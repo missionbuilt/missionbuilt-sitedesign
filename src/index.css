@@ -16,7 +16,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 11%;
 
-    --primary: 210 64% 54%;
+    --primary: 210 70% 50%;
     --primary-foreground: 210 40% 98%;
 
     --secondary: 210 20% 83%;
@@ -55,31 +55,31 @@
   }
   
   .heading-lg {
-    @apply font-display font-bold text-3xl md:text-4xl lg:text-5xl leading-tight;
+    @apply font-display font-bold text-3xl md:text-4xl lg:text-5xl leading-tight text-slate-900;
   }
   
   .heading-md {
-    @apply font-display font-semibold text-2xl md:text-3xl leading-snug;
+    @apply font-display font-semibold text-2xl md:text-3xl leading-snug text-slate-900;
   }
   
   .heading-sm {
-    @apply font-display font-semibold text-xl md:text-2xl leading-snug;
+    @apply font-display font-semibold text-xl md:text-2xl leading-snug text-slate-900;
   }
   
   .body-lg {
-    @apply text-lg leading-relaxed;
+    @apply text-lg leading-relaxed text-slate-800;
   }
   
   .body {
-    @apply text-base leading-relaxed;
+    @apply text-base leading-relaxed text-slate-800;
   }
   
   .body-sm {
-    @apply text-sm leading-relaxed;
+    @apply text-sm leading-relaxed text-slate-700;
   }
 
   .nav-link {
-    @apply text-slate hover:text-steel transition-colors duration-200 font-medium px-3 py-2 rounded-md hover:bg-slate/10;
+    @apply text-slate-700 hover:text-steel transition-colors duration-200 font-medium px-3 py-2 rounded-md hover:bg-slate-100;
   }
   
   .nav-link-active {
@@ -87,15 +87,15 @@
   }
 
   .btn-primary {
-    @apply bg-steel text-white hover:bg-steel/90 px-6 py-3 rounded-lg font-medium transition-colors duration-200;
+    @apply bg-steel text-white hover:bg-steel/90 px-6 py-3 rounded-lg font-medium transition-colors duration-200 shadow-sm;
   }
   
   .btn-secondary {
-    @apply bg-secondary text-slate hover:bg-secondary/80 px-6 py-3 rounded-lg font-medium transition-colors duration-200;
+    @apply bg-secondary text-slate-700 hover:bg-secondary/80 px-6 py-3 rounded-lg font-medium transition-colors duration-200 shadow-sm;
   }
   
   .btn-accent {
-    @apply bg-sunburst text-slate hover:bg-sunburst/90 px-6 py-3 rounded-lg font-medium transition-colors duration-200;
+    @apply bg-sunburst text-slate-800 hover:bg-sunburst/90 px-6 py-3 rounded-lg font-medium transition-colors duration-200 shadow-sm;
   }
   
   .card-hover {

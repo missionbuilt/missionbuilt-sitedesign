@@ -53,11 +53,11 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				// Custom colors based on the provided palette
-				steel: '#5B8CB8', // Modified Steel Blue - slightly softer
-				cloud: '#DEE3E9', // Modified Cloud Silver - slightly warmer
-				slate: '#6C7A86', // Modified Cool Slate Gray - slightly lighter
-				sunburst: '#FFCF40', // Modified Sunburst Yellow - slightly warmer
+				// Enhanced custom colors with better contrast
+				steel: '#3A77AD', // Deeper Steel Blue - more saturated
+				cloud: '#D9DFE6', // Slightly darker Cloud Silver
+				slate: '#4A5A68', // Darker Cool Slate Gray - better contrast
+				sunburst: '#FFC300', // Kept Sunburst Yellow as is - already vibrant
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -101,6 +101,9 @@ export default {
 					},
 				},
 			},
+			boxShadow: {
+				'card': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+			}
 		}
 	},
 	plugins: [require("tailwindcss-animate")],
