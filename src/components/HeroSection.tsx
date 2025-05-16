@@ -15,7 +15,7 @@ const HeroSection = () => {
           </span>
           
           <h1 className="heading-lg mb-6">
-            Building Products with <span className="text-steel">Purpose</span> and <span className="text-sunburst">Strength</span>
+            Building Products with <span className="text-steel">Purpose</span> and <span className="text-army">Strength</span>
           </h1>
           
           <p className="body-lg mb-10 max-w-2xl mx-auto">

@@ -98,6 +98,10 @@
     @apply bg-sunburst text-slate hover:bg-sunburst/90 px-6 py-3 rounded-lg font-medium transition-colors duration-200 shadow-sm;
   }
   
+  .btn-army {
+    @apply bg-army text-white hover:bg-army/90 px-6 py-3 rounded-lg font-medium transition-colors duration-200 shadow-sm;
+  }
+  
   .card-hover {
     @apply transition-all duration-200 hover:shadow-lg hover:-translate-y-1;
   }

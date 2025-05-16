@@ -58,6 +58,7 @@ export default {
 				cloud: '#D9DFE6', // Slightly darker Cloud Silver
 				slate: '#4A5A68', // Darker Cool Slate Gray - better contrast
 				sunburst: '#FFC300', // Kept Sunburst Yellow as is - already vibrant
+				army: '#4B5320', // US Army Green / Olive
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
