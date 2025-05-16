@@ -4,7 +4,7 @@ const HeroSection = () => {
     <section className="relative py-20 md:py-28 overflow-hidden">
       {/* Background elements - reduced blur for better clarity */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute top-0 left-0 w-72 h-72 bg-steel/5 rounded-full -translate-x-1/2 -translate-y-1/2 blur-2xl"></div>
+        <div className="absolute top-0 left-0 w-72 h-72 bg-army/5 rounded-full -translate-x-1/2 -translate-y-1/2 blur-2xl"></div>
         <div className="absolute bottom-0 right-0 w-72 h-72 bg-sunburst/10 rounded-full translate-x-1/3 translate-y-1/3 blur-2xl"></div>
       </div>
       
@@ -15,7 +15,7 @@ const HeroSection = () => {
           </span>
           
           <h1 className="heading-lg mb-6">
-            Building Products with <span className="text-steel">Purpose</span> and <span className="text-army">Strength</span>
+            Building Products with <span className="text-army">Purpose</span> and <span className="text-army">Strength</span>
           </h1>
           
           <p className="body-lg mb-10 max-w-2xl mx-auto">

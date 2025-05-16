@@ -11,10 +11,10 @@ const Navbar = () => {
       <div className="container-custom flex items-center justify-between py-4">
         {/* Logo */}
         <Link to="/" className="flex items-center space-x-2">
-          <div className="w-10 h-10 rounded-full bg-steel flex items-center justify-center text-white font-display font-bold text-xl">
+          <div className="w-10 h-10 rounded-full bg-army flex items-center justify-center text-white font-display font-bold text-xl">
             M
           </div>
-          <span className="font-display font-semibold text-lg md:text-xl text-slate">MissionBuilt<span className="text-steel">.io</span></span>
+          <span className="font-display font-semibold text-lg md:text-xl text-slate">MissionBuilt<span className="text-army">.io</span></span>
         </Link>
 
         {/* Mobile Menu Button */}

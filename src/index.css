@@ -79,15 +79,15 @@
   }
 
   .nav-link {
-    @apply text-slate hover:text-steel transition-colors duration-200 font-medium px-3 py-2 rounded-md hover:bg-slate/10;
+    @apply text-slate hover:text-army transition-colors duration-200 font-medium px-3 py-2 rounded-md hover:bg-slate/10;
   }
   
   .nav-link-active {
-    @apply text-steel bg-steel/10;
+    @apply text-army bg-army/10;
   }
 
   .btn-primary {
-    @apply bg-steel text-white hover:bg-steel/90 px-6 py-3 rounded-lg font-medium transition-colors duration-200 shadow-sm;
+    @apply bg-army text-white hover:bg-army/90 px-6 py-3 rounded-lg font-medium transition-colors duration-200 shadow-sm;
   }
   
   .btn-secondary {
