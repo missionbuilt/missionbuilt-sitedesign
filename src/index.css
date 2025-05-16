@@ -55,31 +55,31 @@
   }
   
   .heading-lg {
-    @apply font-display font-bold text-3xl md:text-4xl lg:text-5xl leading-tight text-slate-900;
+    @apply font-display font-bold text-3xl md:text-4xl lg:text-5xl leading-tight text-slate;
   }
   
   .heading-md {
-    @apply font-display font-semibold text-2xl md:text-3xl leading-snug text-slate-900;
+    @apply font-display font-semibold text-2xl md:text-3xl leading-snug text-slate;
   }
   
   .heading-sm {
-    @apply font-display font-semibold text-xl md:text-2xl leading-snug text-slate-900;
+    @apply font-display font-semibold text-xl md:text-2xl leading-snug text-slate;
   }
   
   .body-lg {
-    @apply text-lg leading-relaxed text-slate-800;
+    @apply text-lg leading-relaxed text-slate;
   }
   
   .body {
-    @apply text-base leading-relaxed text-slate-800;
+    @apply text-base leading-relaxed text-slate;
   }
   
   .body-sm {
-    @apply text-sm leading-relaxed text-slate-700;
+    @apply text-sm leading-relaxed text-slate;
   }
 
   .nav-link {
-    @apply text-slate-700 hover:text-steel transition-colors duration-200 font-medium px-3 py-2 rounded-md hover:bg-slate-100;
+    @apply text-slate hover:text-steel transition-colors duration-200 font-medium px-3 py-2 rounded-md hover:bg-slate/10;
   }
   
   .nav-link-active {
@@ -91,11 +91,11 @@
   }
   
   .btn-secondary {
-    @apply bg-secondary text-slate-700 hover:bg-secondary/80 px-6 py-3 rounded-lg font-medium transition-colors duration-200 shadow-sm;
+    @apply bg-secondary text-slate hover:bg-secondary/80 px-6 py-3 rounded-lg font-medium transition-colors duration-200 shadow-sm;
   }
   
   .btn-accent {
-    @apply bg-sunburst text-slate-800 hover:bg-sunburst/90 px-6 py-3 rounded-lg font-medium transition-colors duration-200 shadow-sm;
+    @apply bg-sunburst text-slate hover:bg-sunburst/90 px-6 py-3 rounded-lg font-medium transition-colors duration-200 shadow-sm;
   }
   
   .card-hover {
