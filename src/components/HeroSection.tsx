@@ -14,6 +14,14 @@ const HeroSection = () => {
             Philosophy × Product Management × Weightlifting
           </span>
           
+          <div className="flex justify-center mb-8">
+            <img 
+              src="/lovable-uploads/dfd1484c-2dce-4c45-a3ef-e17eefa59dcc.png" 
+              alt="MissionBuilt Logo" 
+              className="h-24 w-auto"
+            />
+          </div>
+          
           <h1 className="heading-lg mb-6">
             Building Products with <span className="text-army">Purpose</span> and <span className="text-army">Strength</span>
           </h1>
@@ -24,7 +32,7 @@ const HeroSection = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="/blog" className="btn-primary">
+            <a href="/blog" className="btn-army">
               Read the Blog
             </a>
             <a href="/about" className="btn-secondary">

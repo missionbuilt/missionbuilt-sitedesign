@@ -9,9 +9,11 @@ const Footer = () => {
           {/* Logo and Tagline */}
           <div className="md:col-span-1">
             <Link to="/" className="flex items-center space-x-2">
-              <div className="w-10 h-10 rounded-full bg-army flex items-center justify-center text-white font-display font-bold text-xl">
-                M
-              </div>
+              <img 
+                src="/lovable-uploads/dfd1484c-2dce-4c45-a3ef-e17eefa59dcc.png" 
+                alt="MissionBuilt Logo" 
+                className="h-10 w-auto"
+              />
               <span className="font-display font-semibold text-lg text-slate">MissionBuilt<span className="text-army">.io</span></span>
             </Link>
             <p className="mt-3 text-sm text-slate/80">
