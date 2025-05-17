@@ -12,15 +12,15 @@ const Privacy = () => {
   return (
     <>
       <Helmet>
-        <title>Privacy Policy | MissionBuilt</title>
-        <meta name="description" content="Privacy Policy for MissionBuilt.io" />
+        <title>Terms of Service | MissionBuilt</title>
+        <meta name="description" content="Terms of Service for MissionBuilt.io" />
       </Helmet>
 
       <Navbar />
       
       <main className="container-custom py-12 md:py-16">
         <div className="max-w-3xl mx-auto">
-          <h1 className="heading-lg mb-8">Privacy Policy</h1>
+          <h1 className="heading-lg mb-8">Terms of Service</h1>
           
           <div className="prose prose-slate dark:prose-invert max-w-none">
             <p className="text-slate/60 dark:text-slate-400 mb-8">
