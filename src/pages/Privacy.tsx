@@ -58,6 +58,17 @@ const Privacy = () => {
               </p>
             </section>
             
+            <section className="mb-12">
+              <h2 className="text-2xl font-bold mb-4">3. Contributions and Feedback</h2>
+              <p className="mb-6">
+                If you submit feedback, edits, or ideas — thank you. You grant MissionBuilt.io a non-exclusive right to use and publish that content. You still own it, but we can build with it.
+              </p>
+              
+              <p className="mb-6">
+                We don't accept unsolicited product pitches, growth hacks, or miracle supplements.
+              </p>
+            </section>
+            
             {/* Additional content can be added here by the user later */}
           </div>
         </div>
