@@ -1,7 +1,7 @@
-
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
+import Logo from '@/components/Logo';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -10,14 +10,7 @@ const Navbar = () => {
     <header className="bg-white/90 backdrop-blur-sm sticky top-0 z-10 border-b border-slate/10">
       <div className="container-custom flex items-center justify-between py-4">
         {/* Logo */}
-        <Link to="/" className="flex items-center space-x-2">
-          <img 
-            src="/lovable-uploads/dfd1484c-2dce-4c45-a3ef-e17eefa59dcc.png" 
-            alt="MissionBuilt Logo" 
-            className="h-10 w-auto mix-blend-multiply"
-          />
-          <span className="font-display font-semibold text-lg md:text-xl text-slate">MissionBuilt<span className="text-army">.io</span></span>
-        </Link>
+        <Logo />
 
         {/* Mobile Menu Button */}
         <button 

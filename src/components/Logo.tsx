@@ -1,7 +1,6 @@
 
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import { Dumbbell } from 'lucide-react';
 
 interface LogoProps {
   /**
@@ -16,13 +15,9 @@ interface LogoProps {
    * Optional className for additional styling
    */
   className?: string;
-  /**
-   * Whether to show the dumbbell icon
-   */
-  showIcon?: boolean;
 }
 
-const Logo = ({ size = 'md', asLink = true, className, showIcon = true }: LogoProps) => {
+const Logo = ({ size = 'md', asLink = true, className }: LogoProps) => {
   // Size classes based on variant
   const sizeClasses = {
     sm: "text-lg",
@@ -30,11 +25,11 @@ const Logo = ({ size = 'md', asLink = true, className, showIcon = true }: LogoPr
     lg: "text-2xl md:text-3xl"
   };
 
-  // Icon sizes based on logo size
-  const iconSizes = {
-    sm: 18,
-    md: 22,
-    lg: 28
+  // Image sizes based on logo size
+  const imageSizes = {
+    sm: "h-6",
+    md: "h-8",
+    lg: "h-10"
   };
 
   const logoContent = (
@@ -43,14 +38,12 @@ const Logo = ({ size = 'md', asLink = true, className, showIcon = true }: LogoPr
       sizeClasses[size],
       className
     )}>
-      {showIcon && (
-        <Dumbbell 
-          size={iconSizes[size]} 
-          className="text-army" 
-          strokeWidth={2.5}
-        />
-      )}
-      <span className="font-display font-bold">M</span>ission<span className="text-sunburst">Built</span><span className="text-army">.io</span>
+      <img 
+        src="/lovable-uploads/dfd1484c-2dce-4c45-a3ef-e17eefa59dcc.png" 
+        alt="MissionBuilt Logo" 
+        className={cn("mix-blend-multiply", imageSizes[size])}
+      />
+      <span className="font-display">Mission<span className="text-sunburst">Built</span><span className="text-army">.io</span></span>
     </span>
   );
 

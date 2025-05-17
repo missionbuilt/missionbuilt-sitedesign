@@ -25,30 +25,24 @@ const Training = () => {
 
             {/* Logo Showcase Section */}
             <div className="my-16 p-10 bg-slate/5 rounded-xl border border-slate/10">
-              <h2 className="heading-sm mb-8 text-slate">New Logo Design</h2>
+              <h2 className="heading-sm mb-8 text-slate">Logo Design</h2>
               <div className="space-y-10 flex flex-col items-center">
                 {/* Small Logo */}
                 <div className="p-6 bg-white rounded-lg shadow-sm w-full max-w-md">
                   <h3 className="body font-semibold mb-2 text-slate/70">Small Size</h3>
-                  <Logo size="sm" asLink={false} className="text-slate" showIcon={true} />
+                  <Logo size="sm" asLink={false} className="text-slate" />
                 </div>
                 
                 {/* Medium Logo */}
                 <div className="p-6 bg-white rounded-lg shadow-sm w-full max-w-md">
                   <h3 className="body font-semibold mb-2 text-slate/70">Medium Size (Default)</h3>
-                  <Logo size="md" asLink={false} className="text-slate" showIcon={true} />
+                  <Logo size="md" asLink={false} className="text-slate" />
                 </div>
                 
                 {/* Large Logo */}
                 <div className="p-6 bg-white rounded-lg shadow-sm w-full max-w-md">
                   <h3 className="body font-semibold mb-2 text-slate/70">Large Size</h3>
-                  <Logo size="lg" asLink={false} className="text-slate" showIcon={true} />
-                </div>
-                
-                {/* Without Icon */}
-                <div className="p-6 bg-white rounded-lg shadow-sm w-full max-w-md">
-                  <h3 className="body font-semibold mb-2 text-slate/70">Without Icon</h3>
-                  <Logo size="md" asLink={false} className="text-slate" showIcon={false} />
+                  <Logo size="lg" asLink={false} className="text-slate" />
                 </div>
               </div>
             </div>
