@@ -3,7 +3,7 @@ import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Mail, Linkedin, Instagram, Github } from "lucide-react";
+import { Mail, Linkedin, Instagram, Github, Book } from "lucide-react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
@@ -14,14 +14,15 @@ const AboutMe = () => {
       
       <main className="flex-grow container mx-auto px-4 py-16">
         <div className="max-w-3xl mx-auto">
+          {/* About Me Section */}
           <div className="text-center mb-10">
-            <h1 className="text-4xl font-bold mb-4">About Me</h1>
+            <h1 className="text-4xl font-bold mb-4">About</h1>
             <p className="text-muted-foreground">
               The person behind MissionBuilt
             </p>
           </div>
 
-          <div className="flex flex-col items-center space-y-8">
+          <div className="flex flex-col items-center space-y-8 mb-16">
             <Avatar className="w-40 h-40 border-4 border-primary/10">
               <AvatarFallback className="text-5xl">MB</AvatarFallback>
             </Avatar>
@@ -90,6 +91,54 @@ const AboutMe = () => {
               <Button variant="ghost" size="sm">Blog</Button>
               <Button variant="ghost" size="sm">Speaking</Button>
               <Button variant="ghost" size="sm">Chapters</Button>
+            </div>
+          </div>
+
+          {/* About the Book Section */}
+          <div className="mt-20 border-t pt-16 border-slate/10">
+            <div className="text-center mb-10">
+              <h2 className="text-3xl font-bold mb-4">About the Book</h2>
+              <p className="text-muted-foreground">
+                Forged Under Load
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-8 items-center">
+              <div className="flex justify-center">
+                <div className="w-60 h-80 bg-slate/5 dark:bg-slate/10 rounded-md shadow-lg flex items-center justify-center">
+                  <Book className="w-16 h-16 text-army opacity-70" />
+                </div>
+              </div>
+              
+              <div className="space-y-6">
+                <h3 className="text-2xl font-semibold">Forged Under Load</h3>
+                <p className="text-slate dark:text-slate-200">
+                  A comprehensive guide to building strength, resilience, and purpose through the principles of powerlifting and leadership.
+                </p>
+                
+                <div className="space-y-4">
+                  <div>
+                    <h4 className="text-xl font-semibold mb-2">What You'll Learn</h4>
+                    <ul className="list-disc list-inside space-y-2 text-slate dark:text-slate-200">
+                      <li>Principles of progressive overload in life and leadership</li>
+                      <li>Building mental toughness through physical challenges</li>
+                      <li>Creating systems that support consistent growth</li>
+                      <li>Developing a mission-driven approach to work and training</li>
+                    </ul>
+                  </div>
+                  
+                  <div>
+                    <h4 className="text-xl font-semibold mb-2">Who This Book Is For</h4>
+                    <p className="text-slate dark:text-slate-200">
+                      Leaders, athletes, and anyone seeking to build strength that transcends the physical. Whether you're a seasoned lifter or new to strength training, this book provides actionable insights for your journey.
+                    </p>
+                  </div>
+                </div>
+                
+                <Button className="bg-army hover:bg-army/90 text-white">
+                  Pre-order Now
+                </Button>
+              </div>
             </div>
           </div>
         </div>
