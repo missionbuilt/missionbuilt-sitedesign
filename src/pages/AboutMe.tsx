@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import AboutMeSection from "../components/about/AboutMeSection";
@@ -7,6 +7,11 @@ import BookSection from "../components/about/BookSection";
 import { Button } from "@/components/ui/button";
 
 const AboutMe = () => {
+  // Reset scroll position when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
