@@ -32,7 +32,7 @@ const StatusCounter: React.FC<StatusCounterProps> = ({ chapters }) => {
       <div className="flex items-center gap-2 px-4 py-3 rounded-lg bg-slate-100 dark:bg-slate-800/30 text-slate-800 dark:text-slate-400 shadow-sm">
         <X className="h-4 w-4" />
         <span className="font-semibold text-lg">{statusCounts["not-started"]}</span>
-        <span className="text-sm">404 Gains Not Found</span>
+        <span className="text-sm">Pre not found</span>
       </div>
     </div>
   );
