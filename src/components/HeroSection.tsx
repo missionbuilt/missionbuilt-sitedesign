@@ -8,7 +8,7 @@ const HeroSection = () => {
   
   return (
     <section className="relative py-20 md:py-28 overflow-hidden">
-      {/* Background elements - reduced blur for better clarity */}
+      {/* Background elements */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-0 left-0 w-72 h-72 bg-army/5 dark:bg-army/10 rounded-full -translate-x-1/2 -translate-y-1/2 blur-2xl"></div>
         <div className="absolute bottom-0 right-0 w-72 h-72 bg-sunburst/10 dark:bg-sunburst/20 rounded-full translate-x-1/3 translate-y-1/3 blur-2xl"></div>
@@ -22,34 +22,33 @@ const HeroSection = () => {
 
         <div className="max-w-3xl mx-auto text-center">
           <span className="inline-block px-4 py-1.5 bg-secondary dark:bg-secondary/30 text-slate dark:text-slate-100 rounded-full text-sm font-medium mb-6 shadow-sm">
-            Thoughts on Product, Strength, and Growth
+            [Category/Tag]
           </span>
           
           <div className="flex justify-center mb-8">
             <div className="h-24 w-24 flex items-center justify-center">
               <img 
                 src="/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png" 
-                alt="MissionBuilt Logo" 
+                alt="Logo" 
                 className="h-20 w-auto"
               />
             </div>
           </div>
           
           <h1 className="heading-lg mb-6">
-            Hey, I'm Building <span className="text-sunburst font-bold">Products</span> and <span className="text-sunburst font-bold">Strength</span> for Life
+            [Main Title] <span className="text-sunburst font-bold">[Highlighted]</span> [More Title]
           </h1>
           
           <p className="body-lg mb-10 max-w-2xl mx-auto">
-            After 15+ years in product, I've learned it comes down to one thing: making users successful in their mission.
-            I've found that product work and training share the same DNA: purpose, consistency, and focusing on what really matters.
+            [Main description paragraph goes here. This area contains your primary message to visitors.]
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a href="/field-notes" className="btn-army">
-              Read Field Notes
+              [Primary CTA]
             </a>
             <a href="/training" className="btn-secondary">
-              Daily Reps
+              [Secondary CTA]
             </a>
           </div>
         </div>

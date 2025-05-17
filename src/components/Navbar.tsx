@@ -10,7 +10,7 @@ const Navbar = () => {
   return (
     <header className="bg-white/90 dark:bg-slate/5 backdrop-blur-sm sticky top-0 z-10 border-b border-slate/10 dark:border-slate/20">
       <div className="container-custom flex items-center justify-between py-4">
-        {/* Logo with reverse color scheme (Mission in yellow, Built.io in army green) */}
+        {/* Logo with reverse color scheme */}
         <Logo colorScheme="reverse" />
 
         {/* Mobile Menu Button */}
@@ -35,20 +35,20 @@ const Navbar = () => {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-1">
-          <NavLink to="/" exact>Garage</NavLink>
-          <NavLink to="/field-notes">Field Notes</NavLink>
-          <NavLink to="/training">Training</NavLink>
-          <NavLink to="/pr-board">PR Board</NavLink>
+          <NavLink to="/" exact>Home</NavLink>
+          <NavLink to="/field-notes">Page 1</NavLink>
+          <NavLink to="/training">Page 2</NavLink>
+          <NavLink to="/pr-board">Page 3</NavLink>
         </nav>
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
           <div className="absolute top-full left-0 right-0 bg-white dark:bg-slate/10 shadow-lg border-t border-slate/10 dark:border-slate/20 md:hidden py-2">
             <nav className="flex flex-col">
-              <MobileNavLink to="/" onClick={() => setIsMenuOpen(false)}>Garage</MobileNavLink>
-              <MobileNavLink to="/field-notes" onClick={() => setIsMenuOpen(false)}>Field Notes</MobileNavLink>
-              <MobileNavLink to="/training" onClick={() => setIsMenuOpen(false)}>Training</MobileNavLink>
-              <MobileNavLink to="/pr-board" onClick={() => setIsMenuOpen(false)}>PR Board</MobileNavLink>
+              <MobileNavLink to="/" onClick={() => setIsMenuOpen(false)}>Home</MobileNavLink>
+              <MobileNavLink to="/field-notes" onClick={() => setIsMenuOpen(false)}>Page 1</MobileNavLink>
+              <MobileNavLink to="/training" onClick={() => setIsMenuOpen(false)}>Page 2</MobileNavLink>
+              <MobileNavLink to="/pr-board" onClick={() => setIsMenuOpen(false)}>Page 3</MobileNavLink>
             </nav>
           </div>
         )}

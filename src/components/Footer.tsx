@@ -11,7 +11,7 @@ const Footer = () => {
           <div className="md:col-span-1">
             <Logo size="md" colorScheme="monochrome" />
             <p className="mt-3 text-sm text-slate/80 dark:text-slate-300">
-              Uniting product passion and weightlifting philosophy for balanced growth.
+              [Site tagline or short description]
             </p>
           </div>
           
@@ -19,8 +19,8 @@ const Footer = () => {
           <div>
             <h3 className="font-display font-semibold mb-3 text-slate dark:text-slate-100">Explore</h3>
             <ul className="space-y-2 text-sm">
-              <li><Link to="/field-notes" className="text-slate/80 dark:text-slate-300 hover:text-army dark:hover:text-army transition-colors">Field Notes</Link></li>
-              <li><Link to="/pr-board" className="text-slate/80 dark:text-slate-300 hover:text-army dark:hover:text-army transition-colors">PR Board</Link></li>
+              <li><Link to="/field-notes" className="text-slate/80 dark:text-slate-300 hover:text-army dark:hover:text-army transition-colors">Page 1</Link></li>
+              <li><Link to="/pr-board" className="text-slate/80 dark:text-slate-300 hover:text-army dark:hover:text-army transition-colors">Page 2</Link></li>
             </ul>
           </div>
           
@@ -28,17 +28,17 @@ const Footer = () => {
           <div>
             <h3 className="font-display font-semibold mb-3 text-slate dark:text-slate-100">Connect</h3>
             <ul className="space-y-2 text-sm">
-              <li><a href="#" className="text-slate/80 dark:text-slate-300 hover:text-army dark:hover:text-army transition-colors">Twitter</a></li>
-              <li><a href="#" className="text-slate/80 dark:text-slate-300 hover:text-army dark:hover:text-army transition-colors">LinkedIn</a></li>
-              <li><a href="#" className="text-slate/80 dark:text-slate-300 hover:text-army dark:hover:text-army transition-colors">Instagram</a></li>
-              <li><a href="mailto:hello@missionbuilt.io" className="text-slate/80 dark:text-slate-300 hover:text-army dark:hover:text-army transition-colors">Email</a></li>
+              <li><a href="#" className="text-slate/80 dark:text-slate-300 hover:text-army dark:hover:text-army transition-colors">Social 1</a></li>
+              <li><a href="#" className="text-slate/80 dark:text-slate-300 hover:text-army dark:hover:text-army transition-colors">Social 2</a></li>
+              <li><a href="#" className="text-slate/80 dark:text-slate-300 hover:text-army dark:hover:text-army transition-colors">Social 3</a></li>
+              <li><a href="mailto:hello@example.com" className="text-slate/80 dark:text-slate-300 hover:text-army dark:hover:text-army transition-colors">Email</a></li>
             </ul>
           </div>
           
           {/* Newsletter */}
           <div>
             <h3 className="font-display font-semibold mb-3 text-slate dark:text-slate-100">Newsletter</h3>
-            <p className="text-sm text-slate/80 dark:text-slate-300 mb-3">Get the latest insights straight to your inbox.</p>
+            <p className="text-sm text-slate/80 dark:text-slate-300 mb-3">[Newsletter description]</p>
             <form className="flex">
               <input 
                 type="email" 
@@ -61,7 +61,7 @@ const Footer = () => {
         
         <div className="mt-10 pt-6 border-t border-slate/10 dark:border-slate/20 flex flex-col md:flex-row justify-between items-center">
           <p className="text-sm text-slate/60 dark:text-slate-400 mb-2 md:mb-0">
-            &copy; {new Date().getFullYear()} MissionBuilt.io. All rights reserved.
+            &copy; {new Date().getFullYear()} [Your Company]. All rights reserved.
           </p>
           <div className="flex space-x-6">
             <Link to="/privacy" className="text-sm text-slate/60 dark:text-slate-400 hover:text-army dark:hover:text-army transition-colors">Privacy</Link>

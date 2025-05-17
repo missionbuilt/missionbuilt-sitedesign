@@ -7,15 +7,15 @@ import { toast } from "./ui/use-toast";
 
 const AboutSection = () => {
   const [isEditing, setIsEditing] = useState(false);
-  const [missionText, setMissionText] = useState(
-    "I started this open-source book to bring together two passions: building products that genuinely help people succeed, and building myself through the discipline of strength training.\n\nMy approach isn't revolutionary or trendy—it's about giving a damn about the people using your products. I've learned that product management isn't about frameworks or ceremonies; it's about showing up with fierce dedication and truly caring. When you give a shit about your users' struggles and dreams, you create something that matters. That's the fire that drives me every day—building things that actually make a difference in people's lives."
+  const [mainText, setMainText] = useState(
+    "[Placeholder text for main content]\n\n[Second paragraph of placeholder text]"
   );
 
   const handleSave = () => {
     setIsEditing(false);
     toast({
-      title: "Story updated",
-      description: "Your personal story has been updated successfully.",
+      title: "Content updated",
+      description: "Your content has been updated successfully.",
     });
   };
 
@@ -28,7 +28,7 @@ const AboutSection = () => {
             <div className="aspect-square rounded-2xl overflow-hidden shadow-lg">
               <img 
                 src="/lovable-uploads/3223ec55-65f3-4378-ac65-31d0a864801c.png"
-                alt="Fire and passion in product development" 
+                alt="Section image" 
                 className="w-full h-full object-cover"
               />
             </div>
@@ -40,7 +40,7 @@ const AboutSection = () => {
           <div>
             <div className="flex items-center justify-between mb-4">
               <span className="inline-block px-3 py-1 bg-secondary text-slate/80 dark:bg-secondary/30 dark:text-slate-100 rounded-full text-sm font-medium">
-                My Story
+                [Section Label]
               </span>
               
               <Dialog>
@@ -50,17 +50,17 @@ const AboutSection = () => {
                       <path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
                       <path d="m15 5 4 4"/>
                     </svg>
-                    Edit Story
+                    Edit Content
                   </Button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[525px]">
                   <DialogHeader>
-                    <DialogTitle>Edit Your Story</DialogTitle>
+                    <DialogTitle>Edit Content</DialogTitle>
                   </DialogHeader>
                   <div className="py-4">
                     <Textarea 
-                      value={missionText}
-                      onChange={(e) => setMissionText(e.target.value)}
+                      value={mainText}
+                      onChange={(e) => setMainText(e.target.value)}
                       className="min-h-[200px]"
                     />
                   </div>
@@ -77,18 +77,18 @@ const AboutSection = () => {
             </div>
             
             <h2 className="heading-md text-slate mb-6">
-              Give a Shit
+              [Section Title]
             </h2>
             
             <div className="text-slate/80 dark:text-slate-200 space-y-4">
-              {missionText.split("\n\n").map((paragraph, i) => (
+              {mainText.split("\n\n").map((paragraph, i) => (
                 <p key={i}>{paragraph}</p>
               ))}
             </div>
             
             <div className="mt-8">
               <a href="/field-notes" className="btn-army inline-flex items-center">
-                Read My Story
+                [Call to Action]
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
