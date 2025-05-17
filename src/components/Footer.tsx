@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import Logo from '@/components/Logo';
 import { Heart, ExternalLink, Github } from "lucide-react";
@@ -26,10 +25,10 @@ const Footer = () => {
               Building better products, one rep at a time.
             </p>
             
-            {/* Motto */}
-            <div className="mb-6">
-              <p className="font-display text-sunburst font-semibold italic text-xl">
-                "give a shit"
+            {/* Motto - Updated with more aggressive styling */}
+            <div className="mb-6 bg-slate/10 dark:bg-slate/20 p-3 border-l-4 border-army dark:border-destructive rounded-r-md">
+              <p className="font-display font-bold text-xl uppercase tracking-wider text-army dark:text-destructive drop-shadow-sm">
+                "GIVE A SHIT"
               </p>
             </div>
             
