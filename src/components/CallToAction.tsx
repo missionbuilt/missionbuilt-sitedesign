@@ -4,6 +4,14 @@ import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const CallToAction = () => {
+  // Function to handle scrolling to top when navigating to a new page
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
   return (
     <section className="py-20 relative overflow-hidden">
       {/* Background Elements */}
@@ -23,7 +31,7 @@ const CallToAction = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Link to="/chapters" className="btn-army flex items-center justify-center gap-2 group animate-fade-in">
+              <Link to="/chapters" onClick={scrollToTop} className="btn-army flex items-center justify-center gap-2 group animate-fade-in">
                 <span>Start Reading</span>
                 <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </Link>
