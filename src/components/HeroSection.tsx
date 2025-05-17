@@ -49,7 +49,7 @@ const HeroSection = () => {
               Read Field Notes
             </a>
             <a href="/training" className="btn-secondary">
-              Training Logs
+              Training
             </a>
           </div>
         </div>
