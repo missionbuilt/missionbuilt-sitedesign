@@ -1,8 +1,6 @@
 
 import NightVisionToggle from "./NightVisionToggle";
 import { useTheme } from '@/context/ThemeContext';
-import { Badge } from "@/components/ui/badge";
-import { Dumbbell } from "lucide-react";
 
 const HeroSection = () => {
   const { theme } = useTheme();
@@ -23,16 +21,6 @@ const HeroSection = () => {
         </div>
 
         <div className="max-w-3xl mx-auto text-center">
-          <div className="flex justify-center gap-2 mb-6">
-            <Badge variant="secondary" className="px-3 py-1.5 text-sm font-medium bg-secondary/70 dark:bg-secondary/30 text-slate dark:text-slate-100 flex items-center gap-1.5">
-              <Dumbbell className="h-3.5 w-3.5" />
-              <span>Powerlifting</span>
-            </Badge>
-            <Badge variant="outline" className="px-3 py-1.5 text-sm font-medium border-slate/20 dark:border-slate/40 text-slate/80 dark:text-slate-200/80">
-              Product Management
-            </Badge>
-          </div>
-          
           <div className="flex justify-center mb-8">
             <div className="h-24 w-24 flex items-center justify-center">
               <img 
