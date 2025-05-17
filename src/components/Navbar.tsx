@@ -10,8 +10,8 @@ const Navbar = () => {
   return (
     <header className="bg-white/90 backdrop-blur-sm sticky top-0 z-10 border-b border-slate/10">
       <div className="container-custom flex items-center justify-between py-4">
-        {/* Logo with subtle color scheme */}
-        <Logo colorScheme="subtle" />
+        {/* Logo with reverse color scheme (Mission in yellow, Built.io in army green) */}
+        <Logo colorScheme="reverse" />
 
         {/* Mobile Menu Button */}
         <button 

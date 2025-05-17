@@ -47,6 +47,11 @@ const Training = () => {
                     <h4 className="text-sm text-slate/60 mb-3">Monochrome Color Scheme</h4>
                     <Logo size="md" asLink={false} colorScheme="monochrome" />
                   </div>
+                  
+                  <div className="p-6 bg-white rounded-lg shadow-sm">
+                    <h4 className="text-sm text-slate/60 mb-3">Reverse Color Scheme (Mission in yellow, Built.io in green)</h4>
+                    <Logo size="md" asLink={false} colorScheme="reverse" />
+                  </div>
                 </div>
               </div>
               
@@ -115,6 +120,11 @@ const Training = () => {
                   <div className="p-6 bg-white rounded-lg shadow-sm">
                     <h4 className="text-sm text-slate/60 mb-3">Monochrome Color Scheme</h4>
                     <Logo size="md" asLink={false} showImage={false} showText={true} colorScheme="monochrome" />
+                  </div>
+                  
+                  <div className="p-6 bg-white rounded-lg shadow-sm">
+                    <h4 className="text-sm text-slate/60 mb-3">Reverse Color Scheme</h4>
+                    <Logo size="md" asLink={false} showImage={false} showText={true} colorScheme="reverse" />
                   </div>
                 </div>
               </div>

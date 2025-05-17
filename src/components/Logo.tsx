@@ -26,7 +26,7 @@ interface LogoProps {
   /**
    * Color scheme for the logo text
    */
-  colorScheme?: 'default' | 'monochrome' | 'subtle';
+  colorScheme?: 'default' | 'monochrome' | 'subtle' | 'reverse';
 }
 
 const Logo = ({ 
@@ -69,6 +69,12 @@ const Logo = ({
     subtle: {
       mission: "text-slate",
       built: "text-slate",
+      domain: "text-army"
+    },
+    // Reverse color scheme (Mission: sunburst, Built+.io: army)
+    reverse: {
+      mission: "text-sunburst",
+      built: "text-army",
       domain: "text-army"
     }
   };
