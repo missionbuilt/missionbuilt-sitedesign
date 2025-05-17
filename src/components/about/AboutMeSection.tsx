@@ -7,7 +7,7 @@ const AboutMeSection = () => {
     <div className="flex flex-col items-center space-y-8 mb-16">
       <div className="w-40 h-40 overflow-hidden rounded-full border-4 border-primary/10">
         <img 
-          src="/lovable-uploads/ad42f773-71de-419d-a4d8-282925688c73.png" 
+          src="/lovable-uploads/777697e9-e718-4177-9c47-cb5be778fdd3.png" 
           alt="Mike cartoon character" 
           className="w-full h-full object-cover"
         />
