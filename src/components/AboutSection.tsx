@@ -27,8 +27,8 @@ const AboutSection = () => {
           <div className="relative">
             <div className="aspect-square rounded-2xl overflow-hidden shadow-lg">
               <img 
-                src="/lovable-uploads/bac59bd2-efe4-453f-bc0e-ead232657edd.png"
-                alt="The energy of mission-driven product development" 
+                src="/lovable-uploads/3223ec55-65f3-4378-ac65-31d0a864801c.png"
+                alt="Fire and passion in product development" 
                 className="w-full h-full object-cover"
               />
             </div>
