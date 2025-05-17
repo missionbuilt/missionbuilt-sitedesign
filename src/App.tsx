@@ -9,6 +9,7 @@ import { ThemeProvider } from "@/context/ThemeContext";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Training from "./pages/Training";
+import Chapters from "./pages/Chapters";
 
 const App = () => {
   // Create a new QueryClient instance inside the component
@@ -27,6 +28,7 @@ const App = () => {
                 <Route path="/field-notes" element={<NotFound />} />
                 <Route path="/training" element={<Training />} />
                 <Route path="/pr-board" element={<NotFound />} />
+                <Route path="/chapters" element={<Chapters />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>

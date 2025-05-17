@@ -38,7 +38,7 @@ const Navbar = () => {
           <NavLink to="/" exact>Forged Under Load</NavLink>
           <NavLink to="/field-notes">Page 1</NavLink>
           <NavLink to="/training">Page 2</NavLink>
-          <NavLink to="/pr-board">Page 3</NavLink>
+          <NavLink to="/chapters">Chapters</NavLink>
         </nav>
 
         {/* Mobile Navigation */}
@@ -48,7 +48,7 @@ const Navbar = () => {
               <MobileNavLink to="/" onClick={() => setIsMenuOpen(false)}>Forged Under Load</MobileNavLink>
               <MobileNavLink to="/field-notes" onClick={() => setIsMenuOpen(false)}>Page 1</MobileNavLink>
               <MobileNavLink to="/training" onClick={() => setIsMenuOpen(false)}>Page 2</MobileNavLink>
-              <MobileNavLink to="/pr-board" onClick={() => setIsMenuOpen(false)}>Page 3</MobileNavLink>
+              <MobileNavLink to="/chapters" onClick={() => setIsMenuOpen(false)}>Chapters</MobileNavLink>
             </nav>
           </div>
         )}
