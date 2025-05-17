@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import Navbar from '@/components/Navbar';
@@ -102,7 +103,7 @@ const Privacy = () => {
               <p className="mb-6">
                 Questions, concerns, or brilliant ideas?<br />
                 Email: <a href="mailto:mike@missionbuilt.io" className="text-army hover:underline">mike@missionbuilt.io</a><br />
-                Twitter: <a href="https://twitter.com/missionbuilt" className="text-army hover:underline">@missionbuilt</a><br />
+                Bluesky: <a href="https://bsky.app/profile/missionbuilt.bsky.social" className="text-army hover:underline">missionbuilt.bsky.social</a><br />
                 Or just shout really loud while deadlifting.
               </p>
             </section>
