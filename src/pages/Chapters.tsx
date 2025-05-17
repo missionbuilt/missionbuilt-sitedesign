@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ChapterGrid from "@/components/chapters/ChapterGrid";
@@ -12,6 +12,14 @@ import { BookOpen, ListFilter } from "lucide-react";
 
 const Chapters = () => {
   const [viewMode, setViewMode] = useState<"grid" | "table">("grid");
+  
+  // Automatically scroll to the top when this component mounts
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "auto"
+    });
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
