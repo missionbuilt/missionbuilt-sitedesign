@@ -56,7 +56,12 @@ export default {
 				// Enhanced custom colors with better contrast
 				steel: '#3A77AD', // Deeper Steel Blue - more saturated
 				cloud: '#D9DFE6', // Slightly darker Cloud Silver
-				slate: '#4A5A68', // Darker Cool Slate Gray - better contrast
+				slate: {
+					DEFAULT: '#4A5A68', // Darker Cool Slate Gray - better contrast
+					100: '#F1F5F9', // Light slate for dark mode text
+					200: '#E2E8F0', // Medium light slate for dark mode text
+					300: '#CBD5E1', // Medium slate for dark mode text
+				},
 				sunburst: '#FFC300', // Kept Sunburst Yellow as is - already vibrant
 				army: '#4B5320', // US Army Green / Olive
 			},
