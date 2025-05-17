@@ -99,7 +99,7 @@ const AboutMe = () => {
             <div className="text-center mb-10">
               <h2 className="text-3xl font-bold mb-4">About the Book</h2>
               <p className="text-muted-foreground">
-                Forged Under Load
+                The Mission Behind MissionBuilt
               </p>
             </div>
 
@@ -111,7 +111,7 @@ const AboutMe = () => {
               </div>
               
               <div className="space-y-6">
-                <h3 className="text-2xl font-semibold">Forged Under Load</h3>
+                <h3 className="text-2xl font-semibold">The Mission Behind MissionBuilt</h3>
                 <p className="text-slate dark:text-slate-200">
                   A comprehensive guide to building strength, resilience, and purpose through the principles of powerlifting and leadership.
                 </p>
