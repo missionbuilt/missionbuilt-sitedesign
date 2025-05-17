@@ -1,7 +1,7 @@
 
 import { Link } from 'react-router-dom';
 import Logo from '@/components/Logo';
-import { Heart, ExternalLink } from "lucide-react";
+import { Heart, ExternalLink, Github } from "lucide-react";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -28,6 +28,7 @@ const Footer = () => {
             
             {/* Social Icons */}
             <div className="flex gap-4 mt-4 mb-6 md:mb-0">
+              {/* Bluesky Icon */}
               <a href="https://bsky.app/profile/missionbuilt.bsky.social" className="text-slate/70 hover:text-army dark:text-slate-400 dark:hover:text-army transition-colors">
                 <img 
                   src="/lovable-uploads/14e0963a-6afa-437d-ac6a-c8b45d07bc2b.png" 
@@ -35,6 +36,12 @@ const Footer = () => {
                   className="h-5 w-5" 
                 />
                 <span className="sr-only">Bluesky</span>
+              </a>
+              
+              {/* GitHub Icon - Link will be updated later */}
+              <a href="#" className="text-slate/70 hover:text-army dark:text-slate-400 dark:hover:text-army transition-colors">
+                <Github className="h-5 w-5" />
+                <span className="sr-only">GitHub</span>
               </a>
             </div>
           </div>
