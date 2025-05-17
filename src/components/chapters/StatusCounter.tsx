@@ -20,7 +20,7 @@ const StatusCounter: React.FC<StatusCounterProps> = ({ chapters }) => {
       <div className="flex items-center gap-2 px-4 py-3 rounded-lg bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 shadow-sm">
         <Activity className="h-4 w-4" />
         <span className="font-semibold text-lg">{statusCounts["in-progress"]}</span>
-        <span className="text-sm">Reps on the Board</span>
+        <span className="text-sm">Good Lift</span>
       </div>
       
       <div className="flex items-center gap-2 px-4 py-3 rounded-lg bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-400 shadow-sm">

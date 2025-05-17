@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
@@ -27,7 +26,7 @@ const getBadgeContent = (status: Chapter["status"]) => {
       return (
         <>
           <Activity className="mr-1 h-3 w-3" />
-          <span>Reps on the Board</span>
+          <span>Good Lift</span>
         </>
       );
     case "coming-soon":
