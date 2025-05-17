@@ -10,7 +10,7 @@ import {
   TableCell
 } from "@/components/ui/table";
 import { Chapter } from "@/data/chapters-data";
-import { Activity, Clock, Circle } from "lucide-react";
+import { Activity, Clock, Circle, X } from "lucide-react";
 
 // Helper function to get badge variant
 const getBadgeVariant = (status: Chapter["status"]): "default" | "secondary" | "outline" => {

@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Activity, Clock, Circle } from "lucide-react";
+import { Activity, Clock, Circle, X } from "lucide-react";
 import { Chapter } from "@/data/chapters-data";
 
 interface StatusCounterProps {
@@ -30,9 +30,9 @@ const StatusCounter: React.FC<StatusCounterProps> = ({ chapters }) => {
       </div>
       
       <div className="flex items-center gap-2 px-4 py-3 rounded-lg bg-slate-100 dark:bg-slate-800/30 text-slate-800 dark:text-slate-400 shadow-sm">
-        <Circle className="h-4 w-4" />
+        <X className="h-4 w-4" />
         <span className="font-semibold text-lg">{statusCounts["not-started"]}</span>
-        <span className="text-sm">Still Racking</span>
+        <span className="text-sm">404 Gains Not Found</span>
       </div>
     </div>
   );

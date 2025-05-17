@@ -2,7 +2,7 @@
 import React from "react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Book, ArrowRight, Activity, Clock, Circle } from "lucide-react";
+import { Book, Activity, Clock, Circle, X } from "lucide-react";
 import { Chapter } from "@/data/chapters-data";
 import { cn } from "@/lib/utils";
 
@@ -34,7 +34,7 @@ const getBadgeContent = (status: Chapter["status"]) => {
       return (
         <>
           <Clock className="mr-1 h-3 w-3" />
-          <span>Pushing Through, Don't Touch the Bar</span>
+          <span>Pushing Through</span>
         </>
       );
     case "not-started":
@@ -95,9 +95,9 @@ const ChapterCard: React.FC<ChapterCardProps> = ({ chapter }) => {
               : "opacity-50 cursor-not-allowed text-slate-500"
           )}>
             {chapter.status === "in-progress" ? (
-              <>Read Chapter <ArrowRight className="ml-1 h-4 w-4" /></>
+              <>Read Chapter <Book className="ml-1 h-4 w-4" /></>
             ) : (
-              <>Coming Soon <ArrowRight className="ml-1 h-4 w-4" /></>
+              <>404 Gains Not Found <X className="ml-1 h-4 w-4" /></>
             )}
           </div>
         </div>
