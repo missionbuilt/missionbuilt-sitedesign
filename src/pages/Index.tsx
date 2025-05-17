@@ -3,6 +3,7 @@ import HeroSection from "../components/HeroSection";
 import NewsletterSignup from "../components/NewsletterSignup";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import WhyThisWhyNow from "../components/WhyThisWhyNow";
 
 const Index = () => {
   return (
@@ -11,6 +12,7 @@ const Index = () => {
       
       <main className="flex-grow">
         <HeroSection />
+        <WhyThisWhyNow />
         <NewsletterSignup />
       </main>
       
