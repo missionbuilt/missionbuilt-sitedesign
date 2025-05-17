@@ -15,7 +15,7 @@ const Footer = () => {
           <div className="md:max-w-xs">
             <Logo size="md" colorScheme="monochrome" />
             <p className="mt-3 text-sm text-slate/80 dark:text-slate-300 mb-6">
-              Product lessons through the lens of powerlifting.
+              Building better products, one rep at a time.
             </p>
             
             {/* Social Icons */}
