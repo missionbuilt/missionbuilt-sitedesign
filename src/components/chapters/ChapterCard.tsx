@@ -41,7 +41,7 @@ const getBadgeContent = (status: Chapter["status"]) => {
       return (
         <>
           <Circle className="mr-1 h-3 w-3" />
-          <span>Still Racking the Plates</span>
+          <span>Still Sipping the Pre</span>
         </>
       );
     default:
