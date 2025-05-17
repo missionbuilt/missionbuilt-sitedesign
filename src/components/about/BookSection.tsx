@@ -1,6 +1,5 @@
 
 import React from "react";
-import { Button } from "@/components/ui/button";
 import BookIntroSection from "./BookIntroSection";
 import ProjectPurposeSection from "./ProjectPurposeSection";
 import EmbracingAiSection from "./EmbracingAiSection";
@@ -18,12 +17,6 @@ const BookSection = () => {
       <BookIntroSection />
       <ProjectPurposeSection />
       <EmbracingAiSection />
-      
-      <div className="text-center mt-10">
-        <Button className="bg-army hover:bg-army/90 text-white">
-          Join the Waiting List
-        </Button>
-      </div>
     </div>
   );
 };
