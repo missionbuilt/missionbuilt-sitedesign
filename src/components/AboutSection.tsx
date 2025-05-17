@@ -25,10 +25,10 @@ const AboutSection = () => {
         <div className="grid md:grid-cols-2 gap-10 items-center">
           {/* Image column */}
           <div className="relative">
-            <div className="aspect-square rounded-2xl overflow-hidden">
+            <div className="aspect-square rounded-2xl overflow-hidden shadow-lg">
               <img 
-                src="/placeholder.svg"
-                alt="About MissionBuilt.io" 
+                src="/lovable-uploads/bac59bd2-efe4-453f-bc0e-ead232657edd.png"
+                alt="The energy of mission-driven product development" 
                 className="w-full h-full object-cover"
               />
             </div>
