@@ -69,6 +69,13 @@ const Privacy = () => {
               </p>
             </section>
             
+            <section className="mb-12">
+              <h2 className="text-2xl font-bold mb-4">4. Respect the Mission</h2>
+              <p className="mb-6">
+                Please don't do anything that would harm the site, the author, or the community. That includes hacking, spamming, copying content without attribution, or being a jerk.
+              </p>
+            </section>
+            
             {/* Additional content can be added here by the user later */}
           </div>
         </div>
