@@ -9,6 +9,24 @@ const Privacy = () => {
   // Format today's date as Month Day, Year (e.g. May 17, 2025)
   const formattedDate = format(new Date(), 'MMMM d, yyyy');
   
+  // Function to handle scrolling to top when links are clicked
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
+  // Function to scroll to a specific section by ID
+  const scrollToSection = (sectionId: string) => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      scrollToTop(); // Fallback to scrolling to top if section not found
+    }
+  };
+  
   return (
     <>
       <Helmet>
@@ -37,7 +55,7 @@ const Privacy = () => {
               By accessing or using this site, you agree to the following terms. If you don't agree, that's okay — but please don't use the site.
             </p>
             
-            <section className="mb-12 bg-slate/5 dark:bg-slate/10 p-6 rounded-xl border border-slate/10 dark:border-slate/20 shadow-sm">
+            <section id="use-freely" className="mb-12 bg-slate/5 dark:bg-slate/10 p-6 rounded-xl border border-slate/10 dark:border-slate/20 shadow-sm">
               <h2 className="text-2xl font-display font-semibold mb-4 text-slate dark:text-slate-100">1. Use Freely, Attribute Kindly</h2>
               <div className="space-y-4">
                 <p className="mb-4">
@@ -50,12 +68,12 @@ const Privacy = () => {
                 </p>
                 
                 <p className="mb-4">
-                  More info on the license: <a href="https://creativecommons.org/licenses/by-nc-sa/4.0" target="_blank" rel="noopener noreferrer" className="text-army hover:underline">creativecommons.org/licenses/by-nc-sa/4.0</a>
+                  More info on the license: <a href="https://creativecommons.org/licenses/by-nc-sa/4.0" target="_blank" rel="noopener noreferrer" className="text-army hover:underline" onClick={scrollToTop}>creativecommons.org/licenses/by-nc-sa/4.0</a>
                 </p>
               </div>
             </section>
             
-            <section className="mb-12 bg-slate/5 dark:bg-slate/10 p-6 rounded-xl border border-slate/10 dark:border-slate/20 shadow-sm">
+            <section id="no-professional-advice" className="mb-12 bg-slate/5 dark:bg-slate/10 p-6 rounded-xl border border-slate/10 dark:border-slate/20 shadow-sm">
               <h2 className="text-2xl font-display font-semibold mb-4 text-slate dark:text-slate-100">2. No Professional Advice</h2>
               <div className="space-y-4">
                 <p className="mb-4">
@@ -68,7 +86,7 @@ const Privacy = () => {
               </div>
             </section>
             
-            <section className="mb-12 bg-slate/5 dark:bg-slate/10 p-6 rounded-xl border border-slate/10 dark:border-slate/20 shadow-sm">
+            <section id="contributions" className="mb-12 bg-slate/5 dark:bg-slate/10 p-6 rounded-xl border border-slate/10 dark:border-slate/20 shadow-sm">
               <h2 className="text-2xl font-display font-semibold mb-4 text-slate dark:text-slate-100">3. Contributions and Feedback</h2>
               <div className="space-y-4">
                 <p className="mb-4">
@@ -81,7 +99,7 @@ const Privacy = () => {
               </div>
             </section>
             
-            <section className="mb-12 bg-slate/5 dark:bg-slate/10 p-6 rounded-xl border border-slate/10 dark:border-slate/20 shadow-sm">
+            <section id="respect-mission" className="mb-12 bg-slate/5 dark:bg-slate/10 p-6 rounded-xl border border-slate/10 dark:border-slate/20 shadow-sm">
               <h2 className="text-2xl font-display font-semibold mb-4 text-slate dark:text-slate-100">4. Respect the Mission</h2>
               <div className="space-y-4">
                 <p className="mb-4">
@@ -90,7 +108,7 @@ const Privacy = () => {
               </div>
             </section>
             
-            <section className="mb-12 bg-slate/5 dark:bg-slate/10 p-6 rounded-xl border border-slate/10 dark:border-slate/20 shadow-sm">
+            <section id="analytics" className="mb-12 bg-slate/5 dark:bg-slate/10 p-6 rounded-xl border border-slate/10 dark:border-slate/20 shadow-sm">
               <h2 className="text-2xl font-display font-semibold mb-4 text-slate dark:text-slate-100">5. Analytics and Privacy</h2>
               <div className="space-y-4">
                 <p className="mb-4">
@@ -99,7 +117,7 @@ const Privacy = () => {
               </div>
             </section>
             
-            <section className="mb-12 bg-slate/5 dark:bg-slate/10 p-6 rounded-xl border border-slate/10 dark:border-slate/20 shadow-sm">
+            <section id="changes" className="mb-12 bg-slate/5 dark:bg-slate/10 p-6 rounded-xl border border-slate/10 dark:border-slate/20 shadow-sm">
               <h2 className="text-2xl font-display font-semibold mb-4 text-slate dark:text-slate-100">6. This May Change</h2>
               <div className="space-y-4">
                 <p className="mb-4">
@@ -108,12 +126,12 @@ const Privacy = () => {
               </div>
             </section>
             
-            <section className="mb-12 bg-slate/5 dark:bg-slate/10 p-6 rounded-xl border border-slate/10 dark:border-slate/20 shadow-sm">
+            <section id="contact" className="mb-12 bg-slate/5 dark:bg-slate/10 p-6 rounded-xl border border-slate/10 dark:border-slate/20 shadow-sm">
               <h2 className="text-2xl font-display font-semibold mb-4 text-slate dark:text-slate-100">7. Contact</h2>
               <div className="space-y-4">
                 <p className="mb-4">
                   Questions, concerns, or brilliant ideas?<br />
-                  Bluesky: <a href="https://bsky.app/profile/missionbuilt.bsky.social" className="text-army hover:underline">missionbuilt.bsky.social</a>
+                  Bluesky: <a href="https://bsky.app/profile/missionbuilt.bsky.social" className="text-army hover:underline" onClick={scrollToTop}>missionbuilt.bsky.social</a>
                 </p>
               </div>
             </section>
