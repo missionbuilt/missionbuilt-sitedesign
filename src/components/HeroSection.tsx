@@ -48,7 +48,7 @@ const HeroSection = () => {
                 <div className="py-4 px-6 border-b border-slate/10 dark:border-slate/20 bg-slate/10 dark:bg-slate/15">
                   <h2 className="text-lg font-display font-semibold text-slate dark:text-slate-100 flex items-center justify-center gap-2">
                     <BookOpen className="h-5 w-5 text-sunburst" />
-                    Why This Project Exists
+                    Forged Under Load
                   </h2>
                 </div>
                 
