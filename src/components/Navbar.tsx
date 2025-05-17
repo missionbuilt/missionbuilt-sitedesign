@@ -1,11 +1,12 @@
 
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import Logo from '@/components/Logo';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
 
   return (
     <header className="bg-white/90 dark:bg-slate/5 backdrop-blur-sm sticky top-0 z-10 border-b border-slate/10 dark:border-slate/20">
@@ -62,9 +63,9 @@ interface NavLinkProps {
 }
 
 const NavLink = ({ to, children, exact }: NavLinkProps) => {
-  // TODO: Replace with actual route matching logic once we have useLocation
-  const isActive = (exact && to === window.location.pathname) || 
-    (!exact && window.location.pathname.startsWith(to));
+  const location = useLocation();
+  const isActive = (exact && to === location.pathname) || 
+    (!exact && location.pathname.startsWith(to));
 
   return (
     <Link 
