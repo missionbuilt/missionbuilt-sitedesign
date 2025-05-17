@@ -28,9 +28,9 @@ const HeroSection = () => {
           <div className="flex justify-center mb-8">
             <div className="h-24 w-24 flex items-center justify-center">
               <img 
-                src="/lovable-uploads/dfd1484c-2dce-4c45-a3ef-e17eefa59dcc.png" 
+                src="/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png" 
                 alt="MissionBuilt Logo" 
-                className={`h-20 w-auto ${isDarkMode ? "brightness-90" : ""}`}
+                className="h-20 w-auto"
               />
             </div>
           </div>
