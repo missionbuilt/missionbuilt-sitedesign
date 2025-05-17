@@ -73,8 +73,31 @@ const Footer = () => {
           </div>
         </div>
         
+        {/* Creative Commons License */}
+        <div className="mt-8 pt-6 border-t border-slate/10 dark:border-slate/20 text-sm text-slate/70 dark:text-slate-400">
+          <div className="flex flex-col md:flex-row items-center gap-4">
+            <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+              <img 
+                alt="Creative Commons License" 
+                style={{ borderWidth: 0 }}
+                src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" 
+              />
+            </a>
+            <p>
+              This work is licensed under a{" "}
+              <a 
+                rel="license" 
+                href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
+                className="text-army hover:underline"
+              >
+                Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License
+              </a>.
+            </p>
+          </div>
+        </div>
+        
         {/* Copyright Bar */}
-        <div className="mt-10 pt-6 border-t border-slate/10 dark:border-slate/20">
+        <div className="mt-6 pt-6 border-t border-slate/10 dark:border-slate/20">
           <p className="text-sm text-slate/60 dark:text-slate-400 text-center">
             &copy; {currentYear} MissionBuilt.io. All rights reserved.
           </p>
