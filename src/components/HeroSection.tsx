@@ -36,11 +36,11 @@ const HeroSection = () => {
           </div>
           
           <h1 className="heading-lg mb-6">
-            [Main Title] <span className="text-sunburst font-bold">[Highlighted]</span> [More Title]
+            Product lessons through the lens of <span className="text-sunburst font-bold">powerlifting</span>.
           </h1>
           
           <p className="body-lg mb-10 max-w-2xl mx-auto">
-            [Main description paragraph goes here. This area contains your primary message to visitors.]
+            An open-source book about building products with relentless care and empathetic discipline.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
