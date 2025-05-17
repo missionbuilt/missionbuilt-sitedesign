@@ -113,7 +113,6 @@ const Privacy = () => {
               <div className="space-y-4">
                 <p className="mb-4">
                   Questions, concerns, or brilliant ideas?<br />
-                  Email: <a href="mailto:mike@missionbuilt.io" className="text-army hover:underline">mike@missionbuilt.io</a><br />
                   Bluesky: <a href="https://bsky.app/profile/missionbuilt.bsky.social" className="text-army hover:underline">missionbuilt.bsky.social</a>
                 </p>
               </div>
