@@ -21,7 +21,7 @@ const HeroSection = () => {
         </div>
 
         <div className="max-w-3xl mx-auto text-center">
-          <span className="inline-block px-4 py-1.5 bg-secondary dark:bg-secondary/30 text-slate dark:text-slate/90 rounded-full text-sm font-medium mb-6 shadow-sm">
+          <span className="inline-block px-4 py-1.5 bg-secondary dark:bg-secondary/30 text-slate dark:text-slate-100 rounded-full text-sm font-medium mb-6 shadow-sm">
             Product Management × Weightlifting × Strength
           </span>
           

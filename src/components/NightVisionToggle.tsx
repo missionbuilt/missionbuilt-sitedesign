@@ -26,10 +26,10 @@ const NightVisionToggle: React.FC<NightVisionToggleProps> = ({ className }) => {
       <Moon 
         className={cn(
           "h-4 w-4 transition-opacity",
-          isDarkMode ? "opacity-100" : "opacity-50"
+          isDarkMode ? "opacity-100 text-sunburst" : "opacity-50"
         )}
       />
-      <span className="text-sm font-medium">
+      <span className="text-sm font-medium dark:text-slate-200">
         Night Vision
       </span>
     </div>

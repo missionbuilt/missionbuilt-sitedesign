@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
@@ -7,14 +8,14 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="bg-white/90 backdrop-blur-sm sticky top-0 z-10 border-b border-slate/10">
+    <header className="bg-white/90 dark:bg-slate/5 backdrop-blur-sm sticky top-0 z-10 border-b border-slate/10 dark:border-slate/20">
       <div className="container-custom flex items-center justify-between py-4">
         {/* Logo with reverse color scheme (Mission in yellow, Built.io in army green) */}
         <Logo colorScheme="reverse" />
 
         {/* Mobile Menu Button */}
         <button 
-          className="p-2 rounded-md md:hidden text-slate hover:bg-slate/10"
+          className="p-2 rounded-md md:hidden text-slate hover:bg-slate/10 dark:text-slate-200 dark:hover:bg-slate/10"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
         >
           <svg 
@@ -42,7 +43,7 @@ const Navbar = () => {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="absolute top-full left-0 right-0 bg-white shadow-lg border-t border-slate/10 md:hidden py-2">
+          <div className="absolute top-full left-0 right-0 bg-white dark:bg-slate/10 shadow-lg border-t border-slate/10 dark:border-slate/20 md:hidden py-2">
             <nav className="flex flex-col">
               <MobileNavLink to="/" onClick={() => setIsMenuOpen(false)}>Garage</MobileNavLink>
               <MobileNavLink to="/field-notes" onClick={() => setIsMenuOpen(false)}>Field Notes</MobileNavLink>
@@ -87,7 +88,7 @@ const MobileNavLink = ({ to, children, onClick }: MobileNavLinkProps) => {
   return (
     <Link 
       to={to} 
-      className="text-slate px-4 py-3 block hover:bg-slate/10 transition-colors duration-200"
+      className="text-slate dark:text-slate-200 px-4 py-3 block hover:bg-slate/10 transition-colors duration-200"
       onClick={onClick}
     >
       {children}
