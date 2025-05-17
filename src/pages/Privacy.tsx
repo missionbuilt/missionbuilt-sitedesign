@@ -36,7 +36,7 @@ const Privacy = () => {
             </p>
             
             <section className="mb-12">
-              <h2 className="text-2xl font-bold mb-4">1. Open and Free, But With Boundaries</h2>
+              <h2 className="text-2xl font-bold mb-4">1. Use Freely, Attribute Kindly</h2>
               <p className="mb-6">
                 The content here, including blog posts, articles, and the open-source book "The Unity of Product & Power", is shared under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
               </p>
