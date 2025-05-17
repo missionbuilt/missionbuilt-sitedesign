@@ -37,6 +37,8 @@ const Navbar = () => {
         <nav className="hidden md:flex items-center space-x-1">
           <NavLink to="/" exact>Garage</NavLink>
           <NavLink to="/field-notes">Field Notes</NavLink>
+          <NavLink to="/training">Training</NavLink>
+          <NavLink to="/pr-board">PR Board</NavLink>
         </nav>
 
         {/* Mobile Navigation */}
@@ -45,6 +47,8 @@ const Navbar = () => {
             <nav className="flex flex-col">
               <MobileNavLink to="/" onClick={() => setIsMenuOpen(false)}>Garage</MobileNavLink>
               <MobileNavLink to="/field-notes" onClick={() => setIsMenuOpen(false)}>Field Notes</MobileNavLink>
+              <MobileNavLink to="/training" onClick={() => setIsMenuOpen(false)}>Training</MobileNavLink>
+              <MobileNavLink to="/pr-board" onClick={() => setIsMenuOpen(false)}>PR Board</MobileNavLink>
             </nav>
           </div>
         )}

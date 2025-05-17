@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <footer className="bg-slate/5 dark:bg-slate/10 border-t border-slate/10 dark:border-slate/20 py-10 mt-20">
       <div className="container-custom">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Logo and Tagline */}
           <div className="md:col-span-1">
             <Logo size="md" colorScheme="monochrome" />
@@ -20,6 +20,7 @@ const Footer = () => {
             <h3 className="font-display font-semibold mb-3 text-slate dark:text-slate-100">Explore</h3>
             <ul className="space-y-2 text-sm">
               <li><Link to="/field-notes" className="text-slate/80 dark:text-slate-300 hover:text-army dark:hover:text-army transition-colors">Field Notes</Link></li>
+              <li><Link to="/pr-board" className="text-slate/80 dark:text-slate-300 hover:text-army dark:hover:text-army transition-colors">PR Board</Link></li>
             </ul>
           </div>
           
@@ -32,6 +33,29 @@ const Footer = () => {
               <li><a href="#" className="text-slate/80 dark:text-slate-300 hover:text-army dark:hover:text-army transition-colors">Instagram</a></li>
               <li><a href="mailto:hello@missionbuilt.io" className="text-slate/80 dark:text-slate-300 hover:text-army dark:hover:text-army transition-colors">Email</a></li>
             </ul>
+          </div>
+          
+          {/* Newsletter */}
+          <div>
+            <h3 className="font-display font-semibold mb-3 text-slate dark:text-slate-100">Newsletter</h3>
+            <p className="text-sm text-slate/80 dark:text-slate-300 mb-3">Get the latest insights straight to your inbox.</p>
+            <form className="flex">
+              <input 
+                type="email" 
+                placeholder="Your email" 
+                className="w-full px-3 py-2 rounded-l-lg border border-slate/20 dark:border-slate/30 dark:bg-slate/20 focus:outline-none focus:ring-1 focus:ring-army text-sm dark:text-slate-100 dark:placeholder-slate-400"
+                required
+              />
+              <button 
+                type="submit" 
+                className="bg-army text-white px-3 py-2 rounded-r-lg hover:bg-army/90 transition-colors"
+              >
+                <span className="sr-only">Subscribe</span>
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                </svg>
+              </button>
+            </form>
           </div>
         </div>
         
