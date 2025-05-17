@@ -1,7 +1,7 @@
 
 import { Link } from 'react-router-dom';
 import Logo from '@/components/Logo';
-import { Facebook, Instagram, Twitter, Mail } from 'lucide-react';
+import { Facebook, Instagram, Bluesky, Mail } from 'lucide-react';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -28,9 +28,9 @@ const Footer = () => {
                 <Instagram className="h-5 w-5" />
                 <span className="sr-only">Instagram</span>
               </a>
-              <a href="#" className="text-slate/70 hover:text-army dark:text-slate-400 dark:hover:text-army transition-colors">
-                <Twitter className="h-5 w-5" />
-                <span className="sr-only">Twitter</span>
+              <a href="https://bsky.app/profile/missionbuilt.bsky.social" className="text-slate/70 hover:text-army dark:text-slate-400 dark:hover:text-army transition-colors">
+                <Bluesky className="h-5 w-5" />
+                <span className="sr-only">Bluesky</span>
               </a>
               <a href="mailto:hello@example.com" className="text-slate/70 hover:text-army dark:text-slate-400 dark:hover:text-army transition-colors">
                 <Mail className="h-5 w-5" />
