@@ -23,6 +23,10 @@ interface LogoProps {
    * Whether to show the text (MissionBuilt.io)
    */
   showText?: boolean;
+  /**
+   * Color scheme for the logo text
+   */
+  colorScheme?: 'default' | 'monochrome' | 'subtle';
 }
 
 const Logo = ({ 
@@ -30,7 +34,8 @@ const Logo = ({
   asLink = true, 
   className,
   showImage = true,
-  showText = true
+  showText = true,
+  colorScheme = 'default'
 }: LogoProps) => {
   // Size classes based on variant
   const sizeClasses = {
@@ -46,6 +51,31 @@ const Logo = ({
     lg: "h-10"
   };
 
+  // Color schemes for the text portion
+  const colorSchemes = {
+    // Original color scheme (Mission: slate, Built: sunburst, .io: army)
+    default: {
+      mission: "text-slate",
+      built: "text-sunburst",
+      domain: "text-army"
+    },
+    // All text in slate color for a cleaner look
+    monochrome: {
+      mission: "text-slate",
+      built: "text-slate",
+      domain: "text-slate"
+    },
+    // Subtle two-color approach (Mission+Built: slate, .io: army)
+    subtle: {
+      mission: "text-slate",
+      built: "text-slate",
+      domain: "text-army"
+    }
+  };
+  
+  // Get the selected color scheme
+  const colors = colorSchemes[colorScheme];
+
   const logoContent = (
     <span className={cn(
       "font-display font-semibold inline-flex items-center gap-1.5",
@@ -60,7 +90,11 @@ const Logo = ({
         />
       )}
       {showText && (
-        <span className="font-display">Mission<span className="text-sunburst">Built</span><span className="text-army">.io</span></span>
+        <span className="font-display">
+          <span className={colors.mission}>Mission</span>
+          <span className={colors.built}>Built</span>
+          <span className={colors.domain}>.io</span>
+        </span>
       )}
     </span>
   );

@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
@@ -9,8 +10,8 @@ const Navbar = () => {
   return (
     <header className="bg-white/90 backdrop-blur-sm sticky top-0 z-10 border-b border-slate/10">
       <div className="container-custom flex items-center justify-between py-4">
-        {/* Logo */}
-        <Logo />
+        {/* Logo with subtle color scheme */}
+        <Logo colorScheme="subtle" />
 
         {/* Mobile Menu Button */}
         <button 

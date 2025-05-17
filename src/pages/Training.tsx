@@ -30,21 +30,45 @@ const Training = () => {
               
               {/* Complete Logo (Image + Text) */}
               <div className="mb-10">
-                <h3 className="body font-semibold mb-6 text-slate/70">Complete Logo (Image + Text)</h3>
+                <h3 className="body font-semibold mb-6 text-slate/70">Complete Logo (Image + Text) with Color Schemes</h3>
+                
+                <div className="space-y-8">
+                  <div className="p-6 bg-white rounded-lg shadow-sm">
+                    <h4 className="text-sm text-slate/60 mb-3">Default Color Scheme</h4>
+                    <Logo size="md" asLink={false} colorScheme="default" />
+                  </div>
+                  
+                  <div className="p-6 bg-white rounded-lg shadow-sm">
+                    <h4 className="text-sm text-slate/60 mb-3">Subtle Color Scheme</h4>
+                    <Logo size="md" asLink={false} colorScheme="subtle" />
+                  </div>
+                  
+                  <div className="p-6 bg-white rounded-lg shadow-sm">
+                    <h4 className="text-sm text-slate/60 mb-3">Monochrome Color Scheme</h4>
+                    <Logo size="md" asLink={false} colorScheme="monochrome" />
+                  </div>
+                </div>
+              </div>
+              
+              <Separator className="my-10" />
+              
+              {/* Different Sizes */}
+              <div className="mb-10">
+                <h3 className="body font-semibold mb-6 text-slate/70">Sizes (Using Subtle Color Scheme)</h3>
                 <div className="space-y-8">
                   <div className="p-6 bg-white rounded-lg shadow-sm">
                     <h4 className="text-sm text-slate/60 mb-3">Small</h4>
-                    <Logo size="sm" asLink={false} showImage={true} showText={true} />
+                    <Logo size="sm" asLink={false} colorScheme="subtle" />
                   </div>
                   
                   <div className="p-6 bg-white rounded-lg shadow-sm">
                     <h4 className="text-sm text-slate/60 mb-3">Medium (Default)</h4>
-                    <Logo size="md" asLink={false} showImage={true} showText={true} />
+                    <Logo size="md" asLink={false} colorScheme="subtle" />
                   </div>
                   
                   <div className="p-6 bg-white rounded-lg shadow-sm">
                     <h4 className="text-sm text-slate/60 mb-3">Large</h4>
-                    <Logo size="lg" asLink={false} showImage={true} showText={true} />
+                    <Logo size="lg" asLink={false} colorScheme="subtle" />
                   </div>
                 </div>
               </div>
@@ -76,21 +100,21 @@ const Training = () => {
               
               {/* Logo Text Only */}
               <div>
-                <h3 className="body font-semibold mb-6 text-slate/70">Logo Text Only (MissionBuilt.io)</h3>
+                <h3 className="body font-semibold mb-6 text-slate/70">Logo Text Only with Different Color Schemes</h3>
                 <div className="space-y-8">
                   <div className="p-6 bg-white rounded-lg shadow-sm">
-                    <h4 className="text-sm text-slate/60 mb-3">Small</h4>
-                    <Logo size="sm" asLink={false} showImage={false} showText={true} />
+                    <h4 className="text-sm text-slate/60 mb-3">Default Color Scheme</h4>
+                    <Logo size="md" asLink={false} showImage={false} showText={true} colorScheme="default" />
                   </div>
                   
                   <div className="p-6 bg-white rounded-lg shadow-sm">
-                    <h4 className="text-sm text-slate/60 mb-3">Medium</h4>
-                    <Logo size="md" asLink={false} showImage={false} showText={true} />
+                    <h4 className="text-sm text-slate/60 mb-3">Subtle Color Scheme</h4>
+                    <Logo size="md" asLink={false} showImage={false} showText={true} colorScheme="subtle" />
                   </div>
                   
                   <div className="p-6 bg-white rounded-lg shadow-sm">
-                    <h4 className="text-sm text-slate/60 mb-3">Large</h4>
-                    <Logo size="lg" asLink={false} showImage={false} showText={true} />
+                    <h4 className="text-sm text-slate/60 mb-3">Monochrome Color Scheme</h4>
+                    <Logo size="md" asLink={false} showImage={false} showText={true} colorScheme="monochrome" />
                   </div>
                 </div>
               </div>

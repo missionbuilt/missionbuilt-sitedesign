@@ -1,5 +1,5 @@
-
 import { Link } from 'react-router-dom';
+import Logo from '@/components/Logo';
 
 const Footer = () => {
   return (
@@ -8,14 +8,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Logo and Tagline */}
           <div className="md:col-span-1">
-            <Link to="/" className="flex items-center space-x-2">
-              <img 
-                src="/lovable-uploads/dfd1484c-2dce-4c45-a3ef-e17eefa59dcc.png" 
-                alt="MissionBuilt Logo" 
-                className="h-10 w-auto mix-blend-multiply"
-              />
-              <span className="font-display font-semibold text-lg text-slate">MissionBuilt<span className="text-army">.io</span></span>
-            </Link>
+            <Logo size="md" colorScheme="monochrome" />
             <p className="mt-3 text-sm text-slate/80">
               Uniting product passion and weightlifting philosophy for balanced growth.
             </p>
