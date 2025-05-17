@@ -1,30 +1,30 @@
 
 import BlogCard from './BlogCard';
 
-// Sample blog post data
+// Updated blog post data to match the new theme
 const featuredPosts = [
   {
-    title: "The Product Manager's Journey: From Vision to Reality",
-    excerpt: "How the journey of building great products mirrors the discipline required in strength training.",
+    title: "From Battlefield to Boardroom: Leadership Lessons",
+    excerpt: "How military leadership principles translate to effective product management and team leadership in tech.",
     date: "May 10, 2023",
-    category: "Product Philosophy",
-    slug: "product-managers-journey",
+    category: "Leadership",
+    slug: "battlefield-to-boardroom",
     image: "/placeholder.svg"
   },
   {
-    title: "Principles of Progressive Overload in Product Development",
-    excerpt: "Applying weightlifting's core principle to incrementally improve your products over time.",
+    title: "Building Strength Through Adversity",
+    excerpt: "Developing mental and physical resilience through consistent training and embracing challenges.",
     date: "April 28, 2023",
-    category: "Growth",
-    slug: "progressive-overload-principle",
+    category: "Personal Growth",
+    slug: "strength-through-adversity",
     image: "/placeholder.svg"
   },
   {
-    title: "Building Resilience: Mental Models for Product Teams",
-    excerpt: "How the mental toughness developed in weightlifting can help product teams overcome challenges.",
+    title: "Mission-Driven Product Development",
+    excerpt: "How to align your product strategy with a clear mission that inspires both your team and users.",
     date: "April 15, 2023",
-    category: "Team Building",
-    slug: "building-resilience",
+    category: "Product Strategy",
+    slug: "mission-driven-products",
     image: "/placeholder.svg"
   }
 ];
@@ -34,9 +34,9 @@ const FeaturedPosts = () => {
     <section className="py-16">
       <div className="container-custom">
         <div className="flex flex-col md:flex-row justify-between items-baseline mb-10">
-          <h2 className="heading-md text-slate mb-4 md:mb-0">Featured Articles</h2>
-          <a href="/blog" className="text-steel font-medium flex items-center group">
-            View all posts
+          <h2 className="heading-md text-slate dark:text-slate-100 mb-4 md:mb-0">Field Notes</h2>
+          <a href="/field-notes" className="text-steel dark:text-slate-100 font-medium flex items-center group">
+            View all notes
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>
@@ -57,13 +57,13 @@ const FeaturedPosts = () => {
             <div className="rounded-xl overflow-hidden bg-gradient-to-br from-slate to-steel text-white shadow-sm card-hover">
               <div className="p-6 h-full flex flex-col">
                 <h3 className="heading-sm mb-4 text-white font-bold drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]">
-                  The Mind-Body Connection
+                  Leadership Philosophy
                 </h3>
                 <p className="mb-6 flex-grow">
-                  Discover how the discipline of weightlifting enhances product thinking, and how product philosophy improves physical training.
+                  Discover how military discipline and strategic thinking enhance product leadership, and how mission-driven values improve team performance.
                 </p>
                 <a href="/philosophy" className="inline-flex items-center text-white font-medium group">
-                  Explore the philosophy
+                  Explore my philosophy
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                   </svg>

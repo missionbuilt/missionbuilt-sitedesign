@@ -22,7 +22,7 @@ const HeroSection = () => {
 
         <div className="max-w-3xl mx-auto text-center">
           <span className="inline-block px-4 py-1.5 bg-secondary dark:bg-secondary/30 text-slate dark:text-slate-100 rounded-full text-sm font-medium mb-6 shadow-sm">
-            Product Management × Weightlifting × Strength
+            Product Leadership × Strength Training × Personal Growth
           </span>
           
           <div className="flex justify-center mb-8">
@@ -36,20 +36,20 @@ const HeroSection = () => {
           </div>
           
           <h1 className="heading-lg mb-6">
-            Building Products with <span className="text-sunburst font-bold">Purpose</span> and <span className="text-sunburst font-bold">Strength</span>
+            Building <span className="text-sunburst font-bold">Products</span> and <span className="text-sunburst font-bold">Strength</span> with Purpose
           </h1>
           
           <p className="body-lg mb-10 max-w-2xl mx-auto">
-            Exploring the intersection of product management methodology and the discipline of weightlifting. 
-            Both require vision, persistence, and a growth mindset.
+            Explore the powerful connections between product leadership principles and strength training methodologies.
+            Both domains require vision, consistency, and a growth mindset.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a href="/field-notes" className="btn-army">
-              Field Notes
+              Read Field Notes
             </a>
-            <a href="/pr-board" className="btn-secondary">
-              PR Board
+            <a href="/training" className="btn-secondary">
+              Training Logs
             </a>
           </div>
         </div>
