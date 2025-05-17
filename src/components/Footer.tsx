@@ -26,6 +26,13 @@ const Footer = () => {
               Building better products, one rep at a time.
             </p>
             
+            {/* Motto */}
+            <div className="mb-6">
+              <p className="font-display text-sunburst font-semibold italic text-xl">
+                "give a shit"
+              </p>
+            </div>
+            
             {/* Social Icons */}
             <div className="flex gap-4 mt-4 mb-6 md:mb-0">
               {/* Bluesky Icon */}
