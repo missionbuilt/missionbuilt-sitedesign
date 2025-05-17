@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
@@ -129,7 +130,7 @@ const AboutMe = () => {
               </Card>
             </div>
             
-            {/* Project Purpose Section - ADDED NEW SECTION */}
+            {/* Project Purpose Section */}
             <div className="mb-16">
               <Card className="bg-gradient-to-br from-army/5 to-slate/5 hover:shadow-md transition-shadow duration-300 border border-slate/10">
                 <CardContent className="p-8">
@@ -164,56 +165,8 @@ const AboutMe = () => {
               </Card>
             </div>
             
-            {/* Core Principles Section */}
+            {/* Embracing AI Section */}
             <div className="mb-16">
-              <h3 className="text-2xl font-semibold mb-6 text-center">Core Principles</h3>
-              <div className="grid md:grid-cols-3 gap-6">
-                <Card className="bg-card hover:shadow-md transition-shadow duration-300 border border-slate/10">
-                  <CardContent className="pt-6">
-                    <div className="flex justify-center mb-4">
-                      <div className="p-3 bg-army/10 rounded-full">
-                        <Target className="h-8 w-8 text-army" />
-                      </div>
-                    </div>
-                    <h4 className="text-xl font-semibold mb-2 text-center">Mission First</h4>
-                    <p className="text-slate dark:text-slate-200 text-center">
-                      Clarify your purpose and let it guide every decision, every rep, every day.
-                    </p>
-                  </CardContent>
-                </Card>
-                
-                <Card className="bg-card hover:shadow-md transition-shadow duration-300 border border-slate/10">
-                  <CardContent className="pt-6">
-                    <div className="flex justify-center mb-4">
-                      <div className="p-3 bg-army/10 rounded-full">
-                        <Award className="h-8 w-8 text-army" />
-                      </div>
-                    </div>
-                    <h4 className="text-xl font-semibold mb-2 text-center">Progressive Overload</h4>
-                    <p className="text-slate dark:text-slate-200 text-center">
-                      Embrace consistent, incremental challenges to build strength in all areas of life.
-                    </p>
-                  </CardContent>
-                </Card>
-                
-                <Card className="bg-card hover:shadow-md transition-shadow duration-300 border border-slate/10">
-                  <CardContent className="pt-6">
-                    <div className="flex justify-center mb-4">
-                      <div className="p-3 bg-army/10 rounded-full">
-                        <Users className="h-8 w-8 text-army" />
-                      </div>
-                    </div>
-                    <h4 className="text-xl font-semibold mb-2 text-center">Community Power</h4>
-                    <p className="text-slate dark:text-slate-200 text-center">
-                      Surround yourself with people who push you, support you, and hold you accountable.
-                    </p>
-                  </CardContent>
-                </Card>
-              </div>
-            </div>
-            
-            {/* Embracing AI Section - NEW SECTION */}
-            <div className="mb-16 mt-16">
               <h3 className="text-2xl font-semibold mb-6 text-center">Embracing AI</h3>
               <Card className="bg-gradient-to-br from-steel/5 to-slate/5 hover:shadow-md transition-shadow duration-300 border border-slate/10">
                 <CardContent className="p-8">
@@ -244,23 +197,10 @@ const AboutMe = () => {
               </Card>
             </div>
             
-            {/* Added Author's Note Section */}
-            <div>
-              <h3 className="text-2xl font-semibold mb-4 text-center">Author's Note</h3>
-              <Card className="bg-slate/5 dark:bg-slate/10 border border-slate/10">
-                <CardContent className="pt-6">
-                  <p className="text-slate dark:text-slate-200 italic">
-                    "This book came from years of learning that the strength we build under the bar translates to every area of our lives. The discipline, the focus, the willingness to put in the work when no one is watching—these are the same qualities that build extraordinary leaders and resilient humans. MissionBuilt isn't just about lifting more weight; it's about creating a foundation for a more purposeful life."
-                  </p>
-                  <p className="text-right mt-4 font-semibold">- Mike</p>
-                </CardContent>
-              </Card>
-              
-              <div className="text-center mt-10">
-                <Button className="bg-army hover:bg-army/90 text-white">
-                  Join the Waiting List
-                </Button>
-              </div>
+            <div className="text-center mt-10">
+              <Button className="bg-army hover:bg-army/90 text-white">
+                Join the Waiting List
+              </Button>
             </div>
           </div>
         </div>
