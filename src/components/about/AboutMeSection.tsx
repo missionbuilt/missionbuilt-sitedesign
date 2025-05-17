@@ -3,7 +3,7 @@ import React from "react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Mail, Linkedin, Instagram, Github } from "lucide-react";
+import { Mail, Linkedin, Github } from "lucide-react";
 
 const AboutMeSection = () => {
   return (
@@ -61,10 +61,6 @@ const AboutMeSection = () => {
         <Button variant="ghost" size="sm" className="flex items-center gap-1">
           <Linkedin className="h-4 w-4" />
           <span>LinkedIn</span>
-        </Button>
-        <Button variant="ghost" size="sm" className="flex items-center gap-1">
-          <Instagram className="h-4 w-4" />
-          <span>Instagram</span>
         </Button>
         <Button variant="ghost" size="sm" className="flex items-center gap-1">
           <Github className="h-4 w-4" />
