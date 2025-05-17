@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
@@ -85,7 +86,7 @@ const ChapterCard: React.FC<ChapterCardProps> = ({ chapter }) => {
         <div className="flex items-center justify-between mt-auto pt-4 border-t border-slate/10">
           <div className="flex items-center text-sm text-muted-foreground">
             <Book className="mr-2 h-4 w-4" />
-            <span>Chapter {chapter.id}</span>
+            <span>Log {chapter.id}</span>
           </div>
           <div className={cn(
             "inline-flex items-center text-sm font-medium",
@@ -94,7 +95,7 @@ const ChapterCard: React.FC<ChapterCardProps> = ({ chapter }) => {
               : "opacity-50 cursor-not-allowed text-slate-500"
           )}>
             {chapter.status === "in-progress" ? (
-              <>Read Chapter <Book className="ml-1 h-4 w-4" /></>
+              <>Read Log <Book className="ml-1 h-4 w-4" /></>
             ) : (
               <>404 Gains Not Found <X className="ml-1 h-4 w-4" /></>
             )}
