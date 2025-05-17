@@ -17,13 +17,13 @@ const AboutMe = () => {
           <div className="text-center mb-10">
             <h1 className="text-4xl font-bold mb-4">About Me</h1>
             <p className="text-muted-foreground">
-              The person behind Forged Under Load
+              The person behind MissionBuilt
             </p>
           </div>
 
           <div className="flex flex-col items-center space-y-8">
             <Avatar className="w-40 h-40 border-4 border-primary/10">
-              <AvatarFallback className="text-5xl">FUL</AvatarFallback>
+              <AvatarFallback className="text-5xl">MB</AvatarFallback>
             </Avatar>
 
             <Card className="w-full bg-card shadow-md border border-slate/10">
