@@ -87,6 +87,13 @@ const Privacy = () => {
               </p>
             </section>
             
+            <section className="mb-12">
+              <h2 className="text-2xl font-bold mb-4">6. This May Change</h2>
+              <p className="mb-6">
+                This project is alive — just like you. Terms may be updated occasionally. We'll timestamp the latest version. Keep checking back if that matters to you.
+              </p>
+            </section>
+            
             {/* Additional content can be added here by the user later */}
           </div>
         </div>
