@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
@@ -155,7 +154,7 @@ const Chapters = () => {
           <div className="mb-10 text-center">
             <h1 className="text-4xl font-bold mb-4">Training Logs</h1>
             <p className="text-muted-foreground">
-              The complete guide to strength, leadership, and personal growth.
+              Lift Heavy. Lead Strong. One Rep, One Release at a Time.
             </p>
           </div>
 
