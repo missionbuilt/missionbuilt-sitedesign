@@ -86,23 +86,14 @@ const AboutSection = () => {
               ))}
             </div>
             
-            <div className="grid grid-cols-2 gap-4 mb-8 mt-8">
-              <div className="bg-white dark:bg-slate/20 p-4 rounded-lg shadow-sm border border-slate/10 dark:border-slate/20">
-                <div className="font-display font-semibold text-2xl text-steel dark:text-slate-100 mb-1">🧠</div>
-                <div className="text-sm text-slate/70 dark:text-slate-300">User Mission Method</div>
-              </div>
-              <div className="bg-white dark:bg-slate/20 p-4 rounded-lg shadow-sm border border-slate/10 dark:border-slate/20">
-                <div className="font-display font-semibold text-2xl text-steel dark:text-slate-100 mb-1">🏋️‍♂️</div>
-                <div className="text-sm text-slate/70 dark:text-slate-300">Purpose & Discipline</div>
-              </div>
+            <div className="mt-8">
+              <a href="/field-notes" className="btn-army inline-flex items-center">
+                Read My Story
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </a>
             </div>
-            
-            <a href="/field-notes" className="btn-army inline-flex items-center">
-              Read My Story
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
-            </a>
           </div>
         </div>
       </div>
