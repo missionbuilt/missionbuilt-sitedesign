@@ -2,8 +2,12 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { format } from 'date-fns';
 
 const Privacy = () => {
+  // Format today's date as Month Day, Year (e.g. May 17, 2025)
+  const formattedDate = format(new Date(), 'MMMM d, yyyy');
+  
   return (
     <>
       <Helmet>
@@ -19,7 +23,7 @@ const Privacy = () => {
           
           <div className="prose prose-slate dark:prose-invert max-w-none">
             <p className="text-slate/60 dark:text-slate-400 mb-8">
-              Last updated: [Insert Date]
+              Last updated: {formattedDate}
             </p>
 
             <p className="mb-6">
