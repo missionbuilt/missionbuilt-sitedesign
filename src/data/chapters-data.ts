@@ -1,11 +1,10 @@
-
 // Chapter data structure
 export interface Chapter {
   id: number;
   title: string;
   description: string;
   slug: string;
-  status: "in-progress";
+  status: "in-progress" | "coming-soon" | "not-started";
 }
 
 // Chapter data
@@ -22,7 +21,7 @@ export const chapters: Chapter[] = [
     title: "Built Through Reps",
     description: "Greatness isn't born; it's built — one rep, one iteration at a time. Whether it's product iteration or lifting volume, this chapter highlights how repeated effort compounds into capability.",
     slug: "built-through-reps",
-    status: "in-progress"
+    status: "coming-soon"
   },
   {
     id: 3,
@@ -99,27 +98,27 @@ export const chapters: Chapter[] = [
     title: "Deload Doesn't Mean Quit",
     description: "Strategic recovery as a path to longevity in product and power.",
     slug: "deload-doesnt-mean-quit",
-    status: "in-progress"
+    status: "coming-soon"
   },
   {
     id: 14,
     title: "Burn the Roadmap (and Rewrite It With the User)",
     description: "Kill the fake plans. Design with real feedback.",
     slug: "burn-the-roadmap",
-    status: "in-progress"
+    status: "not-started"
   },
   {
     id: 15,
     title: "Lift Loud, Ship Quiet",
     description: "Let your impact speak louder than your promises.",
     slug: "lift-loud-ship-quiet",
-    status: "in-progress"
+    status: "not-started"
   },
   {
     id: 16,
     title: "Conclusion: Giving a Shit Works",
     description: "Caring deeply isn't soft — it's the sharpest edge you have. Anonymized stories of success where relentless care — for users, teammates, and the mission — made the difference.",
     slug: "giving-a-shit-works",
-    status: "in-progress"
+    status: "not-started"
   }
 ];
