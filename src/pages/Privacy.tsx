@@ -31,6 +31,22 @@ const Privacy = () => {
               By accessing or using this site, you agree to the following terms. If you don't agree, that's okay — but please don't use the site.
             </p>
             
+            <section className="mb-12">
+              <h2 className="text-2xl font-bold mb-4">1. Open and Free, But With Boundaries</h2>
+              <p className="mb-6">
+                The content here, including blog posts, articles, and the open-source book "The Unity of Product & Power", is shared under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
+              </p>
+              
+              <p className="mb-6">
+                <strong>In short:</strong><br />
+                You're welcome to read, share, and remix the content — just don't sell it, and please give credit. If you build upon it, share it under the same license. A link back is love.
+              </p>
+              
+              <p className="mb-6">
+                More info on the license: <a href="https://creativecommons.org/licenses/by-nc-sa/4.0" target="_blank" rel="noopener noreferrer" className="text-army hover:underline">creativecommons.org/licenses/by-nc-sa/4.0</a>
+              </p>
+            </section>
+            
             {/* Additional content can be added here by the user later */}
           </div>
         </div>
