@@ -35,7 +35,7 @@ const Navbar = () => {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-1">
-          <NavLink to="/" exact>Forged Under Load</NavLink>
+          <NavLink to="/" exact>The Mission</NavLink>
           <NavLink to="/field-notes">Page 1</NavLink>
           <NavLink to="/training">Page 2</NavLink>
           <NavLink to="/chapters">Chapters</NavLink>
@@ -46,7 +46,7 @@ const Navbar = () => {
         {isMenuOpen && (
           <div className="absolute top-full left-0 right-0 bg-white dark:bg-slate/10 shadow-lg border-t border-slate/10 dark:border-slate/20 md:hidden py-2">
             <nav className="flex flex-col">
-              <MobileNavLink to="/" onClick={() => setIsMenuOpen(false)}>Forged Under Load</MobileNavLink>
+              <MobileNavLink to="/" onClick={() => setIsMenuOpen(false)}>The Mission</MobileNavLink>
               <MobileNavLink to="/field-notes" onClick={() => setIsMenuOpen(false)}>Page 1</MobileNavLink>
               <MobileNavLink to="/training" onClick={() => setIsMenuOpen(false)}>Page 2</MobileNavLink>
               <MobileNavLink to="/chapters" onClick={() => setIsMenuOpen(false)}>Chapters</MobileNavLink>
