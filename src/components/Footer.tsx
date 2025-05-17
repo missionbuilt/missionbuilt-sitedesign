@@ -1,6 +1,7 @@
 
 import { Link } from 'react-router-dom';
 import Logo from '@/components/Logo';
+import { Heart } from "lucide-react";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -73,6 +74,18 @@ const Footer = () => {
                 </li>
               </ul>
             </div>
+          </div>
+        </div>
+        
+        {/* Made with Lovable Section */}
+        <div className="mt-10 py-6 border-t border-slate/10 dark:border-slate/20">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-3 bg-slate/5 dark:bg-slate/10 py-4 px-6 rounded-xl">
+            <p className="text-sm text-slate/80 dark:text-slate-300 font-medium">Made with</p>
+            <div className="flex items-center">
+              <Heart className="h-5 w-5 text-army mr-1 animate-pulse" />
+              <span className="font-display font-semibold text-army">Lovable</span>
+            </div>
+            <p className="text-sm text-slate/80 dark:text-slate-300">— celebrating the joy of AI-assisted development</p>
           </div>
         </div>
         
