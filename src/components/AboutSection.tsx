@@ -20,7 +20,7 @@ const AboutSection = () => {
           {/* Content column */}
           <div>
             <span className="inline-block px-3 py-1 bg-secondary text-slate/80 rounded-full text-sm font-medium mb-4">
-              About MissionBuilt.io
+              MissionBuilt.io Garage
             </span>
             
             <h2 className="heading-md text-slate mb-6">
@@ -49,8 +49,8 @@ const AboutSection = () => {
               </div>
             </div>
             
-            <a href="/about" className="btn-primary inline-flex items-center">
-              Learn More
+            <a href="/pr-board" className="btn-primary inline-flex items-center">
+              View PR Board
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>

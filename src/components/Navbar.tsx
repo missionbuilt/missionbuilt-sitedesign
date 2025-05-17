@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
@@ -35,22 +34,20 @@ const Navbar = () => {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-1">
-          <NavLink to="/" exact>Home</NavLink>
-          <NavLink to="/blog">Blog</NavLink>
-          <NavLink to="/philosophy">Philosophy</NavLink>
+          <NavLink to="/" exact>Garage</NavLink>
+          <NavLink to="/field-notes">Field Notes</NavLink>
           <NavLink to="/training">Training</NavLink>
-          <NavLink to="/about">About</NavLink>
+          <NavLink to="/pr-board">PR Board</NavLink>
         </nav>
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
           <div className="absolute top-full left-0 right-0 bg-white shadow-lg border-t border-slate/10 md:hidden py-2">
             <nav className="flex flex-col">
-              <MobileNavLink to="/" onClick={() => setIsMenuOpen(false)}>Home</MobileNavLink>
-              <MobileNavLink to="/blog" onClick={() => setIsMenuOpen(false)}>Blog</MobileNavLink>
-              <MobileNavLink to="/philosophy" onClick={() => setIsMenuOpen(false)}>Philosophy</MobileNavLink>
+              <MobileNavLink to="/" onClick={() => setIsMenuOpen(false)}>Garage</MobileNavLink>
+              <MobileNavLink to="/field-notes" onClick={() => setIsMenuOpen(false)}>Field Notes</MobileNavLink>
               <MobileNavLink to="/training" onClick={() => setIsMenuOpen(false)}>Training</MobileNavLink>
-              <MobileNavLink to="/about" onClick={() => setIsMenuOpen(false)}>About</MobileNavLink>
+              <MobileNavLink to="/pr-board" onClick={() => setIsMenuOpen(false)}>PR Board</MobileNavLink>
             </nav>
           </div>
         )}

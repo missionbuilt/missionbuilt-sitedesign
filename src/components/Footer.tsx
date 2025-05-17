@@ -1,3 +1,4 @@
+
 import { Link } from 'react-router-dom';
 import Logo from '@/components/Logo';
 
@@ -18,10 +19,9 @@ const Footer = () => {
           <div>
             <h3 className="font-display font-semibold mb-3 text-slate">Explore</h3>
             <ul className="space-y-2 text-sm">
-              <li><Link to="/blog" className="text-slate/80 hover:text-army transition-colors">Blog</Link></li>
-              <li><Link to="/philosophy" className="text-slate/80 hover:text-army transition-colors">Philosophy</Link></li>
+              <li><Link to="/field-notes" className="text-slate/80 hover:text-army transition-colors">Field Notes</Link></li>
               <li><Link to="/training" className="text-slate/80 hover:text-army transition-colors">Training</Link></li>
-              <li><Link to="/about" className="text-slate/80 hover:text-army transition-colors">About</Link></li>
+              <li><Link to="/pr-board" className="text-slate/80 hover:text-army transition-colors">PR Board</Link></li>
             </ul>
           </div>
           

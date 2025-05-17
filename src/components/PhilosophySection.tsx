@@ -4,7 +4,7 @@ const PhilosophySection = () => {
     <section className="py-16">
       <div className="container-custom">
         <div className="text-center mb-12">
-          <h2 className="heading-md text-slate mb-4">Core Philosophy</h2>
+          <h2 className="heading-md text-slate mb-4">Core Principles</h2>
           <p className="text-slate/80 max-w-2xl mx-auto">
             The principles that guide both product development and strength training are remarkably similar.
             Here are the foundational ideas that shape my approach to both disciplines.
@@ -56,8 +56,8 @@ const PhilosophySection = () => {
         </div>
         
         <div className="mt-10 text-center">
-          <a href="/philosophy" className="btn-secondary inline-flex items-center">
-            Explore Full Philosophy
+          <a href="/field-notes" className="btn-secondary inline-flex items-center">
+            Read Field Notes
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>

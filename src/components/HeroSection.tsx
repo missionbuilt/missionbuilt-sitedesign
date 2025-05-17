@@ -11,7 +11,7 @@ const HeroSection = () => {
       <div className="container-custom relative">
         <div className="max-w-3xl mx-auto text-center">
           <span className="inline-block px-4 py-1.5 bg-secondary text-slate rounded-full text-sm font-medium mb-6 shadow-sm">
-            Philosophy × Product Management × Weightlifting
+            Product Management × Weightlifting × Strength
           </span>
           
           <div className="flex justify-center mb-8">
@@ -27,16 +27,16 @@ const HeroSection = () => {
           </h1>
           
           <p className="body-lg mb-10 max-w-2xl mx-auto">
-            Exploring the intersection of product management philosophy and the discipline of weightlifting. 
+            Exploring the intersection of product management methodology and the discipline of weightlifting. 
             Both require vision, persistence, and a growth mindset.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="/blog" className="btn-army">
-              Read the Blog
+            <a href="/field-notes" className="btn-army">
+              Field Notes
             </a>
-            <a href="/about" className="btn-secondary">
-              Learn My Story
+            <a href="/pr-board" className="btn-secondary">
+              PR Board
             </a>
           </div>
         </div>
