@@ -34,8 +34,8 @@ const PhilosophySection = () => {
             </div>
             <h3 className="font-display font-semibold text-xl mb-3 text-slate dark:text-slate-100">Empathy is a Superpower</h3>
             <p className="text-slate/70 dark:text-slate-300">
-              I simplify until success becomes obvious and repeatable. What I've discovered: the only thing that matters is the customer's mission
-              (while making sure your team doesn't burn out).
+              I've learned to truly put myself in my users' shoes and feel their pain points. When you understand their struggles, you naturally share those insights with your team.
+              Their mission becomes your mission—and that genuine care is what drives meaningful solutions.
             </p>
           </div>
           
