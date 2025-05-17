@@ -41,9 +41,9 @@ const Footer = () => {
           
           {/* Navigation Links */}
           <div className="md:flex gap-16">
-            {/* Logs Links (was Explore) */}
+            {/* Sets Links (was Logs) */}
             <div className="mb-8 md:mb-0">
-              <h3 className="font-display font-semibold mb-4 text-slate dark:text-slate-100">Logs</h3>
+              <h3 className="font-display font-semibold mb-4 text-slate dark:text-slate-100">Sets</h3>
               <ul className="space-y-3 text-sm">
                 <li>
                   <Link to="/" className="text-slate/80 dark:text-slate-300 hover:text-army dark:hover:text-army transition-colors">
