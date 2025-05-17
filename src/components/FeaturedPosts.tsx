@@ -4,27 +4,27 @@ import BlogCard from './BlogCard';
 // Updated blog post data to match the new theme
 const featuredPosts = [
   {
-    title: "From Battlefield to Boardroom: Leadership Lessons",
-    excerpt: "How military leadership principles translate to effective product management and team leadership in tech.",
+    title: "The User Mission Method",
+    excerpt: "Product is simple: Make users successful in their mission. Here's how we implement this philosophy.",
     date: "May 10, 2023",
-    category: "Leadership",
-    slug: "battlefield-to-boardroom",
+    category: "Product",
+    slug: "user-mission-method",
     image: "/placeholder.svg"
   },
   {
-    title: "Building Strength Through Adversity",
-    excerpt: "Developing mental and physical resilience through consistent training and embracing challenges.",
+    title: "Building Strength Through Consistency",
+    excerpt: "Passion is measurable by consistency, not noise. How daily practice builds extraordinary results.",
     date: "April 28, 2023",
-    category: "Personal Growth",
-    slug: "strength-through-adversity",
+    category: "Training",
+    slug: "strength-through-consistency",
     image: "/placeholder.svg"
   },
   {
-    title: "Mission-Driven Product Development",
-    excerpt: "How to align your product strategy with a clear mission that inspires both your team and users.",
+    title: "Simplify Until Success Is Obvious",
+    excerpt: "How removing complexity creates clarity and helps teams achieve meaningful outcomes.",
     date: "April 15, 2023",
     category: "Product Strategy",
-    slug: "mission-driven-products",
+    slug: "simplify-for-success",
     image: "/placeholder.svg"
   }
 ];
@@ -57,13 +57,14 @@ const FeaturedPosts = () => {
             <div className="rounded-xl overflow-hidden bg-gradient-to-br from-slate to-steel text-white shadow-sm card-hover">
               <div className="p-6 h-full flex flex-col">
                 <h3 className="heading-sm mb-4 text-white font-bold drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]">
-                  Leadership Philosophy
+                  Built, Not Theorized
                 </h3>
                 <p className="mb-6 flex-grow">
-                  Discover how military discipline and strategic thinking enhance product leadership, and how mission-driven values improve team performance.
+                  Everyone wants to invent a new model. Most of them overcomplicate what should be simple. 
+                  We believe in tearing down the unnecessary to build up what works.
                 </p>
                 <a href="/philosophy" className="inline-flex items-center text-white font-medium group">
-                  Explore my philosophy
+                  Explore our philosophy
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                   </svg>

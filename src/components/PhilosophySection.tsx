@@ -6,7 +6,7 @@ const PhilosophySection = () => {
         <div className="text-center mb-12">
           <h2 className="heading-md text-slate dark:text-slate-100 mb-4">Core Principles</h2>
           <p className="text-slate/80 dark:text-slate-200 max-w-2xl mx-auto">
-            The values and principles that guided me in military service continue to shape my approach to product leadership and personal growth.
+            At MissionBuilt, we don't preach theory—we live method. We believe in tearing down the unnecessary to build up what works.
           </p>
         </div>
         
@@ -18,10 +18,10 @@ const PhilosophySection = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
               </svg>
             </div>
-            <h3 className="font-display font-semibold text-xl mb-3 text-slate dark:text-slate-100">Mission First</h3>
+            <h3 className="font-display font-semibold text-xl mb-3 text-slate dark:text-slate-100">Relentless Care for Outcomes</h3>
             <p className="text-slate/70 dark:text-slate-300">
-              Clear purpose drives every action. In both military operations and product development, 
-              understanding the "why" behind our work creates focus and meaning.
+              Be the voice of the user in every interaction. Fight for clarity, cut the fluff, and focus the team. 
+              When do we win? When our users do.
             </p>
           </div>
           
@@ -32,10 +32,10 @@ const PhilosophySection = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
               </svg>
             </div>
-            <h3 className="font-display font-semibold text-xl mb-3 text-slate dark:text-slate-100">People Always</h3>
+            <h3 className="font-display font-semibold text-xl mb-3 text-slate dark:text-slate-100">Empathy as a Strength</h3>
             <p className="text-slate/70 dark:text-slate-300">
-              Taking care of your team is paramount. True leadership means serving those you lead,
-              providing them with the resources, guidance and support they need to succeed.
+              In Product: Simplify until success is obvious and repeatable. Remember: the only thing that matters is the customer's mission
+              (without burning out your team).
             </p>
           </div>
           
@@ -46,17 +46,17 @@ const PhilosophySection = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
               </svg>
             </div>
-            <h3 className="font-display font-semibold text-xl mb-3 text-slate dark:text-slate-100">Disciplined Execution</h3>
+            <h3 className="font-display font-semibold text-xl mb-3 text-slate dark:text-slate-100">Consistency Over Complexity</h3>
             <p className="text-slate/70 dark:text-slate-300">
-              Consistent, methodical execution wins the day. Whether in physical training or building products,
-              disciplined processes and persistent effort lead to superior outcomes.
+              In Training: You are the user. The mission is your growth. Self-development through strength is a daily product of purpose.
+              Progress comes from showing up, listening to pain, and adapting.
             </p>
           </div>
         </div>
         
         <div className="mt-10 text-center">
           <a href="/field-notes" className="btn-secondary inline-flex items-center">
-            Leadership Insights
+            Learn More
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>

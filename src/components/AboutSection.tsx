@@ -20,29 +20,29 @@ const AboutSection = () => {
           {/* Content column */}
           <div>
             <span className="inline-block px-3 py-1 bg-secondary text-slate/80 dark:bg-secondary/30 dark:text-slate-100 rounded-full text-sm font-medium mb-4">
-              About Me
+              Our Mission
             </span>
             
             <h2 className="heading-md text-slate mb-6">
-              Military Veteran & Product Leader
+              The User Mission Method
             </h2>
             
             <p className="text-slate/80 dark:text-slate-200 mb-4">
-              I'm a former Army officer turned product leader, passionate about building mission-driven teams and products that make a difference.
+              This site exists to unify two worlds: Building great products that enable others to succeed, and building great selves through strength—powerlifting, bodybuilding, weight training, and personal development.
             </p>
             
             <p className="text-slate/80 dark:text-slate-200 mb-6">
-              My journey has taught me that the principles of effective leadership apply universally - whether leading military operations or product development. Discipline, strategic thinking, and resilience form the core of both worlds.
+              The method? It's not new. It's not trendy. It's radically simple. Product management isn't a circus of ceremonies. It's showing up, giving a shit, and making sure your users are stronger because of you.
             </p>
             
             <div className="grid grid-cols-2 gap-4 mb-8">
               <div className="bg-white dark:bg-slate/20 p-4 rounded-lg shadow-sm border border-slate/10 dark:border-slate/20">
-                <div className="font-display font-semibold text-2xl text-steel dark:text-slate-100 mb-1">12+</div>
-                <div className="text-sm text-slate/70 dark:text-slate-300">Years of Service</div>
+                <div className="font-display font-semibold text-2xl text-steel dark:text-slate-100 mb-1">🧠</div>
+                <div className="text-sm text-slate/70 dark:text-slate-300">User Mission Method</div>
               </div>
               <div className="bg-white dark:bg-slate/20 p-4 rounded-lg shadow-sm border border-slate/10 dark:border-slate/20">
-                <div className="font-display font-semibold text-2xl text-steel dark:text-slate-100 mb-1">8+</div>
-                <div className="text-sm text-slate/70 dark:text-slate-300">Years in Product</div>
+                <div className="font-display font-semibold text-2xl text-steel dark:text-slate-100 mb-1">🏋️‍♂️</div>
+                <div className="text-sm text-slate/70 dark:text-slate-300">Built, Not Theorized</div>
               </div>
             </div>
             

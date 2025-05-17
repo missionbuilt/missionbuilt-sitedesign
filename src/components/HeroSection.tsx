@@ -40,8 +40,8 @@ const HeroSection = () => {
           </h1>
           
           <p className="body-lg mb-10 max-w-2xl mx-auto">
-            Explore the powerful connections between product leadership principles and strength training methodologies.
-            Both domains require vision, consistency, and a growth mindset.
+            Product is simple: Make users successful in their mission.
+            At MissionBuilt, we believe product and training share the same code: purpose, discipline, and relentless focus on outcomes.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
