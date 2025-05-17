@@ -1,6 +1,8 @@
 
 import NightVisionToggle from "./NightVisionToggle";
 import { useTheme } from '@/context/ThemeContext';
+import { Card, CardContent } from "@/components/ui/card";
+import { BookOpen, Users, Award } from "lucide-react";
 
 const HeroSection = () => {
   const { theme } = useTheme();
@@ -39,12 +41,59 @@ const HeroSection = () => {
             Product lessons through the lens of <span className="text-sunburst font-bold">powerlifting</span>.
           </h1>
           
-          {/* Project purpose section */}
-          <div className="mb-8 py-4 px-6 bg-slate/5 dark:bg-slate/10 rounded-xl border border-slate/10 dark:border-slate/20 max-w-2xl mx-auto animate-fade-in">
-            <h2 className="text-lg font-medium mb-2 text-slate dark:text-slate-100">Why This Project Exists</h2>
-            <p className="text-sm text-slate/80 dark:text-slate-200/80 leading-relaxed">
-              I created this project to bridge the unlikely worlds of powerlifting and product development. Both require patience, discipline, and methodical progress. This resource aims to help product leaders develop mental models that blend technical craft with human empathy.
-            </p>
+          {/* Project purpose section - redesigned */}
+          <div className="mb-12 max-w-2xl mx-auto">
+            <Card className="bg-slate/5 dark:bg-slate/10 border border-slate/10 dark:border-slate/20 shadow-sm overflow-hidden">
+              <CardContent className="p-0">
+                <div className="py-4 px-6 border-b border-slate/10 dark:border-slate/20 bg-slate/10 dark:bg-slate/15">
+                  <h2 className="text-lg font-display font-semibold text-slate dark:text-slate-100 flex items-center justify-center gap-2">
+                    <BookOpen className="h-5 w-5 text-sunburst" />
+                    Why This Project Exists
+                  </h2>
+                </div>
+                
+                <div className="p-6 text-left space-y-4">
+                  <p className="text-sm text-slate/90 dark:text-slate-200/90 leading-relaxed">
+                    MissionBuilt was born from a simple idea: that the principles driving successful product teams and driven lifters are more alike than they seem. After decades in both worlds—tech product management and competitive powerlifting—it became clear that each domain thrives on the same core truths: consistency, purpose, and relentless focus on the mission.
+                  </p>
+                  
+                  <p className="text-sm text-slate/90 dark:text-slate-200/90 leading-relaxed">
+                    This project isn't a manifesto. It's not here to tell you how it must be done. It's a personal contribution to the shared pool of knowledge—a new lens for understanding the craft of product leadership, seen through the eyes of the lifter, the builder, the grinder.
+                  </p>
+                  
+                  <p className="text-sm text-slate/90 dark:text-slate-200/90 leading-relaxed">
+                    Some people learn best from frameworks and acronyms. Others need narrative and analogy. MissionBuilt is for the latter. It's product management as told through the chalk-dusted hands of someone who's felt the pressure of a heavy barbell and a tight roadmap.
+                  </p>
+                  
+                  <div className="py-4">
+                    <h3 className="text-base font-medium text-slate dark:text-slate-100 mb-3">This project exists to:</h3>
+                    <ul className="space-y-3 pl-5 list-disc marker:text-sunburst">
+                      <li className="text-sm text-slate/90 dark:text-slate-200/90 leading-relaxed">
+                        Offer a free and open-source book that ties together the rigor of product leadership with the discipline of physical training.
+                      </li>
+                      <li className="text-sm text-slate/90 dark:text-slate-200/90 leading-relaxed">
+                        Present an alternative philosophy, not a prescriptive method.
+                      </li>
+                      <li className="text-sm text-slate/90 dark:text-slate-200/90 leading-relaxed">
+                        Encourage introspection, empathy, and ownership—especially in a world that too often prizes speed over substance.
+                      </li>
+                      <li className="text-sm text-slate/90 dark:text-slate-200/90 leading-relaxed">
+                        Share what's been learned from years of building: products, teams, strength, and character.
+                      </li>
+                    </ul>
+                  </div>
+                  
+                  <p className="text-sm text-slate/90 dark:text-slate-200/90 leading-relaxed">
+                    Most of all, MissionBuilt exists because you might be like me—someone who cares deeply, grinds daily, and believes that strength (in life, in teams, in outcomes) is built, not bought.
+                  </p>
+                  
+                  <div className="pt-2 border-t border-slate/10 dark:border-slate/20 flex flex-col items-center text-center">
+                    <p className="text-sm italic text-slate/80 dark:text-slate-200/80 mt-2">This is a perspective, a point of view. One forged under load.</p>
+                    <p className="text-sm font-medium text-sunburst mt-1">And it's yours to build with.</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </div>
           
           <p className="body-lg mb-10 max-w-2xl mx-auto">
