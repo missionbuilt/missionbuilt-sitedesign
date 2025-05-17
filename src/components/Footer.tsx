@@ -6,6 +6,14 @@ import { Mail } from 'lucide-react';
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   
+  // Function to handle scrolling to top when links are clicked
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+  
   return (
     <footer className="bg-slate/5 dark:bg-slate/10 border-t border-slate/10 dark:border-slate/20 py-12 mt-20">
       <div className="container-custom">
@@ -42,17 +50,17 @@ const Footer = () => {
               <h3 className="font-display font-semibold mb-4 text-slate dark:text-slate-100">Sets</h3>
               <ul className="space-y-3 text-sm">
                 <li>
-                  <Link to="/" className="text-slate/80 dark:text-slate-300 hover:text-army dark:hover:text-army transition-colors">
+                  <Link to="/" onClick={scrollToTop} className="text-slate/80 dark:text-slate-300 hover:text-army dark:hover:text-army transition-colors">
                     The Mission
                   </Link>
                 </li>
                 <li>
-                  <Link to="/chapters" className="text-slate/80 dark:text-slate-300 hover:text-army dark:hover:text-army transition-colors">
+                  <Link to="/chapters" onClick={scrollToTop} className="text-slate/80 dark:text-slate-300 hover:text-army dark:hover:text-army transition-colors">
                     Training Logs
                   </Link>
                 </li>
                 <li>
-                  <Link to="/about" className="text-slate/80 dark:text-slate-300 hover:text-army dark:hover:text-army transition-colors">
+                  <Link to="/about" onClick={scrollToTop} className="text-slate/80 dark:text-slate-300 hover:text-army dark:hover:text-army transition-colors">
                     About
                   </Link>
                 </li>
@@ -64,7 +72,7 @@ const Footer = () => {
               <h3 className="font-display font-semibold mb-4 text-slate dark:text-slate-100">Resources</h3>
               <ul className="space-y-3 text-sm">
                 <li>
-                  <Link to="/terms" className="text-slate/80 dark:text-slate-300 hover:text-army dark:hover:text-army transition-colors">
+                  <Link to="/terms" onClick={scrollToTop} className="text-slate/80 dark:text-slate-300 hover:text-army dark:hover:text-army transition-colors">
                     Terms of Service
                   </Link>
                 </li>
