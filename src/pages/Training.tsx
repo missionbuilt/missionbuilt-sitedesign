@@ -30,19 +30,25 @@ const Training = () => {
                 {/* Small Logo */}
                 <div className="p-6 bg-white rounded-lg shadow-sm w-full max-w-md">
                   <h3 className="body font-semibold mb-2 text-slate/70">Small Size</h3>
-                  <Logo size="sm" asLink={false} className="text-slate" />
+                  <Logo size="sm" asLink={false} className="text-slate" showIcon={true} />
                 </div>
                 
                 {/* Medium Logo */}
                 <div className="p-6 bg-white rounded-lg shadow-sm w-full max-w-md">
                   <h3 className="body font-semibold mb-2 text-slate/70">Medium Size (Default)</h3>
-                  <Logo size="md" asLink={false} className="text-slate" />
+                  <Logo size="md" asLink={false} className="text-slate" showIcon={true} />
                 </div>
                 
                 {/* Large Logo */}
                 <div className="p-6 bg-white rounded-lg shadow-sm w-full max-w-md">
                   <h3 className="body font-semibold mb-2 text-slate/70">Large Size</h3>
-                  <Logo size="lg" asLink={false} className="text-slate" />
+                  <Logo size="lg" asLink={false} className="text-slate" showIcon={true} />
+                </div>
+                
+                {/* Without Icon */}
+                <div className="p-6 bg-white rounded-lg shadow-sm w-full max-w-md">
+                  <h3 className="body font-semibold mb-2 text-slate/70">Without Icon</h3>
+                  <Logo size="md" asLink={false} className="text-slate" showIcon={false} />
                 </div>
               </div>
             </div>
