@@ -4,24 +4,24 @@ import BlogCard from './BlogCard';
 // Updated blog post data with more personal tone
 const featuredPosts = [
   {
-    title: "How I Approach User Success",
-    excerpt: "After years of trial and error, I've found that product is simple: Make users successful in their mission. Here's my approach.",
+    title: "Chapter: User Success Principles",
+    excerpt: "What I've found after years of trial and error: product work is simpler than we make it. Here's how I approach making users successful in their mission.",
     date: "May 10, 2023",
     category: "Product",
     slug: "user-mission-method",
     image: "/placeholder.svg"
   },
   {
-    title: "The Power of Showing Up Daily",
-    excerpt: "I've learned that passion isn't measured by intensity but by consistency. How daily practice leads to extraordinary results.",
+    title: "Chapter: The Daily Practice",
+    excerpt: "I've learned that passion isn't measured by intensity but by consistency. These are my notes on how showing up daily leads to surprising results.",
     date: "April 28, 2023",
     category: "Training",
     slug: "strength-through-consistency",
     image: "/placeholder.svg"
   },
   {
-    title: "Simplify Until It Clicks",
-    excerpt: "My experience with removing complexity to create clarity. Simple beats clever every time when it comes to helping teams succeed.",
+    title: "Chapter: Finding Clarity",
+    excerpt: "My experience with removing complexity to create clarity. When I stopped trying to be clever and focused on being clear, everything changed.",
     date: "April 15, 2023",
     category: "Product Strategy",
     slug: "simplify-for-success",
@@ -34,9 +34,9 @@ const FeaturedPosts = () => {
     <section className="py-16">
       <div className="container-custom">
         <div className="flex flex-col md:flex-row justify-between items-baseline mb-10">
-          <h2 className="heading-md text-slate dark:text-slate-100 mb-4 md:mb-0">Field Notes</h2>
+          <h2 className="heading-md text-slate dark:text-slate-100 mb-4 md:mb-0">Latest Chapters</h2>
           <a href="/field-notes" className="text-steel dark:text-slate-100 font-medium flex items-center group">
-            View all notes
+            View all chapters
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>
