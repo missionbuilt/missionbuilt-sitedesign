@@ -1,3 +1,4 @@
+
 import NightVisionToggle from "./NightVisionToggle";
 import { useTheme } from '@/context/ThemeContext';
 import { Badge } from "@/components/ui/badge";
@@ -46,9 +47,19 @@ const HeroSection = () => {
             Product lessons through the lens of <span className="text-sunburst font-bold">powerlifting</span>.
           </h1>
           
-          <p className="body-lg mb-10 max-w-2xl mx-auto">
-            An open-source book about building products with relentless care and empathetic discipline.
-          </p>
+          <div className="mb-10 max-w-2xl mx-auto">
+            <p className="body-lg mb-6">
+              What if building great products had less to do with frameworks and more to do with focus? Less with process and more with passion? That's the idea behind MissionBuilt — a free, open-source book sharing lessons I've learned across decades of product leadership, through a unique and sometimes sweaty lens: powerlifting.
+            </p>
+            
+            <p className="body-md mb-6">
+              This isn't a manifesto. It's not a masterclass. It's a perspective — one forged from military discipline, startup chaos, scaling software, and lifting very heavy things. You won't find a one-size-fits-all product method here. You will find honest stories, field-tested tactics, and a philosophy grounded in a single belief:
+            </p>
+            
+            <p className="body-lg font-semibold text-sunburst">
+              You win when your users win. Period.
+            </p>
+          </div>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a href="/field-notes" className="btn-army">
