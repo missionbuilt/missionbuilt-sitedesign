@@ -37,7 +37,7 @@ const Navbar = () => {
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-1">
           <NavLink to="/" exact>The Mission</NavLink>
-          <NavLink to="/chapters">Chapters</NavLink>
+          <NavLink to="/chapters">Training Logs</NavLink>
           <NavLink to="/about">About</NavLink>
         </nav>
 
@@ -46,7 +46,7 @@ const Navbar = () => {
           <div className="absolute top-full left-0 right-0 bg-white dark:bg-slate/10 shadow-lg border-t border-slate/10 dark:border-slate/20 md:hidden py-2">
             <nav className="flex flex-col">
               <MobileNavLink to="/" onClick={() => setIsMenuOpen(false)}>The Mission</MobileNavLink>
-              <MobileNavLink to="/chapters" onClick={() => setIsMenuOpen(false)}>Chapters</MobileNavLink>
+              <MobileNavLink to="/chapters" onClick={() => setIsMenuOpen(false)}>Training Logs</MobileNavLink>
               <MobileNavLink to="/about" onClick={() => setIsMenuOpen(false)}>About</MobileNavLink>
             </nav>
           </div>
