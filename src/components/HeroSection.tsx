@@ -39,6 +39,14 @@ const HeroSection = () => {
             Product lessons through the lens of <span className="text-sunburst font-bold">powerlifting</span>.
           </h1>
           
+          {/* Project purpose section */}
+          <div className="mb-8 py-4 px-6 bg-slate/5 dark:bg-slate/10 rounded-xl border border-slate/10 dark:border-slate/20 max-w-2xl mx-auto animate-fade-in">
+            <h2 className="text-lg font-medium mb-2 text-slate dark:text-slate-100">Why This Project Exists</h2>
+            <p className="text-sm text-slate/80 dark:text-slate-200/80 leading-relaxed">
+              I created this project to bridge the unlikely worlds of powerlifting and product development. Both require patience, discipline, and methodical progress. This resource aims to help product leaders develop mental models that blend technical craft with human empathy.
+            </p>
+          </div>
+          
           <p className="body-lg mb-10 max-w-2xl mx-auto">
             An open-source book about building products with relentless care and empathetic discipline.
           </p>
