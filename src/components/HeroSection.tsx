@@ -1,5 +1,4 @@
 
-import NightVisionToggle from "./NightVisionToggle";
 import { useTheme } from '@/context/ThemeContext';
 
 const HeroSection = () => {
@@ -15,11 +14,6 @@ const HeroSection = () => {
       </div>
       
       <div className="container-custom relative">
-        {/* Night Vision Toggle */}
-        <div className="flex justify-center mb-6">
-          <NightVisionToggle />
-        </div>
-
         <div className="max-w-3xl mx-auto text-center">
           <div className="flex justify-center mb-8">
             <div className="h-24 w-24 flex items-center justify-center">

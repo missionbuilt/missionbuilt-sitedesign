@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import Logo from '@/components/Logo';
+import NightVisionToggle from '@/components/NightVisionToggle';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -13,6 +14,17 @@ const Navbar = () => {
       <div className="container-custom flex items-center justify-between py-4">
         {/* Logo with reverse color scheme */}
         <Logo colorScheme="reverse" />
+        
+        {/* Desktop Navigation with Night Vision Toggle */}
+        <div className="hidden md:flex items-center">
+          <nav className="flex items-center space-x-1 mr-6">
+            <NavLink to="/" exact>The Mission</NavLink>
+            <NavLink to="/chapters">Training Logs</NavLink>
+            <NavLink to="/about">About</NavLink>
+          </nav>
+          
+          <NightVisionToggle />
+        </div>
 
         {/* Mobile Menu Button */}
         <button 
@@ -34,13 +46,6 @@ const Navbar = () => {
           </svg>
         </button>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-1">
-          <NavLink to="/" exact>The Mission</NavLink>
-          <NavLink to="/chapters">Training Logs</NavLink>
-          <NavLink to="/about">About</NavLink>
-        </nav>
-
         {/* Mobile Navigation */}
         {isMenuOpen && (
           <div className="absolute top-full left-0 right-0 bg-white dark:bg-slate/10 shadow-lg border-t border-slate/10 dark:border-slate/20 md:hidden py-2">
@@ -48,6 +53,9 @@ const Navbar = () => {
               <MobileNavLink to="/" onClick={() => setIsMenuOpen(false)}>The Mission</MobileNavLink>
               <MobileNavLink to="/chapters" onClick={() => setIsMenuOpen(false)}>Training Logs</MobileNavLink>
               <MobileNavLink to="/about" onClick={() => setIsMenuOpen(false)}>About</MobileNavLink>
+              <div className="px-4 py-3">
+                <NightVisionToggle />
+              </div>
             </nav>
           </div>
         )}
