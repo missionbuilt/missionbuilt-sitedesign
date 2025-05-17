@@ -5,6 +5,7 @@ import Footer from "../components/Footer";
 import ChapterGrid from "@/components/chapters/ChapterGrid";
 import ChapterTable from "@/components/chapters/ChapterTable";
 import ChaptersHeader from "@/components/chapters/ChaptersHeader";
+import StatusCounter from "@/components/chapters/StatusCounter";
 import { chapters } from "@/data/chapters-data";
 
 const Chapters = () => {
@@ -18,6 +19,8 @@ const Chapters = () => {
             title="Training Logs" 
             subtitle="Lift Heavy. Lead Strong. One Rep, One Release at a Time." 
           />
+          
+          <StatusCounter chapters={chapters} />
           
           <ChapterGrid chapters={chapters} />
           <ChapterTable chapters={chapters} />
