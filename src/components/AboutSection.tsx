@@ -8,7 +8,7 @@ import { toast } from "./ui/use-toast";
 const AboutSection = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [missionText, setMissionText] = useState(
-    "I started this site to bring together two passions: building products that help people succeed, and building myself through strength training—powerlifting, bodybuilding, and all things iron.\n\nMy approach? It's not revolutionary. It's not trendy. It's radically simple. I've found that product management isn't about ceremonies or frameworks. It's about showing up, genuinely caring, and making sure the people using your product are better off because of what you built."
+    "I started this open-source book to bring together two passions: building products that genuinely help people succeed, and building myself through the discipline of strength training.\n\nMy approach isn't revolutionary or trendy—it's about giving a damn about the people using your products. I've learned that product management isn't about frameworks or ceremonies; it's about showing up with fierce dedication and truly caring. When you give a shit about your users' struggles and dreams, you create something that matters. That's the fire that drives me every day—building things that actually make a difference in people's lives."
   );
 
   const handleSave = () => {
@@ -77,7 +77,7 @@ const AboutSection = () => {
             </div>
             
             <h2 className="heading-md text-slate mb-6">
-              What I've Learned About Product
+              Give a Shit
             </h2>
             
             <div className="text-slate/80 dark:text-slate-200 space-y-4">
