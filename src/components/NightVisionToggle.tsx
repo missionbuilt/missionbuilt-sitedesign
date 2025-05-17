@@ -18,7 +18,10 @@ const NightVisionToggle: React.FC<NightVisionToggleProps> = ({ className }) => {
       <Switch 
         checked={isDarkMode} 
         onCheckedChange={toggleTheme} 
-        className="data-[state=checked]:bg-army"
+        className={cn(
+          "data-[state=checked]:bg-army dark:data-[state=checked]:bg-sunburst",
+          "data-[state=unchecked]:bg-slate/20"
+        )}
       />
       <Moon 
         className={cn(
