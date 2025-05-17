@@ -1,6 +1,5 @@
 
 import HeroSection from "../components/HeroSection";
-import NewsletterSignup from "../components/NewsletterSignup";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import WhyThisWhyNow from "../components/WhyThisWhyNow";
@@ -15,7 +14,6 @@ const Index = () => {
         <HeroSection />
         <BookUniqueAspects />
         <WhyThisWhyNow />
-        <NewsletterSignup />
       </main>
       
       <Footer />
