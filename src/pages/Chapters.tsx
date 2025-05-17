@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ChapterGrid from "@/components/chapters/ChapterGrid";
@@ -11,7 +11,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BookOpen, ListFilter } from "lucide-react";
 
 const Chapters = () => {
-  const [viewMode, setViewMode] = useState<"grid" | "table">("grid");
+  const [viewMode, setViewMode] = React.useState<"grid" | "table">("grid");
   
   // Automatically scroll to the top when this component mounts
   useEffect(() => {
@@ -27,15 +27,15 @@ const Chapters = () => {
       
       <main className="flex-grow container mx-auto px-4 py-8 md:py-12">
         <div className="max-w-5xl mx-auto">
-          {/* Header with improved animations */}
-          <div className="mb-10 animate-fade-in">
+          {/* Header without animations */}
+          <div className="mb-10">
             <ChaptersHeader 
               title="Training Logs" 
               subtitle="Lift Heavy. Lead Strong. One Rep, One Release at a Time." 
             />
           </div>
           
-          {/* Status counters with improved visual appearance */}
+          {/* Status counters without animations */}
           <div className="mb-8">
             <StatusCounter chapters={chapters} />
           </div>
@@ -61,8 +61,8 @@ const Chapters = () => {
             </Tabs>
           </div>
           
-          {/* Chapter content with better transitions */}
-          <div className="animate-fade-in">
+          {/* Chapter content without animations */}
+          <div>
             {viewMode === "grid" ? (
               <ChapterGrid chapters={chapters} />
             ) : (

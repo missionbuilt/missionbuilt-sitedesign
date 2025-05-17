@@ -17,9 +17,9 @@ const HeroSection = () => {
       
       <div className="container-custom relative">
         <div className="max-w-3xl mx-auto text-center">
-          <div className="flex justify-center mb-10 animate-fade-in">
+          <div className="flex justify-center mb-10">
             <div className="h-24 w-24 flex items-center justify-center relative">
-              <div className="absolute inset-0 bg-army/5 dark:bg-army/10 rounded-full animate-pulse"></div>
+              <div className="absolute inset-0 bg-army/5 dark:bg-army/10 rounded-full"></div>
               <img 
                 src="/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png" 
                 alt="Logo" 
@@ -28,11 +28,11 @@ const HeroSection = () => {
             </div>
           </div>
           
-          <h1 className="heading-lg mb-8 animate-fade-in" style={{ animationDelay: "0.2s" }}>
+          <h1 className="heading-lg mb-8">
             Building better products, one <span className="text-sunburst font-bold">rep</span> at a time.
           </h1>
           
-          <div className="mb-8 max-w-2xl mx-auto animate-fade-in" style={{ animationDelay: "0.4s" }}>
+          <div className="mb-8 max-w-2xl mx-auto">
             <p className="body-lg mb-6">
               What if building great products had less to do with frameworks and more to do with focus? Less with process and more with passion? That's the idea behind MissionBuilt — a free, open-source book sharing lessons I've learned across decades of product leadership, through a unique and sometimes sweaty lens: powerlifting.
             </p>
@@ -46,7 +46,7 @@ const HeroSection = () => {
             </p>
           </div>
           
-          <div className="mt-10 flex flex-col sm:flex-row justify-center gap-4 animate-fade-in" style={{ animationDelay: "0.6s" }}>
+          <div className="mt-10 flex flex-col sm:flex-row justify-center gap-4">
             <Link to="/chapters" className="btn-army flex items-center justify-center gap-2 group">
               <span>Start Reading</span>
               <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />

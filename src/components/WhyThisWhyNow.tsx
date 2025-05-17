@@ -11,15 +11,15 @@ const WhyThisWhyNow = () => {
       
       <div className="container-custom">
         <div className="text-center mb-16">
-          <h2 className="heading-md mb-4 animate-fade-in">Why This, Why Now</h2>
-          <p className="body-md max-w-2xl mx-auto text-slate/80 dark:text-slate-300 animate-fade-in" style={{ animationDelay: "0.2s" }}>
+          <h2 className="heading-md mb-4">Why This, Why Now</h2>
+          <p className="body-md max-w-2xl mx-auto text-slate/80 dark:text-slate-300">
             The intersection of product leadership and physical discipline has never been more relevant
           </p>
         </div>
         
         <div className="grid md:grid-cols-2 gap-10">
           {/* Why This Card */}
-          <Card className="bg-gradient-to-br from-slate/5 to-army/5 hover:shadow-lg transition-all duration-300 hover:-translate-y-2 border border-slate/10 overflow-hidden group animate-fade-in" style={{ animationDelay: "0.3s" }}>
+          <Card className="bg-gradient-to-br from-slate/5 to-army/5 hover:shadow-lg transition-all duration-300 hover:-translate-y-2 border border-slate/10 overflow-hidden group">
             <CardContent className="p-8 md:p-10">
               <div className="flex items-center justify-center mb-8">
                 <div className="p-4 bg-army/10 rounded-full group-hover:scale-110 transition-transform duration-300">
@@ -50,7 +50,7 @@ const WhyThisWhyNow = () => {
           </Card>
           
           {/* Why Now Card */}
-          <Card className="bg-gradient-to-br from-slate/5 to-sunburst/5 hover:shadow-lg transition-all duration-300 hover:-translate-y-2 border border-slate/10 overflow-hidden group animate-fade-in" style={{ animationDelay: "0.4s" }}>
+          <Card className="bg-gradient-to-br from-slate/5 to-sunburst/5 hover:shadow-lg transition-all duration-300 hover:-translate-y-2 border border-slate/10 overflow-hidden group">
             <CardContent className="p-8 md:p-10">
               <div className="flex items-center justify-center mb-8">
                 <div className="p-4 bg-sunburst/10 rounded-full group-hover:scale-110 transition-transform duration-300">
