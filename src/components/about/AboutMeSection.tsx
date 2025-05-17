@@ -1,8 +1,6 @@
 
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Mail, Linkedin, Github } from "lucide-react";
 
 const AboutMeSection = () => {
   return (
@@ -52,17 +50,6 @@ const AboutMeSection = () => {
           </div>
         </CardContent>
       </Card>
-
-      <div className="flex justify-center space-x-4 mt-4">
-        <Button variant="ghost" size="sm" className="flex items-center gap-1">
-          <Linkedin className="h-4 w-4" />
-          <span>LinkedIn</span>
-        </Button>
-        <Button variant="ghost" size="sm" className="flex items-center gap-1">
-          <Github className="h-4 w-4" />
-          <span>GitHub</span>
-        </Button>
-      </div>
     </div>
   );
 };
