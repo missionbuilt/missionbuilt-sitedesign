@@ -8,7 +8,6 @@ import { Helmet, HelmetProvider } from "react-helmet-async";
 import { ThemeProvider } from "@/context/ThemeContext";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import Training from "./pages/Training";
 import Chapters from "./pages/Chapters";
 import AboutMe from "./pages/AboutMe";
 
@@ -26,9 +25,6 @@ const App = () => {
             <BrowserRouter>
               <Routes>
                 <Route path="/" element={<Index />} />
-                <Route path="/field-notes" element={<NotFound />} />
-                <Route path="/training" element={<Training />} />
-                <Route path="/pr-board" element={<NotFound />} />
                 <Route path="/chapters" element={<Chapters />} />
                 <Route path="/about" element={<AboutMe />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
