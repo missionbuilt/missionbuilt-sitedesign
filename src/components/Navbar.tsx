@@ -39,6 +39,7 @@ const Navbar = () => {
           <NavLink to="/field-notes">Page 1</NavLink>
           <NavLink to="/training">Page 2</NavLink>
           <NavLink to="/chapters">Chapters</NavLink>
+          <NavLink to="/about">About</NavLink>
         </nav>
 
         {/* Mobile Navigation */}
@@ -49,6 +50,7 @@ const Navbar = () => {
               <MobileNavLink to="/field-notes" onClick={() => setIsMenuOpen(false)}>Page 1</MobileNavLink>
               <MobileNavLink to="/training" onClick={() => setIsMenuOpen(false)}>Page 2</MobileNavLink>
               <MobileNavLink to="/chapters" onClick={() => setIsMenuOpen(false)}>Chapters</MobileNavLink>
+              <MobileNavLink to="/about" onClick={() => setIsMenuOpen(false)}>About</MobileNavLink>
             </nav>
           </div>
         )}
