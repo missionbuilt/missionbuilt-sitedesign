@@ -26,7 +26,7 @@ const HeroSection = () => {
           </div>
           
           <h1 className="heading-lg mb-6">
-            Product lessons through the lens of <span className="text-sunburst font-bold">powerlifting</span>.
+            Building better products, one <span className="text-sunburst font-bold">rep</span> at a time.
           </h1>
           
           <div className="mb-4 max-w-2xl mx-auto">
