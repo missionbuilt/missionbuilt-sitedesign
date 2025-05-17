@@ -93,14 +93,16 @@ const Logo = ({
       className
     )}>
       {showImage && (
-        <img 
-          src="/lovable-uploads/dfd1484c-2dce-4c45-a3ef-e17eefa59dcc.png" 
-          alt="MissionBuilt Logo" 
-          className={cn(
-            imageSizes[size],
-            isDarkMode ? "invert" : "mix-blend-multiply"
-          )}
-        />
+        <div className="flex items-center justify-center bg-transparent">
+          <img 
+            src="/lovable-uploads/dfd1484c-2dce-4c45-a3ef-e17eefa59dcc.png" 
+            alt="MissionBuilt Logo" 
+            className={cn(
+              imageSizes[size],
+              isDarkMode ? "invert brightness-90" : "mix-blend-multiply"
+            )}
+          />
+        </div>
       )}
       {showText && (
         <span className="font-display">
