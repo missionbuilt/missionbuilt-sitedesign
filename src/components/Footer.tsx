@@ -11,7 +11,7 @@ const Footer = () => {
           <div className="md:col-span-1">
             <Logo size="md" colorScheme="monochrome" />
             <p className="mt-3 text-sm text-slate/80 dark:text-slate-300">
-              [Site tagline or short description]
+              Product lessons through the lens of powerlifting.
             </p>
           </div>
           
