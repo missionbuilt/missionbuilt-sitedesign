@@ -9,8 +9,8 @@ const AboutMeSection = () => {
     <div className="flex flex-col items-center space-y-8 mb-16">
       <div className="w-40 h-40 overflow-hidden rounded-full border-4 border-primary/10">
         <img 
-          src="/lovable-uploads/e1905905-308a-4c93-8f94-d5b6f7ecaa56.png" 
-          alt="Mike profile cartoon" 
+          src="/lovable-uploads/ad42f773-71de-419d-a4d8-282925688c73.png" 
+          alt="Mike cartoon character" 
           className="w-full h-full object-cover"
         />
       </div>
