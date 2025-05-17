@@ -20,6 +20,12 @@ const NightVisionToggle: React.FC<NightVisionToggleProps> = ({ className }) => {
         onCheckedChange={toggleTheme} 
         className="data-[state=checked]:bg-army"
       />
+      <Moon 
+        className={cn(
+          "h-4 w-4 transition-opacity",
+          isDarkMode ? "opacity-100" : "opacity-50"
+        )}
+      />
       <span className="text-sm font-medium">
         Night Vision
       </span>

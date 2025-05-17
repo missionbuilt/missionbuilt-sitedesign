@@ -1,6 +1,7 @@
 
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
+import { useTheme } from '@/context/ThemeContext';
 
 interface LogoProps {
   /**
@@ -37,6 +38,9 @@ const Logo = ({
   showText = true,
   colorScheme = 'default'
 }: LogoProps) => {
+  const { theme } = useTheme();
+  const isDarkMode = theme === 'dark';
+  
   // Size classes based on variant
   const sizeClasses = {
     sm: "text-lg",
@@ -92,7 +96,10 @@ const Logo = ({
         <img 
           src="/lovable-uploads/dfd1484c-2dce-4c45-a3ef-e17eefa59dcc.png" 
           alt="MissionBuilt Logo" 
-          className={cn("mix-blend-multiply", imageSizes[size])}
+          className={cn(
+            imageSizes[size],
+            isDarkMode ? "invert" : "mix-blend-multiply"
+          )}
         />
       )}
       {showText && (

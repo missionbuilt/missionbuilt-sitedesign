@@ -1,7 +1,11 @@
 
 import NightVisionToggle from "./NightVisionToggle";
+import { useTheme } from '@/context/ThemeContext';
 
 const HeroSection = () => {
+  const { theme } = useTheme();
+  const isDarkMode = theme === 'dark';
+  
   return (
     <section className="relative py-20 md:py-28 overflow-hidden">
       {/* Background elements - reduced blur for better clarity */}
@@ -25,7 +29,7 @@ const HeroSection = () => {
             <img 
               src="/lovable-uploads/dfd1484c-2dce-4c45-a3ef-e17eefa59dcc.png" 
               alt="MissionBuilt Logo" 
-              className="h-24 w-auto mix-blend-multiply dark:mix-blend-normal"
+              className={`h-24 w-auto ${isDarkMode ? "invert" : "mix-blend-multiply"}`}
             />
           </div>
           
