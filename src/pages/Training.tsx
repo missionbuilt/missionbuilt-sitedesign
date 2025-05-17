@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import Logo from '@/components/Logo';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { Separator } from '@/components/ui/separator';
 
 const Training = () => {
   return (
@@ -26,23 +27,71 @@ const Training = () => {
             {/* Logo Showcase Section */}
             <div className="my-16 p-10 bg-slate/5 rounded-xl border border-slate/10">
               <h2 className="heading-sm mb-8 text-slate">Logo Design</h2>
-              <div className="space-y-10 flex flex-col items-center">
-                {/* Small Logo */}
-                <div className="p-6 bg-white rounded-lg shadow-sm w-full max-w-md">
-                  <h3 className="body font-semibold mb-2 text-slate/70">Small Size</h3>
-                  <Logo size="sm" asLink={false} className="text-slate" />
+              
+              {/* Complete Logo (Image + Text) */}
+              <div className="mb-10">
+                <h3 className="body font-semibold mb-6 text-slate/70">Complete Logo (Image + Text)</h3>
+                <div className="space-y-8">
+                  <div className="p-6 bg-white rounded-lg shadow-sm">
+                    <h4 className="text-sm text-slate/60 mb-3">Small</h4>
+                    <Logo size="sm" asLink={false} showImage={true} showText={true} />
+                  </div>
+                  
+                  <div className="p-6 bg-white rounded-lg shadow-sm">
+                    <h4 className="text-sm text-slate/60 mb-3">Medium (Default)</h4>
+                    <Logo size="md" asLink={false} showImage={true} showText={true} />
+                  </div>
+                  
+                  <div className="p-6 bg-white rounded-lg shadow-sm">
+                    <h4 className="text-sm text-slate/60 mb-3">Large</h4>
+                    <Logo size="lg" asLink={false} showImage={true} showText={true} />
+                  </div>
                 </div>
-                
-                {/* Medium Logo */}
-                <div className="p-6 bg-white rounded-lg shadow-sm w-full max-w-md">
-                  <h3 className="body font-semibold mb-2 text-slate/70">Medium Size (Default)</h3>
-                  <Logo size="md" asLink={false} className="text-slate" />
+              </div>
+              
+              <Separator className="my-10" />
+              
+              {/* Logo Image Only */}
+              <div className="mb-10">
+                <h3 className="body font-semibold mb-6 text-slate/70">Logo Image Only (M with barbell)</h3>
+                <div className="space-y-8">
+                  <div className="p-6 bg-white rounded-lg shadow-sm">
+                    <h4 className="text-sm text-slate/60 mb-3">Small</h4>
+                    <Logo size="sm" asLink={false} showImage={true} showText={false} />
+                  </div>
+                  
+                  <div className="p-6 bg-white rounded-lg shadow-sm">
+                    <h4 className="text-sm text-slate/60 mb-3">Medium</h4>
+                    <Logo size="md" asLink={false} showImage={true} showText={false} />
+                  </div>
+                  
+                  <div className="p-6 bg-white rounded-lg shadow-sm">
+                    <h4 className="text-sm text-slate/60 mb-3">Large</h4>
+                    <Logo size="lg" asLink={false} showImage={true} showText={false} />
+                  </div>
                 </div>
-                
-                {/* Large Logo */}
-                <div className="p-6 bg-white rounded-lg shadow-sm w-full max-w-md">
-                  <h3 className="body font-semibold mb-2 text-slate/70">Large Size</h3>
-                  <Logo size="lg" asLink={false} className="text-slate" />
+              </div>
+              
+              <Separator className="my-10" />
+              
+              {/* Logo Text Only */}
+              <div>
+                <h3 className="body font-semibold mb-6 text-slate/70">Logo Text Only (MissionBuilt.io)</h3>
+                <div className="space-y-8">
+                  <div className="p-6 bg-white rounded-lg shadow-sm">
+                    <h4 className="text-sm text-slate/60 mb-3">Small</h4>
+                    <Logo size="sm" asLink={false} showImage={false} showText={true} />
+                  </div>
+                  
+                  <div className="p-6 bg-white rounded-lg shadow-sm">
+                    <h4 className="text-sm text-slate/60 mb-3">Medium</h4>
+                    <Logo size="md" asLink={false} showImage={false} showText={true} />
+                  </div>
+                  
+                  <div className="p-6 bg-white rounded-lg shadow-sm">
+                    <h4 className="text-sm text-slate/60 mb-3">Large</h4>
+                    <Logo size="lg" asLink={false} showImage={false} showText={true} />
+                  </div>
                 </div>
               </div>
             </div>

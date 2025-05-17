@@ -15,9 +15,23 @@ interface LogoProps {
    * Optional className for additional styling
    */
   className?: string;
+  /**
+   * Whether to show the logo image (M with barbell)
+   */
+  showImage?: boolean;
+  /**
+   * Whether to show the text (MissionBuilt.io)
+   */
+  showText?: boolean;
 }
 
-const Logo = ({ size = 'md', asLink = true, className }: LogoProps) => {
+const Logo = ({ 
+  size = 'md', 
+  asLink = true, 
+  className,
+  showImage = true,
+  showText = true
+}: LogoProps) => {
   // Size classes based on variant
   const sizeClasses = {
     sm: "text-lg",
@@ -38,12 +52,16 @@ const Logo = ({ size = 'md', asLink = true, className }: LogoProps) => {
       sizeClasses[size],
       className
     )}>
-      <img 
-        src="/lovable-uploads/dfd1484c-2dce-4c45-a3ef-e17eefa59dcc.png" 
-        alt="MissionBuilt Logo" 
-        className={cn("mix-blend-multiply", imageSizes[size])}
-      />
-      <span className="font-display">Mission<span className="text-sunburst">Built</span><span className="text-army">.io</span></span>
+      {showImage && (
+        <img 
+          src="/lovable-uploads/dfd1484c-2dce-4c45-a3ef-e17eefa59dcc.png" 
+          alt="MissionBuilt Logo" 
+          className={cn("mix-blend-multiply", imageSizes[size])}
+        />
+      )}
+      {showText && (
+        <span className="font-display">Mission<span className="text-sunburst">Built</span><span className="text-army">.io</span></span>
+      )}
     </span>
   );
 
