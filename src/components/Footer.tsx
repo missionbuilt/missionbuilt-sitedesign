@@ -84,7 +84,7 @@ const Footer = () => {
             <div className="flex items-center">
               <Heart className="h-5 w-5 text-army mr-1 animate-pulse" />
               <a 
-                href="https://lovable.ai" 
+                href="https://lovable.dev/" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="font-display font-semibold text-army hover:underline flex items-center"
