@@ -67,12 +67,6 @@ const AboutMeSection = () => {
           <span>GitHub</span>
         </Button>
       </div>
-      
-      <div className="flex justify-center space-x-4">
-        <Button variant="ghost" size="sm">Blog</Button>
-        <Button variant="ghost" size="sm">Speaking</Button>
-        <Button variant="ghost" size="sm">Chapters</Button>
-      </div>
     </div>
   );
 };
