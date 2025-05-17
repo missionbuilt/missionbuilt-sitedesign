@@ -60,15 +60,6 @@ const HeroSection = () => {
               You win when your users win. Period.
             </p>
           </div>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="/field-notes" className="btn-army">
-              [Primary CTA]
-            </a>
-            <a href="/training" className="btn-secondary">
-              [Secondary CTA]
-            </a>
-          </div>
         </div>
       </div>
     </section>
