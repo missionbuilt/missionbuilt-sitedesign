@@ -47,6 +47,17 @@ const Privacy = () => {
               </p>
             </section>
             
+            <section className="mb-12">
+              <h2 className="text-2xl font-bold mb-4">2. No Professional Advice</h2>
+              <p className="mb-6">
+                This site blends personal experience from decades in product leadership and the discipline of strength training. But it's not professional product consulting or fitness coaching. Any actions you take based on this content are your own responsibility.
+              </p>
+              
+              <p className="mb-6">
+                Always listen to your body. And your users.
+              </p>
+            </section>
+            
             {/* Additional content can be added here by the user later */}
           </div>
         </div>
