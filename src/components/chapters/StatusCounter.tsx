@@ -16,22 +16,22 @@ const StatusCounter: React.FC<StatusCounterProps> = ({ chapters }) => {
   };
 
   return (
-    <div className="flex justify-center gap-4 my-5 animate-fade-in">
-      <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400">
+    <div className="flex flex-col sm:flex-row justify-center gap-4 mb-8 animate-fade-in">
+      <div className="flex items-center gap-2 px-4 py-3 rounded-lg bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 shadow-sm">
         <Activity className="h-4 w-4" />
-        <span className="font-semibold">{statusCounts["in-progress"]}</span>
+        <span className="font-semibold text-lg">{statusCounts["in-progress"]}</span>
         <span className="text-sm">Reps on the Board</span>
       </div>
       
-      <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-400">
+      <div className="flex items-center gap-2 px-4 py-3 rounded-lg bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-400 shadow-sm">
         <Clock className="h-4 w-4" />
-        <span className="font-semibold">{statusCounts["coming-soon"]}</span>
+        <span className="font-semibold text-lg">{statusCounts["coming-soon"]}</span>
         <span className="text-sm">Pushing Through</span>
       </div>
       
-      <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-100 dark:bg-slate-800/30 text-slate-800 dark:text-slate-400">
+      <div className="flex items-center gap-2 px-4 py-3 rounded-lg bg-slate-100 dark:bg-slate-800/30 text-slate-800 dark:text-slate-400 shadow-sm">
         <Circle className="h-4 w-4" />
-        <span className="font-semibold">{statusCounts["not-started"]}</span>
+        <span className="font-semibold text-lg">{statusCounts["not-started"]}</span>
         <span className="text-sm">Still Racking</span>
       </div>
     </div>

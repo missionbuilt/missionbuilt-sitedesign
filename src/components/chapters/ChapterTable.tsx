@@ -75,20 +75,25 @@ interface ChapterTableProps {
 
 const ChapterTable: React.FC<ChapterTableProps> = ({ chapters }) => {
   return (
-    <div className="mt-12 md:hidden">
-      <h2 className="text-xl font-semibold mb-4">Chapter List</h2>
-      <div className="overflow-x-auto">
+    <div className="mt-0">
+      <div className="overflow-x-auto rounded-lg border border-slate/10 shadow-sm">
         <Table>
-          <TableHeader>
+          <TableHeader className="bg-slate/5">
             <TableRow>
-              <TableHead>Title</TableHead>
-              <TableHead>Status</TableHead>
+              <TableHead className="w-[300px]">Title</TableHead>
+              <TableHead className="hidden md:table-cell">Description</TableHead>
+              <TableHead className="w-[150px]">Status</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {chapters.map((chapter) => (
-              <TableRow key={chapter.id}>
+              <TableRow key={chapter.id} className="hover:bg-slate/5 transition-colors">
                 <TableCell className="font-medium">{chapter.title}</TableCell>
+                <TableCell className="hidden md:table-cell text-muted-foreground">
+                  {chapter.description.length > 100 
+                    ? `${chapter.description.substring(0, 100)}...` 
+                    : chapter.description}
+                </TableCell>
                 <TableCell>
                   <Badge 
                     variant={getBadgeVariant(chapter.status)} 
