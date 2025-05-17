@@ -102,47 +102,8 @@ const AboutMe = () => {
                 The Mission Behind MissionBuilt
               </p>
             </div>
-
-            <div className="grid md:grid-cols-2 gap-8 items-center mb-16">
-              <div className="flex justify-center">
-                <div className="w-60 h-80 bg-slate/5 dark:bg-slate/10 rounded-md shadow-lg flex items-center justify-center relative overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-br from-army/20 to-transparent"></div>
-                  <Book className="w-16 h-16 text-army opacity-70" />
-                </div>
-              </div>
-              
-              <div className="space-y-6">
-                <h3 className="text-2xl font-semibold">The Mission Behind MissionBuilt</h3>
-                <p className="text-slate dark:text-slate-200">
-                  A comprehensive guide to building strength, resilience, and purpose through the principles of powerlifting and leadership.
-                </p>
-                
-                <div className="space-y-4">
-                  <div>
-                    <h4 className="text-xl font-semibold mb-2">What You'll Learn</h4>
-                    <ul className="list-disc list-inside space-y-2 text-slate dark:text-slate-200">
-                      <li>Principles of progressive overload in life and leadership</li>
-                      <li>Building mental toughness through physical challenges</li>
-                      <li>Creating systems that support consistent growth</li>
-                      <li>Developing a mission-driven approach to work and training</li>
-                    </ul>
-                  </div>
-                  
-                  <div>
-                    <h4 className="text-xl font-semibold mb-2">Who This Book Is For</h4>
-                    <p className="text-slate dark:text-slate-200">
-                      Leaders, athletes, and anyone seeking to build strength that transcends the physical. Whether you're a seasoned lifter or new to strength training, this book provides actionable insights for your journey.
-                    </p>
-                  </div>
-                </div>
-                
-                <Button className="bg-army hover:bg-army/90 text-white">
-                  Pre-order Now
-                </Button>
-              </div>
-            </div>
             
-            {/* Added Core Principles Section */}
+            {/* Core Principles Section */}
             <div className="mb-16">
               <h3 className="text-2xl font-semibold mb-6 text-center">Core Principles</h3>
               <div className="grid md:grid-cols-3 gap-6">
