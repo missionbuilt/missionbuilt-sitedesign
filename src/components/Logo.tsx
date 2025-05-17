@@ -50,7 +50,7 @@ const Logo = ({ size = 'md', asLink = true, className, showIcon = true }: LogoPr
           strokeWidth={2.5}
         />
       )}
-      Mission<span className="text-sunburst">Built</span><span className="text-army">.io</span>
+      <span className="font-display font-bold">M</span>ission<span className="text-sunburst">Built</span><span className="text-army">.io</span>
     </span>
   );
 
