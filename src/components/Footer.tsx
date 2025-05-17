@@ -90,8 +90,8 @@ const Footer = () => {
         </div>
         
         {/* Creative Commons License */}
-        <div className="mt-8 pt-6 border-t border-slate/10 dark:border-slate/20 text-sm text-slate/70 dark:text-slate-400">
-          <div className="flex flex-col md:flex-row items-center gap-4">
+        <div className="border-t border-slate/10 dark:border-slate/20 text-sm text-slate/70 dark:text-slate-400">
+          <div className="flex flex-col md:flex-row items-center gap-4 pt-6">
             <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
               <img 
                 alt="Creative Commons License" 
