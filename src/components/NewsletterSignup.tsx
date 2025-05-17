@@ -19,9 +19,9 @@ const NewsletterSignup = () => {
     <section className="bg-gradient-to-br from-steel/10 to-slate/5 py-16">
       <div className="container-custom">
         <div className="max-w-2xl mx-auto text-center">
-          <h2 className="heading-md text-slate mb-4">Join the Mission</h2>
+          <h2 className="heading-md text-slate mb-4">Let's Stay Connected</h2>
           <p className="text-slate/80 mb-8 max-w-lg mx-auto">
-            Subscribe to get insights on product philosophy, weightlifting wisdom, and strategies for personal and professional growth.
+            I send out thoughts on product work, strength training, and personal growth a couple times a month. No fluff, just practical ideas you can actually use.
           </p>
           
           <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
@@ -43,12 +43,12 @@ const NewsletterSignup = () => {
           
           {isSubmitted && (
             <div className="mt-4 text-sm text-green-600 animate-fade-in">
-              Thank you for subscribing! Check your inbox soon.
+              Thanks for subscribing! I'll be in touch soon.
             </div>
           )}
           
           <p className="text-xs text-slate/60 mt-4">
-            We respect your privacy and will never share your information.
+            I respect your privacy and won't share your information. Unsubscribe anytime.
           </p>
         </div>
       </div>

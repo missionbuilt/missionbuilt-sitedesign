@@ -1,26 +1,27 @@
+
 import BlogCard from './BlogCard';
 
-// Updated blog post data to match the new theme
+// Updated blog post data with more personal tone
 const featuredPosts = [
   {
-    title: "The User Mission Method",
-    excerpt: "Product is simple: Make users successful in their mission. Here's how we implement this philosophy.",
+    title: "How I Approach User Success",
+    excerpt: "After years of trial and error, I've found that product is simple: Make users successful in their mission. Here's my approach.",
     date: "May 10, 2023",
     category: "Product",
     slug: "user-mission-method",
     image: "/placeholder.svg"
   },
   {
-    title: "Building Strength Through Consistency",
-    excerpt: "Passion is measurable by consistency, not noise. How daily practice builds extraordinary results.",
+    title: "The Power of Showing Up Daily",
+    excerpt: "I've learned that passion isn't measured by intensity but by consistency. How daily practice leads to extraordinary results.",
     date: "April 28, 2023",
     category: "Training",
     slug: "strength-through-consistency",
     image: "/placeholder.svg"
   },
   {
-    title: "Simplify Until Success Is Obvious",
-    excerpt: "How removing complexity creates clarity and helps teams achieve meaningful outcomes.",
+    title: "Simplify Until It Clicks",
+    excerpt: "My experience with removing complexity to create clarity. Simple beats clever every time when it comes to helping teams succeed.",
     date: "April 15, 2023",
     category: "Product Strategy",
     slug: "simplify-for-success",

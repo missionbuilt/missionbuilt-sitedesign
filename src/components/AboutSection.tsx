@@ -8,14 +8,14 @@ import { toast } from "./ui/use-toast";
 const AboutSection = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [missionText, setMissionText] = useState(
-    "This site exists to unify two worlds: Building great products that enable others to succeed, and building great selves through strength—powerlifting, bodybuilding, weight training, and personal development.\n\nThe method? It's not new. It's not trendy. It's radically simple. Product management isn't a circus of ceremonies. It's showing up, giving a shit, and making sure your users are stronger because of you."
+    "I started this site to bring together two passions: building products that help people succeed, and building myself through strength training—powerlifting, bodybuilding, and all things iron.\n\nMy approach? It's not revolutionary. It's not trendy. It's radically simple. I've found that product management isn't about ceremonies or frameworks. It's about showing up, genuinely caring, and making sure the people using your product are better off because of what you built."
   );
 
   const handleSave = () => {
     setIsEditing(false);
     toast({
-      title: "Mission updated",
-      description: "Your User Mission Method has been updated successfully.",
+      title: "Story updated",
+      description: "Your personal story has been updated successfully.",
     });
   };
 
@@ -40,7 +40,7 @@ const AboutSection = () => {
           <div>
             <div className="flex items-center justify-between mb-4">
               <span className="inline-block px-3 py-1 bg-secondary text-slate/80 dark:bg-secondary/30 dark:text-slate-100 rounded-full text-sm font-medium">
-                Our Mission
+                My Story
               </span>
               
               <Dialog>
@@ -50,12 +50,12 @@ const AboutSection = () => {
                       <path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
                       <path d="m15 5 4 4"/>
                     </svg>
-                    Edit Mission
+                    Edit Story
                   </Button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[525px]">
                   <DialogHeader>
-                    <DialogTitle>Edit User Mission Method</DialogTitle>
+                    <DialogTitle>Edit Your Story</DialogTitle>
                   </DialogHeader>
                   <div className="py-4">
                     <Textarea 
@@ -77,7 +77,7 @@ const AboutSection = () => {
             </div>
             
             <h2 className="heading-md text-slate mb-6">
-              The User Mission Method
+              What I've Learned About Product
             </h2>
             
             <div className="text-slate/80 dark:text-slate-200 space-y-4">
