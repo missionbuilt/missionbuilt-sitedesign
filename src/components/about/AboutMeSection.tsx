@@ -1,6 +1,5 @@
 
 import React from "react";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Mail, Linkedin, Github } from "lucide-react";
@@ -8,9 +7,13 @@ import { Mail, Linkedin, Github } from "lucide-react";
 const AboutMeSection = () => {
   return (
     <div className="flex flex-col items-center space-y-8 mb-16">
-      <Avatar className="w-40 h-40 border-4 border-primary/10">
-        <AvatarFallback className="text-5xl">MB</AvatarFallback>
-      </Avatar>
+      <div className="w-40 h-40 overflow-hidden rounded-full border-4 border-primary/10">
+        <img 
+          src="/lovable-uploads/e1905905-308a-4c93-8f94-d5b6f7ecaa56.png" 
+          alt="Mike profile cartoon" 
+          className="w-full h-full object-cover"
+        />
+      </div>
 
       <Card className="w-full bg-card shadow-md border border-slate/10">
         <CardContent className="pt-6">
