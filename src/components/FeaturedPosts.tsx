@@ -1,3 +1,4 @@
+
 import BlogCard from './BlogCard';
 
 // Sample blog post data
@@ -55,7 +56,9 @@ const FeaturedPosts = () => {
             {/* Third card - Philosophy & Training connection */}
             <div className="rounded-xl overflow-hidden bg-gradient-to-br from-slate to-steel text-white shadow-sm card-hover">
               <div className="p-6 h-full flex flex-col">
-                <h3 className="heading-sm mb-4">The Mind-Body Connection</h3>
+                <h3 className="heading-sm mb-4 text-white font-bold drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]">
+                  The Mind-Body Connection
+                </h3>
                 <p className="mb-6 flex-grow">
                   Discover how the discipline of weightlifting enhances product thinking, and how product philosophy improves physical training.
                 </p>
