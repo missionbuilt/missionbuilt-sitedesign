@@ -15,16 +15,16 @@ const Index = () => {
     // Short timeout to ensure DOM is ready before animations
     const timer = setTimeout(() => {
       setIsLoaded(true);
-    }, 50);
+    }, 100);
     
     return () => clearTimeout(timer);
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col bg-background transition-opacity duration-300 ease-in-out">
+    <div className="min-h-screen flex flex-col bg-background">
       <Navbar />
       
-      <main className={`flex-grow ${isLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}>
+      <main className={`flex-grow transition-all duration-500 ease-in-out ${isLoaded ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-4'}`}>
         <HeroSection />
         <BookUniqueAspects />
         <WhyThisWhyNow />
