@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import Navbar from '@/components/Navbar';
@@ -91,6 +90,16 @@ const Privacy = () => {
               <h2 className="text-2xl font-bold mb-4">6. This May Change</h2>
               <p className="mb-6">
                 This project is alive — just like you. Terms may be updated occasionally. We'll timestamp the latest version. Keep checking back if that matters to you.
+              </p>
+            </section>
+            
+            <section className="mb-12">
+              <h2 className="text-2xl font-bold mb-4">7. Contact</h2>
+              <p className="mb-6">
+                Questions, concerns, or brilliant ideas?<br />
+                Email: <a href="mailto:mike@missionbuilt.io" className="text-army hover:underline">mike@missionbuilt.io</a><br />
+                Twitter: <a href="https://twitter.com/missionbuilt" className="text-army hover:underline">@missionbuilt</a><br />
+                Or just shout really loud while deadlifting.
               </p>
             </section>
             
