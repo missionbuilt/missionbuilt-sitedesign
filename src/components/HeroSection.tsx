@@ -18,7 +18,7 @@ const HeroSection = () => {
             <img 
               src="/lovable-uploads/dfd1484c-2dce-4c45-a3ef-e17eefa59dcc.png" 
               alt="MissionBuilt Logo" 
-              className="h-24 w-auto"
+              className="h-24 w-auto mix-blend-multiply"
             />
           </div>
           

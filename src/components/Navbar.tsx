@@ -14,7 +14,7 @@ const Navbar = () => {
           <img 
             src="/lovable-uploads/dfd1484c-2dce-4c45-a3ef-e17eefa59dcc.png" 
             alt="MissionBuilt Logo" 
-            className="h-10 w-auto"
+            className="h-10 w-auto mix-blend-multiply"
           />
           <span className="font-display font-semibold text-lg md:text-xl text-slate">MissionBuilt<span className="text-army">.io</span></span>
         </Link>
