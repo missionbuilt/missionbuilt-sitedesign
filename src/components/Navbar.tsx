@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import Logo from '@/components/Logo';
@@ -13,9 +13,16 @@ const Navbar = () => {
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: 'instant' // Changed from 'smooth' to 'instant' for immediate scrolling
     });
   };
+
+  // Effect to ensure we're at the top of the page when navigating to home
+  useEffect(() => {
+    if (location.pathname === '/') {
+      window.scrollTo(0, 0);
+    }
+  }, [location.pathname]);
 
   return (
     <header className="bg-white/90 dark:bg-slate/5 backdrop-blur-sm sticky top-0 z-10 border-b border-slate/10 dark:border-slate/20">
