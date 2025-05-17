@@ -76,6 +76,17 @@ const Privacy = () => {
               </p>
             </section>
             
+            <section className="mb-12">
+              <h2 className="text-2xl font-bold mb-4">5. Analytics and Privacy</h2>
+              <p className="mb-6">
+                We may use basic analytics (like Google Analytics or Plausible) to understand how the site is used. We don't sell your data. If we add a newsletter, it'll be opt-in only — and you can unsubscribe any time.
+              </p>
+              
+              <p className="mb-6">
+                For more details, see our Privacy Policy (coming soon).
+              </p>
+            </section>
+            
             {/* Additional content can be added here by the user later */}
           </div>
         </div>
