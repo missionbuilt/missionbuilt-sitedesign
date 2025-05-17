@@ -5,26 +5,29 @@ import { Clock, Target } from "lucide-react";
 
 const WhyThisWhyNow = () => {
   return (
-    <section className="py-20 bg-slate/5 dark:bg-slate/10">
+    <section className="py-24 bg-slate/5 dark:bg-slate/10 relative overflow-hidden">
+      {/* Background accent */}
+      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-sunburst/20 to-transparent"></div>
+      
       <div className="container-custom">
-        <div className="text-center mb-12">
-          <h2 className="heading-md mb-4">Why This, Why Now</h2>
-          <p className="body-md max-w-2xl mx-auto text-slate/80 dark:text-slate-300">
+        <div className="text-center mb-16">
+          <h2 className="heading-md mb-4 animate-fade-in">Why This, Why Now</h2>
+          <p className="body-md max-w-2xl mx-auto text-slate/80 dark:text-slate-300 animate-fade-in" style={{ animationDelay: "0.2s" }}>
             The intersection of product leadership and physical discipline has never been more relevant
           </p>
         </div>
         
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 gap-10">
           {/* Why This Card */}
-          <Card className="bg-gradient-to-br from-slate/5 to-army/5 hover:shadow-md transition-shadow duration-300 border border-slate/10 overflow-hidden">
-            <CardContent className="p-8">
-              <div className="flex items-center justify-center mb-6">
-                <div className="p-3 bg-army/10 rounded-full">
+          <Card className="bg-gradient-to-br from-slate/5 to-army/5 hover:shadow-lg transition-all duration-300 hover:-translate-y-2 border border-slate/10 overflow-hidden group animate-fade-in" style={{ animationDelay: "0.3s" }}>
+            <CardContent className="p-8 md:p-10">
+              <div className="flex items-center justify-center mb-8">
+                <div className="p-4 bg-army/10 rounded-full group-hover:scale-110 transition-transform duration-300">
                   <Target className="h-8 w-8 text-army" />
                 </div>
               </div>
               
-              <h3 className="text-xl font-semibold mb-4 text-center">The Mission Focus</h3>
+              <h3 className="text-xl font-display font-semibold mb-6 text-center">The Mission Focus</h3>
               
               <div className="space-y-4 text-slate dark:text-slate-200">
                 <p>
@@ -47,15 +50,15 @@ const WhyThisWhyNow = () => {
           </Card>
           
           {/* Why Now Card */}
-          <Card className="bg-gradient-to-br from-slate/5 to-sunburst/5 hover:shadow-md transition-shadow duration-300 border border-slate/10 overflow-hidden">
-            <CardContent className="p-8">
-              <div className="flex items-center justify-center mb-6">
-                <div className="p-3 bg-sunburst/10 rounded-full">
+          <Card className="bg-gradient-to-br from-slate/5 to-sunburst/5 hover:shadow-lg transition-all duration-300 hover:-translate-y-2 border border-slate/10 overflow-hidden group animate-fade-in" style={{ animationDelay: "0.4s" }}>
+            <CardContent className="p-8 md:p-10">
+              <div className="flex items-center justify-center mb-8">
+                <div className="p-4 bg-sunburst/10 rounded-full group-hover:scale-110 transition-transform duration-300">
                   <Clock className="h-8 w-8 text-sunburst" />
                 </div>
               </div>
               
-              <h3 className="text-xl font-semibold mb-4 text-center">The Critical Timing</h3>
+              <h3 className="text-xl font-display font-semibold mb-6 text-center">The Critical Timing</h3>
               
               <div className="space-y-4 text-slate dark:text-slate-200">
                 <p>

@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import WhyThisWhyNow from "../components/WhyThisWhyNow";
 import BookUniqueAspects from "../components/BookUniqueAspects";
+import CallToAction from "../components/CallToAction";
 
 const Index = () => {
   return (
@@ -14,6 +15,7 @@ const Index = () => {
         <HeroSection />
         <BookUniqueAspects />
         <WhyThisWhyNow />
+        <CallToAction />
       </main>
       
       <Footer />
