@@ -37,6 +37,36 @@
 
     --radius: 1rem;
   }
+
+  .dark {
+    --background: 222 47% 11%;
+    --foreground: 210 40% 98%;
+
+    --card: 222 47% 11%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222 47% 11%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 70% 50%;
+    --primary-foreground: 222 47% 11%;
+
+    --secondary: 210 20% 30%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 210 20% 20%;
+    --muted-foreground: 215 16% 70%;
+
+    --accent: 45 100% 63%;
+    --accent-foreground: 222 47% 11%;
+
+    --destructive: 0 85% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214 32% 25%;
+    --input: 214 32% 25%;
+    --ring: 210 40% 98%;
+  }
 }
 
 @layer base {
@@ -55,54 +85,54 @@
   }
   
   .heading-lg {
-    @apply font-display font-bold text-3xl md:text-4xl lg:text-5xl leading-tight text-slate;
+    @apply font-display font-bold text-3xl md:text-4xl lg:text-5xl leading-tight text-slate dark:text-slate/90;
   }
   
   .heading-md {
-    @apply font-display font-semibold text-2xl md:text-3xl leading-snug text-slate;
+    @apply font-display font-semibold text-2xl md:text-3xl leading-snug text-slate dark:text-slate/90;
   }
   
   .heading-sm {
-    @apply font-display font-semibold text-xl md:text-2xl leading-snug text-slate;
+    @apply font-display font-semibold text-xl md:text-2xl leading-snug text-slate dark:text-slate/90;
   }
   
   .body-lg {
-    @apply text-lg leading-relaxed text-slate;
+    @apply text-lg leading-relaxed text-slate dark:text-slate/80;
   }
   
   .body {
-    @apply text-base leading-relaxed text-slate;
+    @apply text-base leading-relaxed text-slate dark:text-slate/80;
   }
   
   .body-sm {
-    @apply text-sm leading-relaxed text-slate;
+    @apply text-sm leading-relaxed text-slate dark:text-slate/80;
   }
 
   .nav-link {
-    @apply text-slate hover:text-army transition-colors duration-200 font-medium px-3 py-2 rounded-md hover:bg-slate/10;
+    @apply text-slate hover:text-army transition-colors duration-200 font-medium px-3 py-2 rounded-md hover:bg-slate/10 dark:text-slate/70 dark:hover:text-army dark:hover:bg-slate/5;
   }
   
   .nav-link-active {
-    @apply text-army bg-army/10;
+    @apply text-army bg-army/10 dark:bg-army/5;
   }
 
   .btn-primary {
-    @apply bg-army text-white hover:bg-army/90 px-6 py-3 rounded-lg font-medium transition-colors duration-200 shadow-sm;
+    @apply bg-army text-white hover:bg-army/90 px-6 py-3 rounded-lg font-medium transition-colors duration-200 shadow-sm dark:bg-army/90 dark:hover:bg-army;
   }
   
   .btn-secondary {
-    @apply bg-secondary text-slate hover:bg-secondary/80 px-6 py-3 rounded-lg font-medium transition-colors duration-200 shadow-sm;
+    @apply bg-secondary text-slate hover:bg-secondary/80 px-6 py-3 rounded-lg font-medium transition-colors duration-200 shadow-sm dark:bg-secondary dark:text-slate/90 dark:hover:bg-secondary/90;
   }
   
   .btn-accent {
-    @apply bg-sunburst text-slate hover:bg-sunburst/90 px-6 py-3 rounded-lg font-medium transition-colors duration-200 shadow-sm;
+    @apply bg-sunburst text-slate hover:bg-sunburst/90 px-6 py-3 rounded-lg font-medium transition-colors duration-200 shadow-sm dark:hover:bg-sunburst;
   }
   
   .btn-army {
-    @apply bg-army text-white hover:bg-army/90 px-6 py-3 rounded-lg font-medium transition-colors duration-200 shadow-sm;
+    @apply bg-army text-white hover:bg-army/90 px-6 py-3 rounded-lg font-medium transition-colors duration-200 shadow-sm dark:bg-army/90 dark:hover:bg-army;
   }
   
   .card-hover {
-    @apply transition-all duration-200 hover:shadow-lg hover:-translate-y-1;
+    @apply transition-all duration-200 hover:shadow-lg hover:-translate-y-1 dark:hover:shadow-slate/5;
   }
 }
