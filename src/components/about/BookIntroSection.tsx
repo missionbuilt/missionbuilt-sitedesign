@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Book } from "lucide-react";
+import { Github } from "lucide-react";
 
 const BookIntroSection = () => {
   return (
@@ -10,7 +10,9 @@ const BookIntroSection = () => {
         <CardContent className="p-8">
           <div className="flex items-center justify-center mb-6">
             <div className="p-3 bg-army/10 rounded-full">
-              <Book className="h-10 w-10 text-army" />
+              <a href="https://github.com/missionbuilt" target="_blank" rel="noopener noreferrer">
+                <Github className="h-10 w-10 text-army" />
+              </a>
             </div>
           </div>
           
