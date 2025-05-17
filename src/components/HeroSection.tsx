@@ -47,7 +47,7 @@ const HeroSection = () => {
             Product lessons through the lens of <span className="text-sunburst font-bold">powerlifting</span>.
           </h1>
           
-          <div className="mb-10 max-w-2xl mx-auto">
+          <div className="mb-4 max-w-2xl mx-auto">
             <p className="body-lg mb-6">
               What if building great products had less to do with frameworks and more to do with focus? Less with process and more with passion? That's the idea behind MissionBuilt — a free, open-source book sharing lessons I've learned across decades of product leadership, through a unique and sometimes sweaty lens: powerlifting.
             </p>
