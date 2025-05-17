@@ -1,3 +1,4 @@
+
 // Chapter data structure
 export interface Chapter {
   id: number;
@@ -28,77 +29,77 @@ export const chapters: Chapter[] = [
     title: "Rituals Over Rules",
     description: "Rigid processes break. Rituals scale. Replace rigid roadmaps and overly prescriptive training programs with adaptable, purpose-driven rituals.",
     slug: "rituals-over-rules",
-    status: "in-progress"
+    status: "not-started"
   },
   {
     id: 4,
     title: "Feedback is a Superpower",
     description: "Only the honest get stronger. Lifters use mirrors and video. Builders use retros and customer interviews. The best learn from what's real — not what's comfortable.",
     slug: "feedback-superpower",
-    status: "in-progress"
+    status: "not-started"
   },
   {
     id: 5,
     title: "Progress Isn't Pretty",
     description: "Messy lifts and messy launches mean you're trying. Product and powerlifting are both iterative by nature. Failures aren't signs of weakness — they're markers of forward motion.",
     slug: "progress-isnt-pretty",
-    status: "in-progress"
+    status: "not-started"
   },
   {
     id: 6,
     title: "The Mission Demands Recovery",
     description: "Pursuing the mission doesn't mean burning out. Recovery isn't downtime — it's mission support. From sleep and silence to deloads and retros.",
     slug: "mission-demands-recovery",
-    status: "in-progress"
+    status: "not-started"
   },
   {
     id: 7,
     title: "Train the Engine, Not Just the Output",
     description: "Power comes from the core — of products and people. Behind every visible lift or release is deep, quiet work. That's your core — your engine. Build it.",
     slug: "train-the-engine",
-    status: "in-progress"
+    status: "not-started"
   },
   {
     id: 8,
     title: "Decisions Are Made Under Load",
     description: "Stress reveals integrity — of steel and of strategy. How you make decisions under pressure says everything. Prepare before the lift. Build judgment into your roadmap.",
     slug: "decisions-under-load",
-    status: "in-progress"
+    status: "not-started"
   },
   {
     id: 9,
     title: "Ship It Like You Show Up",
     description: "Consistency > Genius. Most wins come from those who don't flinch. Show up. Ship. Lift. Repeat.",
     slug: "ship-it",
-    status: "in-progress"
+    status: "not-started"
   },
   {
     id: 10,
     title: "The Team Is the Tool",
     description: "You can't outlift a bad spotter. You can't outrun a bad culture. Good teammates matter in the gym and in the roadmap room. Culture is a compounder of success.",
     slug: "team-is-the-tool",
-    status: "in-progress"
+    status: "not-started"
   },
   {
     id: 11,
     title: "Strong Enough to Listen",
     description: "Empathy is a performance enhancer. Listening — really listening — makes you stronger. It drives better design and deeper connections. It reveals where you grow next.",
     slug: "strong-enough-to-listen",
-    status: "in-progress"
+    status: "not-started"
   },
   {
     id: 12,
     title: "The Weight Is Real. Own It.",
     description: "Responsibility isn't optional when the mission matters. Ownership in the gym means no excuses. Same with customers. Own the mission. Own the outcome.",
     slug: "weight-is-real",
-    status: "in-progress"
+    status: "not-started"
   },
   {
     id: 13,
     title: "Deload Doesn't Mean Quit",
     description: "Strategic recovery as a path to longevity in product and power.",
     slug: "deload-doesnt-mean-quit",
-    status: "coming-soon"
+    status: "not-started"
   },
   {
     id: 14,
