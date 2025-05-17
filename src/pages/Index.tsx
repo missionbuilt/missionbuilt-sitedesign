@@ -3,7 +3,6 @@ import HeroSection from "../components/HeroSection";
 import NewsletterSignup from "../components/NewsletterSignup";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import WhyThisWhyNow from "../components/WhyThisWhyNow";
 import BookUniqueAspects from "../components/BookUniqueAspects";
 
 const Index = () => {
@@ -14,7 +13,6 @@ const Index = () => {
       <main className="flex-grow">
         <HeroSection />
         <BookUniqueAspects />
-        <WhyThisWhyNow />
         <NewsletterSignup />
       </main>
       
