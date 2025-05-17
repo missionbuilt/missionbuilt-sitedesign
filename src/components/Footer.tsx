@@ -15,12 +15,13 @@ const Footer = () => {
             </p>
           </div>
           
-          {/* Quick Links */}
+          {/* Quick Links - Updated to match Navbar links */}
           <div>
             <h3 className="font-display font-semibold mb-3 text-slate dark:text-slate-100">Explore</h3>
             <ul className="space-y-2 text-sm">
-              <li><Link to="/field-notes" className="text-slate/80 dark:text-slate-300 hover:text-army dark:hover:text-army transition-colors">Page 1</Link></li>
-              <li><Link to="/pr-board" className="text-slate/80 dark:text-slate-300 hover:text-army dark:hover:text-army transition-colors">Page 2</Link></li>
+              <li><Link to="/" className="text-slate/80 dark:text-slate-300 hover:text-army dark:hover:text-army transition-colors">The Mission</Link></li>
+              <li><Link to="/chapters" className="text-slate/80 dark:text-slate-300 hover:text-army dark:hover:text-army transition-colors">Training Logs</Link></li>
+              <li><Link to="/about" className="text-slate/80 dark:text-slate-300 hover:text-army dark:hover:text-army transition-colors">About</Link></li>
             </ul>
           </div>
           
