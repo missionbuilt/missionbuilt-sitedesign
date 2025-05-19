@@ -1,6 +1,6 @@
 
-// This is just a placeholder.
-// For proper favicon support, please ensure:
-// 1. Move favicon.ico to the public directory
-// 2. Create additional formats like favicon-16x16.png and favicon-32x32.png in public directory
+// This is a placeholder for the M with barbell logo favicon
+// The actual implementation should be an .ico file with the M with barbell logo
+// For browsers that don't support .ico files, we'll provide PNG alternatives
 
+// Note: The Logo component contains the M with barbell logo that we want to use here
