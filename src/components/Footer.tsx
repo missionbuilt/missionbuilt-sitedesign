@@ -44,8 +44,8 @@ const Footer = () => {
                 <span className="sr-only">Bluesky</span>
               </a>
               
-              {/* GitHub Icon - Link will be updated later */}
-              <a href="#" className="text-slate/70 hover:text-army dark:text-slate-400 dark:hover:text-army transition-colors">
+              {/* GitHub Icon - Updated with the correct link */}
+              <a href="https://github.com/missionbuilt" className="text-slate/70 hover:text-army dark:text-slate-400 dark:hover:text-army transition-colors">
                 <Github className="h-5 w-5" />
                 <span className="sr-only">GitHub</span>
               </a>
