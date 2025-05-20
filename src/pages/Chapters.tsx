@@ -40,12 +40,12 @@ const Chapters = () => {
             <StatusCounter chapters={chapters} />
           </div>
           
-          {/* Book title and subtitle */}
-          <div className="mb-10 text-center">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-2 text-army dark:text-army">
+          {/* Book title and subtitle - REDUCED SIZE */}
+          <div className="mb-8 text-center">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-display font-bold mb-1 text-army dark:text-army">
               Mission Built
-            </h1>
-            <p className="text-xl md:text-2xl font-display text-muted-foreground max-w-3xl mx-auto">
+            </h2>
+            <p className="text-lg md:text-xl font-display text-muted-foreground max-w-3xl mx-auto">
               Lessons from the Barbell and the Backlog
             </p>
           </div>
