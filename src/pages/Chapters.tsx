@@ -27,11 +27,9 @@ const Chapters = () => {
       
       <main className="flex-grow container mx-auto px-4 py-8 md:py-12">
         <div className="max-w-5xl mx-auto">
-          {/* Header with book title and subtitle */}
+          {/* Header without book title */}
           <div className="mb-10">
             <ChaptersHeader 
-              bookTitle="Mission Built"
-              bookSubtitle="Lessons from the Barbell and the Backlog"
               title="Training Logs" 
               subtitle="Lift Heavy. Lead Strong. One Rep, One Release at a Time." 
             />
@@ -40,6 +38,16 @@ const Chapters = () => {
           {/* Status counters without animations */}
           <div className="mb-8">
             <StatusCounter chapters={chapters} />
+          </div>
+          
+          {/* Book title and subtitle */}
+          <div className="mb-10 text-center">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-2 text-army dark:text-army">
+              Mission Built
+            </h1>
+            <p className="text-xl md:text-2xl font-display text-muted-foreground max-w-3xl mx-auto">
+              Lessons from the Barbell and the Backlog
+            </p>
           </div>
           
           {/* View toggle for grid/table */}
