@@ -27,9 +27,11 @@ const Chapters = () => {
       
       <main className="flex-grow container mx-auto px-4 py-8 md:py-12">
         <div className="max-w-5xl mx-auto">
-          {/* Header without animations */}
+          {/* Header with book title and subtitle */}
           <div className="mb-10">
             <ChaptersHeader 
+              bookTitle="Mission Built"
+              bookSubtitle="Lessons from the Barbell and the Backlog"
               title="Training Logs" 
               subtitle="Lift Heavy. Lead Strong. One Rep, One Release at a Time." 
             />
