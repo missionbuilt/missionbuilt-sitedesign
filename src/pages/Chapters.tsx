@@ -40,14 +40,11 @@ const Chapters = () => {
             <StatusCounter chapters={chapters} />
           </div>
           
-          {/* Book title and subtitle - REDUCED SIZE */}
+          {/* Book title and subtitle on same line with colon */}
           <div className="mb-8 text-center">
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-display font-bold mb-1 text-army dark:text-army">
-              Mission Built
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-display font-bold text-army dark:text-army">
+              Mission Built<span className="mx-2">:</span><span className="font-normal text-muted-foreground">Lessons from the Barbell and the Backlog</span>
             </h2>
-            <p className="text-lg md:text-xl font-display text-muted-foreground max-w-3xl mx-auto">
-              Lessons from the Barbell and the Backlog
-            </p>
           </div>
           
           {/* View toggle for grid/table */}
