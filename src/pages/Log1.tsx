@@ -34,7 +34,7 @@ const Log1 = () => {
         {/* Log header section */}
         <div className="mb-10">
           <h1 className="text-4xl md:text-5xl font-display font-bold text-slate dark:text-slate-100 mb-4">
-            Log #1 Title
+            Mission Before Metrics
           </h1>
           
           <div className="flex items-center gap-4 text-slate/80 dark:text-slate-300 mb-6">
