@@ -15,7 +15,7 @@ export const chapters: Chapter[] = [
     title: "Mission Before Metrics",
     description: "Success isn't the dashboard — it's the user's outcome. A clear breakdown of the User Mission Method. Forget vanity metrics — this is about aligning everything you do to help users win.",
     slug: "mission-before-metrics",
-    status: "coming-soon"
+    status: "in-progress"
   },
   {
     id: 2,

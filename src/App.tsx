@@ -11,6 +11,7 @@ import NotFound from "./pages/NotFound";
 import Chapters from "./pages/Chapters";
 import AboutMe from "./pages/AboutMe";
 import Privacy from "./pages/Privacy";
+import Log1 from "./pages/Log1";
 
 const App = () => {
   // Create a new QueryClient instance inside the component
@@ -30,6 +31,7 @@ const App = () => {
                 <Route path="/about" element={<AboutMe />} />
                 <Route path="/privacy" element={<Privacy />} />
                 <Route path="/terms" element={<Privacy />} />
+                <Route path="/log/1" element={<Log1 />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>

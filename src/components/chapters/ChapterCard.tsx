@@ -1,5 +1,6 @@
 
 import React from "react";
+import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Book, Activity, Clock, Circle, X } from "lucide-react";
@@ -68,6 +69,13 @@ interface ChapterCardProps {
 }
 
 const ChapterCard: React.FC<ChapterCardProps> = ({ chapter }) => {
+  // Determine if the chapter is Log 1 (special treatment)
+  const isLog1 = chapter.id === 1;
+  
+  // If the chapter is Log 1, we'll make it clickable regardless of status
+  const isClickable = chapter.status === "in-progress" || isLog1;
+  
+  // Render the card content
   return (
     <Card className="transition-all hover:shadow-md border-slate/10 h-full">
       <CardHeader className="pb-2">
@@ -88,18 +96,18 @@ const ChapterCard: React.FC<ChapterCardProps> = ({ chapter }) => {
             <Book className="mr-2 h-4 w-4" />
             <span>Log {chapter.id}</span>
           </div>
-          <div className={cn(
-            "inline-flex items-center text-sm font-medium",
-            chapter.status === "in-progress"
-              ? "text-primary hover:underline cursor-pointer" 
-              : "opacity-50 cursor-not-allowed text-slate-500"
-          )}>
-            {chapter.status === "in-progress" ? (
-              <>Read Log <Book className="ml-1 h-4 w-4" /></>
-            ) : (
-              <>404 Gains Not Found <X className="ml-1 h-4 w-4" /></>
-            )}
-          </div>
+          {isClickable ? (
+            <Link 
+              to={`/log/${chapter.id}`} 
+              className="inline-flex items-center text-sm font-medium text-primary hover:underline"
+            >
+              Read Log <Book className="ml-1 h-4 w-4" />
+            </Link>
+          ) : (
+            <div className="inline-flex items-center text-sm font-medium opacity-50 cursor-not-allowed text-slate-500">
+              404 Gains Not Found <X className="ml-1 h-4 w-4" />
+            </div>
+          )}
         </div>
       </CardContent>
     </Card>
