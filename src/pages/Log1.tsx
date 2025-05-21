@@ -52,7 +52,6 @@ const Log1 = () => {
       <main className="flex-grow container mx-auto px-4 py-8 md:py-12">
         <LogContent
           title="Mission Before Metrics"
-          subtitle="Success isn't the dashboard — it's the user's outcome."
           featuredImage={{
             src: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6",
             alt: "Mission Before Metrics"
