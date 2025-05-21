@@ -1,6 +1,7 @@
+
 import { Link } from 'react-router-dom';
 import Logo from '@/components/Logo';
-import { Heart, ExternalLink, Github } from "lucide-react";
+import { Heart, ExternalLink, Github, Discord } from "lucide-react";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -44,7 +45,13 @@ const Footer = () => {
                 <span className="sr-only">Bluesky</span>
               </a>
               
-              {/* GitHub Icon - Updated with the correct link */}
+              {/* Discord Icon */}
+              <a href="https://discord.gg/H5cSFKz2" className="text-slate/70 hover:text-army dark:text-slate-400 dark:hover:text-army transition-colors">
+                <Discord className="h-5 w-5" />
+                <span className="sr-only">Discord</span>
+              </a>
+              
+              {/* GitHub Icon */}
               <a href="https://github.com/missionbuilt" className="text-slate/70 hover:text-army dark:text-slate-400 dark:hover:text-army transition-colors">
                 <Github className="h-5 w-5" />
                 <span className="sr-only">GitHub</span>
