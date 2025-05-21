@@ -1,3 +1,4 @@
+
 import React, { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -608,8 +609,26 @@ const Log1 = () => {
               </div>
             </div>
             
+            {/* Next/Previous navigation - MOVED ABOVE SOURCES */}
+            <div className="mt-16 pt-8 border-t border-slate/10 dark:border-slate/20 flex justify-between mb-16">
+              <div>
+                {/* This would be the previous log link if available */}
+              </div>
+              <div>
+                <Link 
+                  to="/chapters"
+                  className="btn-army inline-flex"
+                >
+                  All Training Logs
+                </Link>
+              </div>
+              <div>
+                {/* This would be the next log link if available */}
+              </div>
+            </div>
+            
             {/* Sources Section */}
-            <div className="mt-16 pt-8 border-t border-slate/10 dark:border-slate/20">
+            <div className="pt-8 border-t border-slate/10 dark:border-slate/20">
               <h2 id="sources" className="text-2xl md:text-3xl font-display font-semibold text-slate dark:text-slate-100 mb-6">
                 Sources
               </h2>
@@ -800,24 +819,6 @@ const Log1 = () => {
                     </a>
                   </li>
                 </ul>
-              </div>
-            </div>
-            
-            {/* Next/Previous navigation */}
-            <div className="mt-16 pt-8 border-t border-slate/10 dark:border-slate/20 flex justify-between">
-              <div>
-                {/* This would be the previous log link if available */}
-              </div>
-              <div>
-                <Link 
-                  to="/chapters"
-                  className="btn-army inline-flex"
-                >
-                  All Training Logs
-                </Link>
-              </div>
-              <div>
-                {/* This would be the next log link if available */}
               </div>
             </div>
           </div>
