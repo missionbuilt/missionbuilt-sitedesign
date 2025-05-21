@@ -5,7 +5,7 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { ChevronLeft, BookOpen, Clock } from "lucide-react";
+import { ChevronLeft, BookOpen, Clock, Link as LinkIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Log1 = () => {
@@ -608,6 +608,201 @@ const Log1 = () => {
               </div>
             </div>
             
+            {/* Sources Section */}
+            <div className="mt-16 pt-8 border-t border-slate/10 dark:border-slate/20">
+              <h2 id="sources" className="text-2xl md:text-3xl font-display font-semibold text-slate dark:text-slate-100 mb-6">
+                Sources
+              </h2>
+              
+              <div className="space-y-4">
+                <p className="text-slate dark:text-slate-200 leading-relaxed">
+                  The following sources were referenced in this article:
+                </p>
+                
+                <ul className="space-y-3 list-none pl-0">
+                  <li className="p-3 bg-slate/5 hover:bg-slate/10 dark:bg-slate/10 dark:hover:bg-slate/20 rounded-md transition-colors">
+                    <a href="https://www.bloomberg.com/news/articles/2020-12-18/cyberpunk-s-buggy-rollout-costs-cd-projekt-investors-1-billion" 
+                       className="flex items-start gap-2 text-slate dark:text-slate-200 hover:text-army dark:hover:text-army no-underline"
+                       target="_blank" 
+                       rel="noopener noreferrer">
+                      <LinkIcon className="h-5 w-5 mt-0.5 flex-shrink-0" />
+                      <span>CD Projekt's stock plunges amid Cyberpunk 2077 launch issues — Bloomberg</span>
+                    </a>
+                  </li>
+                  
+                  <li className="p-3 bg-slate/5 hover:bg-slate/10 dark:bg-slate/10 dark:hover:bg-slate/20 rounded-md transition-colors">
+                    <a href="https://people.com/sports/simone-biles-pulls-out-of-olympics-all-around-final/" 
+                       className="flex items-start gap-2 text-slate dark:text-slate-200 hover:text-army dark:hover:text-army no-underline"
+                       target="_blank" 
+                       rel="noopener noreferrer">
+                      <LinkIcon className="h-5 w-5 mt-0.5 flex-shrink-0" />
+                      <span>Simone Biles on Mental Health — People Magazine</span>
+                    </a>
+                  </li>
+                  
+                  <li className="p-3 bg-slate/5 hover:bg-slate/10 dark:bg-slate/10 dark:hover:bg-slate/20 rounded-md transition-colors">
+                    <a href="https://www.patagonia.com/stories/dont-buy-this-jacket/story-18615.html" 
+                       className="flex items-start gap-2 text-slate dark:text-slate-200 hover:text-army dark:hover:text-army no-underline"
+                       target="_blank" 
+                       rel="noopener noreferrer">
+                      <LinkIcon className="h-5 w-5 mt-0.5 flex-shrink-0" />
+                      <span>Don't Buy This Jacket — Patagonia, 2011</span>
+                    </a>
+                  </li>
+                  
+                  <li className="p-3 bg-slate/5 hover:bg-slate/10 dark:bg-slate/10 dark:hover:bg-slate/20 rounded-md transition-colors">
+                    <a href="https://hbr.org/2016/10/the-business-case-for-purpose" 
+                       className="flex items-start gap-2 text-slate dark:text-slate-200 hover:text-army dark:hover:text-army no-underline"
+                       target="_blank" 
+                       rel="noopener noreferrer">
+                      <LinkIcon className="h-5 w-5 mt-0.5 flex-shrink-0" />
+                      <span>Harvard Business Review analysis, 2016</span>
+                    </a>
+                  </li>
+                  
+                  <li className="p-3 bg-slate/5 hover:bg-slate/10 dark:bg-slate/10 dark:hover:bg-slate/20 rounded-md transition-colors">
+                    <a href="https://www.imperative.com/purpose-at-work-2016" 
+                       className="flex items-start gap-2 text-slate dark:text-slate-200 hover:text-army dark:hover:text-army no-underline"
+                       target="_blank" 
+                       rel="noopener noreferrer">
+                      <LinkIcon className="h-5 w-5 mt-0.5 flex-shrink-0" />
+                      <span>Imperative & NYU Study on Purpose-Driven Work, 2016</span>
+                    </a>
+                  </li>
+                  
+                  <li className="p-3 bg-slate/5 hover:bg-slate/10 dark:bg-slate/10 dark:hover:bg-slate/20 rounded-md transition-colors">
+                    <a href="https://www.mckinsey.com/business-functions/people-and-organizational-performance/our-insights/purpose-shifting-from-why-to-how" 
+                       className="flex items-start gap-2 text-slate dark:text-slate-200 hover:text-army dark:hover:text-army no-underline"
+                       target="_blank" 
+                       rel="noopener noreferrer">
+                      <LinkIcon className="h-5 w-5 mt-0.5 flex-shrink-0" />
+                      <span>McKinsey & Co., 2020 — Purpose: Shifting from Why to How</span>
+                    </a>
+                  </li>
+                  
+                  <li className="p-3 bg-slate/5 hover:bg-slate/10 dark:bg-slate/10 dark:hover:bg-slate/20 rounded-md transition-colors">
+                    <a href="https://builttoadapt.io/date-driven-development-is-killing-your-product-d0bce4ef6f64" 
+                       className="flex items-start gap-2 text-slate dark:text-slate-200 hover:text-army dark:hover:text-army no-underline"
+                       target="_blank" 
+                       rel="noopener noreferrer">
+                      <LinkIcon className="h-5 w-5 mt-0.5 flex-shrink-0" />
+                      <span>Date-Driven Development is Killing Your Product — Built to Adapt</span>
+                    </a>
+                  </li>
+                  
+                  <li className="p-3 bg-slate/5 hover:bg-slate/10 dark:bg-slate/10 dark:hover:bg-slate/20 rounded-md transition-colors">
+                    <a href="https://dnipogo.org/john-r-boyd/" 
+                       className="flex items-start gap-2 text-slate dark:text-slate-200 hover:text-army dark:hover:text-army no-underline"
+                       target="_blank" 
+                       rel="noopener noreferrer">
+                      <LinkIcon className="h-5 w-5 mt-0.5 flex-shrink-0" />
+                      <span>John Boyd — The Essence of Winning and Losing, 1995 (PDF)</span>
+                    </a>
+                  </li>
+                  
+                  <li className="p-3 bg-slate/5 hover:bg-slate/10 dark:bg-slate/10 dark:hover:bg-slate/20 rounded-md transition-colors">
+                    <a href="https://www.nytimes.com/2020/02/27/magazine/boeing-737-max-crash.html" 
+                       className="flex items-start gap-2 text-slate dark:text-slate-200 hover:text-army dark:hover:text-army no-underline"
+                       target="_blank" 
+                       rel="noopener noreferrer">
+                      <LinkIcon className="h-5 w-5 mt-0.5 flex-shrink-0" />
+                      <span>Boeing 737 Max Crisis — The New York Times</span>
+                    </a>
+                  </li>
+                  
+                  <li className="p-3 bg-slate/5 hover:bg-slate/10 dark:bg-slate/10 dark:hover:bg-slate/20 rounded-md transition-colors">
+                    <a href="https://www.essentiallysports.com/bodybuilding-news-probably-my-biggest-mistake-months-after-a-horrifying-pec-tear-while-bench-pressing-strongman-legend-makes-a-candid-confession-about-his-injury-hafthor-bjornsson/" 
+                       className="flex items-start gap-2 text-slate dark:text-slate-200 hover:text-army dark:hover:text-army no-underline"
+                       target="_blank" 
+                       rel="noopener noreferrer">
+                      <LinkIcon className="h-5 w-5 mt-0.5 flex-shrink-0" />
+                      <span>Hafthor Björnsson on Pec Injury — Essentially Sports</span>
+                    </a>
+                  </li>
+                  
+                  <li className="p-3 bg-slate/5 hover:bg-slate/10 dark:bg-slate/10 dark:hover:bg-slate/20 rounded-md transition-colors">
+                    <a href="https://en.as.com/entertainment/game-of-thrones-star-hafthor-bjornsson-suffers-nasty-injury-while-bench-pressing-n/" 
+                       className="flex items-start gap-2 text-slate dark:text-slate-200 hover:text-army dark:hover:text-army no-underline"
+                       target="_blank" 
+                       rel="noopener noreferrer">
+                      <LinkIcon className="h-5 w-5 mt-0.5 flex-shrink-0" />
+                      <span>Hafthor Björnsson Injury Coverage — AS.com</span>
+                    </a>
+                  </li>
+                  
+                  <li className="p-3 bg-slate/5 hover:bg-slate/10 dark:bg-slate/10 dark:hover:bg-slate/20 rounded-md transition-colors">
+                    <a href="https://guidehouse.com/-/media/new-library/industries/defense-and-security/documents/2023/gh-161-wp-improving-employee-retention.pdf" 
+                       className="flex items-start gap-2 text-slate dark:text-slate-200 hover:text-army dark:hover:text-army no-underline"
+                       target="_blank" 
+                       rel="noopener noreferrer">
+                      <LinkIcon className="h-5 w-5 mt-0.5 flex-shrink-0" />
+                      <span>Improving Employee Retention — Guidehouse</span>
+                    </a>
+                  </li>
+                  
+                  <li className="p-3 bg-slate/5 hover:bg-slate/10 dark:bg-slate/10 dark:hover:bg-slate/20 rounded-md transition-colors">
+                    <a href="https://benevity.com/talent-retention-study" 
+                       className="flex items-start gap-2 text-slate dark:text-slate-200 hover:text-army dark:hover:text-army no-underline"
+                       target="_blank" 
+                       rel="noopener noreferrer">
+                      <LinkIcon className="h-5 w-5 mt-0.5 flex-shrink-0" />
+                      <span>Purpose-Driven Work and Turnover — Benevity</span>
+                    </a>
+                  </li>
+                  
+                  <li className="p-3 bg-slate/5 hover:bg-slate/10 dark:bg-slate/10 dark:hover:bg-slate/20 rounded-md transition-colors">
+                    <a href="https://www.hybridperformancemethod.com/" 
+                       className="flex items-start gap-2 text-slate dark:text-slate-200 hover:text-army dark:hover:text-army no-underline"
+                       target="_blank" 
+                       rel="noopener noreferrer">
+                      <LinkIcon className="h-5 w-5 mt-0.5 flex-shrink-0" />
+                      <span>Stefi Cohen's training philosophy and hybrid methodology — Hybrid Performance Method</span>
+                    </a>
+                  </li>
+                  
+                  <li className="p-3 bg-slate/5 hover:bg-slate/10 dark:bg-slate/10 dark:hover:bg-slate/20 rounded-md transition-colors">
+                    <a href="https://www.agilealliance.org/resources/book/agile-retrospectives-making-good-teams-great/" 
+                       className="flex items-start gap-2 text-slate dark:text-slate-200 hover:text-army dark:hover:text-army no-underline"
+                       target="_blank" 
+                       rel="noopener noreferrer">
+                      <LinkIcon className="h-5 w-5 mt-0.5 flex-shrink-0" />
+                      <span>Agile retrospectives and team rituals — Agile Retrospectives: Making Good Teams Great by Esther Derby & Diana Larsen</span>
+                    </a>
+                  </li>
+                  
+                  <li className="p-3 bg-slate/5 hover:bg-slate/10 dark:bg-slate/10 dark:hover:bg-slate/20 rounded-md transition-colors">
+                    <a href="https://www.elastic.co/blog/category/engineering" 
+                       className="flex items-start gap-2 text-slate dark:text-slate-200 hover:text-army dark:hover:text-army no-underline"
+                       target="_blank" 
+                       rel="noopener noreferrer">
+                      <LinkIcon className="h-5 w-5 mt-0.5 flex-shrink-0" />
+                      <span>Elastic hack weeks referenced from internal practices and public blog examples — Elastic's Engineering Blog</span>
+                    </a>
+                  </li>
+                  
+                  <li className="p-3 bg-slate/5 hover:bg-slate/10 dark:bg-slate/10 dark:hover:bg-slate/20 rounded-md transition-colors">
+                    <a href="https://www.atlassian.com/team-playbook/plays/shipit" 
+                       className="flex items-start gap-2 text-slate dark:text-slate-200 hover:text-army dark:hover:text-army no-underline"
+                       target="_blank" 
+                       rel="noopener noreferrer">
+                      <LinkIcon className="h-5 w-5 mt-0.5 flex-shrink-0" />
+                      <span>Atlassian ShipIt (Hack Week model) — Atlassian</span>
+                    </a>
+                  </li>
+                  
+                  <li className="p-3 bg-slate/5 hover:bg-slate/10 dark:bg-slate/10 dark:hover:bg-slate/20 rounded-md transition-colors">
+                    <a href="https://blog.crisp.se/wp-content/uploads/2012/11/SpotifyScaling.pdf" 
+                       className="flex items-start gap-2 text-slate dark:text-slate-200 hover:text-army dark:hover:text-army no-underline"
+                       target="_blank" 
+                       rel="noopener noreferrer">
+                      <LinkIcon className="h-5 w-5 mt-0.5 flex-shrink-0" />
+                      <span>Spotify hack culture overview — Scaling Agile @ Spotify (whitepaper)</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            
             {/* Next/Previous navigation */}
             <div className="mt-16 pt-8 border-t border-slate/10 dark:border-slate/20 flex justify-between">
               <div>
@@ -654,6 +849,9 @@ const Log1 = () => {
                 </li>
                 <li>
                   <a href="#section-3" className="hover:text-army transition-colors">Rituals Over Rules</a>
+                </li>
+                <li className="pt-1">
+                  <a href="#sources" className="hover:text-army transition-colors">Sources</a>
                 </li>
               </ul>
             </Card>
