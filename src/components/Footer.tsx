@@ -46,13 +46,11 @@ const Footer = () => {
               
               {/* Discord Icon */}
               <a href="https://discord.gg/H5cSFKz2" className="text-slate/70 hover:text-army dark:text-slate-400 dark:hover:text-army transition-colors">
-                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
-                  <path d="M9 12c0-.6.4-1 1-1s1 .4 1 1-.4 1-1 1-1-.4-1-1z"></path>
-                  <path d="M15 12c0-.6.4-1 1-1s1 .4 1 1-.4 1-1 1-1-.4-1-1z"></path>
-                  <path d="M7.5 7.2c.4-.9 1.3-2 2.6-2.5 1.7-.7 3.6-.7 5.4-.2 1.1.3 2.4 1 3.1 2.2.3.7.3 1.8.2 2.5-.3 2-.7 3.7-2.4 5a3.6 3.6 0 0 1-1.5.8"></path>
-                  <path d="M9 17c-2.1 0-3.8-1.3-5-2.5-.3-.3-.2-1 .3-1.5.4-.4 1-.2 1.3.1.4.4 1.6 1.4 3.4 1.4 1.6 0 2.9-1 3.4-1.4.4-.3 1-.5 1.4 0 .5.4.6 1.2.3 1.5-1.2 1.2-2.9 2.5-5 2.5"></path>
-                  <path d="M8 17v5l4-4-4-4v3"></path>
-                </svg>
+                <img 
+                  src="/lovable-uploads/8ab5b464-c7fc-453a-9edd-2ee64a40c820.png" 
+                  alt="Discord" 
+                  className="h-5 w-5" 
+                />
                 <span className="sr-only">Discord</span>
               </a>
               
