@@ -34,9 +34,8 @@ const Log1 = () => {
             </Link>
           </div>
           
-          {/* Chapter header */}
+          {/* Chapter header - removed subtitle */}
           <div className="mb-10 text-center">
-            <p className="text-muted-foreground mb-2">Log 1</p>
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-4 text-slate dark:text-slate-100">
               Mission Before Metrics
             </h1>
