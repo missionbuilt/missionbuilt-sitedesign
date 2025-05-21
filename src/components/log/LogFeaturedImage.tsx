@@ -7,38 +7,26 @@ interface LogFeaturedImageProps {
   imageUrl: string;
   imageAlt?: string;
   caption?: string;
-  ratio?: number;
-  className?: string;
-  cardClassName?: string;
-  imageClassName?: string;
-  captionClassName?: string;
 }
 
 const LogFeaturedImage: React.FC<LogFeaturedImageProps> = ({ 
   imageUrl, 
   imageAlt = "Featured Image", 
-  caption = "Featured image caption", 
-  ratio = 21/9,
-  className = "mb-10",
-  cardClassName = "overflow-hidden border-0 shadow-md",
-  imageClassName = "object-cover w-full h-full",
-  captionClassName = "p-2 text-center text-xs text-slate/70 dark:text-slate-400"
+  caption = "Featured image caption" 
 }) => {
   return (
-    <div className={className}>
-      <Card className={cardClassName}>
-        <AspectRatio ratio={ratio}>
+    <div className="mb-10">
+      <Card className="overflow-hidden border-0 shadow-md">
+        <AspectRatio ratio={21/9}>
           <img 
             src={imageUrl} 
             alt={imageAlt}
-            className={imageClassName} 
+            className="object-cover w-full h-full" 
           />
         </AspectRatio>
-        {caption && (
-          <CardContent className={captionClassName}>
-            {caption}
-          </CardContent>
-        )}
+        <CardContent className="p-2 text-center text-xs text-slate/70 dark:text-slate-400">
+          {caption}
+        </CardContent>
       </Card>
     </div>
   );

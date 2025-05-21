@@ -1,11 +1,5 @@
-
 import React from "react";
 import LogSection from "../LogSection";
-import BlockQuote from "../elements/BlockQuote";
-import BorderedText from "../elements/BorderedText";
-import HighlightedBox from "../elements/HighlightedBox";
-import KeyPoint from "../elements/KeyPoint";
-import SourceCitation from "../elements/SourceCitation";
 
 const MissionMagnetSection: React.FC = () => {
   return (
@@ -34,15 +28,13 @@ const MissionMagnetSection: React.FC = () => {
         Metrics are the outcome of making your user successful. Yes, we need to measure them. But they are the result of serving the mission — not the reason for it.
       </p>
 
-      <HighlightedBox className="border-l-4 border-army pl-4 py-2">
+      <div className="my-8 border-l-4 border-army pl-4 py-2 bg-slate/5 dark:bg-slate/10">
         <p className="text-slate dark:text-slate-200 leading-relaxed italic">
           There's a moment in every product meeting when the question slides in like it always does:
-          <br/>
-          "How will we measure success?"
-          <br/>
-          It's a good question — just not always a good first question.
+          <br/>"How will we measure success?"
+          <br/>It's a good question — just not always a good first question.
         </p>
-      </HighlightedBox>
+      </div>
 
       <p className="text-slate dark:text-slate-200 leading-relaxed">
         In lifting, it's the same story. People chase PRs every week like the number on the barbell is the whole point. Add five pounds. Hit record. Post the clip. Repeat.
@@ -52,9 +44,11 @@ const MissionMagnetSection: React.FC = () => {
         But metrics without mission? That's just noise. Pressure with no direction. Goals with no guts.
       </p>
 
-      <BlockQuote>
-        "The weight on the bar isn't the goal — it's the evidence of progress, not the destination."
-      </BlockQuote>
+      <div className="my-6 text-center">
+        <p className="text-lg font-semibold text-army dark:text-army italic">
+          "The weight on the bar isn't the goal — it's the evidence of progress, not the destination."
+        </p>
+      </div>
 
       <p className="text-slate dark:text-slate-200 leading-relaxed">
         We've all seen what happens when this mindset takes over. It's not a failure of talent — it's a failure of alignment. Cyberpunk 2077 didn't initially flop because the devs didn't care — far from it. The development team poured years into building something ambitious. But the pressure to hit a holiday launch window — a decision made at the executive level — overrode the mission of delivering a complete, polished experience. The result was a rocky release, millions in refunds, a reputational hit, and a stock crash.
@@ -64,28 +58,32 @@ const MissionMagnetSection: React.FC = () => {
         To their credit, the team stuck with it. Years later, after patches and a reimagined DLC, the game has earned back much of the trust it lost — a testament to what happens when talented people are finally given the space to do the work right.
       </p>
       
-      <SourceCitation source="CD Projekt's stock plunges amid Cyberpunk 2077 launch issues — Bloomberg, Dec 2020" />
+      <p className="text-xs text-slate/70 dark:text-slate-400 italic">
+        Source: CD Projekt's stock plunges amid Cyberpunk 2077 launch issues — Bloomberg, Dec 2020
+      </p>
       
       <p className="text-slate dark:text-slate-200 leading-relaxed mt-4">
         And we've seen what it looks like to protect the mission — even when it means stepping back. Simone Biles did exactly that in front of the entire world at the 2021 Olympics. Under unimaginable pressure, she chose long-term purpose over short-term performance. She knew something was off, and she honored that instinct.
       </p>
 
-      <HighlightedBox>
+      <div className="my-6 bg-slate/5 dark:bg-slate/10 p-4 rounded-md">
         <p className="text-slate dark:text-slate-200 leading-relaxed italic">
           "I have to focus on my mental health… if you don't, then you're not going to enjoy your score and you're not gonna succeed as much as you want to."
         </p>
-        <SourceCitation source="Simone Biles on Mental Health — People Magazine, July 2021" className="mt-2" />
-      </HighlightedBox>
+        <p className="text-xs text-slate/70 dark:text-slate-400 mt-2">
+          Source: Simone Biles on Mental Health — People Magazine, July 2021
+        </p>
+      </div>
 
       <p className="text-slate dark:text-slate-200 leading-relaxed">
         Her move wasn't retreat — it was leadership. And in time, she returned to competition stronger, on her terms, and more respected than ever. A different kind of comeback — one powered by mission, not metrics.
       </p>
       
-      <KeyPoint>
+      <p className="text-slate dark:text-slate-200 leading-relaxed font-semibold">
         Success isn't about hitting every metric. It's about refusing to lose yourself trying.
-      </KeyPoint>
+      </p>
 
-      <h3 className="text-xl md:text-2xl font-display font-semibold text-slate dark:text-slate-100 mt-10 mb-4" id="more-than-intentions">
+      <h3 className="text-xl md:text-2xl font-display font-semibold text-slate dark:text-slate-100 mt-10 mb-4">
         More Than Just Good Intentions
       </h3>
 
@@ -101,8 +99,10 @@ const MissionMagnetSection: React.FC = () => {
         Take Patagonia. They once ran a campaign telling customers not to buy their jacket unless they truly needed it. Why? Because their values mattered more than their quarterly revenue.
       </p>
       
-      <SourceCitation source="Don't Buy This Jacket — Patagonia, 2011<br/>
-        Analysis: Harvard Business Review, 2016" />
+      <p className="text-xs text-slate/70 dark:text-slate-400 italic">
+        Source: Don't Buy This Jacket — Patagonia, 2011<br/>
+        Analysis: Harvard Business Review, 2016
+      </p>
       
       <p className="text-slate dark:text-slate-200 leading-relaxed mt-4">
         Or SpaceX — aiming at goals that span decades, not quarters. It's not about idolizing companies. It's about recognizing what real mission-alignment looks like when the stakes are high and the timelines are long.
@@ -112,10 +112,12 @@ const MissionMagnetSection: React.FC = () => {
         And it pays off. Research shows that people who believe in the purpose behind their work stay longer, burn out less, and deliver more.
       </p>
       
-      <SourceCitation source="Imperative & NYU Study on Purpose-Driven Work, 2016<br/>
-        Source: McKinsey & Co., 2020 — Purpose: Shifting from Why to How" />
+      <p className="text-xs text-slate/70 dark:text-slate-400 italic">
+        Source: Imperative & NYU Study on Purpose-Driven Work, 2016<br/>
+        Source: McKinsey & Co., 2020 — Purpose: Shifting from Why to How
+      </p>
 
-      <h3 className="text-xl md:text-2xl font-display font-semibold text-slate dark:text-slate-100 mt-10 mb-4" id="metrics-eclipse-meaning">
+      <h3 className="text-xl md:text-2xl font-display font-semibold text-slate dark:text-slate-100 mt-10 mb-4">
         When Metrics Eclipse Meaning
       </h3>
 
@@ -137,13 +139,15 @@ const MissionMagnetSection: React.FC = () => {
         When dates drive development, teams start cutting corners. Feedback loops close. Energy fades. You build momentum toward a number — not toward value.
       </p>
       
-      <SourceCitation source="Date-Driven Development is Killing Your Product — Built to Adapt, 2021" />
+      <p className="text-xs text-slate/70 dark:text-slate-400 italic">
+        Source: Date-Driven Development is Killing Your Product — Built to Adapt, 2021
+      </p>
       
       <p className="text-slate dark:text-slate-200 leading-relaxed mt-4">
         In the gym, this is ego lifting. In product, it's just as risky. It looks like burned-out engineers, brittle systems, and growth that collapses the second you stop pushing it uphill.
       </p>
 
-      <h3 className="text-xl md:text-2xl font-display font-semibold text-slate dark:text-slate-100 mt-10 mb-4" id="fulfillment-flywheel">
+      <h3 className="text-xl md:text-2xl font-display font-semibold text-slate dark:text-slate-100 mt-10 mb-4">
         The Fulfillment Flywheel (Powered by Purpose)
       </h3>
 
@@ -155,7 +159,9 @@ const MissionMagnetSection: React.FC = () => {
         It's called the OODA Loop: Observe, Orient, Decide, Act. Developed for fighter pilots. Adopted by startups. Powered by clarity.
       </p>
       
-      <SourceCitation source="John Boyd — The Essence of Winning and Losing, 1995 (PDF)" />
+      <p className="text-xs text-slate/70 dark:text-slate-400 italic">
+        Source: John Boyd — The Essence of Winning and Losing, 1995 (PDF)
+      </p>
       
       <p className="text-slate dark:text-slate-200 leading-relaxed mt-4">
         But here's the catch — without a clear mission, the whole loop spins out.
@@ -203,7 +209,7 @@ const MissionMagnetSection: React.FC = () => {
         Mission turns chaos into clarity. It makes every rep count. Every release matter. Every decision directional.
       </p>
 
-      <HighlightedBox bordered>
+      <div className="my-8 p-5 bg-slate/5 dark:bg-slate/10 rounded-lg border-l-4 border-army">
         <p className="text-slate dark:text-slate-200 leading-relaxed">
           This is the real flywheel of fulfillment:
         </p>
@@ -216,7 +222,7 @@ const MissionMagnetSection: React.FC = () => {
         <p className="text-slate dark:text-slate-200 leading-relaxed mt-2">
           That's the throughline. That's what keeps us going.
         </p>
-      </HighlightedBox>
+      </div>
 
       <p className="text-slate dark:text-slate-200 leading-relaxed">
         Metrics follow. But the mission leads.
