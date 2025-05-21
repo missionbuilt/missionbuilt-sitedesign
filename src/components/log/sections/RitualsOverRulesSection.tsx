@@ -1,5 +1,11 @@
+
 import React from "react";
 import LogSection from "../LogSection";
+import BlockQuote from "../elements/BlockQuote";
+import BorderedText from "../elements/BorderedText";
+import HighlightedBox from "../elements/HighlightedBox";
+import KeyPoint from "../elements/KeyPoint";
+import ListContainer from "../elements/ListContainer";
 
 const RitualsOverRulesSection: React.FC = () => {
   return (
@@ -8,9 +14,9 @@ const RitualsOverRulesSection: React.FC = () => {
         You don't get strong by lifting heavy once.
       </p>
       
-      <p className="text-slate dark:text-slate-200 leading-relaxed ml-4 border-l-4 border-army pl-4 py-1">
+      <BorderedText>
         You get strong by showing up again. And again. And again.
-      </p>
+      </BorderedText>
       
       <p className="text-slate dark:text-slate-200 leading-relaxed">
         But if you do the same thing forever, you don't get stronger — you get stuck.
@@ -24,23 +30,23 @@ const RitualsOverRulesSection: React.FC = () => {
         Whether in the gym or in product, growth comes through iteration — small, deliberate cycles of effort. You log your training. You tweak your form. You try a new tempo. In software, you ship. You measure. You talk to the user. You try again. The process isn't glamorous — but it's generative.
       </p>
       
-      <p className="text-slate dark:text-slate-200 leading-relaxed font-semibold">
+      <KeyPoint>
         Rituals compound. Rules confine.
-      </p>
+      </KeyPoint>
       
-      <div className="my-6 space-y-2">
-        <p className="text-slate dark:text-slate-200 leading-relaxed pl-4 border-l-2 border-army">
+      <ListContainer>
+        <BorderedText>
           A rule says "do this."
-        </p>
+        </BorderedText>
         
-        <p className="text-slate dark:text-slate-200 leading-relaxed pl-4 border-l-2 border-army">
+        <BorderedText>
           A ritual says "do this because it matters."
-        </p>
+        </BorderedText>
         
-        <p className="text-slate dark:text-slate-200 leading-relaxed pl-4 border-l-2 border-army">
+        <BorderedText>
           One is brittle. The other bends with you.
-        </p>
-      </div>
+        </BorderedText>
+      </ListContainer>
       
       <p className="text-slate dark:text-slate-200 leading-relaxed">
         Agile, for example, isn't magic. It's just a set of rituals. Daily standups, retros, demos, sprints — all meant to create rhythm and reflection. But rituals only work when they're anchored in meaning and adapted to context. If your team treats retros like checkbox theater, then you're not iterating — you're just looping. And if your standup sounds like "I did stuff, I'll do stuff, no blockers," you've got a ritual without reason.
@@ -54,7 +60,7 @@ const RitualsOverRulesSection: React.FC = () => {
         That's where most systems fail: not because the framework is flawed, but because the user is forgotten. They're treated like an input to a method, instead of the reason for its existence.
       </p>
 
-      <div className="my-6 bg-slate/5 dark:bg-slate/10 p-4 rounded-md">
+      <HighlightedBox>
         <p className="text-slate dark:text-slate-200 leading-relaxed">
           Let's be honest: there's no shortage of books telling you how to do things.
         </p>
@@ -70,7 +76,7 @@ const RitualsOverRulesSection: React.FC = () => {
         <p className="text-slate dark:text-slate-200 leading-relaxed italic mt-2">
           The implementation is on you.
         </p>
-      </div>
+      </HighlightedBox>
 
       <p className="text-slate dark:text-slate-200 leading-relaxed">
         What works for one team, one lifter, one body, won't work for another. That's not failure — that's reality.
@@ -80,9 +86,9 @@ const RitualsOverRulesSection: React.FC = () => {
         Stefi Cohen didn't become a record-breaking lifter by blindly following a single powerlifting template. Her training evolved through experimentation: strength phases, hypertrophy cycles, hybrid athletic blocks. She didn't just lift heavy — she studied her feedback, varied her stimuli, and rewrote her rituals to fit her mission.
       </p>
       
-      <p className="text-slate dark:text-slate-200 leading-relaxed ml-4 italic border-l-4 border-slate/20 dark:border-slate/30 pl-4 py-1">
+      <BorderedText borderColor="border-slate/20 dark:border-slate/30" className="italic">
         Progress didn't come from rigidity. It came from rhythm and reinvention.
-      </p>
+      </BorderedText>
       
       <p className="text-slate dark:text-slate-200 leading-relaxed">
         In product, that same spirit of experimentation lives in hack weeks — short, sacred breaks from routine where teams can stretch in new directions.
@@ -92,18 +98,18 @@ const RitualsOverRulesSection: React.FC = () => {
         Atlassian, Spotify, and Elastic have all embraced this. At Elastic, hack weeks became a celebrated ritual — not just for innovation, but for joy. Engineers got to break free from roadmap gravity and chase ideas that didn't need to justify themselves in Jira. Some of Elastic Security's most creative features — including internal workflow improvements, experimental visualizations, and early prototypes of user-requested tooling — were born not in sprint planning, but in that carved-out chaos.
       </p>
       
-      <p className="text-slate dark:text-slate-200 leading-relaxed ml-4 border-l-4 border-army pl-4 py-1">
+      <BorderedText>
         Sometimes, the best way to realign with the mission is to deliberately step outside it.
-      </p>
+      </BorderedText>
       
-      <div className="my-8 p-5 bg-slate/5 dark:bg-slate/10 rounded-lg border-l-4 border-army">
+      <HighlightedBox bordered>
         <p className="text-slate dark:text-slate-200 leading-relaxed">
           Rituals work when they're shaped by the user, not imposed on them.
         </p>
         <p className="text-slate dark:text-slate-200 leading-relaxed mt-2">
           They're tools — not commandments.
         </p>
-      </div>
+      </HighlightedBox>
       
       <p className="text-slate dark:text-slate-200 leading-relaxed">
         And when they're working, you feel it: not just in output, but in outlook. A team that trusts its rituals doesn't need micromanagement. A lifter that trusts their program doesn't need motivation hacks. The rhythm carries you. The meaning sustains you.
@@ -117,19 +123,19 @@ const RitualsOverRulesSection: React.FC = () => {
         They must flex to your fatigue. They must bend to your bandwidth. They must evolve — not just to avoid boredom, but to stay honest with the mission.
       </p>
       
-      <p className="text-slate dark:text-slate-200 leading-relaxed ml-4 border-l-4 border-slate/20 dark:border-slate/30 pl-4 py-1">
+      <BorderedText borderColor="border-slate/20 dark:border-slate/30">
         Same input, same outcome. If the goal has changed, so must the reps.
-      </p>
+      </BorderedText>
       
       <p className="text-slate dark:text-slate-200 leading-relaxed">
         That's what separates the lifter who grows from the one who stalls.
       </p>
       
-      <p className="text-slate dark:text-slate-200 leading-relaxed ml-4 italic border-l-4 border-slate/20 dark:border-slate/30 pl-4 py-1">
+      <BorderedText borderColor="border-slate/20 dark:border-slate/30" className="italic">
         That's what separates the product team that adapts from the one that burns out.
-      </p>
+      </BorderedText>
       
-      <div className="my-6 space-y-2">
+      <ListContainer>
         <p className="text-slate dark:text-slate-200 leading-relaxed">
           Because if the mission is the magnet —
         </p>
@@ -145,15 +151,15 @@ const RitualsOverRulesSection: React.FC = () => {
         <p className="text-slate dark:text-slate-200 leading-relaxed ml-4">
           They keep you from sliding off the path while you find it.
         </p>
-      </div>
+      </ListContainer>
       
       <p className="text-slate dark:text-slate-200 leading-relaxed">
         Rituals give you direction.
       </p>
       
-      <p className="text-lg text-center font-semibold text-army dark:text-army my-6">
+      <BlockQuote className="text-lg text-center font-semibold text-army dark:text-army my-6">
         But progress? That comes from the work itself — the grind, the reps, the effort no one applauds.
-      </p>
+      </BlockQuote>
       
       <p className="text-slate dark:text-slate-200 leading-relaxed">
         In the next chapter, we talk about how strength is built — and why it doesn't always look like progress.
