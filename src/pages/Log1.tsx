@@ -1,3 +1,4 @@
+
 import React, { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -302,6 +303,135 @@ const Log1 = () => {
               
               <p className="text-xl leading-relaxed text-slate dark:text-slate-100 font-medium">
                 Metrics follow. But the mission leads.
+              </p>
+            </div>
+          </section>
+
+          {/* Section 2: The Drift */}
+          <section className="mb-16">
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-slate dark:text-slate-100 mb-8 leading-tight">
+              The Drift
+            </h2>
+            
+            <div className="prose prose-lg max-w-none">
+              <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-6">
+                At first, the metric is a mirror — it reflects the mission. Clean, focused, and true.
+              </p>
+              
+              <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-6">
+                But over time, something shifts. Quietly. Gradually. The mirror warps. And without noticing, we begin steering toward the reflection instead of the road.
+              </p>
+              
+              <p className="text-xl leading-relaxed text-slate dark:text-slate-100 font-medium mb-8">
+                This is the Drift.
+              </p>
+              
+              <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-6">
+                It doesn't announce itself. It rarely arrives with bad intent. It begins with a goal:
+              </p>
+              
+              <div className="my-8 space-y-3">
+                <div className="border-l-4 border-army/30 pl-6">
+                  <p className="text-lg leading-relaxed text-slate dark:text-slate-200 italic">
+                    Launch the feature by Q4.
+                  </p>
+                </div>
+                <div className="border-l-4 border-army/30 pl-6">
+                  <p className="text-lg leading-relaxed text-slate dark:text-slate-200 italic">
+                    Hit 405 on deadlift.
+                  </p>
+                </div>
+                <div className="border-l-4 border-army/30 pl-6">
+                  <p className="text-lg leading-relaxed text-slate dark:text-slate-200 italic">
+                    Increase MAUs by 20%.
+                  </p>
+                </div>
+              </div>
+              
+              <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-6">
+                Reasonable. Measurable. Actionable. These are the numbers we hold up as evidence that we're making progress — and for a while, they are.
+              </p>
+              
+              <p className="text-xl leading-relaxed text-slate dark:text-slate-100 font-medium mb-8">
+                But then: the goal becomes the game.
+              </p>
+              
+              <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-6">
+                In product, we've seen it time and time again. Shipping becomes more important than solving. Teams crunch to meet a date set quarters ago, long after the user problem has evolved. Metrics chase headlines. Investors want news. Executives want motion. The dashboard glows green while user trust fades red.
+              </p>
+              
+              <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-6">
+                Think of Boeing. In the race to beat Airbus, they needed the 737 Max on runways — fast. Shareholder pressure mounted. Deadlines became immovable. On paper, the metrics looked great: deliveries met, costs controlled. But beneath the numbers, safety systems were skipped, warnings dismissed.
+              </p>
+              
+              <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-8">
+                Two crashes. Hundreds of lives lost. The drift wasn't just technical — it was cultural. Speed overtook scrutiny. The metric overtook the mission.
+              </p>
+              
+              <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-6">
+                In strength, the signs are physical — and brutal. Hafthor Björnsson, one of the strongest men in history, returned to powerlifting after two years of boxing. He set his sights on breaking the raw total world record. Big lifts were stacking fast. But recovery lagged behind. He felt the warning signs — tightness, fatigue — but kept pushing.
+              </p>
+              
+              <blockquote className="border-l-4 border-army bg-army/5 dark:bg-army/10 p-6 my-8 rounded-r-lg">
+                <p className="text-lg font-medium text-slate dark:text-slate-100 italic">
+                  "I wasn't recovering fully between sessions… not listening to my body, which is silly."
+                </p>
+              </blockquote>
+              
+              <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-8">
+                Then came the snap. Attempting a 556-pound bench press, his pec tore clean off the bone.
+              </p>
+              
+              <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-6">
+                The drift had found him too: progress misaligned with process, recovery sacrificed to reach a number that no longer served the mission. The result was pain, delay, and a lesson carved in scar tissue.
+              </p>
+              
+              <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-6">
+                The damage isn't just physical. It's psychological. Because when we treat metrics as the mission, missing them feels like failure. And so we hide the truth, inflate success, or worst of all — stop trying.
+              </p>
+              
+              <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-8">
+                The Drift corrodes not through force, but through inversion. It flips process into performance. It turns care into compliance.
+              </p>
+              
+              <p className="text-xl leading-relaxed text-slate dark:text-slate-100 font-medium mb-8">
+                And it burns people out.
+              </p>
+              
+              <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-6">
+                I've worked with brilliant people who could have built anything — but they left, not because they failed, but because the system stopped valuing why they showed up in the first place. When we reduce contribution to a dashboard, we forget the soul behind the keyboard.
+              </p>
+              
+              <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-6">
+                This isn't just anecdotal. Research shows that mission-driven employees are significantly more loyal.
+              </p>
+              
+              <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-6">
+                A LinkedIn survey found that employees motivated by mission were 54% more likely to stay with their company for five or more years.
+              </p>
+              
+              <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-8">
+                Another study revealed that companies engaging employees in purpose-driven programs saw a 52% lower turnover among newer employees.
+              </p>
+              
+              <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-6">
+                So what's the antidote?
+              </p>
+              
+              <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-8">
+                It's not to ignore metrics. It's to anchor them. To use them as signal, not steering.
+              </p>
+              
+              <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-6">
+                To build systems that reinforce why we do the work, not just how fast we do it.
+              </p>
+              
+              <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-6">
+                Because the real goal is not a launch date or a deadlift.
+              </p>
+              
+              <p className="text-xl leading-relaxed text-slate dark:text-slate-100 font-medium mb-12">
+                The real goal is built through the reps, not measured by them.
               </p>
             </div>
           </section>
