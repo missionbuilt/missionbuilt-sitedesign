@@ -58,10 +58,59 @@ const Log1 = () => {
             </div>
           </div>
         </div>
+
+        {/* Table of Contents */}
+        <Card className="mb-12 bg-slate/5 dark:bg-slate/10 border-slate/20 dark:border-slate/30">
+          <div className="p-6">
+            <h2 className="text-2xl font-display font-semibold text-slate dark:text-slate-100 mb-6 flex items-center">
+              <div className="w-1 h-6 bg-army mr-3"></div>
+              Table of Contents
+            </h2>
+            <nav className="space-y-4">
+              <div>
+                <a href="#mission-is-the-magnet" className="text-lg font-medium text-slate hover:text-army dark:text-slate-200 dark:hover:text-army transition-colors block">
+                  1. The Mission Is the Magnet
+                </a>
+                <ul className="ml-6 mt-2 space-y-1">
+                  <li>
+                    <a href="#more-than-good-intentions" className="text-slate/80 hover:text-army dark:text-slate-300 dark:hover:text-army transition-colors">
+                      More Than Just Good Intentions
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#when-metrics-eclipse-meaning" className="text-slate/80 hover:text-army dark:text-slate-300 dark:hover:text-army transition-colors">
+                      When Metrics Eclipse Meaning
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#fulfillment-flywheel" className="text-slate/80 hover:text-army dark:text-slate-300 dark:hover:text-army transition-colors">
+                      The Fulfillment Flywheel (Powered by Purpose)
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <a href="#the-drift" className="text-lg font-medium text-slate hover:text-army dark:text-slate-200 dark:hover:text-army transition-colors block">
+                  2. The Drift
+                </a>
+              </div>
+              <div>
+                <a href="#repetition-with-intention" className="text-lg font-medium text-slate hover:text-army dark:text-slate-200 dark:hover:text-army transition-colors block">
+                  3. Repetition with Intention
+                </a>
+              </div>
+              <div>
+                <a href="#sources" className="text-lg font-medium text-slate hover:text-army dark:text-slate-200 dark:hover:text-army transition-colors block">
+                  Sources
+                </a>
+              </div>
+            </nav>
+          </div>
+        </Card>
         
         {/* Section 1: The Mission Is the Magnet */}
         <article className="max-w-4xl mx-auto">
-          <section className="mb-16">
+          <section className="mb-16" id="mission-is-the-magnet">
             <h2 className="text-3xl md:text-4xl font-display font-bold text-slate dark:text-slate-100 mb-8 leading-tight">
               The Mission Is the Magnet
             </h2>
@@ -147,7 +196,7 @@ const Log1 = () => {
               </p>
 
               {/* More Than Just Good Intentions */}
-              <h3 className="text-2xl md:text-3xl font-display font-semibold text-slate dark:text-slate-100 mb-6 mt-12">
+              <h3 className="text-2xl md:text-3xl font-display font-semibold text-slate dark:text-slate-100 mb-6 mt-12" id="more-than-good-intentions">
                 More Than Just Good Intentions
               </h3>
               
@@ -172,7 +221,7 @@ const Log1 = () => {
               </p>
 
               {/* When Metrics Eclipse Meaning */}
-              <h3 className="text-2xl md:text-3xl font-display font-semibold text-slate dark:text-slate-100 mb-6 mt-12">
+              <h3 className="text-2xl md:text-3xl font-display font-semibold text-slate dark:text-slate-100 mb-6 mt-12" id="when-metrics-eclipse-meaning">
                 When Metrics Eclipse Meaning
               </h3>
               
@@ -205,7 +254,7 @@ const Log1 = () => {
               </p>
 
               {/* The Fulfillment Flywheel */}
-              <h3 className="text-2xl md:text-3xl font-display font-semibold text-slate dark:text-slate-100 mb-6 mt-12">
+              <h3 className="text-2xl md:text-3xl font-display font-semibold text-slate dark:text-slate-100 mb-6 mt-12" id="fulfillment-flywheel">
                 The Fulfillment Flywheel (Powered by Purpose)
               </h3>
               
@@ -317,7 +366,7 @@ const Log1 = () => {
           </section>
 
           {/* Section 2: The Drift */}
-          <section className="mb-16">
+          <section className="mb-16" id="the-drift">
             <h2 className="text-3xl md:text-4xl font-display font-bold text-slate dark:text-slate-100 mb-8 leading-tight">
               The Drift
             </h2>
@@ -446,7 +495,7 @@ const Log1 = () => {
           </section>
 
           {/* Section 3: Repetition with Intention */}
-          <section className="mb-16">
+          <section className="mb-16" id="repetition-with-intention">
             <h2 className="text-3xl md:text-4xl font-display font-bold text-slate dark:text-slate-100 mb-8 leading-tight">
               Repetition with Intention
             </h2>
