@@ -5,6 +5,7 @@ import Footer from "../components/Footer";
 import WhyThisWhyNow from "../components/WhyThisWhyNow";
 import BookUniqueAspects from "../components/BookUniqueAspects";
 import CallToAction from "../components/CallToAction";
+import FeaturedLogs from "../components/FeaturedLogs";
 import { useEffect } from "react";
 
 const Index = () => {
@@ -19,6 +20,7 @@ const Index = () => {
       
       <main className="flex-grow">
         <HeroSection />
+        <FeaturedLogs />
         <BookUniqueAspects />
         <WhyThisWhyNow />
         <CallToAction />

@@ -1,9 +1,9 @@
-
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import Logo from '@/components/Logo';
 import NightVisionToggle from '@/components/NightVisionToggle';
+import { Badge } from '@/components/ui/badge';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -34,7 +34,15 @@ const Navbar = () => {
         <div className="hidden md:flex items-center">
           <nav className="flex items-center space-x-1 mr-6">
             <NavLink to="/" exact onClick={scrollToTop}>The Mission</NavLink>
-            <NavLink to="/chapters">Training Logs</NavLink>
+            <div className="relative">
+              <NavLink to="/chapters">Training Logs</NavLink>
+              <Badge 
+                variant="default" 
+                className="absolute -top-2 -right-2 bg-sunburst text-slate text-xs px-1.5 py-0.5 animate-pulse"
+              >
+                NEW
+              </Badge>
+            </div>
             <NavLink to="/about">About</NavLink>
           </nav>
           
@@ -66,7 +74,15 @@ const Navbar = () => {
           <div className="absolute top-full left-0 right-0 bg-white dark:bg-slate/10 shadow-lg border-t border-slate/10 dark:border-slate/20 md:hidden py-2">
             <nav className="flex flex-col">
               <MobileNavLink to="/" onClick={() => {setIsMenuOpen(false); scrollToTop();}}>The Mission</MobileNavLink>
-              <MobileNavLink to="/chapters" onClick={() => setIsMenuOpen(false)}>Training Logs</MobileNavLink>
+              <div className="relative">
+                <MobileNavLink to="/chapters" onClick={() => setIsMenuOpen(false)}>Training Logs</MobileNavLink>
+                <Badge 
+                  variant="default" 
+                  className="absolute top-3 right-4 bg-sunburst text-slate text-xs px-1.5 py-0.5 animate-pulse"
+                >
+                  NEW
+                </Badge>
+              </div>
               <MobileNavLink to="/about" onClick={() => setIsMenuOpen(false)}>About</MobileNavLink>
               <div className="px-4 py-3">
                 <NightVisionToggle />
