@@ -1,8 +1,9 @@
+
 import React from "react";
 import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Book, Activity, Clock, Circle, X } from "lucide-react";
+import { Book, Activity, Clock, Circle, X, Calendar } from "lucide-react";
 import { Chapter } from "@/data/chapters-data";
 import { cn } from "@/lib/utils";
 
@@ -89,7 +90,16 @@ const ChapterCard: React.FC<ChapterCardProps> = ({ chapter }) => {
         </div>
       </CardHeader>
       <CardContent>
-        <p className="text-muted-foreground mb-6 line-clamp-3">{chapter.description}</p>
+        <p className="text-muted-foreground mb-4 line-clamp-3">{chapter.description}</p>
+        
+        {/* Show publish date for in-progress chapters */}
+        {chapter.status === "in-progress" && (
+          <div className="flex items-center text-sm text-muted-foreground mb-4">
+            <Calendar className="mr-2 h-4 w-4" />
+            <span>Published: May 24, 2025</span>
+          </div>
+        )}
+        
         <div className="flex items-center justify-between mt-auto pt-4 border-t border-slate/10">
           <div className="flex items-center text-sm text-muted-foreground">
             <Book className="mr-2 h-4 w-4" />
