@@ -248,6 +248,78 @@ const Log2: React.FC = () => {
                 <p className="font-semibold">Up next: Rituals Over Rules.</p>
               </div>
             </section>
+
+            {/* Sources & Further Reading */}
+            <section className="mb-16">
+              <h2 className="text-3xl font-display font-bold text-slate dark:text-slate-100 mb-8">
+                Sources & Further Reading
+              </h2>
+              <div className="space-y-8 text-slate dark:text-slate-200">
+                <div>
+                  <h3 className="text-lg font-semibold mb-3 text-slate dark:text-slate-100">Deeper Read on Instagram's Rise:</h3>
+                  <p className="mb-2"><em>No Filter: The Inside Story of Instagram</em> by Sarah Frier – A detailed, behind-the-scenes look at Instagram's transformation from Burbn to a cultural phenomenon.</p>
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-semibold mb-3 text-slate dark:text-slate-100">The iPhone's hidden grind:</h3>
+                  <p className="mb-2">How Steve Jobs Faked His Way Through Unveiling the iPhone – NY Magazine: <a href="https://nymag.com/intelligencer/2017/01/how-steve-jobs-faked-his-way-through-unveiling-the-iphone.html" className="text-army hover:text-army/80 underline" target="_blank" rel="noopener noreferrer">https://nymag.com/intelligencer/2017/01/how-steve-jobs-faked-his-way-through-unveiling-the-iphone.html</a></p>
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-semibold mb-3 text-slate dark:text-slate-100">Instagram's evolution from Burbn:</h3>
+                  <p className="mb-2">Instagram – Wikipedia: <a href="https://en.wikipedia.org/wiki/Instagram#History" className="text-army hover:text-army/80 underline" target="_blank" rel="noopener noreferrer">https://en.wikipedia.org/wiki/Instagram#History</a></p>
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-semibold mb-3 text-slate dark:text-slate-100">Lifting progress and the plateau effect:</h3>
+                  <p className="mb-2">Overcoming Strength Training Plateaus – Ironmaster: <a href="https://www.ironmaster.com/blog/strength-training-plateau/" className="text-army hover:text-army/80 underline" target="_blank" rel="noopener noreferrer">https://www.ironmaster.com/blog/strength-training-plateau/</a></p>
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-semibold mb-3 text-slate dark:text-slate-100">Product development isn't always fast:</h3>
+                  <p className="mb-2">Failing Fast: Why It's Essential for Entrepreneurs – Harvard Business School Online: <a href="https://online.hbs.edu/blog/post/fail-fast" className="text-army hover:text-army/80 underline" target="_blank" rel="noopener noreferrer">https://online.hbs.edu/blog/post/fail-fast</a></p>
+                </div>
+
+                <div>
+                  <p className="mb-2">Israetel, Mike. "MV, MEV, MAV, MRV Explained." Renaissance Periodization. <a href="https://drmikeisraetel.com/dr-mike-israetel-mv-mev-mav-mrv-explained/" className="text-army hover:text-army/80 underline" target="_blank" rel="noopener noreferrer">https://drmikeisraetel.com/dr-mike-israetel-mv-mev-mav-mrv-explained/</a></p>
+                </div>
+
+                <div>
+                  <p className="mb-2"><em>The Medici Effect: Finding Creative Inspiration in Unlikely Places</em> - A foundational book on innovation through diversity and intersectional thinking.</p>
+                  <p className="mb-2"><a href="https://phoscreative.com/articles/the-medici-effect/" className="text-army hover:text-army/80 underline" target="_blank" rel="noopener noreferrer">https://phoscreative.com/articles/the-medici-effect/</a></p>
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-semibold mb-3 text-slate dark:text-slate-100">Behavior & Systems Thinking</h3>
+                  <p className="mb-2">James Clear – <em>Atomic Habits</em></p>
+                  <p className="mb-2"><a href="https://jamesclear.com/atomic-habits" className="text-army hover:text-army/80 underline" target="_blank" rel="noopener noreferrer">https://jamesclear.com/atomic-habits</a></p>
+                  <p className="mb-2">A guide to building better habits and systems that support long-term success, including the principle: "You do not rise to the level of your goals. You fall to the level of your systems."</p>
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-semibold mb-3 text-slate dark:text-slate-100">User-Centered Product Development</h3>
+                  <p className="mb-2">Basecamp's Shape Up Method – Signal v. Noise</p>
+                  <p className="mb-2"><a href="https://basecamp.com/shapeup" className="text-army hover:text-army/80 underline" target="_blank" rel="noopener noreferrer">https://basecamp.com/shapeup</a></p>
+                  <p className="mb-4">An approach to product work that values thoughtful iteration, foundational improvements, and meaningful user feedback.</p>
+
+                  <p className="mb-2"><em>Talking to Humans</em> — Giff Constable</p>
+                  <p className="mb-2"><a href="https://talkingtohumans.com" className="text-army hover:text-army/80 underline" target="_blank" rel="noopener noreferrer">https://talkingtohumans.com</a></p>
+                  <p className="mb-4">A practical guide to validating ideas and rediscovering motivation by speaking directly with the users you aim to serve.</p>
+
+                  <p className="mb-2">Angela Duckworth – <em>Grit: The Power of Passion and Perseverance</em></p>
+                  <p className="mb-2"><a href="https://angeladuckworth.com/grit-book" className="text-army hover:text-army/80 underline" target="_blank" rel="noopener noreferrer">https://angeladuckworth.com/grit-book</a></p>
+                  <p className="mb-4">Explores why sustained effort matters more than intensity, and how consistency builds excellence.</p>
+
+                  <p className="mb-2">Darren Hardy – <em>The Compound Effect</em></p>
+                  <p className="mb-2"><a href="https://www.thecompoundeffect.com" className="text-army hover:text-army/80 underline" target="_blank" rel="noopener noreferrer">https://www.thecompoundeffect.com</a></p>
+                  <p className="mb-4">Details how small actions done consistently lead to exponential outcomes — a key insight for boring but high-leverage work.</p>
+
+                  <p className="mb-2">Martin Fowler – Is High Quality Software Worth the Cost?</p>
+                  <p className="mb-2"><a href="https://martinfowler.com/articles/is-quality-worth-cost.html" className="text-army hover:text-army/80 underline" target="_blank" rel="noopener noreferrer">https://martinfowler.com/articles/is-quality-worth-cost.html</a></p>
+                  <p>Argues that invisible work like refactoring and testing leads to faster long-term delivery — a strong product parallel to back-off sets and mobility work.</p>
+                </div>
+              </div>
+            </section>
           </div>
         </main>
 
