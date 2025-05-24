@@ -7,8 +7,7 @@ import { chapters } from '@/data/chapters-data';
 const FeaturedLogs = () => {
   // Get the most recent chapters as featured logs
   const featuredLogs = chapters
-    .filter(chapter => chapter.status === 'published' || chapter.status === 'draft')
-    .sort((a, b) => new Date(b.dateAdded).getTime() - new Date(a.dateAdded).getTime())
+    .filter(chapter => chapter.status === 'in-progress')
     .slice(0, 3);
 
   return (
@@ -44,9 +43,7 @@ const FeaturedLogs = () => {
 
                   <div className="mb-4">
                     <div className="flex items-center text-slate/60 text-sm mb-2">
-                      <span>Chapter {chapter.number}</span>
-                      <span className="mx-2">•</span>
-                      <span>{chapter.dateAdded}</span>
+                      <span>Chapter {chapter.id}</span>
                     </div>
                     <h3 className="heading-sm mb-3 group-hover:text-army transition-colors duration-200">
                       {chapter.title}
