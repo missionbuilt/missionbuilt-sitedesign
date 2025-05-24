@@ -12,7 +12,7 @@ const getSections = (chapterId: number) => {
     return [
       { id: "mission-is-the-magnet", title: "The Mission Is the Magnet" },
       { id: "the-drift", title: "The Drift" },
-      { id: "leading-by-example", title: "Leading by Example" },
+      { id: "repetition-with-intention", title: "Repetition with Intention" },
       { id: "key-takeaways", title: "Key Takeaways" }
     ];
   }

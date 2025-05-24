@@ -194,8 +194,48 @@ const getSectionContent = (chapterId: number, sectionId: string) => {
             <p>The real goal is built through the reps, not measured by them.</p>
           </div>
         );
-      case "leading-by-example":
-        return "Leadership starts with personal example and commitment...";
+      case "repetition-with-intention":
+        return (
+          <div className="space-y-6">
+            <p>You don't get strong by lifting heavy once.</p>
+            <p>You get strong by showing up again. And again. And again.</p>
+            <p>But if you do the same thing forever, you don't get stronger — you get stuck.</p>
+            <p>That's the tension of progress: it demands ritual, but it punishes repetition without variation.</p>
+            <p>Whether in the gym or in product, growth comes through iteration — small, deliberate cycles of effort. You log your training. You tweak your form. You try a new tempo. In software, you ship. You measure. You talk to the user. You try again. The process isn't glamorous — but it's generative.</p>
+            <p>Rituals compound. Rules confine.</p>
+            <p>A rule says "do this."</p>
+            <p>A ritual says "do this because it matters."</p>
+            <p>One is brittle. The other bends with you.</p>
+            <p>Agile, for example, isn't magic. It's just a set of rituals. Daily standups, retros, demos, sprints — all meant to create rhythm and reflection. But rituals only work when they're anchored in meaning and adapted to context. If your team treats retros like checkbox theater, then you're not iterating — you're just looping. And if your standup sounds like "I did stuff, I'll do stuff, no blockers," you've got a ritual without reason.</p>
+            <p>The same failure shows up in the gym. People find a powerlifting program online and follow it to the letter, even when it doesn't fit their recovery, their age, their job, their life. They wonder why they plateau — or get hurt. It's because they forgot the principle beneath the plan.</p>
+            <p>That's where most systems fail: not because the framework is flawed, but because the user is forgotten. They're treated like an input to a method, instead of the reason for its existence.</p>
+            <p>Let's be honest: there's no shortage of books telling you how to do things.</p>
+            <p>And yes — here we are, writing another one.</p>
+            <p>But this isn't a blueprint. It's a philosophy.</p>
+            <p>The implementation is on you.</p>
+            <p>What works for one team, one lifter, one body, won't work for another. That's not failure — that's reality.</p>
+            <p>Stefi Cohen didn't become a record-breaking lifter by blindly following a single powerlifting template. Her training evolved through experimentation: strength phases, hypertrophy cycles, hybrid athletic blocks. She didn't just lift heavy — she studied her feedback, varied her stimuli, and rewrote her rituals to fit her mission.</p>
+            <p>Progress didn't come from rigidity. It came from rhythm and reinvention.</p>
+            <p>In product, that same spirit of experimentation lives in hack weeks — short, sacred breaks from routine where teams can stretch in new directions.</p>
+            <p>Atlassian, Spotify, and Elastic have all embraced this. At Elastic, hack weeks became a celebrated ritual — not just for innovation, but for joy. Engineers got to break free from roadmap gravity and chase ideas that didn't need to justify themselves in Jira. Some of Elastic Security's most creative features — including internal workflow improvements, experimental visualizations, and early prototypes of user-requested tooling — were born not in sprint planning, but in that carved-out chaos.</p>
+            <p>Sometimes, the best way to realign with the mission is to deliberately step outside it.</p>
+            <p>Rituals work when they're shaped by the user, not imposed on them.</p>
+            <p>They're tools — not commandments.</p>
+            <p>And when they're working, you feel it: not just in output, but in outlook. A team that trusts its rituals doesn't need micromanagement. A lifter that trusts their program doesn't need motivation hacks. The rhythm carries you. The meaning sustains you.</p>
+            <p>But rituals aren't static.</p>
+            <p>They must flex to your fatigue. They must bend to your bandwidth. They must evolve — not just to avoid boredom, but to stay honest with the mission.</p>
+            <p>Same input, same outcome. If the goal has changed, so must the reps.</p>
+            <p>That's what separates the lifter who grows from the one who stalls.</p>
+            <p>That's what separates the product team that adapts from the one that burns out.</p>
+            <p>Because if the mission is the magnet —</p>
+            <p>rituals are the rails.</p>
+            <p>They don't tell you where to go.</p>
+            <p>They keep you from sliding off the path while you find it.</p>
+            <p>Rituals give you direction.</p>
+            <p>But progress? That comes from the work itself — the grind, the reps, the effort no one applauds.</p>
+            <p>In the next chapter, we talk about how strength is built — and why it doesn't always look like progress.</p>
+          </div>
+        );
       case "key-takeaways":
         return "The key insights from this chapter include...";
       default:
@@ -211,7 +251,7 @@ const getSections = (chapterId: number) => {
     return [
       { id: "mission-is-the-magnet", title: "The Mission Is the Magnet" },
       { id: "the-drift", title: "The Drift" },
-      { id: "leading-by-example", title: "Leading by Example" },
+      { id: "repetition-with-intention", title: "Repetition with Intention" },
       { id: "key-takeaways", title: "Key Takeaways" }
     ];
   }
