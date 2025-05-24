@@ -254,7 +254,7 @@ const Log2: React.FC = () => {
               <h2 className="text-3xl font-display font-bold text-slate dark:text-slate-100 mb-8">
                 Sources & Further Reading
               </h2>
-              <div className="space-y-8 text-slate dark:text-slate-200">
+              <div className="space-y-6 text-slate dark:text-slate-200">
                 <div>
                   <h3 className="text-lg font-semibold mb-3 text-slate dark:text-slate-100">Deeper Read on Instagram's Rise:</h3>
                   <p className="mb-2"><em>No Filter: The Inside Story of Instagram</em> by Sarah Frier – A detailed, behind-the-scenes look at Instagram's transformation from Burbn to a cultural phenomenon.</p>
