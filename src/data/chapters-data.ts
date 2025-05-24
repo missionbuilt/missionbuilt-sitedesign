@@ -130,10 +130,82 @@ export const chapters: Chapter[] = [
     status: "in-progress",
     furtherReading: [
       {
-        title: "The Power of Repetition in Skill Development",
-        description: "Research on deliberate practice and the 10,000-hour rule",
-        url: "https://example.com/repetition-skill-development",
-        note: "Different resources for chapter 2 about building through repetition."
+        title: "Deeper Read on Instagram's Rise",
+        description: "No Filter: The Inside Story of Instagram by Sarah Frier – A detailed, behind-the-scenes look at Instagram's transformation from Burbn to a cultural phenomenon.",
+        url: "https://en.wikipedia.org/wiki/No_Filter:_The_Inside_Story_of_Instagram",
+        note: ""
+      },
+      {
+        title: "The iPhone's hidden grind",
+        description: "How Steve Jobs Faked His Way Through Unveiling the iPhone – NY Magazine",
+        url: "https://nymag.com/intelligencer/2017/01/how-steve-jobs-faked-his-way-through-unveiling-the-iphone.html",
+        note: ""
+      },
+      {
+        title: "Instagram's evolution from Burbn",
+        description: "Instagram – Wikipedia",
+        url: "https://en.wikipedia.org/wiki/Instagram#History",
+        note: ""
+      },
+      {
+        title: "Lifting progress and the plateau effect",
+        description: "Overcoming Strength Training Plateaus – Ironmaster",
+        url: "https://www.ironmaster.com/blog/strength-training-plateau/",
+        note: ""
+      },
+      {
+        title: "Product development isn't always fast",
+        description: "Failing Fast: Why It's Essential for Entrepreneurs – Harvard Business School Online",
+        url: "https://online.hbs.edu/blog/post/fail-fast",
+        note: ""
+      },
+      {
+        title: "MV, MEV, MAV, MRV Explained",
+        description: "Israetel, Mike. \"MV, MEV, MAV, MRV Explained.\" Renaissance Periodization.",
+        url: "https://drmikeisraetel.com/dr-mike-israetel-mv-mev-mav-mrv-explained/",
+        note: ""
+      },
+      {
+        title: "The Medici Effect",
+        description: "Finding Creative Inspiration in Unlikely Places - A foundational book on innovation through diversity and intersectional thinking.",
+        url: "https://phoscreative.com/articles/the-medici-effect/",
+        note: ""
+      },
+      {
+        title: "James Clear – Atomic Habits",
+        description: "A guide to building better habits and systems that support long-term success, including the principle: \"You do not rise to the level of your goals. You fall to the level of your systems.\"",
+        url: "https://jamesclear.com/atomic-habits",
+        note: ""
+      },
+      {
+        title: "Basecamp's Shape Up Method – Signal v. Noise",
+        description: "An approach to product work that values thoughtful iteration, foundational improvements, and meaningful user feedback.",
+        url: "https://basecamp.com/shapeup",
+        note: ""
+      },
+      {
+        title: "Talking to Humans — Giff Constable",
+        description: "A practical guide to validating ideas and rediscovering motivation by speaking directly with the users you aim to serve.",
+        url: "https://talkingtohumans.com",
+        note: ""
+      },
+      {
+        title: "Angela Duckworth – Grit: The Power of Passion and Perseverance",
+        description: "Explores why sustained effort matters more than intensity, and how consistency builds excellence.",
+        url: "https://angeladuckworth.com/grit-book",
+        note: ""
+      },
+      {
+        title: "Darren Hardy – The Compound Effect",
+        description: "Details how small actions done consistently lead to exponential outcomes — a key insight for boring but high-leverage work.",
+        url: "https://www.thecompoundeffect.com",
+        note: ""
+      },
+      {
+        title: "Martin Fowler – Is High Quality Software Worth the Cost?",
+        description: "Argues that invisible work like refactoring and testing leads to faster long-term delivery — a strong product parallel to back-off sets and mobility work.",
+        url: "https://martinfowler.com/articles/is-quality-worth-cost.html",
+        note: ""
       }
     ]
   },
