@@ -68,8 +68,8 @@ const Log2: React.FC = () => {
               <Card className="p-6 w-full bg-card border-border">
                 <h3 className="text-lg font-semibold mb-4 text-slate dark:text-slate-100">In This Log</h3>
                 <nav className="space-y-2">
-                  <a href="#foundation" className="block text-sm text-slate/70 dark:text-slate-300 hover:text-slate dark:hover:text-slate-100 transition-colors">
-                    Building the Foundation
+                  <a href="#myth-overnight-success" className="block text-sm text-slate/70 dark:text-slate-300 hover:text-slate dark:hover:text-slate-100 transition-colors">
+                    The Myth of Overnight Success
                   </a>
                   <a href="#consistency" className="block text-sm text-slate/70 dark:text-slate-300 hover:text-slate dark:hover:text-slate-100 transition-colors">
                     The Power of Consistency
@@ -80,6 +80,9 @@ const Log2: React.FC = () => {
                   <a href="#mindset" className="block text-sm text-slate/70 dark:text-slate-300 hover:text-slate dark:hover:text-slate-100 transition-colors">
                     The Rep Mindset
                   </a>
+                  <a href="#mission-built" className="block text-sm text-slate/70 dark:text-slate-300 hover:text-slate dark:hover:text-slate-100 transition-colors">
+                    What Mission Built Means
+                  </a>
                 </nav>
               </Card>
             </div>
@@ -87,16 +90,126 @@ const Log2: React.FC = () => {
 
           {/* Content sections */}
           <article className="prose prose-lg max-w-none prose-slate dark:prose-invert">
-            <section id="foundation" className="mb-12">
-              <h2 className="text-2xl font-bold mb-4">Building the Foundation</h2>
-              <p className="text-slate/80 dark:text-slate-300 mb-4">
-                Every great achievement starts with a single rep. Whether it's in the gym, in your career, or in life, 
-                progress comes from showing up consistently and putting in the work, one repetition at a time.
-              </p>
-              <p className="text-slate/80 dark:text-slate-300 mb-4">
-                The image captures this perfectly - a moment of quiet determination in a garage gym where real work happens. 
-                No fancy equipment, no distractions, just pure focus on the fundamentals.
-              </p>
+            <section id="myth-overnight-success" className="mb-16">
+              <h2 className="text-3xl font-bold mb-6 text-slate dark:text-slate-100">The Myth of Overnight Success</h2>
+              
+              <div className="space-y-6 text-slate/80 dark:text-slate-300 leading-relaxed">
+                <p className="text-lg">
+                  We've all heard the stories.
+                </p>
+                
+                <p>
+                  The product that "took off overnight."
+                </p>
+                
+                <p>
+                  The lifter who casually pulls four plates like they've always been able to.
+                </p>
+                
+                <p>
+                  The founder in a garage who changes the world with a single keynote.
+                </p>
+                
+                <p>
+                  It's tempting to believe that mastery happens like that — in a flash.
+                </p>
+                
+                <p className="font-medium">
+                  But that's not really how it works.
+                </p>
+                
+                <p>
+                  Take the iPhone. The 2007 reveal made it feel like it dropped from the sky fully formed. But behind that moment were years of trial and error. Touchscreens that didn't quite work. Software that crashed mid-demo. A mountain of prototypes that never saw the light of day. The final product wasn't a stroke of brilliance — it was the result of relentless iteration.
+                </p>
+                
+                <p>
+                  Same with Instagram. What looked like an overnight success was actually the second version of a too-close-to-Foursquare check-in app called Burbn. The team just kept listening, trimming, trying again. One update at a time.
+                </p>
+                
+                <p>
+                  And that big deadlift on your feed? Probably not magic. More likely: a hundred quiet sessions, some of them rough. A lot of small choices to show up, tweak form, trust the program.
+                </p>
+                
+                <p>
+                  We love the idea of sparks — fast wins, big leaps, sudden breakthroughs. But progress usually doesn't feel like that.
+                </p>
+                
+                <p className="font-medium text-lg">
+                  Most of the time, it feels a lot more like repetition.
+                </p>
+                
+                <div className="pl-6 border-l-4 border-army/30 dark:border-destructive/30 bg-slate/5 dark:bg-slate/10 p-4 rounded-r-lg">
+                  <p className="mb-2">
+                    The engineer fixing the same piece of code — again.
+                  </p>
+                  <p className="mb-2">
+                    The founder rewriting their pitch for the fifth time.
+                  </p>
+                  <p>
+                    The lifter doing the same warm-up cues every session, no matter the weight.
+                  </p>
+                </div>
+                
+                <p>
+                  It's not flashy. But it adds up.
+                </p>
+                
+                <p>
+                  That's part of what makes the first few months — or the first year — so exhilarating. In the gym, you make gains almost every week. In a startup, your product evolves daily. Everything feels fast, and the feedback is loud.
+                </p>
+                
+                <p className="font-medium">
+                  But then you hit the plateau.
+                </p>
+                
+                <p>
+                  The easy wins dry up. Strength doesn't come as quickly. Users get harder to surprise. Suddenly, it's not about chasing sparks anymore — it's about showing up and pushing through.
+                </p>
+                
+                <p className="text-lg font-medium text-army dark:text-destructive">
+                  This is where the real work begins.
+                </p>
+                
+                <p>
+                  In lifting, that means grinding through the middle — not maxing out, but mastering the basics under load. In product, it's navigating the shift from scrappy innovation to enterprise-grade reliability. Less fanfare, more focus.
+                </p>
+                
+                <p>
+                  That's the part people don't always talk about — and the part that actually defines mastery.
+                </p>
+                
+                <p>
+                  It's not just about adding more weight or shipping more features.
+                </p>
+                
+                <p className="font-medium">
+                  It's about learning to hone your form.
+                </p>
+                
+                <p>
+                  In lifting, that might mean dialing in your brace, fixing a subtle shift in your squat, or finally feeling your lats engage in a deadlift.
+                </p>
+                
+                <p>
+                  In product, it's refining an initiative until it truly solves the right problem — not just adds to the roadmap.
+                </p>
+                
+                <p className="font-medium">
+                  You start to realize: Reps aren't just about volume.
+                </p>
+                
+                <p className="font-medium">
+                  They're about attention.
+                </p>
+                
+                <p>
+                  That's what makes progress sustainable.
+                </p>
+                
+                <p className="text-lg font-medium text-army dark:text-destructive">
+                  And that's what Mission Built is really about — building better products, one rep at a time.
+                </p>
+              </div>
             </section>
 
             <section id="consistency" className="mb-12">
