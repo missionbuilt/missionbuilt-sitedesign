@@ -3,8 +3,11 @@ import { Link } from 'react-router-dom';
 import { Badge } from '@/components/ui/badge';
 import { ExternalLink } from 'lucide-react';
 import { chapters } from '@/data/chapters-data';
+import { useNewBadge } from '@/hooks/useNewBadge';
 
 const FeaturedLogs = () => {
+  const { hasVisitedTrainingLogs } = useNewBadge();
+  
   // Get the most recent chapters as featured logs
   const featuredLogs = chapters
     .filter(chapter => chapter.status === 'in-progress')
@@ -32,7 +35,7 @@ const FeaturedLogs = () => {
               >
                 <div className="relative p-8 rounded-xl bg-white dark:bg-slate/5 border border-slate/10 dark:border-slate/20 shadow-sm card-hover">
                   {/* NEW Badge for recently added chapters */}
-                  {index === 0 && (
+                  {index === 0 && !hasVisitedTrainingLogs && (
                     <Badge 
                       variant="default" 
                       className="absolute top-4 right-4 bg-sunburst text-slate text-xs px-2 py-1 animate-pulse"

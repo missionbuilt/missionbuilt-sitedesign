@@ -4,10 +4,12 @@ import { cn } from '@/lib/utils';
 import Logo from '@/components/Logo';
 import NightVisionToggle from '@/components/NightVisionToggle';
 import { Badge } from '@/components/ui/badge';
+import { useNewBadge } from '@/hooks/useNewBadge';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const { hasVisitedTrainingLogs, markTrainingLogsAsVisited } = useNewBadge();
 
   // Function to handle scrolling to top when navigating to home
   const scrollToTop = () => {
@@ -15,6 +17,11 @@ const Navbar = () => {
       top: 0,
       behavior: 'instant' // Changed from 'smooth' to 'instant' for immediate scrolling
     });
+  };
+
+  // Function to handle training logs click
+  const handleTrainingLogsClick = () => {
+    markTrainingLogsAsVisited();
   };
 
   // Effect to ensure we're at the top of the page when navigating to home
@@ -35,13 +42,15 @@ const Navbar = () => {
           <nav className="flex items-center space-x-1 mr-6">
             <NavLink to="/" exact onClick={scrollToTop}>The Mission</NavLink>
             <div className="relative">
-              <NavLink to="/chapters">Training Logs</NavLink>
-              <Badge 
-                variant="default" 
-                className="absolute -top-2 -right-2 bg-sunburst text-slate text-xs px-1.5 py-0.5 animate-pulse"
-              >
-                NEW
-              </Badge>
+              <NavLink to="/chapters" onClick={handleTrainingLogsClick}>Training Logs</NavLink>
+              {!hasVisitedTrainingLogs && (
+                <Badge 
+                  variant="default" 
+                  className="absolute -top-2 -right-2 bg-sunburst text-slate text-xs px-1.5 py-0.5 animate-pulse"
+                >
+                  NEW
+                </Badge>
+              )}
             </div>
             <NavLink to="/about">About</NavLink>
           </nav>
@@ -75,13 +84,15 @@ const Navbar = () => {
             <nav className="flex flex-col">
               <MobileNavLink to="/" onClick={() => {setIsMenuOpen(false); scrollToTop();}}>The Mission</MobileNavLink>
               <div className="relative">
-                <MobileNavLink to="/chapters" onClick={() => setIsMenuOpen(false)}>Training Logs</MobileNavLink>
-                <Badge 
-                  variant="default" 
-                  className="absolute top-3 right-4 bg-sunburst text-slate text-xs px-1.5 py-0.5 animate-pulse"
-                >
-                  NEW
-                </Badge>
+                <MobileNavLink to="/chapters" onClick={() => {setIsMenuOpen(false); handleTrainingLogsClick();}}>Training Logs</MobileNavLink>
+                {!hasVisitedTrainingLogs && (
+                  <Badge 
+                    variant="default" 
+                    className="absolute top-3 right-4 bg-sunburst text-slate text-xs px-1.5 py-0.5 animate-pulse"
+                  >
+                    NEW
+                  </Badge>
+                )}
               </div>
               <MobileNavLink to="/about" onClick={() => setIsMenuOpen(false)}>About</MobileNavLink>
               <div className="px-4 py-3">
