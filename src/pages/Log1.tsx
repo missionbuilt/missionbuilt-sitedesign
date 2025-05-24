@@ -650,80 +650,167 @@ const Log1 = () => {
                 </p>
                 
                 <div className="grid gap-4">
-                  {[
-                    {
-                      title: "Cyberpunk 2077 Launch & CD Projekt Red",
-                      description: "A case study in date-driven shipping that sacrificed long-term trust for short-term metrics.",
-                      url: "https://www.forbes.com/sites/davidthier/2020/12/11/cd-projekt-red-stock-drops-after-buggy-messy-cyberpunk-2077-launch/",
-                      source: "CD Projekt Red Stock Drops After Buggy, Messy 'Cyberpunk 2077' Launch – Forbes"
-                    },
-                    {
-                      title: "Simone Biles & Mission-Aligned Decision-Making",
-                      description: "An athlete choosing alignment over achievement — and sparking a global conversation.",
-                      url: "https://people.com/sports/everything-simone-biles-has-said-about-mental-health/",
-                      source: ""I Don't Have to Be Fine": Everything Simone Biles Has Said About Mental Health – People Magazine"
-                    },
-                    {
-                      title: "Patagonia & Purpose-Driven Brand Behavior",
-                      description: "Iconic ad campaign where brand values overrode short-term sales incentives.",
-                      url: "https://www.patagonia.com/stories/dont-buy-this-jacket/story-18615.html",
-                      source: "Don't Buy This Jacket – Patagonia"
-                    },
-                    {
-                      title: "Research on Purpose & Fulfillment",
-                      description: "Purpose-driven companies see higher retention, satisfaction, and performance.",
-                      url: "https://hbr.org/sponsored/2016/04/the-business-case-for-purpose",
-                      source: "The Business Case for Purpose – Harvard Business Review, 2016"
-                    },
-                    {
-                      title: "Strategic Framing: The OODA Loop",
-                      description: "Military strategy model focused on Observation, Orientation, Decision, and Action. Useful for product and performance under uncertainty.",
-                      url: "https://en.wikipedia.org/wiki/OODA_loop",
-                      source: "John Boyd – OODA Loop – Wikipedia"
-                    },
-                    {
-                      title: "Case Study: Product & Organizational Drift",
-                      description: "How engineering culture and metric pressures at Boeing overtook the company's safety-driven mission — with catastrophic results.",
-                      url: "https://www.nytimes.com/2019/09/18/magazine/boeing-737-max-crashes.html",
-                      source: "What Really Brought Down the Boeing 737 Max? – The New York Times"
-                    },
-                    {
-                      title: "Individual Drift: Strength and Misalignment",
-                      description: "A personal reflection on chasing numbers too hard — and paying the price with injury.",
-                      url: "https://www.essentiallysports.com/bodybuilding-news-probably-my-biggest-mistake-months-after-a-horrifying-pec-tear-while-bench-pressing-strongman-legend-makes-a-candid-confession-about-his-injury-hafthor-bjornsson/",
-                      source: "Hafthor Björnsson on Pec Injury – Essentially Sports"
-                    },
-                    {
-                      title: "Research: Purpose and Retention",
-                      description: "Mission-driven workers are significantly more likely to stay long-term — supports your thesis with compelling data.",
-                      url: "https://guidehouse.com/-/media/new-library/industries/defense-and-security/documents/2023/gh-161-wp-improving-employee-retention.pdf",
-                      source: "Improving Employee Retention – Guidehouse"
-                    },
-                    {
-                      title: "Rituals, Adaptation, and Innovation",
-                      description: "How structure and creativity can coexist to drive meaningful progress.",
-                      url: "https://www.hybridperformancemethod.com/",
-                      source: "Stefi Cohen's Training Philosophy and Hybrid Methodology – Hybrid Performance Method"
-                    }
-                  ].map((item, index) => (
-                    <Card key={index} className="p-6 hover:shadow-md transition-all duration-200 border border-slate/20 dark:border-slate/30">
-                      <div className="flex items-start gap-4">
-                        <LinkIcon className="h-6 w-6 mt-1 flex-shrink-0 text-army dark:text-army" />
-                        <div className="flex-1">
-                          <h4 className="font-semibold text-slate dark:text-slate-200 text-lg mb-2">{item.title}</h4>
-                          <p className="text-slate/80 dark:text-slate-300 mb-3 leading-relaxed">{item.description}</p>
-                          <a 
-                            href={item.url} 
-                            className="text-army hover:text-army/80 dark:text-army dark:hover:text-army/80 font-medium"
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                          >
-                            {item.source}
-                          </a>
-                        </div>
+                  <Card className="p-6 hover:shadow-md transition-all duration-200 border border-slate/20 dark:border-slate/30">
+                    <div className="flex items-start gap-4">
+                      <LinkIcon className="h-6 w-6 mt-1 flex-shrink-0 text-army dark:text-army" />
+                      <div className="flex-1">
+                        <h4 className="font-semibold text-slate dark:text-slate-200 text-lg mb-2">Cyberpunk 2077 Launch & CD Projekt Red</h4>
+                        <p className="text-slate/80 dark:text-slate-300 mb-3 leading-relaxed">A case study in date-driven shipping that sacrificed long-term trust for short-term metrics.</p>
+                        <a 
+                          href="https://www.forbes.com/sites/davidthier/2020/12/11/cd-projekt-red-stock-drops-after-buggy-messy-cyberpunk-2077-launch/"
+                          className="text-army hover:text-army/80 dark:text-army dark:hover:text-army/80 font-medium"
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                        >
+                          CD Projekt Red Stock Drops After Buggy, Messy Cyberpunk 2077 Launch – Forbes
+                        </a>
                       </div>
-                    </Card>
-                  ))}
+                    </div>
+                  </Card>
+                  
+                  <Card className="p-6 hover:shadow-md transition-all duration-200 border border-slate/20 dark:border-slate/30">
+                    <div className="flex items-start gap-4">
+                      <LinkIcon className="h-6 w-6 mt-1 flex-shrink-0 text-army dark:text-army" />
+                      <div className="flex-1">
+                        <h4 className="font-semibold text-slate dark:text-slate-200 text-lg mb-2">Simone Biles & Mission-Aligned Decision-Making</h4>
+                        <p className="text-slate/80 dark:text-slate-300 mb-3 leading-relaxed">An athlete choosing alignment over achievement — and sparking a global conversation.</p>
+                        <a 
+                          href="https://people.com/sports/everything-simone-biles-has-said-about-mental-health/"
+                          className="text-army hover:text-army/80 dark:text-army dark:hover:text-army/80 font-medium"
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                        >
+                          I Don&apos;t Have to Be Fine: Everything Simone Biles Has Said About Mental Health – People Magazine
+                        </a>
+                      </div>
+                    </div>
+                  </Card>
+                  
+                  <Card className="p-6 hover:shadow-md transition-all duration-200 border border-slate/20 dark:border-slate/30">
+                    <div className="flex items-start gap-4">
+                      <LinkIcon className="h-6 w-6 mt-1 flex-shrink-0 text-army dark:text-army" />
+                      <div className="flex-1">
+                        <h4 className="font-semibold text-slate dark:text-slate-200 text-lg mb-2">Patagonia & Purpose-Driven Brand Behavior</h4>
+                        <p className="text-slate/80 dark:text-slate-300 mb-3 leading-relaxed">Iconic ad campaign where brand values overrode short-term sales incentives.</p>
+                        <a 
+                          href="https://www.patagonia.com/stories/dont-buy-this-jacket/story-18615.html"
+                          className="text-army hover:text-army/80 dark:text-army dark:hover:text-army/80 font-medium"
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                        >
+                          Don&apos;t Buy This Jacket – Patagonia
+                        </a>
+                      </div>
+                    </div>
+                  </Card>
+                  
+                  <Card className="p-6 hover:shadow-md transition-all duration-200 border border-slate/20 dark:border-slate/30">
+                    <div className="flex items-start gap-4">
+                      <LinkIcon className="h-6 w-6 mt-1 flex-shrink-0 text-army dark:text-army" />
+                      <div className="flex-1">
+                        <h4 className="font-semibold text-slate dark:text-slate-200 text-lg mb-2">Research on Purpose & Fulfillment</h4>
+                        <p className="text-slate/80 dark:text-slate-300 mb-3 leading-relaxed">Purpose-driven companies see higher retention, satisfaction, and performance.</p>
+                        <a 
+                          href="https://hbr.org/sponsored/2016/04/the-business-case-for-purpose"
+                          className="text-army hover:text-army/80 dark:text-army dark:hover:text-army/80 font-medium"
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                        >
+                          The Business Case for Purpose – Harvard Business Review, 2016
+                        </a>
+                      </div>
+                    </div>
+                  </Card>
+                  
+                  <Card className="p-6 hover:shadow-md transition-all duration-200 border border-slate/20 dark:border-slate/30">
+                    <div className="flex items-start gap-4">
+                      <LinkIcon className="h-6 w-6 mt-1 flex-shrink-0 text-army dark:text-army" />
+                      <div className="flex-1">
+                        <h4 className="font-semibold text-slate dark:text-slate-200 text-lg mb-2">Strategic Framing: The OODA Loop</h4>
+                        <p className="text-slate/80 dark:text-slate-300 mb-3 leading-relaxed">Military strategy model focused on Observation, Orientation, Decision, and Action. Useful for product and performance under uncertainty.</p>
+                        <a 
+                          href="https://en.wikipedia.org/wiki/OODA_loop"
+                          className="text-army hover:text-army/80 dark:text-army dark:hover:text-army/80 font-medium"
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                        >
+                          John Boyd – OODA Loop – Wikipedia
+                        </a>
+                      </div>
+                    </div>
+                  </Card>
+                  
+                  <Card className="p-6 hover:shadow-md transition-all duration-200 border border-slate/20 dark:border-slate/30">
+                    <div className="flex items-start gap-4">
+                      <LinkIcon className="h-6 w-6 mt-1 flex-shrink-0 text-army dark:text-army" />
+                      <div className="flex-1">
+                        <h4 className="font-semibold text-slate dark:text-slate-200 text-lg mb-2">Case Study: Product & Organizational Drift</h4>
+                        <p className="text-slate/80 dark:text-slate-300 mb-3 leading-relaxed">How engineering culture and metric pressures at Boeing overtook the company&apos;s safety-driven mission — with catastrophic results.</p>
+                        <a 
+                          href="https://www.nytimes.com/2019/09/18/magazine/boeing-737-max-crashes.html"
+                          className="text-army hover:text-army/80 dark:text-army dark:hover:text-army/80 font-medium"
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                        >
+                          What Really Brought Down the Boeing 737 Max? – The New York Times
+                        </a>
+                      </div>
+                    </div>
+                  </Card>
+                  
+                  <Card className="p-6 hover:shadow-md transition-all duration-200 border border-slate/20 dark:border-slate/30">
+                    <div className="flex items-start gap-4">
+                      <LinkIcon className="h-6 w-6 mt-1 flex-shrink-0 text-army dark:text-army" />
+                      <div className="flex-1">
+                        <h4 className="font-semibold text-slate dark:text-slate-200 text-lg mb-2">Individual Drift: Strength and Misalignment</h4>
+                        <p className="text-slate/80 dark:text-slate-300 mb-3 leading-relaxed">A personal reflection on chasing numbers too hard — and paying the price with injury.</p>
+                        <a 
+                          href="https://www.essentiallysports.com/bodybuilding-news-probably-my-biggest-mistake-months-after-a-horrifying-pec-tear-while-bench-pressing-strongman-legend-makes-a-candid-confession-about-his-injury-hafthor-bjornsson/"
+                          className="text-army hover:text-army/80 dark:text-army dark:hover:text-army/80 font-medium"
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                        >
+                          Hafthor Björnsson on Pec Injury – Essentially Sports
+                        </a>
+                      </div>
+                    </div>
+                  </Card>
+                  
+                  <Card className="p-6 hover:shadow-md transition-all duration-200 border border-slate/20 dark:border-slate/30">
+                    <div className="flex items-start gap-4">
+                      <LinkIcon className="h-6 w-6 mt-1 flex-shrink-0 text-army dark:text-army" />
+                      <div className="flex-1">
+                        <h4 className="font-semibold text-slate dark:text-slate-200 text-lg mb-2">Research: Purpose and Retention</h4>
+                        <p className="text-slate/80 dark:text-slate-300 mb-3 leading-relaxed">Mission-driven workers are significantly more likely to stay long-term — supports your thesis with compelling data.</p>
+                        <a 
+                          href="https://guidehouse.com/-/media/new-library/industries/defense-and-security/documents/2023/gh-161-wp-improving-employee-retention.pdf"
+                          className="text-army hover:text-army/80 dark:text-army dark:hover:text-army/80 font-medium"
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                        >
+                          Improving Employee Retention – Guidehouse
+                        </a>
+                      </div>
+                    </div>
+                  </Card>
+                  
+                  <Card className="p-6 hover:shadow-md transition-all duration-200 border border-slate/20 dark:border-slate/30">
+                    <div className="flex items-start gap-4">
+                      <LinkIcon className="h-6 w-6 mt-1 flex-shrink-0 text-army dark:text-army" />
+                      <div className="flex-1">
+                        <h4 className="font-semibold text-slate dark:text-slate-200 text-lg mb-2">Rituals, Adaptation, and Innovation</h4>
+                        <p className="text-slate/80 dark:text-slate-300 mb-3 leading-relaxed">How structure and creativity can coexist to drive meaningful progress.</p>
+                        <a 
+                          href="https://www.hybridperformancemethod.com/"
+                          className="text-army hover:text-army/80 dark:text-army dark:hover:text-army/80 font-medium"
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                        >
+                          Stefi Cohen&apos;s Training Philosophy and Hybrid Methodology – Hybrid Performance Method
+                        </a>
+                      </div>
+                    </div>
+                  </Card>
                 </div>
               </div>
             </div>
