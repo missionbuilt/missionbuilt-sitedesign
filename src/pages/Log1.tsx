@@ -172,12 +172,7 @@ const Log1 = () => {
                     Take Patagonia. They once ran a campaign telling customers not to buy their jacket unless they truly needed it. Why? Because their values mattered more than their quarterly revenue.
                   </p>
                   
-                  <p className="text-xs text-slate/70 dark:text-slate-400 italic">
-                    Source: Don't Buy This Jacket — Patagonia, 2011<br />
-                    Analysis: Harvard Business Review, 2016
-                  </p>
-                  
-                  <p className="text-slate dark:text-slate-200 leading-relaxed mt-4">
+                  <p className="text-slate dark:text-slate-200 leading-relaxed">
                     Or SpaceX — aiming at goals that span decades, not quarters. It's not about idolizing companies. It's about recognizing what real mission-alignment looks like when the stakes are high and the timelines are long.
                   </p>
                   
