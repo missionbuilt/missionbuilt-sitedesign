@@ -26,7 +26,7 @@ const FurtherReading: React.FC<FurtherReadingProps> = ({ isExpanded = false }) =
     },
     {
       title: "Simone Biles & Mission-Aligned Decision-Making",
-      description: ""I Don't Have to Be Fine": Everything Simone Biles Has Said About Mental Health – People Magazine",
+      description: "\"I Don't Have to Be Fine\": Everything Simone Biles Has Said About Mental Health – People Magazine",
       url: "https://people.com/sports/everything-simone-biles-has-said-about-mental-health/",
       note: "An athlete choosing alignment over achievement — and sparking a global conversation."
     },
