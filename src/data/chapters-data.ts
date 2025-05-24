@@ -28,7 +28,7 @@ export const chapters: Chapter[] = [
     title: "Rituals Over Rules",
     description: "Rigid processes break. Rituals scale. Replace rigid roadmaps and overly prescriptive training programs with adaptable, purpose-driven rituals.",
     slug: "rituals-over-rules",
-    status: "not-started"
+    status: "coming-soon"
   },
   {
     id: 4,
