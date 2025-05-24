@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Chapter } from "@/data/chapters-data";
 import { BookOpen } from "lucide-react";
@@ -12,7 +11,7 @@ const getSections = (chapterId: number) => {
   if (chapterId === 1) {
     return [
       { id: "mission-is-the-magnet", title: "The Mission Is the Magnet" },
-      { id: "building-foundation", title: "Building the Foundation" },
+      { id: "the-drift", title: "The Drift" },
       { id: "leading-by-example", title: "Leading by Example" },
       { id: "key-takeaways", title: "Key Takeaways" }
     ];
