@@ -1,11 +1,17 @@
-
-
 import { Link } from 'react-router-dom';
 import { Badge } from '@/components/ui/badge';
 import { ExternalLink } from 'lucide-react';
 
 const FeaturedLogs = () => {
-  const featuredLogs = [];
+  const featuredLogs = [
+    {
+      id: 1,
+      title: "Mission before Metrics",
+      excerpt: "Why zero-sum thinking might be limiting your product decisions and how to break free from this mental model.",
+      date: "Jan 20, 2025",
+      slug: "/log/1"
+    }
+  ];
 
   return (
     <section className="py-16 bg-gradient-to-b from-slate/5 to-transparent">
@@ -65,4 +71,3 @@ const FeaturedLogs = () => {
 };
 
 export default FeaturedLogs;
-
