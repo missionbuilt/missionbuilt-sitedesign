@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Chapter } from "@/data/chapters-data";
 import { BookOpen } from "lucide-react";
@@ -21,7 +22,8 @@ const getSections = (chapterId: number) => {
       { id: "the-myth-of-overnight-success", title: "The Myth of Overnight Success" },
       { id: "repetition-is-not-redundancy", title: "Repetition Is Not Redundancy" },
       { id: "when-the-spark-fades", title: "When the Spark Fades" },
-      { id: "the-multiplier-of-boring-work", title: "The Multiplier of Boring Work" }
+      { id: "the-multiplier-of-boring-work", title: "The Multiplier of Boring Work" },
+      { id: "the-work-becomes-the-win", title: "The Work Becomes the Win" }
     ];
   }
   

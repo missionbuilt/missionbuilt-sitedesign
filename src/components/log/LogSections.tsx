@@ -360,6 +360,25 @@ const getSectionContent = (chapterId: number, sectionId: string) => {
             <p>That's the real win. And that's where we end this chapter — not at the peak, but at the foundation.</p>
           </div>
         );
+      case "the-work-becomes-the-win":
+        return (
+          <div className="space-y-6">
+            <p>At some point, the reps stop being something you have to do. They just become something you do.</p>
+            <p>You stop chasing motivation and start trusting momentum.</p>
+            <p>You stop asking when it gets easy and start asking how to keep showing up.</p>
+            <p>And that's the shift — not just in the gym or in your sprint board, but in your mindset. You lift because you care. You build because it matters. Because you love it.</p>
+            <p>It's not about PRs or product launches. It's about what they represent: The hours you logged. The patterns you learned. The people you helped.</p>
+            <p>That's what it means to be mission built.</p>
+            <p>You're not doing it for the spotlight.</p>
+            <p>You're doing it because you've seen the power of the process — and you're not walking away from it.</p>
+            <p>Progress doesn't shout — it stacks.</p>
+            <p>One quiet rep at a time.</p>
+            
+            <p>And if repetition is the foundation, what you build on top of it matters.</p>
+            <p>The next chapter explores exactly that: how rituals — not rules — help you grow, adapt, and lead with purpose.</p>
+            <p>Up next: Rituals Over Rules.</p>
+          </div>
+        );
       default:
         return "Content for this section will be added soon.";
     }
@@ -382,7 +401,8 @@ const getSections = (chapterId: number) => {
       { id: "the-myth-of-overnight-success", title: "The Myth of Overnight Success" },
       { id: "repetition-is-not-redundancy", title: "Repetition Is Not Redundancy" },
       { id: "when-the-spark-fades", title: "When the Spark Fades" },
-      { id: "the-multiplier-of-boring-work", title: "The Multiplier of Boring Work" }
+      { id: "the-multiplier-of-boring-work", title: "The Multiplier of Boring Work" },
+      { id: "the-work-becomes-the-win", title: "The Work Becomes the Win" }
     ];
   }
   
