@@ -1,10 +1,10 @@
-
 import React from "react";
 import { Chapter } from "@/data/chapters-data";
 import { BookOpen } from "lucide-react";
 
 interface TableOfContentsProps {
   chapter: Chapter;
+  onSectionClick?: (sectionId: string) => void;
 }
 
 // Sample sections for demonstration
@@ -39,8 +39,19 @@ const getSections = (chapterId: number) => {
   ];
 };
 
-const TableOfContents: React.FC<TableOfContentsProps> = ({ chapter }) => {
+const TableOfContents: React.FC<TableOfContentsProps> = ({ chapter, onSectionClick }) => {
   const sections = getSections(chapter.id);
+  
+  const handleSectionClick = (e: React.MouseEvent, sectionId: string) => {
+    e.preventDefault();
+    onSectionClick?.(sectionId);
+    
+    // Scroll to the section
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
   
   return (
     <div className="bg-slate/5 rounded-lg p-6 border border-slate/10">
@@ -54,7 +65,8 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ chapter }) => {
           <a
             key={section.id}
             href={`#${section.id}`}
-            className="block text-sm text-muted-foreground hover:text-army transition-colors duration-200 py-1"
+            onClick={(e) => handleSectionClick(e, section.id)}
+            className="block text-sm text-muted-foreground hover:text-army transition-colors duration-200 py-1 cursor-pointer"
           >
             {index + 1}. {section.title}
           </a>

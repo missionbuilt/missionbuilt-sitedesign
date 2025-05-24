@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Chapter } from "@/data/chapters-data";
 import {
   Collapsible,
@@ -9,6 +9,7 @@ import { ChevronDown } from "lucide-react";
 
 interface LogSectionsProps {
   chapter: Chapter;
+  expandedSection?: string;
 }
 
 // Function to calculate estimated read time
@@ -436,17 +437,37 @@ const getSections = (chapterId: number) => {
   ];
 };
 
-const LogSections: React.FC<LogSectionsProps> = ({ chapter }) => {
+const LogSections: React.FC<LogSectionsProps> = ({ chapter, expandedSection }) => {
   const sections = getSections(chapter.id);
+  const [openSections, setOpenSections] = useState<Set<string>>(new Set([sections[0]?.id]));
+  
+  useEffect(() => {
+    if (expandedSection) {
+      setOpenSections(prev => new Set([...prev, expandedSection]));
+    }
+  }, [expandedSection]);
+  
+  const toggleSection = (sectionId: string) => {
+    setOpenSections(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(sectionId)) {
+        newSet.delete(sectionId);
+      } else {
+        newSet.add(sectionId);
+      }
+      return newSet;
+    });
+  };
   
   return (
     <div className="space-y-4">
       {sections.map((section, index) => {
         const content = getSectionContent(chapter.id, section.id);
         const readTime = calculateReadTime(content);
+        const isOpen = openSections.has(section.id);
         
         return (
-          <Collapsible key={section.id} defaultOpen={index === 0}>
+          <Collapsible key={section.id} open={isOpen} onOpenChange={() => toggleSection(section.id)}>
             <CollapsibleTrigger 
               id={section.id}
               className="flex items-center justify-between w-full text-left p-4 bg-slate/5 hover:bg-slate/10 rounded-lg border border-slate/10 transition-colors duration-200"
