@@ -1,4 +1,3 @@
-
 // Chapter data structure
 export interface Chapter {
   id: number;
@@ -22,7 +21,7 @@ export const chapters: Chapter[] = [
     title: "Built Through Reps",
     description: "Greatness isn't born; it's built — one rep, one iteration at a time. Whether it's product iteration or lifting volume, this chapter highlights how repeated effort compounds into capability.",
     slug: "built-through-reps",
-    status: "coming-soon"
+    status: "in-progress"
   },
   {
     id: 3,
