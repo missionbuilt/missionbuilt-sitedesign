@@ -9,7 +9,7 @@ const FurtherReading: React.FC = () => {
     {
       title: "Deeper Read on Instagram's Rise:",
       description: "No Filter: The Inside Story of Instagram by Sarah Frier – A detailed, behind-the-scenes look at Instagram's transformation from Burbn to a cultural phenomenon.",
-      url: "#",
+      url: "https://en.wikipedia.org/wiki/No_Filter:_The_Inside_Story_of_Instagram",
       note: ""
     },
     {
