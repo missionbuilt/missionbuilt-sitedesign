@@ -1,3 +1,4 @@
+
 import { Link } from 'react-router-dom';
 import { Badge } from '@/components/ui/badge';
 import { ExternalLink } from 'lucide-react';
@@ -6,7 +7,7 @@ const FeaturedLogs = () => {
   const featuredLogs = [
     {
       id: 1,
-      title: "The Zero-Sum Thinking Trap",
+      title: "Mission before Metrics",
       excerpt: "Why zero-sum thinking might be limiting your product decisions and how to break free from this mental model.",
       date: "Jan 20, 2025",
       slug: "/log/1"
