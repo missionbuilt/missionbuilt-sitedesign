@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { ChevronLeft, BookOpen, Clock, Link as LinkIcon } from "lucide-react";
 import { Link } from "react-router-dom";
+
 const Log1 = () => {
   // Scroll to top on page load
   useEffect(() => {
@@ -15,7 +16,9 @@ const Log1 = () => {
       behavior: "auto"
     });
   }, []);
-  return <div className="min-h-screen flex flex-col bg-background">
+
+  return (
+    <div className="min-h-screen flex flex-col bg-background">
       <Navbar />
       
       <main className="flex-grow container mx-auto px-4 py-8 md:py-12">
@@ -134,9 +137,6 @@ const Log1 = () => {
                     To their credit, the team stuck with it. Years later, after patches and a reimagined DLC, the game has earned back much of the trust it lost — a testament to what happens when talented people are finally given the space to do the work right.
                   </p>
                   
-                  <p className="text-xs text-slate/70 dark:text-slate-400 italic">
-                </p>
-                  
                   <p className="text-slate dark:text-slate-200 leading-relaxed mt-4">
                     And we've seen what it looks like to protect the mission — even when it means stepping back. Simone Biles did exactly that in front of the entire world at the 2021 Olympics. Under unimaginable pressure, she chose long-term purpose over short-term performance. She knew something was off, and she honored that instinct.
                   </p>
@@ -178,11 +178,6 @@ const Log1 = () => {
                   
                   <p className="text-slate dark:text-slate-200 leading-relaxed">
                     And it pays off. Research shows that people who believe in the purpose behind their work stay longer, burn out less, and deliver more.
-                  </p>
-                  
-                  <p className="text-xs text-slate/70 dark:text-slate-400 italic">
-                    Source: Imperative & NYU Study on Purpose-Driven Work, 2016<br />
-                    Source: McKinsey & Co., 2020 — Purpose: Shifting from Why to How
                   </p>
 
                   <h3 className="text-xl md:text-2xl font-display font-semibold text-slate dark:text-slate-100 mt-10 mb-4">
@@ -825,6 +820,8 @@ const Log1 = () => {
       </main>
       
       <Footer />
-    </div>;
+    </div>
+  );
 };
+
 export default Log1;
