@@ -1,4 +1,3 @@
-
 import React, { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -133,8 +132,176 @@ const Log1 = () => {
                 Her move wasn't retreat — it was leadership. And in time, she returned to competition stronger, on her terms, and more respected than ever. A different kind of comeback — one powered by mission, not metrics.
               </p>
               
-              <p className="text-xl leading-relaxed text-slate dark:text-slate-100 font-medium">
+              <p className="text-xl leading-relaxed text-slate dark:text-slate-100 font-medium mb-12">
                 Success isn't about hitting every metric. It's about refusing to lose yourself trying.
+              </p>
+
+              {/* More Than Just Good Intentions */}
+              <h3 className="text-2xl md:text-3xl font-display font-semibold text-slate dark:text-slate-100 mb-6 mt-12">
+                More Than Just Good Intentions
+              </h3>
+              
+              <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-6">
+                Mission-driven isn't a poster in the break room or a bullet in a pitch deck. It's how you move — how you decide, how you show up when it's hard.
+              </p>
+              
+              <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-6">
+                In a world that celebrates velocity, mission is quiet. But that doesn't make it weak. Mission gives you clarity when things get blurry and stamina when things get hard.
+              </p>
+              
+              <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-6">
+                Take Patagonia. They once ran a campaign telling customers not to buy their jacket unless they truly needed it. Why? Because their values mattered more than their quarterly revenue.
+              </p>
+              
+              <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-6">
+                Or SpaceX — aiming at goals that span decades, not quarters. It's not about idolizing companies. It's about recognizing what real mission-alignment looks like when the stakes are high and the timelines are long.
+              </p>
+              
+              <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-8">
+                And it pays off. Research shows that people who believe in the purpose behind their work stay longer, burn out less, and deliver more.
+              </p>
+
+              {/* When Metrics Eclipse Meaning */}
+              <h3 className="text-2xl md:text-3xl font-display font-semibold text-slate dark:text-slate-100 mb-6 mt-12">
+                When Metrics Eclipse Meaning
+              </h3>
+              
+              <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-6">
+                Let's be clear: metrics matter. But only when they serve the mission — not when they become it.
+              </p>
+              
+              <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-4">
+                Here's where teams lose the plot:
+              </p>
+              
+              <ul className="list-none space-y-3 mb-8 pl-4">
+                <li className="text-lg leading-relaxed text-slate dark:text-slate-200 border-l-2 border-army/30 pl-4">
+                  They ship fast instead of shipping right.
+                </li>
+                <li className="text-lg leading-relaxed text-slate dark:text-slate-200 border-l-2 border-army/30 pl-4">
+                  They chase signups instead of learning why users leave.
+                </li>
+                <li className="text-lg leading-relaxed text-slate dark:text-slate-200 border-l-2 border-army/30 pl-4">
+                  They brag about launches and ignore long-term usage.
+                </li>
+              </ul>
+              
+              <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-6">
+                When dates drive development, teams start cutting corners. Feedback loops close. Energy fades. You build momentum toward a number — not toward value.
+              </p>
+              
+              <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-8">
+                In the gym, this is ego lifting. In product, it's just as risky. It looks like burned-out engineers, brittle systems, and growth that collapses the second you stop pushing it uphill.
+              </p>
+
+              {/* The Fulfillment Flywheel */}
+              <h3 className="text-2xl md:text-3xl font-display font-semibold text-slate dark:text-slate-100 mb-6 mt-12">
+                The Fulfillment Flywheel (Powered by Purpose)
+              </h3>
+              
+              <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-6">
+                There's a better model. One that's as relevant in combat as it is in code — or in the squat rack.
+              </p>
+              
+              <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-6">
+                It's called the OODA Loop: Observe, Orient, Decide, Act. Developed for fighter pilots. Adopted by startups. Powered by clarity.
+              </p>
+              
+              <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-8">
+                But here's the catch — without a clear mission, the whole loop spins out.
+              </p>
+
+              {/* OODA Table */}
+              <div className="overflow-x-auto mb-8">
+                <table className="w-full border border-slate/20 dark:border-slate/30 rounded-lg">
+                  <thead>
+                    <tr className="bg-slate/5 dark:bg-slate/10">
+                      <th className="text-left p-4 border-b border-slate/20 dark:border-slate/30 font-semibold text-slate dark:text-slate-100">
+                        OODA Stage
+                      </th>
+                      <th className="text-left p-4 border-b border-slate/20 dark:border-slate/30 font-semibold text-slate dark:text-slate-100">
+                        With Mission-Driven Focus
+                      </th>
+                      <th className="text-left p-4 border-b border-slate/20 dark:border-slate/30 font-semibold text-slate dark:text-slate-100">
+                        Without It
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td className="p-4 border-b border-slate/10 dark:border-slate/20 font-medium text-slate dark:text-slate-200">
+                        Observe
+                      </td>
+                      <td className="p-4 border-b border-slate/10 dark:border-slate/20 text-slate dark:text-slate-200">
+                        You know what matters to watch
+                      </td>
+                      <td className="p-4 border-b border-slate/10 dark:border-slate/20 text-slate dark:text-slate-200">
+                        You collect everything, drowning in noise
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="p-4 border-b border-slate/10 dark:border-slate/20 font-medium text-slate dark:text-slate-200">
+                        Orient
+                      </td>
+                      <td className="p-4 border-b border-slate/10 dark:border-slate/20 text-slate dark:text-slate-200">
+                        Purpose helps filter & frame inputs
+                      </td>
+                      <td className="p-4 border-b border-slate/10 dark:border-slate/20 text-slate dark:text-slate-200">
+                        Metrics get over-prioritized, lose big picture
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="p-4 border-b border-slate/10 dark:border-slate/20 font-medium text-slate dark:text-slate-200">
+                        Decide
+                      </td>
+                      <td className="p-4 border-b border-slate/10 dark:border-slate/20 text-slate dark:text-slate-200">
+                        Mission becomes a north star for action
+                      </td>
+                      <td className="p-4 border-b border-slate/10 dark:border-slate/20 text-slate dark:text-slate-200">
+                        Risk of chasing vanity wins or short-term gains
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="p-4 font-medium text-slate dark:text-slate-200">
+                        Act
+                      </td>
+                      <td className="p-4 text-slate dark:text-slate-200">
+                        Execution has energy and resolve
+                      </td>
+                      <td className="p-4 text-slate dark:text-slate-200">
+                        Actions may be misaligned or half-hearted
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              
+              <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-6">
+                In lifting, it's trusting the plan instead of maxing out because you feel good that day. In product, it's waiting to ship because your users aren't ready — even if your OKRs are.
+              </p>
+              
+              <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-8">
+                Mission turns chaos into clarity. It makes every rep count. Every release matter. Every decision directional.
+              </p>
+
+              <div className="bg-army/5 dark:bg-army/10 p-6 rounded-lg mb-8">
+                <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-4 font-medium">
+                  This is the real flywheel of fulfillment:
+                </p>
+                <ul className="space-y-2 text-lg text-slate dark:text-slate-200">
+                  <li>Mission fuels clarity.</li>
+                  <li>Clarity powers resilience.</li>
+                  <li>Resilience drives real progress.</li>
+                  <li>And real progress reinforces the mission.</li>
+                </ul>
+              </div>
+              
+              <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-6">
+                That's the throughline. That's what keeps us going.
+              </p>
+              
+              <p className="text-xl leading-relaxed text-slate dark:text-slate-100 font-medium">
+                Metrics follow. But the mission leads.
               </p>
             </div>
           </section>
