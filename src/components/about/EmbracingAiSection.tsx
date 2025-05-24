@@ -31,31 +31,6 @@ const EmbracingAiSection = () => {
             <p>
               So no, this isn't a luddite's blog. It's not a shrine to handcrafted suffering. It's a modern-day field manual forged by a human lifter, builder, and father — built with tools that work.
             </p>
-            
-            <div className="mt-10 pt-6 border-t border-slate/10">
-              <h4 className="text-xl font-semibold mb-4">Open Thanks to the Co-Authors</h4>
-              <p>
-                This project wouldn't exist without the growing list of co-authors, contributors, and collaborators—some human, some not. The Unity of Product & Power is proudly an open-source memoir built with tools that amplify what we can do together.
-              </p>
-              
-              <p className="mt-4 font-medium">Special thanks to:</p>
-              
-              <ul className="mt-2 space-y-2">
-                <li><span className="font-medium">Lovable</span> – For the care and clarity in design and build that made these words a home.</li>
-                
-                <li><span className="font-medium">ChatGPT-4o</span> – For showing up every rep, helping shape thoughts into language, language into action, and action into something worth sharing.</li>
-                
-                <li><span className="font-medium">Sora</span> – For reminding us that storytelling has no bounds—not even time and space.</li>
-              </ul>
-              
-              <p className="mt-4">
-                And to everyone who reads, reflects, challenges, or builds on these ideas: you are part of this too.
-              </p>
-              
-              <p className="mt-2">
-                This list will grow. Because great things never happen alone.
-              </p>
-            </div>
           </div>
         </CardContent>
       </Card>
