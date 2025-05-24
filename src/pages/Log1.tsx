@@ -1,3 +1,4 @@
+
 import React, { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -39,10 +40,10 @@ const Log1 = () => {
           <div className="flex items-center gap-4 text-slate/80 dark:text-slate-300 mb-6">
             <div className="flex items-center">
               <Avatar className="h-8 w-8 mr-2">
-                <AvatarImage src="/placeholder.svg" alt="Author" />
+                <AvatarImage src="/lovable-uploads/777697e9-e718-4177-9c47-cb5be778fdd3.png" alt="Mike" />
                 <AvatarFallback>MB</AvatarFallback>
               </Avatar>
-              <span className="text-sm">Author Name</span>
+              <span className="text-sm">Mike</span>
             </div>
             <div className="flex items-center text-sm">
               <Clock className="h-4 w-4 mr-1" />
