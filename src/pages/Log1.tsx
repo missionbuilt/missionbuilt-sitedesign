@@ -1,4 +1,5 @@
 
+
 import React, { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -30,20 +31,20 @@ const Log1 = () => {
         </div>
         
         {/* Hero section with image and compact TOC */}
-        <div className="mb-8 flex flex-col lg:flex-row gap-8 items-start">
+        <div className="mb-8 flex flex-col lg:flex-row gap-6 xl:gap-8 items-start">
           {/* Hero Image */}
-          <div className="flex-1">
+          <div className="flex-1 lg:flex-none lg:w-1/2 xl:w-3/5">
             <img 
               src="/lovable-uploads/fe278df4-1643-4dd0-9a61-51e73f29901d.png" 
               alt="Split view of a person carrying a barbell - one half showing military/field setting, other half showing office/tech environment"
-              className="w-full max-w-lg h-auto rounded-lg shadow-lg"
+              className="w-full max-w-xl lg:max-w-none h-auto rounded-lg shadow-lg"
             />
           </div>
           
           {/* Compact Table of Contents */}
-          <div className="lg:w-80 w-full">
-            <Card className="bg-slate/5 dark:bg-slate/10 border-slate/20 dark:border-slate/30">
-              <div className="p-4">
+          <div className="lg:w-1/2 xl:w-2/5 w-full lg:max-w-sm xl:max-w-md">
+            <Card className="bg-slate/5 dark:bg-slate/10 border-slate/20 dark:border-slate/30 sticky top-8">
+              <div className="p-4 lg:p-5">
                 <h3 className="text-lg font-display font-semibold text-slate dark:text-slate-100 mb-4 flex items-center">
                   <div className="w-1 h-4 bg-army mr-2"></div>
                   Contents
@@ -831,3 +832,4 @@ const Log1 = () => {
 };
 
 export default Log1;
+
