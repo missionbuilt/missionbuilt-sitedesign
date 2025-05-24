@@ -44,7 +44,7 @@ const Log1 = () => {
             </div>
             <div className="flex items-center text-sm">
               <Clock className="h-4 w-4 mr-1" />
-              <span>Published Date</span>
+              <span>May 24, 2025</span>
             </div>
           </div>
         </div>
