@@ -1,4 +1,3 @@
-
 import React, { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -29,13 +28,42 @@ const Log1 = () => {
           </Link>
         </div>
         
-        {/* Hero Image */}
-        <div className="mb-8 flex justify-center">
-          <img 
-            src="/lovable-uploads/fe278df4-1643-4dd0-9a61-51e73f29901d.png" 
-            alt="Split view of a person carrying a barbell - one half showing military/field setting, other half showing office/tech environment"
-            className="max-w-2xl w-full h-auto rounded-lg shadow-lg"
-          />
+        {/* Hero section with image and compact TOC */}
+        <div className="mb-8 flex flex-col lg:flex-row gap-8 items-start">
+          {/* Hero Image */}
+          <div className="flex-1">
+            <img 
+              src="/lovable-uploads/fe278df4-1643-4dd0-9a61-51e73f29901d.png" 
+              alt="Split view of a person carrying a barbell - one half showing military/field setting, other half showing office/tech environment"
+              className="w-full h-auto rounded-lg shadow-lg"
+            />
+          </div>
+          
+          {/* Compact Table of Contents */}
+          <div className="lg:w-80 w-full">
+            <Card className="bg-slate/5 dark:bg-slate/10 border-slate/20 dark:border-slate/30">
+              <div className="p-4">
+                <h3 className="text-lg font-display font-semibold text-slate dark:text-slate-100 mb-4 flex items-center">
+                  <div className="w-1 h-4 bg-army mr-2"></div>
+                  Contents
+                </h3>
+                <nav className="space-y-2 text-sm">
+                  <a href="#mission-is-the-magnet" className="block text-slate hover:text-army dark:text-slate-200 dark:hover:text-army transition-colors font-medium">
+                    1. The Mission Is the Magnet
+                  </a>
+                  <a href="#the-drift" className="block text-slate hover:text-army dark:text-slate-200 dark:hover:text-army transition-colors font-medium">
+                    2. The Drift
+                  </a>
+                  <a href="#repetition-with-intention" className="block text-slate hover:text-army dark:text-slate-200 dark:hover:text-army transition-colors font-medium">
+                    3. Repetition with Intention
+                  </a>
+                  <a href="#sources" className="block text-slate hover:text-army dark:text-slate-200 dark:hover:text-army transition-colors font-medium">
+                    Sources
+                  </a>
+                </nav>
+              </div>
+            </Card>
+          </div>
         </div>
         
         {/* Log header section */}
@@ -59,55 +87,6 @@ const Log1 = () => {
           </div>
         </div>
 
-        {/* Table of Contents */}
-        <Card className="mb-12 bg-slate/5 dark:bg-slate/10 border-slate/20 dark:border-slate/30">
-          <div className="p-6">
-            <h2 className="text-2xl font-display font-semibold text-slate dark:text-slate-100 mb-6 flex items-center">
-              <div className="w-1 h-6 bg-army mr-3"></div>
-              Table of Contents
-            </h2>
-            <nav className="space-y-4">
-              <div>
-                <a href="#mission-is-the-magnet" className="text-lg font-medium text-slate hover:text-army dark:text-slate-200 dark:hover:text-army transition-colors block">
-                  1. The Mission Is the Magnet
-                </a>
-                <ul className="ml-6 mt-2 space-y-1">
-                  <li>
-                    <a href="#more-than-good-intentions" className="text-slate/80 hover:text-army dark:text-slate-300 dark:hover:text-army transition-colors">
-                      More Than Just Good Intentions
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#when-metrics-eclipse-meaning" className="text-slate/80 hover:text-army dark:text-slate-300 dark:hover:text-army transition-colors">
-                      When Metrics Eclipse Meaning
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#fulfillment-flywheel" className="text-slate/80 hover:text-army dark:text-slate-300 dark:hover:text-army transition-colors">
-                      The Fulfillment Flywheel (Powered by Purpose)
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <a href="#the-drift" className="text-lg font-medium text-slate hover:text-army dark:text-slate-200 dark:hover:text-army transition-colors block">
-                  2. The Drift
-                </a>
-              </div>
-              <div>
-                <a href="#repetition-with-intention" className="text-lg font-medium text-slate hover:text-army dark:text-slate-200 dark:hover:text-army transition-colors block">
-                  3. Repetition with Intention
-                </a>
-              </div>
-              <div>
-                <a href="#sources" className="text-lg font-medium text-slate hover:text-army dark:text-slate-200 dark:hover:text-army transition-colors block">
-                  Sources
-                </a>
-              </div>
-            </nav>
-          </div>
-        </Card>
-        
         {/* Section 1: The Mission Is the Magnet */}
         <article className="max-w-4xl mx-auto">
           <section className="mb-16" id="mission-is-the-magnet">
@@ -342,7 +321,7 @@ const Log1 = () => {
               <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-8">
                 Mission turns chaos into clarity. It makes every rep count. Every release matter. Every decision directional.
               </p>
-
+              
               <div className="bg-army/5 dark:bg-army/10 p-6 rounded-lg mb-8">
                 <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-4 font-medium">
                   This is the real flywheel of fulfillment:
