@@ -43,7 +43,7 @@ const Chapters = () => {
           {/* Book title and subtitle on same line with colon */}
           <div className="mb-8 text-center">
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-display font-bold text-army dark:text-army">
-              Mission Built<span className="mx-2">:</span><span className="font-normal text-muted-foreground">Lessons from the Barbell and the Backlog</span>
+              Mission Built<span className="mx-2">:</span><span className="font-normal text-muted-foreground">Lessons from the Barbell and the Boardroom</span>
             </h2>
           </div>
           
