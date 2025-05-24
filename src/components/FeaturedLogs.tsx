@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import { Badge } from '@/components/ui/badge';
 import { ExternalLink } from 'lucide-react';
@@ -26,9 +25,6 @@ const FeaturedLogs = () => {
       <div className="container-custom">
         <div className="text-center mb-12">
           <h2 className="heading-md mb-4 animate-fade-in">Latest Training Logs</h2>
-          <p className="body text-slate/70 max-w-2xl mx-auto animate-fade-in" style={{ animationDelay: "0.1s" }}>
-            Fresh insights from the product development trenches
-          </p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
