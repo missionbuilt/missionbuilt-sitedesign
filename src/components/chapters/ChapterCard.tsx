@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
@@ -98,7 +97,7 @@ const ChapterCard: React.FC<ChapterCardProps> = ({ chapter }) => {
           </div>
           {isClickable ? (
             <Link 
-              to={isLog1 ? "#mission-before-metrics" : `/log/${chapter.id}`}
+              to={`/log/${chapter.id}`}
               className="inline-flex items-center text-sm font-medium text-primary hover:underline"
             >
               Read Log <Book className="ml-1 h-4 w-4" />

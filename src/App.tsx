@@ -9,6 +9,7 @@ import { ThemeProvider } from "@/context/ThemeContext";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Chapters from "./pages/Chapters";
+import Log from "./pages/Log";
 import AboutMe from "./pages/AboutMe";
 import Privacy from "./pages/Privacy";
 
@@ -27,6 +28,7 @@ const App = () => {
               <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/chapters" element={<Chapters />} />
+                <Route path="/log/:id" element={<Log />} />
                 <Route path="/about" element={<AboutMe />} />
                 <Route path="/privacy" element={<Privacy />} />
                 <Route path="/terms" element={<Privacy />} />
