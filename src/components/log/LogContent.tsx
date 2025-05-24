@@ -27,7 +27,7 @@ const LogContent: React.FC<LogContentProps> = ({ chapter }) => {
           <LogMetadata chapter={chapter} />
           <TableOfContents chapter={chapter} onSectionClick={handleSectionClick} />
           <LogSections chapter={chapter} expandedSection={expandedSection} />
-          <FurtherReading />
+          <FurtherReading isExpanded={expandedSection === "further-reading"} />
         </div>
       </div>
     </main>

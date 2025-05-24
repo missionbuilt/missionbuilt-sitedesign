@@ -1,9 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ExternalLink, BookOpen, ChevronDown } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
-const FurtherReading: React.FC = () => {
+interface FurtherReadingProps {
+  isExpanded?: boolean;
+}
+
+const FurtherReading: React.FC<FurtherReadingProps> = ({ isExpanded = false }) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  // Update isOpen when isExpanded prop changes
+  useEffect(() => {
+    if (isExpanded) {
+      setIsOpen(true);
+    }
+  }, [isExpanded]);
 
   const resources = [
     {
