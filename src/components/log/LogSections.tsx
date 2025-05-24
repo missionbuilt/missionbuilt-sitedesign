@@ -473,7 +473,7 @@ const LogSections: React.FC<LogSectionsProps> = ({ chapter, expandedSection }) =
               className="flex items-center justify-between w-full text-left p-4 bg-slate/5 hover:bg-slate/10 rounded-lg border border-slate/10 transition-colors duration-200"
             >
               <div className="flex flex-col items-start">
-                <h2 className="text-xl font-semibold text-slate">
+                <h2 className="text-xl font-semibold text-foreground">
                   {index + 1}. {section.title}
                 </h2>
                 <span className="text-sm text-muted-foreground mt-1">
