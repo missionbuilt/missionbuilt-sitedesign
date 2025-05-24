@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Chapter } from "@/data/chapters-data";
 import {
@@ -11,6 +10,28 @@ import { ChevronDown } from "lucide-react";
 interface LogSectionsProps {
   chapter: Chapter;
 }
+
+// Function to calculate estimated read time
+const calculateReadTime = (content: React.ReactNode): number => {
+  // Convert React content to text for word counting
+  const getTextFromReactNode = (node: React.ReactNode): string => {
+    if (typeof node === 'string') return node;
+    if (typeof node === 'number') return String(node);
+    if (React.isValidElement(node) && node.props.children) {
+      return getTextFromReactNode(node.props.children);
+    }
+    if (Array.isArray(node)) {
+      return node.map(getTextFromReactNode).join(' ');
+    }
+    return '';
+  };
+
+  const text = getTextFromReactNode(content);
+  const wordCount = text.split(/\s+/).filter(word => word.length > 0).length;
+  const wordsPerMinute = 200; // Average reading speed
+  const readTime = Math.ceil(wordCount / wordsPerMinute);
+  return Math.max(1, readTime); // Minimum 1 minute
+};
 
 // Sample content for demonstration
 const getSectionContent = (chapterId: number, sectionId: string) => {
@@ -420,27 +441,37 @@ const LogSections: React.FC<LogSectionsProps> = ({ chapter }) => {
   
   return (
     <div className="space-y-4">
-      {sections.map((section, index) => (
-        <Collapsible key={section.id} defaultOpen={index === 0}>
-          <CollapsibleTrigger 
-            id={section.id}
-            className="flex items-center justify-between w-full text-left p-4 bg-slate/5 hover:bg-slate/10 rounded-lg border border-slate/10 transition-colors duration-200"
-          >
-            <h2 className="text-xl font-semibold text-slate">
-              {index + 1}. {section.title}
-            </h2>
-            <ChevronDown className="h-5 w-5 text-muted-foreground transition-transform duration-200 data-[state=open]:rotate-180" />
-          </CollapsibleTrigger>
-          
-          <CollapsibleContent className="px-4 pb-4">
-            <div className="prose prose-slate max-w-none pt-4">
-              <div className="text-muted-foreground leading-relaxed">
-                {getSectionContent(chapter.id, section.id)}
+      {sections.map((section, index) => {
+        const content = getSectionContent(chapter.id, section.id);
+        const readTime = calculateReadTime(content);
+        
+        return (
+          <Collapsible key={section.id} defaultOpen={index === 0}>
+            <CollapsibleTrigger 
+              id={section.id}
+              className="flex items-center justify-between w-full text-left p-4 bg-slate/5 hover:bg-slate/10 rounded-lg border border-slate/10 transition-colors duration-200"
+            >
+              <div className="flex flex-col items-start">
+                <h2 className="text-xl font-semibold text-slate">
+                  {index + 1}. {section.title}
+                </h2>
+                <span className="text-sm text-muted-foreground mt-1">
+                  {readTime} min read
+                </span>
               </div>
-            </div>
-          </CollapsibleContent>
-        </Collapsible>
-      ))}
+              <ChevronDown className="h-5 w-5 text-muted-foreground transition-transform duration-200 data-[state=open]:rotate-180" />
+            </CollapsibleTrigger>
+            
+            <CollapsibleContent className="px-4 pb-4">
+              <div className="prose prose-slate max-w-none pt-4">
+                <div className="text-muted-foreground leading-relaxed">
+                  {content}
+                </div>
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
+        );
+      })}
     </div>
   );
 };
