@@ -1,3 +1,4 @@
+
 import React, { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -35,7 +36,7 @@ const Log1 = () => {
             <img 
               src="/lovable-uploads/fe278df4-1643-4dd0-9a61-51e73f29901d.png" 
               alt="Split view of a person carrying a barbell - one half showing military/field setting, other half showing office/tech environment"
-              className="w-full h-auto rounded-lg shadow-lg"
+              className="w-full max-w-lg h-auto rounded-lg shadow-lg"
             />
           </div>
           
