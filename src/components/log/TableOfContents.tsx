@@ -17,6 +17,15 @@ const getSections = (chapterId: number) => {
     ];
   }
   
+  if (chapterId === 2) {
+    return [
+      { id: "the-myth-of-overnight-success", title: "The Myth of Overnight Success" },
+      { id: "main-concept", title: "Main Concept" },
+      { id: "practical-application", title: "Practical Application" },
+      { id: "conclusion", title: "Conclusion" }
+    ];
+  }
+  
   // Default sections for other chapters
   return [
     { id: "introduction", title: "Introduction" },
