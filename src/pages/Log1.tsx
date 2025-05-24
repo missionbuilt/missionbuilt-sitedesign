@@ -28,6 +28,15 @@ const Log1 = () => {
           </Link>
         </div>
         
+        {/* Hero Image */}
+        <div className="mb-12">
+          <img 
+            src="/lovable-uploads/fe278df4-1643-4dd0-9a61-51e73f29901d.png" 
+            alt="Split view of a person carrying a barbell - one half showing military/field setting, other half showing office/tech environment"
+            className="w-full h-auto rounded-lg shadow-lg"
+          />
+        </div>
+        
         {/* Log header section */}
         <div className="mb-10">
           <h1 className="text-4xl md:text-5xl font-display font-bold text-slate dark:text-slate-100 mb-4">
