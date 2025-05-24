@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { ExternalLink, BookOpen, ChevronDown } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
@@ -88,7 +87,7 @@ const FurtherReading: React.FC = () => {
   ];
 
   return (
-    <section className="border-t border-slate/10 pt-8">
+    <section id="further-reading" className="border-t border-slate/10 pt-8">
       <Collapsible open={isOpen} onOpenChange={setIsOpen}>
         <CollapsibleTrigger className="flex items-center justify-between w-full text-left group">
           <div className="flex items-center gap-2">

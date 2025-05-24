@@ -13,7 +13,8 @@ const getSections = (chapterId: number) => {
     return [
       { id: "mission-is-the-magnet", title: "The Mission Is the Magnet" },
       { id: "the-drift", title: "The Drift" },
-      { id: "repetition-with-intention", title: "Repetition with Intention" }
+      { id: "repetition-with-intention", title: "Repetition with Intention" },
+      { id: "further-reading", title: "Further Reading" }
     ];
   }
   
@@ -23,7 +24,8 @@ const getSections = (chapterId: number) => {
       { id: "repetition-is-not-redundancy", title: "Repetition Is Not Redundancy" },
       { id: "when-the-spark-fades", title: "When the Spark Fades" },
       { id: "the-multiplier-of-boring-work", title: "The Multiplier of Boring Work" },
-      { id: "the-work-becomes-the-win", title: "The Work Becomes the Win" }
+      { id: "the-work-becomes-the-win", title: "The Work Becomes the Win" },
+      { id: "further-reading", title: "Further Reading" }
     ];
   }
   
@@ -32,7 +34,8 @@ const getSections = (chapterId: number) => {
     { id: "introduction", title: "Introduction" },
     { id: "main-concept", title: "Main Concept" },
     { id: "practical-application", title: "Practical Application" },
-    { id: "conclusion", title: "Conclusion" }
+    { id: "conclusion", title: "Conclusion" },
+    { id: "further-reading", title: "Further Reading" }
   ];
 };
 
