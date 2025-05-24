@@ -31,7 +31,7 @@ const FurtherReading: React.FC<FurtherReadingProps> = ({ isExpanded = false, res
         <CollapsibleTrigger className="flex items-center justify-between w-full text-left group">
           <div className="flex items-center gap-2">
             <BookOpen className="h-5 w-5 text-army" />
-            <h3 className="text-xl font-semibold text-slate">Further Reading</h3>
+            <h3 className="text-xl font-semibold text-foreground">Further Reading</h3>
           </div>
           <ChevronDown 
             className={`h-5 w-5 text-muted-foreground transition-transform duration-200 ${
@@ -51,7 +51,7 @@ const FurtherReading: React.FC<FurtherReadingProps> = ({ isExpanded = false, res
                 className="flex items-start justify-between p-4 bg-slate/5 hover:bg-slate/10 rounded-lg border border-slate/10 transition-colors duration-200 group"
               >
                 <div className="flex-1">
-                  <h4 className="font-medium text-slate group-hover:text-army transition-colors duration-200 mb-1">
+                  <h4 className="font-medium text-foreground group-hover:text-army transition-colors duration-200 mb-1">
                     {resource.title}
                   </h4>
                   {resource.description && (
