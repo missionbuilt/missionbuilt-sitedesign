@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Chapter } from "@/data/chapters-data";
 import {
@@ -432,7 +433,7 @@ const LogSections: React.FC<LogSectionsProps> = ({ chapter }) => {
           </CollapsibleTrigger>
           
           <CollapsibleContent className="px-4 pb-4">
-            <div className="prose prose-slate max-w-none">
+            <div className="prose prose-slate max-w-none pt-4">
               <div className="text-muted-foreground leading-relaxed">
                 {getSectionContent(chapter.id, section.id)}
               </div>
