@@ -42,7 +42,7 @@ const Navbar = () => {
           <nav className="flex items-center space-x-1 mr-6">
             <NavLink to="/" exact onClick={scrollToTop}>The Mission</NavLink>
             <div className="relative">
-              <NavLink to="/chapters" onClick={handleTrainingLogsClick}>Training Logs</NavLink>
+              <NavLink to="/traininglogs" onClick={handleTrainingLogsClick}>Training Logs</NavLink>
               {!hasVisitedTrainingLogs && (
                 <Badge 
                   variant="default" 
@@ -84,7 +84,7 @@ const Navbar = () => {
             <nav className="flex flex-col">
               <MobileNavLink to="/" onClick={() => {setIsMenuOpen(false); scrollToTop();}}>The Mission</MobileNavLink>
               <div className="relative">
-                <MobileNavLink to="/chapters" onClick={() => {setIsMenuOpen(false); handleTrainingLogsClick();}}>Training Logs</MobileNavLink>
+                <MobileNavLink to="/traininglogs" onClick={() => {setIsMenuOpen(false); handleTrainingLogsClick();}}>Training Logs</MobileNavLink>
                 {!hasVisitedTrainingLogs && (
                   <Badge 
                     variant="default" 
