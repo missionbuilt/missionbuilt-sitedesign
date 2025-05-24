@@ -30,6 +30,27 @@ const Log1 = () => {
           </Link>
         </div>
         
+        {/* Log header section */}
+        <div className="mb-10">
+          <h1 className="text-4xl md:text-5xl font-display font-bold text-slate dark:text-slate-100 mb-4">
+            Mission Before Metrics
+          </h1>
+          
+          <div className="flex items-center gap-4 text-slate/80 dark:text-slate-300 mb-6">
+            <div className="flex items-center">
+              <Avatar className="h-8 w-8 mr-2">
+                <AvatarImage src="/lovable-uploads/777697e9-e718-4177-9c47-cb5be778fdd3.png" alt="Mike" />
+                <AvatarFallback>MB</AvatarFallback>
+              </Avatar>
+              <span className="text-sm">Mike</span>
+            </div>
+            <div className="flex items-center text-sm">
+              <Clock className="h-4 w-4 mr-1" />
+              <span>May 24, 2025</span>
+            </div>
+          </div>
+        </div>
+        
         {/* Hero section with image and compact TOC */}
         <div className="mb-8 flex flex-col lg:flex-row gap-6 xl:gap-8 items-start">
           {/* Hero Image */}
@@ -65,27 +86,6 @@ const Log1 = () => {
                 </nav>
               </div>
             </Card>
-          </div>
-        </div>
-        
-        {/* Log header section */}
-        <div className="mb-10">
-          <h1 className="text-4xl md:text-5xl font-display font-bold text-slate dark:text-slate-100 mb-4">
-            Mission Before Metrics
-          </h1>
-          
-          <div className="flex items-center gap-4 text-slate/80 dark:text-slate-300 mb-6">
-            <div className="flex items-center">
-              <Avatar className="h-8 w-8 mr-2">
-                <AvatarImage src="/lovable-uploads/777697e9-e718-4177-9c47-cb5be778fdd3.png" alt="Mike" />
-                <AvatarFallback>MB</AvatarFallback>
-              </Avatar>
-              <span className="text-sm">Mike</span>
-            </div>
-            <div className="flex items-center text-sm">
-              <Clock className="h-4 w-4 mr-1" />
-              <span>May 24, 2025</span>
-            </div>
           </div>
         </div>
 
