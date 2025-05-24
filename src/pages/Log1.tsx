@@ -50,6 +50,96 @@ const Log1 = () => {
           </div>
         </div>
         
+        {/* Section 1: The Mission Is the Magnet */}
+        <article className="max-w-4xl mx-auto">
+          <section className="mb-16">
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-slate dark:text-slate-100 mb-8 leading-tight">
+              The Mission Is the Magnet
+            </h2>
+            
+            <div className="prose prose-lg max-w-none">
+              <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-6">
+                Before I ever built products, I served in the U.S. Army as an Airborne intelligence sergeant. That experience — of working in service of something larger than myself, of making decisions under pressure with lives on the line — shaped everything that came after. I learned early that mission comes first. Not ego. Not recognition. Mission.
+              </p>
+              
+              <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-6">
+                That mindset followed me from the military to cybersecurity, and into leadership roles where the stakes changed but the values stayed the same. Whether it was securing critical systems, helping build Elastic Security, or coaching in the gym, the goal has always been the same: real strength is lifting others.
+              </p>
+              
+              <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-6">
+                One of the proudest chapters of my product career was building Endgame. We entered a brutally competitive market — going head-to-head with massive players like McAfee and CrowdStrike — and carved out real ground. Not because we had more money or brand recognition, but because we had something harder to copy: a clear mission. Protect high-value targets from nation-state level attacks. That focus, and the small, fierce team who rallied behind it, made all the difference.
+              </p>
+              
+              <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-6">
+                At the heart of it was Nate Fick, a Marine officer turned tech CEO, and later the U.S. Ambassador for Cyberspace and Digital Policy. He led with conviction, clarity, and a deep respect for the mission. In all-hands meetings, Nate would remind us that we were an "elevator asset company" — that if the building burned down, the most important assets could still fit in the elevator. It wasn't the code or the tools. It was the people — the ones who understood the user's mission and had the passion to serve it.
+              </p>
+              
+              <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-6">
+                That idea stuck with me. Nate's example reinforced what I learned in uniform: The success is the user's success. Your mission is their mission.
+              </p>
+              
+              <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-8 font-medium">
+                Metrics are the outcome of making your user successful. Yes, we need to measure them. But they are the result of serving the mission — not the reason for it.
+              </p>
+              
+              <div className="border-l-4 border-army/30 pl-6 mb-8">
+                <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-4">
+                  There's a moment in every product meeting when the question slides in like it always does:
+                </p>
+                <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-4">
+                  "How will we measure success?"
+                </p>
+                <p className="text-lg leading-relaxed text-slate dark:text-slate-200">
+                  It's a good question — just not always a good first question.
+                </p>
+              </div>
+              
+              <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-6">
+                In lifting, it's the same story. People chase PRs every week like the number on the barbell is the whole point. Add five pounds. Hit record. Post the clip. Repeat.
+              </p>
+              
+              <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-6">
+                But metrics without mission? That's just noise. Pressure with no direction. Goals with no guts.
+              </p>
+              
+              <blockquote className="border-l-4 border-army bg-army/5 dark:bg-army/10 p-6 my-8 rounded-r-lg">
+                <p className="text-xl font-medium text-slate dark:text-slate-100 italic">
+                  "The weight on the bar isn't the goal — it's the evidence of progress, not the destination."
+                </p>
+              </blockquote>
+              
+              <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-6">
+                We've all seen what happens when this mindset takes over. It's not a failure of talent — it's a failure of alignment. Cyberpunk 2077 didn't initially flop because the devs didn't care — far from it. The development team poured years into building something ambitious. But the pressure to hit a holiday launch window — a decision made at the executive level — overrode the mission of delivering a complete, polished experience. The result was a rocky release, millions in refunds, a reputational hit, and a stock crash.
+              </p>
+              
+              <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-6">
+                To their credit, the team stuck with it. Years later, after patches and a reimagined DLC, the game has earned back much of the trust it lost — a testament to what happens when talented people are finally given the space to do the work right.
+              </p>
+              
+              <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-6">
+                And we've seen what it looks like to protect the mission — even when it means stepping back. Simone Biles did exactly that in front of the entire world at the 2021 Olympics. Under unimaginable pressure, she chose long-term purpose over short-term performance. She knew something was off, and she honored that instinct.
+              </p>
+              
+              <blockquote className="border-l-4 border-army bg-army/5 dark:bg-army/10 p-6 my-8 rounded-r-lg">
+                <p className="text-lg font-medium text-slate dark:text-slate-100 italic mb-2">
+                  "I have to focus on my mental health… if you don't, then you're not going to enjoy your score and you're not gonna succeed as much as you want to."
+                </p>
+                <footer className="text-sm text-slate/80 dark:text-slate-300">
+                  — Simone Biles
+                </footer>
+              </blockquote>
+              
+              <p className="text-lg leading-relaxed text-slate dark:text-slate-200 mb-6">
+                Her move wasn't retreat — it was leadership. And in time, she returned to competition stronger, on her terms, and more respected than ever. A different kind of comeback — one powered by mission, not metrics.
+              </p>
+              
+              <p className="text-xl leading-relaxed text-slate dark:text-slate-100 font-medium">
+                Success isn't about hitting every metric. It's about refusing to lose yourself trying.
+              </p>
+            </div>
+          </section>
+        </article>
+        
         {/* Next/Previous navigation */}
         <div className="mt-16 pt-8 border-t border-slate/10 dark:border-slate/20 flex justify-between mb-16">
           <div>
