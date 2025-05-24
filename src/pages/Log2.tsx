@@ -2,11 +2,13 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
-import { ChevronLeft, Clock } from "lucide-react";
+import { ChevronLeft, Clock, ExternalLink } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card } from "@/components/ui/card";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+
+const LinkIcon = () => <ExternalLink className="h-3 w-3 ml-1 inline" />;
 
 const Log2: React.FC = () => {
   return (
@@ -254,71 +256,124 @@ const Log2: React.FC = () => {
               <h2 className="text-3xl font-display font-bold text-slate dark:text-slate-100 mb-8">
                 Sources & Further Reading
               </h2>
-              <div className="space-y-6 text-slate dark:text-slate-200">
-                <div>
-                  <h3 className="text-lg font-semibold mb-3 text-slate dark:text-slate-100">Deeper Read on Instagram's Rise:</h3>
-                  <p className="mb-2"><em>No Filter: The Inside Story of Instagram</em> by Sarah Frier – A detailed, behind-the-scenes look at Instagram's transformation from Burbn to a cultural phenomenon.</p>
-                </div>
+              <ul className="space-y-4">
+                <li className="p-3 bg-slate/5 hover:bg-slate/10 dark:bg-slate/10 dark:hover:bg-slate/20 rounded-md transition-colors">
+                  <h3 className="text-lg font-semibold mb-2 text-slate dark:text-slate-100">Deeper Read on Instagram's Rise:</h3>
+                  <p className="text-slate dark:text-slate-200 mb-2">
+                    <em>No Filter: The Inside Story of Instagram</em> by Sarah Frier – A detailed, behind-the-scenes look at Instagram's transformation from Burbn to a cultural phenomenon.
+                  </p>
+                </li>
 
-                <div>
-                  <h3 className="text-lg font-semibold mb-3 text-slate dark:text-slate-100">The iPhone's hidden grind:</h3>
-                  <p className="mb-2">How Steve Jobs Faked His Way Through Unveiling the iPhone – NY Magazine: <a href="https://nymag.com/intelligencer/2017/01/how-steve-jobs-faked-his-way-through-unveiling-the-iphone.html" className="text-army hover:text-army/80 underline" target="_blank" rel="noopener noreferrer">https://nymag.com/intelligencer/2017/01/how-steve-jobs-faked-his-way-through-unveiling-the-iphone.html</a></p>
-                </div>
+                <li className="p-3 bg-slate/5 hover:bg-slate/10 dark:bg-slate/10 dark:hover:bg-slate/20 rounded-md transition-colors">
+                  <h3 className="text-lg font-semibold mb-2 text-slate dark:text-slate-100">The iPhone's Hidden Grind:</h3>
+                  <p className="text-slate dark:text-slate-200 mb-2">
+                    <a href="https://nymag.com/intelligencer/2017/01/how-steve-jobs-faked-his-way-through-unveiling-the-iphone.html" className="text-army hover:text-army/80 underline" target="_blank" rel="noopener noreferrer">
+                      How Steve Jobs Faked His Way Through Unveiling the iPhone – NY Magazine<LinkIcon />
+                    </a>
+                  </p>
+                </li>
 
-                <div>
-                  <h3 className="text-lg font-semibold mb-3 text-slate dark:text-slate-100">Instagram's evolution from Burbn:</h3>
-                  <p className="mb-2">Instagram – Wikipedia: <a href="https://en.wikipedia.org/wiki/Instagram#History" className="text-army hover:text-army/80 underline" target="_blank" rel="noopener noreferrer">https://en.wikipedia.org/wiki/Instagram#History</a></p>
-                </div>
+                <li className="p-3 bg-slate/5 hover:bg-slate/10 dark:bg-slate/10 dark:hover:bg-slate/20 rounded-md transition-colors">
+                  <h3 className="text-lg font-semibold mb-2 text-slate dark:text-slate-100">Instagram's Evolution from Burbn:</h3>
+                  <p className="text-slate dark:text-slate-200 mb-2">
+                    <a href="https://en.wikipedia.org/wiki/Instagram#History" className="text-army hover:text-army/80 underline" target="_blank" rel="noopener noreferrer">
+                      Instagram – Wikipedia<LinkIcon />
+                    </a>
+                  </p>
+                </li>
 
-                <div>
-                  <h3 className="text-lg font-semibold mb-3 text-slate dark:text-slate-100">Lifting progress and the plateau effect:</h3>
-                  <p className="mb-2">Overcoming Strength Training Plateaus – Ironmaster: <a href="https://www.ironmaster.com/blog/strength-training-plateau/" className="text-army hover:text-army/80 underline" target="_blank" rel="noopener noreferrer">https://www.ironmaster.com/blog/strength-training-plateau/</a></p>
-                </div>
+                <li className="p-3 bg-slate/5 hover:bg-slate/10 dark:bg-slate/10 dark:hover:bg-slate/20 rounded-md transition-colors">
+                  <h3 className="text-lg font-semibold mb-2 text-slate dark:text-slate-100">Lifting Progress and the Plateau Effect:</h3>
+                  <p className="text-slate dark:text-slate-200 mb-2">
+                    <a href="https://www.ironmaster.com/blog/strength-training-plateau/" className="text-army hover:text-army/80 underline" target="_blank" rel="noopener noreferrer">
+                      Overcoming Strength Training Plateaus – Ironmaster<LinkIcon />
+                    </a>
+                  </p>
+                </li>
 
-                <div>
-                  <h3 className="text-lg font-semibold mb-3 text-slate dark:text-slate-100">Product development isn't always fast:</h3>
-                  <p className="mb-2">Failing Fast: Why It's Essential for Entrepreneurs – Harvard Business School Online: <a href="https://online.hbs.edu/blog/post/fail-fast" className="text-army hover:text-army/80 underline" target="_blank" rel="noopener noreferrer">https://online.hbs.edu/blog/post/fail-fast</a></p>
-                </div>
+                <li className="p-3 bg-slate/5 hover:bg-slate/10 dark:bg-slate/10 dark:hover:bg-slate/20 rounded-md transition-colors">
+                  <h3 className="text-lg font-semibold mb-2 text-slate dark:text-slate-100">Product Development Isn't Always Fast:</h3>
+                  <p className="text-slate dark:text-slate-200 mb-2">
+                    <a href="https://online.hbs.edu/blog/post/fail-fast" className="text-army hover:text-army/80 underline" target="_blank" rel="noopener noreferrer">
+                      Failing Fast: Why It's Essential for Entrepreneurs – Harvard Business School Online<LinkIcon />
+                    </a>
+                  </p>
+                </li>
 
-                <div>
-                  <p className="mb-2">Israetel, Mike. "MV, MEV, MAV, MRV Explained." Renaissance Periodization. <a href="https://drmikeisraetel.com/dr-mike-israetel-mv-mev-mav-mrv-explained/" className="text-army hover:text-army/80 underline" target="_blank" rel="noopener noreferrer">https://drmikeisraetel.com/dr-mike-israetel-mv-mev-mav-mrv-explained/</a></p>
-                </div>
+                <li className="p-3 bg-slate/5 hover:bg-slate/10 dark:bg-slate/10 dark:hover:bg-slate/20 rounded-md transition-colors">
+                  <h3 className="text-lg font-semibold mb-2 text-slate dark:text-slate-100">Training Periodization & Volume:</h3>
+                  <p className="text-slate dark:text-slate-200 mb-2">
+                    <a href="https://drmikeisraetel.com/dr-mike-israetel-mv-mev-mav-mrv-explained/" className="text-army hover:text-army/80 underline" target="_blank" rel="noopener noreferrer">
+                      MV, MEV, MAV, MRV Explained – Dr. Mike Israetel<LinkIcon />
+                    </a>
+                  </p>
+                </li>
 
-                <div>
-                  <p className="mb-2"><em>The Medici Effect: Finding Creative Inspiration in Unlikely Places</em> - A foundational book on innovation through diversity and intersectional thinking.</p>
-                  <p className="mb-2"><a href="https://phoscreative.com/articles/the-medici-effect/" className="text-army hover:text-army/80 underline" target="_blank" rel="noopener noreferrer">https://phoscreative.com/articles/the-medici-effect/</a></p>
-                </div>
+                <li className="p-3 bg-slate/5 hover:bg-slate/10 dark:bg-slate/10 dark:hover:bg-slate/20 rounded-md transition-colors">
+                  <h3 className="text-lg font-semibold mb-2 text-slate dark:text-slate-100">Innovation Through Diversity:</h3>
+                  <p className="text-slate dark:text-slate-200 mb-2">
+                    <em>The Medici Effect: Finding Creative Inspiration in Unlikely Places</em> – A foundational book on innovation through diversity and intersectional thinking.
+                  </p>
+                  <p className="text-slate dark:text-slate-200 mb-2">
+                    <a href="https://phoscreative.com/articles/the-medici-effect/" className="text-army hover:text-army/80 underline" target="_blank" rel="noopener noreferrer">
+                      The Medici Effect Overview<LinkIcon />
+                    </a>
+                  </p>
+                </li>
 
-                <div>
-                  <h3 className="text-lg font-semibold mb-3 text-slate dark:text-slate-100">Behavior & Systems Thinking</h3>
-                  <p className="mb-2">James Clear – <em>Atomic Habits</em></p>
-                  <p className="mb-2"><a href="https://jamesclear.com/atomic-habits" className="text-army hover:text-army/80 underline" target="_blank" rel="noopener noreferrer">https://jamesclear.com/atomic-habits</a></p>
-                  <p className="mb-2">A guide to building better habits and systems that support long-term success, including the principle: "You do not rise to the level of your goals. You fall to the level of your systems."</p>
-                </div>
+                <li className="p-3 bg-slate/5 hover:bg-slate/10 dark:bg-slate/10 dark:hover:bg-slate/20 rounded-md transition-colors">
+                  <h3 className="text-lg font-semibold mb-2 text-slate dark:text-slate-100">Behavior & Systems Thinking:</h3>
+                  <p className="text-slate dark:text-slate-200 mb-2">
+                    <em>Atomic Habits</em> by James Clear – A guide to building better habits and systems that support long-term success, including the principle: "You do not rise to the level of your goals. You fall to the level of your systems."
+                  </p>
+                  <p className="text-slate dark:text-slate-200 mb-2">
+                    <a href="https://jamesclear.com/atomic-habits" className="text-army hover:text-army/80 underline" target="_blank" rel="noopener noreferrer">
+                      Atomic Habits<LinkIcon />
+                    </a>
+                  </p>
+                </li>
 
-                <div>
-                  <h3 className="text-lg font-semibold mb-3 text-slate dark:text-slate-100">User-Centered Product Development</h3>
-                  <p className="mb-2">Basecamp's Shape Up Method – Signal v. Noise</p>
-                  <p className="mb-2"><a href="https://basecamp.com/shapeup" className="text-army hover:text-army/80 underline" target="_blank" rel="noopener noreferrer">https://basecamp.com/shapeup</a></p>
-                  <p className="mb-4">An approach to product work that values thoughtful iteration, foundational improvements, and meaningful user feedback.</p>
+                <li className="p-3 bg-slate/5 hover:bg-slate/10 dark:bg-slate/10 dark:hover:bg-slate/20 rounded-md transition-colors">
+                  <h3 className="text-lg font-semibold mb-2 text-slate dark:text-slate-100">User-Centered Product Development:</h3>
+                  <p className="text-slate dark:text-slate-200 mb-2">
+                    <a href="https://basecamp.com/shapeup" className="text-army hover:text-army/80 underline" target="_blank" rel="noopener noreferrer">
+                      Shape Up Method – Basecamp<LinkIcon />
+                    </a> – An approach to product work that values thoughtful iteration, foundational improvements, and meaningful user feedback.
+                  </p>
+                  <p className="text-slate dark:text-slate-200 mb-2">
+                    <a href="https://talkingtohumans.com" className="text-army hover:text-army/80 underline" target="_blank" rel="noopener noreferrer">
+                      Talking to Humans – Giff Constable<LinkIcon />
+                    </a> – A practical guide to validating ideas and rediscovering motivation by speaking directly with the users you aim to serve.
+                  </p>
+                </li>
 
-                  <p className="mb-2"><em>Talking to Humans</em> — Giff Constable</p>
-                  <p className="mb-2"><a href="https://talkingtohumans.com" className="text-army hover:text-army/80 underline" target="_blank" rel="noopener noreferrer">https://talkingtohumans.com</a></p>
-                  <p className="mb-4">A practical guide to validating ideas and rediscovering motivation by speaking directly with the users you aim to serve.</p>
+                <li className="p-3 bg-slate/5 hover:bg-slate/10 dark:bg-slate/10 dark:hover:bg-slate/20 rounded-md transition-colors">
+                  <h3 className="text-lg font-semibold mb-2 text-slate dark:text-slate-100">Grit & Perseverance:</h3>
+                  <p className="text-slate dark:text-slate-200 mb-2">
+                    <a href="https://angeladuckworth.com/grit-book" className="text-army hover:text-army/80 underline" target="_blank" rel="noopener noreferrer">
+                      Grit: The Power of Passion and Perseverance – Angela Duckworth<LinkIcon />
+                    </a> – Explores why sustained effort matters more than intensity, and how consistency builds excellence.
+                  </p>
+                </li>
 
-                  <p className="mb-2">Angela Duckworth – <em>Grit: The Power of Passion and Perseverance</em></p>
-                  <p className="mb-2"><a href="https://angeladuckworth.com/grit-book" className="text-army hover:text-army/80 underline" target="_blank" rel="noopener noreferrer">https://angeladuckworth.com/grit-book</a></p>
-                  <p className="mb-4">Explores why sustained effort matters more than intensity, and how consistency builds excellence.</p>
+                <li className="p-3 bg-slate/5 hover:bg-slate/10 dark:bg-slate/10 dark:hover:bg-slate/20 rounded-md transition-colors">
+                  <h3 className="text-lg font-semibold mb-2 text-slate dark:text-slate-100">The Compound Effect:</h3>
+                  <p className="text-slate dark:text-slate-200 mb-2">
+                    <a href="https://www.thecompoundeffect.com" className="text-army hover:text-army/80 underline" target="_blank" rel="noopener noreferrer">
+                      The Compound Effect – Darren Hardy<LinkIcon />
+                    </a> – Details how small actions done consistently lead to exponential outcomes — a key insight for boring but high-leverage work.
+                  </p>
+                </li>
 
-                  <p className="mb-2">Darren Hardy – <em>The Compound Effect</em></p>
-                  <p className="mb-2"><a href="https://www.thecompoundeffect.com" className="text-army hover:text-army/80 underline" target="_blank" rel="noopener noreferrer">https://www.thecompoundeffect.com</a></p>
-                  <p className="mb-4">Details how small actions done consistently lead to exponential outcomes — a key insight for boring but high-leverage work.</p>
-
-                  <p className="mb-2">Martin Fowler – Is High Quality Software Worth the Cost?</p>
-                  <p className="mb-2"><a href="https://martinfowler.com/articles/is-quality-worth-cost.html" className="text-army hover:text-army/80 underline" target="_blank" rel="noopener noreferrer">https://martinfowler.com/articles/is-quality-worth-cost.html</a></p>
-                  <p>Argues that invisible work like refactoring and testing leads to faster long-term delivery — a strong product parallel to back-off sets and mobility work.</p>
-                </div>
-              </div>
+                <li className="p-3 bg-slate/5 hover:bg-slate/10 dark:bg-slate/10 dark:hover:bg-slate/20 rounded-md transition-colors">
+                  <h3 className="text-lg font-semibold mb-2 text-slate dark:text-slate-100">Quality Software Development:</h3>
+                  <p className="text-slate dark:text-slate-200 mb-2">
+                    <a href="https://martinfowler.com/articles/is-quality-worth-cost.html" className="text-army hover:text-army/80 underline" target="_blank" rel="noopener noreferrer">
+                      Is High Quality Software Worth the Cost? – Martin Fowler<LinkIcon />
+                    </a> – Argues that invisible work like refactoring and testing leads to faster long-term delivery — a strong product parallel to back-off sets and mobility work.
+                  </p>
+                </li>
+              </ul>
             </section>
           </div>
         </main>
