@@ -7,7 +7,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { ChevronLeft, BookOpen, Clock, Link as LinkIcon } from "lucide-react";
 import { Link } from "react-router-dom";
-
 const Log1 = () => {
   // Scroll to top on page load
   useEffect(() => {
@@ -16,9 +15,7 @@ const Log1 = () => {
       behavior: "auto"
     });
   }, []);
-
-  return (
-    <div className="min-h-screen flex flex-col bg-background">
+  return <div className="min-h-screen flex flex-col bg-background">
       <Navbar />
       
       <main className="flex-grow container mx-auto px-4 py-8 md:py-12">
@@ -54,12 +51,8 @@ const Log1 = () => {
         {/* Featured image */}
         <div className="mb-10">
           <Card className="overflow-hidden border-0 shadow-md">
-            <AspectRatio ratio={21/9}>
-              <img 
-                src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6" 
-                alt="Featured Image"
-                className="object-cover w-full h-full" 
-              />
+            <AspectRatio ratio={21 / 9}>
+              <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6" alt="Featured Image" className="object-cover w-full h-full" />
             </AspectRatio>
             <CardContent className="p-2 text-center text-xs text-slate/70 dark:text-slate-400">
               Featured image caption
@@ -114,8 +107,8 @@ const Log1 = () => {
                   <div className="my-8 border-l-4 border-army pl-4 py-2 bg-slate/5 dark:bg-slate/10">
                     <p className="text-slate dark:text-slate-200 leading-relaxed italic">
                       There's a moment in every product meeting when the question slides in like it always does:
-                      <br/>"How will we measure success?"
-                      <br/>It's a good question — just not always a good first question.
+                      <br />"How will we measure success?"
+                      <br />It's a good question — just not always a good first question.
                     </p>
                   </div>
 
@@ -142,8 +135,7 @@ const Log1 = () => {
                   </p>
                   
                   <p className="text-xs text-slate/70 dark:text-slate-400 italic">
-                    Source: CD Projekt's stock plunges amid Cyberpunk 2077 launch issues — Bloomberg, Dec 2020
-                  </p>
+                </p>
                   
                   <p className="text-slate dark:text-slate-200 leading-relaxed mt-4">
                     And we've seen what it looks like to protect the mission — even when it means stepping back. Simone Biles did exactly that in front of the entire world at the 2021 Olympics. Under unimaginable pressure, she chose long-term purpose over short-term performance. She knew something was off, and she honored that instinct.
@@ -153,9 +145,7 @@ const Log1 = () => {
                     <p className="text-slate dark:text-slate-200 leading-relaxed italic">
                       "I have to focus on my mental health… if you don't, then you're not going to enjoy your score and you're not gonna succeed as much as you want to."
                     </p>
-                    <p className="text-xs text-slate/70 dark:text-slate-400 mt-2">
-                      Source: Simone Biles on Mental Health — People Magazine, July 2021
-                    </p>
+                    <p className="text-xs text-slate/70 dark:text-slate-400 mt-2">Source: Simone Biles on Mental Health — People Magazine</p>
                   </div>
 
                   <p className="text-slate dark:text-slate-200 leading-relaxed">
@@ -183,7 +173,7 @@ const Log1 = () => {
                   </p>
                   
                   <p className="text-xs text-slate/70 dark:text-slate-400 italic">
-                    Source: Don't Buy This Jacket — Patagonia, 2011<br/>
+                    Source: Don't Buy This Jacket — Patagonia, 2011<br />
                     Analysis: Harvard Business Review, 2016
                   </p>
                   
@@ -196,7 +186,7 @@ const Log1 = () => {
                   </p>
                   
                   <p className="text-xs text-slate/70 dark:text-slate-400 italic">
-                    Source: Imperative & NYU Study on Purpose-Driven Work, 2016<br/>
+                    Source: Imperative & NYU Study on Purpose-Driven Work, 2016<br />
                     Source: McKinsey & Co., 2020 — Purpose: Shifting from Why to How
                   </p>
 
@@ -613,10 +603,7 @@ const Log1 = () => {
                 {/* This would be the previous log link if available */}
               </div>
               <div>
-                <Link 
-                  to="/chapters"
-                  className="btn-army inline-flex"
-                >
+                <Link to="/chapters" className="btn-army inline-flex">
                   All Training Logs
                 </Link>
               </div>
@@ -644,10 +631,7 @@ const Log1 = () => {
                         <div>
                           <h4 className="font-semibold text-slate dark:text-slate-200">Cyberpunk 2077 Launch & CD Projekt Red</h4>
                           <p className="text-sm text-slate/80 dark:text-slate-300 mb-2">A case study in date-driven shipping that sacrificed long-term trust for short-term metrics.</p>
-                          <a href="https://www.forbes.com/sites/davidthier/2020/12/11/cd-projekt-red-stock-drops-after-buggy-messy-cyberpunk-2077-launch/" 
-                             className="text-army hover:text-army/80 dark:text-army dark:hover:text-army/80 text-sm"
-                             target="_blank" 
-                             rel="noopener noreferrer">
+                          <a href="https://www.forbes.com/sites/davidthier/2020/12/11/cd-projekt-red-stock-drops-after-buggy-messy-cyberpunk-2077-launch/" className="text-army hover:text-army/80 dark:text-army dark:hover:text-army/80 text-sm" target="_blank" rel="noopener noreferrer">
                             CD Projekt Red Stock Drops After Buggy, Messy 'Cyberpunk 2077' Launch – Forbes
                           </a>
                         </div>
@@ -662,10 +646,7 @@ const Log1 = () => {
                         <div>
                           <h4 className="font-semibold text-slate dark:text-slate-200">Simone Biles & Mission-Aligned Decision-Making</h4>
                           <p className="text-sm text-slate/80 dark:text-slate-300 mb-2">An athlete choosing alignment over achievement — and sparking a global conversation.</p>
-                          <a href="https://people.com/sports/everything-simone-biles-has-said-about-mental-health/" 
-                             className="text-army hover:text-army/80 dark:text-army dark:hover:text-army/80 text-sm"
-                             target="_blank" 
-                             rel="noopener noreferrer">
+                          <a href="https://people.com/sports/everything-simone-biles-has-said-about-mental-health/" className="text-army hover:text-army/80 dark:text-army dark:hover:text-army/80 text-sm" target="_blank" rel="noopener noreferrer">
                             "I Don't Have to Be Fine": Everything Simone Biles Has Said About Mental Health – People Magazine
                           </a>
                         </div>
@@ -680,10 +661,7 @@ const Log1 = () => {
                         <div>
                           <h4 className="font-semibold text-slate dark:text-slate-200">Patagonia & Purpose-Driven Brand Behavior</h4>
                           <p className="text-sm text-slate/80 dark:text-slate-300 mb-2">Iconic ad campaign where brand values overrode short-term sales incentives.</p>
-                          <a href="https://www.patagonia.com/stories/dont-buy-this-jacket/story-18615.html" 
-                             className="text-army hover:text-army/80 dark:text-army dark:hover:text-army/80 text-sm"
-                             target="_blank" 
-                             rel="noopener noreferrer">
+                          <a href="https://www.patagonia.com/stories/dont-buy-this-jacket/story-18615.html" className="text-army hover:text-army/80 dark:text-army dark:hover:text-army/80 text-sm" target="_blank" rel="noopener noreferrer">
                             Don't Buy This Jacket – Patagonia
                           </a>
                         </div>
@@ -699,22 +677,13 @@ const Log1 = () => {
                           <h4 className="font-semibold text-slate dark:text-slate-200">Research on Purpose & Fulfillment</h4>
                           <p className="text-sm text-slate/80 dark:text-slate-300 mb-2">Purpose-driven companies see higher retention, satisfaction, and performance.</p>
                           <div className="space-y-1">
-                            <a href="https://hbr.org/sponsored/2016/04/the-business-case-for-purpose" 
-                               className="block text-army hover:text-army/80 dark:text-army dark:hover:text-army/80 text-sm"
-                               target="_blank" 
-                               rel="noopener noreferrer">
+                            <a href="https://hbr.org/sponsored/2016/04/the-business-case-for-purpose" className="block text-army hover:text-army/80 dark:text-army dark:hover:text-army/80 text-sm" target="_blank" rel="noopener noreferrer">
                               The Business Case for Purpose – Harvard Business Review, 2016
                             </a>
-                            <a href="https://www.imperative.com/resource/2016-workforce-purpose-index" 
-                               className="block text-army hover:text-army/80 dark:text-army dark:hover:text-army/80 text-sm"
-                               target="_blank" 
-                               rel="noopener noreferrer">
+                            <a href="https://www.imperative.com/resource/2016-workforce-purpose-index" className="block text-army hover:text-army/80 dark:text-army dark:hover:text-army/80 text-sm" target="_blank" rel="noopener noreferrer">
                               Purpose at Work – Imperative & NYU Study, 2016 (54% of purpose-driven employees are more likely to stay 5+ years)
                             </a>
-                            <a href="https://www.mckinsey.com/business-functions/people-and-organizational-performance/our-insights/purpose-shifting-from-why-to-how" 
-                               className="block text-army hover:text-army/80 dark:text-army dark:hover:text-army/80 text-sm"
-                               target="_blank" 
-                               rel="noopener noreferrer">
+                            <a href="https://www.mckinsey.com/business-functions/people-and-organizational-performance/our-insights/purpose-shifting-from-why-to-how" className="block text-army hover:text-army/80 dark:text-army dark:hover:text-army/80 text-sm" target="_blank" rel="noopener noreferrer">
                               Purpose: Shifting from Why to How – McKinsey & Company, 2020
                             </a>
                           </div>
@@ -730,10 +699,7 @@ const Log1 = () => {
                         <div>
                           <h4 className="font-semibold text-slate dark:text-slate-200">Strategic Framing: The OODA Loop</h4>
                           <p className="text-sm text-slate/80 dark:text-slate-300 mb-2">Military strategy model focused on Observation, Orientation, Decision, and Action. Useful for product and performance under uncertainty.</p>
-                          <a href="https://en.wikipedia.org/wiki/OODA_loop" 
-                             className="text-army hover:text-army/80 dark:text-army dark:hover:text-army/80 text-sm"
-                             target="_blank" 
-                             rel="noopener noreferrer">
+                          <a href="https://en.wikipedia.org/wiki/OODA_loop" className="text-army hover:text-army/80 dark:text-army dark:hover:text-army/80 text-sm" target="_blank" rel="noopener noreferrer">
                             John Boyd – OODA Loop – Wikipedia
                           </a>
                         </div>
@@ -748,10 +714,7 @@ const Log1 = () => {
                         <div>
                           <h4 className="font-semibold text-slate dark:text-slate-200">Case Study: Product & Organizational Drift</h4>
                           <p className="text-sm text-slate/80 dark:text-slate-300 mb-2">How engineering culture and metric pressures at Boeing overtook the company's safety-driven mission — with catastrophic results.</p>
-                          <a href="https://www.nytimes.com/2019/09/18/magazine/boeing-737-max-crashes.html" 
-                             className="text-army hover:text-army/80 dark:text-army dark:hover:text-army/80 text-sm"
-                             target="_blank" 
-                             rel="noopener noreferrer">
+                          <a href="https://www.nytimes.com/2019/09/18/magazine/boeing-737-max-crashes.html" className="text-army hover:text-army/80 dark:text-army dark:hover:text-army/80 text-sm" target="_blank" rel="noopener noreferrer">
                             What Really Brought Down the Boeing 737 Max? – The New York Times
                           </a>
                         </div>
@@ -767,16 +730,10 @@ const Log1 = () => {
                           <h4 className="font-semibold text-slate dark:text-slate-200">Individual Drift: Strength and Misalignment</h4>
                           <p className="text-sm text-slate/80 dark:text-slate-300 mb-2">A personal reflection on chasing numbers too hard — and paying the price with injury.</p>
                           <div className="space-y-1">
-                            <a href="https://www.essentiallysports.com/bodybuilding-news-probably-my-biggest-mistake-months-after-a-horrifying-pec-tear-while-bench-pressing-strongman-legend-makes-a-candid-confession-about-his-injury-hafthor-bjornsson/" 
-                               className="block text-army hover:text-army/80 dark:text-army dark:hover:text-army/80 text-sm"
-                               target="_blank" 
-                               rel="noopener noreferrer">
+                            <a href="https://www.essentiallysports.com/bodybuilding-news-probably-my-biggest-mistake-months-after-a-horrifying-pec-tear-while-bench-pressing-strongman-legend-makes-a-candid-confession-about-his-injury-hafthor-bjornsson/" className="block text-army hover:text-army/80 dark:text-army dark:hover:text-army/80 text-sm" target="_blank" rel="noopener noreferrer">
                               Hafthor Björnsson on Pec Injury – Essentially Sports
                             </a>
-                            <a href="https://en.as.com/entertainment/game-of-thrones-star-hafthor-bjornsson-suffers-nasty-injury-while-bench-pressing-n/" 
-                               className="block text-army hover:text-army/80 dark:text-army dark:hover:text-army/80 text-sm"
-                               target="_blank" 
-                               rel="noopener noreferrer">
+                            <a href="https://en.as.com/entertainment/game-of-thrones-star-hafthor-bjornsson-suffers-nasty-injury-while-bench-pressing-n/" className="block text-army hover:text-army/80 dark:text-army dark:hover:text-army/80 text-sm" target="_blank" rel="noopener noreferrer">
                               Hafthor Björnsson Injury Coverage – AS.com
                             </a>
                           </div>
@@ -793,16 +750,10 @@ const Log1 = () => {
                           <h4 className="font-semibold text-slate dark:text-slate-200">Research: Purpose and Retention</h4>
                           <p className="text-sm text-slate/80 dark:text-slate-300 mb-2">Mission-driven workers are significantly more likely to stay long-term — supports your thesis with compelling data.</p>
                           <div className="space-y-1">
-                            <a href="https://guidehouse.com/-/media/new-library/industries/defense-and-security/documents/2023/gh-161-wp-improving-employee-retention.pdf" 
-                               className="block text-army hover:text-army/80 dark:text-army dark:hover:text-army/80 text-sm"
-                               target="_blank" 
-                               rel="noopener noreferrer">
+                            <a href="https://guidehouse.com/-/media/new-library/industries/defense-and-security/documents/2023/gh-161-wp-improving-employee-retention.pdf" className="block text-army hover:text-army/80 dark:text-army dark:hover:text-army/80 text-sm" target="_blank" rel="noopener noreferrer">
                               Improving Employee Retention – Guidehouse
                             </a>
-                            <a href="https://benevity.com/talent-retention-study" 
-                               className="block text-army hover:text-army/80 dark:text-army dark:hover:text-army/80 text-sm"
-                               target="_blank" 
-                               rel="noopener noreferrer">
+                            <a href="https://benevity.com/talent-retention-study" className="block text-army hover:text-army/80 dark:text-army dark:hover:text-army/80 text-sm" target="_blank" rel="noopener noreferrer">
                               Purpose-Driven Work and Turnover – Benevity Talent Retention Study
                             </a>
                           </div>
@@ -819,28 +770,16 @@ const Log1 = () => {
                           <h4 className="font-semibold text-slate dark:text-slate-200">Rituals, Adaptation, and Innovation</h4>
                           <p className="text-sm text-slate/80 dark:text-slate-300 mb-2">How structure and creativity can coexist to drive meaningful progress.</p>
                           <div className="space-y-1">
-                            <a href="https://www.hybridperformancemethod.com/" 
-                               className="block text-army hover:text-army/80 dark:text-army dark:hover:text-army/80 text-sm"
-                               target="_blank" 
-                               rel="noopener noreferrer">
+                            <a href="https://www.hybridperformancemethod.com/" className="block text-army hover:text-army/80 dark:text-army dark:hover:text-army/80 text-sm" target="_blank" rel="noopener noreferrer">
                               Stefi Cohen's Training Philosophy and Hybrid Methodology – Hybrid Performance Method
                             </a>
-                            <a href="https://www.agilealliance.org/resources/books/agile-retrospectives-making-good-teams-great/" 
-                               className="block text-army hover:text-army/80 dark:text-army dark:hover:text-army/80 text-sm"
-                               target="_blank" 
-                               rel="noopener noreferrer">
+                            <a href="https://www.agilealliance.org/resources/books/agile-retrospectives-making-good-teams-great/" className="block text-army hover:text-army/80 dark:text-army dark:hover:text-army/80 text-sm" target="_blank" rel="noopener noreferrer">
                               Agile Retrospectives and Team Rituals – Esther Derby & Diana Larsen
                             </a>
-                            <a href="https://www.atlassian.com/company/shipit" 
-                               className="block text-army hover:text-army/80 dark:text-army dark:hover:text-army/80 text-sm"
-                               target="_blank" 
-                               rel="noopener noreferrer">
+                            <a href="https://www.atlassian.com/company/shipit" className="block text-army hover:text-army/80 dark:text-army dark:hover:text-army/80 text-sm" target="_blank" rel="noopener noreferrer">
                               Atlassian ShipIt (Hack Week Model) – Atlassian
                             </a>
-                            <a href="https://blog.crisp.se/wp-content/uploads/2012/11/SpotifyScaling.pdf" 
-                               className="block text-army hover:text-army/80 dark:text-army dark:hover:text-army/80 text-sm"
-                               target="_blank" 
-                               rel="noopener noreferrer">
+                            <a href="https://blog.crisp.se/wp-content/uploads/2012/11/SpotifyScaling.pdf" className="block text-army hover:text-army/80 dark:text-army dark:hover:text-army/80 text-sm" target="_blank" rel="noopener noreferrer">
                               Spotify Hack Culture Overview – Scaling Agile @ Spotify (Whitepaper)
                             </a>
                           </div>
@@ -891,8 +830,6 @@ const Log1 = () => {
       </main>
       
       <Footer />
-    </div>
-  );
+    </div>;
 };
-
 export default Log1;
