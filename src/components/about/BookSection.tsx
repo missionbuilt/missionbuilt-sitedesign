@@ -3,7 +3,6 @@ import React from "react";
 import BookIntroSection from "./BookIntroSection";
 import ProjectPurposeSection from "./ProjectPurposeSection";
 import EmbracingAiSection from "./EmbracingAiSection";
-import OpenThanksSection from "./OpenThanksSection";
 
 const BookSection = () => {
   return (
@@ -18,7 +17,6 @@ const BookSection = () => {
       <BookIntroSection />
       <ProjectPurposeSection />
       <EmbracingAiSection />
-      <OpenThanksSection />
     </div>
   );
 };
