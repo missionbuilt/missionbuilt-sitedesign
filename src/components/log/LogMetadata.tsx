@@ -2,6 +2,7 @@
 import React from "react";
 import { Chapter } from "@/data/chapters-data";
 import { Calendar, User, Clock } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface LogMetadataProps {
   chapter: Chapter;
@@ -13,7 +14,7 @@ const LogMetadata: React.FC<LogMetadataProps> = ({ chapter }) => {
       <div className="flex flex-wrap gap-6 text-sm text-muted-foreground">
         <div className="flex items-center gap-2">
           <User className="h-4 w-4" />
-          <span>Author: You</span>
+          <span>Author: <Link to="/about" className="text-army hover:text-army/80 transition-colors">Mike</Link></span>
         </div>
         <div className="flex items-center gap-2">
           <Calendar className="h-4 w-4" />
