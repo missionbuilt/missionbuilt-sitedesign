@@ -333,6 +333,33 @@ const getSectionContent = (chapterId: number, sectionId: string) => {
             <p>And that brings us to the next section: the power of the quiet reps — the multiplier of boring work.</p>
           </div>
         );
+      case "the-multiplier-of-boring-work":
+        return (
+          <div className="space-y-6">
+            <p>There's a kind of work that doesn't make headlines. No one posts their warm-up sets. No one celebrates shaving 100ms off load time.</p>
+            <p>But that's the work that wins.</p>
+            <p>For every PR pulled in competition, there are hundreds of days of grinding behind it — submaximal sets, long pauses, light reps, mental resets. The same is true in product. Every effortless-looking release rests on a foundation of something much deeper: months of planning, iteration, bug-fixing, and late-night Slack threads.</p>
+            <p>In lifting, it's the mobility work you do alone at 6 a.m. The back-off sets you don't skip. The deload week you take seriously. It doesn't look impressive — but it makes everything else possible.</p>
+            <p>In product, it's building out role-based access controls — not because it's exciting, but because your biggest customers expect it. It's mapping audit logs across services so your platform isn't a compliance risk anymore. It's the 10th conversation with a user about the same rough edge in the UX. These aren't "big bets," but they're the reason your big bets land.</p>
+            <p>That's what boring work does: it compounds.</p>
+            <p>Each rep you don't skip, each ticket you don't shortcut, each problem you refine instead of avoid — it stacks. Quietly. Relentlessly. And over time, it becomes your edge.</p>
+            <p>You don't need to go viral. You need to be trusted.</p>
+            <p>And trust is built in the boring work.</p>
+            <p>The warm-up that prevents injury.</p>
+            <p>The small fix that prevents churn.</p>
+            <p>The five-second improvement that gives a user five minutes back.</p>
+            <p>This is what separates the strong from the strong enough.</p>
+            <p>It's not what you do once.</p>
+            <p>It's what you do without applause.</p>
+            <p>You do it for the growth. For the discipline. For the user whose day you quietly made better. Not for the accolades.</p>
+            <p>That's what separates long-term success from short-term effort — not glory, but the passion to do the work for its own sake. The features and the gains? They're just symptoms. What matters is the mission that fuels them.</p>
+            <p>That's why I'm so passionate about product management — and about lifting. Because the best PMs and the best lifters don't just show up for themselves. They show up for the team, for the user, for their own growth — not in a selfish way, but in a way that elevates everything and everyone around them.</p>
+            <p>And if you've made it this far — through the reps, the plateaus, the quiet work — you already know:</p>
+            <p>This isn't just about shipping or lifting.</p>
+            <p>It's about becoming the kind of person, or the kind of team, that keeps showing up.</p>
+            <p>That's the real win. And that's where we end this chapter — not at the peak, but at the foundation.</p>
+          </div>
+        );
       default:
         return "Content for this section will be added soon.";
     }
@@ -355,7 +382,7 @@ const getSections = (chapterId: number) => {
       { id: "the-myth-of-overnight-success", title: "The Myth of Overnight Success" },
       { id: "repetition-is-not-redundancy", title: "Repetition Is Not Redundancy" },
       { id: "when-the-spark-fades", title: "When the Spark Fades" },
-      { id: "conclusion", title: "Conclusion" }
+      { id: "the-multiplier-of-boring-work", title: "The Multiplier of Boring Work" }
     ];
   }
   
