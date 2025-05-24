@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
@@ -73,6 +72,9 @@ const Log2: React.FC = () => {
                   </a>
                   <a href="#repetition-redundancy" className="block text-sm text-slate/70 dark:text-slate-300 hover:text-slate dark:hover:text-slate-100 transition-colors">
                     Repetition Is Not Redundancy
+                  </a>
+                  <a href="#spark-fades" className="block text-sm text-slate/70 dark:text-slate-300 hover:text-slate dark:hover:text-slate-100 transition-colors">
+                    When the Spark Fades
                   </a>
                   <a href="#consistency" className="block text-sm text-slate/70 dark:text-slate-300 hover:text-slate dark:hover:text-slate-100 transition-colors">
                     The Power of Consistency
@@ -298,6 +300,104 @@ const Log2: React.FC = () => {
                 
                 <p className="text-lg font-medium text-army dark:text-destructive">
                   This is how you break through the plateau — not by abandoning the reps, but by evolving them.
+                </p>
+              </div>
+            </section>
+
+            <section id="spark-fades" className="mb-16">
+              <h2 className="text-3xl font-bold mb-6 text-slate dark:text-slate-100">When the Spark Fades</h2>
+              
+              <div className="space-y-6 text-slate/80 dark:text-slate-300 leading-relaxed">
+                <p>
+                  The first reps are easy — not physically, but emotionally. You're fired up. Everything's new. Progress is loud and obvious.
+                </p>
+                
+                <p className="font-medium">
+                  But what happens after the rush?
+                </p>
+                
+                <p>
+                  In lifting, it's the long middle. The early PRs stop coming. Your form stalls. You show up, grind through the same sets, and wonder if you're actually moving forward. You're not always chasing your one-rep max. And you shouldn't be. Strength isn't built by living at your limit — it's built in the space between peaks, when you train with intention and recover with discipline.
+                </p>
+                
+                <p>
+                  In product, it's the same. You can't always be doing the flashy, innovative thing. Sometimes the most important work is foundational — fixing backend debt, improving accessibility, tightening up performance. The kind of work that creates capacity for brilliance later.
+                </p>
+                
+                <p className="font-medium">
+                  And for many, this is where the wheels come off.
+                </p>
+                
+                <p>
+                  Because motivation — that spark — is unreliable. It's not designed for the long haul. And it doesn't care about your goals.
+                </p>
+                
+                <p className="text-lg font-medium text-army dark:text-destructive">
+                  That's why systems matter more than sparks.
+                </p>
+                
+                <p>
+                  Systems are how you keep showing up when the dopamine dies down. Morning routines. Logbooks. Standups. Progress reviews. They don't need to be rigid. But they do need to be real. Reps don't get done by accident.
+                </p>
+                
+                <p className="font-medium">
+                  You don't need hype — you need structure.
+                </p>
+                
+                <p>
+                  In training, that structure might be a coach, a program, a calendar alert that says "get under the bar." In product, it might be a rhythm of sprint planning, async demos, or check-ins with customers. Externalized accountability is often the only thing that keeps momentum moving.
+                </p>
+                
+                <p>
+                  James Clear — author of the bestselling book Atomic Habits, known for his work on behavior change and habit formation — wrote:
+                </p>
+                
+                <blockquote className="pl-6 border-l-4 border-army/30 dark:border-destructive/30 bg-slate/5 dark:bg-slate/10 p-4 rounded-r-lg italic">
+                  "You do not rise to the level of your goals. You fall to the level of your systems."
+                </blockquote>
+                
+                <p>
+                  The work still has to be done. But when your environment supports your actions, it gets done more often.
+                </p>
+                
+                <p className="font-medium">
+                  And here's the quiet truth:
+                </p>
+                
+                <p className="font-medium">
+                  The people who make the biggest progress aren't usually the most intense — they're the most consistent.
+                </p>
+                
+                <p>
+                  They build when no one's watching.
+                </p>
+                
+                <p>
+                  They train when it's not fun.
+                </p>
+                
+                <p>
+                  They keep caring — even when the spark is gone.
+                </p>
+                
+                <p className="font-medium">
+                  But what if you need to find the spark again?
+                </p>
+                
+                <p>
+                  One of the fastest ways to reignite your drive is to reconnect with the people you're building for. Talk to your users — especially the ones who aren't shouting. You might think the work you're doing isn't flashy, but somewhere out there, someone is craving exactly what you're building.
+                </p>
+                
+                <p>
+                  Stability. Accessibility. Visibility. These aren't buzzwords — they're lifelines for users with real problems. Find them. Listen to them. Let them lift you up.
+                </p>
+                
+                <p>
+                  Because nothing recharges momentum like hearing someone say: "This made my day better."
+                </p>
+                
+                <p className="text-lg font-medium text-army dark:text-destructive">
+                  And that brings us to the next section: the power of the quiet reps — the multiplier of boring work.
                 </p>
               </div>
             </section>
