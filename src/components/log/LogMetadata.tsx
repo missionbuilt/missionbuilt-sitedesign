@@ -22,7 +22,7 @@ const LogMetadata: React.FC<LogMetadataProps> = ({ chapter }) => {
         </div>
         <div className="flex items-center gap-2">
           <Clock className="h-4 w-4" />
-          <span>8 min read</span>
+          <span>12 min read</span>
         </div>
       </div>
     </div>
