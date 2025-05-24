@@ -279,6 +279,32 @@ const getSectionContent = (chapterId: number, sectionId: string) => {
             <p>And that's what Mission Built is really about — building better products, one rep at a time.</p>
           </div>
         );
+      case "repetition-is-not-redundancy":
+        return (
+          <div className="space-y-6">
+            <p>In Section 1, we looked at the myth of overnight success — how real strength, in the gym or in product, is built through showing up again and again. But not all reps are created equal. The real magic isn't just in the repetition — it's in how you use it.</p>
+            <p>Not all reps count the same.</p>
+            <p>Anyone who's coasted through a gym session, just moving weight, knows the difference. One set burns time. Another builds awareness, precision, and strength — even if the numbers don't change.</p>
+            <p>The same is true in product.</p>
+            <p>Repetition isn't redundant when it's intentional. When it's used to test assumptions, refine interfaces, tune performance, or build something just a little closer to what users actually need. That's the kind of rep that moves things forward.</p>
+            <p>But repetition alone isn't enough — variation is what makes repetition transformative.</p>
+            <p>As Dr. Mike Israetel, co-founder of Renaissance Periodization, teaches:</p>
+            <p>"Training works best when structured into intentional blocks that emphasize different goals. In hypertrophy-focused blocks, lifters increase volume over time — guided by principles like Minimum Effective Volume (MEV), Maximum Adaptive Volume (MAV), and Maximum Recoverable Volume (MRV). This structured overload builds muscle while preserving recovery, setting the stage for later strength expression. The concept isn't just about working hard — it's about working smart, within clear, adaptive boundaries."</p>
+            <p>Source: https://drmikeisraetel.com/dr-mike-israetel-mv-mev-mav-mrv-explained/</p>
+            <p>In training, we use blocks for different goals: hypertrophy to build muscle, strength to build expression, and deloads to recover and grow. We manipulate movement, load, and tempo to avoid stagnation. A paused bench press, a deficit deadlift, or chains added to a bar — each variation targets a different adaptation, even if the base movement stays the same.</p>
+            <p>Product is no different.</p>
+            <p>You might run a block of sprints to achieve a specific outcome — refining onboarding, improving performance, or tackling tech debt. Then shift into a new block with a new goal. Like training, it takes enough intentionality to complete a cycle, maybe one, two, or three sprints, before varying the focus. Progress comes not from flailing in every direction, but from focused variation over time.</p>
+            <p>And just like strength doesn't grow without tension, product insight doesn't grow without diverse input.</p>
+            <p>You can't just loop with your own team forever. Sometimes you have to stretch — to talk to sales, to customers, to analysts, to skeptics. Even when it's uncomfortable. Especially when it is.</p>
+            <p>This is where The Medici Group gets it right: innovation happens when diverse perspectives collide.</p>
+            <p>As Frans Johansson puts it in The Medici Effect:</p>
+            <p>"When you step into an intersection of fields, disciplines, or cultures, you can combine existing concepts into a large number of extraordinary new ideas."</p>
+            <p>In the gym, that might mean lifting with people stronger or different than you. In product, it means bringing in voices from outside your echo chamber — support calls, sales objections, the person who almost churned.</p>
+            <p>Reps alone build endurance.</p>
+            <p>Smart variation builds power.</p>
+            <p>This is how you break through the plateau — not by abandoning the reps, but by evolving them.</p>
+          </div>
+        );
       default:
         return "Content for this section will be added soon.";
     }
@@ -299,7 +325,7 @@ const getSections = (chapterId: number) => {
   if (chapterId === 2) {
     return [
       { id: "the-myth-of-overnight-success", title: "The Myth of Overnight Success" },
-      { id: "main-concept", title: "Main Concept" },
+      { id: "repetition-is-not-redundancy", title: "Repetition Is Not Redundancy" },
       { id: "practical-application", title: "Practical Application" },
       { id: "conclusion", title: "Conclusion" }
     ];

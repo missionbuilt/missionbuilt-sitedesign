@@ -20,7 +20,7 @@ const getSections = (chapterId: number) => {
   if (chapterId === 2) {
     return [
       { id: "the-myth-of-overnight-success", title: "The Myth of Overnight Success" },
-      { id: "main-concept", title: "Main Concept" },
+      { id: "repetition-is-not-redundancy", title: "Repetition Is Not Redundancy" },
       { id: "practical-application", title: "Practical Application" },
       { id: "conclusion", title: "Conclusion" }
     ];
