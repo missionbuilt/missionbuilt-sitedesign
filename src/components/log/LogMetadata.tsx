@@ -13,11 +13,11 @@ const LogMetadata: React.FC<LogMetadataProps> = ({ chapter }) => {
       <div className="flex flex-wrap gap-6 text-sm text-muted-foreground">
         <div className="flex items-center gap-2">
           <User className="h-4 w-4" />
-          <span>Author: Your Name</span>
+          <span>Author: You</span>
         </div>
         <div className="flex items-center gap-2">
           <Calendar className="h-4 w-4" />
-          <span>Published: January 2024</span>
+          <span>Published: May 24, 2025</span>
         </div>
         <div className="flex items-center gap-2">
           <Clock className="h-4 w-4" />
