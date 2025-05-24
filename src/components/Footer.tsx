@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import Logo from '@/components/Logo';
 import { Heart, ExternalLink } from "lucide-react";
@@ -52,7 +51,7 @@ const Footer = () => {
               </a>
               
               {/* LinkedIn Icon */}
-              <a href="https://linkedin.com/company/missionbuilt" className="text-slate/70 hover:text-army dark:text-slate-400 dark:hover:text-army transition-colors">
+              <a href="https://www.linkedin.com/in/howardnicholslinkedin/" className="text-slate/70 hover:text-army dark:text-slate-400 dark:hover:text-army transition-colors">
                 <FaLinkedinIn className="h-5 w-5" />
                 <span className="sr-only">LinkedIn</span>
               </a>
