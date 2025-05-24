@@ -1,4 +1,3 @@
-
 import React, { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -49,7 +48,6 @@ const Log1 = () => {
               <Clock className="h-4 w-4 mr-1" />
               <span>Published Date</span>
             </div>
-            <div className="text-sm px-2 py-1 bg-slate/10 dark:bg-slate/20 rounded-full">Category</div>
           </div>
         </div>
         
