@@ -12,6 +12,9 @@ const LogHero: React.FC<LogHeroProps> = ({ chapter }) => {
     if (chapterId === 1) {
       return "/lovable-uploads/e99cef43-4b1f-469b-80cf-a4896d8629b7.png";
     }
+    if (chapterId === 2) {
+      return "/lovable-uploads/35170400-1b3f-446c-ae37-a3bb988dc1b8.png";
+    }
     return "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80";
   };
 
