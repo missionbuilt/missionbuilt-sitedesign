@@ -41,7 +41,7 @@ const Footer = () => {
               </a>
               
               {/* Discord Icon */}
-              <a href="https://discord.gg/H5cSFKz2" className="text-slate/70 hover:text-army dark:text-slate-400 dark:hover:text-army transition-colors">
+              <a href="https://discord.gg/tCJNkFXyKe" className="text-slate/70 hover:text-army dark:text-slate-400 dark:hover:text-army transition-colors">
                 <MessageCircle className="h-5 w-5" />
                 <span className="sr-only">Discord</span>
               </a>
