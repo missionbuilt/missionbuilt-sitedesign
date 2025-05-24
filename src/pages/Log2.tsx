@@ -57,7 +57,7 @@ const Log2: React.FC = () => {
             {/* Hero Image */}
             <div className="flex justify-center lg:justify-start">
               <img 
-                src="/lovable-uploads/dfd1484c-2dce-4c45-a3ef-e17eefa59dcc.png" 
+                src="/lovable-uploads/af1227a8-77de-4d0f-9dc7-14d29a017dca.png" 
                 alt="Built Through Reps - Training in the gym"
                 className="rounded-lg shadow-lg max-w-xl w-full h-auto object-cover"
               />
@@ -71,9 +71,6 @@ const Log2: React.FC = () => {
                   <a href="#myth-overnight-success" className="block text-sm text-slate/70 dark:text-slate-300 hover:text-slate dark:hover:text-slate-100 transition-colors">
                     The Myth of Overnight Success
                   </a>
-                  <a href="#repetition-not-redundancy" className="block text-sm text-slate/70 dark:text-slate-300 hover:text-slate dark:hover:text-slate-100 transition-colors">
-                    Repetition Is Not Redundancy
-                  </a>
                   <a href="#consistency" className="block text-sm text-slate/70 dark:text-slate-300 hover:text-slate dark:hover:text-slate-100 transition-colors">
                     The Power of Consistency
                   </a>
@@ -82,6 +79,9 @@ const Log2: React.FC = () => {
                   </a>
                   <a href="#mindset" className="block text-sm text-slate/70 dark:text-slate-300 hover:text-slate dark:hover:text-slate-100 transition-colors">
                     The Rep Mindset
+                  </a>
+                  <a href="#mission-built" className="block text-sm text-slate/70 dark:text-slate-300 hover:text-slate dark:hover:text-slate-100 transition-colors">
+                    What Mission Built Means
                   </a>
                 </nav>
               </Card>
@@ -208,99 +208,6 @@ const Log2: React.FC = () => {
                 
                 <p className="text-lg font-medium text-army dark:text-destructive">
                   And that's what Mission Built is really about — building better products, one rep at a time.
-                </p>
-              </div>
-            </section>
-
-            <section id="repetition-not-redundancy" className="mb-16">
-              <h2 className="text-3xl font-bold mb-6 text-slate dark:text-slate-100">Repetition Is Not Redundancy</h2>
-              
-              <div className="space-y-6 text-slate/80 dark:text-slate-300 leading-relaxed">
-                <p>
-                  In Section 1, we looked at the myth of overnight success — how real strength, in the gym or in product, is built through showing up again and again. But not all reps are created equal. The real magic isn't just in the repetition — it's in how you use it.
-                </p>
-                
-                <p className="font-medium">
-                  Not all reps count the same.
-                </p>
-                
-                <p>
-                  Anyone who's coasted through a gym session, just moving weight, knows the difference. One set burns time. Another builds awareness, precision, and strength — even if the numbers don't change.
-                </p>
-                
-                <p>
-                  The same is true in product.
-                </p>
-                
-                <p>
-                  Repetition isn't redundant when it's intentional. When it's used to test assumptions, refine interfaces, tune performance, or build something just a little closer to what users actually need. That's the kind of rep that moves things forward.
-                </p>
-                
-                <p className="font-medium">
-                  But repetition alone isn't enough — variation is what makes repetition transformative.
-                </p>
-                
-                <p>
-                  As Dr. Mike Israetel, co-founder of Renaissance Periodization, teaches:
-                </p>
-                
-                <div className="pl-6 border-l-4 border-army/30 dark:border-destructive/30 bg-slate/5 dark:bg-slate/10 p-4 rounded-r-lg">
-                  <p className="italic">
-                    "Training works best when structured into intentional blocks that emphasize different goals. In hypertrophy-focused blocks, lifters increase volume over time — guided by principles like Minimum Effective Volume (MEV), Maximum Adaptive Volume (MAV), and Maximum Recoverable Volume (MRV). This structured overload builds muscle while preserving recovery, setting the stage for later strength expression. The concept isn't just about working hard — it's about working smart, within clear, adaptive boundaries."
-                  </p>
-                  <p className="text-sm mt-2 text-slate/60 dark:text-slate-400">
-                    Source: <a href="https://drmikeisraetel.com/dr-mike-israetel-mv-mev-mav-mrv-explained/" className="text-army dark:text-destructive hover:underline">https://drmikeisraetel.com/dr-mike-israetel-mv-mev-mav-mrv-explained/</a>
-                  </p>
-                </div>
-                
-                <p>
-                  In training, we use blocks for different goals: hypertrophy to build muscle, strength to build expression, and deloads to recover and grow. We manipulate movement, load, and tempo to avoid stagnation. A paused bench press, a deficit deadlift, or chains added to a bar — each variation targets a different adaptation, even if the base movement stays the same.
-                </p>
-                
-                <p className="font-medium">
-                  Product is no different.
-                </p>
-                
-                <p>
-                  You might run a block of sprints to achieve a specific outcome — refining onboarding, improving performance, or tackling tech debt. Then shift into a new block with a new goal. Like training, it takes enough intentionality to complete a cycle, maybe one, two, or three sprints, before varying the focus. Progress comes not from flailing in every direction, but from focused variation over time.
-                </p>
-                
-                <p className="font-medium">
-                  And just like strength doesn't grow without tension, product insight doesn't grow without diverse input.
-                </p>
-                
-                <p>
-                  You can't just loop with your own team forever. Sometimes you have to stretch — to talk to sales, to customers, to analysts, to skeptics. Even when it's uncomfortable. Especially when it is.
-                </p>
-                
-                <p>
-                  This is where The Medici Group gets it right: innovation happens when diverse perspectives collide.
-                </p>
-                
-                <p>
-                  As Frans Johansson puts it in The Medici Effect:
-                </p>
-                
-                <div className="pl-6 border-l-4 border-army/30 dark:border-destructive/30 bg-slate/5 dark:bg-slate/10 p-4 rounded-r-lg">
-                  <p className="italic">
-                    "When you step into an intersection of fields, disciplines, or cultures, you can combine existing concepts into a large number of extraordinary new ideas."
-                  </p>
-                </div>
-                
-                <p>
-                  In the gym, that might mean lifting with people stronger or different than you. In product, it means bringing in voices from outside your echo chamber — support calls, sales objections, the person who almost churned.
-                </p>
-                
-                <p className="font-medium">
-                  Reps alone build endurance.
-                </p>
-                
-                <p className="font-medium">
-                  Smart variation builds power.
-                </p>
-                
-                <p className="text-lg font-medium text-army dark:text-destructive">
-                  This is how you break through the plateau — not by abandoning the reps, but by evolving them.
                 </p>
               </div>
             </section>
