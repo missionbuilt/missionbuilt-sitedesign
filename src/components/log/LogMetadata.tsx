@@ -8,6 +8,21 @@ interface LogMetadataProps {
   chapter: Chapter;
 }
 
+// Function to estimate read time based on chapter content
+const getReadTime = (chapterId: number): string => {
+  // Approximate word counts based on current content
+  const wordCounts = {
+    1: 2400, // Mission Before Metrics (3 sections)
+    2: 3600, // The Strength in the Grind (5 sections)
+  };
+  
+  const words = wordCounts[chapterId as keyof typeof wordCounts] || 1200;
+  const wordsPerMinute = 200; // Average reading speed
+  const minutes = Math.ceil(words / wordsPerMinute);
+  
+  return `${minutes} min read`;
+};
+
 const LogMetadata: React.FC<LogMetadataProps> = ({ chapter }) => {
   return (
     <div className="border-b border-slate/10 pb-6">
@@ -22,7 +37,7 @@ const LogMetadata: React.FC<LogMetadataProps> = ({ chapter }) => {
         </div>
         <div className="flex items-center gap-2">
           <Clock className="h-4 w-4" />
-          <span>12 min read</span>
+          <span>{getReadTime(chapter.id)}</span>
         </div>
       </div>
     </div>
