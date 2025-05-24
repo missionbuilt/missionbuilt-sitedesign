@@ -1,9 +1,11 @@
+
 import { Link } from 'react-router-dom';
 import Logo from '@/components/Logo';
 import { Heart, ExternalLink } from "lucide-react";
 import { FaBluesky } from "react-icons/fa6";
 import { FaDiscord } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
+import { FaLinkedinIn } from "react-icons/fa";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -47,6 +49,12 @@ const Footer = () => {
               <a href="https://discord.gg/tCJNkFXyKe" className="text-slate/70 hover:text-army dark:text-slate-400 dark:hover:text-army transition-colors">
                 <FaDiscord className="h-5 w-5" />
                 <span className="sr-only">Discord</span>
+              </a>
+              
+              {/* LinkedIn Icon */}
+              <a href="https://linkedin.com/company/missionbuilt" className="text-slate/70 hover:text-army dark:text-slate-400 dark:hover:text-army transition-colors">
+                <FaLinkedinIn className="h-5 w-5" />
+                <span className="sr-only">LinkedIn</span>
               </a>
               
               {/* GitHub Icon */}
