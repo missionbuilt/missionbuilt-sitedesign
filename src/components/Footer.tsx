@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import Logo from '@/components/Logo';
-import { Heart, ExternalLink, Github, MessageCircle } from "lucide-react";
+import { Heart, ExternalLink, Github, MessageCircle, Cloud } from "lucide-react";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -36,11 +36,7 @@ const Footer = () => {
             <div className="flex gap-4 mt-4 mb-6 md:mb-0">
               {/* Bluesky Icon */}
               <a href="https://bsky.app/profile/missionbuilt.bsky.social" className="text-slate/70 hover:text-army dark:text-slate-400 dark:hover:text-army transition-colors">
-                <img 
-                  src="/lovable-uploads/14e0963a-6afa-437d-ac6a-c8b45d07bc2b.png" 
-                  alt="Bluesky" 
-                  className="h-5 w-5" 
-                />
+                <Cloud className="h-5 w-5" />
                 <span className="sr-only">Bluesky</span>
               </a>
               
