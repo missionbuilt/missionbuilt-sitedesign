@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Chapter } from "@/data/chapters-data";
 import {
@@ -251,8 +252,7 @@ const getSections = (chapterId: number) => {
     return [
       { id: "mission-is-the-magnet", title: "The Mission Is the Magnet" },
       { id: "the-drift", title: "The Drift" },
-      { id: "repetition-with-intention", title: "Repetition with Intention" },
-      { id: "key-takeaways", title: "Key Takeaways" }
+      { id: "repetition-with-intention", title: "Repetition with Intention" }
     ];
   }
   
