@@ -43,7 +43,7 @@ const FeaturedLogs = () => {
 
                   <div className="mb-4">
                     <div className="flex items-center text-slate/60 text-sm mb-2">
-                      <span>Chapter {chapter.id}</span>
+                      <span>Log {chapter.id}</span>
                     </div>
                     <h3 className="heading-sm mb-3 group-hover:text-army transition-colors duration-200">
                       {chapter.title}
@@ -54,7 +54,7 @@ const FeaturedLogs = () => {
                   </div>
 
                   <div className="flex items-center text-army font-medium group-hover:text-army/80 transition-colors duration-200">
-                    View chapter
+                    View log
                     <ExternalLink className="h-4 w-4 ml-2 transition-transform group-hover:translate-x-1" />
                   </div>
                 </div>
