@@ -72,7 +72,7 @@ const generateEpub = async (chapter: Chapter) => {
 </body>
 </html>`);
 
-  // Add the generic cover page (basic text only for e-reader compatibility)
+  // Add the cover page (dark mode style)
   oebps?.file("cover.xhtml", `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -80,17 +80,28 @@ const generateEpub = async (chapter: Chapter) => {
   <title>Cover</title>
   <link rel="stylesheet" type="text/css" href="style.css"/>
 </head>
-<body class="generic-cover">
-  <div class="generic-cover-content">
-    <h1>Training Log ${chapter.id}</h1>
-    <h2>${escapeXml(chapter.title)}</h2>
-    <p>by Mike Nichols</p>
-    <p>Mission Built: Lessons from the Barbell and the Boardroom</p>
+<body class="cover-page dark-cover">
+  <div class="cover-content">
+    <div class="cover-header">
+      <div class="logo-container">
+        <div class="logo-text">
+          <span class="mission">Mission</span><span class="built">Built</span><span class="domain">.io</span>
+        </div>
+      </div>
+    </div>
+    <div class="cover-main">
+      <h1 class="cover-title">Training Log ${chapter.id}</h1>
+      <h2 class="cover-subtitle">${escapeXml(chapter.title)}</h2>
+      <p class="cover-author">by Mike Nichols</p>
+    </div>
+    <div class="cover-footer">
+      <p class="cc-license">Licensed under Creative Commons Attribution-NonCommercial 4.0</p>
+    </div>
   </div>
 </body>
 </html>`);
 
-  // Add the inside cover page (custom design with MissionBuilt styling)
+  // Add the inside cover page (light mode style)
   oebps?.file("inside-cover.xhtml", `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -193,7 +204,7 @@ const generateEpub = async (chapter: Chapter) => {
 </body>
 </html>`);
 
-  // Add enhanced CSS with generic cover, custom inside cover, headers, footers, and proper styling
+  // Add enhanced CSS with cover pages, headers, footers, and proper styling
   oebps?.file("style.css", `/* Base typography and layout */
 body { 
   font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -203,48 +214,18 @@ body {
   color: #4A5A68;
 }
 
-/* Generic cover page styles (simple and compatible with e-readers) */
-.generic-cover {
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  background-color: #ffffff;
-  color: #4A5A68;
-  padding: 2rem;
-  box-sizing: border-box;
-}
-
-.generic-cover-content h1 {
-  font-family: Montserrat, sans-serif;
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin: 0 0 1rem 0;
-  color: #4A5A68;
-}
-
-.generic-cover-content h2 {
-  font-family: Montserrat, sans-serif;
-  font-size: 1.75rem;
-  font-weight: 400;
-  margin: 0 0 2rem 0;
-  color: #3A77AD;
-}
-
-.generic-cover-content p {
-  font-size: 1.25rem;
-  margin: 0.5rem 0;
-  color: #64748b;
-}
-
-/* Custom inside cover page styles */
+/* Cover page styles */
 .cover-page {
   height: 100vh;
   display: flex;
   flex-direction: column;
   margin: 0;
   padding: 0;
+}
+
+.dark-cover {
+  background-color: #0f172a;
+  color: #f1f5f9;
 }
 
 .light-cover {
@@ -276,6 +257,10 @@ body {
   font-weight: 600;
   font-size: 1.5rem;
 }
+
+.dark-cover .mission { color: #f1f5f9; }
+.dark-cover .built { color: #FFC300; }
+.dark-cover .domain { color: #4B5320; }
 
 .light-cover .mission { color: #4A5A68; }
 .light-cover .built { color: #FFC300; }
@@ -463,7 +448,7 @@ section h2:first-child {
 
 /* Print optimizations */
 @media print {
-  .generic-cover, .cover-page {
+  .cover-page {
     page-break-after: always;
   }
   
