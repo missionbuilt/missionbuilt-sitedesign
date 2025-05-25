@@ -1,3 +1,4 @@
+
 import React from 'react';
 import EPub from 'epub-gen-memory';
 import { Chapter } from '@/data/chapters-data';
@@ -253,7 +254,7 @@ export const generateEpub = async (chapters: Chapter | Chapter[], getChapterCont
     };
 
     console.log('Generating EPUB buffer...');
-    const epubBuffer = await EPub(epubOptions);
+    const epubBuffer = await EPub(epubOptions, [], undefined);
     
     if (!epubBuffer || epubBuffer.length === 0) {
       throw new Error('EPUB generation failed - empty buffer');
