@@ -30,7 +30,7 @@ const FurtherReading: React.FC<FurtherReadingProps> = ({ isExpanded = false, res
       <Collapsible open={isOpen} onOpenChange={setIsOpen}>
         <CollapsibleTrigger className="flex items-center justify-between w-full text-left group">
           <div className="flex items-center gap-2">
-            <BookOpen className="h-5 w-5 text-army" />
+            <BookOpen className="h-5 w-5 text-army dark:text-sunburst" />
             <h3 className="text-xl font-semibold text-foreground">Further Reading</h3>
           </div>
           <ChevronDown 
