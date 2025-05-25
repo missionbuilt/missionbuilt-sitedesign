@@ -888,22 +888,18 @@ body {
   flex-direction: column;
 }
 
-/* Page structure */
+/* Page structure - improved spacing to prevent text cutoff */
 .page-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 40px;
+  height: 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
+  padding: 10px 30px;
   background: #f8fafc;
   border-bottom: 1px solid #e2e8f0;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
-  z-index: 100;
+  margin-bottom: 10px;
 }
 
 .header-left {
@@ -917,25 +913,23 @@ body {
 
 .content-wrapper {
   flex: 1;
-  padding: 60px 20px 60px 20px;
+  padding: 30px 40px 50px 40px;
   max-width: 800px;
   margin: 0 auto;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 .page-footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 40px;
+  height: 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
+  padding: 10px 30px;
   background: #f8fafc;
   border-top: 1px solid #e2e8f0;
-  font-size: 12px;
-  z-index: 100;
+  font-size: 11px;
+  margin-top: 20px;
 }
 
 .footer-left a {
@@ -960,26 +954,10 @@ body {
   align-items: center;
   justify-content: center;
   background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-  padding: 40px 20px;
+  padding: 40px 30px;
 }
 
 .cover-content {
-  text-align: center;
-  max-width: 600px;
-  width: 100%;
-}
-
-/* Inside cover styles - similar to cover but with additional elements */
-.inside-cover {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-  padding: 40px 20px;
-}
-
-.inside-cover-content {
   text-align: center;
   max-width: 600px;
   width: 100%;
@@ -1103,7 +1081,7 @@ body {
   text-decoration: underline;
 }
 
-/* License notice for inside cover */
+/* License notice */
 .license-notice {
   font-size: 14px;
   color: #64748b;
@@ -1114,66 +1092,70 @@ body {
   margin: 0;
 }
 
-/* Content page styles */
+/* Content page styles - improved spacing */
 h1 {
   font-family: 'Montserrat', sans-serif;
   color: #0f172a;
   border-bottom: 2px solid #059669;
-  padding-bottom: 10px;
+  padding-bottom: 15px;
   font-size: 32px;
   font-weight: 700;
-  margin: 0 0 30px 0;
+  margin: 0 0 40px 0;
   letter-spacing: -0.025em;
+  line-height: 1.2;
 }
 
 h2 {
   font-family: 'Montserrat', sans-serif;
   color: #1e293b;
-  margin: 40px 0 20px 0;
+  margin: 50px 0 25px 0;
   font-size: 24px;
   font-weight: 600;
   letter-spacing: -0.015em;
+  line-height: 1.3;
 }
 
 h3 {
   font-family: 'Montserrat', sans-serif;
   color: #334155;
-  margin: 30px 0 15px 0;
+  margin: 40px 0 20px 0;
   font-size: 20px;
   font-weight: 600;
   letter-spacing: -0.015em;
+  line-height: 1.3;
 }
 
 .description {
   font-style: italic;
   color: #64748b;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
   font-size: 18px;
   line-height: 1.6;
 }
 
 .section {
-  margin-bottom: 50px;
+  margin-bottom: 60px;
   page-break-after: auto;
 }
 
-/* Text content styles */
+/* Text content styles - improved readability */
 p {
-  margin: 0 0 20px 0;
+  margin: 0 0 25px 0;
   line-height: 1.7;
   font-size: 16px;
   color: #374151;
+  text-align: justify;
 }
 
 blockquote {
   border-left: 4px solid #059669;
-  padding-left: 20px;
-  margin: 30px 0;
+  padding: 25px;
+  margin: 40px 0;
   font-style: italic;
   color: #4b5563;
   background: #f8fafc;
-  padding: 20px;
   border-radius: 8px;
+  line-height: 1.6;
 }
 
 .border-army {
@@ -1181,27 +1163,27 @@ blockquote {
 }
 
 ul {
-  margin: 20px 0;
+  margin: 25px 0;
   padding-left: 30px;
 }
 
 li {
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   line-height: 1.6;
   color: #374151;
 }
 
-/* Table styles */
+/* Table styles - improved spacing */
 table {
   width: 100%;
   border-collapse: collapse;
-  margin: 30px 0;
+  margin: 40px 0;
   font-size: 14px;
 }
 
 th, td {
   border: 1px solid #d1d5db;
-  padding: 12px;
+  padding: 15px;
   text-align: left;
   line-height: 1.5;
 }
@@ -1218,8 +1200,8 @@ tr:nth-child(even) {
 
 /* Resource and license styles */
 .resource {
-  margin-bottom: 30px;
-  padding: 20px;
+  margin-bottom: 35px;
+  padding: 25px;
   border-left: 3px solid #059669;
   background-color: #f8fafc;
   border-radius: 8px;
@@ -1237,7 +1219,7 @@ tr:nth-child(even) {
 }
 
 .license {
-  padding: 30px;
+  padding: 40px;
   font-family: 'Inter', serif;
   background: #f8fafc;
   border-radius: 8px;
@@ -1257,12 +1239,25 @@ a:hover {
 
 /* Print/EPUB specific styles */
 @media print {
+  body {
+    margin: 0.5in;
+  }
+  
   .page-header, .page-footer {
     position: static;
+    page-break-inside: avoid;
   }
   
   .content-wrapper {
-    padding: 20px;
+    padding: 20px 0;
+  }
+  
+  h1, h2, h3 {
+    page-break-after: avoid;
+  }
+  
+  .section {
+    page-break-inside: avoid;
   }
 }
 
@@ -1276,23 +1271,24 @@ a:hover {
     font-size: 22px;
   }
   
-  .cover-content, .inside-cover-content {
-    padding: 0 10px;
+  .cover-content {
+    padding: 0 15px;
   }
   
   .chapter-info {
-    padding: 20px;
+    padding: 25px;
   }
   
   .page-header, .page-footer {
-    padding: 0 10px;
+    padding: 10px 20px;
   }
   
   .content-wrapper {
-    padding: 60px 10px;
+    padding: 25px 20px 40px 20px;
   }
 }
 `;
+
 };
 
 const generateFilename = (title: string): string => {
