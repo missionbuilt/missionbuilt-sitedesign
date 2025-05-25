@@ -1,3 +1,4 @@
+
 import { Link } from 'react-router-dom';
 import Logo from '@/components/Logo';
 import { Heart, ExternalLink } from "lucide-react";
@@ -112,7 +113,7 @@ const Footer = () => {
                 href="https://lovable.dev/" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="font-display font-semibold text-army hover:underline flex items-center"
+                className="font-display font-semibold text-army dark:text-sunburst hover:underline flex items-center"
               >
                 Lovable
                 <ExternalLink className="h-3 w-3 ml-1" />
