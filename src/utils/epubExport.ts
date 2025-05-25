@@ -1,3 +1,4 @@
+
 import { Chapter } from "@/data/chapters-data";
 import JSZip from 'jszip';
 import { chapters } from "@/data/chapters-data";
@@ -806,7 +807,7 @@ const generateNextTrainingLogSection = (currentChapterId: number): string => {
     return ''; // No next chapter exists
   }
   
-  const isPublished = nextChapter.status === 'published';
+  const isPublished = nextChapter.status === 'in-progress';
   
   if (isPublished) {
     return `
