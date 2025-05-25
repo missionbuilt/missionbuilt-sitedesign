@@ -722,7 +722,6 @@ const generateCoverHtml = (chapter: Chapter): string => {
       <div class="title-section">
         <h1 class="main-title">Mission Built</h1>
         <h2 class="subtitle">Lessons from the Barbell and the Boardroom</h2>
-        <p class="tagline">The Shared Discipline Behind Great Products and Great Lifts</p>
       </div>
       
       <div class="chapter-info">
@@ -1031,19 +1030,7 @@ body {
   font-weight: 600;
   line-height: 1.3;
   color: #334155;
-  margin: 0 0 15px 0;
-  word-wrap: break-word !important;
-  overflow-wrap: break-word !important;
-  hyphens: auto !important;
-}
-
-.tagline {
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #64748b;
   margin: 0;
-  font-style: italic;
   word-wrap: break-word !important;
   overflow-wrap: break-word !important;
   hyphens: auto !important;
