@@ -157,18 +157,34 @@ const generateCoverHtml = (chapter: Chapter): string => {
 };
 
 const generateContentHtml = (chapter: Chapter): string => {
-  let sectionsHtml = '';
+  // Generate content based on what's actually displayed on the log page
+  let contentHtml = '';
   
-  if (chapter.sections && chapter.sections.length > 0) {
-    sectionsHtml = chapter.sections.map(section => `
-      <h2>${escapeXml(section.title)}</h2>
-      ${section.content ? `<div>${escapeXml(section.content)}</div>` : ''}
-    `).join('');
-  } else {
-    // Add placeholder content if no sections exist
-    sectionsHtml = `
-      <h2>Chapter Content</h2>
+  if (chapter.id === 1) {
+    // Mission Before Metrics - actual content from the log page
+    contentHtml = `
+      <p>In the pursuit of building great products and achieving excellence, we often get caught up in numbers, dashboards, and metrics that feel important but don't actually move the needle. This chapter explores why mission-driven thinking beats metric-driven thinking every time.</p>
+      
+      <p>Metrics are seductive. They give us the illusion of progress and control. But when we optimize for metrics instead of outcomes, we risk building the wrong thing entirely. Just like a powerlifter who focuses only on the number on the bar instead of proper form and long-term strength development.</p>
+      
+      <p>The User Mission Method is simple: before you build anything, before you measure anything, ask yourself one question: "What is the user trying to accomplish, and how can I help them win?" Everything else flows from this core mission alignment.</p>
+      
+      <p>Mission alignment isn't just a philosophy—it's a practical framework for decision-making. When faced with feature requests, technical debt, or resource allocation decisions, the mission becomes your north star. Does this help users accomplish their goals more effectively?</p>
+    `;
+  } else if (chapter.id === 2) {
+    // Built Through Reps - actual content from the log page
+    contentHtml = `
+      <p>Greatness isn't born; it's built — one rep, one iteration at a time. Whether it's product iteration or lifting volume, this chapter highlights how repeated effort compounds into capability.</p>
+      
       <p>This chapter is currently being developed. The content will be available soon.</p>
+      
+      <p>In the meantime, check out the Further Reading section for related resources and insights.</p>
+    `;
+  } else {
+    // For other chapters that are coming soon or not started
+    contentHtml = `
+      <p>This chapter is currently being developed. The content will be available soon.</p>
+      
       <p>In the meantime, check out the Further Reading section for related resources and insights.</p>
     `;
   }
@@ -183,7 +199,7 @@ const generateContentHtml = (chapter: Chapter): string => {
 <body>
   <h1>${escapeXml(chapter.title)}</h1>
   ${chapter.description ? `<p class="description">${escapeXml(chapter.description)}</p>` : ''}
-  ${sectionsHtml}
+  ${contentHtml}
 </body>
 </html>`;
 };
