@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
@@ -60,7 +61,7 @@ const Navbar = () => {
 
         {/* Mobile Menu Button */}
         <button 
-          className="p-2 rounded-md md:hidden text-slate hover:bg-slate/10 dark:text-slate-200 dark:hover:bg-slate/10"
+          className="p-2 rounded-md md:hidden text-foreground hover:bg-slate/10 dark:hover:bg-slate/10"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
         >
           <svg 
@@ -139,7 +140,7 @@ const MobileNavLink = ({ to, children, onClick }: MobileNavLinkProps) => {
   return (
     <Link 
       to={to} 
-      className="text-slate dark:text-slate-200 px-4 py-3 block hover:bg-slate/10 transition-colors duration-200"
+      className="text-foreground px-4 py-3 block hover:bg-slate/10 transition-colors duration-200"
       onClick={onClick}
     >
       {children}
