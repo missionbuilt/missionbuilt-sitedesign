@@ -1,4 +1,3 @@
-
 // Chapter data structure
 export interface Resource {
   title: string;
@@ -31,6 +30,28 @@ export const chapters: Chapter[] = [
     description: "Success isn't the dashboard — it's the user's outcome. A clear breakdown of the User Mission Method. Forget vanity metrics — this is about aligning everything you do to help users win.",
     slug: "mission-before-metrics",
     status: "in-progress",
+    sections: [
+      {
+        id: "introduction",
+        title: "Introduction",
+        content: "In the pursuit of building great products and achieving excellence, we often get caught up in numbers, dashboards, and metrics that feel important but don't actually move the needle. This chapter explores why mission-driven thinking beats metric-driven thinking every time."
+      },
+      {
+        id: "the-metric-trap",
+        title: "The Metric Trap",
+        content: "Metrics are seductive. They give us the illusion of progress and control. But when we optimize for metrics instead of outcomes, we risk building the wrong thing entirely. Just like a powerlifter who focuses only on the number on the bar instead of proper form and long-term strength development."
+      },
+      {
+        id: "user-mission-method",
+        title: "The User Mission Method",
+        content: "The User Mission Method is simple: before you build anything, before you measure anything, ask yourself one question: 'What is the user trying to accomplish, and how can I help them win?' Everything else flows from this core mission alignment."
+      },
+      {
+        id: "mission-alignment-practice",
+        title: "Mission Alignment in Practice",
+        content: "Mission alignment isn't just a philosophy—it's a practical framework for decision-making. When faced with feature requests, technical debt, or resource allocation decisions, the mission becomes your north star. Does this help users accomplish their goals more effectively?"
+      }
+    ],
     furtherReading: [
       {
         title: "Cyberpunk 2077 Launch & CD Projekt Red",
