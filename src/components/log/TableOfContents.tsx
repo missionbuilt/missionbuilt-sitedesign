@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Chapter } from "@/data/chapters-data";
 import { BookOpen } from "lucide-react";
@@ -57,7 +58,7 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ chapter, onSectionCli
     <div className="bg-slate/5 rounded-lg p-6 border border-slate/10">
       <div className="flex items-center gap-2 mb-4">
         <BookOpen className="h-5 w-5 text-army" />
-        <h3 className="font-semibold text-slate">Table of Contents</h3>
+        <h3 className="font-semibold text-foreground dark:text-slate-100">Table of Contents</h3>
       </div>
       
       <nav className="space-y-2">
