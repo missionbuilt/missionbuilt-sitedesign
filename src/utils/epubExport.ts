@@ -24,7 +24,10 @@ const generateEpub = async (chapter: Chapter) => {
   // Create the OEBPS directory
   const oebps = zip.folder("OEBPS");
 
-  // Add the content.opf file with proper metadata and cover reference
+  // Generate cover image
+  const coverImageBlob = await generateCoverImage(chapter);
+
+  // Add the content.opf file with proper metadata and image cover reference
   oebps?.file("content.opf", `<?xml version="1.0" encoding="UTF-8"?>
 <package version="3.0" xmlns="http://www.idpf.org/2007/opf" unique-identifier="pub-id">
   <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
@@ -33,11 +36,12 @@ const generateEpub = async (chapter: Chapter) => {
     <dc:identifier id="pub-id">urn:uuid:${uuid}</dc:identifier>
     <dc:language>en</dc:language>
     <meta property="dcterms:modified">${currentDate}</meta>
-    <meta name="cover" content="cover"/>
+    <meta name="cover" content="cover-image"/>
   </metadata>
   <manifest>
     <item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>
-    <item id="cover" href="cover.xhtml" media-type="application/xhtml+xml" properties="cover-image"/>
+    <item id="cover-image" href="cover.png" media-type="image/png" properties="cover-image"/>
+    <item id="cover-page" href="cover.xhtml" media-type="application/xhtml+xml"/>
     <item id="inside-cover" href="inside-cover.xhtml" media-type="application/xhtml+xml"/>
     <item id="content" href="content.xhtml" media-type="application/xhtml+xml"/>
     <item id="license" href="license.xhtml" media-type="application/xhtml+xml"/>
@@ -45,7 +49,7 @@ const generateEpub = async (chapter: Chapter) => {
     <item id="logo" href="logo.png" media-type="image/png"/>
   </manifest>
   <spine toc="nav">
-    <itemref idref="cover"/>
+    <itemref idref="cover-page"/>
     <itemref idref="inside-cover"/>
     <itemref idref="content"/>
     <itemref idref="license"/>
@@ -54,6 +58,9 @@ const generateEpub = async (chapter: Chapter) => {
     <reference type="cover" title="Cover" href="cover.xhtml"/>
   </guide>
 </package>`);
+
+  // Add the cover image
+  oebps?.file("cover.png", coverImageBlob);
 
   // Add the nav.xhtml file
   oebps?.file("nav.xhtml", `<?xml version="1.0" encoding="UTF-8"?>
@@ -503,6 +510,104 @@ section h2:first-child {
   });
   
   FileSaver.saveAs(content, `${chapter.slug}.epub`);
+};
+
+const generateCoverImage = async (chapter: Chapter): Promise<Blob> => {
+  // Create a canvas to generate the cover image
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  
+  if (!ctx) {
+    throw new Error('Could not get canvas context');
+  }
+
+  // Set canvas dimensions (standard book cover ratio)
+  canvas.width = 800;
+  canvas.height = 1200;
+
+  // Dark background
+  ctx.fillStyle = '#0f172a';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // Load and draw logo
+  try {
+    const logoImg = new Image();
+    logoImg.crossOrigin = 'anonymous';
+    
+    await new Promise((resolve, reject) => {
+      logoImg.onload = resolve;
+      logoImg.onerror = reject;
+      logoImg.src = '/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png';
+    });
+
+    // Draw logo (make it white for dark background)
+    ctx.filter = 'brightness(0) invert(1)';
+    ctx.drawImage(logoImg, 50, 50, 60, 60);
+    ctx.filter = 'none';
+  } catch (error) {
+    console.warn('Could not load logo for cover image:', error);
+  }
+
+  // Draw logo text
+  ctx.font = 'bold 36px Montserrat, sans-serif';
+  ctx.fillStyle = '#f1f5f9';
+  ctx.fillText('Mission', 120, 85);
+  
+  ctx.fillStyle = '#FFC300';
+  const missionWidth = ctx.measureText('Mission').width;
+  ctx.fillText('Built', 120 + missionWidth, 85);
+  
+  ctx.fillStyle = '#4B5320';
+  const builtWidth = ctx.measureText('Built').width;
+  ctx.fillText('.io', 120 + missionWidth + builtWidth, 85);
+
+  // Draw main title
+  ctx.font = 'bold 72px Montserrat, sans-serif';
+  ctx.fillStyle = '#f1f5f9';
+  ctx.textAlign = 'center';
+  ctx.fillText(`Training Log ${chapter.id}`, canvas.width / 2, canvas.height / 2 - 100);
+
+  // Draw subtitle
+  ctx.font = '48px Montserrat, sans-serif';
+  const subtitle = chapter.title;
+  const maxWidth = canvas.width - 100;
+  
+  // Simple text wrapping
+  const words = subtitle.split(' ');
+  let line = '';
+  let y = canvas.height / 2;
+  
+  for (let n = 0; n < words.length; n++) {
+    const testLine = line + words[n] + ' ';
+    const metrics = ctx.measureText(testLine);
+    const testWidth = metrics.width;
+    
+    if (testWidth > maxWidth && n > 0) {
+      ctx.fillText(line, canvas.width / 2, y);
+      line = words[n] + ' ';
+      y += 60;
+    } else {
+      line = testLine;
+    }
+  }
+  ctx.fillText(line, canvas.width / 2, y);
+
+  // Draw author
+  ctx.font = '36px Montserrat, sans-serif';
+  ctx.fillStyle = '#cbd5e1';
+  ctx.fillText('by Mike Nichols', canvas.width / 2, canvas.height - 200);
+
+  // Draw license
+  ctx.font = '24px Inter, sans-serif';
+  ctx.fillStyle = '#94a3b8';
+  ctx.fillText('Licensed under Creative Commons Attribution-NonCommercial 4.0', canvas.width / 2, canvas.height - 50);
+
+  // Convert canvas to blob
+  return new Promise((resolve) => {
+    canvas.toBlob((blob) => {
+      resolve(blob || new Blob());
+    }, 'image/png');
+  });
 };
 
 const generateFurtherReading = (resources: Chapter["furtherReading"]): string => {
