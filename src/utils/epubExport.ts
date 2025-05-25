@@ -147,19 +147,20 @@ const generateEpub = async (chapter: Chapter) => {
 </body>
 </html>`);
 
-  // Use ONLY the actual chapter data - NO generated content
-  const chapterContent = chapter.sections.map(section => {
-    const paragraphs = section.content.split('\n\n').filter(p => p.trim().length > 0);
-    const paragraphsHTML = paragraphs.map(paragraph => 
-      `<p>${escapeXml(paragraph.trim())}</p>`
-    ).join('');
+  // Build chapter content from actual data - ONLY what exists in the chapter data
+  let chapterContent = '';
+  
+  // Only add sections if they exist
+  if (chapter.sections && chapter.sections.length > 0) {
+    chapterContent = chapter.sections.map(section => {
+      return `<section class="chapter-section">
+        <h2>${escapeXml(section.title)}</h2>
+        <div class="section-content">${escapeXml(section.content).replace(/\n\n/g, '</p><p>').replace(/^/, '<p>').replace(/$/, '</p>')}</div>
+      </section>`;
+    }).join('');
+  }
 
-    return `<section class="chapter-section">
-      <h2>${escapeXml(section.title)}</h2>
-      <div class="section-content">${paragraphsHTML}</div>
-    </section>`;
-  }).join('');
-
+  // Only add further reading if it exists and has content
   const furtherReadingContent = chapter.furtherReading && chapter.furtherReading.length > 0 ? `
     <section>
       <h2>Further Reading</h2>
@@ -167,7 +168,7 @@ const generateEpub = async (chapter: Chapter) => {
         ${chapter.furtherReading.map(resource => `
           <li>
             <a href="${escapeXml(resource.url)}">${escapeXml(resource.title)}</a>
-            <p>${escapeXml(resource.description)}</p>
+            ${resource.description ? `<p>${escapeXml(resource.description)}</p>` : ''}
             ${resource.note ? `<p><em>Note: ${escapeXml(resource.note)}</em></p>` : ''}
           </li>
         `).join('')}
@@ -175,7 +176,7 @@ const generateEpub = async (chapter: Chapter) => {
     </section>
   ` : '';
 
-  // Add the content.xhtml file with headers and footers
+  // Add the content.xhtml file - ONLY using the actual chapter data
   oebps?.file("content.xhtml", `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -454,12 +455,12 @@ section {
   margin-bottom: 2.5rem;
 }
 
-section div {
-  margin-top: 1rem;
+.section-content {
+  line-height: 1.7;
 }
 
-.section-content {
-  white-space: pre-line;
+.section-content p {
+  margin-bottom: 1rem;
   line-height: 1.7;
 }
 
