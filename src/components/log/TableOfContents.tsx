@@ -55,7 +55,7 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ chapter, onSectionCli
   };
   
   return (
-    <div className="bg-slate/5 rounded-lg p-6 border border-slate/10">
+    <div className="bg-slate/5 dark:bg-slate-800/40 rounded-lg p-6 border border-slate/10 dark:border-slate-700/50">
       <div className="flex items-center gap-2 mb-4">
         <BookOpen className="h-5 w-5 text-army dark:text-sunburst" />
         <h3 className="font-semibold text-foreground dark:text-slate-100">Table of Contents</h3>
@@ -67,7 +67,7 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ chapter, onSectionCli
             key={section.id}
             href={`#${section.id}`}
             onClick={(e) => handleSectionClick(e, section.id)}
-            className="block text-sm text-muted-foreground hover:text-army transition-colors duration-200 py-1 cursor-pointer"
+            className="block text-sm text-muted-foreground dark:text-slate-300 hover:text-army dark:hover:text-sunburst transition-colors duration-200 py-1 cursor-pointer"
           >
             {index + 1}. {section.title}
           </a>
