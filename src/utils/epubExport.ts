@@ -19,6 +19,10 @@ export const generateEpub = async (chapter: Chapter): Promise<void> => {
     // Create OEBPS folder
     const oebps = zip.folder("OEBPS");
     
+    // Generate and add cover image
+    const coverImageSvg = generateCoverImageSvg(chapter);
+    oebps?.file("cover.svg", coverImageSvg);
+    
     // Create content.opf (package document)
     oebps?.file("content.opf", generateContentOpf(chapter));
     
@@ -64,6 +68,57 @@ export const generateEpub = async (chapter: Chapter): Promise<void> => {
     console.error('Error generating EPUB:', error);
     throw new Error('Failed to generate EPUB file');
   }
+};
+
+// Generate SVG cover image
+const generateCoverImageSvg = (chapter: Chapter): string => {
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<svg width="600" height="800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="backgroundGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f8fafc;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e2e8f0;stop-opacity:1" />
+    </linearGradient>
+    <style>
+      .logo-text { font-family: 'Arial', sans-serif; font-weight: 600; font-size: 18px; }
+      .main-title { font-family: 'Arial', sans-serif; font-weight: 700; font-size: 36px; }
+      .subtitle { font-family: 'Arial', sans-serif; font-weight: 600; font-size: 20px; }
+      .tagline { font-family: 'Arial', sans-serif; font-weight: 400; font-size: 14px; font-style: italic; }
+      .chapter-title { font-family: 'Arial', sans-serif; font-weight: 600; font-size: 18px; }
+      .training-log { font-family: 'Arial', sans-serif; font-weight: 500; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; }
+      .author { font-family: 'Arial', sans-serif; font-weight: 600; font-size: 16px; }
+    </style>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="600" height="800" fill="url(#backgroundGradient)"/>
+  
+  <!-- Logo Section -->
+  <g transform="translate(300, 80)">
+    <text class="logo-text" text-anchor="middle" fill="#475569">Mission</text>
+    <text class="logo-text" text-anchor="middle" fill="#f59e0b" x="60">Built</text>
+    <text class="logo-text" text-anchor="middle" fill="#059669" x="90">.io</text>
+  </g>
+  
+  <!-- Main Title -->
+  <text class="main-title" x="300" y="180" text-anchor="middle" fill="#0f172a">Mission Built</text>
+  
+  <!-- Subtitle -->
+  <text class="subtitle" x="300" y="220" text-anchor="middle" fill="#334155">Lessons from the Barbell</text>
+  <text class="subtitle" x="300" y="250" text-anchor="middle" fill="#334155">and the Boardroom</text>
+  
+  <!-- Tagline -->
+  <text class="tagline" x="300" y="290" text-anchor="middle" fill="#64748b">The Shared Discipline Behind Great Products and Great Lifts</text>
+  
+  <!-- Chapter Info Box -->
+  <rect x="50" y="380" width="500" height="120" fill="white" rx="12" stroke="#e2e8f0" stroke-width="1"/>
+  <text class="chapter-title" x="300" y="420" text-anchor="middle" fill="#059669">${escapeXml(chapter.title)}</text>
+  <text class="training-log" x="300" y="450" text-anchor="middle" fill="#64748b">TRAINING LOG</text>
+  
+  <!-- Author -->
+  <line x1="50" y1="680" x2="550" y2="680" stroke="#e2e8f0" stroke-width="2"/>
+  <text class="author" x="300" y="720" text-anchor="middle" fill="#374151">Mike Nichols</text>
+</svg>`;
 };
 
 // Helper function to escape XML characters
@@ -460,14 +515,16 @@ const generateContentOpf = (chapter: Chapter): string => {
 <package xmlns="http://www.idpf.org/2007/opf" unique-identifier="BookId" version="2.0">
   <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
     <dc:title>${escapeXml(chapter.title)}</dc:title>
-    <dc:creator>MissionBuilt.io</dc:creator>
+    <dc:creator>Mike Nichols</dc:creator>
     <dc:publisher>MissionBuilt.io</dc:publisher>
     <dc:description>${escapeXml(chapter.description)}</dc:description>
     <dc:language>en</dc:language>
     <dc:identifier id="BookId">${chapter.id}</dc:identifier>
+    <meta name="cover" content="cover-image"/>
   </metadata>
   <manifest>
     <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml"/>
+    <item id="cover-image" href="cover.svg" media-type="image/svg+xml"/>
     <item id="cover" href="cover.html" media-type="application/xhtml+xml"/>
     <item id="content" href="content.html" media-type="application/xhtml+xml"/>
     <item id="further-reading" href="further-reading.html" media-type="application/xhtml+xml"/>
@@ -480,6 +537,9 @@ const generateContentOpf = (chapter: Chapter): string => {
     <itemref idref="further-reading"/>
     <itemref idref="license"/>
   </spine>
+  <guide>
+    <reference type="cover" title="Cover" href="cover.html"/>
+  </guide>
 </package>`;
 };
 
