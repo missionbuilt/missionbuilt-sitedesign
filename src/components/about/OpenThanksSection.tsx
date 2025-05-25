@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -55,7 +56,7 @@ const OpenThanksSection = () => {
             <p className="text-center font-display text-lg mt-8 pt-6 border-t border-slate/10">
               This is just the beginning.
               <br />
-              <span className="text-army dark:text-army/90 font-semibold">Real strength lifts others.</span>
+              <span className="text-army dark:text-foreground font-semibold">Real strength lifts others.</span>
             </p>
           </div>
         </CardContent>
