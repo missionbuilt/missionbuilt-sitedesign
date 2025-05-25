@@ -1,4 +1,3 @@
-
 import React from 'react';
 import EPub from 'epub-gen-memory';
 import { Chapter } from '@/data/chapters-data';
@@ -88,6 +87,32 @@ const renderContentToString = (content: React.ReactNode): string => {
   return getTextFromReactNode(content);
 };
 
+const downloadFile = (blob: Blob, filename: string): void => {
+  try {
+    console.log('Creating download link...');
+    const url = URL.createObjectURL(blob);
+    const downloadLink = document.createElement('a');
+    
+    downloadLink.href = url;
+    downloadLink.download = filename;
+    downloadLink.style.display = 'none';
+    
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+    
+    // Clean up the object URL
+    setTimeout(() => {
+      URL.revokeObjectURL(url);
+    }, 100);
+    
+    console.log('File download initiated successfully');
+  } catch (error) {
+    console.error('Download failed:', error);
+    throw new Error('Failed to download file');
+  }
+};
+
 export const generateEpub = async (chapters: Chapter | Chapter[], getChapterContent?: (chapterId: number) => string): Promise<void> => {
   try {
     console.log('Starting EPUB generation...');
@@ -118,7 +143,7 @@ export const generateEpub = async (chapters: Chapter | Chapter[], getChapterCont
       title: bookTitle,
       author: 'Mike',
       language: 'en',
-      content: chaptersArray.map((chapter, index) => {
+      content: chaptersArray.map((chapter) => {
         const content = contentFunction(chapter.id);
         
         return {
@@ -245,24 +270,12 @@ export const generateEpub = async (chapters: Chapter | Chapter[], getChapterCont
       throw new Error('Generated EPUB buffer is empty');
     }
     
-    console.log('Creating blob and initiating download...');
+    console.log('Creating blob for download...');
     const blob = new Blob([epubBuffer], { type: 'application/epub+zip' });
     
-    // Use native browser download instead of file-saver
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = fileName;
-    link.style.display = 'none';
+    downloadFile(blob, fileName);
     
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    
-    // Clean up the URL object
-    URL.revokeObjectURL(url);
-    
-    console.log('EPUB download initiated successfully');
+    console.log('EPUB download completed successfully');
   } catch (error) {
     console.error('EPUB generation failed with detailed error:', error);
     console.error('Error name:', error instanceof Error ? error.name : 'Unknown');
