@@ -1,4 +1,3 @@
-
 import { Chapter } from "@/data/chapters-data";
 import JSZip from 'jszip';
 
@@ -232,7 +231,7 @@ const getSectionContent = (chapterId: number, sectionId: string): string => {
           </blockquote>
           
           <p>Then came the snap. Attempting a 556-pound bench press, his pec tore clean off the bone.</p>
-          <p>The drift had found him too: progress misaligned with process, recovery sacrificed to reach a number that no longer served the mission. The result was pain, delay, and a lesson carved in scar tissue.</p>
+          <p>The drift had found him too: progress misaligned with process, recovery sacrificed to reach a number that no longer serves the mission. The result was pain, delay, and a lesson carved in scar tissue.</p>
           
           <p>The damage isn't just physical. It's psychological. Because when we treat metrics as the mission, missing them feels like failure. And so we hide the truth, inflate success, or worst of all — stop trying.</p>
           
@@ -542,10 +541,28 @@ const generateCoverHtml = (chapter: Chapter): string => {
 </head>
 <body>
   <div class="cover">
-    <h1>${escapeXml(chapter.title)}</h1>
-    <h2>Training Log</h2>
-    <p class="author">MissionBuilt.io</p>
-    ${chapter.description ? `<p class="description">${escapeXml(chapter.description)}</p>` : ''}
+    <div class="cover-content">
+      <div class="logo-section">
+        <div class="logo-text">
+          <span class="mission">Mission</span><span class="built">Built</span><span class="domain">.io</span>
+        </div>
+      </div>
+      
+      <div class="title-section">
+        <h1 class="main-title">Mission Built</h1>
+        <h2 class="subtitle">Lessons from the Barbell and the Boardroom</h2>
+        <p class="tagline">The Shared Discipline Behind Great Products and Great Lifts</p>
+      </div>
+      
+      <div class="chapter-info">
+        <h3 class="chapter-title">${escapeXml(chapter.title)}</h3>
+        <p class="training-log-label">Training Log</p>
+      </div>
+      
+      <div class="author-section">
+        <p class="author">Mike Nichols</p>
+      </div>
+    </div>
   </div>
 </body>
 </html>`;
@@ -646,75 +663,198 @@ const generateLicenseHtml = (): string => {
 
 const generateCss = (): string => {
   return `
+/* Base styles */
 body {
-  font-family: Georgia, serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   line-height: 1.6;
-  margin: 2em;
-  color: #333;
+  margin: 0;
+  padding: 0;
+  color: #1e293b;
+  background: #f8fafc;
 }
 
+/* Cover page styles */
 .cover {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  padding: 40px 20px;
+}
+
+.cover-content {
   text-align: center;
-  padding: 50px 20px;
-}
-
-.cover h1 {
-  font-size: 2em;
-  margin-bottom: 20px;
-  color: #2c3e50;
-}
-
-.cover h2 {
-  color: #666;
-  margin-bottom: 30px;
-}
-
-.cover .author {
-  font-size: 1.2em;
-  margin-top: 30px;
-}
-
-.cover .description {
-  margin-top: 30px;
-  font-style: italic;
   max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
+  width: 100%;
 }
 
+/* Logo section */
+.logo-section {
+  margin-bottom: 60px;
+}
+
+.logo-text {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+.mission {
+  color: #475569; /* slate */
+}
+
+.built {
+  color: #f59e0b; /* sunburst */
+}
+
+.domain {
+  color: #059669; /* army */
+}
+
+/* Title section */
+.title-section {
+  margin-bottom: 50px;
+  padding: 0 20px;
+}
+
+.main-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: #0f172a;
+  margin: 0 0 20px 0;
+  letter-spacing: -0.025em;
+}
+
+.subtitle {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #334155;
+  margin: 0 0 20px 0;
+  letter-spacing: -0.015em;
+}
+
+.tagline {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: #64748b;
+  margin: 0;
+  font-style: italic;
+}
+
+/* Chapter info section */
+.chapter-info {
+  margin-bottom: 50px;
+  padding: 30px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e2e8f0;
+}
+
+.chapter-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: #059669;
+  margin: 0 0 10px 0;
+  letter-spacing: -0.015em;
+}
+
+.training-log-label {
+  font-size: 16px;
+  font-weight: 500;
+  color: #64748b;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Author section */
+.author-section {
+  border-top: 2px solid #e2e8f0;
+  padding-top: 30px;
+}
+
+.author {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: #374151;
+  margin: 0;
+  letter-spacing: -0.015em;
+}
+
+/* Content page styles */
 h1 {
-  color: #2c3e50;
-  border-bottom: 2px solid #3498db;
+  font-family: 'Montserrat', sans-serif;
+  color: #0f172a;
+  border-bottom: 2px solid #059669;
   padding-bottom: 10px;
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0 0 30px 0;
+  letter-spacing: -0.025em;
 }
 
 h2 {
-  color: #34495e;
-  margin-top: 2em;
+  font-family: 'Montserrat', sans-serif;
+  color: #1e293b;
+  margin: 40px 0 20px 0;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
 }
 
 h3 {
-  color: #34495e;
-  margin-top: 1.5em;
+  font-family: 'Montserrat', sans-serif;
+  color: #334155;
+  margin: 30px 0 15px 0;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
 }
 
 .description {
   font-style: italic;
-  color: #666;
-  margin-bottom: 2em;
+  color: #64748b;
+  margin-bottom: 30px;
+  font-size: 18px;
+  line-height: 1.6;
 }
 
 .section {
-  margin-bottom: 3em;
+  margin-bottom: 50px;
   page-break-after: auto;
 }
 
+/* Text content styles */
+p {
+  margin: 0 0 20px 0;
+  line-height: 1.7;
+  font-size: 16px;
+  color: #374151;
+}
+
 blockquote {
-  border-left: 4px solid #3498db;
+  border-left: 4px solid #059669;
   padding-left: 20px;
-  margin: 20px 0;
+  margin: 30px 0;
   font-style: italic;
-  color: #666;
+  color: #4b5563;
+  background: #f8fafc;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.border-army {
+  border-color: #059669;
 }
 
 ul {
@@ -723,59 +863,92 @@ ul {
 }
 
 li {
-  margin-bottom: 8px;
+  margin-bottom: 10px;
+  line-height: 1.6;
+  color: #374151;
 }
 
+/* Table styles */
 table {
   width: 100%;
   border-collapse: collapse;
-  margin: 20px 0;
+  margin: 30px 0;
+  font-size: 14px;
 }
 
 th, td {
-  border: 1px solid #dee2e6;
+  border: 1px solid #d1d5db;
   padding: 12px;
   text-align: left;
+  line-height: 1.5;
 }
 
 th {
-  background-color: #f8f9fa;
-  font-weight: bold;
+  background-color: #f3f4f6;
+  font-weight: 600;
+  color: #1f2937;
 }
 
 tr:nth-child(even) {
-  background-color: #f8f9fa;
+  background-color: #f9fafb;
 }
 
+/* Resource and license styles */
 .resource {
-  margin-bottom: 2em;
-  padding: 1em;
-  border-left: 3px solid #3498db;
-  background-color: #f8f9fa;
+  margin-bottom: 30px;
+  padding: 20px;
+  border-left: 3px solid #059669;
+  background-color: #f8fafc;
+  border-radius: 8px;
 }
 
 .resource h3 {
   margin-top: 0;
+  color: #059669;
 }
 
 .resource .note {
   font-style: italic;
-  font-size: 0.9em;
-  color: #666;
+  font-size: 14px;
+  color: #64748b;
 }
 
 .license {
   padding: 30px;
-  font-family: serif;
+  font-family: 'Inter', serif;
+  background: #f8fafc;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
 }
 
+/* Links */
 a {
-  color: #3498db;
+  color: #059669;
   text-decoration: none;
+  font-weight: 500;
 }
 
 a:hover {
   text-decoration: underline;
+}
+
+/* Responsive adjustments for smaller e-readers */
+@media screen and (max-width: 600px) {
+  .main-title {
+    font-size: 36px;
+  }
+  
+  .subtitle {
+    font-size: 22px;
+  }
+  
+  .cover-content {
+    padding: 0 10px;
+  }
+  
+  .chapter-info {
+    padding: 20px;
+  }
 }
 `;
 };
