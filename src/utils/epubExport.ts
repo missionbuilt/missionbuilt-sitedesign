@@ -1,8 +1,9 @@
+
 import { Chapter } from "@/data/chapters-data";
 
 interface EpubContent {
   title: string;
-  data: string;
+  content: string;
 }
 
 export const generateEpub = async (chapter: Chapter): Promise<void> => {
@@ -19,15 +20,15 @@ export const generateEpub = async (chapter: Chapter): Promise<void> => {
     const content: EpubContent[] = [
       {
         title: "Cover",
-        data: generateCoverPage(chapter)
+        content: generateCoverPage(chapter)
       },
       {
         title: chapter.title,
-        data: contentHtml
+        content: contentHtml
       },
       {
         title: "Further Reading",
-        data: formatFurtherReading(chapter.furtherReading)
+        content: formatFurtherReading(chapter.furtherReading)
       }
     ];
 
