@@ -95,7 +95,14 @@ This is the real flywheel of fulfillment:
 - And real progress reinforces the mission.
 
 That's the throughline. That's what keeps us going.
-Metrics follow. But the mission leads.`;
+Metrics follow. But the mission leads.
+
+[TABLE: OODA Loop Analysis]
+OODA Stage | With Mission-Driven Focus | Without It
+Observe | You know what matters to watch | You collect everything, drowning in noise
+Orient | Purpose helps filter & frame inputs | Metrics get over-prioritized, lose big picture
+Decide | Mission becomes a north star for action | Risk of chasing vanity wins or short-term gains
+Act | Execution has energy and resolve | Actions may be misaligned or half-hearted`;
       default:
         return "Content for this section will be added soon.";
     }
@@ -247,6 +254,65 @@ const PdfExportButton: React.FC<PdfExportButtonProps> = ({ chapter }) => {
         yPosition += fontSize * 0.2;
       };
 
+      // Helper function to add table
+      const addTable = () => {
+        const tableData = [
+          ["OODA Stage", "With Mission-Driven Focus", "Without It"],
+          ["Observe", "You know what matters to watch", "You collect everything, drowning in noise"],
+          ["Orient", "Purpose helps filter & frame inputs", "Metrics get over-prioritized, lose big picture"],
+          ["Decide", "Mission becomes a north star for action", "Risk of chasing vanity wins or short-term gains"],
+          ["Act", "Execution has energy and resolve", "Actions may be misaligned or half-hearted"]
+        ];
+
+        const colWidths = [maxWidth * 0.2, maxWidth * 0.4, maxWidth * 0.4];
+        const rowHeight = 20;
+        const tableHeight = tableData.length * rowHeight;
+        
+        // Check if table fits on current page
+        checkPageBreak(tableHeight + 20);
+        
+        // Add some space before table
+        yPosition += 10;
+        
+        tableData.forEach((row, rowIndex) => {
+          // Check for page break before each row
+          if (yPosition + rowHeight > pageHeight - margin) {
+            pdf.addPage();
+            yPosition = margin;
+          }
+          
+          let xPosition = margin;
+          
+          row.forEach((cell, colIndex) => {
+            // Draw cell border
+            pdf.rect(xPosition, yPosition, colWidths[colIndex], rowHeight);
+            
+            // Add cell content
+            pdf.setFontSize(9);
+            if (rowIndex === 0) {
+              pdf.setFont("helvetica", "bold");
+            } else {
+              pdf.setFont("helvetica", "normal");
+            }
+            
+            // Split text to fit in cell
+            const cellLines = pdf.splitTextToSize(cell, colWidths[colIndex] - 4);
+            const textY = yPosition + 6;
+            
+            cellLines.forEach((line: string, lineIndex: number) => {
+              pdf.text(line, xPosition + 2, textY + (lineIndex * 4));
+            });
+            
+            xPosition += colWidths[colIndex];
+          });
+          
+          yPosition += rowHeight;
+        });
+        
+        // Add space after table
+        yPosition += 10;
+      };
+
       // Add spacing between sections
       const addSectionSpacing = () => {
         yPosition += 10;
@@ -273,9 +339,15 @@ const PdfExportButton: React.FC<PdfExportButtonProps> = ({ chapter }) => {
         const paragraphs = content.split('\n\n');
         paragraphs.forEach((paragraph, paragraphIndex) => {
           if (paragraph.trim()) {
-            addText(paragraph.trim(), 11);
-            // Add small spacing between paragraphs
-            yPosition += 3;
+            // Check if this paragraph contains table marker
+            if (paragraph.includes('[TABLE: OODA Loop Analysis]')) {
+              // Add table instead of text
+              addTable();
+            } else {
+              addText(paragraph.trim(), 11);
+              // Add small spacing between paragraphs
+              yPosition += 3;
+            }
           }
         });
         
