@@ -199,9 +199,20 @@ const PdfExportButton: React.FC<PdfExportButtonProps> = ({ chapter }) => {
       const margin = 20;
       const maxWidth = pageWidth - (margin * 2);
       let yPosition = margin;
+      const lineHeight = 1.5;
 
-      // Helper function to add text with word wrapping
-      const addText = (text: string, fontSize: number = 12, isBold: boolean = false) => {
+      // Helper function to check if we need a new page
+      const checkPageBreak = (additionalHeight: number) => {
+        if (yPosition + additionalHeight > pageHeight - margin) {
+          pdf.addPage();
+          yPosition = margin;
+          return true;
+        }
+        return false;
+      };
+
+      // Helper function to add text with word wrapping and proper page breaks
+      const addText = (text: string, fontSize: number = 11, isBold: boolean = false, isTitle: boolean = false) => {
         pdf.setFontSize(fontSize);
         if (isBold) {
           pdf.setFont("helvetica", "bold");
@@ -210,47 +221,96 @@ const PdfExportButton: React.FC<PdfExportButtonProps> = ({ chapter }) => {
         }
         
         const lines = pdf.splitTextToSize(text, maxWidth);
+        const totalHeight = lines.length * fontSize * 0.3 * lineHeight;
         
-        // Check if we need a new page
-        if (yPosition + (lines.length * fontSize * 0.4) > pageHeight - margin) {
-          pdf.addPage();
-          yPosition = margin;
+        // Check if we need a new page for this text block
+        checkPageBreak(totalHeight);
+        
+        // Add extra space before titles (except if at top of page)
+        if (isTitle && yPosition > margin) {
+          yPosition += 8;
         }
         
-        pdf.text(lines, margin, yPosition);
-        yPosition += lines.length * fontSize * 0.4 + 5;
+        // Add the text line by line
+        lines.forEach((line: string, index: number) => {
+          // Check for page break before each line if needed
+          if (yPosition + fontSize * 0.3 * lineHeight > pageHeight - margin) {
+            pdf.addPage();
+            yPosition = margin;
+          }
+          
+          pdf.text(line, margin, yPosition);
+          yPosition += fontSize * 0.3 * lineHeight;
+        });
+        
+        // Add spacing after text blocks
+        yPosition += fontSize * 0.2;
+      };
+
+      // Add spacing between sections
+      const addSectionSpacing = () => {
+        yPosition += 10;
       };
 
       // Title
-      addText(chapter.title, 20, true);
-      yPosition += 10;
+      addText(chapter.title, 18, true, true);
+      addSectionSpacing();
 
       // Description
-      addText(chapter.description, 14);
-      yPosition += 10;
+      addText(chapter.description, 12);
+      addSectionSpacing();
 
-      // Sections - now pulling actual content
+      // Sections content
       const sections = getSections(chapter.id);
-      sections.forEach((section) => {
-        addText(section.title, 16, true);
+      sections.forEach((section, index) => {
+        // Section title
+        addText(section.title, 14, true, true);
+        
+        // Section content
         const content = getSectionContent(chapter.id, section.id);
-        addText(content);
-        yPosition += 5;
+        
+        // Split content into paragraphs for better formatting
+        const paragraphs = content.split('\n\n');
+        paragraphs.forEach((paragraph, paragraphIndex) => {
+          if (paragraph.trim()) {
+            addText(paragraph.trim(), 11);
+            // Add small spacing between paragraphs
+            yPosition += 3;
+          }
+        });
+        
+        // Add spacing between sections
+        if (index < sections.length - 1) {
+          addSectionSpacing();
+        }
       });
 
-      // Further Reading
+      // Further Reading section
       if (chapter.furtherReading && chapter.furtherReading.length > 0) {
-        addText("Further Reading", 16, true);
-        chapter.furtherReading.forEach((resource) => {
-          addText(resource.title, 12, true);
+        addSectionSpacing();
+        addText("Further Reading", 14, true, true);
+        
+        chapter.furtherReading.forEach((resource, index) => {
+          // Resource title
+          addText(resource.title, 11, true);
+          
+          // Resource description
           if (resource.description) {
-            addText(resource.description);
+            addText(resource.description, 10);
           }
+          
+          // Resource note
           if (resource.note) {
             addText(resource.note, 10);
           }
-          addText(resource.url, 10);
-          yPosition += 3;
+          
+          // Resource URL
+          addText(resource.url, 9);
+          
+          // Add spacing between resources
+          if (index < chapter.furtherReading.length - 1) {
+            yPosition += 8;
+          }
         });
       }
 
