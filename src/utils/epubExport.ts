@@ -774,7 +774,7 @@ const generateContentHtml = (chapter: Chapter): string => {
   <title>${escapeXml(chapter.title)}</title>
   <link rel="stylesheet" type="text/css" href="styles.css"/>
 </head>
-<body>
+<body class="content-page">
   <div class="page-header">
     <div class="header-left">Mission Built</div>
     <div class="header-right">Training Log ${chapter.id}: ${escapeXml(chapter.title)}</div>
@@ -788,7 +788,7 @@ const generateContentHtml = (chapter: Chapter): string => {
   
   <div class="page-footer">
     <div class="footer-left"><a href="https://missionbuilt.io">missionbuilt.io</a></div>
-    <div class="footer-right"><span class="page-number"></span> CC BY-NC 4.0</div>
+    <div class="footer-right">CC BY-NC 4.0</div>
   </div>
 </body>
 </html>`;
@@ -816,7 +816,7 @@ const generateFurtherReadingHtml = (chapter: Chapter): string => {
   <title>Further Reading</title>
   <link rel="stylesheet" type="text/css" href="styles.css"/>
 </head>
-<body>
+<body class="content-page">
   <div class="page-header">
     <div class="header-left">Mission Built</div>
     <div class="header-right">Training Log ${chapter.id}: ${escapeXml(chapter.title)}</div>
@@ -829,7 +829,7 @@ const generateFurtherReadingHtml = (chapter: Chapter): string => {
   
   <div class="page-footer">
     <div class="footer-left"><a href="https://missionbuilt.io">missionbuilt.io</a></div>
-    <div class="footer-right"><span class="page-number"></span> CC BY-NC 4.0</div>
+    <div class="footer-right">CC BY-NC 4.0</div>
   </div>
 </body>
 </html>`;
@@ -843,7 +843,7 @@ const generateLicenseHtml = (): string => {
   <title>License</title>
   <link rel="stylesheet" type="text/css" href="styles.css"/>
 </head>
-<body>
+<body class="content-page">
   <div class="page-header">
     <div class="header-left">Mission Built</div>
     <div class="header-right">License</div>
@@ -867,7 +867,7 @@ const generateLicenseHtml = (): string => {
   
   <div class="page-footer">
     <div class="footer-left"><a href="https://missionbuilt.io">missionbuilt.io</a></div>
-    <div class="footer-right"><span class="page-number"></span> CC BY-NC 4.0</div>
+    <div class="footer-right">CC BY-NC 4.0</div>
   </div>
 </body>
 </html>`;
@@ -884,22 +884,47 @@ body {
   color: #1e293b;
   background: #f8fafc;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
 }
 
-/* Page structure - improved spacing to prevent text cutoff */
+/* Content pages structure */
+.content-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Page headers and footers - properly positioned */
 .page-header {
-  height: 30px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 30px;
+  padding: 0 30px;
   background: #f8fafc;
   border-bottom: 1px solid #e2e8f0;
   font-size: 11px;
   font-weight: 500;
-  margin-bottom: 10px;
+  z-index: 100;
+}
+
+.page-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30px;
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+  font-size: 11px;
+  z-index: 100;
 }
 
 .header-left {
@@ -909,27 +934,6 @@ body {
 
 .header-right {
   color: #64748b;
-}
-
-.content-wrapper {
-  flex: 1;
-  padding: 30px 40px 50px 40px;
-  max-width: 800px;
-  margin: 0 auto;
-  overflow-wrap: break-word;
-  word-wrap: break-word;
-}
-
-.page-footer {
-  height: 30px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 30px;
-  background: #f8fafc;
-  border-top: 1px solid #e2e8f0;
-  font-size: 11px;
-  margin-top: 20px;
 }
 
 .footer-left a {
@@ -947,7 +951,17 @@ body {
   font-weight: 400;
 }
 
-/* Cover page styles */
+/* Content wrapper with proper spacing for headers/footers */
+.content-wrapper {
+  flex: 1;
+  padding: 80px 40px 80px 40px; /* Top and bottom padding to account for fixed headers/footers */
+  max-width: 800px;
+  margin: 0 auto;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+/* Cover page styles - no headers/footers */
 .cover {
   min-height: 100vh;
   display: flex;
@@ -1092,7 +1106,7 @@ body {
   margin: 0;
 }
 
-/* Content page styles - improved spacing */
+/* Content page styles */
 h1 {
   font-family: 'Montserrat', sans-serif;
   color: #0f172a;
@@ -1138,7 +1152,7 @@ h3 {
   page-break-after: auto;
 }
 
-/* Text content styles - improved readability */
+/* Text content styles */
 p {
   margin: 0 0 25px 0;
   line-height: 1.7;
@@ -1173,7 +1187,7 @@ li {
   color: #374151;
 }
 
-/* Table styles - improved spacing */
+/* Table styles */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -1239,13 +1253,18 @@ a:hover {
 
 /* Print/EPUB specific styles */
 @media print {
-  body {
-    margin: 0.5in;
+  .content-page {
+    display: block;
   }
   
-  .page-header, .page-footer {
+  .page-header {
     position: static;
-    page-break-inside: avoid;
+    margin-bottom: 20px;
+  }
+  
+  .page-footer {
+    position: static;
+    margin-top: 20px;
   }
   
   .content-wrapper {
@@ -1280,11 +1299,11 @@ a:hover {
   }
   
   .page-header, .page-footer {
-    padding: 10px 20px;
+    padding: 0 20px;
   }
   
   .content-wrapper {
-    padding: 25px 20px 40px 20px;
+    padding: 80px 20px;
   }
 }
 `;
