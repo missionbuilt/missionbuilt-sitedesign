@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
@@ -120,7 +121,10 @@ const NavLink = ({ to, children, exact, onClick }: NavLinkProps) => {
   return (
     <Link 
       to={to} 
-      className={cn("nav-link", isActive && "nav-link-active")}
+      className={cn(
+        "text-foreground hover:text-army transition-colors duration-200 font-medium px-3 py-2 rounded-md hover:bg-slate/10 dark:hover:text-army dark:hover:bg-slate/5",
+        isActive && "text-army bg-army/10 dark:bg-army/5 dark:text-army"
+      )}
       onClick={onClick}
     >
       {children}
