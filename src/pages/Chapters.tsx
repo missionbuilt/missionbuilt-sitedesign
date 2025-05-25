@@ -1,5 +1,5 @@
-
 import React, { useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ChapterGrid from "@/components/chapters/ChapterGrid";
@@ -21,8 +21,33 @@ const Chapters = () => {
     });
   }, []);
 
+  const pageTitle = "Training Logs | MissionBuilt.io";
+  const pageDescription = "Explore all training logs from Mission Built: Lessons from the Barbell and the Boardroom. Product management insights through the lens of powerlifting.";
+
   return (
     <div className="min-h-screen flex flex-col bg-background">
+      <Helmet>
+        <title>{pageTitle}</title>
+        <meta name="description" content={pageDescription} />
+        
+        {/* Open Graph tags */}
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={pageDescription} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://missionbuilt.io/traininglogs" />
+        <meta property="og:image" content="https://missionbuilt.io/og-image.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:site_name" content="MissionBuilt.io" />
+        
+        {/* Twitter Card tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@missionbuilt" />
+        <meta name="twitter:title" content={pageTitle} />
+        <meta name="twitter:description" content={pageDescription} />
+        <meta name="twitter:image" content="https://missionbuilt.io/og-image.png" />
+      </Helmet>
+      
       <Navbar />
       
       <main className="flex-grow container mx-auto px-4 py-8 md:py-12">
