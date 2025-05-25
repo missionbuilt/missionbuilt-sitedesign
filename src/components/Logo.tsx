@@ -96,7 +96,10 @@ const Logo = ({
           <img 
             src="/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png" 
             alt="MissionBuilt Logo" 
-            className={cn(imageSizes[size])}
+            className={cn(
+              imageSizes[size],
+              "dark:brightness-0 dark:invert"
+            )}
           />
         </div>
       )}
