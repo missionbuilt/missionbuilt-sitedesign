@@ -1,3 +1,4 @@
+
 import { Chapter, chapters } from "@/data/chapters-data";
 import JSZip from 'jszip';
 import * as FileSaver from 'file-saver';
@@ -146,11 +147,33 @@ const generateEpub = async (chapter: Chapter) => {
 </body>
 </html>`);
 
-  // Use the actual chapter data directly - this is the EXACT content from the log page
-  const chapterContent = renderChapterContentAsHTML(chapter);
+  // Use ONLY the actual chapter data - NO generated content
+  const chapterContent = chapter.sections.map(section => {
+    const paragraphs = section.content.split('\n\n').filter(p => p.trim().length > 0);
+    const paragraphsHTML = paragraphs.map(paragraph => 
+      `<p>${escapeXml(paragraph.trim())}</p>`
+    ).join('');
 
-  const furtherReadingContent = generateFurtherReading(chapter.furtherReading);
-  const nextChapterMessage = generateNextChapterMessage(chapter.id);
+    return `<section class="chapter-section">
+      <h2>${escapeXml(section.title)}</h2>
+      <div class="section-content">${paragraphsHTML}</div>
+    </section>`;
+  }).join('');
+
+  const furtherReadingContent = chapter.furtherReading && chapter.furtherReading.length > 0 ? `
+    <section>
+      <h2>Further Reading</h2>
+      <ul>
+        ${chapter.furtherReading.map(resource => `
+          <li>
+            <a href="${escapeXml(resource.url)}">${escapeXml(resource.title)}</a>
+            <p>${escapeXml(resource.description)}</p>
+            ${resource.note ? `<p><em>Note: ${escapeXml(resource.note)}</em></p>` : ''}
+          </li>
+        `).join('')}
+      </ul>
+    </section>
+  ` : '';
 
   // Add the content.xhtml file with headers and footers
   oebps?.file("content.xhtml", `<?xml version="1.0" encoding="UTF-8"?>
@@ -171,7 +194,6 @@ const generateEpub = async (chapter: Chapter) => {
     <p class="chapter-description">${escapeXml(chapter.description)}</p>
     ${chapterContent}
     ${furtherReadingContent}
-    ${nextChapterMessage}
   </main>
   
   <footer class="page-footer">
@@ -466,21 +488,6 @@ a:hover {
   text-decoration: underline; 
 }
 
-.next-chapter { 
-  margin-top: 3rem; 
-  padding-top: 2rem; 
-  border-top: 2px solid #e2e8f0;
-}
-
-.next-chapter h2 {
-  color: #FFC300;
-  font-weight: 700;
-}
-
-.next-chapter h3 {
-  color: #4A5A68;
-}
-
 /* Further reading section */
 section h2:first-child {
   color: #4A5A68;
@@ -523,51 +530,6 @@ section h2:first-child {
   });
   
   FileSaver.saveAs(content, `${chapter.slug}.epub`);
-};
-
-// Function to render chapter content using the actual chapter data
-const renderChapterContentAsHTML = (chapter: Chapter): string => {
-  // Use the actual chapter sections data directly
-  if (!chapter.sections || chapter.sections.length === 0) {
-    return '<section class="chapter-section"><p>No content available for this chapter.</p></section>';
-  }
-
-  return chapter.sections.map(section => {
-    // Split content into paragraphs and preserve line breaks
-    const paragraphs = section.content.split('\n\n').filter(p => p.trim().length > 0);
-    
-    const paragraphsHTML = paragraphs.map(paragraph => 
-      `<p>${escapeXml(paragraph.trim())}</p>`
-    ).join('');
-
-    return `<section class="chapter-section">
-      <h2>${escapeXml(section.title)}</h2>
-      <div class="section-content">${paragraphsHTML}</div>
-    </section>`;
-  }).join('');
-};
-
-// Helper function to convert DOM structure to clean EPUB HTML
-const convertDOMToEpubHTML = (element: HTMLElement): string => {
-  let html = '';
-  
-  // Process each child node
-  for (const child of Array.from(element.children)) {
-    if (child.tagName === 'SECTION' || child.classList.contains('space-y-6')) {
-      // This is likely a section
-      const heading = child.querySelector('h2, h3');
-      const content = child.querySelector('.prose, .space-y-4, p, div');
-      
-      if (heading && content) {
-        html += `<section class="chapter-section">
-          <h2>${escapeXml(heading.textContent || '')}</h2>
-          <div class="section-content">${escapeXml(content.textContent || '')}</div>
-        </section>`;
-      }
-    }
-  }
-  
-  return html || '<section class="chapter-section"><p>No content could be extracted.</p></section>';
 };
 
 const generateCoverImage = async (chapter: Chapter): Promise<Blob> => {
@@ -685,63 +647,6 @@ const generateCoverImage = async (chapter: Chapter): Promise<Blob> => {
       resolve(blob || new Blob());
     }, 'image/png');
   });
-};
-
-const generateFurtherReading = (resources: Chapter["furtherReading"]): string => {
-  if (!resources || resources.length === 0) {
-    return '<section><h2>Further Reading</h2><p>No further reading resources available.</p></section>';
-  }
-
-  return `
-    <section>
-      <h2>Further Reading</h2>
-      <ul>
-        ${resources.map(resource => `
-          <li>
-            <a href="${escapeXml(resource.url)}">${escapeXml(resource.title)}</a>
-            <p>${escapeXml(resource.description)}</p>
-            ${resource.note ? `<p><em>Note: ${escapeXml(resource.note)}</em></p>` : ''}
-          </li>
-        `).join('')}
-      </ul>
-    </section>
-  `;
-};
-
-const generateNextChapterMessage = (currentChapterId: number): string => {
-  const nextChapter = chapters.find(ch => ch.id === currentChapterId + 1);
-  
-  if (!nextChapter) {
-    return `
-      <section class="next-chapter">
-        <h2>Good set. We're chalking up for the next one.</h2>
-        <h3>Training Log ${currentChapterId + 1}: Coming Soon</h3>
-        <p>Coming soon. Check out <a href="https://missionbuilt.io">missionbuilt.io</a> in the meantime - and follow us on <a href="https://bsky.app/profile/missionbuilt.bsky.social">bluesky</a> for updates.</p>
-      </section>
-    `;
-  }
-  
-  const isPublished = nextChapter.status === 'in-progress';
-  
-  if (isPublished) {
-    return `
-      <section class="next-chapter">
-        <h2>Take a breath. Hydrate. Next set is up.</h2>
-        <h3>Training Log ${nextChapter.id}: ${escapeXml(nextChapter.title)}</h3>
-        <p>${escapeXml(nextChapter.description)}</p>
-        <p><a href="https://missionbuilt.io/log/${nextChapter.id}">Read Training Log ${nextChapter.id}</a></p>
-      </section>
-    `;
-  } else {
-    return `
-      <section class="next-chapter">
-        <h2>Good set. We're chalking up for the next one.</h2>
-        <h3>Training Log ${nextChapter.id}: ${escapeXml(nextChapter.title)}</h3>
-        <p>${escapeXml(nextChapter.description)}</p>
-        <p>Coming soon. Check out <a href="https://missionbuilt.io">missionbuilt.io</a> in the meantime - and follow us on <a href="https://bsky.app/profile/missionbuilt.bsky.social">bluesky</a> for updates.</p>
-      </section>
-    `;
-  }
 };
 
 // Helper function to escape XML/HTML content
