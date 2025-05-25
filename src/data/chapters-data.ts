@@ -34,7 +34,7 @@ export const chapters: Chapter[] = [
       {
         id: "the-mission-is-the-magnet",
         title: "The Mission is the Magnet",
-        content: `[Please provide the content for this section]`
+        content: "Success isn't the dashboard — it's the user's outcome. A clear breakdown of the User Mission Method. Forget vanity metrics — this is about aligning everything you do to help users win."
       }
     ],
     furtherReading: [
@@ -146,7 +146,7 @@ export const chapters: Chapter[] = [
       {
         id: "the-myth-of-overnight-success",
         title: "The Myth of Overnight Success",
-        content: `[Please provide the content for this section]`
+        content: "Greatness isn't born; it's built — one rep, one iteration at a time. Whether it's product iteration or lifting volume, this chapter highlights how repeated effort compounds into capability."
       }
     ],
     furtherReading: [
