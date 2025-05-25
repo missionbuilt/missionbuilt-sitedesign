@@ -1,4 +1,3 @@
-
 import { Chapter } from "@/data/chapters-data";
 import JSZip from 'jszip';
 
@@ -32,9 +31,6 @@ export const generateEpub = async (chapter: Chapter): Promise<void> => {
     
     // Create cover page
     oebps?.file("cover.html", generateCoverHtml(chapter));
-    
-    // Create inside cover page
-    oebps?.file("inside-cover.html", generateInsideCoverHtml(chapter));
     
     // Create main content
     oebps?.file("content.html", generateContentHtml(chapter));
@@ -641,7 +637,6 @@ const generateContentOpf = (chapter: Chapter): string => {
     <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml"/>
     <item id="cover-image" href="cover.png" media-type="image/png"/>
     <item id="cover" href="cover.html" media-type="application/xhtml+xml"/>
-    <item id="inside-cover" href="inside-cover.html" media-type="application/xhtml+xml"/>
     <item id="content" href="content.html" media-type="application/xhtml+xml"/>
     <item id="further-reading" href="further-reading.html" media-type="application/xhtml+xml"/>
     <item id="license" href="license.html" media-type="application/xhtml+xml"/>
@@ -649,7 +644,6 @@ const generateContentOpf = (chapter: Chapter): string => {
   </manifest>
   <spine toc="ncx">
     <itemref idref="cover"/>
-    <itemref idref="inside-cover"/>
     <itemref idref="content"/>
     <itemref idref="further-reading"/>
     <itemref idref="license"/>
@@ -668,13 +662,9 @@ const generateTocNcx = (chapter: Chapter): string => {
       <navLabel><text>Cover</text></navLabel>
       <content src="cover.html"/>
     </navPoint>
-    <navPoint id="inside-cover" playOrder="2">
-      <navLabel><text>Inside Cover</text></navLabel>
-      <content src="inside-cover.html"/>
-    </navPoint>
   `;
   
-  let playOrder = 3;
+  let playOrder = 2;
   sections.forEach((section) => {
     navPoints += `
     <navPoint id="${section.id}" playOrder="${playOrder}">
@@ -723,43 +713,6 @@ const generateCoverHtml = (chapter: Chapter): string => {
 <body>
   <div class="cover">
     <div class="cover-content">
-      <div class="logo-section">
-        <div class="logo-text">
-          <span class="mission">Mission</span><span class="built">Built</span><span class="domain">.io</span>
-        </div>
-      </div>
-      
-      <div class="title-section">
-        <h1 class="main-title">Mission Built</h1>
-        <h2 class="subtitle">Lessons from the Barbell and the Boardroom</h2>
-        <p class="tagline">The Shared Discipline Behind Great Products and Great Lifts</p>
-      </div>
-      
-      <div class="chapter-info">
-        <h3 class="chapter-title">${escapeXml(chapter.title)}</h3>
-        <p class="training-log-label">Training Log</p>
-      </div>
-      
-      <div class="author-section">
-        <p class="author">Mike Nichols</p>
-      </div>
-    </div>
-  </div>
-</body>
-</html>`;
-};
-
-const generateInsideCoverHtml = (chapter: Chapter): string => {
-  return `<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-  <title>Inside Cover</title>
-  <link rel="stylesheet" type="text/css" href="styles.css"/>
-</head>
-<body>
-  <div class="inside-cover">
-    <div class="inside-cover-content">
       <div class="logo-section">
         <div class="logo-text">
           <span class="mission">Mission</span><span class="built">Built</span><span class="domain">.io</span>
