@@ -1,3 +1,4 @@
+
 // Chapter data structure
 export interface Resource {
   title: string;
@@ -6,12 +7,19 @@ export interface Resource {
   note: string;
 }
 
+export interface Section {
+  id: string;
+  title: string;
+  content: string;
+}
+
 export interface Chapter {
   id: number;
   title: string;
   description: string;
   slug: string;
   status: "in-progress" | "coming-soon" | "not-started";
+  sections?: Section[];
   furtherReading: Resource[];
 }
 

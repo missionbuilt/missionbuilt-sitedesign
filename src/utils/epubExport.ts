@@ -1,15 +1,9 @@
 
 import { Chapter } from "@/data/chapters-data";
 
-interface EpubOptions {
+interface EpubContent {
   title: string;
-  author: string;
-  publisher: string;
-  description?: string;
-  content: Array<{
-    title: string;
-    data: string;
-  }>;
+  data: string;
 }
 
 export const generateEpub = async (chapter: Chapter): Promise<void> => {
@@ -23,28 +17,31 @@ export const generateEpub = async (chapter: Chapter): Promise<void> => {
     // Generate filename from chapter title
     const filename = generateFilename(chapter.title);
     
-    const options: EpubOptions = {
+    const content: EpubContent[] = [
+      {
+        title: "Cover",
+        data: generateCoverPage(chapter)
+      },
+      {
+        title: chapter.title,
+        data: contentHtml
+      },
+      {
+        title: "Further Reading",
+        data: formatFurtherReading(chapter.furtherReading)
+      }
+    ];
+
+    const options = {
       title: chapter.title,
       author: "MissionBuilt.io",
       publisher: "MissionBuilt.io",
       description: chapter.description,
-      content: [
-        {
-          title: "Cover",
-          data: generateCoverPage(chapter)
-        },
-        {
-          title: chapter.title,
-          data: contentHtml
-        },
-        {
-          title: "Further Reading",
-          data: formatFurtherReading(chapter.furtherReading)
-        }
-      ]
+      content: content
     };
 
-    const epub = new EPub(options, filename);
+    // Use the library without 'new' keyword and correct parameter order
+    const epub = EPub(options, filename);
     await epub.promise;
     
     // The library should automatically trigger download
@@ -63,7 +60,7 @@ const formatChapterContent = (chapter: Chapter): string => {
     html += `<p class="description">${chapter.description}</p>`;
   }
   
-  // Add sections content
+  // Add sections content if they exist
   if (chapter.sections && chapter.sections.length > 0) {
     chapter.sections.forEach(section => {
       html += `<h2>${section.title}</h2>`;
