@@ -1,3 +1,4 @@
+
 // Chapter data structure
 export interface Resource {
   title: string;
@@ -22,7 +23,7 @@ export interface Chapter {
   furtherReading: Resource[];
 }
 
-// Chapter data
+// Chapter data - only your two written logs
 export const chapters: Chapter[] = [
   {
     id: 1,
@@ -32,24 +33,9 @@ export const chapters: Chapter[] = [
     status: "in-progress",
     sections: [
       {
-        id: "introduction",
-        title: "Introduction",
-        content: "In the pursuit of building great products and achieving excellence, we often get caught up in numbers, dashboards, and metrics that feel important but don't actually move the needle. This chapter explores why mission-driven thinking beats metric-driven thinking every time."
-      },
-      {
-        id: "the-metric-trap",
-        title: "The Metric Trap",
-        content: "Metrics are seductive. They give us the illusion of progress and control. But when we optimize for metrics instead of outcomes, we risk building the wrong thing entirely. Just like a powerlifter who focuses only on the number on the bar instead of proper form and long-term strength development."
-      },
-      {
-        id: "user-mission-method",
-        title: "The User Mission Method",
-        content: "The User Mission Method is simple: before you build anything, before you measure anything, ask yourself one question: 'What is the user trying to accomplish, and how can I help them win?' Everything else flows from this core mission alignment."
-      },
-      {
-        id: "mission-alignment-practice",
-        title: "Mission Alignment in Practice",
-        content: "Mission alignment isn't just a philosophy—it's a practical framework for decision-making. When faced with feature requests, technical debt, or resource allocation decisions, the mission becomes your north star. Does this help users accomplish their goals more effectively?"
+        id: "the-mission-is-the-magnet",
+        title: "The Mission is the Magnet",
+        content: ""
       }
     ],
     furtherReading: [
@@ -157,6 +143,13 @@ export const chapters: Chapter[] = [
     description: "Greatness isn't born; it's built — one rep, one iteration at a time. Whether it's product iteration or lifting volume, this chapter highlights how repeated effort compounds into capability.",
     slug: "built-through-reps",
     status: "in-progress",
+    sections: [
+      {
+        id: "the-myth-of-overnight-success",
+        title: "The Myth of Overnight Success",
+        content: ""
+      }
+    ],
     furtherReading: [
       {
         title: "Deeper Read on Instagram's Rise",
@@ -237,117 +230,5 @@ export const chapters: Chapter[] = [
         note: ""
       }
     ]
-  },
-  {
-    id: 3,
-    title: "Rituals Over Rules",
-    description: "Rigid processes break. Rituals scale. Replace rigid roadmaps and overly prescriptive training programs with adaptable, purpose-driven rituals.",
-    slug: "rituals-over-rules",
-    status: "coming-soon",
-    furtherReading: []
-  },
-  {
-    id: 4,
-    title: "Feedback is a Superpower",
-    description: "Only the honest get stronger. Lifters use mirrors and video. Builders use retros and customer interviews. The best learn from what's real — not what's comfortable.",
-    slug: "feedback-superpower",
-    status: "not-started",
-    furtherReading: []
-  },
-  {
-    id: 5,
-    title: "Progress Isn't Pretty",
-    description: "Messy lifts and messy launches mean you're trying. Product and powerlifting are both iterative by nature. Failures aren't signs of weakness — they're markers of forward motion.",
-    slug: "progress-isnt-pretty",
-    status: "not-started",
-    furtherReading: []
-  },
-  {
-    id: 6,
-    title: "The Mission Demands Recovery",
-    description: "Pursuing the mission doesn't mean burning out. Recovery isn't downtime — it's mission support. From sleep and silence to deloads and retros.",
-    slug: "mission-demands-recovery",
-    status: "not-started",
-    furtherReading: []
-  },
-  {
-    id: 7,
-    title: "Train the Engine, Not Just the Output",
-    description: "Power comes from the core — of products and people. Behind every visible lift or release is deep, quiet work. That's your core — your engine. Build it.",
-    slug: "train-the-engine",
-    status: "not-started",
-    furtherReading: []
-  },
-  {
-    id: 8,
-    title: "Decisions Are Made Under Load",
-    description: "Stress reveals integrity — of steel and of strategy. How you make decisions under pressure says everything. Prepare before the lift. Build judgment into your roadmap.",
-    slug: "decisions-under-load",
-    status: "not-started",
-    furtherReading: []
-  },
-  {
-    id: 9,
-    title: "Ship It Like You Show Up",
-    description: "Consistency > Genius. Most wins come from those who don't flinch. Show up. Ship. Lift. Repeat.",
-    slug: "ship-it",
-    status: "not-started",
-    furtherReading: []
-  },
-  {
-    id: 10,
-    title: "The Team Is the Tool",
-    description: "You can't outlift a bad spotter. You can't outrun a bad culture. Good teammates matter in the gym and in the roadmap room. Culture is a compounder of success.",
-    slug: "team-is-the-tool",
-    status: "not-started",
-    furtherReading: []
-  },
-  {
-    id: 11,
-    title: "Strong Enough to Listen",
-    description: "Empathy is a performance enhancer. Listening — really listening — makes you stronger. It drives better design and deeper connections. It reveals where you grow next.",
-    slug: "strong-enough-to-listen",
-    status: "not-started",
-    furtherReading: []
-  },
-  {
-    id: 12,
-    title: "The Weight Is Real. Own It.",
-    description: "Responsibility isn't optional when the mission matters. Ownership in the gym means no excuses. Same with customers. Own the mission. Own the outcome.",
-    slug: "weight-is-real",
-    status: "not-started",
-    furtherReading: []
-  },
-  {
-    id: 13,
-    title: "Deload Doesn't Mean Quit",
-    description: "Strategic recovery as a path to longevity in product and power.",
-    slug: "deload-doesnt-mean-quit",
-    status: "not-started",
-    furtherReading: []
-  },
-  {
-    id: 14,
-    title: "Burn the Roadmap (and Rewrite It With the User)",
-    description: "Kill the fake plans. Design with real feedback.",
-    slug: "burn-the-roadmap",
-    status: "not-started",
-    furtherReading: []
-  },
-  {
-    id: 15,
-    title: "Lift Loud, Ship Quiet",
-    description: "Let your impact speak louder than your promises.",
-    slug: "lift-loud-ship-quiet",
-    status: "not-started",
-    furtherReading: []
-  },
-  {
-    id: 16,
-    title: "Conclusion: Giving a Shit Works",
-    description: "Caring deeply isn't soft — it's the sharpest edge you have. Anonymized stories of success where relentless care — for users, teammates, and the mission — made the difference.",
-    slug: "giving-a-shit-works",
-    status: "not-started",
-    furtherReading: []
   }
 ];
