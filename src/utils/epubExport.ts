@@ -119,7 +119,7 @@ const generateEpub = async (chapter: Chapter) => {
   // Add the cover image
   oebps?.file("cover.png", coverImageBlob);
 
-  // Add the nav.xhtml file with visible header and footer elements
+  // Add the nav.xhtml file
   oebps?.file("nav.xhtml", `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops">
@@ -128,31 +128,19 @@ const generateEpub = async (chapter: Chapter) => {
   <link rel="stylesheet" type="text/css" href="style.css"/>
 </head>
 <body>
-  <div class="header-bar">
-    <span class="header-left">Mission Built</span>
-    <span class="header-right">Training Log ${chapter.id}: ${escapeXml(chapter.title)}</span>
-  </div>
-  
-  <div class="main-content">
-    <nav epub:type="toc">
-      <h1>Table of Contents</h1>
-      <ol>
-        <li><a href="cover.xhtml">Cover</a></li>
-        <li><a href="inside-cover.xhtml">Inside Cover</a></li>
-        <li><a href="content.xhtml">${escapeXml(chapter.title)}</a></li>
-        <li><a href="license.xhtml">License</a></li>
-      </ol>
-    </nav>
-  </div>
-  
-  <div class="footer-bar">
-    <span class="footer-left">missionbuilt.io</span>
-    <span class="footer-right">CC BY-NC 4.0</span>
-  </div>
+  <nav epub:type="toc">
+    <h1>Table of Contents</h1>
+    <ol>
+      <li><a href="cover.xhtml">Cover</a></li>
+      <li><a href="inside-cover.xhtml">Inside Cover</a></li>
+      <li><a href="content.xhtml">${escapeXml(chapter.title)}</a></li>
+      <li><a href="license.xhtml">License</a></li>
+    </ol>
+  </nav>
 </body>
 </html>`);
 
-  // Add the cover page (dark mode style) - this is the main cover that should be displayed
+  // Add the cover page (dark mode style)
   oebps?.file("cover.xhtml", `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -184,7 +172,7 @@ const generateEpub = async (chapter: Chapter) => {
 </body>
 </html>`);
 
-  // Add the inside cover page with visible header and footer
+  // Add the inside cover page
   oebps?.file("inside-cover.xhtml", `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -192,37 +180,25 @@ const generateEpub = async (chapter: Chapter) => {
   <title>Inside Cover</title>
   <link rel="stylesheet" type="text/css" href="style.css"/>
 </head>
-<body>
-  <div class="header-bar">
-    <span class="header-left">Mission Built</span>
-    <span class="header-right">Training Log ${chapter.id}: ${escapeXml(chapter.title)}</span>
-  </div>
-  
-  <div class="main-content cover-page light-cover">
-    <div class="cover-content">
-      <div class="cover-header">
-        <div class="logo-container">
-          <img src="logo.png" alt="MissionBuilt Logo" class="logo-image" />
-          <div class="logo-text">
-            <span class="mission">Mission</span><span class="built">Built</span><span class="domain">.io</span>
-          </div>
+<body class="cover-page light-cover">
+  <div class="cover-content">
+    <div class="cover-header">
+      <div class="logo-container">
+        <img src="logo.png" alt="MissionBuilt Logo" class="logo-image" />
+        <div class="logo-text">
+          <span class="mission">Mission</span><span class="built">Built</span><span class="domain">.io</span>
         </div>
       </div>
-      <div class="cover-main">
-        <h1 class="cover-title">Mission Built</h1>
-        <h2 class="cover-subtitle">Lessons from the Barbell and the Boardroom</h2>
-        <p class="cover-training-log">Training Log ${chapter.id}: ${escapeXml(chapter.title)}</p>
-        <p class="cover-author">by Mike Nichols</p>
-      </div>
-      <div class="cover-footer">
-        <p class="cc-license">Licensed under Creative Commons Attribution-NonCommercial 4.0</p>
-      </div>
     </div>
-  </div>
-  
-  <div class="footer-bar">
-    <span class="footer-left">missionbuilt.io</span>
-    <span class="footer-right">CC BY-NC 4.0</span>
+    <div class="cover-main">
+      <h1 class="cover-title">Mission Built</h1>
+      <h2 class="cover-subtitle">Lessons from the Barbell and the Boardroom</h2>
+      <p class="cover-training-log">Training Log ${chapter.id}: ${escapeXml(chapter.title)}</p>
+      <p class="cover-author">by Mike Nichols</p>
+    </div>
+    <div class="cover-footer">
+      <p class="cc-license">Licensed under Creative Commons Attribution-NonCommercial 4.0</p>
+    </div>
   </div>
 </body>
 </html>`);
@@ -257,7 +233,7 @@ const generateEpub = async (chapter: Chapter) => {
     </section>
   ` : '';
 
-  // Add the content.xhtml file with visible header and footer
+  // Add the content.xhtml file
   oebps?.file("content.xhtml", `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -266,26 +242,16 @@ const generateEpub = async (chapter: Chapter) => {
   <link rel="stylesheet" type="text/css" href="style.css"/>
 </head>
 <body>
-  <div class="header-bar">
-    <span class="header-left">Mission Built</span>
-    <span class="header-right">Training Log ${chapter.id}: ${escapeXml(chapter.title)}</span>
-  </div>
-  
   <div class="main-content">
     <h1>${escapeXml(chapter.title)}</h1>
     <p class="chapter-description">${escapeXml(chapter.description)}</p>
     ${chapterContent}
     ${furtherReadingContent}
   </div>
-  
-  <div class="footer-bar">
-    <span class="footer-left">missionbuilt.io</span>
-    <span class="footer-right">CC BY-NC 4.0</span>
-  </div>
 </body>
 </html>`);
 
-  // Add the license page with visible header and footer
+  // Add the license page
   oebps?.file("license.xhtml", `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -294,11 +260,6 @@ const generateEpub = async (chapter: Chapter) => {
   <link rel="stylesheet" type="text/css" href="style.css"/>
 </head>
 <body>
-  <div class="header-bar">
-    <span class="header-left">Mission Built</span>
-    <span class="header-right">Training Log ${chapter.id}: ${escapeXml(chapter.title)}</span>
-  </div>
-  
   <div class="main-content">
     <h1>License</h1>
     
@@ -312,16 +273,77 @@ const generateEpub = async (chapter: Chapter) => {
     
     <p>You are free to share and adapt this work for non-commercial use, with appropriate credit and a link to <a href="https://missionbuilt.io">missionbuilt.io</a>.</p>
   </div>
-  
-  <div class="footer-bar">
-    <span class="footer-left">missionbuilt.io</span>
-    <span class="footer-right">CC BY-NC 4.0</span>
-  </div>
 </body>
 </html>`);
 
-  // Add simplified CSS that EPUB readers will actually display
-  oebps?.file("style.css", `/* Base typography and layout */
+  // Add CSS with proper page headers and footers using CSS Paged Media
+  oebps?.file("style.css", `/* CSS for EPUB with page headers and footers */
+
+/* Page setup with headers and footers */
+@page {
+  margin: 0.75in 0.5in;
+  
+  @top-left {
+    content: "Mission Built";
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    font-weight: bold;
+    color: #666;
+    vertical-align: bottom;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  @top-right {
+    content: "Training Log ${chapter.id}: ${escapeXml(chapter.title)}";
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    font-weight: bold;
+    color: #007bff;
+    vertical-align: bottom;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  @bottom-left {
+    content: "missionbuilt.io";
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    font-weight: bold;
+    color: #007bff;
+    vertical-align: top;
+    padding-top: 8px;
+    border-top: 1px solid #ddd;
+  }
+  
+  @bottom-right {
+    content: "CC BY-NC 4.0";
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    font-weight: bold;
+    color: #666;
+    vertical-align: top;
+    padding-top: 8px;
+    border-top: 1px solid #ddd;
+  }
+}
+
+/* Special page for covers - no headers/footers */
+@page cover {
+  margin: 0;
+  
+  @top-left { content: none; }
+  @top-right { content: none; }
+  @bottom-left { content: none; }
+  @bottom-right { content: none; }
+}
+
+/* Apply cover page style to cover pages */
+.cover-page {
+  page: cover;
+}
+
+/* Base typography and layout */
 body { 
   font-family: Georgia, serif;
   line-height: 1.6; 
@@ -331,69 +353,14 @@ body {
   background-color: #ffffff;
 }
 
-/* Header and footer bars - Always visible */
-.header-bar {
-  width: 100%;
-  padding: 8px 16px;
-  background-color: #f8f9fa;
-  border-bottom: 1px solid #dee2e6;
-  margin-bottom: 16px;
-  font-size: 12px;
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.header-bar::after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-.header-left {
-  float: left;
-  color: #495057;
-}
-
-.header-right {
-  float: right;
-  color: #007bff;
-}
-
-.footer-bar {
-  width: 100%;
-  padding: 8px 16px;
-  background-color: #f8f9fa;
-  border-top: 1px solid #dee2e6;
-  margin-top: 24px;
-  font-size: 12px;
-  font-weight: bold;
-}
-
-.footer-bar::after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-.footer-left {
-  float: left;
-  color: #007bff;
-}
-
-.footer-right {
-  float: right;
-  color: #6c757d;
-}
-
 /* Main content area */
 .main-content {
-  padding: 0 20px;
-  max-width: 600px;
-  margin: 0 auto;
+  padding: 0;
+  max-width: 100%;
+  margin: 0;
 }
 
-/* Cover page styles - special case without header/footer bars */
+/* Cover page styles */
 .cover-page {
   height: 100vh;
   display: flex;
@@ -519,6 +486,7 @@ h1 {
   margin: 0 0 16px 0;
   color: #333333;
   line-height: 1.2;
+  page-break-after: avoid;
 }
 
 h2 { 
@@ -528,6 +496,7 @@ h2 {
   margin: 32px 0 16px 0;
   color: #007bff;
   line-height: 1.3;
+  page-break-after: avoid;
 }
 
 h3 {
@@ -536,6 +505,7 @@ h3 {
   font-weight: bold;
   margin: 24px 0 12px 0;
   color: #333333;
+  page-break-after: avoid;
 }
 
 .chapter-description {
@@ -547,6 +517,7 @@ h3 {
 
 .chapter-section {
   margin-bottom: 32px;
+  page-break-inside: avoid;
 }
 
 .section-content {
@@ -561,6 +532,8 @@ h3 {
 p {
   margin-bottom: 16px;
   line-height: 1.7;
+  orphans: 3;
+  widows: 3;
 }
 
 ul { 
@@ -590,29 +563,49 @@ nav li {
   line-height: 1.5;
 }
 
-/* Ensure headers and footers are always visible */
-.header-bar,
-.footer-bar {
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-}
-
 /* Page break controls */
-@page {
-  margin: 0.5in;
-}
-
 .cover-page {
   page-break-after: always;
 }
 
-h1, h2 {
-  page-break-after: avoid;
-}
-
 .chapter-section {
   page-break-inside: avoid;
+}
+
+/* Fallback for EPUB readers that don't support CSS Paged Media */
+@media screen {
+  .running-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 30px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+    padding: 8px 16px;
+    font-size: 12px;
+    font-weight: bold;
+    z-index: 1000;
+  }
+  
+  .running-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 30px;
+    background: #f8f9fa;
+    border-top: 1px solid #dee2e6;
+    padding: 8px 16px;
+    font-size: 12px;
+    font-weight: bold;
+    z-index: 1000;
+  }
+  
+  .main-content {
+    margin-top: 50px;
+    margin-bottom: 50px;
+  }
 }
 `);
 
