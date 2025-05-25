@@ -1,4 +1,3 @@
-
 import React from 'react';
 import EPub from 'epub-gen-memory';
 import { saveAs } from 'file-saver';
@@ -96,12 +95,22 @@ const renderContentToString = (content: React.ReactNode): string => {
   return getTextFromReactNode(content);
 };
 
-export const generateEpub = async (chapters: Chapter[], getChapterContent: (chapterId: number) => string): Promise<void> => {
+export const generateEpub = async (chapters: Chapter | Chapter[], getChapterContent?: (chapterId: number) => string): Promise<void> => {
   try {
     console.log('Starting EPUB generation...');
     
-    const epubContent = chapters.map((chapter, index) => {
-      const content = getChapterContent(chapter.id);
+    // Convert single chapter to array for uniform processing
+    const chaptersArray = Array.isArray(chapters) ? chapters : [chapters];
+    
+    // Default content function if none provided
+    const defaultGetContent = (chapterId: number): string => {
+      return `<p>Content for chapter ${chapterId} will be available soon.</p>`;
+    };
+    
+    const contentFunction = getChapterContent || defaultGetContent;
+    
+    const epubContent = chaptersArray.map((chapter, index) => {
+      const content = contentFunction(chapter.id);
       
       return {
         title: `Chapter ${chapter.id}: ${chapter.title}`,
@@ -173,14 +182,14 @@ export const generateEpub = async (chapters: Chapter[], getChapterContent: (chap
               <div class="chapter-header">
                 <h1>Chapter ${chapter.id}</h1>
                 <h2>${chapter.title}</h2>
-                <p><em>${chapter.subtitle}</em></p>
+                <p><em>${chapter.subtitle || chapter.description || ''}</em></p>
               </div>
               
               ${content}
               
               <div class="chapter-footer">
                 <p>Mission Built: Building Better Products, One Rep at a Time</p>
-                <p>Chapter ${chapter.id} of ${chapters.length}</p>
+                <p>Chapter ${chapter.id} of ${chaptersArray.length}</p>
               </div>
             </body>
           </html>
@@ -188,8 +197,12 @@ export const generateEpub = async (chapters: Chapter[], getChapterContent: (chap
       };
     });
 
+    const bookTitle = chaptersArray.length === 1 
+      ? `Mission Built - Chapter ${chaptersArray[0].id}: ${chaptersArray[0].title}`
+      : 'Mission Built: Building Better Products, One Rep at a Time';
+
     const options = {
-      title: 'Mission Built: Building Better Products, One Rep at a Time',
+      title: bookTitle,
       author: 'Mike',
       language: 'en',
       css: `
@@ -229,8 +242,12 @@ export const generateEpub = async (chapters: Chapter[], getChapterContent: (chap
     const epubBuffer = await EPub(options);
     console.log('EPUB generated successfully, buffer size:', epubBuffer.length);
     
+    const fileName = chaptersArray.length === 1 
+      ? `mission-built-chapter-${chaptersArray[0].id}.epub`
+      : 'mission-built-building-better-products.epub';
+    
     const blob = new Blob([epubBuffer], { type: 'application/epub+zip' });
-    saveAs(blob, 'mission-built-building-better-products.epub');
+    saveAs(blob, fileName);
     
     console.log('EPUB download initiated');
   } catch (error) {
