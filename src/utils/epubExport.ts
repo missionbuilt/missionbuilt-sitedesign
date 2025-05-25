@@ -182,7 +182,7 @@ export const generateEpub = async (chapters: Chapter | Chapter[], getChapterCont
               <div class="chapter-header">
                 <h1>Chapter ${chapter.id}</h1>
                 <h2>${chapter.title}</h2>
-                <p><em>${chapter.subtitle || chapter.description || ''}</em></p>
+                <p><em>${chapter.subtitle || ''}</em></p>
               </div>
               
               ${content}
@@ -239,7 +239,7 @@ export const generateEpub = async (chapters: Chapter | Chapter[], getChapterCont
 
     console.log('Generating EPUB with options:', options);
     
-    const epubBuffer = await EPub(options);
+    const epubBuffer = await EPub(options, undefined);
     console.log('EPUB generated successfully, buffer size:', epubBuffer.length);
     
     const fileName = chaptersArray.length === 1 
