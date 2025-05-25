@@ -123,7 +123,7 @@ const NavLink = ({ to, children, exact, onClick }: NavLinkProps) => {
       to={to} 
       className={cn(
         "text-foreground hover:text-army transition-colors duration-200 font-medium px-3 py-2 rounded-md hover:bg-slate/10 dark:hover:text-army dark:hover:bg-slate/5",
-        isActive && "text-army bg-army/10 dark:bg-army/5 dark:text-army"
+        isActive && "text-army bg-army/10 dark:bg-army/5 dark:text-foreground"
       )}
       onClick={onClick}
     >
