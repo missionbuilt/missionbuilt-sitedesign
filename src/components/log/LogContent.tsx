@@ -6,7 +6,6 @@ import LogMetadata from "./LogMetadata";
 import TableOfContents from "./TableOfContents";
 import LogSections from "./LogSections";
 import FurtherReading from "./FurtherReading";
-import EpubExportButton from "./EpubExportButton";
 
 interface LogContentProps {
   chapter: Chapter;
@@ -25,14 +24,7 @@ const LogContent: React.FC<LogContentProps> = ({ chapter }) => {
       
       <div className="container mx-auto px-4 py-12 max-w-4xl">
         <div className="space-y-8">
-          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
-            <div className="flex-1">
-              <LogMetadata chapter={chapter} />
-            </div>
-            <div className="flex-shrink-0">
-              <EpubExportButton chapter={chapter} />
-            </div>
-          </div>
+          <LogMetadata chapter={chapter} />
           <TableOfContents chapter={chapter} onSectionClick={handleSectionClick} />
           <LogSections chapter={chapter} expandedSection={expandedSection} />
           <FurtherReading 
