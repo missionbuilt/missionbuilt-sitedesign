@@ -62,11 +62,11 @@ const Logo = ({
       built: "text-sunburst",
       domain: "text-army"
     },
-    // All text in slate color for a cleaner look
+    // All text in slate color for a cleaner look with dark mode support
     monochrome: {
-      mission: "text-slate",
-      built: "text-slate",
-      domain: "text-slate"
+      mission: "text-slate dark:text-slate-100",
+      built: "text-slate dark:text-slate-100",
+      domain: "text-slate dark:text-slate-100"
     },
     // Subtle two-color approach (Mission+Built: slate, .io: army)
     subtle: {
