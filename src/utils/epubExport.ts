@@ -1,3 +1,4 @@
+
 import { Chapter } from "@/data/chapters-data";
 
 interface EpubContent {
@@ -39,8 +40,8 @@ export const generateEpub = async (chapter: Chapter): Promise<void> => {
       content: content
     };
 
-    // Use the library correctly with both required arguments
-    const epubBuffer = await EPub(options, filename);
+    // Use the library correctly - it only takes options as parameter
+    const epubBuffer = await EPub(options);
     
     // Create download link
     const blob = new Blob([epubBuffer], { type: 'application/epub+zip' });
