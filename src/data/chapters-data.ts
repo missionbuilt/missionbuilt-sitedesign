@@ -1,4 +1,3 @@
-
 // Chapter data structure
 export interface Resource {
   title: string;
@@ -35,7 +34,7 @@ export const chapters: Chapter[] = [
       {
         id: "the-mission-is-the-magnet",
         title: "The Mission is the Magnet",
-        content: ""
+        content: `[Please provide the content for this section]`
       }
     ],
     furtherReading: [
@@ -147,7 +146,7 @@ export const chapters: Chapter[] = [
       {
         id: "the-myth-of-overnight-success",
         title: "The Myth of Overnight Success",
-        content: ""
+        content: `[Please provide the content for this section]`
       }
     ],
     furtherReading: [
