@@ -1,6 +1,6 @@
+
 import React from 'react';
 import EPub from 'epub-gen-memory';
-import { saveAs } from 'file-saver';
 import { Chapter } from '@/data/chapters-data';
 
 const renderContentToString = (content: React.ReactNode): string => {
@@ -245,11 +245,22 @@ export const generateEpub = async (chapters: Chapter | Chapter[], getChapterCont
       throw new Error('Generated EPUB buffer is empty');
     }
     
-    console.log('Creating blob with filename:', fileName);
+    console.log('Creating blob and initiating download...');
     const blob = new Blob([epubBuffer], { type: 'application/epub+zip' });
     
-    console.log('Initiating download with saveAs...');
-    saveAs(blob, fileName);
+    // Use native browser download instead of file-saver
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = fileName;
+    link.style.display = 'none';
+    
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    // Clean up the URL object
+    URL.revokeObjectURL(url);
     
     console.log('EPUB download initiated successfully');
   } catch (error) {
