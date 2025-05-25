@@ -84,6 +84,7 @@ const generateEpub = async (chapter: Chapter) => {
   <div class="cover-content">
     <div class="cover-header">
       <div class="logo-container">
+        <img src="logo.png" alt="MissionBuilt Logo" class="logo-image" />
         <div class="logo-text">
           <span class="mission">Mission</span><span class="built">Built</span><span class="domain">.io</span>
         </div>
@@ -113,6 +114,7 @@ const generateEpub = async (chapter: Chapter) => {
   <div class="cover-content">
     <div class="cover-header">
       <div class="logo-container">
+        <img src="logo.png" alt="MissionBuilt Logo" class="logo-image" />
         <div class="logo-text">
           <span class="mission">Mission</span><span class="built">Built</span><span class="domain">.io</span>
         </div>
@@ -250,6 +252,11 @@ body {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+}
+
+.logo-image {
+  height: 2rem;
+  width: auto;
 }
 
 .logo-text {
@@ -461,6 +468,15 @@ section h2:first-child {
   }
 }
 `);
+
+  // Add the logo image to the EPUB
+  try {
+    const logoResponse = await fetch('/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png');
+    const logoBlob = await logoResponse.blob();
+    oebps?.file("logo.png", logoBlob);
+  } catch (error) {
+    console.warn('Could not include logo in EPUB:', error);
+  }
 
   // Generate the EPUB file with proper compression
   const content = await zip.generateAsync({ 
