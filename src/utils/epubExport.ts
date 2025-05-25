@@ -875,59 +875,60 @@ const generateLicenseHtml = (): string => {
 
 const generateCss = (): string => {
   return `
-/* Base styles */
+/* Base styles - optimized for EPUB readers */
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  line-height: 1.6;
+  font-family: 'Georgia', 'Times New Roman', serif;
+  line-height: 1.8;
   margin: 0;
-  padding: 0;
+  padding: 20px;
   color: #1e293b;
-  background: #f8fafc;
-  min-height: 100vh;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  hyphens: auto;
+  background: #ffffff;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  hyphens: auto !important;
+  -webkit-hyphens: auto !important;
+  -moz-hyphens: auto !important;
+  -ms-hyphens: auto !important;
 }
 
-/* Content pages structure */
-.content-page {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-/* Page headers and footers - properly positioned */
+/* Remove fixed positioning - use static headers/footers */
 .page-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 30px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 5px 20px;
-  background: #f8fafc;
+  display: block;
+  width: 100%;
+  padding: 10px 0 15px 0;
+  margin-bottom: 20px;
   border-bottom: 1px solid #e2e8f0;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 500;
-  z-index: 100;
+  text-align: center;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
 }
 
 .page-footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 30px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 5px 20px;
-  background: #f8fafc;
+  display: block;
+  width: 100%;
+  padding: 15px 0 10px 0;
+  margin-top: 30px;
   border-top: 1px solid #e2e8f0;
-  font-size: 10px;
-  z-index: 100;
+  font-size: 11px;
+  text-align: center;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+}
+
+.header-left, .header-right {
+  display: block;
+  margin: 2px 0;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+}
+
+.footer-left, .footer-right {
+  display: block;
+  margin: 2px 0;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
 }
 
 .header-left {
@@ -935,7 +936,7 @@ body {
   font-weight: 600;
 }
 
-.header-right {
+.header-right, .footer-left, .footer-right {
   color: #64748b;
 }
 
@@ -943,285 +944,339 @@ body {
   color: #059669;
   text-decoration: none;
   font-weight: 500;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
 }
 
 .footer-left a:hover {
   text-decoration: underline;
 }
 
-.footer-right {
-  color: #64748b;
-  font-weight: 400;
-}
-
-/* Content wrapper with proper spacing for headers/footers */
+/* Content wrapper - no fixed positioning constraints */
 .content-wrapper {
-  flex: 1;
-  padding: 45px 25px 45px 25px;
-  max-width: 700px;
-  margin: 0 auto;
-  overflow-wrap: break-word;
-  word-wrap: break-word;
-  hyphens: auto;
-  min-height: calc(100vh - 80px);
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+  margin: 0;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  hyphens: auto !important;
+  -webkit-hyphens: auto !important;
+  -moz-hyphens: auto !important;
+  -ms-hyphens: auto !important;
 }
 
-/* Cover page styles - no headers/footers */
+/* Cover page styles */
 .cover {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-  padding: 40px 30px;
+  width: 100%;
+  padding: 30px 15px;
+  text-align: center;
+  background: #f8fafc;
+  page-break-after: always;
 }
 
 .cover-content {
-  text-align: center;
-  max-width: 600px;
   width: 100%;
+  max-width: 100%;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
 }
 
 /* Logo section */
 .logo-section {
-  margin-bottom: 60px;
+  margin-bottom: 40px;
 }
 
 .logo-text {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 24px;
+  font-family: 'Arial', sans-serif;
+  font-size: 20px;
   font-weight: 600;
-  letter-spacing: -0.025em;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
 }
 
 .mission {
-  color: #475569; /* slate */
+  color: #475569;
 }
 
 .built {
-  color: #f59e0b; /* sunburst */
+  color: #f59e0b;
 }
 
 .domain {
-  color: #059669; /* army */
+  color: #059669;
 }
 
 /* Title section */
 .title-section {
-  margin-bottom: 50px;
-  padding: 0 20px;
+  margin-bottom: 40px;
+  padding: 0 10px;
 }
 
 .main-title {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 48px;
+  font-family: 'Arial', sans-serif;
+  font-size: 32px;
   font-weight: 700;
-  line-height: 1.1;
+  line-height: 1.2;
   color: #0f172a;
-  margin: 0 0 20px 0;
-  letter-spacing: -0.025em;
+  margin: 0 0 15px 0;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  hyphens: auto !important;
 }
 
 .subtitle {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 28px;
+  font-family: 'Arial', sans-serif;
+  font-size: 20px;
   font-weight: 600;
-  line-height: 1.2;
+  line-height: 1.3;
   color: #334155;
-  margin: 0 0 20px 0;
-  letter-spacing: -0.015em;
+  margin: 0 0 15px 0;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  hyphens: auto !important;
 }
 
 .tagline {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 400;
-  line-height: 1.4;
+  line-height: 1.5;
   color: #64748b;
   margin: 0;
   font-style: italic;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  hyphens: auto !important;
 }
 
 /* Chapter info section */
 .chapter-info {
-  margin-bottom: 50px;
-  padding: 30px;
+  margin-bottom: 40px;
+  padding: 20px 15px;
   background: white;
-  border-radius: 16px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   border: 1px solid #e2e8f0;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
 }
 
 .chapter-title {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 24px;
+  font-family: 'Arial', sans-serif;
+  font-size: 18px;
   font-weight: 600;
   color: #059669;
-  margin: 0 0 10px 0;
-  letter-spacing: -0.015em;
+  margin: 0 0 8px 0;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  hyphens: auto !important;
 }
 
 .training-log-label {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
   color: #64748b;
   margin: 0;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
 }
 
 /* Author section */
 .author-section {
   border-top: 2px solid #e2e8f0;
-  padding-top: 30px;
-  margin-bottom: 30px;
+  padding-top: 20px;
+  margin-bottom: 20px;
 }
 
 .author {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 20px;
+  font-family: 'Arial', sans-serif;
+  font-size: 16px;
   font-weight: 600;
   color: #374151;
-  margin: 0 0 10px 0;
-  letter-spacing: -0.015em;
+  margin: 0 0 8px 0;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
 }
 
 .website {
-  font-size: 16px;
+  font-size: 14px;
   margin: 0;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
 }
 
 .website a {
   color: #059669;
   text-decoration: none;
   font-weight: 500;
-}
-
-.website a:hover {
-  text-decoration: underline;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
 }
 
 /* License notice */
 .license-notice {
-  font-size: 14px;
+  font-size: 12px;
   color: #64748b;
   font-style: italic;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
 }
 
 .license-notice p {
   margin: 0;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
 }
 
-/* Content page styles */
+/* Content page styles - aggressive text wrapping */
 h1 {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Arial', sans-serif;
   color: #0f172a;
   border-bottom: 2px solid #059669;
-  padding-bottom: 10px;
-  font-size: 28px;
+  padding-bottom: 8px;
+  font-size: 24px;
   font-weight: 700;
-  margin: 0 0 25px 0;
-  letter-spacing: -0.025em;
-  line-height: 1.2;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
+  margin: 0 0 20px 0;
+  line-height: 1.3;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  hyphens: auto !important;
+  -webkit-hyphens: auto !important;
+  -moz-hyphens: auto !important;
+  page-break-after: avoid;
 }
 
 h2 {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Arial', sans-serif;
   color: #1e293b;
-  margin: 30px 0 15px 0;
-  font-size: 22px;
+  margin: 25px 0 12px 0;
+  font-size: 20px;
   font-weight: 600;
-  letter-spacing: -0.015em;
-  line-height: 1.3;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
+  line-height: 1.4;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  hyphens: auto !important;
+  -webkit-hyphens: auto !important;
+  -moz-hyphens: auto !important;
+  page-break-after: avoid;
 }
 
 h3 {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Arial', sans-serif;
   color: #334155;
-  margin: 25px 0 12px 0;
-  font-size: 18px;
+  margin: 20px 0 10px 0;
+  font-size: 16px;
   font-weight: 600;
-  letter-spacing: -0.015em;
-  line-height: 1.3;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
+  line-height: 1.4;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  hyphens: auto !important;
+  -webkit-hyphens: auto !important;
+  -moz-hyphens: auto !important;
+  page-break-after: avoid;
 }
 
 .description {
   font-style: italic;
   color: #64748b;
-  margin-bottom: 25px;
-  font-size: 16px;
-  line-height: 1.6;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
+  margin-bottom: 20px;
+  font-size: 15px;
+  line-height: 1.7;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  hyphens: auto !important;
+  -webkit-hyphens: auto !important;
+  -moz-hyphens: auto !important;
 }
 
 .section {
-  margin-bottom: 35px;
-  page-break-after: auto;
+  margin-bottom: 30px;
+  page-break-inside: avoid;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
 }
 
-/* Text content styles */
+/* Paragraph styles - maximum text wrapping */
 p {
-  margin: 0 0 16px 0;
-  line-height: 1.7;
-  font-size: 15px;
+  margin: 0 0 14px 0;
+  line-height: 1.8;
+  font-size: 14px;
   color: #374151;
   text-align: left;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  hyphens: auto;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  hyphens: auto !important;
+  -webkit-hyphens: auto !important;
+  -moz-hyphens: auto !important;
+  -ms-hyphens: auto !important;
+  orphans: 2;
+  widows: 2;
+  max-width: 100%;
 }
 
+/* Blockquotes */
 blockquote {
   border-left: 4px solid #059669;
-  padding: 15px;
-  margin: 20px 0;
+  padding: 12px 15px;
+  margin: 16px 0;
   font-style: italic;
   color: #4b5563;
   background: #f8fafc;
-  border-radius: 8px;
-  line-height: 1.6;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
+  line-height: 1.7;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  hyphens: auto !important;
+  -webkit-hyphens: auto !important;
+  -moz-hyphens: auto !important;
+  page-break-inside: avoid;
 }
 
-.border-army {
-  border-color: #059669;
-}
-
+/* Lists with proper wrapping */
 ul {
-  margin: 16px 0;
-  padding-left: 25px;
+  margin: 14px 0;
+  padding-left: 20px;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+}
+
+ol {
+  margin: 14px 0;
+  padding-left: 20px;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
 }
 
 li {
-  margin-bottom: 8px;
-  line-height: 1.6;
+  margin-bottom: 6px;
+  line-height: 1.7;
   color: #374151;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  hyphens: auto !important;
+  -webkit-hyphens: auto !important;
+  -moz-hyphens: auto !important;
 }
 
-/* Table styles */
+/* Table styles with wrapping */
 table {
   width: 100%;
   border-collapse: collapse;
-  margin: 20px 0;
-  font-size: 13px;
+  margin: 16px 0;
+  font-size: 12px;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  table-layout: fixed;
 }
 
 th, td {
   border: 1px solid #d1d5db;
-  padding: 8px;
+  padding: 6px 8px;
   text-align: left;
-  line-height: 1.5;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
+  line-height: 1.6;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  hyphens: auto !important;
+  -webkit-hyphens: auto !important;
+  -moz-hyphens: auto !important;
 }
 
 th {
@@ -1234,106 +1289,183 @@ tr:nth-child(even) {
   background-color: #f9fafb;
 }
 
-/* Resource and license styles */
+/* Resource and license styles with maximum wrapping */
 .resource {
-  margin-bottom: 20px;
-  padding: 15px;
+  margin-bottom: 16px;
+  padding: 12px;
   border-left: 3px solid #059669;
   background-color: #f8fafc;
-  border-radius: 8px;
   page-break-inside: avoid;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  hyphens: auto !important;
+  -webkit-hyphens: auto !important;
+  -moz-hyphens: auto !important;
 }
 
 .resource h3 {
   margin-top: 0;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   color: #059669;
-  font-size: 16px;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
+  font-size: 14px;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  hyphens: auto !important;
+  -webkit-hyphens: auto !important;
+  -moz-hyphens: auto !important;
 }
 
 .resource p {
-  margin-bottom: 12px;
-  font-size: 14px;
-  line-height: 1.6;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
+  margin-bottom: 10px;
+  font-size: 13px;
+  line-height: 1.7;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  hyphens: auto !important;
+  -webkit-hyphens: auto !important;
+  -moz-hyphens: auto !important;
 }
 
 .resource .note {
   font-style: italic;
-  font-size: 13px;
+  font-size: 12px;
   color: #64748b;
   margin-bottom: 0;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  hyphens: auto !important;
+  -webkit-hyphens: auto !important;
+  -moz-hyphens: auto !important;
 }
 
 .license {
-  padding: 20px;
-  font-family: 'Inter', serif;
+  padding: 15px;
   background: #f8fafc;
-  border-radius: 8px;
   border: 1px solid #e2e8f0;
   page-break-inside: avoid;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  hyphens: auto !important;
+  -webkit-hyphens: auto !important;
+  -moz-hyphens: auto !important;
 }
 
 .license h2 {
   margin-top: 0;
-  margin-bottom: 15px;
-  font-size: 20px;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
+  margin-bottom: 12px;
+  font-size: 18px;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  hyphens: auto !important;
+  -webkit-hyphens: auto !important;
+  -moz-hyphens: auto !important;
 }
 
 .license p {
-  margin-bottom: 12px;
-  font-size: 14px;
-  line-height: 1.6;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
+  margin-bottom: 10px;
+  font-size: 13px;
+  line-height: 1.7;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  hyphens: auto !important;
+  -webkit-hyphens: auto !important;
+  -moz-hyphens: auto !important;
 }
 
 .license p:last-child {
   margin-bottom: 0;
 }
 
-/* Links */
+/* Links with wrapping */
 a {
   color: #059669;
   text-decoration: none;
   font-weight: 500;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  hyphens: auto !important;
+  -webkit-hyphens: auto !important;
+  -moz-hyphens: auto !important;
 }
 
 a:hover {
   text-decoration: underline;
 }
 
+/* Universal text wrapping for all elements */
+* {
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  hyphens: auto !important;
+  -webkit-hyphens: auto !important;
+  -moz-hyphens: auto !important;
+  -ms-hyphens: auto !important;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 600px) {
+  body {
+    padding: 15px;
+  }
+  
+  .main-title {
+    font-size: 24px;
+  }
+  
+  .subtitle {
+    font-size: 16px;
+  }
+  
+  .cover-content {
+    padding: 0 10px;
+  }
+  
+  .chapter-info {
+    padding: 15px 10px;
+  }
+  
+  .resource, .license {
+    padding: 10px;
+  }
+  
+  h1 {
+    font-size: 20px;
+  }
+  
+  h2 {
+    font-size: 16px;
+  }
+  
+  h3 {
+    font-size: 14px;
+  }
+  
+  p, li {
+    font-size: 13px;
+  }
+  
+  table {
+    font-size: 10px;
+  }
+  
+  th, td {
+    padding: 4px 6px;
+  }
+}
+
 /* Print/EPUB specific styles */
 @media print {
-  .content-page {
-    display: block;
+  * {
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+    hyphens: auto !important;
   }
   
-  .page-header {
-    position: static;
-    margin-bottom: 10px;
-  }
-  
-  .page-footer {
-    position: static;
-    margin-top: 10px;
-  }
-  
-  .content-wrapper {
-    padding: 10px 0;
+  .page-header, .page-footer {
+    position: static !important;
+    display: block !important;
   }
   
   h1, h2, h3 {
@@ -1347,53 +1479,6 @@ a:hover {
   p, li {
     orphans: 2;
     widows: 2;
-  }
-}
-
-/* Responsive adjustments for smaller e-readers */
-@media screen and (max-width: 600px) {
-  .main-title {
-    font-size: 32px;
-  }
-  
-  .subtitle {
-    font-size: 20px;
-  }
-  
-  .cover-content {
-    padding: 0 15px;
-  }
-  
-  .chapter-info {
-    padding: 15px;
-  }
-  
-  .page-header, .page-footer {
-    padding: 5px 10px;
-  }
-  
-  .content-wrapper {
-    padding: 40px 15px;
-  }
-  
-  .resource, .license {
-    padding: 12px;
-  }
-  
-  h1 {
-    font-size: 24px;
-  }
-  
-  h2 {
-    font-size: 20px;
-  }
-  
-  h3 {
-    font-size: 16px;
-  }
-  
-  p, li {
-    font-size: 14px;
   }
 }
 `;
