@@ -146,22 +146,18 @@ const generateEpub = async (chapter: Chapter) => {
 </body>
 </html>`);
 
-  // Generate properly formatted chapter content using actual chapter data
-  const chapterContent = chapter.sections && chapter.sections.length > 0
-    ? chapter.sections.map(section => {
-        // Use the actual section content exactly as it is, just format paragraphs
-        const formattedContent = section.content
-          .split('\n\n')
-          .filter(paragraph => paragraph.trim())
-          .map(paragraph => `<p>${escapeXml(paragraph.trim())}</p>`)
-          .join('');
-        
-        return `<section class="chapter-section">
-          <h2>${escapeXml(section.title)}</h2>
-          <div class="section-content">${formattedContent}</div>
-        </section>`;
-      }).join('')
-    : '<section class="chapter-section"><p>No content available for this chapter.</p></section>';
+  // Use the EXACT chapter content from the data source - no modifications
+  let chapterContent = '';
+  if (chapter.sections && chapter.sections.length > 0) {
+    chapterContent = chapter.sections.map(section => {
+      return `<section class="chapter-section">
+        <h2>${escapeXml(section.title)}</h2>
+        <div class="section-content">${escapeXml(section.content)}</div>
+      </section>`;
+    }).join('');
+  } else {
+    chapterContent = '<section class="chapter-section"><p>No content available for this chapter.</p></section>';
+  }
 
   const furtherReadingContent = generateFurtherReading(chapter.furtherReading);
   const nextChapterMessage = generateNextChapterMessage(chapter.id);
@@ -448,6 +444,11 @@ section {
 
 section div {
   margin-top: 1rem;
+}
+
+.section-content {
+  white-space: pre-line;
+  line-height: 1.7;
 }
 
 p {
