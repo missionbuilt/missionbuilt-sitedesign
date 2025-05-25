@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import Logo from '@/components/Logo';
 import { Heart, ExternalLink } from "lucide-react";
@@ -108,7 +107,7 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row items-center justify-center gap-3 bg-slate/5 dark:bg-slate/10 py-4 px-6 rounded-xl">
             <p className="text-sm text-slate/80 dark:text-slate-300 font-medium">Made with</p>
             <div className="flex items-center">
-              <Heart className="h-5 w-5 text-army mr-1 animate-pulse" />
+              <Heart className="h-5 w-5 text-army dark:text-sunburst mr-1 animate-pulse" />
               <a 
                 href="https://lovable.dev/" 
                 target="_blank" 
