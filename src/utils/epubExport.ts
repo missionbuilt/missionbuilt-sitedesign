@@ -80,63 +80,86 @@ const generateCoverImagePng = async (chapter: Chapter): Promise<Blob> => {
     canvas.width = 600;
     canvas.height = 800;
     
-    // Create gradient background
-    const gradient = ctx.createLinearGradient(0, 0, 600, 800);
-    gradient.addColorStop(0, '#f8fafc');
-    gradient.addColorStop(1, '#e2e8f0');
-    ctx.fillStyle = gradient;
+    // Dark mode background (using website's dark background color)
+    ctx.fillStyle = '#0f172a'; // Dark slate background from the website
     ctx.fillRect(0, 0, 600, 800);
     
     // Set up text styling
     ctx.textAlign = 'center';
-    ctx.fillStyle = '#0f172a';
     
-    // Logo section
-    ctx.font = 'bold 24px Arial, sans-serif';
-    ctx.fillStyle = '#475569';
+    // Logo section - using website's brand colors
+    ctx.font = 'bold 24px Inter, sans-serif';
+    ctx.fillStyle = '#64748b'; // muted text color from dark mode
     ctx.fillText('Mission', 250, 80);
-    ctx.fillStyle = '#f59e0b';
+    ctx.fillStyle = '#FFC300'; // sunburst yellow
     ctx.fillText('Built', 320, 80);
-    ctx.fillStyle = '#059669';
+    ctx.fillStyle = '#4B5320'; // army green
     ctx.fillText('.io', 370, 80);
     
-    // Main title
-    ctx.font = 'bold 48px Arial, sans-serif';
-    ctx.fillStyle = '#0f172a';
+    // Main title - using website's heading styles
+    ctx.font = 'bold 48px Montserrat, sans-serif';
+    ctx.fillStyle = '#f8fafc'; // light text for dark mode
     ctx.fillText('Mission Built', 300, 160);
     
     // Subtitle
-    ctx.font = '600 28px Arial, sans-serif';
-    ctx.fillStyle = '#334155';
+    ctx.font = '600 28px Montserrat, sans-serif';
+    ctx.fillStyle = '#e2e8f0'; // slightly muted light text
     ctx.fillText('Lessons from the Barbell', 300, 200);
     ctx.fillText('and the Boardroom', 300, 240);
     
     // Tagline
-    ctx.font = 'italic 18px Arial, sans-serif';
-    ctx.fillStyle = '#64748b';
+    ctx.font = 'italic 18px Inter, sans-serif';
+    ctx.fillStyle = '#94a3b8'; // muted foreground color
     ctx.fillText('The Shared Discipline Behind', 300, 280);
     ctx.fillText('Great Products and Great Lifts', 300, 310);
     
-    // Chapter info box
-    ctx.fillStyle = 'white';
-    ctx.strokeStyle = '#e2e8f0';
+    // Chapter info box with dark mode styling
+    ctx.fillStyle = '#1e293b'; // dark card background
+    ctx.strokeStyle = '#334155'; // dark border
     ctx.lineWidth = 1;
-    const boxX = 50, boxY = 380, boxW = 500, boxH = 120;
+    const boxX = 50, boxY = 380, boxW = 500, boxH = 140;
     ctx.fillRect(boxX, boxY, boxW, boxH);
     ctx.strokeRect(boxX, boxY, boxW, boxH);
     
+    // Training log number
+    ctx.font = '600 16px Inter, sans-serif';
+    ctx.fillStyle = '#FFC300'; // sunburst for accent
+    ctx.fillText(`TRAINING LOG ${chapter.id}`, 300, 420);
+    
     // Chapter title
-    ctx.font = '600 24px Arial, sans-serif';
-    ctx.fillStyle = '#059669';
-    ctx.fillText(chapter.title, 300, 420);
+    ctx.font = '600 24px Montserrat, sans-serif';
+    ctx.fillStyle = '#4B5320'; // army green for chapter title
+    ctx.fillText(chapter.title, 300, 450);
     
-    // Training log label
-    ctx.font = '500 16px Arial, sans-serif';
-    ctx.fillStyle = '#64748b';
-    ctx.fillText('TRAINING LOG', 300, 450);
+    // Chapter description if available
+    if (chapter.description) {
+      ctx.font = '400 14px Inter, sans-serif';
+      ctx.fillStyle = '#cbd5e1'; // light muted text
+      // Split long descriptions into multiple lines
+      const words = chapter.description.split(' ');
+      const maxWidth = 450;
+      let line = '';
+      let y = 480;
+      
+      for (let i = 0; i < words.length; i++) {
+        const testLine = line + words[i] + ' ';
+        const metrics = ctx.measureText(testLine);
+        if (metrics.width > maxWidth && i > 0) {
+          ctx.fillText(line.trim(), 300, y);
+          line = words[i] + ' ';
+          y += 20;
+          if (y > 510) break; // Prevent overflow
+        } else {
+          line = testLine;
+        }
+      }
+      if (line.trim() && y <= 510) {
+        ctx.fillText(line.trim(), 300, y);
+      }
+    }
     
-    // Author line
-    ctx.strokeStyle = '#e2e8f0';
+    // Author line with dark mode styling
+    ctx.strokeStyle = '#475569'; // darker border for dark mode
     ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.moveTo(50, 680);
@@ -144,8 +167,8 @@ const generateCoverImagePng = async (chapter: Chapter): Promise<Blob> => {
     ctx.stroke();
     
     // Author name
-    ctx.font = '600 20px Arial, sans-serif';
-    ctx.fillStyle = '#374151';
+    ctx.font = '600 20px Montserrat, sans-serif';
+    ctx.fillStyle = '#e2e8f0'; // light text for author
     ctx.fillText('Mike Nichols', 300, 720);
     
     // Convert canvas to blob
