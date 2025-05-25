@@ -829,13 +829,13 @@ const PdfExportButton: React.FC<PdfExportButtonProps> = ({ chapter }) => {
       const nextChapter = getNextChapterInfo(chapter.id);
       
       if (nextLogAvailable) {
-        addText("One chapter. One set.", 11);
-        addText(`Let's keep the rhythm. Training Log ${nextChapter.id} – ${nextChapter.title} is next.`, 11);
-        addText(`missionbuilt.io/log/${nextChapter.id}`, 11);
+        addText("One chapter. One set.", 11, true);
+        addText(`Let's keep the rhythm. Training Log ${nextChapter.id} – ${nextChapter.title} is next.`, 11, true);
+        addText(`missionbuilt.io/log/${nextChapter.id}`, 11, true);
       } else {
-        addText("Good set. We're chalking up for the next one.", 11);
-        addText(`Training Log ${nextChapter.id} – ${nextChapter.title} is coming soon.`, 11);
-        addText("Want a heads-up when it's live? Until then follow along at missionbuilt.io or over on Bluesky: missionbuilt.bsky.social", 11);
+        addText("Good set. We're chalking up for the next one.", 11, true);
+        addText(`Training Log ${nextChapter.id} – ${nextChapter.title} is coming soon.`, 11, true);
+        addText("Want a heads-up when it's live? Until then follow along at missionbuilt.io or over on Bluesky: missionbuilt.bsky.social", 11, true);
       }
 
       // Further Reading section
