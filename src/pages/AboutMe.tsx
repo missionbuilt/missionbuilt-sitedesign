@@ -1,3 +1,4 @@
+
 import React, { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import Navbar from "../components/Navbar";
@@ -19,8 +20,8 @@ const AboutMe = () => {
     }
   };
 
-  const pageTitle = "About Mike | MissionBuilt.io";
-  const pageDescription = "An open-source book exploring how product leadership and powerlifting intersect.";
+  const pageTitle = "About Mike | Mission Built: Lessons from the Barbell and the Boardroom";
+  const pageDescription = "An open-source book exploring how product leadership and powerlifting share the same foundation: discipline, mission, and care. New chapters weekly.";
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -29,10 +30,10 @@ const AboutMe = () => {
         <meta name="description" content={pageDescription} />
         
         {/* Open Graph tags */}
-        <meta property="og:title" content={pageTitle} />
-        <meta property="og:description" content={pageDescription} />
+        <meta property="og:title" content="Mission Built: Lessons from the Barbell and the Boardroom" />
+        <meta property="og:description" content="An open-source book exploring how product leadership and powerlifting share the same foundation: discipline, mission, and care. New chapters weekly." />
         <meta property="og:type" content="profile" />
-        <meta property="og:url" content="https://missionbuilt.io/about" />
+        <meta property="og:url" content="https://missionbuilt.io" />
         <meta property="og:image" content="https://missionbuilt.io/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
@@ -41,8 +42,8 @@ const AboutMe = () => {
         {/* Twitter Card tags */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@missionbuilt" />
-        <meta name="twitter:title" content={pageTitle} />
-        <meta name="twitter:description" content={pageDescription} />
+        <meta name="twitter:title" content="Mission Built: Lessons from the Barbell and the Boardroom" />
+        <meta name="twitter:description" content="An open-source book exploring how product leadership and powerlifting share the same foundation: discipline, mission, and care. New chapters weekly." />
         <meta name="twitter:image" content="https://missionbuilt.io/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png" />
         
         {/* Profile specific tags */}

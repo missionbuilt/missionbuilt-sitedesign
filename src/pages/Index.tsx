@@ -18,12 +18,12 @@ const Index = () => {
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Helmet>
-        <title>MissionBuilt.io | The Mission</title>
-        <meta name="description" content="An open-source book exploring how product leadership and powerlifting intersect." />
+        <title>Mission Built: Lessons from the Barbell and the Boardroom</title>
+        <meta name="description" content="An open-source book exploring how product leadership and powerlifting share the same foundation: discipline, mission, and care. New chapters weekly." />
         
         {/* Open Graph tags */}
-        <meta property="og:title" content="MissionBuilt.io | The Mission" />
-        <meta property="og:description" content="An open-source book exploring how product leadership and powerlifting intersect." />
+        <meta property="og:title" content="Mission Built: Lessons from the Barbell and the Boardroom" />
+        <meta property="og:description" content="An open-source book exploring how product leadership and powerlifting share the same foundation: discipline, mission, and care. New chapters weekly." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://missionbuilt.io" />
         <meta property="og:image" content="https://missionbuilt.io/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png" />
@@ -34,8 +34,8 @@ const Index = () => {
         {/* Twitter Card tags */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@missionbuilt" />
-        <meta name="twitter:title" content="MissionBuilt.io | The Mission" />
-        <meta name="twitter:description" content="An open-source book exploring how product leadership and powerlifting intersect." />
+        <meta name="twitter:title" content="Mission Built: Lessons from the Barbell and the Boardroom" />
+        <meta name="twitter:description" content="An open-source book exploring how product leadership and powerlifting share the same foundation: discipline, mission, and care. New chapters weekly." />
         <meta name="twitter:image" content="https://missionbuilt.io/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png" />
       </Helmet>
       

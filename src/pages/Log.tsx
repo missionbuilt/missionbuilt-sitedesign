@@ -23,9 +23,9 @@ const Log = () => {
     return (
       <div className="min-h-screen flex flex-col bg-background">
         <Helmet>
-          <title>Log Not Found | MissionBuilt.io</title>
-          <meta property="og:title" content="Log Not Found | MissionBuilt.io" />
-          <meta property="og:description" content="The requested training log could not be found." />
+          <title>Log Not Found | Mission Built: Lessons from the Barbell and the Boardroom</title>
+          <meta property="og:title" content="Mission Built: Lessons from the Barbell and the Boardroom" />
+          <meta property="og:description" content="An open-source book exploring how product leadership and powerlifting share the same foundation: discipline, mission, and care. New chapters weekly." />
         </Helmet>
         <Navbar />
         <main className="flex-grow flex items-center justify-center">
@@ -39,7 +39,7 @@ const Log = () => {
     );
   }
 
-  const pageTitle = `Training Log ${chapter.id}: ${chapter.title} | MissionBuilt.io`;
+  const pageTitle = `Training Log ${chapter.id}: ${chapter.title} | Mission Built: Lessons from the Barbell and the Boardroom`;
   const pageDescription = chapter.description;
   const pageUrl = `https://missionbuilt.io/log/${chapter.id}`;
 
@@ -50,10 +50,10 @@ const Log = () => {
         <meta name="description" content={pageDescription} />
         
         {/* Open Graph tags */}
-        <meta property="og:title" content={pageTitle} />
-        <meta property="og:description" content={pageDescription} />
+        <meta property="og:title" content="Mission Built: Lessons from the Barbell and the Boardroom" />
+        <meta property="og:description" content="An open-source book exploring how product leadership and powerlifting share the same foundation: discipline, mission, and care. New chapters weekly." />
         <meta property="og:type" content="article" />
-        <meta property="og:url" content={pageUrl} />
+        <meta property="og:url" content="https://missionbuilt.io" />
         <meta property="og:image" content="https://missionbuilt.io/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
@@ -62,8 +62,8 @@ const Log = () => {
         {/* Twitter Card tags */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@missionbuilt" />
-        <meta name="twitter:title" content={pageTitle} />
-        <meta name="twitter:description" content={pageDescription} />
+        <meta name="twitter:title" content="Mission Built: Lessons from the Barbell and the Boardroom" />
+        <meta name="twitter:description" content="An open-source book exploring how product leadership and powerlifting share the same foundation: discipline, mission, and care. New chapters weekly." />
         <meta name="twitter:image" content="https://missionbuilt.io/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png" />
         
         {/* Article specific tags */}
