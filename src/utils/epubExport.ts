@@ -1,3 +1,4 @@
+
 import { Chapter } from "@/data/chapters-data";
 import JSZip from 'jszip';
 
@@ -1339,6 +1340,7 @@ a:hover {
   }
 }
 `;
+};
 
 const generateFilename = (title: string): string => {
   return title
