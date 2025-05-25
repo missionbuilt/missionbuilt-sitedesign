@@ -1,4 +1,3 @@
-
 import React from 'react';
 import EPub from 'epub-gen-memory';
 import { saveAs } from 'file-saver';
@@ -107,11 +106,14 @@ export const generateEpub = async (chapters: Chapter | Chapter[], getChapterCont
       ? `Mission Built - Chapter ${chaptersArray[0].id}: ${chaptersArray[0].title}`
       : 'Mission Built: Building Better Products, One Rep at a Time';
 
+    const fileName = chaptersArray.length === 1 
+      ? `mission-built-chapter-${chaptersArray[0].id}.epub`
+      : 'mission-built-building-better-products.epub';
+
     const options = {
       title: bookTitle,
       author: 'Mike',
       language: 'en',
-      cover: undefined,
       content: chaptersArray.map((chapter, index) => {
         const content = contentFunction(chapter.id);
         
@@ -234,10 +236,6 @@ export const generateEpub = async (chapters: Chapter | Chapter[], getChapterCont
     
     const epubBuffer = await EPub(options);
     console.log('EPUB generated successfully, buffer size:', epubBuffer.length);
-    
-    const fileName = chaptersArray.length === 1 
-      ? `mission-built-chapter-${chaptersArray[0].id}.epub`
-      : 'mission-built-building-better-products.epub';
     
     const blob = new Blob([epubBuffer], { type: 'application/epub+zip' });
     saveAs(blob, fileName);
