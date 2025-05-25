@@ -449,7 +449,7 @@ const LogMetadata: React.FC<LogMetadataProps> = ({ chapter }) => {
       <div className="flex flex-wrap gap-6 text-sm text-muted-foreground">
         <div className="flex items-center gap-2">
           <User className="h-4 w-4" />
-          <span>Author: <Link to="/about" className="text-foreground hover:text-army transition-colors dark:text-slate-100 dark:hover:text-sunburst">Mike</Link></span>
+          <span>Author: <Link to="/about" className="text-sunburst hover:text-sunburst/80 transition-colors dark:text-sunburst dark:hover:text-sunburst/80">Mike</Link></span>
         </div>
         <div className="flex items-center gap-2">
           <Calendar className="h-4 w-4" />
