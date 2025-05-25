@@ -103,8 +103,9 @@ const generateEpub = async (chapter: Chapter) => {
       </div>
     </div>
     <div class="cover-main">
-      <h1 class="cover-title">Training Log ${chapter.id}</h1>
-      <h2 class="cover-subtitle">${escapeXml(chapter.title)}</h2>
+      <h1 class="cover-title">Mission Built</h1>
+      <h2 class="cover-subtitle">Lessons from the Barbell and the Boardroom</h2>
+      <p class="cover-training-log">Training Log ${chapter.id}: ${escapeXml(chapter.title)}</p>
       <p class="cover-author">by Mike Nichols</p>
     </div>
     <div class="cover-footer">
@@ -133,8 +134,9 @@ const generateEpub = async (chapter: Chapter) => {
       </div>
     </div>
     <div class="cover-main">
-      <h1 class="cover-title">Training Log ${chapter.id}</h1>
-      <h2 class="cover-subtitle">${escapeXml(chapter.title)}</h2>
+      <h1 class="cover-title">Mission Built</h1>
+      <h2 class="cover-subtitle">Lessons from the Barbell and the Boardroom</h2>
+      <p class="cover-training-log">Training Log ${chapter.id}: ${escapeXml(chapter.title)}</p>
       <p class="cover-author">by Mike Nichols</p>
     </div>
     <div class="cover-footer">
@@ -315,16 +317,24 @@ body {
 
 .cover-subtitle {
   font-family: Montserrat, sans-serif;
-  font-size: 2rem;
+  font-size: 1.75rem;
   font-weight: 400;
   margin: 0;
   line-height: 1.3;
+  opacity: 0.9;
+}
+
+.cover-training-log {
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin: 1.5rem 0 0.5rem 0;
+  opacity: 0.8;
 }
 
 .cover-author {
   font-size: 1.5rem;
   font-weight: 400;
-  margin: 1rem 0 0 0;
+  margin: 0.5rem 0 0 0;
   opacity: 0.8;
 }
 
@@ -561,45 +571,30 @@ const generateCoverImage = async (chapter: Chapter): Promise<Blob> => {
   const builtWidth = ctx.measureText('Built').width;
   ctx.fillText('.io', 120 + missionWidth + builtWidth, 85);
 
-  // Draw main title
-  ctx.font = 'bold 72px Montserrat, sans-serif';
+  // Draw main book title
+  ctx.font = 'bold 64px Montserrat, sans-serif';
   ctx.fillStyle = '#f1f5f9';
   ctx.textAlign = 'center';
-  ctx.fillText(`Training Log ${chapter.id}`, canvas.width / 2, canvas.height / 2 - 100);
+  ctx.fillText('Mission Built', canvas.width / 2, canvas.height / 2 - 120);
 
   // Draw subtitle
-  ctx.font = '48px Montserrat, sans-serif';
-  const subtitle = chapter.title;
-  const maxWidth = canvas.width - 100;
-  
-  // Simple text wrapping
-  const words = subtitle.split(' ');
-  let line = '';
-  let y = canvas.height / 2;
-  
-  for (let n = 0; n < words.length; n++) {
-    const testLine = line + words[n] + ' ';
-    const metrics = ctx.measureText(testLine);
-    const testWidth = metrics.width;
-    
-    if (testWidth > maxWidth && n > 0) {
-      ctx.fillText(line, canvas.width / 2, y);
-      line = words[n] + ' ';
-      y += 60;
-    } else {
-      line = testLine;
-    }
-  }
-  ctx.fillText(line, canvas.width / 2, y);
+  ctx.font = '40px Montserrat, sans-serif';
+  ctx.fillStyle = '#cbd5e1';
+  ctx.fillText('Lessons from the Barbell and the Boardroom', canvas.width / 2, canvas.height / 2 - 60);
+
+  // Draw training log info
+  ctx.font = '32px Montserrat, sans-serif';
+  ctx.fillStyle = '#94a3b8';
+  ctx.fillText(`Training Log ${chapter.id}: ${chapter.title}`, canvas.width / 2, canvas.height / 2 + 20);
 
   // Draw author
   ctx.font = '36px Montserrat, sans-serif';
   ctx.fillStyle = '#cbd5e1';
-  ctx.fillText('by Mike Nichols', canvas.width / 2, canvas.height - 200);
+  ctx.fillText('by Mike Nichols', canvas.width / 2, canvas.height / 2 + 100);
 
   // Draw license
   ctx.font = '24px Inter, sans-serif';
-  ctx.fillStyle = '#94a3b8';
+  ctx.fillStyle = '#64748b';
   ctx.fillText('Licensed under Creative Commons Attribution-NonCommercial 4.0', canvas.width / 2, canvas.height - 50);
 
   // Convert canvas to blob
