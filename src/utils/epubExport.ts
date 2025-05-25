@@ -103,94 +103,6 @@ export const generateEpub = async (chapters: Chapter | Chapter[], getChapterCont
     
     const contentFunction = getChapterContent || defaultGetContent;
     
-    const epubContent = chaptersArray.map((chapter, index) => {
-      const content = contentFunction(chapter.id);
-      
-      return {
-        title: `Chapter ${chapter.id}: ${chapter.title}`,
-        data: `
-          <html>
-            <head>
-              <title>Chapter ${chapter.id}: ${chapter.title}</title>
-              <style>
-                body { 
-                  font-family: Georgia, serif; 
-                  line-height: 1.6; 
-                  margin: 2rem; 
-                  color: #333;
-                }
-                h1, h2, h3 { 
-                  color: #8B4513; 
-                  margin-top: 2rem; 
-                  margin-bottom: 1rem;
-                }
-                p { 
-                  margin-bottom: 1rem; 
-                  text-align: justify;
-                }
-                blockquote { 
-                  border-left: 4px solid #8B4513; 
-                  padding-left: 1rem; 
-                  margin: 1.5rem 0; 
-                  font-style: italic; 
-                  color: #666; 
-                }
-                ul, ol { 
-                  margin: 1rem 0; 
-                  padding-left: 2rem; 
-                }
-                li { 
-                  margin-bottom: 0.5rem; 
-                }
-                table { 
-                  width: 100%; 
-                  border-collapse: collapse; 
-                  margin: 1.5rem 0; 
-                }
-                th, td { 
-                  border: 1px solid #ddd; 
-                  padding: 0.75rem; 
-                  text-align: left; 
-                }
-                th { 
-                  background-color: #f8f9fa; 
-                  font-weight: bold; 
-                }
-                .chapter-header {
-                  text-align: center;
-                  border-bottom: 2px solid #8B4513;
-                  padding-bottom: 1rem;
-                  margin-bottom: 2rem;
-                }
-                .chapter-footer {
-                  text-align: center;
-                  border-top: 1px solid #ddd;
-                  padding-top: 1rem;
-                  margin-top: 2rem;
-                  font-size: 0.9rem;
-                  color: #666;
-                }
-              </style>
-            </head>
-            <body>
-              <div class="chapter-header">
-                <h1>Chapter ${chapter.id}</h1>
-                <h2>${chapter.title}</h2>
-                <p><em>${chapter.description || ''}</em></p>
-              </div>
-              
-              ${content}
-              
-              <div class="chapter-footer">
-                <p>Mission Built: Building Better Products, One Rep at a Time</p>
-                <p>Chapter ${chapter.id} of ${chaptersArray.length}</p>
-              </div>
-            </body>
-          </html>
-        `
-      };
-    });
-
     const bookTitle = chaptersArray.length === 1 
       ? `Mission Built - Chapter ${chaptersArray[0].id}: ${chaptersArray[0].title}`
       : 'Mission Built: Building Better Products, One Rep at a Time';
@@ -199,6 +111,94 @@ export const generateEpub = async (chapters: Chapter | Chapter[], getChapterCont
       title: bookTitle,
       author: 'Mike',
       language: 'en',
+      cover: undefined,
+      content: chaptersArray.map((chapter, index) => {
+        const content = contentFunction(chapter.id);
+        
+        return {
+          title: `Chapter ${chapter.id}: ${chapter.title}`,
+          data: `
+            <html>
+              <head>
+                <title>Chapter ${chapter.id}: ${chapter.title}</title>
+                <style>
+                  body { 
+                    font-family: Georgia, serif; 
+                    line-height: 1.6; 
+                    margin: 2rem; 
+                    color: #333;
+                  }
+                  h1, h2, h3 { 
+                    color: #8B4513; 
+                    margin-top: 2rem; 
+                    margin-bottom: 1rem;
+                  }
+                  p { 
+                    margin-bottom: 1rem; 
+                    text-align: justify;
+                  }
+                  blockquote { 
+                    border-left: 4px solid #8B4513; 
+                    padding-left: 1rem; 
+                    margin: 1.5rem 0; 
+                    font-style: italic; 
+                    color: #666; 
+                  }
+                  ul, ol { 
+                    margin: 1rem 0; 
+                    padding-left: 2rem; 
+                  }
+                  li { 
+                    margin-bottom: 0.5rem; 
+                  }
+                  table { 
+                    width: 100%; 
+                    border-collapse: collapse; 
+                    margin: 1.5rem 0; 
+                  }
+                  th, td { 
+                    border: 1px solid #ddd; 
+                    padding: 0.75rem; 
+                    text-align: left; 
+                  }
+                  th { 
+                    background-color: #f8f9fa; 
+                    font-weight: bold; 
+                  }
+                  .chapter-header {
+                    text-align: center;
+                    border-bottom: 2px solid #8B4513;
+                    padding-bottom: 1rem;
+                    margin-bottom: 2rem;
+                  }
+                  .chapter-footer {
+                    text-align: center;
+                    border-top: 1px solid #ddd;
+                    padding-top: 1rem;
+                    margin-top: 2rem;
+                    font-size: 0.9rem;
+                    color: #666;
+                  }
+                </style>
+              </head>
+              <body>
+                <div class="chapter-header">
+                  <h1>Chapter ${chapter.id}</h1>
+                  <h2>${chapter.title}</h2>
+                  <p><em>${chapter.description || ''}</em></p>
+                </div>
+                
+                ${content}
+                
+                <div class="chapter-footer">
+                  <p>Mission Built: Building Better Products, One Rep at a Time</p>
+                  <p>Chapter ${chapter.id} of ${chaptersArray.length}</p>
+                </div>
+              </body>
+            </html>
+          `
+        };
+      }),
       css: `
         body { 
           font-family: Georgia, serif; 
@@ -227,13 +227,12 @@ export const generateEpub = async (chapters: Chapter | Chapter[], getChapterCont
           page-break-before: always; 
         }
       `,
-      content: epubContent,
       verbose: true
     };
 
     console.log('Generating EPUB with options:', options);
     
-    const epubBuffer = await EPub(options, undefined);
+    const epubBuffer = await EPub(options);
     console.log('EPUB generated successfully, buffer size:', epubBuffer.length);
     
     const fileName = chaptersArray.length === 1 
