@@ -1,4 +1,3 @@
-
 import { Chapter } from "@/data/chapters-data";
 
 interface EpubContent {
@@ -29,6 +28,10 @@ export const generateEpub = async (chapter: Chapter): Promise<void> => {
       {
         title: "Further Reading",
         content: formatFurtherReading(chapter.furtherReading)
+      },
+      {
+        title: "License",
+        content: generateLicenseContent()
       }
     ];
 
@@ -121,4 +124,22 @@ const generateFilename = (title: string): string => {
     .replace(/[^a-z0-9\s]/g, '')
     .replace(/\s+/g, '-')
     .concat('-training-log.epub');
+};
+
+const generateLicenseContent = (): string => {
+  return `
+    <div style="padding: 30px; font-family: serif;">
+      <h2>License</h2>
+      
+      <p><strong>Mission Built: Lessons from the Barbell and the Boardroom</strong><br>
+      by Mike Nichols</p>
+      
+      <p>This work is licensed under a<br>
+      Creative Commons Attribution-NonCommercial 4.0 International License.<br>
+      To view a copy of this license, visit<br>
+      creativecommons.org/licenses/by-nc/4.0</p>
+      
+      <p>You are free to share and adapt this work for non-commercial use, with appropriate credit and a link to missionbuilt.io.</p>
+    </div>
+  `;
 };
