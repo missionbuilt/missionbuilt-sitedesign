@@ -146,10 +146,22 @@ const generateEpub = async (chapter: Chapter) => {
 </body>
 </html>`);
 
-  // Generate chapter content
-  const chapterContent = chapter.sections
-    ?.map(section => `<section><h2>${escapeXml(section.title)}</h2><div>${escapeXml(section.content)}</div></section>`)
-    .join('') || '<p>No content available for this chapter.</p>';
+  // Generate properly formatted chapter content
+  const chapterContent = chapter.sections && chapter.sections.length > 0
+    ? chapter.sections.map(section => {
+        // Convert plain text content to HTML paragraphs
+        const formattedContent = section.content
+          .split('\n\n')
+          .filter(paragraph => paragraph.trim())
+          .map(paragraph => `<p>${escapeXml(paragraph.trim())}</p>`)
+          .join('');
+        
+        return `<section class="chapter-section">
+          <h2>${escapeXml(section.title)}</h2>
+          <div class="section-content">${formattedContent}</div>
+        </section>`;
+      }).join('')
+    : '<section class="chapter-section"><p>No content available for this chapter.</p></section>';
 
   const furtherReadingContent = generateFurtherReading(chapter.furtherReading);
   const nextChapterMessage = generateNextChapterMessage(chapter.id);
