@@ -1,5 +1,6 @@
 import { Chapter } from "@/data/chapters-data";
 import JSZip from 'jszip';
+import { chapters } from "@/data/chapters-data";
 
 export const generateEpub = async (chapter: Chapter): Promise<void> => {
   try {
@@ -766,6 +767,9 @@ const generateContentHtml = (chapter: Chapter): string => {
     `;
   }
   
+  // Add next training log section
+  const nextTrainingLogHtml = generateNextTrainingLogSection(chapter.id);
+  
   return `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -783,6 +787,7 @@ const generateContentHtml = (chapter: Chapter): string => {
     <h1>${escapeXml(chapter.title)}</h1>
     ${chapter.description ? `<p class="description">${escapeXml(chapter.description)}</p>` : ''}
     ${sectionsHtml}
+    ${nextTrainingLogHtml}
   </div>
   
   <div class="page-footer">
@@ -791,6 +796,49 @@ const generateContentHtml = (chapter: Chapter): string => {
   </div>
 </body>
 </html>`;
+};
+
+// New function to generate next training log section
+const generateNextTrainingLogSection = (currentChapterId: number): string => {
+  const nextChapter = chapters.find(chapter => chapter.id === currentChapterId + 1);
+  
+  if (!nextChapter) {
+    return ''; // No next chapter exists
+  }
+  
+  const isPublished = nextChapter.status === 'published';
+  
+  if (isPublished) {
+    return `
+      <div class="next-training-log">
+        <div class="training-break">
+          <p><strong>Take a breath. Hydrate. Next set is up.</strong></p>
+        </div>
+        
+        <div class="next-log-info">
+          <h3>Training Log ${nextChapter.id}: ${escapeXml(nextChapter.title)}</h3>
+          <p class="next-log-summary">${escapeXml(nextChapter.description)}</p>
+          <p class="next-log-link">
+            <a href="https://missionbuilt.io/log/${nextChapter.id}">Read Training Log ${nextChapter.id} →</a>
+          </p>
+        </div>
+      </div>
+    `;
+  } else {
+    return `
+      <div class="next-training-log">
+        <div class="training-break">
+          <p><strong>Good set. We're chalking up for the next one.</strong></p>
+        </div>
+        
+        <div class="next-log-info">
+          <h3>Training Log ${nextChapter.id}: ${escapeXml(nextChapter.title)}</h3>
+          <p class="next-log-summary">${escapeXml(nextChapter.description)}</p>
+          <p class="coming-soon">Coming soon. Check out <a href="https://missionbuilt.io">missionbuilt.io</a> in the meantime - and follow us on <a href="https://bsky.app/profile/missionbuilt.bsky.social">bluesky</a> for updates.</p>
+        </div>
+      </div>
+    `;
+  }
 };
 
 const generateFurtherReadingHtml = (chapter: Chapter): string => {
@@ -1440,6 +1488,18 @@ a:hover {
   th, td {
     padding: 4px 6px;
   }
+  
+  .next-training-log {
+    padding: 15px;
+  }
+  
+  .training-break p {
+    font-size: 14px;
+  }
+  
+  .next-log-info h3 {
+    font-size: 16px;
+  }
 }
 
 /* Print/EPUB specific styles */
@@ -1459,7 +1519,7 @@ a:hover {
     page-break-after: avoid;
   }
   
-  .section, .resource, .license {
+  .section, .resource, .license, .next-training-log {
     page-break-inside: avoid;
   }
   
