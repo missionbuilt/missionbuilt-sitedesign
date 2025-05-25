@@ -1,3 +1,4 @@
+
 import { Link } from 'react-router-dom';
 import Logo from '@/components/Logo';
 import { Heart, ExternalLink } from "lucide-react";
@@ -137,7 +138,7 @@ const Footer = () => {
               <a 
                 rel="license" 
                 href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
-                className="text-army hover:underline"
+                className="text-army dark:text-sunburst hover:underline"
               >
                 Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License
               </a>.
