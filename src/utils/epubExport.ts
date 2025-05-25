@@ -59,6 +59,21 @@ const getSections = (chapterId: number) => {
   return [];
 };
 
+// Create header and footer HTML components
+const createPageHeader = (chapter: Chapter) => `
+  <div class="page-header">
+    <div class="header-left">Mission Built</div>
+    <div class="header-right">Training Log ${chapter.id}: ${escapeXml(chapter.title)}</div>
+  </div>
+`;
+
+const createPageFooter = () => `
+  <div class="page-footer">
+    <div class="footer-left">missionbuilt.io</div>
+    <div class="footer-right">CC BY-NC 4.0</div>
+  </div>
+`;
+
 const generateEpub = async (chapter: Chapter) => {
   const zip = new JSZip();
 
@@ -180,8 +195,9 @@ const generateEpub = async (chapter: Chapter) => {
   <title>Inside Cover</title>
   <link rel="stylesheet" type="text/css" href="style.css"/>
 </head>
-<body class="cover-page light-cover">
-  <div class="cover-content">
+<body class="normal-page">
+  ${createPageHeader(chapter)}
+  <div class="cover-content light-cover">
     <div class="cover-header">
       <div class="logo-container">
         <img src="logo.png" alt="MissionBuilt Logo" class="logo-image" />
@@ -200,6 +216,7 @@ const generateEpub = async (chapter: Chapter) => {
       <p class="cc-license">Licensed under Creative Commons Attribution-NonCommercial 4.0</p>
     </div>
   </div>
+  ${createPageFooter()}
 </body>
 </html>`);
 
@@ -233,7 +250,7 @@ const generateEpub = async (chapter: Chapter) => {
     </section>
   ` : '';
 
-  // Add the content.xhtml file
+  // Add the content.xhtml file with headers and footers
   oebps?.file("content.xhtml", `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -241,17 +258,19 @@ const generateEpub = async (chapter: Chapter) => {
   <title>${escapeXml(chapter.title)}</title>
   <link rel="stylesheet" type="text/css" href="style.css"/>
 </head>
-<body>
+<body class="normal-page">
+  ${createPageHeader(chapter)}
   <div class="main-content">
     <h1>${escapeXml(chapter.title)}</h1>
     <p class="chapter-description">${escapeXml(chapter.description)}</p>
     ${chapterContent}
     ${furtherReadingContent}
   </div>
+  ${createPageFooter()}
 </body>
 </html>`);
 
-  // Add the license page
+  // Add the license page with headers and footers
   oebps?.file("license.xhtml", `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -259,7 +278,8 @@ const generateEpub = async (chapter: Chapter) => {
   <title>License</title>
   <link rel="stylesheet" type="text/css" href="style.css"/>
 </head>
-<body>
+<body class="normal-page">
+  ${createPageHeader(chapter)}
   <div class="main-content">
     <h1>License</h1>
     
@@ -273,75 +293,12 @@ const generateEpub = async (chapter: Chapter) => {
     
     <p>You are free to share and adapt this work for non-commercial use, with appropriate credit and a link to <a href="https://missionbuilt.io">missionbuilt.io</a>.</p>
   </div>
+  ${createPageFooter()}
 </body>
 </html>`);
 
-  // Add CSS with proper page headers and footers using CSS Paged Media
-  oebps?.file("style.css", `/* CSS for EPUB with page headers and footers */
-
-/* Page setup with headers and footers */
-@page {
-  margin: 0.75in 0.5in;
-  
-  @top-left {
-    content: "Mission Built";
-    font-family: Arial, sans-serif;
-    font-size: 10px;
-    font-weight: bold;
-    color: #666;
-    vertical-align: bottom;
-    padding-bottom: 8px;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  @top-right {
-    content: "Training Log ${chapter.id}: ${escapeXml(chapter.title)}";
-    font-family: Arial, sans-serif;
-    font-size: 10px;
-    font-weight: bold;
-    color: #007bff;
-    vertical-align: bottom;
-    padding-bottom: 8px;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  @bottom-left {
-    content: "missionbuilt.io";
-    font-family: Arial, sans-serif;
-    font-size: 10px;
-    font-weight: bold;
-    color: #007bff;
-    vertical-align: top;
-    padding-top: 8px;
-    border-top: 1px solid #ddd;
-  }
-  
-  @bottom-right {
-    content: "CC BY-NC 4.0";
-    font-family: Arial, sans-serif;
-    font-size: 10px;
-    font-weight: bold;
-    color: #666;
-    vertical-align: top;
-    padding-top: 8px;
-    border-top: 1px solid #ddd;
-  }
-}
-
-/* Special page for covers - no headers/footers */
-@page cover {
-  margin: 0;
-  
-  @top-left { content: none; }
-  @top-right { content: none; }
-  @bottom-left { content: none; }
-  @bottom-right { content: none; }
-}
-
-/* Apply cover page style to cover pages */
-.cover-page {
-  page: cover;
-}
+  // Add CSS with embedded headers and footers
+  oebps?.file("style.css", `/* CSS for EPUB with embedded headers and footers */
 
 /* Base typography and layout */
 body { 
@@ -353,14 +310,13 @@ body {
   background-color: #ffffff;
 }
 
-/* Main content area */
-.main-content {
-  padding: 0;
-  max-width: 100%;
-  margin: 0;
+/* Page structure for normal pages with headers/footers */
+.normal-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-/* Cover page styles */
 .cover-page {
   height: 100vh;
   display: flex;
@@ -370,6 +326,60 @@ body {
   box-sizing: border-box;
 }
 
+/* Header and footer styles */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  border-bottom: 2px solid #dee2e6;
+  background-color: #f8f9fa;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-left {
+  color: #666;
+}
+
+.header-right {
+  color: #007bff;
+}
+
+.page-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  border-top: 2px solid #dee2e6;
+  background-color: #f8f9fa;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+  margin-top: auto;
+}
+
+.footer-left {
+  color: #007bff;
+}
+
+.footer-right {
+  color: #666;
+}
+
+/* Main content area */
+.main-content {
+  flex: 1;
+  padding: 30px 20px;
+  max-width: 100%;
+  margin: 0;
+}
+
+/* Cover page styles */
 .dark-cover {
   background-color: #1a1a1a;
   color: #ffffff;
@@ -486,7 +496,6 @@ h1 {
   margin: 0 0 16px 0;
   color: #333333;
   line-height: 1.2;
-  page-break-after: avoid;
 }
 
 h2 { 
@@ -496,7 +505,6 @@ h2 {
   margin: 32px 0 16px 0;
   color: #007bff;
   line-height: 1.3;
-  page-break-after: avoid;
 }
 
 h3 {
@@ -505,7 +513,6 @@ h3 {
   font-weight: bold;
   margin: 24px 0 12px 0;
   color: #333333;
-  page-break-after: avoid;
 }
 
 .chapter-description {
@@ -517,7 +524,6 @@ h3 {
 
 .chapter-section {
   margin-bottom: 32px;
-  page-break-inside: avoid;
 }
 
 .section-content {
@@ -532,8 +538,6 @@ h3 {
 p {
   margin-bottom: 16px;
   line-height: 1.7;
-  orphans: 3;
-  widows: 3;
 }
 
 ul { 
@@ -563,48 +567,24 @@ nav li {
   line-height: 1.5;
 }
 
-/* Page break controls */
-.cover-page {
-  page-break-after: always;
-}
-
-.chapter-section {
-  page-break-inside: avoid;
-}
-
-/* Fallback for EPUB readers that don't support CSS Paged Media */
-@media screen {
-  .running-header {
+/* Print-specific adjustments */
+@media print {
+  .page-header,
+  .page-footer {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 30px;
-    background: #f8f9fa;
-    border-bottom: 1px solid #dee2e6;
-    padding: 8px 16px;
-    font-size: 12px;
-    font-weight: bold;
-    z-index: 1000;
   }
   
-  .running-footer {
-    position: fixed;
+  .page-header {
+    top: 0;
+  }
+  
+  .page-footer {
     bottom: 0;
-    left: 0;
-    right: 0;
-    height: 30px;
-    background: #f8f9fa;
-    border-top: 1px solid #dee2e6;
-    padding: 8px 16px;
-    font-size: 12px;
-    font-weight: bold;
-    z-index: 1000;
   }
   
   .main-content {
-    margin-top: 50px;
-    margin-bottom: 50px;
+    margin-top: 60px;
+    margin-bottom: 60px;
   }
 }
 `);
@@ -628,123 +608,6 @@ nav li {
   });
   
   FileSaver.saveAs(content, `${chapter.slug}.epub`);
-};
-
-const generateCoverImage = async (chapter: Chapter): Promise<Blob> => {
-  // Create a canvas to generate the cover image
-  const canvas = document.createElement('canvas');
-  const ctx = canvas.getContext('2d');
-  
-  if (!ctx) {
-    throw new Error('Could not get canvas context');
-  }
-
-  // Set canvas dimensions (standard book cover ratio)
-  canvas.width = 800;
-  canvas.height = 1200;
-
-  // Dark gradient background for more visual interest
-  const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-  gradient.addColorStop(0, '#0f172a');
-  gradient.addColorStop(0.7, '#1e293b');
-  gradient.addColorStop(1, '#0f172a');
-  ctx.fillStyle = gradient;
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-  // Load and draw logo
-  try {
-    const logoImg = new Image();
-    logoImg.crossOrigin = 'anonymous';
-    
-    await new Promise((resolve, reject) => {
-      logoImg.onload = resolve;
-      logoImg.onerror = reject;
-      logoImg.src = '/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png';
-    });
-
-    // Draw logo (make it white for dark background)
-    ctx.filter = 'brightness(0) invert(1)';
-    ctx.drawImage(logoImg, 60, 60, 80, 80);
-    ctx.filter = 'none';
-  } catch (error) {
-    console.warn('Could not load logo for cover image:', error);
-  }
-
-  // Draw logo text with better spacing
-  ctx.font = 'bold 42px Montserrat, sans-serif';
-  ctx.fillStyle = '#f8fafc';
-  ctx.fillText('Mission', 160, 110);
-  
-  ctx.fillStyle = '#fbbf24';
-  const missionWidth = ctx.measureText('Mission').width;
-  ctx.fillText('Built', 160 + missionWidth, 110);
-  
-  ctx.fillStyle = '#65a30d';
-  const builtWidth = ctx.measureText('Built').width;
-  ctx.fillText('.io', 160 + missionWidth + builtWidth, 110);
-
-  // Draw main book title with enhanced styling
-  ctx.textAlign = 'center';
-  ctx.font = 'bold 78px Montserrat, sans-serif';
-  ctx.fillStyle = '#f8fafc';
-  ctx.strokeStyle = '#475569';
-  ctx.lineWidth = 2;
-  ctx.strokeText('Mission Built', canvas.width / 2, canvas.height / 2 - 150);
-  ctx.fillText('Mission Built', canvas.width / 2, canvas.height / 2 - 150);
-
-  // Draw subtitle with improved readability
-  ctx.font = '44px Montserrat, sans-serif';
-  ctx.fillStyle = '#e2e8f0';
-  ctx.strokeStyle = '#334155';
-  ctx.lineWidth = 1;
-  
-  // Split subtitle into two lines for better formatting
-  const line1 = 'Lessons from the Barbell';
-  const line2 = 'and the Boardroom';
-  
-  ctx.strokeText(line1, canvas.width / 2, canvas.height / 2 - 70);
-  ctx.fillText(line1, canvas.width / 2, canvas.height / 2 - 70);
-  
-  ctx.strokeText(line2, canvas.width / 2, canvas.height / 2 - 20);
-  ctx.fillText(line2, canvas.width / 2, canvas.height / 2 - 20);
-
-  // Draw training log info with accent color
-  ctx.font = 'bold 36px Montserrat, sans-serif';
-  ctx.fillStyle = '#fbbf24';
-  ctx.strokeStyle = '#92400e';
-  ctx.lineWidth = 1;
-  const trainingLogText = `Training Log ${chapter.id}: ${chapter.title}`;
-  ctx.strokeText(trainingLogText, canvas.width / 2, canvas.height / 2 + 60);
-  ctx.fillText(trainingLogText, canvas.width / 2, canvas.height / 2 + 60);
-
-  // Draw author with elegant styling
-  ctx.font = '40px Montserrat, sans-serif';
-  ctx.fillStyle = '#cbd5e1';
-  ctx.strokeStyle = '#475569';
-  ctx.lineWidth = 1;
-  ctx.strokeText('by Mike Nichols', canvas.width / 2, canvas.height / 2 + 140);
-  ctx.fillText('by Mike Nichols', canvas.width / 2, canvas.height / 2 + 140);
-
-  // Add decorative elements
-  ctx.strokeStyle = '#fbbf24';
-  ctx.lineWidth = 3;
-  ctx.beginPath();
-  ctx.moveTo(canvas.width / 2 - 100, canvas.height / 2 + 180);
-  ctx.lineTo(canvas.width / 2 + 100, canvas.height / 2 + 180);
-  ctx.stroke();
-
-  // Draw license with subtle styling
-  ctx.font = '26px Inter, sans-serif';
-  ctx.fillStyle = '#64748b';
-  ctx.textAlign = 'center';
-  ctx.fillText('Licensed under Creative Commons Attribution-NonCommercial 4.0', canvas.width / 2, canvas.height - 80);
-
-  // Convert canvas to blob
-  return new Promise((resolve) => {
-    canvas.toBlob((blob) => {
-      resolve(blob || new Blob());
-    }, 'image/png');
-  });
 };
 
 // Helper function to escape XML/HTML content
