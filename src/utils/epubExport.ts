@@ -119,7 +119,7 @@ const generateEpub = async (chapter: Chapter) => {
   // Add the cover image
   oebps?.file("cover.png", coverImageBlob);
 
-  // Add the nav.xhtml file with header and footer
+  // Add the nav.xhtml file with visible header and footer elements
   oebps?.file("nav.xhtml", `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops">
@@ -128,28 +128,26 @@ const generateEpub = async (chapter: Chapter) => {
   <link rel="stylesheet" type="text/css" href="style.css"/>
 </head>
 <body>
-  <div class="page-container">
-    <header class="page-header">
-      <div class="header-left">Mission Built</div>
-      <div class="header-right">Training Log ${chapter.id}: ${escapeXml(chapter.title)}</div>
-    </header>
-    
-    <main class="page-content">
-      <nav epub:type="toc">
-        <h1>Table of Contents</h1>
-        <ol>
-          <li><a href="cover.xhtml">Cover</a></li>
-          <li><a href="inside-cover.xhtml">Inside Cover</a></li>
-          <li><a href="content.xhtml">${escapeXml(chapter.title)}</a></li>
-          <li><a href="license.xhtml">License</a></li>
-        </ol>
-      </nav>
-    </main>
-    
-    <footer class="page-footer">
-      <div class="footer-left">missionbuilt.io</div>
-      <div class="footer-right">CC BY-NC 4.0</div>
-    </footer>
+  <div class="header-bar">
+    <span class="header-left">Mission Built</span>
+    <span class="header-right">Training Log ${chapter.id}: ${escapeXml(chapter.title)}</span>
+  </div>
+  
+  <div class="main-content">
+    <nav epub:type="toc">
+      <h1>Table of Contents</h1>
+      <ol>
+        <li><a href="cover.xhtml">Cover</a></li>
+        <li><a href="inside-cover.xhtml">Inside Cover</a></li>
+        <li><a href="content.xhtml">${escapeXml(chapter.title)}</a></li>
+        <li><a href="license.xhtml">License</a></li>
+      </ol>
+    </nav>
+  </div>
+  
+  <div class="footer-bar">
+    <span class="footer-left">missionbuilt.io</span>
+    <span class="footer-right">CC BY-NC 4.0</span>
   </div>
 </body>
 </html>`);
@@ -186,7 +184,7 @@ const generateEpub = async (chapter: Chapter) => {
 </body>
 </html>`);
 
-  // Add the inside cover page (light mode style) with header and footer
+  // Add the inside cover page with visible header and footer
   oebps?.file("inside-cover.xhtml", `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -194,39 +192,37 @@ const generateEpub = async (chapter: Chapter) => {
   <title>Inside Cover</title>
   <link rel="stylesheet" type="text/css" href="style.css"/>
 </head>
-<body class="cover-page light-cover">
-  <div class="page-container">
-    <header class="page-header">
-      <div class="header-left">Mission Built</div>
-      <div class="header-right">Training Log ${chapter.id}: ${escapeXml(chapter.title)}</div>
-    </header>
-    
-    <main class="page-content">
-      <div class="cover-content">
-        <div class="cover-header">
-          <div class="logo-container">
-            <img src="logo.png" alt="MissionBuilt Logo" class="logo-image" />
-            <div class="logo-text">
-              <span class="mission">Mission</span><span class="built">Built</span><span class="domain">.io</span>
-            </div>
+<body>
+  <div class="header-bar">
+    <span class="header-left">Mission Built</span>
+    <span class="header-right">Training Log ${chapter.id}: ${escapeXml(chapter.title)}</span>
+  </div>
+  
+  <div class="main-content cover-page light-cover">
+    <div class="cover-content">
+      <div class="cover-header">
+        <div class="logo-container">
+          <img src="logo.png" alt="MissionBuilt Logo" class="logo-image" />
+          <div class="logo-text">
+            <span class="mission">Mission</span><span class="built">Built</span><span class="domain">.io</span>
           </div>
         </div>
-        <div class="cover-main">
-          <h1 class="cover-title">Mission Built</h1>
-          <h2 class="cover-subtitle">Lessons from the Barbell and the Boardroom</h2>
-          <p class="cover-training-log">Training Log ${chapter.id}: ${escapeXml(chapter.title)}</p>
-          <p class="cover-author">by Mike Nichols</p>
-        </div>
-        <div class="cover-footer">
-          <p class="cc-license">Licensed under Creative Commons Attribution-NonCommercial 4.0</p>
-        </div>
       </div>
-    </main>
-    
-    <footer class="page-footer">
-      <div class="footer-left">missionbuilt.io</div>
-      <div class="footer-right">CC BY-NC 4.0</div>
-    </footer>
+      <div class="cover-main">
+        <h1 class="cover-title">Mission Built</h1>
+        <h2 class="cover-subtitle">Lessons from the Barbell and the Boardroom</h2>
+        <p class="cover-training-log">Training Log ${chapter.id}: ${escapeXml(chapter.title)}</p>
+        <p class="cover-author">by Mike Nichols</p>
+      </div>
+      <div class="cover-footer">
+        <p class="cc-license">Licensed under Creative Commons Attribution-NonCommercial 4.0</p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="footer-bar">
+    <span class="footer-left">missionbuilt.io</span>
+    <span class="footer-right">CC BY-NC 4.0</span>
   </div>
 </body>
 </html>`);
@@ -261,7 +257,7 @@ const generateEpub = async (chapter: Chapter) => {
     </section>
   ` : '';
 
-  // Add the content.xhtml file with header and footer
+  // Add the content.xhtml file with visible header and footer
   oebps?.file("content.xhtml", `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -270,28 +266,26 @@ const generateEpub = async (chapter: Chapter) => {
   <link rel="stylesheet" type="text/css" href="style.css"/>
 </head>
 <body>
-  <div class="page-container">
-    <header class="page-header">
-      <div class="header-left">Mission Built</div>
-      <div class="header-right">Training Log ${chapter.id}: ${escapeXml(chapter.title)}</div>
-    </header>
-    
-    <main class="page-content">
-      <h1>${escapeXml(chapter.title)}</h1>
-      <p class="chapter-description">${escapeXml(chapter.description)}</p>
-      ${chapterContent}
-      ${furtherReadingContent}
-    </main>
-    
-    <footer class="page-footer">
-      <div class="footer-left">missionbuilt.io</div>
-      <div class="footer-right">CC BY-NC 4.0</div>
-    </footer>
+  <div class="header-bar">
+    <span class="header-left">Mission Built</span>
+    <span class="header-right">Training Log ${chapter.id}: ${escapeXml(chapter.title)}</span>
+  </div>
+  
+  <div class="main-content">
+    <h1>${escapeXml(chapter.title)}</h1>
+    <p class="chapter-description">${escapeXml(chapter.description)}</p>
+    ${chapterContent}
+    ${furtherReadingContent}
+  </div>
+  
+  <div class="footer-bar">
+    <span class="footer-left">missionbuilt.io</span>
+    <span class="footer-right">CC BY-NC 4.0</span>
   </div>
 </body>
 </html>`);
 
-  // Add the license page with header and footer
+  // Add the license page with visible header and footer
   oebps?.file("license.xhtml", `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -300,59 +294,106 @@ const generateEpub = async (chapter: Chapter) => {
   <link rel="stylesheet" type="text/css" href="style.css"/>
 </head>
 <body>
-  <div class="page-container">
-    <header class="page-header">
-      <div class="header-left">Mission Built</div>
-      <div class="header-right">Training Log ${chapter.id}: ${escapeXml(chapter.title)}</div>
-    </header>
+  <div class="header-bar">
+    <span class="header-left">Mission Built</span>
+    <span class="header-right">Training Log ${chapter.id}: ${escapeXml(chapter.title)}</span>
+  </div>
+  
+  <div class="main-content">
+    <h1>License</h1>
     
-    <main class="page-content">
-      <h1>License</h1>
-      
-      <h2>Mission Built: Lessons from the Barbell and the Boardroom</h2>
-      <p><strong>by Mike Nichols</strong></p>
-      
-      <p>This work is licensed under a<br/>
-      <strong>Creative Commons Attribution-NonCommercial 4.0 International License.</strong><br/>
-      To view a copy of this license, visit<br/>
-      <a href="https://creativecommons.org/licenses/by-nc/4.0">creativecommons.org/licenses/by-nc/4.0</a></p>
-      
-      <p>You are free to share and adapt this work for non-commercial use, with appropriate credit and a link to <a href="https://missionbuilt.io">missionbuilt.io</a>.</p>
-    </main>
+    <h2>Mission Built: Lessons from the Barbell and the Boardroom</h2>
+    <p><strong>by Mike Nichols</strong></p>
     
-    <footer class="page-footer">
-      <div class="footer-left">missionbuilt.io</div>
-      <div class="footer-right">CC BY-NC 4.0</div>
-    </footer>
+    <p>This work is licensed under a<br/>
+    <strong>Creative Commons Attribution-NonCommercial 4.0 International License.</strong><br/>
+    To view a copy of this license, visit<br/>
+    <a href="https://creativecommons.org/licenses/by-nc/4.0">creativecommons.org/licenses/by-nc/4.0</a></p>
+    
+    <p>You are free to share and adapt this work for non-commercial use, with appropriate credit and a link to <a href="https://missionbuilt.io">missionbuilt.io</a>.</p>
+  </div>
+  
+  <div class="footer-bar">
+    <span class="footer-left">missionbuilt.io</span>
+    <span class="footer-right">CC BY-NC 4.0</span>
   </div>
 </body>
 </html>`);
 
-  // Add enhanced CSS with improved header and footer display for EPUB readers
+  // Add simplified CSS that EPUB readers will actually display
   oebps?.file("style.css", `/* Base typography and layout */
 body { 
-  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: Georgia, serif;
   line-height: 1.6; 
   margin: 0;
   padding: 0;
-  color: #4A5A68;
+  color: #333333;
+  background-color: #ffffff;
 }
 
-/* Page container for proper header/footer positioning */
-.page-container {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+/* Header and footer bars - Always visible */
+.header-bar {
+  width: 100%;
+  padding: 8px 16px;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+  margin-bottom: 16px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.page-content {
-  flex: 1;
-  padding: 0 2rem;
-  max-width: 65ch;
+.header-bar::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.header-left {
+  float: left;
+  color: #495057;
+}
+
+.header-right {
+  float: right;
+  color: #007bff;
+}
+
+.footer-bar {
+  width: 100%;
+  padding: 8px 16px;
+  background-color: #f8f9fa;
+  border-top: 1px solid #dee2e6;
+  margin-top: 24px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.footer-bar::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.footer-left {
+  float: left;
+  color: #007bff;
+}
+
+.footer-right {
+  float: right;
+  color: #6c757d;
+}
+
+/* Main content area */
+.main-content {
+  padding: 0 20px;
+  max-width: 600px;
   margin: 0 auto;
 }
 
-/* Cover page styles */
+/* Cover page styles - special case without header/footer bars */
 .cover-page {
   height: 100vh;
   display: flex;
@@ -363,38 +404,37 @@ body {
 }
 
 .dark-cover {
-  background-color: #0f172a;
-  color: #f1f5f9;
+  background-color: #1a1a1a;
+  color: #ffffff;
 }
 
 .light-cover {
   background-color: #ffffff;
-  color: #4A5A68;
+  color: #333333;
 }
 
 .cover-content {
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 2rem;
+  padding: 40px;
   box-sizing: border-box;
 }
 
 .cover-header {
   flex: 0 0 auto;
-  margin-bottom: 2rem;
+  margin-bottom: 40px;
 }
 
 .logo-container {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 12px;
 }
 
 .logo-image {
-  height: 2rem;
+  height: 32px;
   width: auto;
-  filter: brightness(0) invert(1);
 }
 
 .dark-cover .logo-image {
@@ -406,18 +446,18 @@ body {
 }
 
 .logo-text {
-  font-family: Montserrat, sans-serif;
-  font-weight: 600;
-  font-size: 1.5rem;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  font-size: 24px;
 }
 
-.dark-cover .mission { color: #f1f5f9; }
-.dark-cover .built { color: #FFC300; }
-.dark-cover .domain { color: #4B5320; }
+.dark-cover .mission { color: #ffffff; }
+.dark-cover .built { color: #ffd700; }
+.dark-cover .domain { color: #90ee90; }
 
-.light-cover .mission { color: #4A5A68; }
-.light-cover .built { color: #FFC300; }
-.light-cover .domain { color: #4B5320; }
+.light-cover .mission { color: #333333; }
+.light-cover .built { color: #ffa500; }
+.light-cover .domain { color: #228b22; }
 
 .cover-main {
   flex: 1;
@@ -426,37 +466,37 @@ body {
   justify-content: center;
   align-items: center;
   text-align: center;
-  gap: 1rem;
+  gap: 16px;
 }
 
 .cover-title {
-  font-family: Montserrat, sans-serif;
-  font-size: 3rem;
-  font-weight: 700;
+  font-family: Arial, sans-serif;
+  font-size: 48px;
+  font-weight: bold;
   margin: 0;
   line-height: 1.2;
 }
 
 .cover-subtitle {
-  font-family: Montserrat, sans-serif;
-  font-size: 1.75rem;
-  font-weight: 400;
+  font-family: Arial, sans-serif;
+  font-size: 28px;
+  font-weight: normal;
   margin: 0;
   line-height: 1.3;
   opacity: 0.9;
 }
 
 .cover-training-log {
-  font-size: 1.25rem;
-  font-weight: 500;
-  margin: 1.5rem 0 0.5rem 0;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 24px 0 8px 0;
   opacity: 0.8;
 }
 
 .cover-author {
-  font-size: 1.5rem;
-  font-weight: 400;
-  margin: 0.5rem 0 0 0;
+  font-size: 24px;
+  font-weight: normal;
+  margin: 8px 0 0 0;
   opacity: 0.8;
 }
 
@@ -466,116 +506,47 @@ body {
 }
 
 .cc-license {
-  font-size: 0.875rem;
+  font-size: 14px;
   opacity: 0.7;
   margin: 0;
 }
 
-/* Page headers and footers - Enhanced for EPUB readers */
-.page-header {
-  display: block !important;
-  width: 100%;
-  padding: 1rem 2rem;
-  border-bottom: 2px solid #e2e8f0;
-  margin-bottom: 2rem;
-  background-color: #ffffff;
-  position: relative;
-  z-index: 100;
-  box-sizing: border-box;
-}
-
-.page-header::after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-.header-left {
-  float: left;
-  font-weight: 600;
-  font-size: 0.875rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #4A5A68;
-}
-
-.header-right {
-  float: right;
-  font-weight: 600;
-  font-size: 0.875rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #3A77AD;
-}
-
-.page-footer {
-  display: block !important;
-  width: 100%;
-  margin-top: 2rem;
-  padding: 1.5rem 2rem;
-  border-top: 2px solid #e2e8f0;
-  background-color: #ffffff;
-  position: relative;
-  z-index: 100;
-  box-sizing: border-box;
-}
-
-.page-footer::after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-.footer-left {
-  float: left;
-  color: #3A77AD;
-  font-weight: 500;
-  font-size: 0.875rem;
-}
-
-.footer-right {
-  float: right;
-  color: #64748b;
-  font-weight: 500;
-  font-size: 0.875rem;
-}
-
-/* Content styles */
+/* Content typography */
 h1 { 
-  font-family: Montserrat, sans-serif;
-  font-size: 2.5rem; 
-  font-weight: 700;
-  margin: 0 0 1rem 0;
-  color: #4A5A68;
+  font-family: Arial, sans-serif;
+  font-size: 32px; 
+  font-weight: bold;
+  margin: 0 0 16px 0;
+  color: #333333;
   line-height: 1.2;
 }
 
 h2 { 
-  font-family: Montserrat, sans-serif;
-  font-size: 1.75rem; 
-  font-weight: 600;
-  margin: 2rem 0 1rem 0;
-  color: #3A77AD;
+  font-family: Arial, sans-serif;
+  font-size: 24px; 
+  font-weight: bold;
+  margin: 32px 0 16px 0;
+  color: #007bff;
   line-height: 1.3;
 }
 
 h3 {
-  font-family: Montserrat, sans-serif;
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin: 1.5rem 0 0.75rem 0;
-  color: #4A5A68;
+  font-family: Arial, sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  margin: 24px 0 12px 0;
+  color: #333333;
 }
 
 .chapter-description {
-  font-size: 1.125rem;
-  color: #64748b;
-  margin-bottom: 2rem;
+  font-size: 16px;
+  color: #6c757d;
+  margin-bottom: 24px;
   font-style: italic;
 }
 
-section {
-  margin-bottom: 2.5rem;
+.chapter-section {
+  margin-bottom: 32px;
 }
 
 .section-content {
@@ -583,71 +554,65 @@ section {
 }
 
 .section-content p {
-  margin-bottom: 1rem;
+  margin-bottom: 16px;
   line-height: 1.7;
 }
 
 p {
-  margin-bottom: 1rem;
+  margin-bottom: 16px;
   line-height: 1.7;
 }
 
 ul { 
   list-style-type: disc; 
-  padding-left: 2rem;
-  margin: 1rem 0;
+  padding-left: 32px;
+  margin: 16px 0;
 }
 
 li { 
-  margin-bottom: 0.75rem; 
+  margin-bottom: 8px; 
   line-height: 1.6;
 }
 
 a { 
-  color: #3A77AD; 
-  text-decoration: none; 
-}
-
-a:hover { 
+  color: #007bff; 
   text-decoration: underline; 
 }
 
-/* Further reading section */
-section h2:first-child {
-  color: #4A5A68;
-  border-bottom: 1px solid #e2e8f0;
-  padding-bottom: 0.5rem;
+/* Navigation styles */
+nav ol {
+  list-style-type: decimal;
+  padding-left: 32px;
 }
 
-/* Print and EPUB optimizations */
-@media print, screen {
-  .page-header {
-    page-break-inside: avoid;
-    break-inside: avoid;
-  }
-  
-  .page-footer {
-    page-break-inside: avoid;
-    break-inside: avoid;
-  }
-  
-  .cover-page {
-    page-break-after: always;
-    break-after: page;
-  }
+nav li {
+  margin-bottom: 8px;
+  line-height: 1.5;
 }
 
-/* Fallback for older EPUB readers */
-@page {
-  margin: 1in;
-}
-
-/* Ensure headers and footers are visible */
-.page-header,
-.page-footer {
+/* Ensure headers and footers are always visible */
+.header-bar,
+.footer-bar {
   display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
+}
+
+/* Page break controls */
+@page {
+  margin: 0.5in;
+}
+
+.cover-page {
+  page-break-after: always;
+}
+
+h1, h2 {
+  page-break-after: avoid;
+}
+
+.chapter-section {
+  page-break-inside: avoid;
 }
 `);
 
