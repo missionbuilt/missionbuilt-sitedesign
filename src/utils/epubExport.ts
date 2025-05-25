@@ -1,4 +1,3 @@
-
 import React from 'react';
 import EPub from 'epub-gen-memory';
 import { saveAs } from 'file-saver';
@@ -250,7 +249,6 @@ export const generateEpub = async (chapters: Chapter | Chapter[], getChapterCont
     const blob = new Blob([epubBuffer], { type: 'application/epub+zip' });
     
     console.log('Initiating download with saveAs...');
-    // Fix: Ensure both arguments are passed to saveAs
     saveAs(blob, fileName);
     
     console.log('EPUB download initiated successfully');
