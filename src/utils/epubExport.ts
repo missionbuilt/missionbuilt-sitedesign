@@ -146,8 +146,8 @@ const generateEpub = async (chapter: Chapter) => {
 </body>
 </html>`);
 
-  // Generate the actual content that appears on the log page by rendering it the same way the LogSections component does
-  const chapterContent = await renderChapterContentAsHTML(chapter);
+  // Use the actual chapter data directly - this is the EXACT content from the log page
+  const chapterContent = renderChapterContentAsHTML(chapter);
 
   const furtherReadingContent = generateFurtherReading(chapter.furtherReading);
   const nextChapterMessage = generateNextChapterMessage(chapter.id);
@@ -525,30 +525,26 @@ section h2:first-child {
   FileSaver.saveAs(content, `${chapter.slug}.epub`);
 };
 
-// New function to render chapter content exactly as it appears on the log page
-const renderChapterContentAsHTML = async (chapter: Chapter): Promise<string> => {
-  // Create a temporary DOM element to render the content
-  const tempDiv = document.createElement('div');
-  
-  // Get the actual rendered content from the log page by finding the LogSections component
-  const logSectionsElement = document.querySelector('[data-testid="log-sections"]') || 
-                            document.querySelector('.space-y-8') ||
-                            document.querySelector('main .space-y-8');
-  
-  if (logSectionsElement) {
-    // Clone the content and extract just the text content, preserving structure
-    const clonedContent = logSectionsElement.cloneNode(true) as HTMLElement;
-    
-    // Remove any interactive elements like buttons
-    const buttons = clonedContent.querySelectorAll('button');
-    buttons.forEach(btn => btn.remove());
-    
-    // Convert the HTML structure to a clean format for EPUB
-    return convertDOMToEpubHTML(clonedContent);
+// Function to render chapter content using the actual chapter data
+const renderChapterContentAsHTML = (chapter: Chapter): string => {
+  // Use the actual chapter sections data directly
+  if (!chapter.sections || chapter.sections.length === 0) {
+    return '<section class="chapter-section"><p>No content available for this chapter.</p></section>';
   }
-  
-  // Fallback: if we can't find the rendered content, return a message
-  return '<section class="chapter-section"><p>Content could not be extracted from the log page.</p></section>';
+
+  return chapter.sections.map(section => {
+    // Split content into paragraphs and preserve line breaks
+    const paragraphs = section.content.split('\n\n').filter(p => p.trim().length > 0);
+    
+    const paragraphsHTML = paragraphs.map(paragraph => 
+      `<p>${escapeXml(paragraph.trim())}</p>`
+    ).join('');
+
+    return `<section class="chapter-section">
+      <h2>${escapeXml(section.title)}</h2>
+      <div class="section-content">${paragraphsHTML}</div>
+    </section>`;
+  }).join('');
 };
 
 // Helper function to convert DOM structure to clean EPUB HTML
