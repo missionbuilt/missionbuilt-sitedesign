@@ -535,8 +535,12 @@ const generateCoverImage = async (chapter: Chapter): Promise<Blob> => {
   canvas.width = 800;
   canvas.height = 1200;
 
-  // Dark background
-  ctx.fillStyle = '#0f172a';
+  // Dark gradient background for more visual interest
+  const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+  gradient.addColorStop(0, '#0f172a');
+  gradient.addColorStop(0.7, '#1e293b');
+  gradient.addColorStop(1, '#0f172a');
+  ctx.fillStyle = gradient;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   // Load and draw logo
@@ -552,50 +556,80 @@ const generateCoverImage = async (chapter: Chapter): Promise<Blob> => {
 
     // Draw logo (make it white for dark background)
     ctx.filter = 'brightness(0) invert(1)';
-    ctx.drawImage(logoImg, 50, 50, 60, 60);
+    ctx.drawImage(logoImg, 60, 60, 80, 80);
     ctx.filter = 'none';
   } catch (error) {
     console.warn('Could not load logo for cover image:', error);
   }
 
-  // Draw logo text
-  ctx.font = 'bold 36px Montserrat, sans-serif';
-  ctx.fillStyle = '#f1f5f9';
-  ctx.fillText('Mission', 120, 85);
+  // Draw logo text with better spacing
+  ctx.font = 'bold 42px Montserrat, sans-serif';
+  ctx.fillStyle = '#f8fafc';
+  ctx.fillText('Mission', 160, 110);
   
-  ctx.fillStyle = '#FFC300';
+  ctx.fillStyle = '#fbbf24';
   const missionWidth = ctx.measureText('Mission').width;
-  ctx.fillText('Built', 120 + missionWidth, 85);
+  ctx.fillText('Built', 160 + missionWidth, 110);
   
-  ctx.fillStyle = '#4B5320';
+  ctx.fillStyle = '#65a30d';
   const builtWidth = ctx.measureText('Built').width;
-  ctx.fillText('.io', 120 + missionWidth + builtWidth, 85);
+  ctx.fillText('.io', 160 + missionWidth + builtWidth, 110);
 
-  // Draw main book title
-  ctx.font = 'bold 64px Montserrat, sans-serif';
-  ctx.fillStyle = '#f1f5f9';
+  // Draw main book title with enhanced styling
   ctx.textAlign = 'center';
-  ctx.fillText('Mission Built', canvas.width / 2, canvas.height / 2 - 120);
+  ctx.font = 'bold 78px Montserrat, sans-serif';
+  ctx.fillStyle = '#f8fafc';
+  ctx.strokeStyle = '#475569';
+  ctx.lineWidth = 2;
+  ctx.strokeText('Mission Built', canvas.width / 2, canvas.height / 2 - 150);
+  ctx.fillText('Mission Built', canvas.width / 2, canvas.height / 2 - 150);
 
-  // Draw subtitle
+  // Draw subtitle with improved readability
+  ctx.font = '44px Montserrat, sans-serif';
+  ctx.fillStyle = '#e2e8f0';
+  ctx.strokeStyle = '#334155';
+  ctx.lineWidth = 1;
+  
+  // Split subtitle into two lines for better formatting
+  const line1 = 'Lessons from the Barbell';
+  const line2 = 'and the Boardroom';
+  
+  ctx.strokeText(line1, canvas.width / 2, canvas.height / 2 - 70);
+  ctx.fillText(line1, canvas.width / 2, canvas.height / 2 - 70);
+  
+  ctx.strokeText(line2, canvas.width / 2, canvas.height / 2 - 20);
+  ctx.fillText(line2, canvas.width / 2, canvas.height / 2 - 20);
+
+  // Draw training log info with accent color
+  ctx.font = 'bold 36px Montserrat, sans-serif';
+  ctx.fillStyle = '#fbbf24';
+  ctx.strokeStyle = '#92400e';
+  ctx.lineWidth = 1;
+  const trainingLogText = `Training Log ${chapter.id}: ${chapter.title}`;
+  ctx.strokeText(trainingLogText, canvas.width / 2, canvas.height / 2 + 60);
+  ctx.fillText(trainingLogText, canvas.width / 2, canvas.height / 2 + 60);
+
+  // Draw author with elegant styling
   ctx.font = '40px Montserrat, sans-serif';
   ctx.fillStyle = '#cbd5e1';
-  ctx.fillText('Lessons from the Barbell and the Boardroom', canvas.width / 2, canvas.height / 2 - 60);
+  ctx.strokeStyle = '#475569';
+  ctx.lineWidth = 1;
+  ctx.strokeText('by Mike Nichols', canvas.width / 2, canvas.height / 2 + 140);
+  ctx.fillText('by Mike Nichols', canvas.width / 2, canvas.height / 2 + 140);
 
-  // Draw training log info
-  ctx.font = '32px Montserrat, sans-serif';
-  ctx.fillStyle = '#94a3b8';
-  ctx.fillText(`Training Log ${chapter.id}: ${chapter.title}`, canvas.width / 2, canvas.height / 2 + 20);
+  // Add decorative elements
+  ctx.strokeStyle = '#fbbf24';
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.moveTo(canvas.width / 2 - 100, canvas.height / 2 + 180);
+  ctx.lineTo(canvas.width / 2 + 100, canvas.height / 2 + 180);
+  ctx.stroke();
 
-  // Draw author
-  ctx.font = '36px Montserrat, sans-serif';
-  ctx.fillStyle = '#cbd5e1';
-  ctx.fillText('by Mike Nichols', canvas.width / 2, canvas.height / 2 + 100);
-
-  // Draw license
-  ctx.font = '24px Inter, sans-serif';
+  // Draw license with subtle styling
+  ctx.font = '26px Inter, sans-serif';
   ctx.fillStyle = '#64748b';
-  ctx.fillText('Licensed under Creative Commons Attribution-NonCommercial 4.0', canvas.width / 2, canvas.height - 50);
+  ctx.textAlign = 'center';
+  ctx.fillText('Licensed under Creative Commons Attribution-NonCommercial 4.0', canvas.width / 2, canvas.height - 80);
 
   // Convert canvas to blob
   return new Promise((resolve) => {
