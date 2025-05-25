@@ -24,7 +24,7 @@ const generateEpub = async (chapter: Chapter) => {
   // Create the OEBPS directory
   const oebps = zip.folder("OEBPS");
 
-  // Add the content.opf file with proper metadata
+  // Add the content.opf file with proper metadata and cover reference
   oebps?.file("content.opf", `<?xml version="1.0" encoding="UTF-8"?>
 <package version="3.0" xmlns="http://www.idpf.org/2007/opf" unique-identifier="pub-id">
   <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
@@ -33,10 +33,11 @@ const generateEpub = async (chapter: Chapter) => {
     <dc:identifier id="pub-id">urn:uuid:${uuid}</dc:identifier>
     <dc:language>en</dc:language>
     <meta property="dcterms:modified">${currentDate}</meta>
+    <meta name="cover" content="cover"/>
   </metadata>
   <manifest>
     <item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>
-    <item id="cover" href="cover.xhtml" media-type="application/xhtml+xml"/>
+    <item id="cover" href="cover.xhtml" media-type="application/xhtml+xml" properties="cover-image"/>
     <item id="inside-cover" href="inside-cover.xhtml" media-type="application/xhtml+xml"/>
     <item id="content" href="content.xhtml" media-type="application/xhtml+xml"/>
     <item id="license" href="license.xhtml" media-type="application/xhtml+xml"/>
@@ -49,6 +50,9 @@ const generateEpub = async (chapter: Chapter) => {
     <itemref idref="content"/>
     <itemref idref="license"/>
   </spine>
+  <guide>
+    <reference type="cover" title="Cover" href="cover.xhtml"/>
+  </guide>
 </package>`);
 
   // Add the nav.xhtml file
@@ -72,13 +76,14 @@ const generateEpub = async (chapter: Chapter) => {
 </body>
 </html>`);
 
-  // Add the cover page (dark mode style)
+  // Add the cover page (dark mode style) - this is the main cover that should be displayed
   oebps?.file("cover.xhtml", `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <title>Cover</title>
   <link rel="stylesheet" type="text/css" href="style.css"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body class="cover-page dark-cover">
   <div class="cover-content">
@@ -223,6 +228,7 @@ body {
   flex-direction: column;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 .dark-cover {
@@ -257,6 +263,15 @@ body {
 .logo-image {
   height: 2rem;
   width: auto;
+  filter: brightness(0) invert(1);
+}
+
+.dark-cover .logo-image {
+  filter: brightness(0) invert(1);
+}
+
+.light-cover .logo-image {
+  filter: none;
 }
 
 .logo-text {
