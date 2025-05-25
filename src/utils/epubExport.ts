@@ -101,62 +101,29 @@ const generateCoverImagePng = async (chapter: Chapter): Promise<Blob> => {
     ctx.fillStyle = '#f8fafc'; // light text for dark mode
     ctx.fillText('Mission Built', 300, 160);
     
-    // Subtitle
-    ctx.font = '600 28px Montserrat, sans-serif';
-    ctx.fillStyle = '#e2e8f0'; // slightly muted light text
-    ctx.fillText('Lessons from the Barbell', 300, 200);
-    ctx.fillText('and the Boardroom', 300, 240);
-    
     // Tagline
     ctx.font = 'italic 18px Inter, sans-serif';
     ctx.fillStyle = '#94a3b8'; // muted foreground color
-    ctx.fillText('The Shared Discipline Behind', 300, 280);
-    ctx.fillText('Great Products and Great Lifts', 300, 310);
+    ctx.fillText('The Shared Discipline Behind', 300, 220);
+    ctx.fillText('Great Products and Great Lifts', 300, 250);
     
     // Chapter info box with dark mode styling
     ctx.fillStyle = '#1e293b'; // dark card background
     ctx.strokeStyle = '#334155'; // dark border
     ctx.lineWidth = 1;
-    const boxX = 50, boxY = 380, boxW = 500, boxH = 140;
+    const boxX = 50, boxY = 320, boxW = 500, boxH = 100;
     ctx.fillRect(boxX, boxY, boxW, boxH);
     ctx.strokeRect(boxX, boxY, boxW, boxH);
     
     // Training log number
     ctx.font = '600 16px Inter, sans-serif';
     ctx.fillStyle = '#FFC300'; // sunburst for accent
-    ctx.fillText(`TRAINING LOG ${chapter.id}`, 300, 420);
+    ctx.fillText(`TRAINING LOG ${chapter.id}`, 300, 360);
     
     // Chapter title
     ctx.font = '600 24px Montserrat, sans-serif';
     ctx.fillStyle = '#4B5320'; // army green for chapter title
-    ctx.fillText(chapter.title, 300, 450);
-    
-    // Chapter description if available
-    if (chapter.description) {
-      ctx.font = '400 14px Inter, sans-serif';
-      ctx.fillStyle = '#cbd5e1'; // light muted text
-      // Split long descriptions into multiple lines
-      const words = chapter.description.split(' ');
-      const maxWidth = 450;
-      let line = '';
-      let y = 480;
-      
-      for (let i = 0; i < words.length; i++) {
-        const testLine = line + words[i] + ' ';
-        const metrics = ctx.measureText(testLine);
-        if (metrics.width > maxWidth && i > 0) {
-          ctx.fillText(line.trim(), 300, y);
-          line = words[i] + ' ';
-          y += 20;
-          if (y > 510) break; // Prevent overflow
-        } else {
-          line = testLine;
-        }
-      }
-      if (line.trim() && y <= 510) {
-        ctx.fillText(line.trim(), 300, y);
-      }
-    }
+    ctx.fillText(chapter.title, 300, 390);
     
     // Author line with dark mode styling
     ctx.strokeStyle = '#475569'; // darker border for dark mode
