@@ -1,3 +1,74 @@
+import { Chapter } from "@/data/chapters-data";
+import JSZip from 'jszip';
+
+export const generateEpub = async (chapter: Chapter): Promise<void> => {
+  try {
+    const zip = new JSZip();
+    
+    // Generate filename from chapter title
+    const filename = generateFilename(chapter.title);
+    
+    // Create META-INF folder with container.xml
+    zip.folder("META-INF")?.file("container.xml", `<?xml version="1.0"?>
+<container version="1.0" xmlns="urn:oasis:names:tc:opendocument:xmlns:container">
+  <rootfiles>
+    <rootfile full-path="OEBPS/content.opf" media-type="application/oebps-package+xml"/>
+  </rootfiles>
+</container>`);
+
+    // Create OEBPS folder
+    const oebps = zip.folder("OEBPS");
+    
+    // Generate and add cover image as PNG
+    const coverImageBlob = await generateCoverImagePng(chapter);
+    oebps?.file("cover.png", coverImageBlob);
+    
+    // Create content.opf (package document)
+    oebps?.file("content.opf", generateContentOpf(chapter));
+    
+    // Create toc.ncx (navigation)
+    oebps?.file("toc.ncx", generateTocNcx(chapter));
+    
+    // Create cover page
+    oebps?.file("cover.html", generateCoverHtml(chapter));
+    
+    // Create main content
+    oebps?.file("content.html", generateContentHtml(chapter));
+    
+    // Create further reading page
+    oebps?.file("further-reading.html", generateFurtherReadingHtml(chapter));
+    
+    // Create license page
+    oebps?.file("license.html", generateLicenseHtml());
+    
+    // Create basic CSS
+    oebps?.file("styles.css", generateCss());
+    
+    // Create mimetype file (must be first and uncompressed)
+    zip.file("mimetype", "application/epub+zip", { compression: "STORE" });
+    
+    // Generate the EPUB file
+    const epubBlob = await zip.generateAsync({ 
+      type: "blob",
+      mimeType: "application/epub+zip",
+      compression: "DEFLATE"
+    });
+    
+    // Create download link
+    const url = URL.createObjectURL(epubBlob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    link.click();
+    URL.revokeObjectURL(url);
+    
+    console.log(`EPUB generated: ${filename}`);
+    
+  } catch (error) {
+    console.error('Error generating EPUB:', error);
+    throw new Error('Failed to generate EPUB file');
+  }
+};
 
 // Generate PNG cover image using canvas
 const generateCoverImagePng = async (chapter: Chapter): Promise<Blob> => {
@@ -1051,6 +1122,7 @@ a:hover {
   }
 }
 `;
+
 };
 
 const generateFilename = (title: string): string => {
