@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
@@ -84,6 +83,8 @@ It's called the OODA Loop: Observe, Orient, Decide, Act. Developed for fighter p
 
 But here's the catch — without a clear mission, the whole loop spins out.
 
+[TABLE: OODA Loop Analysis]
+
 In lifting, it's trusting the plan instead of maxing out because you feel good that day. In product, it's waiting to ship because your users aren't ready — even if your OKRs are.
 
 Mission turns chaos into clarity. It makes every rep count. Every release matter. Every decision directional.
@@ -95,15 +96,7 @@ This is the real flywheel of fulfillment:
 - And real progress reinforces the mission.
 
 That's the throughline. That's what keeps us going.
-Metrics follow. But the mission leads.
-
-[TABLE: OODA Loop Analysis]
-
-OODA Stage | With Mission-Driven Focus | Without It
-Observe | You know what matters to watch | You collect everything, drowning in noise
-Orient | Purpose helps filter & frame inputs | Metrics get over-prioritized, lose big picture
-Decide | Mission becomes a north star for action | Risk of chasing vanity wins or short-term gains
-Act | Execution has energy and resolve | Actions may be misaligned or half-hearted`;
+Metrics follow. But the mission leads.`;
       default:
         return "Content for this section will be added soon.";
     }
@@ -336,47 +329,31 @@ const PdfExportButton: React.FC<PdfExportButtonProps> = ({ chapter }) => {
         // Section content
         const content = getSectionContent(chapter.id, section.id);
         
-        // Process content line by line to handle table placement correctly
-        const lines = content.split('\n');
-        let i = 0;
-        while (i < lines.length) {
-          const line = lines[i];
-          
-          // Check if this line is the table marker
-          if (line.includes('[TABLE: OODA Loop Analysis]')) {
-            // Skip the table marker line and the empty line after it
-            i++;
-            if (i < lines.length && lines[i].trim() === '') {
-              i++;
-            }
-            
-            // Add the table
-            addTable();
-            
-            // Skip the table header and data lines
-            while (i < lines.length && (lines[i].includes('|') || lines[i].includes('OODA Stage') || lines[i].includes('Observe') || lines[i].includes('Orient') || lines[i].includes('Decide') || lines[i].includes('Act'))) {
-              i++;
-            }
-            continue;
+        // Split content into paragraphs, but handle table placement specially
+        const text = content.replace('[TABLE: OODA Loop Analysis]', '');
+        const beforeTable = content.split('But here\'s the catch — without a clear mission, the whole loop spins out.')[0] + 'But here\'s the catch — without a clear mission, the whole loop spins out.';
+        const afterTable = content.split('But here\'s the catch — without a clear mission, the whole loop spins out.')[1].replace('[TABLE: OODA Loop Analysis]', '').trim();
+        
+        // Add content before table
+        const beforeTableParagraphs = beforeTable.split('\n\n');
+        beforeTableParagraphs.forEach((paragraph) => {
+          if (paragraph.trim()) {
+            addText(paragraph.trim(), 11);
+            yPosition += 3;
           }
-          
-          // Regular text line - collect paragraph
-          let paragraph = '';
-          while (i < lines.length && lines[i].trim() !== '' && !lines[i].includes('[TABLE:')) {
-            paragraph += (paragraph ? ' ' : '') + lines[i].trim();
-            i++;
+        });
+        
+        // Add the table
+        addTable();
+        
+        // Add content after table
+        const afterTableParagraphs = afterTable.split('\n\n');
+        afterTableParagraphs.forEach((paragraph) => {
+          if (paragraph.trim()) {
+            addText(paragraph.trim(), 11);
+            yPosition += 3;
           }
-          
-          if (paragraph) {
-            addText(paragraph, 11);
-            yPosition += 3; // Add small spacing between paragraphs
-          }
-          
-          // Skip empty lines
-          while (i < lines.length && lines[i].trim() === '') {
-            i++;
-          }
-        }
+        });
         
         // Add spacing between sections
         if (index < sections.length - 1) {
