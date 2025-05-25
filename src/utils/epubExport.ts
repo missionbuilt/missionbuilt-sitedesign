@@ -101,11 +101,11 @@ const generateCoverImagePng = async (chapter: Chapter): Promise<Blob> => {
     ctx.fillStyle = '#f8fafc'; // light text for dark mode
     ctx.fillText('Mission Built', 300, 160);
     
-    // Tagline
-    ctx.font = 'italic 18px Inter, sans-serif';
-    ctx.fillStyle = '#94a3b8'; // muted foreground color
-    ctx.fillText('The Shared Discipline Behind', 300, 220);
-    ctx.fillText('Great Products and Great Lifts', 300, 250);
+    // Subtitle
+    ctx.font = '600 28px Montserrat, sans-serif';
+    ctx.fillStyle = '#e2e8f0'; // slightly muted light text
+    ctx.fillText('Lessons from the Barbell', 300, 200);
+    ctx.fillText('and the Boardroom', 300, 240);
     
     // Chapter info box with dark mode styling
     ctx.fillStyle = '#1e293b'; // dark card background
