@@ -40,11 +40,18 @@ export const generateEpub = async (chapter: Chapter): Promise<void> => {
       content: content
     };
 
-    // Use the library without 'new' keyword and correct parameter order
-    const epub = EPub(options, filename);
-    await epub.promise;
+    // Use the library correctly - it returns a Promise<Buffer> directly
+    const epubBuffer = await EPub(options);
     
-    // The library should automatically trigger download
+    // Create download link
+    const blob = new Blob([epubBuffer], { type: 'application/epub+zip' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    link.click();
+    URL.revokeObjectURL(url);
+    
     console.log(`EPUB generated: ${filename}`);
     
   } catch (error) {
