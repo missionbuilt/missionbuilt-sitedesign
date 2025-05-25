@@ -1,4 +1,3 @@
-
 import { Chapter } from "@/data/chapters-data";
 import JSZip from 'jszip';
 
@@ -67,14 +66,24 @@ export const generateEpub = async (chapter: Chapter): Promise<void> => {
   }
 };
 
+// Helper function to escape XML characters
+const escapeXml = (text: string): string => {
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
+};
+
 const generateContentOpf = (chapter: Chapter): string => {
   return `<?xml version="1.0" encoding="UTF-8"?>
 <package xmlns="http://www.idpf.org/2007/opf" unique-identifier="BookId" version="2.0">
   <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
-    <dc:title>${chapter.title}</dc:title>
+    <dc:title>${escapeXml(chapter.title)}</dc:title>
     <dc:creator>MissionBuilt.io</dc:creator>
     <dc:publisher>MissionBuilt.io</dc:publisher>
-    <dc:description>${chapter.description}</dc:description>
+    <dc:description>${escapeXml(chapter.description)}</dc:description>
     <dc:language>en</dc:language>
     <dc:identifier id="BookId">${chapter.id}</dc:identifier>
   </metadata>
@@ -105,7 +114,7 @@ const generateTocNcx = (chapter: Chapter): string => {
     <meta name="dtb:maxPageNumber" content="0"/>
   </head>
   <docTitle>
-    <text>${chapter.title}</text>
+    <text>${escapeXml(chapter.title)}</text>
   </docTitle>
   <navMap>
     <navPoint id="cover" playOrder="1">
@@ -113,7 +122,7 @@ const generateTocNcx = (chapter: Chapter): string => {
       <content src="cover.html"/>
     </navPoint>
     <navPoint id="content" playOrder="2">
-      <navLabel><text>${chapter.title}</text></navLabel>
+      <navLabel><text>${escapeXml(chapter.title)}</text></navLabel>
       <content src="content.html"/>
     </navPoint>
     <navPoint id="further-reading" playOrder="3">
@@ -138,10 +147,10 @@ const generateCoverHtml = (chapter: Chapter): string => {
 </head>
 <body>
   <div class="cover">
-    <h1>${chapter.title}</h1>
+    <h1>${escapeXml(chapter.title)}</h1>
     <h2>Training Log</h2>
     <p class="author">MissionBuilt.io</p>
-    ${chapter.description ? `<p class="description">${chapter.description}</p>` : ''}
+    ${chapter.description ? `<p class="description">${escapeXml(chapter.description)}</p>` : ''}
   </div>
 </body>
 </html>`;
@@ -152,21 +161,28 @@ const generateContentHtml = (chapter: Chapter): string => {
   
   if (chapter.sections && chapter.sections.length > 0) {
     sectionsHtml = chapter.sections.map(section => `
-      <h2>${section.title}</h2>
-      ${section.content ? `<div>${section.content}</div>` : ''}
+      <h2>${escapeXml(section.title)}</h2>
+      ${section.content ? `<div>${escapeXml(section.content)}</div>` : ''}
     `).join('');
+  } else {
+    // Add placeholder content if no sections exist
+    sectionsHtml = `
+      <h2>Chapter Content</h2>
+      <p>This chapter is currently being developed. The content will be available soon.</p>
+      <p>In the meantime, check out the Further Reading section for related resources and insights.</p>
+    `;
   }
   
   return `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <title>${chapter.title}</title>
+  <title>${escapeXml(chapter.title)}</title>
   <link rel="stylesheet" type="text/css" href="styles.css"/>
 </head>
 <body>
-  <h1>${chapter.title}</h1>
-  ${chapter.description ? `<p class="description">${chapter.description}</p>` : ''}
+  <h1>${escapeXml(chapter.title)}</h1>
+  ${chapter.description ? `<p class="description">${escapeXml(chapter.description)}</p>` : ''}
   ${sectionsHtml}
 </body>
 </html>`;
@@ -178,9 +194,9 @@ const generateFurtherReadingHtml = (chapter: Chapter): string => {
   if (chapter.furtherReading && chapter.furtherReading.length > 0) {
     resourcesHtml = chapter.furtherReading.map(resource => `
       <div class="resource">
-        <h3><a href="${resource.url}">${resource.title}</a></h3>
-        ${resource.description ? `<p>${resource.description}</p>` : ''}
-        ${resource.note ? `<p class="note">${resource.note}</p>` : ''}
+        <h3><a href="${escapeXml(resource.url)}">${escapeXml(resource.title)}</a></h3>
+        ${resource.description ? `<p>${escapeXml(resource.description)}</p>` : ''}
+        ${resource.note ? `<p class="note">${escapeXml(resource.note)}</p>` : ''}
       </div>
     `).join('');
   } else {
