@@ -770,9 +770,21 @@ const generateContentHtml = (chapter: Chapter): string => {
   <link rel="stylesheet" type="text/css" href="styles.css"/>
 </head>
 <body>
-  <h1>${escapeXml(chapter.title)}</h1>
-  ${chapter.description ? `<p class="description">${escapeXml(chapter.description)}</p>` : ''}
-  ${sectionsHtml}
+  <div class="page-header">
+    <div class="header-left">Mission Built</div>
+    <div class="header-right">Training Log ${chapter.id}: ${escapeXml(chapter.title)}</div>
+  </div>
+  
+  <div class="content-wrapper">
+    <h1>${escapeXml(chapter.title)}</h1>
+    ${chapter.description ? `<p class="description">${escapeXml(chapter.description)}</p>` : ''}
+    ${sectionsHtml}
+  </div>
+  
+  <div class="page-footer">
+    <div class="footer-left"><a href="https://missionbuilt.io">missionbuilt.io</a></div>
+    <div class="footer-right"><span class="page-number"></span> | CC BY-NC 4.0</div>
+  </div>
 </body>
 </html>`;
 };
@@ -800,8 +812,20 @@ const generateFurtherReadingHtml = (chapter: Chapter): string => {
   <link rel="stylesheet" type="text/css" href="styles.css"/>
 </head>
 <body>
-  <h2>Further Reading</h2>
-  ${resourcesHtml}
+  <div class="page-header">
+    <div class="header-left">Mission Built</div>
+    <div class="header-right">Training Log ${chapter.id}: ${escapeXml(chapter.title)}</div>
+  </div>
+  
+  <div class="content-wrapper">
+    <h2>Further Reading</h2>
+    ${resourcesHtml}
+  </div>
+  
+  <div class="page-footer">
+    <div class="footer-left"><a href="https://missionbuilt.io">missionbuilt.io</a></div>
+    <div class="footer-right"><span class="page-number"></span> | CC BY-NC 4.0</div>
+  </div>
 </body>
 </html>`;
 };
@@ -815,18 +839,30 @@ const generateLicenseHtml = (): string => {
   <link rel="stylesheet" type="text/css" href="styles.css"/>
 </head>
 <body>
-  <div class="license">
-    <h2>License</h2>
-    
-    <p><strong>Mission Built: Lessons from the Barbell and the Boardroom</strong><br/>
-    by Mike Nichols</p>
-    
-    <p>This work is licensed under a<br/>
-    Creative Commons Attribution-NonCommercial 4.0 International License.<br/>
-    To view a copy of this license, visit<br/>
-    creativecommons.org/licenses/by-nc/4.0</p>
-    
-    <p>You are free to share and adapt this work for non-commercial use, with appropriate credit and a link to missionbuilt.io.</p>
+  <div class="page-header">
+    <div class="header-left">Mission Built</div>
+    <div class="header-right">License</div>
+  </div>
+  
+  <div class="content-wrapper">
+    <div class="license">
+      <h2>License</h2>
+      
+      <p><strong>Mission Built: Lessons from the Barbell and the Boardroom</strong><br/>
+      by Mike Nichols</p>
+      
+      <p>This work is licensed under a<br/>
+      Creative Commons Attribution-NonCommercial 4.0 International License.<br/>
+      To view a copy of this license, visit<br/>
+      creativecommons.org/licenses/by-nc/4.0</p>
+      
+      <p>You are free to share and adapt this work for non-commercial use, with appropriate credit and a link to missionbuilt.io.</p>
+    </div>
+  </div>
+  
+  <div class="page-footer">
+    <div class="footer-left"><a href="https://missionbuilt.io">missionbuilt.io</a></div>
+    <div class="footer-right"><span class="page-number"></span> | CC BY-NC 4.0</div>
   </div>
 </body>
 </html>`;
@@ -842,6 +878,74 @@ body {
   padding: 0;
   color: #1e293b;
   background: #f8fafc;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Page structure */
+.page-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  background: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 12px;
+  font-weight: 500;
+  z-index: 100;
+}
+
+.header-left {
+  color: #059669;
+  font-weight: 600;
+}
+
+.header-right {
+  color: #64748b;
+}
+
+.content-wrapper {
+  flex: 1;
+  padding: 60px 20px 60px 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.page-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+  font-size: 12px;
+  z-index: 100;
+}
+
+.footer-left a {
+  color: #059669;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.footer-left a:hover {
+  text-decoration: underline;
+}
+
+.footer-right {
+  color: #64748b;
+  font-weight: 400;
 }
 
 /* Cover page styles */
@@ -1103,6 +1207,17 @@ a:hover {
   text-decoration: underline;
 }
 
+/* Print/EPUB specific styles */
+@media print {
+  .page-header, .page-footer {
+    position: static;
+  }
+  
+  .content-wrapper {
+    padding: 20px;
+  }
+}
+
 /* Responsive adjustments for smaller e-readers */
 @media screen and (max-width: 600px) {
   .main-title {
@@ -1119,6 +1234,14 @@ a:hover {
   
   .chapter-info {
     padding: 20px;
+  }
+  
+  .page-header, .page-footer {
+    padding: 0 10px;
+  }
+  
+  .content-wrapper {
+    padding: 60px 10px;
   }
 }
 `;
