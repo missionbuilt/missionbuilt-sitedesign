@@ -1,5 +1,6 @@
+
 import { Chapter, chapters } from "@/data/chapters-data";
-import * as JSZip from 'jszip';
+import JSZip from 'jszip';
 import * as FileSaver from 'file-saver';
 
 const generateEpub = async (chapter: Chapter) => {
