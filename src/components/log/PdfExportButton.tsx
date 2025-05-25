@@ -496,9 +496,34 @@ const PdfExportButton: React.FC<PdfExportButtonProps> = ({ chapter }) => {
       let yPosition = margin;
       const lineHeight = 1.5;
 
+      // Helper function to add footer to current page
+      const addFooter = () => {
+        const footerY = pageHeight - 10;
+        
+        // Left side - missionbuilt.io
+        pdf.setFontSize(9);
+        pdf.setFont("helvetica", "normal");
+        pdf.setTextColor(107, 114, 128); // Gray color
+        pdf.text("missionbuilt.io", margin, footerY);
+        
+        // Middle - page number
+        const pageNum = pdf.internal.getNumberOfPages();
+        const pageText = `${pageNum}`;
+        const pageTextWidth = pdf.getTextWidth(pageText);
+        const pageX = (pageWidth - pageTextWidth) / 2;
+        pdf.text(pageText, pageX, footerY);
+        
+        // Right side - CC BY-NC 4.0
+        const licenseText = "CC BY-NC 4.0";
+        const licenseTextWidth = pdf.getTextWidth(licenseText);
+        const licenseX = pageWidth - margin - licenseTextWidth;
+        pdf.text(licenseText, licenseX, footerY);
+      };
+
       // Helper function to check if we need a new page
       const checkPageBreak = (additionalHeight: number) => {
-        if (yPosition + additionalHeight > pageHeight - margin) {
+        if (yPosition + additionalHeight > pageHeight - margin - 15) { // Leave space for footer
+          addFooter(); // Add footer to current page before creating new one
           pdf.addPage();
           yPosition = margin;
           return true;
@@ -529,7 +554,8 @@ const PdfExportButton: React.FC<PdfExportButtonProps> = ({ chapter }) => {
         // Add the text line by line
         lines.forEach((line: string, index: number) => {
           // Check for page break before each line if needed
-          if (yPosition + fontSize * 0.3 * lineHeight > pageHeight - margin) {
+          if (yPosition + fontSize * 0.3 * lineHeight > pageHeight - margin - 15) {
+            addFooter(); // Add footer before page break
             pdf.addPage();
             yPosition = margin;
           }
@@ -584,7 +610,8 @@ const PdfExportButton: React.FC<PdfExportButtonProps> = ({ chapter }) => {
         
         tableData.forEach((row, rowIndex) => {
           // Check for page break before each row
-          if (yPosition + rowHeight > pageHeight - margin) {
+          if (yPosition + rowHeight > pageHeight - margin - 15) {
+            addFooter(); // Add footer before page break
             pdf.addPage();
             yPosition = margin;
           }
@@ -695,6 +722,9 @@ const PdfExportButton: React.FC<PdfExportButtonProps> = ({ chapter }) => {
       pdf.setFont("helvetica", "normal");
       addCenteredText("This work is licensed under a Creative Commons", 8, false, pageHeight - 30);
       addCenteredText("Attribution-NonCommercial 4.0 International License", 8, false, pageHeight - 20);
+
+      // Add footer to cover page
+      addFooter();
 
       // Start new page for content
       pdf.addPage();
@@ -807,6 +837,9 @@ const PdfExportButton: React.FC<PdfExportButtonProps> = ({ chapter }) => {
       
       addText("Citation", 14, true, true);
       addText("Nichols, Mike. Mission Built: Lessons from the Barbell and the Boardroom. missionbuilt.io", 11);
+
+      // Add footer to the last page
+      addFooter();
 
       // Download the PDF
       const fileName = `training-log-${chapter.id}-${chapter.title.toLowerCase().replace(/\s+/g, '-')}.pdf`;
