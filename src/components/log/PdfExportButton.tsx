@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
@@ -542,6 +543,26 @@ const PdfExportButton: React.FC<PdfExportButtonProps> = ({ chapter }) => {
         yPosition += fontSize * 0.2;
       };
 
+      // Helper function to add centered text
+      const addCenteredText = (text: string, fontSize: number = 11, isBold: boolean = false, yPos?: number) => {
+        pdf.setFontSize(fontSize);
+        if (isBold) {
+          pdf.setFont("helvetica", "bold");
+        } else {
+          pdf.setFont("helvetica", "normal");
+        }
+        
+        const textWidth = pdf.getTextWidth(text);
+        const x = (pageWidth - textWidth) / 2;
+        const y = yPos || yPosition;
+        
+        pdf.text(text, x, y);
+        
+        if (!yPos) {
+          yPosition += fontSize * 0.3 * lineHeight;
+        }
+      };
+
       // Helper function to add table
       const addTable = () => {
         const tableData = [
@@ -605,6 +626,69 @@ const PdfExportButton: React.FC<PdfExportButtonProps> = ({ chapter }) => {
       const addSectionSpacing = () => {
         yPosition += 15;
       };
+
+      // === COVER PAGE ===
+      // Set dark background color (matching dark mode)
+      pdf.setFillColor(34, 40, 49); // Dark blue-gray background
+      pdf.rect(0, 0, pageWidth, pageHeight, 'F');
+
+      // Add Mission Built logo area (simulated with text since we can't embed the actual logo in jsPDF easily)
+      pdf.setTextColor(255, 255, 255); // White text
+      pdf.setFontSize(24);
+      pdf.setFont("helvetica", "bold");
+      
+      // Logo simulation - "M" with barbell concept
+      addCenteredText("MISSION", 32, true, 60);
+      addCenteredText("BUILT", 32, true, 90);
+      
+      // Website
+      pdf.setTextColor(156, 163, 175); // Light gray
+      pdf.setFontSize(14);
+      pdf.setFont("helvetica", "normal");
+      addCenteredText("missionbuilt.io", 14, false, 110);
+
+      // Book title
+      pdf.setTextColor(245, 158, 11); // Sunburst color (amber)
+      pdf.setFontSize(28);
+      pdf.setFont("helvetica", "bold");
+      addCenteredText("Mission Built", 28, true, 160);
+      
+      pdf.setTextColor(255, 255, 255); // White
+      pdf.setFontSize(20);
+      pdf.setFont("helvetica", "normal");
+      addCenteredText("Lessons from the Barbell", 20, false, 185);
+      addCenteredText("and the Boardroom", 20, false, 205);
+
+      // Training log details
+      pdf.setTextColor(34, 197, 94); // Army green
+      pdf.setFontSize(18);
+      pdf.setFont("helvetica", "bold");
+      addCenteredText(`Training Log ${chapter.id}`, 18, true, 250);
+      
+      pdf.setTextColor(255, 255, 255); // White
+      pdf.setFontSize(16);
+      pdf.setFont("helvetica", "normal");
+      addCenteredText(chapter.title, 16, false, 275);
+
+      // Author
+      pdf.setTextColor(156, 163, 175); // Light gray
+      pdf.setFontSize(16);
+      pdf.setFont("helvetica", "normal");
+      addCenteredText("by Mike Nichols", 16, false, 320);
+
+      // Creative Commons License at bottom
+      pdf.setTextColor(107, 114, 128); // Darker gray
+      pdf.setFontSize(8);
+      pdf.setFont("helvetica", "normal");
+      addCenteredText("This work is licensed under a Creative Commons", 8, false, pageHeight - 40);
+      addCenteredText("Attribution-NonCommercial 4.0 International License", 8, false, pageHeight - 30);
+
+      // Start new page for content
+      pdf.addPage();
+      
+      // Reset text color and position for content
+      pdf.setTextColor(0, 0, 0); // Black text for content
+      yPosition = margin;
 
       // Title
       addText(chapter.title, 18, true, true);
