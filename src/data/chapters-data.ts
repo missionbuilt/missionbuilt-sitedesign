@@ -157,33 +157,6 @@ export const chapters: Chapter[] = [
     description: "Greatness isn't born; it's built — one rep, one iteration at a time. Whether it's product iteration or lifting volume, this chapter highlights how repeated effort compounds into capability.",
     slug: "built-through-reps",
     status: "in-progress",
-    sections: [
-      {
-        id: "the-instagram-story",
-        title: "The Instagram Story",
-        content: "In 2010, Kevin Systrom and Mike Krieger launched Burbn, a location-based check-in app with photo sharing, game mechanics, and social features. It was cluttered, confusing, and going nowhere.\n\nBut they noticed something: users loved the photo feature. So they stripped everything else away and focused on one thing — making photo sharing simple and beautiful.\n\nThey renamed it Instagram and launched it with just 13 features. The rest is history.\n\nThis wasn't a stroke of genius. It was reps. Iteration after iteration, testing and refining, until they found what worked."
-      },
-      {
-        id: "reps-build-capability",
-        title: "Reps Build Capability",
-        content: "In the gym, you don't get strong from one perfect lift. You get strong from volume — hundreds of reps, thousands of reps, building strength gradually over time.\n\nProduct development works the same way. You don't build great products from one perfect launch. You build them through iteration — shipping, learning, improving, repeat.\n\nEvery rep teaches you something. Every iteration makes you better."
-      },
-      {
-        id: "volume-before-intensity",
-        title: "Volume Before Intensity",
-        content: "Novice lifters want to max out every session. They think intensity equals progress.\n\nBut experienced lifters know better. They focus on volume first — consistent, moderate effort that builds the foundation for real strength.\n\nThe same principle applies to product work. New teams want to ship game-changing features every week. But successful teams focus on consistent, valuable iterations that compound over time."
-      },
-      {
-        id: "the-boring-work",
-        title: "The Boring Work",
-        content: "Most of your progress comes from boring work.\n\nIn lifting: warming up, mobility work, accessory exercises, back-off sets. Not glamorous, but essential.\n\nIn product: bug fixes, performance optimizations, user research, refactoring. Not exciting, but critical.\n\nThe boring work is what makes the exciting work possible."
-      },
-      {
-        id: "consistency-beats-perfection",
-        title: "Consistency Beats Perfection",
-        content: "A mediocre workout done consistently beats a perfect workout done occasionally.\n\nA decent feature shipped regularly beats a perfect feature that never ships.\n\nConsistency compounds. Perfection procrastinates."
-      }
-    ],
     furtherReading: [
       {
         title: "Deeper Read on Instagram's Rise",
