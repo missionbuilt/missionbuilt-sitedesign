@@ -98,6 +98,7 @@ That's the throughline. That's what keeps us going.
 Metrics follow. But the mission leads.
 
 [TABLE: OODA Loop Analysis]
+
 OODA Stage | With Mission-Driven Focus | Without It
 Observe | You know what matters to watch | You collect everything, drowning in noise
 Orient | Purpose helps filter & frame inputs | Metrics get over-prioritized, lose big picture
@@ -335,21 +336,47 @@ const PdfExportButton: React.FC<PdfExportButtonProps> = ({ chapter }) => {
         // Section content
         const content = getSectionContent(chapter.id, section.id);
         
-        // Split content into paragraphs for better formatting
-        const paragraphs = content.split('\n\n');
-        paragraphs.forEach((paragraph, paragraphIndex) => {
-          if (paragraph.trim()) {
-            // Check if this paragraph contains table marker
-            if (paragraph.includes('[TABLE: OODA Loop Analysis]')) {
-              // Add table instead of text
-              addTable();
-            } else {
-              addText(paragraph.trim(), 11);
-              // Add small spacing between paragraphs
-              yPosition += 3;
+        // Process content line by line to handle table placement correctly
+        const lines = content.split('\n');
+        let i = 0;
+        while (i < lines.length) {
+          const line = lines[i];
+          
+          // Check if this line is the table marker
+          if (line.includes('[TABLE: OODA Loop Analysis]')) {
+            // Skip the table marker line and the empty line after it
+            i++;
+            if (i < lines.length && lines[i].trim() === '') {
+              i++;
             }
+            
+            // Add the table
+            addTable();
+            
+            // Skip the table header and data lines
+            while (i < lines.length && (lines[i].includes('|') || lines[i].includes('OODA Stage') || lines[i].includes('Observe') || lines[i].includes('Orient') || lines[i].includes('Decide') || lines[i].includes('Act'))) {
+              i++;
+            }
+            continue;
           }
-        });
+          
+          // Regular text line - collect paragraph
+          let paragraph = '';
+          while (i < lines.length && lines[i].trim() !== '' && !lines[i].includes('[TABLE:')) {
+            paragraph += (paragraph ? ' ' : '') + lines[i].trim();
+            i++;
+          }
+          
+          if (paragraph) {
+            addText(paragraph, 11);
+            yPosition += 3; // Add small spacing between paragraphs
+          }
+          
+          // Skip empty lines
+          while (i < lines.length && lines[i].trim() === '') {
+            i++;
+          }
+        }
         
         // Add spacing between sections
         if (index < sections.length - 1) {
