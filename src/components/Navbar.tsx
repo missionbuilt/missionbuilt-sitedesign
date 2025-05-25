@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
@@ -116,8 +115,7 @@ interface NavLinkProps {
 
 const NavLink = ({ to, children, exact, onClick }: NavLinkProps) => {
   const location = useLocation();
-  const isActive = (exact && to === location.pathname) || 
-    (!exact && location.pathname.startsWith(to));
+  const isActive = exact ? to === location.pathname : location.pathname.startsWith(to);
 
   return (
     <Link 
