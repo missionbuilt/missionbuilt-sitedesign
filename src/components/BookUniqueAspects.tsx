@@ -12,7 +12,7 @@ const BookUniqueAspects = () => {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center justify-center gap-3 mb-6 animate-fade-in">
             <div className="h-px flex-grow bg-army/20 max-w-[100px]"></div>
-            <BookOpen className="h-5 w-5 text-army/70" />
+            <BookOpen className="h-5 w-5 text-army dark:text-foreground" />
             <div className="h-px flex-grow bg-army/20 max-w-[100px]"></div>
           </div>
 
@@ -25,7 +25,7 @@ const BookUniqueAspects = () => {
             <div className="p-6 rounded-lg bg-slate/5 border border-slate/10 hover:border-army/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-md animate-fade-in" style={{ animationDelay: "0.1s" }}>
               <div className="flex items-center justify-center mb-4">
                 <div className="p-3 rounded-full bg-army/10">
-                  <CheckCircle className="h-5 w-5 text-army" />
+                  <CheckCircle className="h-5 w-5 text-army dark:text-foreground" />
                 </div>
               </div>
               <h3 className="font-semibold mb-2">Free</h3>
@@ -38,7 +38,7 @@ const BookUniqueAspects = () => {
             <div className="p-6 rounded-lg bg-slate/5 border border-slate/10 hover:border-army/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-md animate-fade-in" style={{ animationDelay: "0.2s" }}>
               <div className="flex items-center justify-center mb-4">
                 <div className="p-3 rounded-full bg-army/10">
-                  <BookOpen className="h-5 w-5 text-army" />
+                  <BookOpen className="h-5 w-5 text-army dark:text-foreground" />
                 </div>
               </div>
               <h3 className="font-semibold mb-2">Open</h3>
@@ -51,7 +51,7 @@ const BookUniqueAspects = () => {
             <div className="p-6 rounded-lg bg-slate/5 border border-slate/10 hover:border-army/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-md animate-fade-in" style={{ animationDelay: "0.3s" }}>
               <div className="flex items-center justify-center mb-4">
                 <div className="p-3 rounded-full bg-army/10">
-                  <BookText className="h-5 w-5 text-army" />
+                  <BookText className="h-5 w-5 text-army dark:text-foreground" />
                 </div>
               </div>
               <h3 className="font-semibold mb-2">Real</h3>
@@ -64,7 +64,7 @@ const BookUniqueAspects = () => {
             <div className="p-6 rounded-lg bg-slate/5 border border-slate/10 hover:border-army/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-md animate-fade-in" style={{ animationDelay: "0.4s" }}>
               <div className="flex items-center justify-center mb-4">
                 <div className="p-3 rounded-full bg-army/10">
-                  <svg className="h-5 w-5 text-army" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg className="h-5 w-5 text-army dark:text-foreground" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M12 2c1.5 0 3 .5 3 2v1c0 1.5-.5 2-2 3v1a3 3 0 0 0 3 3c.5 0 1.5 0 2.5-1.5" />
                     <path d="M9 2c-1.5 0-3 .5-3 2v1c0 1.5.5 2 2 3v1a3 3 0 0 1-3 3c-.5 0-1.5 0-2.5-1.5" />
                     <path d="M3.75 19a2.25 2.25 0 0 1 4.5 0 2.25 2.25 0 0 1-4.5 0" />
