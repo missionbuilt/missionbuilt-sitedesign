@@ -56,11 +56,11 @@ const Logo = ({
 
   // Color schemes for the text portion
   const colorSchemes = {
-    // Original color scheme (Mission: slate, Built: sunburst, .io: army)
+    // Original color scheme (Mission: slate, Built: sunburst, .io: army) with dark mode improvements
     default: {
-      mission: "text-slate",
-      built: "text-sunburst",
-      domain: "text-army"
+      mission: "text-slate dark:text-slate-100",
+      built: "text-sunburst dark:text-sunburst",
+      domain: "text-army dark:text-army"
     },
     // All text in slate color for a cleaner look with dark mode support
     monochrome: {
@@ -70,15 +70,15 @@ const Logo = ({
     },
     // Subtle two-color approach (Mission+Built: slate, .io: army)
     subtle: {
-      mission: "text-slate",
-      built: "text-slate",
-      domain: "text-army"
+      mission: "text-slate dark:text-slate-100",
+      built: "text-slate dark:text-slate-100",
+      domain: "text-army dark:text-army"
     },
-    // Reverse color scheme (Mission: sunburst, Built+.io: army)
+    // Reverse color scheme (Mission: sunburst, Built+.io: army) with dark mode improvements
     reverse: {
-      mission: "text-sunburst",
-      built: "text-army",
-      domain: "text-army"
+      mission: "text-sunburst dark:text-sunburst",
+      built: "text-army dark:text-foreground",
+      domain: "text-army dark:text-foreground"
     }
   };
   
