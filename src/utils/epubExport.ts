@@ -32,6 +32,9 @@ export const generateEpub = async (chapter: Chapter): Promise<void> => {
     // Create cover page
     oebps?.file("cover.html", generateCoverHtml(chapter));
     
+    // Create inside cover page
+    oebps?.file("inside-cover.html", generateInsideCoverHtml(chapter));
+    
     // Create main content
     oebps?.file("content.html", generateContentHtml(chapter));
     
@@ -637,6 +640,7 @@ const generateContentOpf = (chapter: Chapter): string => {
     <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml"/>
     <item id="cover-image" href="cover.png" media-type="image/png"/>
     <item id="cover" href="cover.html" media-type="application/xhtml+xml"/>
+    <item id="inside-cover" href="inside-cover.html" media-type="application/xhtml+xml"/>
     <item id="content" href="content.html" media-type="application/xhtml+xml"/>
     <item id="further-reading" href="further-reading.html" media-type="application/xhtml+xml"/>
     <item id="license" href="license.html" media-type="application/xhtml+xml"/>
@@ -644,6 +648,7 @@ const generateContentOpf = (chapter: Chapter): string => {
   </manifest>
   <spine toc="ncx">
     <itemref idref="cover"/>
+    <itemref idref="inside-cover"/>
     <itemref idref="content"/>
     <itemref idref="further-reading"/>
     <itemref idref="license"/>
@@ -662,9 +667,13 @@ const generateTocNcx = (chapter: Chapter): string => {
       <navLabel><text>Cover</text></navLabel>
       <content src="cover.html"/>
     </navPoint>
+    <navPoint id="inside-cover" playOrder="2">
+      <navLabel><text>Inside Cover</text></navLabel>
+      <content src="inside-cover.html"/>
+    </navPoint>
   `;
   
-  let playOrder = 2;
+  let playOrder = 3;
   sections.forEach((section) => {
     navPoints += `
     <navPoint id="${section.id}" playOrder="${playOrder}">
@@ -732,6 +741,48 @@ const generateCoverHtml = (chapter: Chapter): string => {
       
       <div class="author-section">
         <p class="author">Mike Nichols</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>`;
+};
+
+const generateInsideCoverHtml = (chapter: Chapter): string => {
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Inside Cover</title>
+  <link rel="stylesheet" type="text/css" href="styles.css"/>
+</head>
+<body>
+  <div class="inside-cover">
+    <div class="inside-cover-content">
+      <div class="logo-section">
+        <div class="logo-text">
+          <span class="mission">Mission</span><span class="built">Built</span><span class="domain">.io</span>
+        </div>
+      </div>
+      
+      <div class="title-section">
+        <h1 class="main-title">Mission Built</h1>
+        <h2 class="subtitle">Lessons from the Barbell and the Boardroom</h2>
+        <p class="tagline">The Shared Discipline Behind Great Products and Great Lifts</p>
+      </div>
+      
+      <div class="chapter-info">
+        <h3 class="chapter-title">${escapeXml(chapter.title)}</h3>
+        <p class="training-log-label">Training Log ${chapter.id}</p>
+      </div>
+      
+      <div class="author-section">
+        <p class="author">Mike Nichols</p>
+        <p class="website"><a href="https://missionbuilt.io">missionbuilt.io</a></p>
+      </div>
+      
+      <div class="license-notice">
+        <p>This work is licensed under CC BY-NC 4.0</p>
       </div>
     </div>
   </div>
@@ -964,6 +1015,22 @@ body {
   width: 100%;
 }
 
+/* Inside cover styles - similar to cover but with additional elements */
+.inside-cover {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  padding: 40px 20px;
+}
+
+.inside-cover-content {
+  text-align: center;
+  max-width: 600px;
+  width: 100%;
+}
+
 /* Logo section */
 .logo-section {
   margin-bottom: 60px;
@@ -1055,6 +1122,7 @@ body {
 .author-section {
   border-top: 2px solid #e2e8f0;
   padding-top: 30px;
+  margin-bottom: 30px;
 }
 
 .author {
@@ -1062,8 +1130,34 @@ body {
   font-size: 20px;
   font-weight: 600;
   color: #374151;
-  margin: 0;
+  margin: 0 0 10px 0;
   letter-spacing: -0.015em;
+}
+
+.website {
+  font-size: 16px;
+  margin: 0;
+}
+
+.website a {
+  color: #059669;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.website a:hover {
+  text-decoration: underline;
+}
+
+/* License notice for inside cover */
+.license-notice {
+  font-size: 14px;
+  color: #64748b;
+  font-style: italic;
+}
+
+.license-notice p {
+  margin: 0;
 }
 
 /* Content page styles */
@@ -1228,7 +1322,7 @@ a:hover {
     font-size: 22px;
   }
   
-  .cover-content {
+  .cover-content, .inside-cover-content {
     padding: 0 10px;
   }
   
@@ -1245,8 +1339,6 @@ a:hover {
   }
 }
 `;
-
-};
 
 const generateFilename = (title: string): string => {
   return title
