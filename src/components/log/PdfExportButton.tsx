@@ -507,7 +507,7 @@ const PdfExportButton: React.FC<PdfExportButtonProps> = ({ chapter }) => {
         pdf.text("missionbuilt.io", margin, footerY);
         
         // Middle - page number
-        const pageNum = pdf.internal.getNumberOfPages();
+        const pageNum = pdf.getCurrentPageInfo().pageNumber;
         const pageText = `${pageNum}`;
         const pageTextWidth = pdf.getTextWidth(pageText);
         const pageX = (pageWidth - pageTextWidth) / 2;
