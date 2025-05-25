@@ -1,14 +1,8 @@
+
 import React from 'react';
 import EPub from 'epub-gen-memory';
 import { saveAs } from 'file-saver';
-
-export interface Chapter {
-  id: number;
-  title: string;
-  subtitle: string;
-  status: 'draft' | 'published';
-  readTime: string;
-}
+import { Chapter } from '@/data/chapters-data';
 
 const renderContentToString = (content: React.ReactNode): string => {
   const getTextFromReactNode = (node: React.ReactNode): string => {
@@ -182,7 +176,7 @@ export const generateEpub = async (chapters: Chapter | Chapter[], getChapterCont
               <div class="chapter-header">
                 <h1>Chapter ${chapter.id}</h1>
                 <h2>${chapter.title}</h2>
-                <p><em>${chapter.subtitle || ''}</em></p>
+                <p><em>${chapter.description || ''}</em></p>
               </div>
               
               ${content}
