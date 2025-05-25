@@ -954,11 +954,12 @@ body {
 /* Content wrapper with proper spacing for headers/footers */
 .content-wrapper {
   flex: 1;
-  padding: 80px 40px 80px 40px; /* Top and bottom padding to account for fixed headers/footers */
+  padding: 60px 40px 60px 40px; /* Reduced top/bottom padding to prevent cutoff */
   max-width: 800px;
   margin: 0 auto;
   overflow-wrap: break-word;
   word-wrap: break-word;
+  min-height: calc(100vh - 120px); /* Ensure minimum height accounting for headers/footers */
 }
 
 /* Cover page styles - no headers/footers */
@@ -1114,7 +1115,7 @@ h1 {
   padding-bottom: 15px;
   font-size: 32px;
   font-weight: 700;
-  margin: 0 0 40px 0;
+  margin: 0 0 30px 0; /* Reduced bottom margin */
   letter-spacing: -0.025em;
   line-height: 1.2;
 }
@@ -1122,7 +1123,7 @@ h1 {
 h2 {
   font-family: 'Montserrat', sans-serif;
   color: #1e293b;
-  margin: 50px 0 25px 0;
+  margin: 40px 0 20px 0; /* Reduced margins */
   font-size: 24px;
   font-weight: 600;
   letter-spacing: -0.015em;
@@ -1132,7 +1133,7 @@ h2 {
 h3 {
   font-family: 'Montserrat', sans-serif;
   color: #334155;
-  margin: 40px 0 20px 0;
+  margin: 30px 0 15px 0; /* Reduced margins */
   font-size: 20px;
   font-weight: 600;
   letter-spacing: -0.015em;
@@ -1142,19 +1143,19 @@ h3 {
 .description {
   font-style: italic;
   color: #64748b;
-  margin-bottom: 40px;
+  margin-bottom: 30px; /* Reduced margin */
   font-size: 18px;
   line-height: 1.6;
 }
 
 .section {
-  margin-bottom: 60px;
+  margin-bottom: 40px; /* Reduced margin */
   page-break-after: auto;
 }
 
 /* Text content styles */
 p {
-  margin: 0 0 25px 0;
+  margin: 0 0 20px 0; /* Reduced bottom margin */
   line-height: 1.7;
   font-size: 16px;
   color: #374151;
@@ -1163,8 +1164,8 @@ p {
 
 blockquote {
   border-left: 4px solid #059669;
-  padding: 25px;
-  margin: 40px 0;
+  padding: 20px; /* Reduced padding */
+  margin: 30px 0; /* Reduced margin */
   font-style: italic;
   color: #4b5563;
   background: #f8fafc;
@@ -1177,12 +1178,12 @@ blockquote {
 }
 
 ul {
-  margin: 25px 0;
+  margin: 20px 0; /* Reduced margin */
   padding-left: 30px;
 }
 
 li {
-  margin-bottom: 12px;
+  margin-bottom: 10px; /* Reduced margin */
   line-height: 1.6;
   color: #374151;
 }
@@ -1191,13 +1192,13 @@ li {
 table {
   width: 100%;
   border-collapse: collapse;
-  margin: 40px 0;
+  margin: 30px 0; /* Reduced margin */
   font-size: 14px;
 }
 
 th, td {
   border: 1px solid #d1d5db;
-  padding: 15px;
+  padding: 12px; /* Reduced padding */
   text-align: left;
   line-height: 1.5;
 }
@@ -1212,32 +1213,53 @@ tr:nth-child(even) {
   background-color: #f9fafb;
 }
 
-/* Resource and license styles */
+/* Resource and license styles - improved spacing */
 .resource {
-  margin-bottom: 35px;
-  padding: 25px;
+  margin-bottom: 25px; /* Reduced margin */
+  padding: 20px; /* Reduced padding */
   border-left: 3px solid #059669;
   background-color: #f8fafc;
   border-radius: 8px;
+  page-break-inside: avoid;
 }
 
 .resource h3 {
   margin-top: 0;
+  margin-bottom: 10px; /* Added explicit bottom margin */
   color: #059669;
+}
+
+.resource p {
+  margin-bottom: 15px; /* Consistent spacing */
 }
 
 .resource .note {
   font-style: italic;
   font-size: 14px;
   color: #64748b;
+  margin-bottom: 0; /* Remove bottom margin for last element */
 }
 
 .license {
-  padding: 40px;
+  padding: 30px; /* Reduced padding */
   font-family: 'Inter', serif;
   background: #f8fafc;
   border-radius: 8px;
   border: 1px solid #e2e8f0;
+  page-break-inside: avoid;
+}
+
+.license h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.license p {
+  margin-bottom: 15px; /* Consistent spacing */
+}
+
+.license p:last-child {
+  margin-bottom: 0; /* Remove bottom margin for last paragraph */
 }
 
 /* Links */
@@ -1259,23 +1281,23 @@ a:hover {
   
   .page-header {
     position: static;
-    margin-bottom: 20px;
+    margin-bottom: 15px; /* Reduced margin */
   }
   
   .page-footer {
     position: static;
-    margin-top: 20px;
+    margin-top: 15px; /* Reduced margin */
   }
   
   .content-wrapper {
-    padding: 20px 0;
+    padding: 15px 0; /* Reduced padding for print */
   }
   
   h1, h2, h3 {
     page-break-after: avoid;
   }
   
-  .section {
+  .section, .resource, .license {
     page-break-inside: avoid;
   }
 }
@@ -1295,15 +1317,19 @@ a:hover {
   }
   
   .chapter-info {
-    padding: 25px;
+    padding: 20px; /* Reduced padding */
   }
   
   .page-header, .page-footer {
-    padding: 0 20px;
+    padding: 0 15px; /* Reduced padding */
   }
   
   .content-wrapper {
-    padding: 80px 20px;
+    padding: 50px 15px; /* Reduced padding */
+  }
+  
+  .resource, .license {
+    padding: 15px; /* Reduced padding for small screens */
   }
 }
 `;
