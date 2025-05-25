@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
@@ -33,7 +32,7 @@ const Navbar = () => {
   }, [location.pathname]);
 
   return (
-    <header className="bg-white/90 dark:bg-slate/5 backdrop-blur-sm sticky top-0 z-10 border-b border-slate/10 dark:border-slate/20">
+    <header className="bg-white/95 dark:bg-slate/90 backdrop-blur-md sticky top-0 z-10 border-b border-slate/10 dark:border-slate/20">
       <div className="container-custom flex items-center justify-between py-4">
         {/* Logo with reverse color scheme */}
         <Logo colorScheme="reverse" />
@@ -81,7 +80,7 @@ const Navbar = () => {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="absolute top-full left-0 right-0 bg-white dark:bg-slate/10 shadow-lg border-t border-slate/10 dark:border-slate/20 md:hidden py-2">
+          <div className="absolute top-full left-0 right-0 bg-white/95 dark:bg-slate/90 backdrop-blur-md shadow-lg border-t border-slate/10 dark:border-slate/20 md:hidden py-2">
             <nav className="flex flex-col">
               <MobileNavLink to="/" onClick={() => {setIsMenuOpen(false); scrollToTop();}}>The Mission</MobileNavLink>
               <div className="relative">
