@@ -1,4 +1,5 @@
 
+import React from 'react';
 import EPub from 'epub-gen-memory';
 import { saveAs } from 'file-saver';
 

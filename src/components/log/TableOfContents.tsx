@@ -57,7 +57,7 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ chapter, onSectionCli
   return (
     <div className="bg-slate/5 rounded-lg p-6 border border-slate/10">
       <div className="flex items-center gap-2 mb-4">
-        <BookOpen className="h-5 w-5 text-army" />
+        <BookOpen className="h-5 w-5 text-army dark:text-sunburst" />
         <h3 className="font-semibold text-foreground dark:text-slate-100">Table of Contents</h3>
       </div>
       
