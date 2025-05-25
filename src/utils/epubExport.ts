@@ -94,6 +94,7 @@ export const generateEpub = async (chapters: Chapter | Chapter[], getChapterCont
     
     // Convert single chapter to array for uniform processing
     const chaptersArray = Array.isArray(chapters) ? chapters : [chapters];
+    console.log('Processing chapters:', chaptersArray.map(c => c.id));
     
     // Default content function if none provided
     const defaultGetContent = (chapterId: number): string => {
@@ -109,6 +110,9 @@ export const generateEpub = async (chapters: Chapter | Chapter[], getChapterCont
     const fileName = chaptersArray.length === 1 
       ? `mission-built-chapter-${chaptersArray[0].id}.epub`
       : 'mission-built-building-better-products.epub';
+
+    console.log('Book title:', bookTitle);
+    console.log('File name:', fileName);
 
     const options = {
       title: bookTitle,
@@ -232,17 +236,27 @@ export const generateEpub = async (chapters: Chapter | Chapter[], getChapterCont
       verbose: true
     };
 
-    console.log('Generating EPUB with options:', options);
+    console.log('Generating EPUB with options...');
     
     const epubBuffer = await EPub(options);
     console.log('EPUB generated successfully, buffer size:', epubBuffer.length);
     
+    if (!epubBuffer || epubBuffer.length === 0) {
+      throw new Error('Generated EPUB buffer is empty');
+    }
+    
+    console.log('Creating blob with filename:', fileName);
     const blob = new Blob([epubBuffer], { type: 'application/epub+zip' });
+    
+    console.log('Initiating download with saveAs...');
     saveAs(blob, fileName);
     
-    console.log('EPUB download initiated');
+    console.log('EPUB download initiated successfully');
   } catch (error) {
-    console.error('EPUB generation failed:', error);
+    console.error('EPUB generation failed with detailed error:', error);
+    console.error('Error name:', error instanceof Error ? error.name : 'Unknown');
+    console.error('Error message:', error instanceof Error ? error.message : 'Unknown error');
+    console.error('Error stack:', error instanceof Error ? error.stack : 'No stack trace');
     throw error;
   }
 };
