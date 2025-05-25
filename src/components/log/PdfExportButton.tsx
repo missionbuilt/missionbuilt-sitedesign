@@ -46,16 +46,15 @@ const PdfExportButton: React.FC<PdfExportButtonProps> = ({ chapter }) => {
         yPosition += lines.length * fontSize * 0.4 + 5;
       };
 
-      // Title - exactly as shown on page
-      addText(`Training Log ${chapter.id}`, 14);
+      // Title
       addText(chapter.title, 20, true);
       yPosition += 10;
 
-      // Description - exactly as shown on page
+      // Description
       addText(chapter.description, 14);
       yPosition += 10;
 
-      // Sections - only if they exist and exactly as written
+      // Sections
       if (chapter.sections && chapter.sections.length > 0) {
         chapter.sections.forEach((section) => {
           addText(section.title, 16, true);
@@ -64,7 +63,7 @@ const PdfExportButton: React.FC<PdfExportButtonProps> = ({ chapter }) => {
         });
       }
 
-      // Further Reading - only if it exists and exactly as written
+      // Further Reading
       if (chapter.furtherReading && chapter.furtherReading.length > 0) {
         addText("Further Reading", 16, true);
         chapter.furtherReading.forEach((resource) => {
@@ -73,9 +72,9 @@ const PdfExportButton: React.FC<PdfExportButtonProps> = ({ chapter }) => {
             addText(resource.description);
           }
           if (resource.note) {
-            addText(`Note: ${resource.note}`, 10);
+            addText(resource.note, 10);
           }
-          addText(`URL: ${resource.url}`, 10);
+          addText(resource.url, 10);
           yPosition += 3;
         });
       }
