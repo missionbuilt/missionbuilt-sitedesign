@@ -1,15 +1,25 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const AboutMeSection = () => {
+  const [imageLoaded, setImageLoaded] = useState(false);
+  
   return (
     <div className="flex flex-col items-center space-y-8 mb-16">
-      <div className="w-40 h-40 overflow-hidden rounded-full border-4 border-primary/10">
+      <div className="w-40 h-40 overflow-hidden rounded-full border-4 border-primary/10 relative">
+        {!imageLoaded && (
+          <Skeleton className="w-full h-full rounded-full" />
+        )}
         <img 
           src="/lovable-uploads/777697e9-e718-4177-9c47-cb5be778fdd3.png" 
           alt="Mike cartoon character" 
-          className="w-full h-full object-cover"
+          className={`w-full h-full object-cover transition-opacity duration-300 ${
+            imageLoaded ? 'opacity-100' : 'opacity-0'
+          }`}
+          loading="lazy"
+          onLoad={() => setImageLoaded(true)}
         />
       </div>
 

@@ -2,10 +2,13 @@
 import { useTheme } from '@/context/ThemeContext';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
+import { useState } from 'react';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const HeroSection = () => {
   const { theme } = useTheme();
   const isDarkMode = theme === 'dark';
+  const [logoLoaded, setLogoLoaded] = useState(false);
   
   return (
     <section className="relative py-24 md:py-32 overflow-hidden">
@@ -20,10 +23,17 @@ const HeroSection = () => {
           <div className="flex justify-center mb-10">
             <div className="h-24 w-24 flex items-center justify-center relative">
               <div className="absolute inset-0 bg-army/5 dark:bg-army/10 rounded-full"></div>
+              {!logoLoaded && (
+                <Skeleton className="h-20 w-20 rounded-full relative z-10" />
+              )}
               <img 
                 src="/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png" 
                 alt="Logo" 
-                className="h-20 w-auto relative z-10"
+                className={`h-20 w-auto relative z-10 transition-opacity duration-300 ${
+                  logoLoaded ? 'opacity-100' : 'opacity-0'
+                }`}
+                loading="lazy"
+                onLoad={() => setLogoLoaded(true)}
               />
             </div>
           </div>

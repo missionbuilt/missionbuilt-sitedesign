@@ -1,5 +1,7 @@
 
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface BlogCardProps {
   title: string;
@@ -20,16 +22,24 @@ const BlogCard = ({
   image = "/placeholder.svg", 
   featured = false 
 }: BlogCardProps) => {
+  const [imageLoaded, setImageLoaded] = useState(false);
   
   if (featured) {
     return (
       <Link to={`/blog/${slug}`} className="group block">
         <div className="grid md:grid-cols-2 gap-6 rounded-xl overflow-hidden bg-white border border-slate/10 shadow-sm card-hover">
-          <div className="aspect-video overflow-hidden">
+          <div className="aspect-video overflow-hidden relative">
+            {!imageLoaded && (
+              <Skeleton className="w-full h-full" />
+            )}
             <img 
               src={image} 
               alt={title} 
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
+              className={`w-full h-full object-cover transition-all duration-500 group-hover:scale-105 ${
+                imageLoaded ? 'opacity-100' : 'opacity-0'
+              }`}
+              loading="lazy"
+              onLoad={() => setImageLoaded(true)}
             />
           </div>
           <div className="p-6 flex flex-col">
@@ -60,11 +70,18 @@ const BlogCard = ({
   return (
     <Link to={`/blog/${slug}`} className="group block">
       <div className="rounded-xl overflow-hidden bg-white border border-slate/10 shadow-sm card-hover">
-        <div className="aspect-video overflow-hidden">
+        <div className="aspect-video overflow-hidden relative">
+          {!imageLoaded && (
+            <Skeleton className="w-full h-full" />
+          )}
           <img 
             src={image} 
             alt={title} 
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
+            className={`w-full h-full object-cover transition-all duration-500 group-hover:scale-105 ${
+              imageLoaded ? 'opacity-100' : 'opacity-0'
+            }`}
+            loading="lazy"
+            onLoad={() => setImageLoaded(true)}
           />
         </div>
         <div className="p-6">
