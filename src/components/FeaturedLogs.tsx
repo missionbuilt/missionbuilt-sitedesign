@@ -1,3 +1,4 @@
+
 import { Link } from 'react-router-dom';
 import { Badge } from '@/components/ui/badge';
 import { ExternalLink } from 'lucide-react';
@@ -21,7 +22,7 @@ const FeaturedLogs = () => {
 
         {featuredLogs.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-slate/60">No training logs available yet.</p>
+            <p className="text-muted-foreground">No training logs available yet.</p>
           </div>
         ) : (
           <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
@@ -44,13 +45,13 @@ const FeaturedLogs = () => {
                   )}
 
                   <div className="mb-4">
-                    <div className="flex items-center text-slate/60 text-sm mb-2">
+                    <div className="flex items-center text-muted-foreground text-sm mb-2">
                       <span>Log {chapter.id}</span>
                     </div>
                     <h3 className="heading-sm mb-3 group-hover:text-army transition-colors duration-200">
                       {chapter.title}
                     </h3>
-                    <p className="body text-slate/70 mb-4">
+                    <p className="body text-muted-foreground mb-4">
                       {chapter.description}
                     </p>
                   </div>
