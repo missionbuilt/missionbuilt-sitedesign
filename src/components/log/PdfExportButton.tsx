@@ -480,6 +480,31 @@ const getSections = (chapterId: number) => {
   return [];
 };
 
+// Helper function to check if next training log is available
+const isNextLogAvailable = (currentChapterId: number) => {
+  // Check if the next chapter exists in our chapters data
+  const nextChapterId = currentChapterId + 1;
+  // For now, we know that chapters 1 and 2 exist, so only chapter 3+ are "coming soon"
+  return nextChapterId <= 2;
+};
+
+// Helper function to get next chapter info
+const getNextChapterInfo = (currentChapterId: number) => {
+  const nextChapterId = currentChapterId + 1;
+  
+  // Define known chapter titles
+  const chapterTitles: { [key: number]: string } = {
+    1: "Mission Before Metrics",
+    2: "Built Through Reps",
+    3: "Rituals Over Rules"
+  };
+  
+  return {
+    id: nextChapterId,
+    title: chapterTitles[nextChapterId] || "Coming Soon"
+  };
+};
+
 const PdfExportButton: React.FC<PdfExportButtonProps> = ({ chapter }) => {
   const [isGenerating, setIsGenerating] = useState(false);
   const { toast } = useToast();
@@ -795,6 +820,23 @@ const PdfExportButton: React.FC<PdfExportButtonProps> = ({ chapter }) => {
           addSectionSpacing();
         }
       });
+
+      // Add conditional text before Further Reading section
+      addSectionSpacing();
+      addSectionSpacing(); // Extra space before the conditional text
+      
+      const nextLogAvailable = isNextLogAvailable(chapter.id);
+      const nextChapter = getNextChapterInfo(chapter.id);
+      
+      if (nextLogAvailable) {
+        addText("One chapter. One set.", 11);
+        addText(`Let's keep the rhythm. Training Log ${nextChapter.id} – ${nextChapter.title} is next.`, 11);
+        addText(`missionbuilt.io/log/${nextChapter.id}`, 11);
+      } else {
+        addText("Good set. We're chalking up for the next one.", 11);
+        addText(`Training Log ${nextChapter.id} – ${nextChapter.title} is coming soon.`, 11);
+        addText("Want a heads-up when it's live? Until then follow along at missionbuilt.io or over on Bluesky: missionbuilt.bsky.social", 11);
+      }
 
       // Further Reading section
       if (chapter.furtherReading && chapter.furtherReading.length > 0) {
