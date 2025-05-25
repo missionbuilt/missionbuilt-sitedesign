@@ -20,7 +20,7 @@ const AboutMe = () => {
   };
 
   const pageTitle = "About Mike | MissionBuilt.io";
-  const pageDescription = "Meet Mike, the author behind MissionBuilt. A product leader, powerlifting coach, and father sharing lessons from the barbell and the boardroom.";
+  const pageDescription = "An open-source book exploring how product leadership and powerlifting intersect.";
 
   return (
     <div className="min-h-screen flex flex-col bg-background">

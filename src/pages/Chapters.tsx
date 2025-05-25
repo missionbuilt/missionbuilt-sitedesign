@@ -22,7 +22,7 @@ const Chapters = () => {
   }, []);
 
   const pageTitle = "Training Logs | MissionBuilt.io";
-  const pageDescription = "Explore all training logs from Mission Built: Lessons from the Barbell and the Boardroom. Product management insights through the lens of powerlifting.";
+  const pageDescription = "An open-source book exploring how product leadership and powerlifting intersect.";
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
