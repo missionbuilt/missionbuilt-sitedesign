@@ -1,4 +1,3 @@
-
 import { Chapter } from "@/data/chapters-data";
 import JSZip from 'jszip';
 
@@ -835,7 +834,7 @@ const generateContentHtml = (chapter: Chapter): string => {
   
   <div class="page-footer">
     <div class="footer-left"><a href="https://missionbuilt.io">missionbuilt.io</a></div>
-    <div class="footer-right"><span class="page-number"></span> | CC BY-NC 4.0</div>
+    <div class="footer-right"><span class="page-number"></span> CC BY-NC 4.0</div>
   </div>
 </body>
 </html>`;
@@ -876,7 +875,7 @@ const generateFurtherReadingHtml = (chapter: Chapter): string => {
   
   <div class="page-footer">
     <div class="footer-left"><a href="https://missionbuilt.io">missionbuilt.io</a></div>
-    <div class="footer-right"><span class="page-number"></span> | CC BY-NC 4.0</div>
+    <div class="footer-right"><span class="page-number"></span> CC BY-NC 4.0</div>
   </div>
 </body>
 </html>`;
@@ -914,7 +913,7 @@ const generateLicenseHtml = (): string => {
   
   <div class="page-footer">
     <div class="footer-left"><a href="https://missionbuilt.io">missionbuilt.io</a></div>
-    <div class="footer-right"><span class="page-number"></span> | CC BY-NC 4.0</div>
+    <div class="footer-right"><span class="page-number"></span> CC BY-NC 4.0</div>
   </div>
 </body>
 </html>`;
@@ -1340,7 +1339,6 @@ a:hover {
   }
 }
 `;
-};
 
 const generateFilename = (title: string): string => {
   return title
