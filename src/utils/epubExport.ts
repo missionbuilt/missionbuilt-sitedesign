@@ -128,25 +128,29 @@ const generateEpub = async (chapter: Chapter) => {
   <link rel="stylesheet" type="text/css" href="style.css"/>
 </head>
 <body>
-  <header class="page-header">
-    <div class="header-left">Mission Built</div>
-    <div class="header-right">Training Log ${chapter.id}: ${escapeXml(chapter.title)}</div>
-  </header>
-  
-  <nav epub:type="toc">
-    <h1>Table of Contents</h1>
-    <ol>
-      <li><a href="cover.xhtml">Cover</a></li>
-      <li><a href="inside-cover.xhtml">Inside Cover</a></li>
-      <li><a href="content.xhtml">${escapeXml(chapter.title)}</a></li>
-      <li><a href="license.xhtml">License</a></li>
-    </ol>
-  </nav>
-  
-  <footer class="page-footer">
-    <div class="footer-left">missionbuilt.io</div>
-    <div class="footer-right">CC BY-NC 4.0</div>
-  </footer>
+  <div class="page-container">
+    <header class="page-header">
+      <div class="header-left">Mission Built</div>
+      <div class="header-right">Training Log ${chapter.id}: ${escapeXml(chapter.title)}</div>
+    </header>
+    
+    <main class="page-content">
+      <nav epub:type="toc">
+        <h1>Table of Contents</h1>
+        <ol>
+          <li><a href="cover.xhtml">Cover</a></li>
+          <li><a href="inside-cover.xhtml">Inside Cover</a></li>
+          <li><a href="content.xhtml">${escapeXml(chapter.title)}</a></li>
+          <li><a href="license.xhtml">License</a></li>
+        </ol>
+      </nav>
+    </main>
+    
+    <footer class="page-footer">
+      <div class="footer-left">missionbuilt.io</div>
+      <div class="footer-right">CC BY-NC 4.0</div>
+    </footer>
+  </div>
 </body>
 </html>`);
 
@@ -191,35 +195,39 @@ const generateEpub = async (chapter: Chapter) => {
   <link rel="stylesheet" type="text/css" href="style.css"/>
 </head>
 <body class="cover-page light-cover">
-  <header class="page-header">
-    <div class="header-left">Mission Built</div>
-    <div class="header-right">Training Log ${chapter.id}: ${escapeXml(chapter.title)}</div>
-  </header>
-  
-  <div class="cover-content">
-    <div class="cover-header">
-      <div class="logo-container">
-        <img src="logo.png" alt="MissionBuilt Logo" class="logo-image" />
-        <div class="logo-text">
-          <span class="mission">Mission</span><span class="built">Built</span><span class="domain">.io</span>
+  <div class="page-container">
+    <header class="page-header">
+      <div class="header-left">Mission Built</div>
+      <div class="header-right">Training Log ${chapter.id}: ${escapeXml(chapter.title)}</div>
+    </header>
+    
+    <main class="page-content">
+      <div class="cover-content">
+        <div class="cover-header">
+          <div class="logo-container">
+            <img src="logo.png" alt="MissionBuilt Logo" class="logo-image" />
+            <div class="logo-text">
+              <span class="mission">Mission</span><span class="built">Built</span><span class="domain">.io</span>
+            </div>
+          </div>
+        </div>
+        <div class="cover-main">
+          <h1 class="cover-title">Mission Built</h1>
+          <h2 class="cover-subtitle">Lessons from the Barbell and the Boardroom</h2>
+          <p class="cover-training-log">Training Log ${chapter.id}: ${escapeXml(chapter.title)}</p>
+          <p class="cover-author">by Mike Nichols</p>
+        </div>
+        <div class="cover-footer">
+          <p class="cc-license">Licensed under Creative Commons Attribution-NonCommercial 4.0</p>
         </div>
       </div>
-    </div>
-    <div class="cover-main">
-      <h1 class="cover-title">Mission Built</h1>
-      <h2 class="cover-subtitle">Lessons from the Barbell and the Boardroom</h2>
-      <p class="cover-training-log">Training Log ${chapter.id}: ${escapeXml(chapter.title)}</p>
-      <p class="cover-author">by Mike Nichols</p>
-    </div>
-    <div class="cover-footer">
-      <p class="cc-license">Licensed under Creative Commons Attribution-NonCommercial 4.0</p>
-    </div>
+    </main>
+    
+    <footer class="page-footer">
+      <div class="footer-left">missionbuilt.io</div>
+      <div class="footer-right">CC BY-NC 4.0</div>
+    </footer>
   </div>
-  
-  <footer class="page-footer">
-    <div class="footer-left">missionbuilt.io</div>
-    <div class="footer-right">CC BY-NC 4.0</div>
-  </footer>
 </body>
 </html>`);
 
@@ -262,22 +270,24 @@ const generateEpub = async (chapter: Chapter) => {
   <link rel="stylesheet" type="text/css" href="style.css"/>
 </head>
 <body>
-  <header class="page-header">
-    <div class="header-left">Mission Built</div>
-    <div class="header-right">Training Log ${chapter.id}: ${escapeXml(chapter.title)}</div>
-  </header>
-  
-  <main class="content-main">
-    <h1>${escapeXml(chapter.title)}</h1>
-    <p class="chapter-description">${escapeXml(chapter.description)}</p>
-    ${chapterContent}
-    ${furtherReadingContent}
-  </main>
-  
-  <footer class="page-footer">
-    <div class="footer-left">missionbuilt.io</div>
-    <div class="footer-right">CC BY-NC 4.0</div>
-  </footer>
+  <div class="page-container">
+    <header class="page-header">
+      <div class="header-left">Mission Built</div>
+      <div class="header-right">Training Log ${chapter.id}: ${escapeXml(chapter.title)}</div>
+    </header>
+    
+    <main class="page-content">
+      <h1>${escapeXml(chapter.title)}</h1>
+      <p class="chapter-description">${escapeXml(chapter.description)}</p>
+      ${chapterContent}
+      ${furtherReadingContent}
+    </main>
+    
+    <footer class="page-footer">
+      <div class="footer-left">missionbuilt.io</div>
+      <div class="footer-right">CC BY-NC 4.0</div>
+    </footer>
+  </div>
 </body>
 </html>`);
 
@@ -290,33 +300,35 @@ const generateEpub = async (chapter: Chapter) => {
   <link rel="stylesheet" type="text/css" href="style.css"/>
 </head>
 <body>
-  <header class="page-header">
-    <div class="header-left">Mission Built</div>
-    <div class="header-right">Training Log ${chapter.id}: ${escapeXml(chapter.title)}</div>
-  </header>
-  
-  <main class="content-main">
-    <h1>License</h1>
+  <div class="page-container">
+    <header class="page-header">
+      <div class="header-left">Mission Built</div>
+      <div class="header-right">Training Log ${chapter.id}: ${escapeXml(chapter.title)}</div>
+    </header>
     
-    <h2>Mission Built: Lessons from the Barbell and the Boardroom</h2>
-    <p><strong>by Mike Nichols</strong></p>
+    <main class="page-content">
+      <h1>License</h1>
+      
+      <h2>Mission Built: Lessons from the Barbell and the Boardroom</h2>
+      <p><strong>by Mike Nichols</strong></p>
+      
+      <p>This work is licensed under a<br/>
+      <strong>Creative Commons Attribution-NonCommercial 4.0 International License.</strong><br/>
+      To view a copy of this license, visit<br/>
+      <a href="https://creativecommons.org/licenses/by-nc/4.0">creativecommons.org/licenses/by-nc/4.0</a></p>
+      
+      <p>You are free to share and adapt this work for non-commercial use, with appropriate credit and a link to <a href="https://missionbuilt.io">missionbuilt.io</a>.</p>
+    </main>
     
-    <p>This work is licensed under a<br/>
-    <strong>Creative Commons Attribution-NonCommercial 4.0 International License.</strong><br/>
-    To view a copy of this license, visit<br/>
-    <a href="https://creativecommons.org/licenses/by-nc/4.0">creativecommons.org/licenses/by-nc/4.0</a></p>
-    
-    <p>You are free to share and adapt this work for non-commercial use, with appropriate credit and a link to <a href="https://missionbuilt.io">missionbuilt.io</a>.</p>
-  </main>
-  
-  <footer class="page-footer">
-    <div class="footer-left">missionbuilt.io</div>
-    <div class="footer-right">CC BY-NC 4.0</div>
-  </footer>
+    <footer class="page-footer">
+      <div class="footer-left">missionbuilt.io</div>
+      <div class="footer-right">CC BY-NC 4.0</div>
+    </footer>
+  </div>
 </body>
 </html>`);
 
-  // Add enhanced CSS with updated header and footer styles
+  // Add enhanced CSS with improved header and footer display for EPUB readers
   oebps?.file("style.css", `/* Base typography and layout */
 body { 
   font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -324,9 +336,20 @@ body {
   margin: 0;
   padding: 0;
   color: #4A5A68;
+}
+
+/* Page container for proper header/footer positioning */
+.page-container {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
+
+.page-content {
+  flex: 1;
+  padding: 0 2rem;
+  max-width: 65ch;
+  margin: 0 auto;
 }
 
 /* Cover page styles */
@@ -352,7 +375,7 @@ body {
 .cover-content {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 100%;
   padding: 2rem;
   box-sizing: border-box;
 }
@@ -448,59 +471,76 @@ body {
   margin: 0;
 }
 
-/* Page headers and footers */
+/* Page headers and footers - Enhanced for EPUB readers */
 .page-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: block !important;
+  width: 100%;
   padding: 1rem 2rem;
   border-bottom: 2px solid #e2e8f0;
   margin-bottom: 2rem;
+  background-color: #ffffff;
+  position: relative;
+  z-index: 100;
+  box-sizing: border-box;
+}
+
+.page-header::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.header-left {
+  float: left;
   font-weight: 600;
   font-size: 0.875rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  flex-shrink: 0;
-}
-
-.header-left {
   color: #4A5A68;
 }
 
 .header-right {
+  float: right;
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   color: #3A77AD;
 }
 
 .page-footer {
-  margin-top: auto;
+  display: block !important;
+  width: 100%;
+  margin-top: 2rem;
   padding: 1.5rem 2rem;
   border-top: 2px solid #e2e8f0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.875rem;
-  color: #64748b;
-  flex-shrink: 0;
+  background-color: #ffffff;
+  position: relative;
+  z-index: 100;
+  box-sizing: border-box;
+}
+
+.page-footer::after {
+  content: "";
+  display: table;
+  clear: both;
 }
 
 .footer-left {
+  float: left;
   color: #3A77AD;
   font-weight: 500;
+  font-size: 0.875rem;
 }
 
 .footer-right {
+  float: right;
   color: #64748b;
   font-weight: 500;
+  font-size: 0.875rem;
 }
 
 /* Content styles */
-.content-main {
-  padding: 0 2rem;
-  max-width: 65ch;
-  margin: 0 auto;
-  flex: 1;
-}
-
 h1 { 
   font-family: Montserrat, sans-serif;
   font-size: 2.5rem; 
@@ -579,19 +619,35 @@ section h2:first-child {
   padding-bottom: 0.5rem;
 }
 
-/* Print optimizations */
-@media print {
-  .cover-page {
-    page-break-after: always;
-  }
-  
+/* Print and EPUB optimizations */
+@media print, screen {
   .page-header {
-    position: running(header);
+    page-break-inside: avoid;
+    break-inside: avoid;
   }
   
   .page-footer {
-    position: running(footer);
+    page-break-inside: avoid;
+    break-inside: avoid;
   }
+  
+  .cover-page {
+    page-break-after: always;
+    break-after: page;
+  }
+}
+
+/* Fallback for older EPUB readers */
+@page {
+  margin: 1in;
+}
+
+/* Ensure headers and footers are visible */
+.page-header,
+.page-footer {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 `);
 
