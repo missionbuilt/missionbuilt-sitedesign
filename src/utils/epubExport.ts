@@ -119,7 +119,7 @@ const generateEpub = async (chapter: Chapter) => {
   // Add the cover image
   oebps?.file("cover.png", coverImageBlob);
 
-  // Add the nav.xhtml file
+  // Add the nav.xhtml file with header and footer
   oebps?.file("nav.xhtml", `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops">
@@ -128,6 +128,11 @@ const generateEpub = async (chapter: Chapter) => {
   <link rel="stylesheet" type="text/css" href="style.css"/>
 </head>
 <body>
+  <header class="page-header">
+    <div class="header-left">Mission Built</div>
+    <div class="header-right">Training Log ${chapter.id}: ${escapeXml(chapter.title)}</div>
+  </header>
+  
   <nav epub:type="toc">
     <h1>Table of Contents</h1>
     <ol>
@@ -137,6 +142,11 @@ const generateEpub = async (chapter: Chapter) => {
       <li><a href="license.xhtml">License</a></li>
     </ol>
   </nav>
+  
+  <footer class="page-footer">
+    <div class="footer-left">missionbuilt.io</div>
+    <div class="footer-right">CC BY-NC 4.0</div>
+  </footer>
 </body>
 </html>`);
 
@@ -172,7 +182,7 @@ const generateEpub = async (chapter: Chapter) => {
 </body>
 </html>`);
 
-  // Add the inside cover page (light mode style)
+  // Add the inside cover page (light mode style) with header and footer
   oebps?.file("inside-cover.xhtml", `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -181,6 +191,11 @@ const generateEpub = async (chapter: Chapter) => {
   <link rel="stylesheet" type="text/css" href="style.css"/>
 </head>
 <body class="cover-page light-cover">
+  <header class="page-header">
+    <div class="header-left">Mission Built</div>
+    <div class="header-right">Training Log ${chapter.id}: ${escapeXml(chapter.title)}</div>
+  </header>
+  
   <div class="cover-content">
     <div class="cover-header">
       <div class="logo-container">
@@ -200,6 +215,11 @@ const generateEpub = async (chapter: Chapter) => {
       <p class="cc-license">Licensed under Creative Commons Attribution-NonCommercial 4.0</p>
     </div>
   </div>
+  
+  <footer class="page-footer">
+    <div class="footer-left">missionbuilt.io</div>
+    <div class="footer-right">CC BY-NC 4.0</div>
+  </footer>
 </body>
 </html>`);
 
@@ -233,7 +253,7 @@ const generateEpub = async (chapter: Chapter) => {
     </section>
   ` : '';
 
-  // Add the content.xhtml file - using the EXACT same content as the log page
+  // Add the content.xhtml file with header and footer
   oebps?.file("content.xhtml", `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -255,14 +275,13 @@ const generateEpub = async (chapter: Chapter) => {
   </main>
   
   <footer class="page-footer">
-    <p>This chapter is part of <em>Mission Built: Lessons from the Barbell and the Boardroom</em><br/>
-    © 2025 Mike Nichols · <a href="https://missionbuilt.io">missionbuilt.io</a><br/>
-    Licensed under CC BY-NC 4.0</p>
+    <div class="footer-left">missionbuilt.io</div>
+    <div class="footer-right">CC BY-NC 4.0</div>
   </footer>
 </body>
 </html>`);
 
-  // Add the license page
+  // Add the license page with header and footer
   oebps?.file("license.xhtml", `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -273,7 +292,7 @@ const generateEpub = async (chapter: Chapter) => {
 <body>
   <header class="page-header">
     <div class="header-left">Mission Built</div>
-    <div class="header-right">License</div>
+    <div class="header-right">Training Log ${chapter.id}: ${escapeXml(chapter.title)}</div>
   </header>
   
   <main class="content-main">
@@ -291,14 +310,13 @@ const generateEpub = async (chapter: Chapter) => {
   </main>
   
   <footer class="page-footer">
-    <p>This chapter is part of <em>Mission Built: Lessons from the Barbell and the Boardroom</em><br/>
-    © 2025 Mike Nichols · <a href="https://missionbuilt.io">missionbuilt.io</a><br/>
-    Licensed under CC BY-NC 4.0</p>
+    <div class="footer-left">missionbuilt.io</div>
+    <div class="footer-right">CC BY-NC 4.0</div>
   </footer>
 </body>
 </html>`);
 
-  // Add enhanced CSS with cover pages, headers, footers, and proper styling
+  // Add enhanced CSS with updated header and footer styles
   oebps?.file("style.css", `/* Base typography and layout */
 body { 
   font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -306,6 +324,9 @@ body {
   margin: 0;
   padding: 0;
   color: #4A5A68;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Cover page styles */
@@ -439,6 +460,7 @@ body {
   font-size: 0.875rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  flex-shrink: 0;
 }
 
 .header-left {
@@ -450,22 +472,25 @@ body {
 }
 
 .page-footer {
-  margin-top: 4rem;
-  padding: 2rem;
+  margin-top: auto;
+  padding: 1.5rem 2rem;
   border-top: 2px solid #e2e8f0;
-  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   font-size: 0.875rem;
   color: #64748b;
-  line-height: 1.5;
+  flex-shrink: 0;
 }
 
-.page-footer a {
+.footer-left {
   color: #3A77AD;
-  text-decoration: none;
+  font-weight: 500;
 }
 
-.page-footer a:hover {
-  text-decoration: underline;
+.footer-right {
+  color: #64748b;
+  font-weight: 500;
 }
 
 /* Content styles */
@@ -473,6 +498,7 @@ body {
   padding: 0 2rem;
   max-width: 65ch;
   margin: 0 auto;
+  flex: 1;
 }
 
 h1 { 
