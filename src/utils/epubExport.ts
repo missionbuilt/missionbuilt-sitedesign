@@ -1,78 +1,7 @@
-import { Chapter } from "@/data/chapters-data";
-import JSZip from 'jszip';
-
-export const generateEpub = async (chapter: Chapter): Promise<void> => {
-  try {
-    const zip = new JSZip();
-    
-    // Generate filename from chapter title
-    const filename = generateFilename(chapter.title);
-    
-    // Create META-INF folder with container.xml
-    zip.folder("META-INF")?.file("container.xml", `<?xml version="1.0"?>
-<container version="1.0" xmlns="urn:oasis:names:tc:opendocument:xmlns:container">
-  <rootfiles>
-    <rootfile full-path="OEBPS/content.opf" media-type="application/oebps-package+xml"/>
-  </rootfiles>
-</container>`);
-
-    // Create OEBPS folder
-    const oebps = zip.folder("OEBPS");
-    
-    // Generate and add cover image as PNG
-    const coverImageBlob = await generateCoverImagePng(chapter);
-    oebps?.file("cover.png", coverImageBlob);
-    
-    // Create content.opf (package document)
-    oebps?.file("content.opf", generateContentOpf(chapter));
-    
-    // Create toc.ncx (navigation)
-    oebps?.file("toc.ncx", generateTocNcx(chapter));
-    
-    // Create cover page
-    oebps?.file("cover.html", generateCoverHtml(chapter));
-    
-    // Create main content
-    oebps?.file("content.html", generateContentHtml(chapter));
-    
-    // Create further reading page
-    oebps?.file("further-reading.html", generateFurtherReadingHtml(chapter));
-    
-    // Create license page
-    oebps?.file("license.html", generateLicenseHtml());
-    
-    // Create basic CSS
-    oebps?.file("styles.css", generateCss());
-    
-    // Create mimetype file (must be first and uncompressed)
-    zip.file("mimetype", "application/epub+zip", { compression: "STORE" });
-    
-    // Generate the EPUB file
-    const epubBlob = await zip.generateAsync({ 
-      type: "blob",
-      mimeType: "application/epub+zip",
-      compression: "DEFLATE"
-    });
-    
-    // Create download link
-    const url = URL.createObjectURL(epubBlob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = filename;
-    link.click();
-    URL.revokeObjectURL(url);
-    
-    console.log(`EPUB generated: ${filename}`);
-    
-  } catch (error) {
-    console.error('Error generating EPUB:', error);
-    throw new Error('Failed to generate EPUB file');
-  }
-};
 
 // Generate PNG cover image using canvas
 const generateCoverImagePng = async (chapter: Chapter): Promise<Blob> => {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d')!;
     
@@ -84,64 +13,151 @@ const generateCoverImagePng = async (chapter: Chapter): Promise<Blob> => {
     ctx.fillStyle = '#0f172a'; // Dark slate background from the website
     ctx.fillRect(0, 0, 600, 800);
     
-    // Set up text styling
-    ctx.textAlign = 'center';
+    // Load the Mission Built logo
+    const logoImg = new Image();
+    logoImg.crossOrigin = 'anonymous';
+    logoImg.onload = () => {
+      try {
+        // Set up text styling
+        ctx.textAlign = 'center';
+        
+        // Logo section - draw the actual Mission Built logo (with M barbell and stylized text)
+        const logoWidth = 200; // Adjust size to be prominent but not overwhelming
+        const logoHeight = (logoImg.height / logoImg.width) * logoWidth; // Maintain aspect ratio
+        const logoX = (600 - logoWidth) / 2;
+        const logoY = 40;
+        
+        // Apply inversion filter for dark mode (makes the logo white on dark background)
+        ctx.filter = 'brightness(0) invert(1)';
+        ctx.drawImage(logoImg, logoX, logoY, logoWidth, logoHeight);
+        ctx.filter = 'none'; // Reset filter
+        
+        // Main title - using website's heading styles
+        ctx.font = 'bold 48px Montserrat, sans-serif';
+        ctx.fillStyle = '#f8fafc'; // light text for dark mode
+        ctx.fillText('Mission Built', 300, logoY + logoHeight + 60);
+        
+        // Subtitle
+        ctx.font = '600 28px Montserrat, sans-serif';
+        ctx.fillStyle = '#e2e8f0'; // slightly muted light text
+        ctx.fillText('Lessons from the Barbell', 300, logoY + logoHeight + 100);
+        ctx.fillText('and the Boardroom', 300, logoY + logoHeight + 140);
+        
+        // Chapter info box with dark mode styling
+        ctx.fillStyle = '#1e293b'; // dark card background
+        ctx.strokeStyle = '#334155'; // dark border
+        ctx.lineWidth = 1;
+        const boxX = 50, boxY = logoY + logoHeight + 200, boxW = 500, boxH = 100;
+        ctx.fillRect(boxX, boxY, boxW, boxH);
+        ctx.strokeRect(boxX, boxY, boxW, boxH);
+        
+        // Training log number
+        ctx.font = '600 16px Inter, sans-serif';
+        ctx.fillStyle = '#FFC300'; // sunburst for accent
+        ctx.fillText(`TRAINING LOG ${chapter.id}`, 300, boxY + 40);
+        
+        // Chapter title
+        ctx.font = '600 24px Montserrat, sans-serif';
+        ctx.fillStyle = '#4B5320'; // army green for chapter title
+        ctx.fillText(chapter.title, 300, boxY + 70);
+        
+        // Author line with dark mode styling
+        ctx.strokeStyle = '#475569'; // darker border for dark mode
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(50, 700);
+        ctx.lineTo(550, 700);
+        ctx.stroke();
+        
+        // Author name
+        ctx.font = '600 20px Montserrat, sans-serif';
+        ctx.fillStyle = '#e2e8f0'; // light text for author
+        ctx.fillText('Mike Nichols', 300, 740);
+        
+        // Convert canvas to blob
+        canvas.toBlob((blob) => {
+          if (blob) {
+            resolve(blob);
+          } else {
+            reject(new Error('Failed to generate cover image'));
+          }
+        }, 'image/png');
+      } catch (error) {
+        reject(error);
+      }
+    };
     
-    // Logo section - using website's brand colors
-    ctx.font = 'bold 24px Inter, sans-serif';
-    ctx.fillStyle = '#64748b'; // muted text color from dark mode
-    ctx.fillText('Mission', 250, 80);
-    ctx.fillStyle = '#FFC300'; // sunburst yellow
-    ctx.fillText('Built', 320, 80);
-    ctx.fillStyle = '#4B5320'; // army green
-    ctx.fillText('.io', 370, 80);
+    logoImg.onerror = () => {
+      // Fallback: generate cover without logo image
+      console.warn('Failed to load logo image, using fallback');
+      try {
+        ctx.textAlign = 'center';
+        
+        // Fallback logo text section
+        ctx.font = 'bold 24px Montserrat, sans-serif';
+        ctx.fillStyle = '#64748b'; // muted text color from dark mode
+        ctx.fillText('Mission', 250, 80);
+        ctx.fillStyle = '#FFC300'; // sunburst yellow
+        ctx.fillText('Built', 320, 80);
+        ctx.fillStyle = '#4B5320'; // army green
+        ctx.fillText('.io', 370, 80);
+        
+        // Main title - using website's heading styles
+        ctx.font = 'bold 48px Montserrat, sans-serif';
+        ctx.fillStyle = '#f8fafc'; // light text for dark mode
+        ctx.fillText('Mission Built', 300, 160);
+        
+        // Subtitle
+        ctx.font = '600 28px Montserrat, sans-serif';
+        ctx.fillStyle = '#e2e8f0'; // slightly muted light text
+        ctx.fillText('Lessons from the Barbell', 300, 200);
+        ctx.fillText('and the Boardroom', 300, 240);
+        
+        // Chapter info box with dark mode styling
+        ctx.fillStyle = '#1e293b'; // dark card background
+        ctx.strokeStyle = '#334155'; // dark border
+        ctx.lineWidth = 1;
+        const boxX = 50, boxY = 320, boxW = 500, boxH = 100;
+        ctx.fillRect(boxX, boxY, boxW, boxH);
+        ctx.strokeRect(boxX, boxY, boxW, boxH);
+        
+        // Training log number
+        ctx.font = '600 16px Inter, sans-serif';
+        ctx.fillStyle = '#FFC300'; // sunburst for accent
+        ctx.fillText(`TRAINING LOG ${chapter.id}`, 300, 360);
+        
+        // Chapter title
+        ctx.font = '600 24px Montserrat, sans-serif';
+        ctx.fillStyle = '#4B5320'; // army green for chapter title
+        ctx.fillText(chapter.title, 300, 390);
+        
+        // Author line with dark mode styling
+        ctx.strokeStyle = '#475569'; // darker border for dark mode
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(50, 680);
+        ctx.lineTo(550, 680);
+        ctx.stroke();
+        
+        // Author name
+        ctx.font = '600 20px Montserrat, sans-serif';
+        ctx.fillStyle = '#e2e8f0'; // light text for author
+        ctx.fillText('Mike Nichols', 300, 720);
+        
+        canvas.toBlob((blob) => {
+          if (blob) {
+            resolve(blob);
+          } else {
+            reject(new Error('Failed to generate cover image'));
+          }
+        }, 'image/png');
+      } catch (error) {
+        reject(error);
+      }
+    };
     
-    // Main title - using website's heading styles
-    ctx.font = 'bold 48px Montserrat, sans-serif';
-    ctx.fillStyle = '#f8fafc'; // light text for dark mode
-    ctx.fillText('Mission Built', 300, 160);
-    
-    // Subtitle
-    ctx.font = '600 28px Montserrat, sans-serif';
-    ctx.fillStyle = '#e2e8f0'; // slightly muted light text
-    ctx.fillText('Lessons from the Barbell', 300, 200);
-    ctx.fillText('and the Boardroom', 300, 240);
-    
-    // Chapter info box with dark mode styling
-    ctx.fillStyle = '#1e293b'; // dark card background
-    ctx.strokeStyle = '#334155'; // dark border
-    ctx.lineWidth = 1;
-    const boxX = 50, boxY = 320, boxW = 500, boxH = 100;
-    ctx.fillRect(boxX, boxY, boxW, boxH);
-    ctx.strokeRect(boxX, boxY, boxW, boxH);
-    
-    // Training log number
-    ctx.font = '600 16px Inter, sans-serif';
-    ctx.fillStyle = '#FFC300'; // sunburst for accent
-    ctx.fillText(`TRAINING LOG ${chapter.id}`, 300, 360);
-    
-    // Chapter title
-    ctx.font = '600 24px Montserrat, sans-serif';
-    ctx.fillStyle = '#4B5320'; // army green for chapter title
-    ctx.fillText(chapter.title, 300, 390);
-    
-    // Author line with dark mode styling
-    ctx.strokeStyle = '#475569'; // darker border for dark mode
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.moveTo(50, 680);
-    ctx.lineTo(550, 680);
-    ctx.stroke();
-    
-    // Author name
-    ctx.font = '600 20px Montserrat, sans-serif';
-    ctx.fillStyle = '#e2e8f0'; // light text for author
-    ctx.fillText('Mike Nichols', 300, 720);
-    
-    // Convert canvas to blob
-    canvas.toBlob((blob) => {
-      resolve(blob!);
-    }, 'image/png');
+    // Load the logo from the public folder
+    logoImg.src = '/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png';
   });
 };
 
