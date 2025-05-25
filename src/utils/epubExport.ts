@@ -87,41 +87,32 @@ const renderContentToString = (content: React.ReactNode): string => {
   return getTextFromReactNode(content);
 };
 
-const downloadFile = (blob: Blob, filename: string): void => {
-  try {
-    console.log('Creating download link...');
-    const url = URL.createObjectURL(blob);
-    const downloadLink = document.createElement('a');
-    
-    downloadLink.href = url;
-    downloadLink.download = filename;
-    downloadLink.style.display = 'none';
-    
-    document.body.appendChild(downloadLink);
-    downloadLink.click();
-    document.body.removeChild(downloadLink);
-    
-    // Clean up the object URL
-    setTimeout(() => {
-      URL.revokeObjectURL(url);
-    }, 100);
-    
-    console.log('File download initiated successfully');
-  } catch (error) {
-    console.error('Download failed:', error);
-    throw new Error('Failed to download file');
-  }
+const triggerBrowserDownload = (arrayBuffer: ArrayBuffer, filename: string): void => {
+  console.log('Starting browser download process...');
+  
+  const blob = new Blob([arrayBuffer], { type: 'application/epub+zip' });
+  const url = URL.createObjectURL(blob);
+  
+  const anchor = document.createElement('a');
+  anchor.href = url;
+  anchor.download = filename;
+  anchor.style.display = 'none';
+  
+  document.body.appendChild(anchor);
+  anchor.click();
+  document.body.removeChild(anchor);
+  
+  URL.revokeObjectURL(url);
+  console.log('Download triggered successfully');
 };
 
 export const generateEpub = async (chapters: Chapter | Chapter[], getChapterContent?: (chapterId: number) => string): Promise<void> => {
   try {
     console.log('Starting EPUB generation...');
     
-    // Convert single chapter to array for uniform processing
     const chaptersArray = Array.isArray(chapters) ? chapters : [chapters];
     console.log('Processing chapters:', chaptersArray.map(c => c.id));
     
-    // Default content function if none provided
     const defaultGetContent = (chapterId: number): string => {
       return `<p>Content for chapter ${chapterId} will be available soon.</p>`;
     };
@@ -139,7 +130,7 @@ export const generateEpub = async (chapters: Chapter | Chapter[], getChapterCont
     console.log('Book title:', bookTitle);
     console.log('File name:', fileName);
 
-    const options = {
+    const epubOptions = {
       title: bookTitle,
       author: 'Mike',
       language: 'en',
@@ -261,26 +252,19 @@ export const generateEpub = async (chapters: Chapter | Chapter[], getChapterCont
       verbose: true
     };
 
-    console.log('Generating EPUB with options...');
-    
-    const epubBuffer = await EPub(options);
-    console.log('EPUB generated successfully, buffer size:', epubBuffer.length);
+    console.log('Generating EPUB buffer...');
+    const epubBuffer = await EPub(epubOptions);
     
     if (!epubBuffer || epubBuffer.length === 0) {
-      throw new Error('Generated EPUB buffer is empty');
+      throw new Error('EPUB generation failed - empty buffer');
     }
     
-    console.log('Creating blob for download...');
-    const blob = new Blob([epubBuffer], { type: 'application/epub+zip' });
+    console.log('EPUB buffer generated, size:', epubBuffer.length);
+    triggerBrowserDownload(epubBuffer, fileName);
     
-    downloadFile(blob, fileName);
-    
-    console.log('EPUB download completed successfully');
+    console.log('EPUB generation and download completed');
   } catch (error) {
-    console.error('EPUB generation failed with detailed error:', error);
-    console.error('Error name:', error instanceof Error ? error.name : 'Unknown');
-    console.error('Error message:', error instanceof Error ? error.message : 'Unknown error');
-    console.error('Error stack:', error instanceof Error ? error.stack : 'No stack trace');
+    console.error('EPUB generation error:', error);
     throw error;
   }
 };
