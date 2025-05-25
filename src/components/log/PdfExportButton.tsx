@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
@@ -698,6 +697,19 @@ const PdfExportButton: React.FC<PdfExportButtonProps> = ({ chapter }) => {
           }
         });
       }
+
+      // Add License and Citation section
+      addSectionSpacing();
+      addSectionSpacing(); // Extra space before license section
+      
+      addText("License", 14, true, true);
+      addText("This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License (CC BY-NC 4.0).", 11);
+      addText("You are free to share and adapt this material for non-commercial purposes, with proper attribution.", 11);
+      
+      yPosition += 10; // Space between license and citation
+      
+      addText("Citation", 14, true, true);
+      addText("Nichols, Mike. Mission Built: Lessons from the Barbell and the Boardroom. missionbuilt.io", 11);
 
       // Download the PDF
       const fileName = `training-log-${chapter.id}-${chapter.title.toLowerCase().replace(/\s+/g, '-')}.pdf`;
