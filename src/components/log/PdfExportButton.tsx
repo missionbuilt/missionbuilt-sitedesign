@@ -54,23 +54,14 @@ const PdfExportButton: React.FC<PdfExportButtonProps> = ({ chapter }) => {
       addText(chapter.description, 14);
       yPosition += 10;
 
-      // Metadata
-      addText("Metadata:", 16, true);
-      addText(`Date: ${chapter.date}`);
-      addText(`Duration: ${chapter.duration}`);
-      addText(`Difficulty: ${chapter.difficulty}`);
-      addText(`Location: ${chapter.location}`);
-      if (chapter.weather) {
-        addText(`Weather: ${chapter.weather}`);
-      }
-      yPosition += 10;
-
       // Sections
-      chapter.sections.forEach((section) => {
-        addText(section.title, 16, true);
-        addText(section.content);
-        yPosition += 5;
-      });
+      if (chapter.sections && chapter.sections.length > 0) {
+        chapter.sections.forEach((section) => {
+          addText(section.title, 16, true);
+          addText(section.content);
+          yPosition += 5;
+        });
+      }
 
       // Further Reading
       if (chapter.furtherReading && chapter.furtherReading.length > 0) {
