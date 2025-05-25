@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -14,7 +13,7 @@ const OpenThanksSection = () => {
               The Unity of Product & Power isn't just a book. It's a collaboration across domains, disciplines, and even dimensions. It's an open-source memoir shaped by years of lifting, building, and listening—made possible by a growing circle of co-authors, contributors, and creative forces.
             </p>
             
-            <p className="font-medium text-army dark:text-army/90">This project wouldn't exist without:</p>
+            <p className="font-medium text-army dark:text-foreground">This project wouldn't exist without:</p>
             
             <ul className="space-y-4 list-none">
               <li className="flex items-start">
