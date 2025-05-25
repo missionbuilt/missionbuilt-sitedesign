@@ -39,6 +39,12 @@ export const chapters: Chapter[] = [
     ],
     furtherReading: [
       {
+        title: "One Bullet Away — Wikipedia",
+        description: "Memoir by Marine officer Nathaniel Fick, tracing his journey from Ivy League student to combat leader in Afghanistan and Iraq, offering an unflinching look at modern military leadership and ethical decision-making in war.",
+        url: "https://en.wikipedia.org/wiki/One_Bullet_Away",
+        note: ""
+      },
+      {
         title: "Cyberpunk 2077 Launch & CD Projekt Red",
         description: "CD Projekt Red Stock Drops After Buggy, Messy 'Cyberpunk 2077' Launch – Forbes",
         url: "https://www.forbes.com/sites/davidthier/2020/12/11/cd-projekt-red-stock-drops-after-buggy-messy-cyberpunk-2077-launch/",
