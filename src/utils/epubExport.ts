@@ -146,10 +146,10 @@ const generateEpub = async (chapter: Chapter) => {
 </body>
 </html>`);
 
-  // Generate properly formatted chapter content
+  // Generate properly formatted chapter content using actual chapter data
   const chapterContent = chapter.sections && chapter.sections.length > 0
     ? chapter.sections.map(section => {
-        // Convert plain text content to HTML paragraphs
+        // Use the actual section content exactly as it is, just format paragraphs
         const formattedContent = section.content
           .split('\n\n')
           .filter(paragraph => paragraph.trim())
