@@ -250,7 +250,7 @@ export const chapters: Chapter[] = [
     title: "Feedback is a Superpower",
     description: "Great products and great lifters grow through honest, iterative feedback.",
     slug: "feedback-is-a-superpower",
-    status: "coming-soon",
+    status: "not-started",
     sections: [],
     furtherReading: []
   },
@@ -259,7 +259,7 @@ export const chapters: Chapter[] = [
     title: "Progress Isn't Pretty",
     description: "Growth is messy. Embrace the uncomfortable middle.",
     slug: "progress-isnt-pretty",
-    status: "coming-soon",
+    status: "not-started",
     sections: [],
     furtherReading: []
   },
