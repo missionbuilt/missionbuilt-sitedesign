@@ -1,9 +1,12 @@
+
 import React from "react";
-import { Chapter } from "@/data/chapters-data";
 import { BookOpen } from "lucide-react";
 
 interface TableOfContentsProps {
-  chapter: Chapter;
+  chapter: {
+    id: number;
+    title: string;
+  };
   onSectionClick?: (sectionId: string) => void;
 }
 

@@ -5,7 +5,6 @@ import { Helmet } from "react-helmet-async";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import LogContent from "@/components/log/LogContent";
-import { chapters } from "@/data/chapters-data";
 
 const Log = () => {
   const { id } = useParams<{ id: string }>();
@@ -16,8 +15,36 @@ const Log = () => {
     window.scrollTo(0, 0);
   }, [logId]);
   
-  // Find the chapter data
-  const chapter = chapters.find(c => c.id === logId);
+  // Create chapter data based on the log ID
+  const getChapterData = (id: number) => {
+    const chapters = [
+      {
+        id: 1,
+        title: "Mission Before Metrics",
+        description: "Mission-driven work outlasts short-term wins. This chapter defines the book's core philosophy.",
+        slug: "mission-before-metrics",
+        status: "in-progress" as const
+      },
+      {
+        id: 2,
+        title: "Built Through Reps",
+        description: "Progress is earned through intentional repetition. It's not about genius — it's about doing the work.",
+        slug: "built-through-reps",
+        status: "in-progress" as const
+      },
+      {
+        id: 3,
+        title: "Rituals Over Rules",
+        description: "Adaptable routines create long-term resilience. Rules can be broken — rituals evolve.",
+        slug: "rituals-over-rules",
+        status: "in-progress" as const
+      }
+    ];
+    
+    return chapters.find(c => c.id === id);
+  };
+  
+  const chapter = getChapterData(logId);
   
   if (!chapter) {
     return (
@@ -41,7 +68,6 @@ const Log = () => {
 
   const pageTitle = `Training Log ${chapter.id}: ${chapter.title} | Mission Built: Lessons from the Barbell and the Boardroom`;
   const pageDescription = chapter.description;
-  const pageUrl = `https://missionbuilt.io/log/${chapter.id}`;
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
