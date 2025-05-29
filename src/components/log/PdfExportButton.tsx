@@ -10,10 +10,13 @@ const PdfExportButton: React.FC = () => {
   const handleDownload = async () => {
     try {
       console.log("Starting PDF download...");
+      console.log("Current URL:", window.location.href);
+      console.log("Attempting to fetch:", window.location.origin + '/Mission Built v1.0.pdf');
       
       // First, check if the file exists by making a HEAD request
       const response = await fetch('/Mission Built v1.0.pdf', { method: 'HEAD' });
       console.log("File check response:", response.status, response.statusText);
+      console.log("Response headers:", Object.fromEntries(response.headers.entries()));
       
       if (!response.ok) {
         throw new Error(`File not found: ${response.status} ${response.statusText}`);
