@@ -414,6 +414,23 @@ const getSectionContent = (chapterId: number, sectionId: string) => {
     }
   }
   
+  if (chapterId === 3) {
+    switch (sectionId) {
+      case "the-ritual-is-the-rail":
+        return (
+          <div className="space-y-6">
+            <p>Rituals provide flexible structure in both training and team life. Coming soon.</p>
+          </div>
+        );
+      case "listen-to-your-signals":
+        return "Content for this section will be added soon.";
+      case "change-the-pattern-not-the-practice":
+        return "Content for this section will be added soon.";
+      default:
+        return "Content for this section will be added soon.";
+    }
+  }
+  
   return "Content for this section will be added soon.";
 };
 
@@ -433,6 +450,14 @@ const getSections = (chapterId: number) => {
       { id: "when-the-spark-fades", title: "When the Spark Fades" },
       { id: "the-multiplier-of-boring-work", title: "The Multiplier of Boring Work" },
       { id: "the-work-becomes-the-win", title: "The Work Becomes the Win" }
+    ];
+  }
+  
+  if (chapterId === 3) {
+    return [
+      { id: "the-ritual-is-the-rail", title: "The Ritual is the Rail" },
+      { id: "listen-to-your-signals", title: "Listen to Your Signals" },
+      { id: "change-the-pattern-not-the-practice", title: "Change the Pattern, Not the Practice" }
     ];
   }
   
