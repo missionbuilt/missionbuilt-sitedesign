@@ -431,6 +431,45 @@ const getSectionContent = (chapterId: number, sectionId: string) => {
             <p>Because if the mission is the magnet, the ritual is the rail — not to restrict your path, but to keep you from drifting when the pressure builds.</p>
           </div>
         );
+      case "listen-to-your-signals":
+        return (
+          <div className="space-y-6">
+            <p>Rituals only work if you're paying attention.</p>
+            
+            <p>You can't run the same program forever. Not in the gym. Not in product. Not in life. Progress demands feedback. And feedback starts with listening.</p>
+            
+            <p>Lifters learn this early. You might show up ready to deadlift heavy — but your grip feels off, your back's tight, your CNS just isn't firing.</p>
+            
+            <p className="text-muted-foreground italic">(CNS: Central Nervous System — the part of your body responsible for strength output, coordination, and neural drive. If it's fatigued, you'll feel it, even if your muscles are technically rested.)</p>
+            
+            <p>That's not failure. That's information. A smart lifter doesn't abandon the workout — they adjust. They keep the ritual, shift the intensity. Maybe you pause at 70%, maybe you pivot to accessories. Listening doesn't make you weaker. It keeps you in the game longer.</p>
+            
+            <p>In product teams, the same truth holds: rituals without awareness become liabilities.</p>
+            
+            <p>You can run the ceremonies — sprint planning, retros, standups — but if you're ignoring signals from your team or your users, you're performing process theater. Burnout doesn't show up in Jira. Disengagement doesn't flash red in a dashboard. You feel it in the delay before someone unmutes. In the tension after a roadmap shift. In the quiet attrition of both teammates and customers.</p>
+            
+            <p>Nowhere is this more visible than in the game industry's long-standing reliance on crunch time. Late-stage death marches, where teams work 60-, 70-, 80-hour weeks to hit a ship date. Executives cite passion. Teams call it what it is: avoidable. The rituals of "just one more sprint," of all-hands war rooms, of praise for pulling all-nighters — they're treated as signs of commitment, when they're actually signals of failure.</p>
+            
+            <p>Failure to listen. To plan. To build sustainable systems.</p>
+            
+            <p className="text-muted-foreground italic">Failure to treat the team as human — not just headcount.</p>
+            
+            <p>This is where product management has a second, often overlooked role.</p>
+            
+            <p>Yes, product is the voice of the user inside the development team — but product is also the shield of the team against the wrong voices from above. A good PM doesn't just absorb pressure from the top and pass it down. A good PM pushes back. Uses data to say no to date-driven development. Advocates for pacing, not panic. Protects the team's ability to think, breathe, and build well — even when the deadline is loud.</p>
+            
+            <p>Because our goal isn't to meet an investor's timeline or an executive's forecast.</p>
+            
+            <p className="text-muted-foreground italic">It's to build the best product to solve our user's mission.</p>
+            
+            <p>And the only way to do that — sustainably, meaningfully, and well — is to listen.</p>
+            
+            <p>To your body.</p>
+            <p className="text-muted-foreground italic">To your team.</p>
+            <p className="text-muted-foreground italic">To your users.</p>
+            <p className="text-muted-foreground italic">To the mission.</p>
+          </div>
+        );
       default:
         return "Content for this section will be added soon.";
     }
@@ -460,7 +499,8 @@ const getSections = (chapterId: number) => {
   
   if (chapterId === 3) {
     return [
-      { id: "the-ritual-is-the-rail", title: "The Ritual Is the Rail" }
+      { id: "the-ritual-is-the-rail", title: "The Ritual Is the Rail" },
+      { id: "listen-to-your-signals", title: "Listen to Your Signals" }
     ];
   }
   
