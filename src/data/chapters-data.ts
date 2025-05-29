@@ -240,10 +240,8 @@ export const chapters: Chapter[] = [
     id: 3,
     title: "Discipline: The Hidden Framework",
     description: "True strength comes from showing up, especially when you don't feel like it. Learn how rituals, feedback, and adaptability form the foundation of both great lifts and great products.",
+    slug: "discipline-the-hidden-framework",
     status: "in-progress" as const,
-    publishedDate: "2024-12-18",
-    readTime: "12 min",
-    tags: ["Discipline", "Process", "Team Management"],
     sections: [
       {
         id: "ritual-strength",
