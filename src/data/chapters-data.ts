@@ -241,8 +241,14 @@ export const chapters: Chapter[] = [
     title: "Rituals Over Rules",
     description: "Adaptable routines create long-term resilience. Rules can be broken — rituals evolve.",
     slug: "rituals-over-rules",
-    status: "coming-soon",
-    sections: [],
+    status: "in-progress",
+    sections: [
+      {
+        id: "the-ritual-is-the-rail",
+        title: "The Ritual is the Rail",
+        content: "Rituals provide flexible structure in both training and team life. Coming soon."
+      }
+    ],
     furtherReading: []
   },
   {
