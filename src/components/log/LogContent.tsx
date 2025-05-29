@@ -30,7 +30,7 @@ const LogContent: React.FC<LogContentProps> = ({ chapter }) => {
               <LogMetadata chapter={chapter} />
             </div>
             <div className="flex-shrink-0">
-              <PdfExportButton chapter={chapter} />
+              <PdfExportButton />
             </div>
           </div>
           <TableOfContents chapter={chapter} onSectionClick={handleSectionClick} />
