@@ -19,8 +19,14 @@ const calculateReadTime = (content: React.ReactNode): number => {
   const getTextFromReactNode = (node: React.ReactNode): string => {
     if (typeof node === 'string') return node;
     if (typeof node === 'number') return String(node);
-    if (React.isValidElement(node) && node.props.children) {
-      return getTextFromReactNode(node.props.children);
+    if (React.isValidElement(node)) {
+      if (node.props.children) {
+        if (Array.isArray(node.props.children)) {
+          return node.props.children.map(getTextFromReactNode).join(' ');
+        }
+        return getTextFromReactNode(node.props.children);
+      }
+      return '';
     }
     if (Array.isArray(node)) {
       return node.map(getTextFromReactNode).join(' ');
@@ -29,7 +35,9 @@ const calculateReadTime = (content: React.ReactNode): number => {
   };
 
   const text = getTextFromReactNode(content);
-  const wordCount = text.split(/\s+/).filter(word => word.length > 0).length;
+  // Clean up the text by removing extra whitespace and filtering out empty words
+  const words = text.split(/\s+/).filter(word => word.trim().length > 0);
+  const wordCount = words.length;
   const wordsPerMinute = 200; // Average reading speed
   const readTime = Math.ceil(wordCount / wordsPerMinute);
   return Math.max(1, readTime); // Minimum 1 minute
