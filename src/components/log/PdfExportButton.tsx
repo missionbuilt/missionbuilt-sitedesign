@@ -19,7 +19,7 @@ const PdfExportButton: React.FC = () => {
 
       toast({
         title: "Download Started",
-        description: "Mission Built v1.0 guide is downloading.",
+        description: "Mission Built v1.0 is downloading.",
       });
     } catch (error) {
       console.error("Download failed:", error);
