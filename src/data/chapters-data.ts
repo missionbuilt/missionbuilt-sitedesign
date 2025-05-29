@@ -22,7 +22,7 @@ export interface Chapter {
   furtherReading: Resource[];
 }
 
-// Chapter data - only your two written logs
+// Chapter data - expanding the full list
 export const chapters: Chapter[] = [
   {
     id: 1,
@@ -235,5 +235,59 @@ export const chapters: Chapter[] = [
         note: ""
       }
     ]
+  },
+  {
+    id: 3,
+    title: "Care as a Competitive Advantage",
+    description: "In a world of feature factories and growth hacking, the most sustainable advantage isn't innovation or speed — it's genuinely caring about the people you serve.",
+    slug: "care-as-competitive-advantage",
+    status: "coming-soon",
+    sections: [],
+    furtherReading: []
+  },
+  {
+    id: 4,
+    title: "The Weight of Leadership",
+    description: "Leadership isn't about having all the answers — it's about carrying the weight of uncertainty while your team finds theirs.",
+    slug: "weight-of-leadership",
+    status: "coming-soon",
+    sections: [],
+    furtherReading: []
+  },
+  {
+    id: 5,
+    title: "Progressive Overload in Product",
+    description: "Just like building strength, building great products requires gradually increasing the challenge. How to apply progressive overload principles to feature development and team growth.",
+    slug: "progressive-overload-product",
+    status: "coming-soon",
+    sections: [],
+    furtherReading: []
+  },
+  {
+    id: 6,
+    title: "Form Check: Code Review Culture",
+    description: "In the gym, a good spotter saves you from injury. In product development, a good code review culture saves you from technical debt. Building systems that help, not hurt.",
+    slug: "form-check-code-review",
+    status: "not-started",
+    sections: [],
+    furtherReading: []
+  },
+  {
+    id: 7,
+    title: "The Compound Effect of Small Wins",
+    description: "A 5-pound plate doesn't seem like much, but add it every week for a year and you've gained 260 pounds on your lift. How small, consistent product improvements compound into market-changing features.",
+    slug: "compound-effect-small-wins",
+    status: "not-started",
+    sections: [],
+    furtherReading: []
+  },
+  {
+    id: 8,
+    title: "Recovery and Technical Debt",
+    description: "Skipping rest days leads to injury. Skipping refactoring leads to system failure. Why building recovery into your development cycle isn't optional — it's strategic.",
+    slug: "recovery-technical-debt",
+    status: "not-started",
+    sections: [],
+    furtherReading: []
   }
 ];
