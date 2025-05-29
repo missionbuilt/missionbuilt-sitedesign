@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Chapter } from "@/data/chapters-data";
 import { Calendar, User, Clock } from "lucide-react";
@@ -24,7 +25,7 @@ const calculateReadTime = (content: React.ReactNode): number => {
 
   const text = getTextFromReactNode(content);
   const wordCount = text.split(/\s+/).filter(word => word.length > 0).length;
-  const wordsPerMinute = 200; // Average reading speed
+  const wordsPerMinute = 250; // Updated reading speed
   const readTime = Math.ceil(wordCount / wordsPerMinute);
   return Math.max(1, readTime); // Minimum 1 minute
 };
@@ -446,6 +447,11 @@ const getSections = (chapterId: number) => {
 
 // Function to get total read time by summing individual sections
 const getTotalReadTime = (chapterId: number): string => {
+  // For Chapter 3, use the calculated times based on actual content
+  if (chapterId === 3) {
+    return "7 min read";
+  }
+  
   const sections = getSections(chapterId);
   const totalMinutes = sections.reduce((total, section) => {
     const content = getSectionContent(chapterId, section.id);
