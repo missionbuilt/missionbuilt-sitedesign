@@ -11,15 +11,15 @@ const PdfExportButton: React.FC = () => {
     try {
       // Create a link element to trigger download
       const link = document.createElement('a');
-      link.href = '/mission-built-complete.pdf'; // Path to the PDF in public folder
-      link.download = 'mission-built-complete.pdf';
+      link.href = '/Mission Built v1.0.pdf'; // Path to the PDF in public folder
+      link.download = 'Mission Built v1.0.pdf';
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
 
       toast({
         title: "Download Started",
-        description: "Mission Built complete guide is downloading.",
+        description: "Mission Built v1.0 guide is downloading.",
       });
     } catch (error) {
       console.error("Download failed:", error);
