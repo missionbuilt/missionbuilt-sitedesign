@@ -1,7 +1,8 @@
+
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
-import { Toaster } from "react-hot-toast";
+import { Toaster } from "@/components/ui/toaster";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import Index from "./pages/Index";
@@ -13,6 +14,8 @@ import Privacy from "./pages/Privacy";
 import NotFound from "./pages/NotFound";
 import { ThemeProvider } from "@/context/ThemeContext";
 import LogoDownload from "./pages/LogoDownload";
+
+const queryClient = new QueryClient();
 
 function App() {
   return (
@@ -37,7 +40,5 @@ function App() {
     </HelmetProvider>
   );
 }
-
-const queryClient = new QueryClient();
 
 export default App;
