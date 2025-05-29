@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Chapter } from "@/data/chapters-data";
 import { Calendar, User, Clock } from "lucide-react";
@@ -28,6 +27,19 @@ const calculateReadTime = (content: React.ReactNode): number => {
   const wordsPerMinute = 200; // Average reading speed
   const readTime = Math.ceil(wordCount / wordsPerMinute);
   return Math.max(1, readTime); // Minimum 1 minute
+};
+
+// Function to get publish date based on chapter
+const getPublishDate = (chapterId: number): string => {
+  switch (chapterId) {
+    case 1:
+    case 2:
+      return "May 24, 2025";
+    case 3:
+      return "May 29, 2025";
+    default:
+      return "May 24, 2025";
+  }
 };
 
 // Import the same content and sections functions from LogSections
@@ -453,7 +465,7 @@ const LogMetadata: React.FC<LogMetadataProps> = ({ chapter }) => {
         </div>
         <div className="flex items-center gap-2">
           <Calendar className="h-4 w-4" />
-          <span>Published: May 24, 2025</span>
+          <span>Published: {getPublishDate(chapter.id)}</span>
         </div>
         <div className="flex items-center gap-2">
           <Clock className="h-4 w-4" />
