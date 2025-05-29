@@ -7,7 +7,6 @@ import TableOfContents from "./TableOfContents";
 import LogSections from "./LogSections";
 import FurtherReading from "./FurtherReading";
 import PdfExportButton from "./PdfExportButton";
-import UniversalEpubButton from "./UniversalEpubButton";
 
 interface LogContentProps {
   chapter: Chapter;
@@ -30,9 +29,8 @@ const LogContent: React.FC<LogContentProps> = ({ chapter }) => {
             <div className="flex-1">
               <LogMetadata chapter={chapter} />
             </div>
-            <div className="flex flex-col sm:flex-row gap-2">
+            <div className="flex-shrink-0">
               <PdfExportButton />
-              <UniversalEpubButton />
             </div>
           </div>
           <TableOfContents chapter={chapter} onSectionClick={handleSectionClick} />
