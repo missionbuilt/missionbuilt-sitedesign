@@ -458,9 +458,11 @@ const getSectionContent = (chapterId: number, sectionId: string) => {
             
             <p>Yes, product is the voice of the user inside the development team — but product is also the shield of the team against the wrong voices from above. A good PM doesn't just absorb pressure from the top and pass it down. A good PM pushes back. Uses data to say no to date-driven development. Advocates for pacing, not panic. Protects the team's ability to think, breathe, and build well — even when the deadline is loud.</p>
             
-            <p>Because our goal isn't to meet an investor's timeline or an executive's forecast.</p>
-            
-            <p className="text-muted-foreground italic">It's to build the best product to solve our user's mission.</p>
+            <blockquote className="border-l-4 border-army pl-6 py-4 my-6 bg-slate/5 rounded-r-lg">
+              <p className="text-lg font-semibold mb-2">Because our goal isn't to meet an investor's timeline or an executive's forecast.</p>
+              
+              <p className="text-lg font-semibold">It's to build the best product to solve our user's mission.</p>
+            </blockquote>
             
             <p>And the only way to do that — sustainably, meaningfully, and well — is to listen.</p>
             
