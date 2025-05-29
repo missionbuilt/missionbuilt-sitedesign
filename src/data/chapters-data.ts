@@ -240,8 +240,10 @@ export const chapters: Chapter[] = [
     id: 3,
     title: "Discipline: The Hidden Framework",
     description: "True strength comes from showing up, especially when you don't feel like it. Learn how rituals, feedback, and adaptability form the foundation of both great lifts and great products.",
-    slug: "discipline-the-hidden-framework",
     status: "in-progress" as const,
+    publishedDate: "2024-12-18",
+    readTime: "12 min",
+    tags: ["Discipline", "Process", "Team Management"],
     sections: [
       {
         id: "ritual-strength",
@@ -384,79 +386,79 @@ In the next chapter, we'll explore how the best lifters and product leaders make
         title: "Chalk Up: Rituals That Prepare the Mind and Body",
         description: "Explores how pre-lift rituals like chalking hands and visualization prepare athletes mentally and physically.",
         url: "https://www.elitefts.com/education/pre-workout-ritual-instructions",
-        note: "Powerlifting Rituals & Adaptive Training"
+        note: "🏋️ Powerlifting Rituals & Adaptive Training"
       },
       {
         title: "Stefi Cohen's Hybrid Training Philosophy",
         description: "Discusses balancing compound and isolation movements, emphasizing adaptability in training.",
         url: "https://www.hybridperformancemethod.com/blog/are-isolation-movements-better-for-muscle-growth",
-        note: "Powerlifting Rituals & Adaptive Training"
+        note: "🏋️ Powerlifting Rituals & Adaptive Training"
       },
       {
         title: "Autoregulation: Can It Be Beneficial for Every Type of Strength Athlete?",
         description: "Details how lifters adjust training intensity based on daily readiness, promoting flexibility within structured programs.",
         url: "https://barbend.com/autoregulation/",
-        note: "Powerlifting Rituals & Adaptive Training"
+        note: "🏋️ Powerlifting Rituals & Adaptive Training"
       },
       {
         title: "CNS Fatigue: Symptoms and Recovery Strategies",
         description: "Addresses central nervous system fatigue and strategies for recovery, highlighting the importance of listening to one's body.",
         url: "https://www.strongerbyscience.com/qa/",
-        note: "Powerlifting Rituals & Adaptive Training"
+        note: "🏋️ Powerlifting Rituals & Adaptive Training"
       },
       {
         title: "What is a Stand-Up Meeting? [+ Expert Tips]",
         description: "Provides guidance on conducting effective stand-up meetings to maintain team alignment.",
         url: "https://www.atlassian.com/agile/scrum/standups",
-        note: "Product Rituals, Burnout & Team Evolution"
+        note: "💻 Product Rituals, Burnout & Team Evolution"
       },
       {
         title: "Leadership @ Elastic | Kevin Kluge: Distributed for the Better",
         description: "Discusses Elastic's approach to distributed work and maintaining engineering culture.",
         url: "https://www.elastic.co/blog/leadership-elastic-kevin-kluge-distributed-for-the-better",
-        note: "Product Rituals, Burnout & Team Evolution"
+        note: "💻 Product Rituals, Burnout & Team Evolution"
       },
       {
         title: "How to Collaborate Effectively If Your Team Is Remote",
         description: "Harvard Business Review offers evidence-based strategies for improving communication and trust across distributed teams — reinforcing the importance of intentional, adaptive rituals in asynchronous environments.",
         url: "https://hbr.org/2018/02/how-to-collaborate-effectively-if-your-team-is-remote",
-        note: "Product Rituals, Burnout & Team Evolution"
+        note: "💻 Product Rituals, Burnout & Team Evolution"
       },
       {
         title: "Shape Up: Stop Running in Circles and Ship Work that Matters",
         description: "Introduces a methodology that emphasizes flexible work cycles over rigid sprints.",
         url: "https://basecamp.com/shapeup",
-        note: "Product Rituals, Burnout & Team Evolution"
+        note: "💻 Product Rituals, Burnout & Team Evolution"
       },
       {
         title: "Understanding Developer Burnout",
         description: "Breaks down the causes, symptoms, and strategies for preventing developer burnout — with a focus on workload balance, autonomy, and the importance of adaptive team rituals.",
         url: "https://devskiller.com/blog/developer-burnout/",
-        note: "Product Rituals, Burnout & Team Evolution"
+        note: "💻 Product Rituals, Burnout & Team Evolution"
       },
       {
         title: "The Hidden Power of Workplace Rituals",
         description: "Explores how intentional rituals in the workplace can strengthen psychological safety, enhance purpose, and boost performance.",
         url: "https://hbr.org/2022/08/the-hidden-power-of-workplace-rituals",
-        note: "Organizational Culture & Ritual Evolution"
+        note: "🧠 Organizational Culture & Ritual Evolution"
       },
       {
         title: "Crunch Culture: How Game Development Becomes Toxic",
         description: "Investigates the detrimental effects of excessive overtime in the gaming industry, highlighting how passion-driven projects can lead to burnout and decreased quality.",
         url: "https://reporter.rit.edu/6288/tech/crunch-culture-how-game-development-becomes-toxic/",
-        note: "Crunch Time & Anti-patterns in Product Culture"
+        note: "🎮 Crunch Time & Anti-patterns in Product Culture"
       },
       {
         title: "Red Dead Redemption 2 Exposes the Gaming Industry's Dangerous Addiction to Overtime",
         description: "WIRED investigates the systemic issue of \"crunch culture\" in game development, using Rockstar Games as a focal point. The article highlights how extended overtime, driven by passion and pressure, can lead to long-term burnout and erode product quality.",
         url: "https://www.wired.com/story/red-dead-redemption-2-rockstar-overtime-crunch/",
-        note: "Crunch Time & Anti-patterns in Product Culture"
+        note: "🎮 Crunch Time & Anti-patterns in Product Culture"
       },
       {
         title: "How Product Leaders Can Learn to Say No",
         description: "Ken Norton, a former Google product leader and GV partner, emphasizes the critical skill of saying \"no\" in product management. He discusses how ambiguity can derail teams and the necessity for PMs to set clear boundaries, even when facing pressure from executives. This essay provides practical advice on maintaining focus and protecting the team's priorities.",
         url: "https://www.bringthedonuts.com/essays/discipline-of-no.html",
-        note: "Product Managers as Advocates & Shields"
+        note: "🛡️ Product Managers as Advocates & Shields"
       }
     ],
   },
