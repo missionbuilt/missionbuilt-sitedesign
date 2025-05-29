@@ -2,7 +2,6 @@
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { useTheme } from '@/context/ThemeContext';
-import { generateLogoSVG } from '@/utils/logoGenerator';
 
 interface LogoProps {
   /**
@@ -50,9 +49,9 @@ const Logo = ({
 
   // Image sizes based on logo size
   const imageSizes = {
-    sm: { width: 24, height: 24, className: "h-6" },
-    md: { width: 32, height: 32, className: "h-8" },
-    lg: { width: 40, height: 40, className: "h-10" }
+    sm: "h-6",
+    md: "h-8",
+    lg: "h-10"
   };
 
   // Color schemes for the text portion
@@ -86,10 +85,6 @@ const Logo = ({
   // Get the selected color scheme
   const colors = colorSchemes[colorScheme];
 
-  // Generate logo SVG based on theme and size
-  const logoColor = theme === 'dark' ? '#ffffff' : '#10b981';
-  const logoSVG = generateLogoSVG(logoColor, imageSizes[size].width);
-
   const logoContent = (
     <span className={cn(
       "font-display font-semibold inline-flex items-center gap-1.5",
@@ -97,10 +92,16 @@ const Logo = ({
       className
     )}>
       {showImage && (
-        <div 
-          className={cn("flex items-center justify-center", imageSizes[size].className)}
-          dangerouslySetInnerHTML={{ __html: logoSVG }}
-        />
+        <div className="flex items-center justify-center">
+          <img 
+            src="/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png" 
+            alt="MissionBuilt Logo" 
+            className={cn(
+              imageSizes[size],
+              "dark:brightness-0 dark:invert"
+            )}
+          />
+        </div>
       )}
       {showText && (
         <span className="font-display">
