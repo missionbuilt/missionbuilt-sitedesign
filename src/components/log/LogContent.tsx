@@ -18,6 +18,16 @@ const LogContent: React.FC<LogContentProps> = ({ chapter }) => {
   const handleSectionClick = (sectionId: string) => {
     setExpandedSection(sectionId);
   };
+
+  // Convert string array to Resource array format
+  const convertToResources = (furtherReading: string[]) => {
+    return furtherReading.map((item) => ({
+      title: item,
+      description: "",
+      url: "#",
+      note: ""
+    }));
+  };
   
   return (
     <main className="flex-grow">
@@ -37,7 +47,7 @@ const LogContent: React.FC<LogContentProps> = ({ chapter }) => {
           <LogSections chapter={chapter} expandedSection={expandedSection} />
           <FurtherReading 
             isExpanded={expandedSection === "further-reading"} 
-            resources={chapter.furtherReading}
+            resources={convertToResources(chapter.furtherReading)}
           />
         </div>
       </div>
