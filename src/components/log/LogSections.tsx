@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Chapter } from "@/data/chapters-data";
 import {
@@ -451,7 +452,6 @@ const getSectionContent = (chapterId: number, sectionId: string) => {
             <p>Nowhere is this more visible than in the game industry's long-standing reliance on crunch time. Late-stage death marches, where teams work 60-, 70-, 80-hour weeks to hit a ship date. Executives cite passion. Teams call it what it is: avoidable. The rituals of "just one more sprint," of all-hands war rooms, of praise for pulling all-nighters — they're treated as signs of commitment, when they're actually signals of failure.</p>
             
             <p>Failure to listen. To plan. To build sustainable systems.</p>
-            
             <p className="text-muted-foreground italic">Failure to treat the team as human — not just headcount.</p>
             
             <p>This is where product management has a second, often overlooked role.</p>
@@ -470,6 +470,58 @@ const getSectionContent = (chapterId: number, sectionId: string) => {
             <p className="text-muted-foreground italic">To your team.</p>
             <p className="text-muted-foreground italic">To your users.</p>
             <p className="text-muted-foreground italic">To the mission.</p>
+          </div>
+        );
+      case "change-the-pattern-not-the-practice":
+        return (
+          <div className="space-y-6">
+            <p>When things stop working, you don't abandon the ritual — you adapt it.</p>
+            
+            <p>Progress isn't a straight line. It's a cycle of push, plateau, pivot. And when you hit that plateau — when the usual ritual no longer delivers results — it's not a sign to quit. It's a sign to evolve.</p>
+            
+            <p>In the gym, this happens all the time. You run a successful squat cycle, adding five pounds a week like clockwork. But then you stall. Your knees cave, your speed slows, and the bar starts winning. The answer isn't to scrap the movement. It's to change the pattern. Maybe you shift to pause squats, change your stance, or drop the volume to focus on recovery. The ritual — showing up and squatting — stays. The shape of it changes.</p>
+            
+            <p>The same holds true in product.</p>
+            
+            <p>The standup that once helped your team sync becomes a box-checking chore. The planning meeting that used to set priorities now spirals into status updates. That doesn't mean you stop planning. It means you shift how you plan. You move from live check-ins to async threads. You replace calendar fatigue with focused, flexible rituals that match your team's needs — and their current phase of growth.</p>
+            
+            <p>Rituals that don't evolve become rules. And rules, as we've seen, break people.</p>
+            
+            <p>This is especially true in globally distributed teams. At Elastic, our workforce spans time zones and continents. We had to learn — early — that rituals built for co-located teams don't translate. Sync meetings at 10 a.m. in California are 7 p.m. in Berlin, and 2:30 a.m. in Sydney. So we changed the pattern.</p>
+            
+            <p>We moved toward asynchronous rhythms:</p>
+            
+            <p>Key decisions live in documents, not meetings.</p>
+            
+            <p>Slack threads replace sidebars.</p>
+            
+            <p>Recorded meetings include transcripts and tagged callouts.</p>
+            
+            <p>Big calls are followed by quiet time — space for global teammates to reflect, respond, and contribute.</p>
+            
+            <p>We didn't stop collaborating. We just restructured how and when collaboration happens. The ritual of cross-team communication stayed. Its shape changed. And it made space for more voices, not fewer.</p>
+            
+            <p>What matters isn't how you do it.</p>
+            <p className="text-muted-foreground italic">What matters is that you keep showing up with purpose.</p>
+            
+            <p>The gym teaches you this without words.</p>
+            <p className="text-muted-foreground italic">You hit a wall. You adjust. You don't abandon the work — you change the pattern.</p>
+            
+            <p>Because in the end, progress comes from consistent effort, not perfect conditions.</p>
+            
+            <p>That's the lesson: rituals serve the mission. When they stop serving, reshape them.</p>
+            <p className="text-muted-foreground italic">Don't confuse rigidity for discipline.</p>
+            <p className="text-muted-foreground italic">Don't let the form matter more than the function.</p>
+            
+            <p className="text-muted-foreground italic">(And please — don't treat your favorite product management book like doctrine.</p>
+            <p className="text-muted-foreground italic">Those frameworks weren't written for your team. Your mission was.)</p>
+            
+            <p>Rituals aren't constraints — they're commitments. But only if we let them evolve. The strongest systems, the longest-lasting teams, the most resilient lifters — all share this in common: they don't cling to routine for routine's sake. They adapt. With intention. With feedback. With mission in mind.</p>
+            
+            <h3 className="text-lg font-semibold mt-8 mb-4">Up Next: Feedback Is a Superpower</h3>
+            
+            <p>Adaptation only works when you know what to change. And knowing what to change starts with feedback — not just getting it, but learning how to hear it, invite it, and act on it.</p>
+            <p className="text-muted-foreground italic">In the next chapter, we'll explore how the best lifters and product leaders make feedback part of their strength — not their insecurity.</p>
           </div>
         );
       default:
@@ -502,7 +554,8 @@ const getSections = (chapterId: number) => {
   if (chapterId === 3) {
     return [
       { id: "the-ritual-is-the-rail", title: "The Ritual Is the Rail" },
-      { id: "listen-to-your-signals", title: "Listen to Your Signals" }
+      { id: "listen-to-your-signals", title: "Listen to Your Signals" },
+      { id: "change-the-pattern-not-the-practice", title: "Change the Pattern, Not the Practice" }
     ];
   }
   
