@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Chapter } from "@/data/chapters-data";
 import { BookOpen } from "lucide-react";
@@ -26,6 +25,16 @@ const getSections = (chapterId: number) => {
       { id: "when-the-spark-fades", title: "When the Spark Fades" },
       { id: "the-multiplier-of-boring-work", title: "The Multiplier of Boring Work" },
       { id: "the-work-becomes-the-win", title: "The Work Becomes the Win" },
+      { id: "further-reading", title: "Further Reading" }
+    ];
+  }
+  
+  if (chapterId === 3) {
+    return [
+      { id: "introduction", title: "Introduction" },
+      { id: "listen-to-your-signals", title: "Listen to Your Signals" },
+      { id: "change-the-pattern-not-the-practice", title: "Change the Pattern, Not the Practice" },
+      { id: "conclusion", title: "Conclusion" },
       { id: "further-reading", title: "Further Reading" }
     ];
   }
