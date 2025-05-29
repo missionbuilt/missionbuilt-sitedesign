@@ -407,6 +407,35 @@ const getSectionContent = (chapterId: number, sectionId: string) => {
     }
   }
   
+  if (chapterId === 3) {
+    switch (sectionId) {
+      case "the-ritual-is-the-rail":
+        return (
+          <div className="space-y-6">
+            <p>Rituals keep us on track — not by forcing us forward, but by guiding our momentum. Like rails under a train, they don't power the engine, but they make sure we're headed in the right direction. They keep drift from becoming derailment.</p>
+            
+            <p>In the gym, rituals aren't written on the whiteboard, but everyone knows them. The way you chalk your hands before a heavy lift. The nod from your training partner. The slap on the back before a max attempt. These moments don't make you stronger by themselves — but they signal that it's time to lock in. They tune your mind and body to the work ahead.</p>
+            
+            <p>In product, rituals shape how we build — and why. A startup might begin with a single weekly sync, focused on shipping a differentiated capability that makes a mark on the market. That urgency, that clarity of purpose, fuels early momentum. But as the company grows, the rituals evolve. Roadmap reviews become more structured. Standups get tighter. You start shipping the "boring" features — the ones that don't win awards, but win hearts. Role-based access control. Data retention workflows. RBAC and audit logging won't make the cover of TechCrunch, but they're what your biggest customers need to trust you.</p>
+            
+            <p>These shifts aren't a loss of agility — they're a deepening of commitment. The rituals grow because the mission does.</p>
+            
+            <p>The difference between a rule and a ritual is intention. Rules are imposed. Rituals are earned. A rule says "follow this or else." A ritual says "this is how we move with purpose." When teams stop questioning why they follow a process, it calcifies into dogma. But when the process stays tied to the mission, it adapts. It grows. It stays human.</p>
+            
+            <p>Elite lifters know this instinctively. Even as their programming changes — higher volume, lower intensity, or a shift from competition prep to recovery — their rituals stay intact. The warmup flow, the music choice, the way they approach the bar. These things evolve, but they never disappear. They guide the body into readiness. They keep the lifter connected to something deeper than the day's numbers.</p>
+            
+            <p>And that's the point.</p>
+            
+            <p>You don't need more rules. You need rails that carry you toward the mission — and flex with the turns ahead.</p>
+            
+            <p>Because if the mission is the magnet, the ritual is the rail — not to restrict your path, but to keep you from drifting when the pressure builds.</p>
+          </div>
+        );
+      default:
+        return "Content for this section will be added soon.";
+    }
+  }
+  
   return "Content for this section will be added soon.";
 };
 
@@ -426,6 +455,12 @@ const getSections = (chapterId: number) => {
       { id: "when-the-spark-fades", title: "When the Spark Fades" },
       { id: "the-multiplier-of-boring-work", title: "The Multiplier of Boring Work" },
       { id: "the-work-becomes-the-win", title: "The Work Becomes the Win" }
+    ];
+  }
+  
+  if (chapterId === 3) {
+    return [
+      { id: "the-ritual-is-the-rail", title: "The Ritual Is the Rail" }
     ];
   }
   
