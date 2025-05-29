@@ -1,5 +1,6 @@
 
 import React, { useState } from "react";
+import { Chapter } from "@/data/chapters-data";
 import LogHero from "./LogHero";
 import LogMetadata from "./LogMetadata";
 import TableOfContents from "./TableOfContents";
@@ -8,13 +9,7 @@ import FurtherReading from "./FurtherReading";
 import PdfExportButton from "./PdfExportButton";
 
 interface LogContentProps {
-  chapter: {
-    id: number;
-    title: string;
-    description: string;
-    slug: string;
-    status: "in-progress" | "coming-soon" | "not-started";
-  };
+  chapter: Chapter;
 }
 
 const LogContent: React.FC<LogContentProps> = ({ chapter }) => {
@@ -42,7 +37,7 @@ const LogContent: React.FC<LogContentProps> = ({ chapter }) => {
           <LogSections chapter={chapter} expandedSection={expandedSection} />
           <FurtherReading 
             isExpanded={expandedSection === "further-reading"} 
-            resources={[]}
+            resources={chapter.furtherReading}
           />
         </div>
       </div>

@@ -1,12 +1,9 @@
-
 import React from "react";
+import { Chapter } from "@/data/chapters-data";
 import { BookOpen } from "lucide-react";
 
 interface TableOfContentsProps {
-  chapter: {
-    id: number;
-    title: string;
-  };
+  chapter: Chapter;
   onSectionClick?: (sectionId: string) => void;
 }
 
@@ -35,8 +32,6 @@ const getSections = (chapterId: number) => {
   if (chapterId === 3) {
     return [
       { id: "the-ritual-is-the-rail", title: "The Ritual is the Rail" },
-      { id: "listen-to-your-signals", title: "Listen to Your Signals" },
-      { id: "change-the-pattern-not-the-practice", title: "Change the Pattern, Not the Practice" },
       { id: "further-reading", title: "Further Reading" }
     ];
   }
