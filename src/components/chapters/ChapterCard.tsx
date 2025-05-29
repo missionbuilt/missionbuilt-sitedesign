@@ -12,9 +12,9 @@ const getBadgeVariant = (status: Chapter["status"]): "default" | "secondary" | "
   switch (status) {
     case "in-progress":
       return "default";
-    case "coming-soon":
+    case "planning":
       return "secondary";
-    case "not-started":
+    case "complete":
       return "outline";
     default:
       return "outline";
@@ -31,14 +31,14 @@ const getBadgeContent = (status: Chapter["status"]) => {
           <span>Good Lift</span>
         </>
       );
-    case "coming-soon":
+    case "planning":
       return (
         <>
           <Clock className="mr-1 h-3 w-3" />
           <span>Pushing Through</span>
         </>
       );
-    case "not-started":
+    case "complete":
       return (
         <>
           <Circle className="mr-1 h-3 w-3" />
@@ -55,9 +55,9 @@ const getBadgeClass = (status: Chapter["status"]): string => {
   switch (status) {
     case "in-progress":
       return "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400";
-    case "coming-soon":
+    case "planning":
       return "bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400";
-    case "not-started":
+    case "complete":
       return "bg-slate-100 text-slate-800 dark:bg-slate-800/30 dark:text-slate-400";
     default:
       return "";
