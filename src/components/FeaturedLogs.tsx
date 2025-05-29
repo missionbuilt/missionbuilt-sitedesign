@@ -8,10 +8,8 @@ import { useNewBadge } from '@/hooks/useNewBadge';
 const FeaturedLogs = () => {
   const { hasVisitedTrainingLogs } = useNewBadge();
   
-  // Get the most recent chapters as featured logs
-  const featuredLogs = chapters
-    .filter(chapter => chapter.status === 'in-progress')
-    .slice(0, 3);
+  // Get the most recent chapters as featured logs (removed status filter)
+  const featuredLogs = chapters.slice(0, 3);
 
   return (
     <section className="py-16 bg-gradient-to-b from-slate/5 to-transparent">
