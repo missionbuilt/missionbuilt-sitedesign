@@ -64,6 +64,19 @@ const getBadgeClass = (status: Chapter["status"]): string => {
   }
 };
 
+// Function to get publish date based on chapter
+const getPublishDate = (chapterId: number): string => {
+  switch (chapterId) {
+    case 1:
+    case 2:
+      return "May 24, 2025";
+    case 3:
+      return "May 29, 2025";
+    default:
+      return "May 24, 2025";
+  }
+};
+
 interface ChapterCardProps {
   chapter: Chapter;
 }
@@ -96,7 +109,7 @@ const ChapterCard: React.FC<ChapterCardProps> = ({ chapter }) => {
         {chapter.status === "in-progress" && (
           <div className="flex items-center text-sm text-muted-foreground mb-4">
             <Calendar className="mr-2 h-4 w-4" />
-            <span>Published: May 24, 2025</span>
+            <span>Published: {getPublishDate(chapter.id)}</span>
           </div>
         )}
         
