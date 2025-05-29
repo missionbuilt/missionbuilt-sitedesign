@@ -31,10 +31,7 @@ const getSections = (chapterId: number) => {
   
   if (chapterId === 3) {
     return [
-      { id: "introduction", title: "Introduction" },
-      { id: "listen-to-your-signals", title: "Listen to Your Signals" },
-      { id: "change-the-pattern-not-the-practice", title: "Change the Pattern, Not the Practice" },
-      { id: "conclusion", title: "Conclusion" },
+      { id: "the-ritual-is-the-rail", title: "The Ritual is the Rail" },
       { id: "further-reading", title: "Further Reading" }
     ];
   }
