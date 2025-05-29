@@ -268,7 +268,7 @@ export const chapters: Chapter[] = [
     title: "The Mission Demands Recovery",
     description: "Rest isn't a reward — it's a requirement. Real performance needs pause.",
     slug: "the-mission-demands-recovery",
-    status: "coming-soon",
+    status: "not-started",
     sections: [],
     furtherReading: []
   },
