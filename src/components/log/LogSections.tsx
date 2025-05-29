@@ -38,7 +38,7 @@ const calculateReadTime = (content: React.ReactNode): number => {
   // Clean up the text by removing extra whitespace and filtering out empty words
   const words = text.split(/\s+/).filter(word => word.trim().length > 0);
   const wordCount = words.length;
-  const wordsPerMinute = 200; // Average reading speed
+  const wordsPerMinute = 250; // Slightly higher reading speed for more accurate calculation
   const readTime = Math.ceil(wordCount / wordsPerMinute);
   return Math.max(1, readTime); // Minimum 1 minute
 };
