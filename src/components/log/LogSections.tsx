@@ -23,16 +23,53 @@ const calculateReadTime = (content: string): number => {
   return Math.max(1, readTime); // Minimum 1 minute
 };
 
-// Function to format text content with proper line breaks
-const formatTextContent = (content: string) => {
-  return content.split('\n').map((paragraph, index) => {
+// Function to emphasize specific phrases in the content
+const emphasizeKeyPhrases = (text: string): React.ReactNode => {
+  const phrasesToEmphasize = [
+    "laser focus",
+    "doing the right thing",
+    "Point the flashlight",
+    "Two Words That Changed the Lift",
+    "It's a spotlight, not a floodlight — aimed at what matters most, right now.",
+    "From Backlog to Breakthrough",
+    "The Flashlight, Not the Floodlight",
+    "One cue, one rep at a time"
+  ];
+
+  let processedText = text;
+  
+  // Replace each phrase with emphasized version
+  phrasesToEmphasize.forEach((phrase, index) => {
+    const regex = new RegExp(`(${phrase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+    processedText = processedText.replace(regex, `<EMPHASIS_${index}>$1</EMPHASIS_${index}>`);
+  });
+
+  // Split by paragraphs and process each one
+  return processedText.split('\n').map((paragraph, paragraphIndex) => {
     if (paragraph.trim() === '') return null;
+    
+    // Split by emphasis markers and process
+    const parts = paragraph.split(/(<EMPHASIS_\d+>.*?<\/EMPHASIS_\d+>)/g);
+    
+    const processedParts = parts.map((part, partIndex) => {
+      const emphasisMatch = part.match(/<EMPHASIS_\d+>(.*?)<\/EMPHASIS_\d+>/);
+      if (emphasisMatch) {
+        return <strong key={partIndex} className="font-semibold">{emphasisMatch[1]}</strong>;
+      }
+      return part;
+    });
+
     return (
-      <p key={index} className="mb-4 last:mb-0">
-        {paragraph}
+      <p key={paragraphIndex} className="mb-4 last:mb-0">
+        {processedParts}
       </p>
     );
   }).filter(Boolean);
+};
+
+// Function to format text content with proper line breaks and emphasis
+const formatTextContent = (content: string) => {
+  return emphasizeKeyPhrases(content);
 };
 
 const LogSections: React.FC<LogSectionsProps> = ({ chapter, expandedSection }) => {
