@@ -19,7 +19,10 @@ export interface Chapter {
   description: string;
   slug: string;
   status: "in-progress" | "coming-soon" | "not-started";
-  sections?: Section[];
+  publishDate: string;
+  heroImage: string;
+  authorName: string;
+  sections: Section[];
   furtherReading: Resource[];
 }
 
@@ -31,6 +34,9 @@ export const chapters: Chapter[] = [
     description: "Mission-driven work outlasts short-term wins. This chapter defines the book's core philosophy.",
     slug: "mission-before-metrics",
     status: "not-started",
+    publishDate: "May 24, 2025",
+    heroImage: "/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png",
+    authorName: "Mike",
     sections: [],
     furtherReading: []
   },
@@ -40,6 +46,9 @@ export const chapters: Chapter[] = [
     description: "Progress is earned through intentional repetition. It's not about genius — it's about doing the work.",
     slug: "built-through-reps",
     status: "not-started",
+    publishDate: "May 24, 2025",
+    heroImage: "/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png",
+    authorName: "Mike",
     sections: [],
     furtherReading: []
   },
@@ -49,6 +58,9 @@ export const chapters: Chapter[] = [
     description: "Adaptable routines create long-term resilience. Rules can be broken — rituals evolve.",
     slug: "rituals-over-rules",
     status: "not-started",
+    publishDate: "May 29, 2025",
+    heroImage: "/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png",
+    authorName: "Mike",
     sections: [],
     furtherReading: []
   },
@@ -58,6 +70,9 @@ export const chapters: Chapter[] = [
     description: "Great products and great lifters grow through honest, iterative feedback.",
     slug: "feedback-is-a-superpower",
     status: "not-started",
+    publishDate: "May 24, 2025",
+    heroImage: "/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png",
+    authorName: "Mike",
     sections: [],
     furtherReading: []
   },
@@ -67,6 +82,9 @@ export const chapters: Chapter[] = [
     description: "Growth is messy. Embrace the uncomfortable middle.",
     slug: "progress-isnt-pretty",
     status: "not-started",
+    publishDate: "May 24, 2025",
+    heroImage: "/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png",
+    authorName: "Mike",
     sections: [],
     furtherReading: []
   },
@@ -76,6 +94,9 @@ export const chapters: Chapter[] = [
     description: "Rest isn't a reward — it's a requirement. Real performance needs pause.",
     slug: "the-mission-demands-recovery",
     status: "not-started",
+    publishDate: "May 24, 2025",
+    heroImage: "/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png",
+    authorName: "Mike",
     sections: [],
     furtherReading: []
   },
@@ -85,6 +106,9 @@ export const chapters: Chapter[] = [
     description: "Don't optimize for appearance — build what actually powers performance.",
     slug: "train-the-engine-not-just-the-output",
     status: "not-started",
+    publishDate: "May 24, 2025",
+    heroImage: "/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png",
+    authorName: "Mike",
     sections: [],
     furtherReading: []
   },
@@ -94,6 +118,9 @@ export const chapters: Chapter[] = [
     description: "Who you are shows up under stress. Build decision strength now, not later.",
     slug: "decisions-are-made-under-load",
     status: "not-started",
+    publishDate: "May 24, 2025",
+    heroImage: "/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png",
+    authorName: "Mike",
     sections: [],
     furtherReading: []
   },
@@ -103,6 +130,9 @@ export const chapters: Chapter[] = [
     description: "Every detail is a reflection of your standard. Show up like it matters.",
     slug: "ship-it-like-you-show-up",
     status: "not-started",
+    publishDate: "May 24, 2025",
+    heroImage: "/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png",
+    authorName: "Mike",
     sections: [],
     furtherReading: []
   },
@@ -112,6 +142,9 @@ export const chapters: Chapter[] = [
     description: "You don't win alone. Build the crew that lifts with you.",
     slug: "the-team-is-the-tool",
     status: "not-started",
+    publishDate: "May 24, 2025",
+    heroImage: "/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png",
+    authorName: "Mike",
     sections: [],
     furtherReading: []
   },
@@ -121,6 +154,9 @@ export const chapters: Chapter[] = [
     description: "Power includes the ability to pause, receive, and adjust.",
     slug: "strong-enough-to-listen",
     status: "not-started",
+    publishDate: "May 24, 2025",
+    heroImage: "/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png",
+    authorName: "Mike",
     sections: [],
     furtherReading: []
   },
@@ -130,6 +166,9 @@ export const chapters: Chapter[] = [
     description: "Real growth means taking responsibility for the hard things.",
     slug: "the-weight-is-real-own-it",
     status: "not-started",
+    publishDate: "May 24, 2025",
+    heroImage: "/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png",
+    authorName: "Mike",
     sections: [],
     furtherReading: []
   },
@@ -139,6 +178,9 @@ export const chapters: Chapter[] = [
     description: "At the end of it all, it's not talent or tech that makes the difference. It's heart.",
     slug: "giving-a-shit-works",
     status: "not-started",
+    publishDate: "May 24, 2025",
+    heroImage: "/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png",
+    authorName: "Mike",
     sections: [],
     furtherReading: []
   }

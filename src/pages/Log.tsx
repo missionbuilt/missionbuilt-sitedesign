@@ -4,6 +4,9 @@ import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import ChapterHero from "../components/log/ChapterHero";
+import ChapterContent from "../components/log/ChapterContent";
+import FurtherReading from "../components/log/FurtherReading";
 import { chapters } from "@/data/chapters-data";
 
 const Log = () => {
@@ -22,15 +25,15 @@ const Log = () => {
     return (
       <div className="min-h-screen flex flex-col bg-background">
         <Helmet>
-          <title>Log Not Found | Mission Built: Lessons from the Barbell and the Boardroom</title>
+          <title>Chapter Not Found | Mission Built: Lessons from the Barbell and the Boardroom</title>
           <meta property="og:title" content="Mission Built: Lessons from the Barbell and the Boardroom" />
           <meta property="og:description" content="An open-source book exploring how product leadership and powerlifting share the same foundation: discipline, mission, and care. New chapters weekly." />
         </Helmet>
         <Navbar />
         <main className="flex-grow flex items-center justify-center">
           <div className="text-center">
-            <h1 className="text-2xl font-bold mb-4">Log Not Found</h1>
-            <p className="text-muted-foreground">The requested training log could not be found.</p>
+            <h1 className="text-2xl font-bold mb-4">Chapter Not Found</h1>
+            <p className="text-muted-foreground">The requested chapter could not be found.</p>
           </div>
         </main>
         <Footer />
@@ -38,7 +41,7 @@ const Log = () => {
     );
   }
 
-  const pageTitle = `Training Log ${chapter.id}: ${chapter.title} | Mission Built: Lessons from the Barbell and the Boardroom`;
+  const pageTitle = `Chapter ${chapter.id}: ${chapter.title} | Mission Built: Lessons from the Barbell and the Boardroom`;
   const pageDescription = chapter.description;
 
   return (
@@ -71,22 +74,11 @@ const Log = () => {
         <meta property="article:tag" content="Leadership" />
         <meta property="article:tag" content="Powerlifting" />
       </Helmet>
+      
       <Navbar />
-      
-      <main className="flex-grow container mx-auto px-4 py-12">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl font-bold mb-4">Training Log {chapter.id}</h1>
-          <h2 className="text-2xl text-muted-foreground mb-6">{chapter.title}</h2>
-          <p className="text-lg">{chapter.description}</p>
-          
-          <div className="mt-12 p-8 bg-muted rounded-lg">
-            <p className="text-muted-foreground">
-              Ready to design this log page. What would you like to start with?
-            </p>
-          </div>
-        </div>
-      </main>
-      
+      <ChapterHero chapter={chapter} />
+      <ChapterContent chapter={chapter} />
+      <FurtherReading chapter={chapter} />
       <Footer />
     </div>
   );
