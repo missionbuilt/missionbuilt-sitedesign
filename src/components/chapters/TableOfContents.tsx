@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Chapter } from "@/data/chapters-data";
-import { BookOpen, Clock, CheckCircle2, Circle, Calendar } from "lucide-react";
+import { Clock, CheckCircle2, Circle, Calendar } from "lucide-react";
 
 interface TableOfContentsProps {
   chapters: Chapter[];
@@ -160,16 +160,6 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ chapters }) => {
               );
             })}
           </div>
-        </div>
-      </div>
-
-      {/* Reading Instructions */}
-      <div className="mt-8 p-6 bg-slate/5 rounded-lg border border-slate/10 text-center">
-        <div className="flex items-center justify-center mb-2">
-          <BookOpen className="mr-2 h-5 w-5 text-muted-foreground" />
-          <p className="text-sm text-muted-foreground">
-            New chapters are released weekly. Click on published chapters to start reading.
-          </p>
         </div>
       </div>
     </div>
