@@ -88,10 +88,10 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ chapters }) => {
         </p>
       </div>
 
-      {/* Table of Contents */}
+      {/* Training Logs */}
       <div className="bg-white dark:bg-slate/5 rounded-lg border border-slate/10 shadow-sm overflow-hidden">
         <div className="p-6 border-b border-slate/10 bg-slate/5">
-          <h2 className="text-2xl font-serif font-bold text-center">Table of Contents</h2>
+          <h2 className="text-2xl font-serif font-bold text-center">Training Logs</h2>
         </div>
         
         <div className="p-8">
