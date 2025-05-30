@@ -10,16 +10,16 @@ import {
   TableCell
 } from "@/components/ui/table";
 import { Chapter } from "@/data/chapters-data";
-import { Activity, Clock, Circle, X } from "lucide-react";
+import { CheckCircle2, Clock, Circle, X } from "lucide-react";
 
 // Helper function to get badge variant
 const getBadgeVariant = (status: Chapter["status"]): "default" | "secondary" | "outline" => {
   switch (status) {
-    case "in-progress":
+    case "published":
       return "default";
     case "coming-soon":
       return "secondary";
-    case "not-started":
+    case "draft":
       return "outline";
     default:
       return "outline";
@@ -29,25 +29,25 @@ const getBadgeVariant = (status: Chapter["status"]): "default" | "secondary" | "
 // Helper function to get badge content
 const getBadgeContent = (status: Chapter["status"]) => {
   switch (status) {
-    case "in-progress":
+    case "published":
       return (
         <>
-          <Activity className="mr-1 h-3 w-3" />
-          <span>Good Lift</span>
+          <CheckCircle2 className="mr-1 h-3 w-3" />
+          <span>Published</span>
         </>
       );
     case "coming-soon":
       return (
         <>
           <Clock className="mr-1 h-3 w-3" />
-          <span>Pushing Through</span>
+          <span>Coming Soon</span>
         </>
       );
-    case "not-started":
+    case "draft":
       return (
         <>
           <Circle className="mr-1 h-3 w-3" />
-          <span>Sipping the Pre</span>
+          <span>Draft</span>
         </>
       );
     default:
@@ -58,11 +58,11 @@ const getBadgeContent = (status: Chapter["status"]) => {
 // Helper function to get badge class
 const getBadgeClass = (status: Chapter["status"]): string => {
   switch (status) {
-    case "in-progress":
+    case "published":
       return "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400";
     case "coming-soon":
-      return "bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400";
-    case "not-started":
+      return "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400";
+    case "draft":
       return "bg-slate-100 text-slate-800 dark:bg-slate-800/30 dark:text-slate-400";
     default:
       return "";

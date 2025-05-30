@@ -3,18 +3,18 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Book, Activity, Clock, Circle, X, Calendar } from "lucide-react";
+import { Book, CheckCircle2, Clock, Circle, X, Calendar } from "lucide-react";
 import { Chapter } from "@/data/chapters-data";
 import { cn } from "@/lib/utils";
 
 // Helper function to get badge variant
 const getBadgeVariant = (status: Chapter["status"]): "default" | "secondary" | "outline" => {
   switch (status) {
-    case "in-progress":
+    case "published":
       return "default";
     case "coming-soon":
       return "secondary";
-    case "not-started":
+    case "draft":
       return "outline";
     default:
       return "outline";
@@ -24,25 +24,25 @@ const getBadgeVariant = (status: Chapter["status"]): "default" | "secondary" | "
 // Helper function to get badge content
 const getBadgeContent = (status: Chapter["status"]) => {
   switch (status) {
-    case "in-progress":
+    case "published":
       return (
         <>
-          <Activity className="mr-1 h-3 w-3" />
-          <span>Good Lift</span>
+          <CheckCircle2 className="mr-1 h-3 w-3" />
+          <span>Published</span>
         </>
       );
     case "coming-soon":
       return (
         <>
           <Clock className="mr-1 h-3 w-3" />
-          <span>Pushing Through</span>
+          <span>Coming Soon</span>
         </>
       );
-    case "not-started":
+    case "draft":
       return (
         <>
           <Circle className="mr-1 h-3 w-3" />
-          <span>Sipping the Pre</span>
+          <span>Draft</span>
         </>
       );
     default:
@@ -53,11 +53,11 @@ const getBadgeContent = (status: Chapter["status"]) => {
 // Helper function to get badge class
 const getBadgeClass = (status: Chapter["status"]): string => {
   switch (status) {
-    case "in-progress":
+    case "published":
       return "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400";
     case "coming-soon":
-      return "bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400";
-    case "not-started":
+      return "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400";
+    case "draft":
       return "bg-slate-100 text-slate-800 dark:bg-slate-800/30 dark:text-slate-400";
     default:
       return "";
@@ -88,7 +88,7 @@ const ChapterCard: React.FC<ChapterCardProps> = ({ chapter }) => {
   const isLog1 = chapter.id === 1;
   
   // If the chapter is Log 1, we'll make it clickable regardless of status
-  const isClickable = chapter.status === "in-progress" || isLog1;
+  const isClickable = chapter.status === "published" || isLog1;
   
   // Render the card content
   return (
@@ -107,8 +107,8 @@ const ChapterCard: React.FC<ChapterCardProps> = ({ chapter }) => {
       <CardContent>
         <p className="text-muted-foreground mb-4 line-clamp-3">{chapter.description}</p>
         
-        {/* Show publish date for in-progress chapters */}
-        {chapter.status === "in-progress" && (
+        {/* Show publish date for published chapters */}
+        {chapter.status === "published" && (
           <div className="flex items-center text-sm text-muted-foreground mb-4">
             <Calendar className="mr-2 h-4 w-4" />
             <span>Published: {getPublishDate(chapter.id)}</span>

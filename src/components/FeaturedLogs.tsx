@@ -8,9 +8,9 @@ import { useNewBadge } from '@/hooks/useNewBadge';
 const FeaturedLogs = () => {
   const { hasVisitedTrainingLogs } = useNewBadge();
   
-  // Get the most recent chapters as featured logs
+  // Get the most recent published chapters as featured logs
   const featuredLogs = chapters
-    .filter(chapter => chapter.status === 'in-progress')
+    .filter(chapter => chapter.status === 'published')
     .slice(0, 3);
 
   return (
