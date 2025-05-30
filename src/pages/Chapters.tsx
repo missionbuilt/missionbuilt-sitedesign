@@ -3,17 +3,11 @@ import React, { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import ChapterGrid from "@/components/chapters/ChapterGrid";
-import ChapterTable from "@/components/chapters/ChapterTable";
 import ChaptersHeader from "@/components/chapters/ChaptersHeader";
-import StatusCounter from "@/components/chapters/StatusCounter";
+import TableOfContents from "@/components/chapters/TableOfContents";
 import { chapters } from "@/data/chapters-data";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BookOpen, ListFilter } from "lucide-react";
 
 const Chapters = () => {
-  const [viewMode, setViewMode] = React.useState<"grid" | "table">("grid");
-  
   // Automatically scroll to the top when this component mounts
   useEffect(() => {
     window.scrollTo({
@@ -22,7 +16,7 @@ const Chapters = () => {
     });
   }, []);
 
-  const pageTitle = "Training Logs | Mission Built: Lessons from the Barbell and the Boardroom";
+  const pageTitle = "Table of Contents | Mission Built: Lessons from the Barbell and the Boardroom";
   const pageDescription = "An open-source book exploring how product leadership and powerlifting share the same foundation: discipline, mission, and care. New chapters weekly.";
 
   return (
@@ -52,58 +46,25 @@ const Chapters = () => {
       <Navbar />
       
       <main className="flex-grow container mx-auto px-4 py-8 md:py-12">
-        <div className="max-w-5xl mx-auto">
-          {/* Header without book title */}
-          <div className="mb-10">
-            <ChaptersHeader 
-              title="Training Logs" 
-              subtitle="Lift Heavy. Lead Strong. One Rep, One Release at a Time." 
-            />
-          </div>
-          
-          {/* Status counters without animations */}
-          <div className="mb-8">
-            <StatusCounter chapters={chapters} />
-          </div>
-          
-          {/* Book title and subtitle on same line with colon */}
-          <div className="mb-8 text-center">
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-display font-bold text-army dark:text-army">
-              Mission Built<span className="mx-2">:</span><span className="font-normal text-muted-foreground">Lessons from the Barbell and the Boardroom</span>
+        <div className="max-w-6xl mx-auto">
+          {/* Book Header */}
+          <div className="mb-16 text-center">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-6 text-slate dark:text-slate-100">
+              Mission Built
+            </h1>
+            <h2 className="text-2xl md:text-3xl font-light text-muted-foreground mb-8">
+              Lessons from the Barbell and the Boardroom
             </h2>
+            <div className="w-24 h-1 bg-primary mx-auto mb-8"></div>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+              An open-source book exploring how product leadership and powerlifting share the same foundation: 
+              discipline, mission, and care. Each chapter connects the weight room to the boardroom, 
+              revealing timeless principles for building both strength and software.
+            </p>
           </div>
           
-          {/* View toggle for grid/table */}
-          <div className="mb-6 flex justify-end">
-            <Tabs 
-              defaultValue="grid" 
-              value={viewMode}
-              onValueChange={(value) => setViewMode(value as "grid" | "table")}
-              className="w-[200px]"
-            >
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="grid" className="flex items-center gap-2">
-                  <BookOpen className="h-4 w-4" />
-                  <span>Cards</span>
-                </TabsTrigger>
-                <TabsTrigger value="table" className="flex items-center gap-2">
-                  <ListFilter className="h-4 w-4" />
-                  <span>List</span>
-                </TabsTrigger>
-              </TabsList>
-            </Tabs>
-          </div>
-          
-          {/* Chapter content without animations */}
-          <div>
-            {viewMode === "grid" ? (
-              <ChapterGrid chapters={chapters} />
-            ) : (
-              <div className="mt-0">
-                <ChapterTable chapters={chapters} />
-              </div>
-            )}
-          </div>
+          {/* Table of Contents */}
+          <TableOfContents chapters={chapters} />
         </div>
       </main>
       
