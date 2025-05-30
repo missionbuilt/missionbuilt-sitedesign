@@ -56,11 +56,6 @@ const Chapters = () => {
               Lessons from the Barbell and the Boardroom
             </h2>
             <div className="w-24 h-1 bg-primary mx-auto mb-8"></div>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              An open-source book exploring how product leadership and powerlifting share the same foundation: 
-              discipline, mission, and care. Each chapter connects the weight room to the boardroom, 
-              revealing timeless principles for building both strength and software.
-            </p>
           </div>
           
           {/* Table of Contents */}
