@@ -22,7 +22,7 @@ const LogHero: React.FC<LogHeroProps> = ({ chapter }) => {
       return "/lovable-uploads/0f0d931d-cbc0-46a2-aa6b-d834d3052c01.png";
     }
     if (chapterId === 4) {
-      return "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80";
+      return "/lovable-uploads/b2c7b360-89b4-4bba-ab57-8aee39b1cc62.png";
     }
     return "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80";
   };
