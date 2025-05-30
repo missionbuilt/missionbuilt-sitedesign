@@ -1,16 +1,9 @@
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Chapter } from "@/data/chapters-data";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { ChevronDown } from "lucide-react";
 
 interface LogSectionsProps {
   chapter: Chapter;
-  expandedSection?: string;
 }
 
 // Function to calculate estimated read time
@@ -22,78 +15,66 @@ const calculateReadTime = (content: string): number => {
   return Math.max(1, readTime);
 };
 
-const LogSections: React.FC<LogSectionsProps> = ({ chapter, expandedSection }) => {
+const LogSections: React.FC<LogSectionsProps> = ({ chapter }) => {
   const sections = chapter.sections || [];
-  const [openSections, setOpenSections] = useState<Set<string>>(new Set([sections[0]?.id]));
-  
-  useEffect(() => {
-    if (expandedSection) {
-      setOpenSections(prev => new Set([...prev, expandedSection]));
-    }
-  }, [expandedSection]);
-  
-  const toggleSection = (sectionId: string) => {
-    setOpenSections(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(sectionId)) {
-        newSet.delete(sectionId);
-      } else {
-        newSet.add(sectionId);
-      }
-      return newSet;
-    });
-  };
 
   // If no sections are available, show a message
   if (sections.length === 0) {
     return (
-      <div className="text-center py-8">
-        <p className="text-muted-foreground">Content for this chapter is coming soon.</p>
+      <div className="text-center py-16">
+        <div className="max-w-md mx-auto">
+          <h2 className="text-2xl font-semibold mb-4 text-foreground">Coming Soon</h2>
+          <p className="text-muted-foreground text-lg">
+            This chapter is currently being written. Check back soon for the full content.
+          </p>
+        </div>
       </div>
     );
   }
+
+  // Calculate total read time for the chapter
+  const totalReadTime = sections.reduce((total, section) => {
+    return total + calculateReadTime(section.content);
+  }, 0);
   
   return (
-    <div className="space-y-4">
-      {sections.map((section, index) => {
-        const readTime = calculateReadTime(section.content);
-        const isOpen = openSections.has(section.id);
-        
-        return (
-          <Collapsible key={section.id} open={isOpen} onOpenChange={() => toggleSection(section.id)}>
-            <CollapsibleTrigger 
-              id={section.id}
-              className="flex items-center justify-between w-full text-left p-4 bg-slate/5 hover:bg-slate/10 rounded-lg border border-slate/10 transition-colors duration-200"
-            >
-              <div className="flex flex-col items-start">
-                <h2 className="text-xl font-semibold text-foreground">
-                  {index + 1}. {section.title}
-                </h2>
-                <span className="text-sm text-muted-foreground mt-1">
-                  {readTime} min read
-                </span>
+    <article className="prose prose-lg prose-slate max-w-none dark:prose-invert">
+      {/* Chapter reading info */}
+      <div className="not-prose mb-8 pb-6 border-b border-border">
+        <div className="text-sm text-muted-foreground">
+          {totalReadTime} min read • {sections.length} {sections.length === 1 ? 'section' : 'sections'}
+        </div>
+      </div>
+
+      {/* Chapter sections */}
+      <div className="space-y-12">
+        {sections.map((section, index) => (
+          <section key={section.id} id={section.id} className="scroll-mt-24">
+            {/* Section header */}
+            <header className="not-prose mb-6">
+              <h2 className="text-2xl font-bold text-foreground mb-2">
+                {section.title}
+              </h2>
+              <div className="text-sm text-muted-foreground">
+                {calculateReadTime(section.content)} min read
               </div>
-              <ChevronDown className="h-5 w-5 text-muted-foreground transition-transform duration-200 data-[state=open]:rotate-180" />
-            </CollapsibleTrigger>
-            
-            <CollapsibleContent className="px-4 pb-4">
-              <div className="prose prose-slate max-w-none pt-4">
-                <div className="text-muted-foreground leading-relaxed">
-                  {section.content.split('\n').map((paragraph, index) => {
-                    if (paragraph.trim() === '') return null;
-                    return (
-                      <p key={index} className="mb-4 last:mb-0">
-                        {paragraph}
-                      </p>
-                    );
-                  }).filter(Boolean)}
-                </div>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
-        );
-      })}
-    </div>
+            </header>
+
+            {/* Section content */}
+            <div className="leading-relaxed">
+              {section.content.split('\n\n').map((paragraph, pIndex) => {
+                if (paragraph.trim() === '') return null;
+                return (
+                  <p key={pIndex} className="mb-6 text-foreground/90 leading-8">
+                    {paragraph.trim()}
+                  </p>
+                );
+              }).filter(Boolean)}
+            </div>
+          </section>
+        ))}
+      </div>
+    </article>
   );
 };
 
