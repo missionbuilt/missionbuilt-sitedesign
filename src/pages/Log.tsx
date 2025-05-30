@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import LogContent from "@/components/log/LogContent";
 import { chapters } from "@/data/chapters-data";
 
 const Log = () => {
@@ -41,7 +40,6 @@ const Log = () => {
 
   const pageTitle = `Training Log ${chapter.id}: ${chapter.title} | Mission Built: Lessons from the Barbell and the Boardroom`;
   const pageDescription = chapter.description;
-  const pageUrl = `https://missionbuilt.io/log/${chapter.id}`;
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -74,7 +72,21 @@ const Log = () => {
         <meta property="article:tag" content="Powerlifting" />
       </Helmet>
       <Navbar />
-      <LogContent chapter={chapter} />
+      
+      <main className="flex-grow container mx-auto px-4 py-12">
+        <div className="max-w-4xl mx-auto text-center">
+          <h1 className="text-4xl font-bold mb-4">Training Log {chapter.id}</h1>
+          <h2 className="text-2xl text-muted-foreground mb-6">{chapter.title}</h2>
+          <p className="text-lg">{chapter.description}</p>
+          
+          <div className="mt-12 p-8 bg-muted rounded-lg">
+            <p className="text-muted-foreground">
+              Ready to design this log page. What would you like to start with?
+            </p>
+          </div>
+        </div>
+      </main>
+      
       <Footer />
     </div>
   );
