@@ -91,7 +91,7 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ chapters }) => {
       {/* Training Logs */}
       <div className="bg-white dark:bg-slate/5 rounded-lg border border-slate/10 shadow-sm overflow-hidden">
         <div className="p-6 border-b border-slate/10 bg-slate/5">
-          <h2 className="text-2xl font-serif font-bold text-center">Training Logs</h2>
+          <h2 className="text-2xl font-display font-bold text-center">Training Logs</h2>
         </div>
         
         <div className="p-8">
@@ -118,7 +118,7 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ chapters }) => {
                   <div className="flex-grow min-w-0 mx-6">
                     {isClickable ? (
                       <Link to={`/log/${chapter.id}`} className="block">
-                        <h3 className="text-lg font-serif font-semibold mb-1 group-hover:text-primary transition-colors">
+                        <h3 className="text-lg font-display font-semibold mb-1 group-hover:text-primary transition-colors">
                           {chapter.title}
                         </h3>
                         <p className="text-sm text-muted-foreground line-clamp-2">
@@ -127,7 +127,7 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ chapters }) => {
                       </Link>
                     ) : (
                       <>
-                        <h3 className="text-lg font-serif font-semibold mb-1 text-slate-400">
+                        <h3 className="text-lg font-display font-semibold mb-1 text-slate-400">
                           {chapter.title}
                         </h3>
                         <p className="text-sm text-muted-foreground line-clamp-2">
