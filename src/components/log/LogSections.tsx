@@ -23,8 +23,8 @@ const calculateReadTime = (content: string): number => {
   return Math.max(1, readTime); // Minimum 1 minute
 };
 
-// Function to emphasize specific phrases in the content
-const emphasizeKeyPhrases = (text: string): React.ReactNode => {
+// Function to emphasize specific phrases in Log 4 content only
+const emphasizeKeyPhrasesForLog4 = (text: string): React.ReactNode => {
   const phrasesToEmphasize = [
     "laser focus",
     "doing the right thing",
@@ -67,9 +67,27 @@ const emphasizeKeyPhrases = (text: string): React.ReactNode => {
   }).filter(Boolean);
 };
 
-// Function to format text content with proper line breaks and emphasis
-const formatTextContent = (content: string) => {
-  return emphasizeKeyPhrases(content);
+// Function to format text content with basic paragraph breaks for all other logs
+const formatGenericTextContent = (content: string): React.ReactNode => {
+  return content.split('\n').map((paragraph, index) => {
+    if (paragraph.trim() === '') return null;
+    return (
+      <p key={index} className="mb-4 last:mb-0">
+        {paragraph}
+      </p>
+    );
+  }).filter(Boolean);
+};
+
+// Main function to format text content based on chapter
+const formatTextContent = (content: string, chapterId: number) => {
+  // Only apply special emphasis for Log 4 (chapter ID 4)
+  if (chapterId === 4) {
+    return emphasizeKeyPhrasesForLog4(content);
+  }
+  
+  // Use generic formatting for all other logs
+  return formatGenericTextContent(content);
 };
 
 const LogSections: React.FC<LogSectionsProps> = ({ chapter, expandedSection }) => {
@@ -130,7 +148,7 @@ const LogSections: React.FC<LogSectionsProps> = ({ chapter, expandedSection }) =
             <CollapsibleContent className="px-4 pb-4">
               <div className="prose prose-slate max-w-none pt-4">
                 <div className="text-muted-foreground leading-relaxed">
-                  {formatTextContent(section.content)}
+                  {formatTextContent(section.content, chapter.id)}
                 </div>
               </div>
             </CollapsibleContent>
