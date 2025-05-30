@@ -74,16 +74,16 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ chapters }) => {
 
   return (
     <div className="max-w-4xl mx-auto">
-      {/* Book Progress */}
-      <div className="mb-12 p-6 bg-slate/5 rounded-lg border border-slate/10">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold">Book Progress</h3>
-          <span className="text-sm text-muted-foreground">
-            {publishedChapters} of {totalChapters} chapters published
+      {/* Book Progress - Reduced Size */}
+      <div className="mb-8 p-3 bg-slate/5 rounded border border-slate/10">
+        <div className="flex items-center justify-between mb-2">
+          <h3 className="text-sm font-medium">Book Progress</h3>
+          <span className="text-xs text-muted-foreground">
+            {publishedChapters}/{totalChapters} published
           </span>
         </div>
-        <Progress value={bookProgress} className="h-3" />
-        <p className="text-sm text-muted-foreground mt-2">
+        <Progress value={bookProgress} className="h-1.5" />
+        <p className="text-xs text-muted-foreground mt-1">
           {Math.round(bookProgress)}% complete
         </p>
       </div>
