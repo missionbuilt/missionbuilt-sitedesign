@@ -72,6 +72,8 @@ const getPublishDate = (chapterId: number): string => {
       return "May 24, 2025";
     case 3:
       return "May 29, 2025";
+    case 4:
+      return "May 30, 2025";
     default:
       return "May 24, 2025";
   }

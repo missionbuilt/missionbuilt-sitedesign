@@ -335,8 +335,14 @@ export const chapters: Chapter[] = [
     title: "Feedback is a Superpower",
     description: "Great products and great lifters grow through honest, iterative feedback.",
     slug: "feedback-is-a-superpower",
-    status: "coming-soon",
-    sections: [],
+    status: "in-progress",
+    sections: [
+      {
+        id: "feedback-loops-that-fuel-growth",
+        title: "Feedback Loops That Fuel Growth",
+        content: "Building systems that deliver honest, actionable feedback in both product development and strength training."
+      }
+    ],
     furtherReading: []
   },
   {
