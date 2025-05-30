@@ -38,7 +38,7 @@ export const chapters: Chapter[] = [
   {
     id: 1,
     title: "Mission Before Metrics",
-    description: "Mission-driven work outlasts short-term wins. This chapter defines the book's core philosophy.",
+    description: "",
     slug: "mission-before-metrics",
     status: "draft",
     publishDate: "May 24, 2025",
@@ -52,7 +52,7 @@ export const chapters: Chapter[] = [
   {
     id: 2,
     title: "Built Through Reps",
-    description: "Progress is earned through intentional repetition. It's not about genius — it's about doing the work.",
+    description: "",
     slug: "built-through-reps",
     status: "draft",
     publishDate: "May 24, 2025",
@@ -66,7 +66,7 @@ export const chapters: Chapter[] = [
   {
     id: 3,
     title: "Rituals Over Rules",
-    description: "Adaptable routines create long-term resilience. Rules can be broken — rituals evolve.",
+    description: "",
     slug: "rituals-over-rules",
     status: "coming-soon",
     publishDate: "May 29, 2025",
@@ -80,7 +80,7 @@ export const chapters: Chapter[] = [
   {
     id: 4,
     title: "Feedback is a Superpower",
-    description: "Great products and great lifters grow through honest, iterative feedback.",
+    description: "",
     slug: "feedback-is-a-superpower",
     status: "published",
     publishDate: "May 24, 2025",
@@ -94,7 +94,7 @@ export const chapters: Chapter[] = [
   {
     id: 5,
     title: "Progress Isn't Pretty",
-    description: "Growth is messy. Embrace the uncomfortable middle.",
+    description: "",
     slug: "progress-isnt-pretty",
     status: "draft",
     publishDate: "May 24, 2025",
@@ -108,7 +108,7 @@ export const chapters: Chapter[] = [
   {
     id: 6,
     title: "The Mission Demands Recovery",
-    description: "Rest isn't a reward — it's a requirement. Real performance needs pause.",
+    description: "",
     slug: "the-mission-demands-recovery",
     status: "draft",
     publishDate: "May 24, 2025",
@@ -122,7 +122,7 @@ export const chapters: Chapter[] = [
   {
     id: 7,
     title: "Train the Engine, Not Just the Output",
-    description: "Don't optimize for appearance — build what actually powers performance.",
+    description: "",
     slug: "train-the-engine-not-just-the-output",
     status: "draft",
     publishDate: "May 24, 2025",
@@ -136,7 +136,7 @@ export const chapters: Chapter[] = [
   {
     id: 8,
     title: "Decisions Are Made Under Load",
-    description: "Who you are shows up under stress. Build decision strength now, not later.",
+    description: "",
     slug: "decisions-are-made-under-load",
     status: "draft",
     publishDate: "May 24, 2025",
@@ -150,7 +150,7 @@ export const chapters: Chapter[] = [
   {
     id: 9,
     title: "Ship It Like You Show Up",
-    description: "Every detail is a reflection of your standard. Show up like it matters.",
+    description: "",
     slug: "ship-it-like-you-show-up",
     status: "draft",
     publishDate: "May 24, 2025",
@@ -164,7 +164,7 @@ export const chapters: Chapter[] = [
   {
     id: 10,
     title: "The Team Is the Tool",
-    description: "You don't win alone. Build the crew that lifts with you.",
+    description: "",
     slug: "the-team-is-the-tool",
     status: "draft",
     publishDate: "May 24, 2025",
@@ -178,7 +178,7 @@ export const chapters: Chapter[] = [
   {
     id: 11,
     title: "Strong Enough to Listen",
-    description: "Power includes the ability to pause, receive, and adjust.",
+    description: "",
     slug: "strong-enough-to-listen",
     status: "draft",
     publishDate: "May 24, 2025",
@@ -192,7 +192,7 @@ export const chapters: Chapter[] = [
   {
     id: 12,
     title: "The Weight Is Real. Own It.",
-    description: "Real growth means taking responsibility for the hard things.",
+    description: "",
     slug: "the-weight-is-real-own-it",
     status: "draft",
     publishDate: "May 24, 2025",
@@ -206,7 +206,7 @@ export const chapters: Chapter[] = [
   {
     id: 13,
     title: "Giving a Shit Works",
-    description: "At the end of it all, it's not talent or tech that makes the difference. It's heart.",
+    description: "",
     slug: "giving-a-shit-works",
     status: "draft",
     publishDate: "May 24, 2025",
