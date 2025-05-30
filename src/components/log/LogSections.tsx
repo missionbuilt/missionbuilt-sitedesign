@@ -15,83 +15,14 @@ interface LogSectionsProps {
 
 // Function to calculate estimated read time
 const calculateReadTime = (content: string): number => {
-  // Clean up the text by removing extra whitespace and filtering out empty words
   const words = content.split(/\s+/).filter(word => word.trim().length > 0);
   const wordCount = words.length;
-  const wordsPerMinute = 250; // Slightly higher reading speed for more accurate calculation
+  const wordsPerMinute = 250;
   const readTime = Math.ceil(wordCount / wordsPerMinute);
-  return Math.max(1, readTime); // Minimum 1 minute
-};
-
-// Function to emphasize specific phrases in Log 4 content only
-const emphasizeKeyPhrasesForLog4 = (text: string): React.ReactNode => {
-  const phrasesToEmphasize = [
-    "laser focus",
-    "doing the right thing",
-    "Point the flashlight",
-    "Two Words That Changed the Lift",
-    "It's a spotlight, not a floodlight — aimed at what matters most, right now.",
-    "From Backlog to Breakthrough",
-    "The Flashlight, Not the Floodlight",
-    "One cue, one rep at a time"
-  ];
-
-  let processedText = text;
-  
-  // Replace each phrase with emphasized version
-  phrasesToEmphasize.forEach((phrase, index) => {
-    const regex = new RegExp(`(${phrase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
-    processedText = processedText.replace(regex, `<EMPHASIS_${index}>$1</EMPHASIS_${index}>`);
-  });
-
-  // Split by paragraphs and process each one
-  return processedText.split('\n').map((paragraph, paragraphIndex) => {
-    if (paragraph.trim() === '') return null;
-    
-    // Split by emphasis markers and process
-    const parts = paragraph.split(/(<EMPHASIS_\d+>.*?<\/EMPHASIS_\d+>)/g);
-    
-    const processedParts = parts.map((part, partIndex) => {
-      const emphasisMatch = part.match(/<EMPHASIS_\d+>(.*?)<\/EMPHASIS_\d+>/);
-      if (emphasisMatch) {
-        return <strong key={partIndex} className="font-semibold">{emphasisMatch[1]}</strong>;
-      }
-      return part;
-    });
-
-    return (
-      <p key={paragraphIndex} className="mb-4 last:mb-0">
-        {processedParts}
-      </p>
-    );
-  }).filter(Boolean);
-};
-
-// Function to format text content with basic paragraph breaks for all other logs
-const formatGenericTextContent = (content: string): React.ReactNode => {
-  return content.split('\n').map((paragraph, index) => {
-    if (paragraph.trim() === '') return null;
-    return (
-      <p key={index} className="mb-4 last:mb-0">
-        {paragraph}
-      </p>
-    );
-  }).filter(Boolean);
-};
-
-// Main function to format text content based on chapter
-const formatTextContent = (content: string, chapterId: number) => {
-  // Only apply special emphasis for Log 4 (chapter ID 4)
-  if (chapterId === 4) {
-    return emphasizeKeyPhrasesForLog4(content);
-  }
-  
-  // Use generic formatting for all other logs
-  return formatGenericTextContent(content);
+  return Math.max(1, readTime);
 };
 
 const LogSections: React.FC<LogSectionsProps> = ({ chapter, expandedSection }) => {
-  // Use the actual sections from the chapter data, or fall back to empty array
   const sections = chapter.sections || [];
   const [openSections, setOpenSections] = useState<Set<string>>(new Set([sections[0]?.id]));
   
@@ -148,7 +79,14 @@ const LogSections: React.FC<LogSectionsProps> = ({ chapter, expandedSection }) =
             <CollapsibleContent className="px-4 pb-4">
               <div className="prose prose-slate max-w-none pt-4">
                 <div className="text-muted-foreground leading-relaxed">
-                  {formatTextContent(section.content, chapter.id)}
+                  {section.content.split('\n').map((paragraph, index) => {
+                    if (paragraph.trim() === '') return null;
+                    return (
+                      <p key={index} className="mb-4 last:mb-0">
+                        {paragraph}
+                      </p>
+                    );
+                  }).filter(Boolean)}
                 </div>
               </div>
             </CollapsibleContent>
