@@ -1,3 +1,4 @@
+
 import { Chapter, ChapterMetadata } from '@/types/chapter';
 
 export interface ChapterLink {
@@ -83,36 +84,74 @@ class ContentService {
   }
 
   downloadContentFile(chapterId: string, content: string): void {
-    console.log('Downloading content file for:', chapterId);
-    const contentBlob = new Blob([content], { type: 'text/markdown' });
-    const url = URL.createObjectURL(contentBlob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `${chapterId}.md`;
-    link.style.display = 'none';
+    console.log('Starting content download for:', chapterId);
+    console.log('Content length:', content.length);
     
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-    console.log(`Downloaded: ${chapterId}.md`);
+    try {
+      const contentBlob = new Blob([content], { type: 'text/markdown' });
+      console.log('Blob created, size:', contentBlob.size);
+      
+      const url = URL.createObjectURL(contentBlob);
+      console.log('Object URL created:', url);
+      
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${chapterId}.md`;
+      link.style.display = 'none';
+      
+      console.log('Adding link to document');
+      document.body.appendChild(link);
+      
+      console.log('Triggering click');
+      link.click();
+      
+      console.log('Removing link from document');
+      document.body.removeChild(link);
+      
+      console.log('Revoking object URL');
+      URL.revokeObjectURL(url);
+      
+      console.log(`Successfully downloaded: ${chapterId}.md`);
+    } catch (error) {
+      console.error('Error downloading content file:', error);
+    }
   }
 
   downloadMetadataFile(chapterId: string, metadata: ChapterMeta): void {
-    console.log('Downloading metadata file for:', chapterId);
-    const metadataStr = JSON.stringify(metadata, null, 2);
-    const metadataBlob = new Blob([metadataStr], { type: 'application/json' });
-    const url = URL.createObjectURL(metadataBlob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `${chapterId}-meta.json`;
-    link.style.display = 'none';
+    console.log('Starting metadata download for:', chapterId);
+    console.log('Metadata:', metadata);
     
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-    console.log(`Downloaded: ${chapterId}-meta.json`);
+    try {
+      const metadataStr = JSON.stringify(metadata, null, 2);
+      console.log('JSON string length:', metadataStr.length);
+      
+      const metadataBlob = new Blob([metadataStr], { type: 'application/json' });
+      console.log('Blob created, size:', metadataBlob.size);
+      
+      const url = URL.createObjectURL(metadataBlob);
+      console.log('Object URL created:', url);
+      
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${chapterId}-meta.json`;
+      link.style.display = 'none';
+      
+      console.log('Adding link to document');
+      document.body.appendChild(link);
+      
+      console.log('Triggering click');
+      link.click();
+      
+      console.log('Removing link from document');
+      document.body.removeChild(link);
+      
+      console.log('Revoking object URL');
+      URL.revokeObjectURL(url);
+      
+      console.log(`Successfully downloaded: ${chapterId}-meta.json`);
+    } catch (error) {
+      console.error('Error downloading metadata file:', error);
+    }
   }
 
   savePermanently(chapterId: string, content: string, metadata: ChapterMeta): void {
