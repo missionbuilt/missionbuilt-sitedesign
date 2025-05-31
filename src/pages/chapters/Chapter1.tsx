@@ -6,6 +6,7 @@ import { ArrowLeft, Calendar, Clock } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ContentEditor from '@/components/ContentEditor';
+import LinkSection from '@/components/LinkSection';
 import { calculateReadTime } from '@/utils/readTimeCalculator';
 
 const Chapter1 = () => {
@@ -22,6 +23,11 @@ const Chapter1 = () => {
   const handleContentChange = (newContent: string) => {
     setContent(newContent);
     setReadTime(calculateReadTime(newContent));
+  };
+
+  const handleLinksChange = (links: any[]) => {
+    // In a real application, you might save this to localStorage, a database, etc.
+    console.log('Links updated:', links);
   };
 
   return (
@@ -82,12 +88,17 @@ const Chapter1 = () => {
             </div>
           </header>
           
-          <div className="prose prose-slate dark:prose-invert max-w-none">
+          <div className="prose prose-slate dark:prose-invert max-w-none mb-12">
             <ContentEditor 
               initialContent=""
               onSave={handleContentSave}
               onContentChange={handleContentChange}
             />
+          </div>
+
+          {/* Links Section */}
+          <div className="border-t border-gray-200 dark:border-gray-700 pt-8">
+            <LinkSection onLinksChange={handleLinksChange} />
           </div>
         </div>
       </main>
