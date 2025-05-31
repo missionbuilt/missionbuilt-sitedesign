@@ -20,7 +20,7 @@ const Chapters = () => {
   const pageDescription = "An open-source book exploring how product leadership and powerlifting share the same foundation: discipline, mission, and care. New chapters weekly.";
 
   return (
-    <div className="min-h-screen flex flex-col bg-background">
+    <div className="min-h-screen flex flex-col bg-background font-sans">
       <Helmet>
         <title>{pageTitle}</title>
         <meta name="description" content={pageDescription} />
@@ -49,10 +49,10 @@ const Chapters = () => {
         <div className="max-w-6xl mx-auto">
           {/* Book Header */}
           <div className="mb-16 text-center">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-6 text-slate dark:text-slate-100">
+            <h1 className="heading-lg font-serif mb-6">
               Mission Built
             </h1>
-            <h2 className="text-2xl md:text-3xl font-light text-muted-foreground mb-8">
+            <h2 className="heading-md font-light text-muted-foreground mb-8">
               Lessons from the Barbell and the Boardroom
             </h2>
             <div className="w-24 h-1 bg-primary mx-auto mb-8"></div>
