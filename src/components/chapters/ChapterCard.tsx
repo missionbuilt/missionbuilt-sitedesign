@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
@@ -84,11 +83,12 @@ interface ChapterCardProps {
 }
 
 const ChapterCard: React.FC<ChapterCardProps> = ({ chapter }) => {
-  // Determine if the chapter is Log 1 (special treatment)
+  // Determine if the chapter is Log 1 or Log 4 (special treatment)
   const isLog1 = chapter.id === 1;
+  const isLog4 = chapter.id === 4;
   
-  // If the chapter is Log 1, we'll make it clickable regardless of status
-  const isClickable = chapter.status === "published" || isLog1;
+  // If the chapter is Log 1 or Log 4, we'll make it clickable regardless of status
+  const isClickable = chapter.status === "published" || isLog1 || isLog4;
   
   // Render the card content
   return (
