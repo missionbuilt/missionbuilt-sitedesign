@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
@@ -122,7 +121,7 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ chapters }) => {
           <div className="space-y-1">
             {filteredChapters.map((chapter, index) => {
               const chapterNumber = String(chapter.id).padStart(2, '0');
-              const isClickable = chapter.status === "published" || chapter.id === 1;
+              const isClickable = chapter.status === "published";
               const dynamicReadingTime = getDynamicReadingTime(chapter);
               
               return (
