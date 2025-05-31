@@ -1,13 +1,14 @@
 
 import React from "react";
-import { Chapter } from "@/data/chapters-data";
+import { Chapter, LogContent } from "@/data/chapters-data";
 
 interface ChapterContentProps {
   chapter: Chapter;
+  logContent: LogContent | null;
 }
 
-const ChapterContent: React.FC<ChapterContentProps> = ({ chapter }) => {
-  if (!chapter.sections || chapter.sections.length === 0) {
+const ChapterContent: React.FC<ChapterContentProps> = ({ chapter, logContent }) => {
+  if (!logContent || !logContent.sections || logContent.sections.length === 0) {
     return (
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-3xl mx-auto">
@@ -31,7 +32,7 @@ const ChapterContent: React.FC<ChapterContentProps> = ({ chapter }) => {
           </p>
           
           {/* Chapter Sections */}
-          {chapter.sections.map((section, index) => (
+          {logContent.sections.map((section, index) => (
             <section key={section.id} className="mb-12">
               <h2 className="text-2xl font-bold mb-6">{section.title}</h2>
               <div 

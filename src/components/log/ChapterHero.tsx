@@ -8,7 +8,7 @@ interface ChapterHeroProps {
 }
 
 const ChapterHero: React.FC<ChapterHeroProps> = ({ chapter }) => {
-  const dynamicReadingTime = getDynamicReadingTime(chapter);
+  const dynamicReadingTime = getDynamicReadingTime(chapter.wordCount);
   
   return (
     <div className="relative">
@@ -43,7 +43,7 @@ const ChapterHero: React.FC<ChapterHeroProps> = ({ chapter }) => {
                 <Calendar className="h-4 w-4" />
                 <span>{chapter.date}</span>
               </div>
-              {chapter.status === "published" && (
+              {chapter.status === "published" && chapter.wordCount && chapter.wordCount > 0 && (
                 <div className="flex items-center gap-2">
                   <Clock className="h-4 w-4" />
                   <span>{dynamicReadingTime} min read</span>

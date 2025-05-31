@@ -1,4 +1,5 @@
-// Chapter type definition
+
+// Chapter type definition - now only contains metadata
 export interface Chapter {
   id: number;
   title: string;
@@ -8,7 +9,12 @@ export interface Chapter {
   date: string;
   status: "published" | "coming-soon" | "draft";
   heroImage: string;
-  sections?: Array<{
+  wordCount?: number; // Optional field to store word count for reading time calculation
+}
+
+// LogContent interface for individual log content files
+export interface LogContent {
+  sections: Array<{
     id: string;
     title: string;
     content: string;
@@ -20,22 +26,17 @@ export interface Chapter {
   }>;
 }
 
-// Utility function to calculate reading time based on content
-export const getDynamicReadingTime = (chapter: Chapter): number => {
-  if (!chapter.sections || chapter.sections.length === 0) {
+// Utility function to calculate reading time
+export const getDynamicReadingTime = (wordCount?: number): number => {
+  if (!wordCount) {
     return 5; // Default reading time
   }
   
-  const totalWords = chapter.sections.reduce((total, section) => {
-    const wordCount = section.content.replace(/<[^>]*>/g, '').split(/\s+/).length;
-    return total + wordCount;
-  }, 0);
-  
   // Assuming average reading speed of 200 words per minute
-  return Math.ceil(totalWords / 200);
+  return Math.ceil(wordCount / 200);
 };
 
-// Sample chapters data - starting fresh
+// Sample chapters data - now only metadata
 export const chapters: Chapter[] = [
   {
     id: 1,
@@ -46,8 +47,7 @@ export const chapters: Chapter[] = [
     date: "2024-01-15",
     status: "draft",
     heroImage: "/lovable-uploads/35170400-1b3f-446c-ae37-a3bb988dc1b8.png",
-    sections: [],
-    furtherReading: []
+    wordCount: 0
   },
   {
     id: 2,
@@ -58,8 +58,7 @@ export const chapters: Chapter[] = [
     date: "2024-01-22",
     status: "coming-soon",
     heroImage: "/lovable-uploads/35170400-1b3f-446c-ae37-a3bb988dc1b8.png",
-    sections: [],
-    furtherReading: []
+    wordCount: 0
   },
   {
     id: 3,
@@ -70,7 +69,6 @@ export const chapters: Chapter[] = [
     date: "2024-01-29", 
     status: "coming-soon",
     heroImage: "/lovable-uploads/35170400-1b3f-446c-ae37-a3bb988dc1b8.png",
-    sections: [],
-    furtherReading: []
+    wordCount: 0
   }
 ];

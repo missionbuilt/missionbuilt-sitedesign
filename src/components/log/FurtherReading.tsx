@@ -1,14 +1,14 @@
 
 import React from "react";
-import { Chapter } from "@/data/chapters-data";
+import { LogContent } from "@/data/chapters-data";
 import { ExternalLink, BookOpen } from "lucide-react";
 
 interface FurtherReadingProps {
-  chapter: Chapter;
+  logContent: LogContent | null;
 }
 
-const FurtherReading: React.FC<FurtherReadingProps> = ({ chapter }) => {
-  if (!chapter.furtherReading || chapter.furtherReading.length === 0) {
+const FurtherReading: React.FC<FurtherReadingProps> = ({ logContent }) => {
+  if (!logContent || !logContent.furtherReading || logContent.furtherReading.length === 0) {
     return null;
   }
 
@@ -22,7 +22,7 @@ const FurtherReading: React.FC<FurtherReadingProps> = ({ chapter }) => {
           </div>
           
           <div className="space-y-6">
-            {chapter.furtherReading.map((resource, index) => (
+            {logContent.furtherReading.map((resource, index) => (
               <div key={index} className="bg-background rounded-lg p-6 border">
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1">
