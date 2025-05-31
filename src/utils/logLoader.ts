@@ -1,17 +1,16 @@
 
 import { LogContent } from "@/data/chapters-data";
 
-// Dynamic imports for log content
+// Dynamic imports for log content - will be added as logs are created
 const logImports: Record<number, () => Promise<{ [key: string]: LogContent }>> = {
-  1: () => import("@/data/logs/log-1"),
-  2: () => import("@/data/logs/log-2"),
-  3: () => import("@/data/logs/log-3"),
+  // Log imports will be added here as content is created
 };
 
 export const loadLogContent = async (logId: number): Promise<LogContent | null> => {
   try {
     const importFn = logImports[logId];
     if (!importFn) {
+      console.log(`No content available for log ${logId}`);
       return null;
     }
     
