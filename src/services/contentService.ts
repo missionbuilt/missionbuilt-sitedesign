@@ -1,3 +1,4 @@
+
 import { Chapter, ChapterMetadata } from '@/types/chapter';
 
 export interface ChapterLink {
@@ -87,36 +88,50 @@ class ContentService {
     console.log('Content length:', content.length);
     console.log('Metadata:', metadata);
 
-    // Download content file
-    const contentBlob = new Blob([content], { type: 'text/markdown' });
-    const contentUrl = URL.createObjectURL(contentBlob);
-    const contentLink = document.createElement('a');
-    contentLink.href = contentUrl;
-    contentLink.download = `${chapterId}.md`;
-    contentLink.style.display = 'none';
-    document.body.appendChild(contentLink);
-    contentLink.click();
-    document.body.removeChild(contentLink);
-    URL.revokeObjectURL(contentUrl);
-    console.log(`Downloaded: ${chapterId}.md`);
+    // Create both files and download them sequentially with proper delays
+    const downloadFile = (blob: Blob, filename: string) => {
+      return new Promise<void>((resolve) => {
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        link.style.display = 'none';
+        
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        // Clean up and resolve after a delay
+        setTimeout(() => {
+          URL.revokeObjectURL(url);
+          console.log(`Downloaded: ${filename}`);
+          resolve();
+        }, 200);
+      });
+    };
 
-    // Download metadata file with a small delay to prevent browser blocking
-    setTimeout(() => {
-      const metadataStr = JSON.stringify(metadata, null, 2);
-      const metadataBlob = new Blob([metadataStr], { type: 'application/json' });
-      const metadataUrl = URL.createObjectURL(metadataBlob);
-      const metadataLink = document.createElement('a');
-      metadataLink.href = metadataUrl;
-      metadataLink.download = `${chapterId}-meta.json`;
-      metadataLink.style.display = 'none';
-      document.body.appendChild(metadataLink);
-      metadataLink.click();
-      document.body.removeChild(metadataLink);
-      URL.revokeObjectURL(metadataUrl);
-      console.log(`Downloaded: ${chapterId}-meta.json`);
-    }, 100);
+    // Download files sequentially to avoid browser blocking
+    const downloadSequentially = async () => {
+      try {
+        // Download content file first
+        const contentBlob = new Blob([content], { type: 'text/markdown' });
+        await downloadFile(contentBlob, `${chapterId}.md`);
+        
+        // Wait a bit longer before downloading the second file
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
+        // Download metadata file
+        const metadataStr = JSON.stringify(metadata, null, 2);
+        const metadataBlob = new Blob([metadataStr], { type: 'application/json' });
+        await downloadFile(metadataBlob, `${chapterId}-meta.json`);
+        
+        console.log(`Completed permanent save downloads for ${chapterId}`);
+      } catch (error) {
+        console.error('Error during file downloads:', error);
+      }
+    };
 
-    console.log(`Initiated permanent save downloads for ${chapterId}`);
+    downloadSequentially();
   }
 
   clearLocalStorage(chapterId: string): void {
