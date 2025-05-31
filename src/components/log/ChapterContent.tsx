@@ -15,12 +15,6 @@ const ChapterContent: React.FC<ChapterContentProps> = ({ chapter }) => {
             <p className="lead text-xl text-muted-foreground mb-8">
               {chapter.description}
             </p>
-            
-            <div className="mt-12 p-8 bg-muted rounded-lg text-center">
-              <p className="text-muted-foreground">
-                Chapter content will be added soon. Stay tuned for insights on {chapter.title.toLowerCase()}.
-              </p>
-            </div>
           </div>
         </div>
       </div>
