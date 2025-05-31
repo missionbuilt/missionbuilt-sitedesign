@@ -45,7 +45,7 @@ export const chapters: Chapter[] = [
     description: "",
     author: "Author Name",
     date: "2024-01-15",
-    status: "draft",
+    status: "published",
     heroImage: "/lovable-uploads/35170400-1b3f-446c-ae37-a3bb988dc1b8.png",
     wordCount: 0
   },
