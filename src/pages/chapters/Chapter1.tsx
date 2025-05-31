@@ -7,7 +7,6 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ContentEditor from '@/components/ContentEditor';
 import LinkSection from '@/components/LinkSection';
-import KeyInsights from '@/components/KeyInsights';
 import ReadingProgress from '@/components/ReadingProgress';
 import SectionDivider from '@/components/SectionDivider';
 import { calculateReadTime } from '@/utils/readTimeCalculator';
@@ -29,10 +28,6 @@ const Chapter1 = () => {
 
   const handleLinksChange = (links: any[]) => {
     console.log('Links updated:', links);
-  };
-
-  const handleInsightsChange = (insights: any[]) => {
-    console.log('Insights updated:', insights);
   };
 
   return (
@@ -117,9 +112,6 @@ const Chapter1 = () => {
               onContentChange={handleContentChange}
             />
           </div>
-
-          {/* Key Insights Section */}
-          <KeyInsights onInsightsChange={handleInsightsChange} />
 
           <SectionDivider />
 
