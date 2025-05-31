@@ -1,3 +1,4 @@
+
 // Chapter data structure
 export interface Resource {
   title: string;
@@ -66,13 +67,13 @@ export const getDynamicReadingTime = (chapter: Chapter): number => {
 export const chapters: Chapter[] = [
   {
     id: 1,
-    title: "The Foundation",
-    description: "Understanding the core principles that drive both exceptional product leadership and powerlifting excellence.",
-    slug: "the-foundation",
-    status: "published" as const,
-    publishDate: "2024-03-01",
-    heroImage: "/lovable-uploads/8ee131fa-0051-44d9-beb8-76b508b63c61.png",
-    authorName: "Mission Built Team",
+    title: "Mission Before Metrics",
+    description: "Before progress can be measured, purpose must be clarified. This chapter explores how clear, motivating missions outlast vanity metrics — in both lifting and leadership. It draws on military, product, and gym floor lessons to show that true progress begins with alignment to something bigger than the numbers.",
+    slug: "mission-before-metrics",
+    status: "draft",
+    publishDate: "May 24, 2025",
+    heroImage: "/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png",
+    authorName: "Mike",
     sections: [],
     furtherReading: []
   },
