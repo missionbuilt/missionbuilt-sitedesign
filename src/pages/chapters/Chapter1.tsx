@@ -2,7 +2,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Calendar } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
@@ -23,17 +23,21 @@ const Chapter1 = () => {
           alt="Chapter 1 Hero"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-black/20"></div>
-        <div className="absolute inset-0 flex flex-col items-center justify-center">
+        <div className="absolute inset-0 bg-black/30"></div>
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
           <Link 
             to="/about" 
-            className="text-sunburst hover:text-sunburst/80 transition-colors mb-4 text-lg font-medium"
+            className="text-sunburst hover:text-sunburst/80 transition-colors text-lg font-medium mb-2"
           >
-            Mike
+            by Mike
           </Link>
-          <h1 className="font-display font-bold text-4xl md:text-5xl lg:text-6xl text-white text-center px-4">
+          <h1 className="font-display font-bold text-4xl md:text-5xl lg:text-6xl text-white mb-4 leading-tight">
             Mission Before Metrics
           </h1>
+          <div className="flex items-center text-white/90 text-sm font-medium">
+            <Calendar className="w-4 h-4 mr-2" />
+            Published May 25th, 2025
+          </div>
         </div>
       </div>
       
