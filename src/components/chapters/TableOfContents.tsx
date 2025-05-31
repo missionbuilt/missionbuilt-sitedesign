@@ -57,7 +57,7 @@ const getBadgeContent = (status: Chapter["status"]) => {
 const getBadgeClass = (status: Chapter["status"]): string => {
   switch (status) {
     case "published":
-      return "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400";
+      return "bg-army text-white dark:bg-army/90 dark:text-white";
     case "coming-soon":
       return "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400";
     case "draft":
@@ -86,7 +86,7 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ chapters }) => {
           <Button
             variant={filterStatus === "published" ? "default" : "outline"}
             onClick={() => setFilterStatus(filterStatus === "published" ? "all" : "published")}
-            className="bg-green-100 text-green-800 hover:bg-green-200 border-green-300"
+            className="bg-army text-white hover:bg-army/90 border-army"
           >
             <CheckCircle2 className="mr-2 h-4 w-4" />
             {publishedChapters} Good Lift
