@@ -297,7 +297,104 @@ export const chapters: Chapter[] = [
 <p>But progress? That comes from the work itself — the grind, the reps, the effort no one applauds.</p>`
       }
     ],
-    furtherReading: []
+    furtherReading: [
+      {
+        title: "Cyberpunk 2077 Launch & CD Projekt Red",
+        description: "A case study in date-driven shipping that sacrificed long-term trust for short-term metrics.",
+        url: "https://www.forbes.com/sites/erikkain/2020/12/19/cd-projekt-red-stock-drops-after-buggy-messy-cyberpunk-2077-launch/",
+        note: "Case Study: Metrics Over Mission"
+      },
+      {
+        title: "What Really Brought Down the Boeing 737 Max?",
+        description: "How engineering culture and metric pressures at Boeing overtook the company's safety-driven mission — with catastrophic results.",
+        url: "https://www.nytimes.com/2019/04/08/business/boeing-737-max-.html",
+        note: "Case Study: Metrics Over Mission"
+      },
+      {
+        title: "Hafthor Björnsson on Pec Injury",
+        description: "A personal reflection on chasing numbers too hard — and paying the price with injury.",
+        url: "https://www.essentiallysports.com/strongman-news-hafthor-julius-bjornsson-pec-tear-confession/",
+        note: "Individual Drift: Strength and Misalignment"
+      },
+      {
+        title: "Hafthor Björnsson Injury Coverage",
+        description: "News coverage reinforcing the story's cautionary angle.",
+        url: "https://en.as.com/en/2024/06/28/other_sports/1719566715_673504.html",
+        note: "Individual Drift: Strength and Misalignment"
+      },
+      {
+        title: "Simone Biles & Mental Health",
+        description: "An athlete choosing alignment over achievement — and sparking a global conversation.",
+        url: "https://people.com/sports/everything-simone-biles-has-said-about-mental-health/",
+        note: "Mission-Aligned Decision-Making"
+      },
+      {
+        title: "Don't Buy This Jacket – Patagonia",
+        description: "Iconic ad campaign where brand values overrode short-term sales incentives.",
+        url: "https://www.patagonia.com/stories/dont-buy-this-jacket-black-friday-and-the-new-york-times/story-18615.html",
+        note: "Purpose-Driven Brand Behavior"
+      },
+      {
+        title: "The Business Case for Purpose",
+        description: "Purpose-driven companies see higher retention, satisfaction, and performance.",
+        url: "https://hbr.org/2018/10/the-business-case-for-purpose",
+        note: "Research: Purpose & Retention"
+      },
+      {
+        title: "Purpose at Work – Imperative & NYU Study (2016)",
+        description: "54% of purpose-driven employees are more likely to stay 5+ years.",
+        url: "https://www.imperative.com/workforce-purpose-index",
+        note: "Research: Purpose & Retention"
+      },
+      {
+        title: "Purpose: Shifting from Why to How",
+        description: "A roadmap for operationalizing purpose across the org.",
+        url: "https://www.mckinsey.com/business-functions/organization/our-insights/purpose-shifting-from-why-to-how",
+        note: "Research: Purpose & Retention"
+      },
+      {
+        title: "Improving Employee Retention",
+        description: "Research-based strategies for retention, highlighting mission alignment and culture.",
+        url: "https://guidehouse.com/insights/energy/2022/improving-employee-retention",
+        note: "Research: Purpose & Retention"
+      },
+      {
+        title: "Benevity Talent Retention Study",
+        description: "Mission-driven workers are significantly more likely to stay long-term.",
+        url: "https://www.benevity.com/resources/reports/talent-retention-study",
+        note: "Research: Purpose & Retention"
+      },
+      {
+        title: "Stefi Cohen's Hybrid Methodology",
+        description: "An elite athlete's fusion of structure and adaptation in strength programming.",
+        url: "https://www.hybridperformancemethod.com/stefi-cohen",
+        note: "Rituals, Adaptation & Innovation"
+      },
+      {
+        title: "Agile Retrospectives",
+        description: "A guide to turning recurring team reviews into meaningful improvement rituals.",
+        url: "https://www.agilealliance.org/glossary/retrospective/",
+        note: "Rituals, Adaptation & Innovation"
+      },
+      {
+        title: "Atlassian ShipIt (Hack Week)",
+        description: "A structured ritual encouraging innovation through autonomy and creativity.",
+        url: "https://www.atlassian.com/company/shipit",
+        note: "Rituals, Adaptation & Innovation"
+      },
+      {
+        title: "Spotify Hack Culture",
+        description: "How Spotify built agility and creativity into team rituals — not rigid processes.",
+        url: "https://blog.crisp.se/wp-content/uploads/2012/11/SpotifyScaling.pdf",
+        note: "Rituals, Adaptation & Innovation"
+      },
+      {
+        title: "John Boyd's OODA Loop",
+        description: "Military strategy model focused on Observation, Orientation, Decision, and Action. Useful for product and performance under uncertainty.",
+        url: "https://en.wikipedia.org/wiki/OODA_loop",
+        note: "Strategic Framing"
+      }
+    ]
   },
   {
     id: 2,
