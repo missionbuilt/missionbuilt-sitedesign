@@ -1,3 +1,4 @@
+
 // Chapter data structure
 export interface Resource {
   title: string;
@@ -1004,6 +1005,101 @@ Source: https://drmikeisraetel.com/dr-mike-israetel-mv-mev-mav-mrv-explained/</p
 <p>That's how progress happens. Not with noise — with precision.</p>
 
 <p>One cue, one rep at a time.</p>`
+      },
+      {
+        id: "make-feedback-a-ritual",
+        title: "Make Feedback a Ritual",
+        content: `<p>Feedback isn't something you give once a quarter. It's not a Slack comment or a surprise at review time. It's a rhythm. A rep.</p>
+
+<p>If cues are the spark, rituals are the circuit — they keep the current flowing. The strongest teams and the strongest lifters don't just react to feedback when it shows up. They build it in. They expect it. They practice it. They normalize it.</p>
+
+<p>In lifting, you log your sets. You reflect on what moved well, what felt off, what needs attention tomorrow. Feedback isn't an event — it's a ritual. Same goes for product.</p>
+
+<p>And if you're a product manager, here's the simple truth:</p>
+
+<blockquote>
+<p><em>If you're not talking to users, you are failing at your job.</em></p>
+</blockquote>
+
+<p>Not falling behind. Not missing a step. Failing.</p>
+
+<p>User feedback isn't a bonus. It's not a "nice to have." It's the core ritual of the role. If you're not making regular space to listen — directly, personally — then you're flying blind.</p>
+
+<p>You're not a scrum master. You're not a backlog babysitter. You are the voice of the user.</p>
+
+<p>And here's what that really means: the user is not a secondary part of your job. They're not a "requirement" that emerges after the product is scoped. They are not a symptom of your development process.</p>
+
+<blockquote>
+<p><em>The user — and their mission — is why you have a job.</em></p>
+</blockquote>
+
+<p>That's the point of all of this.</p>
+
+<p>The research, the roadmaps, the revenue — all of it is an outcome of solving the user's problem. Not the other way around.</p>
+
+<p>Too many teams fall into the trap of building for elegance, or scale, or conversion — and forget to ask the most important question: Does this move the mission forward?</p>
+
+<p>That's your job as a PM. To hold that line. To make feedback a ritual — not just to improve the product, but to stay anchored to the reason it exists.</p>
+
+<p>Because metrics can drift. Roadmaps can get noisy. But the mission stays clear — if you keep listening.</p>
+
+<h3>Slack: Feedback as the Product</h3>
+
+<p>Slack didn't start out as a product idea. It started as an internal tool. The team at Tiny Speck built it for themselves while working on a multiplayer game called Glitch.</p>
+
+<p>The game didn't succeed. But the internal chat tool did — because the team had built it by listening to their own pain.</p>
+
+<p>They weren't running customer interviews or user panels. They were simply using the tool every day — and treating their own experience as data. The engineers, designers, writers, and founders were all giving and receiving feedback constantly. What was slow? What was confusing? What needed to work better?</p>
+
+<p>The users were them. The feedback was constant. And the ritual was built into the way they worked.</p>
+
+<p>They didn't treat those observations as complaints. They treated them as cues — small signals that, over time, shaped something far more useful than they had originally intended.</p>
+
+<p>So when Glitch shut down, the pivot to Slack wasn't a Hail Mary. It was a progression. The team had already spent years listening to what they needed most — and building it.</p>
+
+<blockquote>
+<p><em>Ritualized feedback didn't just improve the product. It revealed the product they should have been building all along.</em></p>
+</blockquote>
+
+<p>Slack didn't become Slack by guessing what users wanted.</p>
+
+<p>It became Slack by listening to internal signals — consistently, honestly, and early.</p>
+
+<h3>Elastic: Customer Zero and Design Partner Rituals</h3>
+
+<p>We've seen the same thing at Elastic.</p>
+
+<p>Our internal information security team — "customer zero" — is often the first to use upcoming Elastic Security features. They're not a test group. They're real users with real problems. When something's unclear, slow, or missing, they tell us — early and often. And because they sit just a few channels away, we can respond quickly and refine before anything reaches broader release.</p>
+
+<p>It's not just internal, either. Some of our most pivotal feedback comes from design partners — external users who've volunteered to be on the front lines with us. They opt into early access, knowing the feature might be raw, knowing it might break — because they care about shaping something real. Something that works not just in a demo, but in a live environment.</p>
+
+<p>These aren't one-offs.</p>
+
+<p>They're not spontaneous bursts of goodwill.</p>
+
+<p>They're planned rituals — structured partnerships built into how we deliver great products.</p>
+
+<p>Embedded loops that make the product stronger long before it ever reaches general availability.</p>
+
+<p>Ritualized feedback isn't about checking a box.</p>
+
+<p>It's about building alongside the people who share the mission.</p>
+
+<h3>Relationship-Level Listening</h3>
+
+<p>Collecting feedback is the easy part.</p>
+
+<p>Like in any relationship, getting someone to tell you what's on their mind is just the start. What really matters is what you do next.</p>
+
+<p>Do you listen? Do you actually hear them? Or do you nod, say "totally," and go back to your plan?</p>
+
+<p>It's the same in product. And in training.</p>
+
+<p>You can run all the standups, retros, interviews, and training logs you want — but if you're not listening with intent, you're just gathering noise. You're not growing.</p>
+
+<p>Feedback is only useful if it lands.</p>
+
+<p>And that means learning how to listen — not just politely, but purposefully.</p>`
       }
     ],
     furtherReading: []
