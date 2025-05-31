@@ -135,4 +135,38 @@
   .card-hover {
     @apply transition-all duration-200 hover:shadow-lg hover:-translate-y-1 dark:hover:shadow-slate/5;
   }
+
+  /* Enhanced reading experience */
+  .reading-content {
+    @apply text-base leading-8 text-foreground;
+    font-feature-settings: "liga" 1, "kern" 1;
+    text-rendering: optimizeLegibility;
+  }
+
+  .reading-content h1,
+  .reading-content h2,
+  .reading-content h3,
+  .reading-content h4 {
+    @apply font-display tracking-tight;
+    scroll-margin-top: 2rem;
+  }
+
+  .reading-content p {
+    @apply mb-6;
+    hyphens: auto;
+    word-break: break-word;
+  }
+
+  .reading-content blockquote {
+    @apply border-l-4 border-sunburst bg-sunburst/5 dark:bg-sunburst/10 rounded-r-lg py-4 px-6 my-8 italic text-lg;
+  }
+
+  .reading-content ul,
+  .reading-content ol {
+    @apply space-y-2 mb-6;
+  }
+
+  .reading-content li {
+    @apply leading-7;
+  }
 }

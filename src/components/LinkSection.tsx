@@ -206,32 +206,39 @@ const LinkSection = ({ onLinksChange }: LinkSectionProps) => {
         </div>
       )}
 
-      {/* Published Links Display */}
+      {/* Enhanced Published Links Display */}
       {links.length > 0 && (
-        <div className="space-y-4">
-          <h3 className="text-xl font-semibold font-display">Further Reading</h3>
-          <div className="space-y-3">
+        <div className="space-y-6">
+          <h3 className="text-2xl font-semibold font-display text-foreground">Further Reading</h3>
+          <div className="grid gap-4">
             {links.map((link) => (
               <div key={link.id} className="group">
                 <a
                   href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-start gap-3 p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-army dark:hover:border-sunburst transition-colors"
+                  className="block p-6 border border-gray-200 dark:border-gray-700 rounded-xl 
+                           hover:border-army dark:hover:border-sunburst transition-all duration-300
+                           hover:shadow-lg hover:-translate-y-1 bg-white dark:bg-gray-800/50
+                           hover:bg-gray-50 dark:hover:bg-gray-800"
                 >
-                  <ExternalLink className="w-5 h-5 text-army dark:text-sunburst mt-0.5 flex-shrink-0" />
-                  <div className="flex-1 min-w-0">
-                    <h4 className="font-medium text-foreground group-hover:text-army dark:group-hover:text-sunburst transition-colors">
-                      {link.name}
-                    </h4>
-                    {link.summary && (
-                      <p className="text-sm text-muted-foreground mt-1">
-                        {link.summary}
+                  <div className="flex items-start gap-4">
+                    <ExternalLink className="w-6 h-6 text-army dark:text-sunburst mt-1 flex-shrink-0 
+                                           group-hover:scale-110 transition-transform" />
+                    <div className="flex-1 min-w-0">
+                      <h4 className="font-semibold text-lg text-foreground group-hover:text-army 
+                                   dark:group-hover:text-sunburst transition-colors mb-2">
+                        {link.name}
+                      </h4>
+                      {link.summary && (
+                        <p className="text-muted-foreground leading-relaxed mb-3">
+                          {link.summary}
+                        </p>
+                      )}
+                      <p className="text-sm text-blue-600 dark:text-blue-400 font-medium truncate">
+                        {link.url}
                       </p>
-                    )}
-                    <p className="text-xs text-blue-600 dark:text-blue-400 mt-1 truncate">
-                      {link.url}
-                    </p>
+                    </div>
                   </div>
                 </a>
               </div>
