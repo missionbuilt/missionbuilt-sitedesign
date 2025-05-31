@@ -13,7 +13,7 @@ const AboutMeSection = () => {
           <Skeleton className="w-full h-full rounded-full" />
         )}
         <img 
-          src="/lovable-uploads/777697e9-e718-4177-9c47-cb5be778fdd3.png" 
+          src="/lovable-uploads/52e363d4-d1fe-491f-b882-883c85e430de.png" 
           alt="Mike cartoon character" 
           className={`w-full h-full object-cover transition-opacity duration-300 ${
             imageLoaded ? 'opacity-100' : 'opacity-0'
