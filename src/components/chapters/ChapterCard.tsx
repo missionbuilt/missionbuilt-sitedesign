@@ -3,9 +3,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Book, CheckCircle2, Clock, Circle, X, Calendar } from "lucide-react";
+import { Book, CheckCircle2, Clock, Circle, X } from "lucide-react";
 import { Chapter } from "@/data/chapters-data";
-import { cn } from "@/lib/utils";
 
 // Helper function to get badge variant
 const getBadgeVariant = (status: Chapter["status"]): "default" | "secondary" | "outline" => {
@@ -64,33 +63,13 @@ const getBadgeClass = (status: Chapter["status"]): string => {
   }
 };
 
-// Function to get publish date based on chapter
-const getPublishDate = (chapterId: number): string => {
-  switch (chapterId) {
-    case 1:
-    case 2:
-      return "May 24, 2025";
-    case 3:
-      return "May 29, 2025";
-    case 4:
-      return "May 30, 2025";
-    default:
-      return "May 24, 2025";
-  }
-};
-
 interface ChapterCardProps {
   chapter: Chapter;
 }
 
 const ChapterCard: React.FC<ChapterCardProps> = ({ chapter }) => {
-  // Determine if the chapter is Log 1 (special treatment)
-  const isLog1 = chapter.id === 1;
+  const isClickable = chapter.status === "published";
   
-  // If the chapter is Log 1, we'll make it clickable regardless of status
-  const isClickable = chapter.status === "published" || isLog1;
-  
-  // Render the card content
   return (
     <Card className="transition-all hover:shadow-md border-slate/10 h-full">
       <CardHeader className="pb-2">
@@ -106,14 +85,6 @@ const ChapterCard: React.FC<ChapterCardProps> = ({ chapter }) => {
       </CardHeader>
       <CardContent>
         <p className="text-muted-foreground mb-4 line-clamp-3">{chapter.description}</p>
-        
-        {/* Show publish date for published chapters */}
-        {chapter.status === "published" && (
-          <div className="flex items-center text-sm text-muted-foreground mb-4">
-            <Calendar className="mr-2 h-4 w-4" />
-            <span>Published: {getPublishDate(chapter.id)}</span>
-          </div>
-        )}
         
         <div className="flex items-center justify-between mt-auto pt-4 border-t border-slate/10">
           <div className="flex items-center text-sm text-muted-foreground">

@@ -1,9 +1,10 @@
+
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Chapter, getDynamicReadingTime } from "@/data/chapters-data";
-import { Clock, CheckCircle2, Circle, Calendar } from "lucide-react";
+import { Chapter } from "@/data/chapters-data";
+import { CheckCircle2, Circle, Calendar } from "lucide-react";
 
 interface TableOfContentsProps {
   chapters: Chapter[];
@@ -122,7 +123,6 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ chapters }) => {
             {filteredChapters.map((chapter, index) => {
               const chapterNumber = String(chapter.id).padStart(2, '0');
               const isClickable = chapter.status === "published";
-              const dynamicReadingTime = getDynamicReadingTime(chapter.wordCount);
               
               return (
                 <div
@@ -164,15 +164,8 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ chapters }) => {
                   {/* Dots (traditional TOC styling) */}
                   <div className="flex-grow border-b border-dotted border-slate-300 dark:border-slate-600 mx-4 mb-2"></div>
 
-                  {/* Reading Time and Status */}
-                  <div className="flex-shrink-0 flex items-center gap-4">
-                    {chapter.status === "published" && (
-                      <div className="flex items-center text-sm text-muted-foreground">
-                        <Clock className="mr-1 h-3 w-3" />
-                        <span>{dynamicReadingTime} min</span>
-                      </div>
-                    )}
-                    
+                  {/* Status Badge */}
+                  <div className="flex-shrink-0">
                     <Badge 
                       variant={getBadgeVariant(chapter.status)} 
                       className={`flex items-center ${getBadgeClass(chapter.status)}`}
