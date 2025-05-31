@@ -1,10 +1,10 @@
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Plus, Edit3, Save, X, ExternalLink, Trash2 } from 'lucide-react';
+import { Plus, Edit3, Save, X, ExternalLink, Trash2, Download, Upload } from 'lucide-react';
 
 interface Link {
   id: string;
@@ -26,6 +26,7 @@ const LinkSection = ({ onLinksChange }: LinkSectionProps) => {
     summary: '',
     url: ''
   });
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Check if we're in development mode (editing capability)
   const isDevelopment = process.env.NODE_ENV === 'development' || window.location.hostname === 'localhost';
@@ -90,6 +91,61 @@ const LinkSection = ({ onLinksChange }: LinkSectionProps) => {
     setEditingId(null);
   };
 
+  const handleExportLinks = () => {
+    const dataStr = JSON.stringify(links, null, 2);
+    const dataBlob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(dataBlob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `links-export-${new Date().toISOString().split('T')[0]}.json`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
+  const handleImportLinks = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const importedLinks = JSON.parse(e.target?.result as string);
+          if (Array.isArray(importedLinks)) {
+            // Validate that imported data has the correct structure
+            const validLinks = importedLinks.filter(link => 
+              link && typeof link === 'object' && 
+              typeof link.name === 'string' && 
+              typeof link.url === 'string'
+            );
+            
+            if (validLinks.length > 0) {
+              // Generate new IDs to avoid conflicts
+              const newLinks = validLinks.map(link => ({
+                ...link,
+                id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
+                summary: link.summary || ''
+              }));
+              
+              const updatedLinks = [...links, ...newLinks];
+              setLinks(updatedLinks);
+              onLinksChange?.(updatedLinks);
+              console.log(`Imported ${newLinks.length} links successfully`);
+            }
+          }
+        } catch (error) {
+          console.error('Error importing links:', error);
+          alert('Error importing links. Please check the file format.');
+        }
+      };
+      reader.readAsText(file);
+    }
+    // Reset the input value so the same file can be imported again
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
   return (
     <div className="w-full">
       {/* Editor Controls - Only visible in development */}
@@ -97,17 +153,48 @@ const LinkSection = ({ onLinksChange }: LinkSectionProps) => {
         <div className="mb-4 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-semibold">Manage Links</h3>
-            {!isAdding && !editingId && (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setIsAdding(true)}
-                className="flex items-center gap-2"
-              >
-                <Plus className="w-4 h-4" />
-                Add Link
-              </Button>
-            )}
+            <div className="flex gap-2">
+              {links.length > 0 && (
+                <>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleExportLinks}
+                    className="flex items-center gap-2"
+                  >
+                    <Download className="w-4 h-4" />
+                    Export
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => fileInputRef.current?.click()}
+                    className="flex items-center gap-2"
+                  >
+                    <Upload className="w-4 h-4" />
+                    Import
+                  </Button>
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept=".json"
+                    onChange={handleImportLinks}
+                    className="hidden"
+                  />
+                </>
+              )}
+              {!isAdding && !editingId && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setIsAdding(true)}
+                  className="flex items-center gap-2"
+                >
+                  <Plus className="w-4 h-4" />
+                  Add Link
+                </Button>
+              )}
+            </div>
           </div>
 
           {/* Add/Edit Form */}
