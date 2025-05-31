@@ -243,7 +243,7 @@ export const chapters: Chapter[] = [
 
 <p>Because the real goal is not a launch date or a deadlift.</p>
 
-<p>The real goal is built through the reps, not measured by them.</p>
+<p>The real goal is built through the reps, not measured by them.</p>`
       },
       {
         id: "repetition-with-intention",
