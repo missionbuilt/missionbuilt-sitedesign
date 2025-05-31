@@ -1,4 +1,3 @@
-
 // Chapter data structure
 export interface Resource {
   title: string;
@@ -70,7 +69,7 @@ export const chapters: Chapter[] = [
     title: "Mission Before Metrics",
     description: "Before progress can be measured, purpose must be clarified. This chapter explores how clear, motivating missions outlast vanity metrics — in both lifting and leadership. It draws on military, product, and gym floor lessons to show that true progress begins with alignment to something bigger than the numbers.",
     slug: "mission-before-metrics",
-    status: "draft",
+    status: "published",
     publishDate: "May 24, 2025",
     heroImage: "/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png",
     authorName: "Mike",
