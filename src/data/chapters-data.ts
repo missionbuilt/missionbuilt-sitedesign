@@ -885,7 +885,127 @@ Source: https://drmikeisraetel.com/dr-mike-israetel-mv-mev-mav-mrv-explained/</p
     publishDate: "May 30, 2025",
     heroImage: "/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png",
     authorName: "Mike",
-    sections: [],
+    sections: [
+      {
+        id: "cues-not-critiques",
+        title: "Cues, Not Critiques",
+        content: `<p>My mentor Nate Fick used to talk about the power of laser focus. Not just attention — precision. That phrase gets thrown around a lot, but he meant it in the truest sense.</p>
+
+<p>Laser focus isn't about doing one thing. It's about doing the right thing — the move that creates the most impact. The shift that makes everything else click into place.</p>
+
+<p>I saw that principle in action during my early days at Endgame.</p>
+
+<p>When I joined, we had four different products — all in different markets, serving different users. Built with a small team. Sold with an even smaller one. The problem wasn't that the ideas were bad. They weren't. In fact, each had real potential.</p>
+
+<p>But potential doesn't scale without focus.</p>
+
+<p>Nate made a tough call. He chose to end-of-life three of the products — even though they were generating short-term revenue — and put every ounce of our talent behind a single one.</p>
+
+<p>It was a risk. But it paid off.</p>
+
+<p>We built a best-in-class endpoint protection product in one of the most competitive markets in cybersecurity. Not because we chased everything. But because we aligned everything to a singular mission.</p>
+
+<p>That's what laser focus looks like in the real world. And feedback should work the same way.</p>
+
+<p>When you're under pressure — under the bar, under deadline — you don't need a list of everything that's off. You need one cue. One phrase that slices through the noise and sticks when it counts.</p>
+
+<h3>Point the Flashlight</h3>
+
+<p>Like in baseball.</p>
+
+<p>Coaches used to flood hitters with advice mid-swing. "Keep your hands back." "Level the bat." "Don't bail out." All technically true. None actually helpful in the moment.</p>
+
+<p>Then came this:</p>
+
+<blockquote>
+<p><em>"Your belly button's a flashlight. Point it at the pitcher."</em></p>
+</blockquote>
+
+<p>It's weird. It's vivid. And it works. The batter stops overthinking and starts moving with intention. The hips rotate. The swing tightens. Power follows.</p>
+
+<p>That's the magic of laser-focused feedback — not more, just clearer.</p>
+
+<h3>Two Words That Changed the Lift</h3>
+
+<p>The same thing happens under the bar.</p>
+
+<p>Stefi Cohen is one of the most accomplished powerlifters on the planet. But even the best get stuck. During a heavy squat cycle, she was losing depth and collapsing forward — the kind of breakdown that could invite a checklist of mechanical critiques.</p>
+
+<p>Her coach didn't do that. He gave her one cue:</p>
+
+<blockquote>
+<p><em>"Knees out."</em></p>
+</blockquote>
+
+<p>Two words.</p>
+
+<p>Her glutes fired. Her hips opened. Her position locked in. No overcorrection. No overthinking. Just a precise adjustment that reconnected the movement.</p>
+
+<p>That's what real feedback does. It doesn't flood you with everything that's wrong.</p>
+
+<blockquote>
+<p><em>It's a spotlight, not a floodlight — aimed at what matters most, right now.</em></p>
+</blockquote>
+
+<h3>From Backlog to Breakthrough</h3>
+
+<p>Similarly, in product development, we're inundated with feedback. Users, developers, sales teams, executives — everyone has ideas, and most of them are shared with genuine excitement. Everyone wants the product to be better.</p>
+
+<p>But without focus, we risk becoming a jack of all trades and a master of none. Chasing every suggestion means delivering none of them well.</p>
+
+<p>The best product teams don't just collect feedback — they hone it. They find the thread, the theme, the one insight that can generate the most impact with the least investment.</p>
+
+<p>Because here's the truth: In software, we can build almost anything — given infinite time and budget. But for some reason, executive teams rarely offer those.</p>
+
+<p>So it takes real leadership to sift through the noise, spot what matters most, and act.</p>
+
+<p>Take an example from Dropbox.</p>
+
+<p>Dropbox had a problem most product teams would recognize. Users were signing up… but not sticking around. Specifically, they were dropping off before installing the desktop client — the core part of the experience that made Dropbox more than just another web app.</p>
+
+<p>The team started spinning on solutions. Maybe the onboarding flow needed to be redesigned. Maybe they needed more education, more nudges, more screens. The backlog of ideas kept growing.</p>
+
+<p>Then a PM said something simple:</p>
+
+<blockquote>
+<p><em>"You're treating the CTA like a destination, not a trigger."</em></p>
+</blockquote>
+
+<p>That one line cut through the noise.</p>
+
+<p>They changed the button copy from "Next" to "Install Dropbox." They added a subtle animation to guide the user forward. That was it.</p>
+
+<p>And conversion went up.</p>
+
+<p>No massive rebuild. No big campaign. Just a focused shift — one that made it crystal clear what the user needed to do next.</p>
+
+<p>It wasn't about the volume of feedback. It was about knowing which piece would actually move the needle.</p>
+
+<blockquote>
+<p><em>That's product leadership: listening broadly, then acting precisely.</em></p>
+</blockquote>
+
+<h3>The Flashlight, Not the Floodlight</h3>
+
+<p>The same principle applies across every domain — lifting, sport, software.</p>
+
+<p>You don't have infinite time to build a product. You don't have infinite weights to lift and sculpt the perfect physique. You can't act on every idea, every error, every impulse.</p>
+
+<p>So you focus.</p>
+
+<p>Whether you're adjusting your squat, refining your swing, or unblocking a user journey — the best feedback doesn't overwhelm. It illuminates.</p>
+
+<p>Not a floodlight that blinds.</p>
+
+<p>Not a laser that burns.</p>
+
+<p>Just a flashlight, steady and clear, aimed at what matters most right now.</p>
+
+<p>That's how progress happens. Not with noise — with precision.</p>
+
+<p>One cue, one rep at a time.</p>`
+      }
+    ],
     furtherReading: []
   },
   {
