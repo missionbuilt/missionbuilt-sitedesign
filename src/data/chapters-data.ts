@@ -294,7 +294,7 @@ export const chapters: Chapter[] = [
 
 <p>Rituals give you direction.</p>
 
-<p>But progress? That comes from the work itself — the grind, the reps, the effort no one applauds.</p>`
+<p>But progress? That comes from the work itself — the grind, the reps, the effort no one applauds.</p>
       }
     ],
     furtherReading: [
@@ -401,7 +401,7 @@ export const chapters: Chapter[] = [
     title: "Built Through Reps",
     description: "Mastery doesn't happen in a moment — it's forged through consistent, intentional repetition. This chapter examines how showing up, rep after rep, creates strength and strategy alike. Featuring parallels between building great software and building great squats, it's a case for doing the work — especially when it's boring.",
     slug: "built-through-reps",
-    status: "draft",
+    status: "published",
     publishDate: "May 24, 2025",
     heroImage: "/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png",
     authorName: "Mike",
