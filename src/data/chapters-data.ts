@@ -403,7 +403,7 @@ export const chapters: Chapter[] = [
     slug: "built-through-reps",
     status: "published",
     publishDate: "May 24, 2025",
-    heroImage: "/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png",
+    heroImage: "/lovable-uploads/59ceb206-ccca-4023-b0a3-a37e2a5455f8.png",
     authorName: "Mike",
     sections: [],
     furtherReading: []
