@@ -40,9 +40,9 @@ export const getDynamicReadingTime = (chapter: Chapter): number => {
 export const chapters: Chapter[] = [
   {
     id: 1,
-    title: "Foundation Principles",
+    title: "",
     subtitle: "The Core Values That Drive Mission Success",
-    description: "Ready to start writing your first chapter content.",
+    description: "",
     author: "Author Name",
     date: "2024-01-15",
     status: "draft",
