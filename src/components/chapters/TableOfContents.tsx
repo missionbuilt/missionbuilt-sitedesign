@@ -1,8 +1,8 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
+import { Button } from "@/components/ui/button";
 import { Chapter } from "@/data/chapters-data";
 import { Clock, CheckCircle2, Circle, Calendar } from "lucide-react";
 
@@ -68,24 +68,48 @@ const getBadgeClass = (status: Chapter["status"]): string => {
 };
 
 const TableOfContents: React.FC<TableOfContentsProps> = ({ chapters }) => {
+  const [filterStatus, setFilterStatus] = useState<Chapter["status"] | "all">("all");
+
   const publishedChapters = chapters.filter(chapter => chapter.status === "published").length;
-  const totalChapters = chapters.length;
-  const bookProgress = (publishedChapters / totalChapters) * 100;
+  const comingSoonChapters = chapters.filter(chapter => chapter.status === "coming-soon").length;
+  const draftChapters = chapters.filter(chapter => chapter.status === "draft").length;
+
+  const filteredChapters = filterStatus === "all" 
+    ? chapters 
+    : chapters.filter(chapter => chapter.status === filterStatus);
 
   return (
     <div className="max-w-4xl mx-auto">
-      {/* Book Progress - Reduced Size */}
+      {/* Filter Buttons */}
       <div className="mb-8 p-3 bg-slate/5 rounded border border-slate/10">
-        <div className="flex items-center justify-between mb-2">
-          <h3 className="text-sm font-medium">Book Progress</h3>
-          <span className="text-xs text-muted-foreground">
-            {publishedChapters}/{totalChapters} published
-          </span>
+        <div className="flex flex-wrap gap-2 justify-center">
+          <Button
+            variant={filterStatus === "published" ? "default" : "outline"}
+            onClick={() => setFilterStatus(filterStatus === "published" ? "all" : "published")}
+            className="bg-green-100 text-green-800 hover:bg-green-200 border-green-300"
+          >
+            <CheckCircle2 className="mr-2 h-4 w-4" />
+            {publishedChapters} Good Lift
+          </Button>
+          
+          <Button
+            variant={filterStatus === "coming-soon" ? "secondary" : "outline"}
+            onClick={() => setFilterStatus(filterStatus === "coming-soon" ? "all" : "coming-soon")}
+            className="bg-blue-100 text-blue-800 hover:bg-blue-200 border-blue-300"
+          >
+            <Calendar className="mr-2 h-4 w-4" />
+            {comingSoonChapters} Chalking Up
+          </Button>
+          
+          <Button
+            variant={filterStatus === "draft" ? "outline" : "outline"}
+            onClick={() => setFilterStatus(filterStatus === "draft" ? "all" : "draft")}
+            className="bg-slate-100 text-slate-800 hover:bg-slate-200 border-slate-300"
+          >
+            <Circle className="mr-2 h-4 w-4" />
+            {draftChapters} Sipping the Pre
+          </Button>
         </div>
-        <Progress value={bookProgress} className="h-1.5" />
-        <p className="text-xs text-muted-foreground mt-1">
-          {Math.round(bookProgress)}% complete
-        </p>
       </div>
 
       {/* Training Logs */}
@@ -96,7 +120,7 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ chapters }) => {
         
         <div className="p-8">
           <div className="space-y-1">
-            {chapters.map((chapter, index) => {
+            {filteredChapters.map((chapter, index) => {
               const chapterNumber = String(chapter.id).padStart(2, '0');
               const isClickable = chapter.status === "published" || chapter.id === 1;
               
