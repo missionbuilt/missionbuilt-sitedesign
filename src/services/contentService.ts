@@ -1,4 +1,3 @@
-
 import { Chapter, ChapterMetadata } from '@/types/chapter';
 
 export interface ChapterLink {
@@ -47,21 +46,22 @@ class ContentService {
 
   async loadChapterMetadata(chapterId: string): Promise<ChapterMeta | null> {
     try {
-      // Always try localStorage first in development environments
-      if (this.isDevelopment) {
-        const localMeta = localStorage.getItem(`chapter-${chapterId}-meta`);
-        if (localMeta) {
-          console.log(`Loaded metadata for ${chapterId} from localStorage`);
-          return JSON.parse(localMeta);
-        }
-      }
-
-      // Load from static file
+      // Load from static file first to get the latest data
       const response = await fetch(`/src/content/chapters/${chapterId}-meta.json`);
       if (response.ok) {
         const meta = await response.json();
-        console.log(`Loaded metadata for ${chapterId} from static file`);
+        console.log(`Loaded metadata for ${chapterId} from static file with status:`, meta.status);
         return meta;
+      }
+
+      // Fallback to localStorage only if static file fails
+      if (this.isDevelopment) {
+        const localMeta = localStorage.getItem(`chapter-${chapterId}-meta`);
+        if (localMeta) {
+          const parsedMeta = JSON.parse(localMeta);
+          console.log(`Loaded metadata for ${chapterId} from localStorage with status:`, parsedMeta.status);
+          return parsedMeta;
+        }
       }
       
       return null;
