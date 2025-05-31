@@ -1,48 +1,12 @@
 
-import React, { useState, useEffect } from "react";
-import { Chapter, getChapterWithContent } from "@/data/chapters-data";
+import React from "react";
+import { Chapter } from "@/data/chapters-data";
 
 interface ChapterContentProps {
   chapter: Chapter;
 }
 
-const ChapterContent: React.FC<ChapterContentProps> = ({ chapter: initialChapter }) => {
-  const [chapter, setChapter] = useState(initialChapter);
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    const loadChapterContent = async () => {
-      if (initialChapter.loadContent && !initialChapter.sections) {
-        setIsLoading(true);
-        try {
-          const chapterWithContent = await getChapterWithContent(initialChapter);
-          setChapter(chapterWithContent);
-        } catch (error) {
-          console.error('Failed to load chapter content:', error);
-        } finally {
-          setIsLoading(false);
-        }
-      } else {
-        setChapter(initialChapter);
-      }
-    };
-
-    loadChapterContent();
-  }, [initialChapter]);
-
-  if (isLoading) {
-    return (
-      <div className="container mx-auto px-4 py-12">
-        <div className="max-w-3xl mx-auto">
-          <div className="flex items-center justify-center py-12">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-            <span className="ml-3 text-muted-foreground">Loading chapter content...</span>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
+const ChapterContent: React.FC<ChapterContentProps> = ({ chapter }) => {
   if (!chapter.sections || chapter.sections.length === 0) {
     return (
       <div className="container mx-auto px-4 py-12">
