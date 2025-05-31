@@ -23,19 +23,23 @@ const FieldNotes = () => {
       try {
         console.log('Loading chapter data...');
         
-        // Load chapter 1 and chapter 2 data
+        // Load chapter 1, chapter 2, and chapter 3 data
         const [
           content1, metadata1,
-          content2, metadata2
+          content2, metadata2,
+          content3, metadata3
         ] = await Promise.all([
           contentService.loadChapterContent('chapter-1'),
           contentService.loadChapterMetadata('chapter-1'),
           contentService.loadChapterContent('chapter-2'),
-          contentService.loadChapterMetadata('chapter-2')
+          contentService.loadChapterMetadata('chapter-2'),
+          contentService.loadChapterContent('chapter-3'),
+          contentService.loadChapterMetadata('chapter-3')
         ]);
         
         console.log('Chapter 1 metadata:', metadata1);
         console.log('Chapter 2 metadata:', metadata2);
+        console.log('Chapter 3 metadata:', metadata3);
         
         const chaptersData = [];
         
@@ -64,6 +68,20 @@ const FieldNotes = () => {
             description: metadata2.description,
             slug: 'chapter-2',
             status: metadata2.status
+          });
+        }
+
+        if (metadata3) {
+          const readTime3 = calculateReadTime(content3);
+          chaptersData.push({
+            id: metadata3.id,
+            title: metadata3.title,
+            publishedDate: 'May 25th, 2025', // Keep hardcoded as requested
+            readTime: readTime3,
+            tags: metadata3.tags,
+            description: metadata3.description,
+            slug: 'chapter-3',
+            status: metadata3.status
           });
         }
         
@@ -105,7 +123,7 @@ const FieldNotes = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {[1, 2].map((i) => (
+                  {[1, 2, 3].map((i) => (
                     <TableRow key={i}>
                       <TableCell>
                         <Skeleton className="h-4 w-48 mb-2" />
