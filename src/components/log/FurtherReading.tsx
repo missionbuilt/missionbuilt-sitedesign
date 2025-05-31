@@ -39,11 +39,6 @@ const FurtherReading: React.FC<FurtherReadingProps> = ({ chapter }) => {
                     <p className="text-muted-foreground mb-2">
                       {resource.description}
                     </p>
-                    {resource.note && (
-                      <p className="text-sm text-muted-foreground italic">
-                        {resource.note}
-                      </p>
-                    )}
                   </div>
                   <ExternalLink className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-1" />
                 </div>

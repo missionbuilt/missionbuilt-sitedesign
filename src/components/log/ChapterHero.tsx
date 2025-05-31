@@ -37,11 +37,11 @@ const ChapterHero: React.FC<ChapterHeroProps> = ({ chapter }) => {
             <div className="flex flex-wrap gap-6 text-sm">
               <div className="flex items-center gap-2">
                 <User className="h-4 w-4" />
-                <span>{chapter.authorName}</span>
+                <span>{chapter.author}</span>
               </div>
               <div className="flex items-center gap-2">
                 <Calendar className="h-4 w-4" />
-                <span>{chapter.publishDate}</span>
+                <span>{chapter.date}</span>
               </div>
               {chapter.status === "published" && (
                 <div className="flex items-center gap-2">
