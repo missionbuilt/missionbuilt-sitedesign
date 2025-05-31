@@ -1,4 +1,3 @@
-
 import { Chapter, ChapterMetadata } from '@/types/chapter';
 
 export interface ChapterLink {
@@ -81,6 +80,39 @@ class ContentService {
       localStorage.setItem(`chapter-${chapterId}-meta-timestamp`, new Date().toISOString());
       console.log(`Saved metadata for ${chapterId} to localStorage`);
     }
+  }
+
+  downloadContentFile(chapterId: string, content: string): void {
+    console.log('Downloading content file for:', chapterId);
+    const contentBlob = new Blob([content], { type: 'text/markdown' });
+    const url = URL.createObjectURL(contentBlob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `${chapterId}.md`;
+    link.style.display = 'none';
+    
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    console.log(`Downloaded: ${chapterId}.md`);
+  }
+
+  downloadMetadataFile(chapterId: string, metadata: ChapterMeta): void {
+    console.log('Downloading metadata file for:', chapterId);
+    const metadataStr = JSON.stringify(metadata, null, 2);
+    const metadataBlob = new Blob([metadataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(metadataBlob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `${chapterId}-meta.json`;
+    link.style.display = 'none';
+    
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    console.log(`Downloaded: ${chapterId}-meta.json`);
   }
 
   savePermanently(chapterId: string, content: string, metadata: ChapterMeta): void {

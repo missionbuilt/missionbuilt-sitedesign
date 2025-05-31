@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
@@ -103,6 +102,31 @@ const Chapter1 = () => {
     }, 1000);
   };
 
+  const handleDownloadContent = () => {
+    contentService.downloadContentFile(chapterId, content);
+    toast({
+      title: "Content File Downloaded",
+      description: "The .md file has been downloaded successfully.",
+    });
+  };
+
+  const handleDownloadMetadata = () => {
+    if (!metadata) {
+      toast({
+        title: "Error",
+        description: "Cannot download: metadata not loaded",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    contentService.downloadMetadataFile(chapterId, metadata);
+    toast({
+      title: "Metadata File Downloaded", 
+      description: "The .json file has been downloaded successfully.",
+    });
+  };
+
   const hasUnsavedChanges = contentService.hasUnsavedChanges(chapterId);
 
   if (isLoading) {
@@ -146,11 +170,20 @@ const Chapter1 = () => {
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={handleSavePermanently}
+                  onClick={handleDownloadContent}
                   className="flex items-center gap-2"
                 >
                   <FileDown className="w-4 h-4" />
-                  Save Permanently
+                  Download .md
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleDownloadMetadata}
+                  className="flex items-center gap-2"
+                >
+                  <FileDown className="w-4 h-4" />
+                  Download .json
                 </Button>
                 <Button
                   variant="ghost"
