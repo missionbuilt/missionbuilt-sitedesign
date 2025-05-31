@@ -1,3 +1,4 @@
+
 {
   "id": "chapter-2",
   "title": "Built Through Reps",
@@ -11,23 +12,23 @@
   ],
   "description": "Mastery doesn't happen in a moment — it's forged through consistent, intentional repetition. This chapter examines how showing up, rep after rep, creates strength and strategy alike. Featuring parallels between building great software and building great squats, it's a case for doing the work — especially when it's boring.",
   "slug": "chapter-2",
-  "status": "draft",
+  "status": "published",
   "links": [
     {
       "id": "1748726892838",
       "name": "No Filter: The Inside Story of Instagram by Sarah Frier",
-      "summary": "A detailed, behind-the-scenes look at Instagram’s transformation from Burbn to a cultural phenomenon.",
+      "summary": "A detailed, behind-the-scenes look at Instagram's transformation from Burbn to a cultural phenomenon.",
       "url": "https://en.wikipedia.org/wiki/No_Filter:_The_Inside_Story_of_Instagram"
     },
     {
       "id": "1748726920051",
-      "name": "The iPhone’s hidden grind",
+      "name": "The iPhone's hidden grind",
       "summary": "How Steve Jobs Faked His Way Through Unveiling the iPhone – NY Magazine",
       "url": "https://nymag.com/intelligencer/2017/01/how-steve-jobs-faked-his-way-through-unveiling-the-iphone.html"
     },
     {
       "id": "1748726941744",
-      "name": "Instagram’s evolution from Burbn",
+      "name": "Instagram's evolution from Burbn",
       "summary": "Instagram – Wikipedia",
       "url": "https://en.wikipedia.org/wiki/Instagram#History"
     },
@@ -39,7 +40,7 @@
     },
     {
       "id": "1748726979263",
-      "name": "Product development isn’t always fast",
+      "name": "Product development isn't always fast",
       "summary": "Failing Fast: Why It's Essential for Entrepreneurs – Harvard Business School Online",
       "url": "https://online.hbs.edu/blog/post/fail-fast"
     },
@@ -58,12 +59,12 @@
     {
       "id": "1748727037241",
       "name": "James Clear – Atomic Habits",
-      "summary": "A guide to building better habits and systems that support long-term success, including the principle: “You do not rise to the level of your goals. You fall to the level of your systems.”",
+      "summary": "A guide to building better habits and systems that support long-term success, including the principle: "You do not rise to the level of your goals. You fall to the level of your systems."",
       "url": "https://jamesclear.com/atomic-habits"
     },
     {
       "id": "1748727053892",
-      "name": "Basecamp’s Shape Up Method – Signal v. Noise",
+      "name": "Basecamp's Shape Up Method – Signal v. Noise",
       "summary": "An approach to product work that values thoughtful iteration, foundational improvements, and meaningful user feedback.",
       "url": "https://basecamp.com/shapeup"
     },
