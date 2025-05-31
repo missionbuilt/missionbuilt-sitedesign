@@ -2,15 +2,26 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Calendar } from 'lucide-react';
+import { ArrowLeft, Calendar, Clock } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ContentEditor from '@/components/ContentEditor';
+import { calculateReadTime } from '@/utils/readTimeCalculator';
 
 const Chapter1 = () => {
-  const handleContentSave = (content: string) => {
+  const [content, setContent] = React.useState('');
+  const [readTime, setReadTime] = React.useState('0 min read');
+
+  const handleContentSave = (newContent: string) => {
     // In a real application, you might save this to localStorage, a database, etc.
-    console.log('Content saved:', content);
+    console.log('Content saved:', newContent);
+    setContent(newContent);
+    setReadTime(calculateReadTime(newContent));
+  };
+
+  const handleContentChange = (newContent: string) => {
+    setContent(newContent);
+    setReadTime(calculateReadTime(newContent));
   };
 
   return (
@@ -40,9 +51,15 @@ const Chapter1 = () => {
           <h1 className="font-display font-bold text-4xl md:text-5xl lg:text-6xl text-white mb-4 leading-tight">
             Mission Before Metrics
           </h1>
-          <div className="flex items-center text-white/90 text-sm font-medium">
-            <Calendar className="w-4 h-4 mr-2" />
-            Published May 25th, 2025
+          <div className="flex items-center gap-4 text-white/90 text-sm font-medium">
+            <div className="flex items-center">
+              <Calendar className="w-4 h-4 mr-2" />
+              Published May 25th, 2025
+            </div>
+            <div className="flex items-center">
+              <Clock className="w-4 h-4 mr-2" />
+              {readTime}
+            </div>
           </div>
         </div>
       </div>
@@ -59,12 +76,17 @@ const Chapter1 = () => {
           
           <header className="mb-12">
             <h1 className="text-4xl font-bold text-foreground mb-4">Field Note 1: Mission Before Metrics</h1>
+            <div className="flex items-center text-muted-foreground text-sm">
+              <Clock className="w-4 h-4 mr-2" />
+              Estimated read time: {readTime}
+            </div>
           </header>
           
           <div className="prose prose-slate dark:prose-invert max-w-none">
             <ContentEditor 
               initialContent=""
               onSave={handleContentSave}
+              onContentChange={handleContentChange}
             />
           </div>
         </div>

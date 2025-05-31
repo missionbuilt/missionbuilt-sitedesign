@@ -10,9 +10,10 @@ import { Eye, Edit3, Save, Heading, List, Quote, Bold, Type, Table as TableIcon 
 interface ContentEditorProps {
   initialContent?: string;
   onSave?: (content: string) => void;
+  onContentChange?: (content: string) => void;
 }
 
-const ContentEditor = ({ initialContent = '', onSave }: ContentEditorProps) => {
+const ContentEditor = ({ initialContent = '', onSave, onContentChange }: ContentEditorProps) => {
   const [content, setContent] = useState(initialContent);
   const [isEditing, setIsEditing] = useState(false);
   const [isPreview, setIsPreview] = useState(false);
@@ -23,6 +24,11 @@ const ContentEditor = ({ initialContent = '', onSave }: ContentEditorProps) => {
       textareaRef.current.focus();
     }
   }, [isEditing]);
+
+  const handleContentUpdate = (newContent: string) => {
+    setContent(newContent);
+    onContentChange?.(newContent);
+  };
 
   const handleSave = () => {
     setIsEditing(false);
@@ -45,7 +51,7 @@ const ContentEditor = ({ initialContent = '', onSave }: ContentEditorProps) => {
     const currentValue = content;
     
     const newValue = currentValue.substring(0, start) + textToInsert + currentValue.substring(end);
-    setContent(newValue);
+    handleContentUpdate(newValue);
     
     // Set cursor position after inserted text
     setTimeout(() => {
@@ -239,7 +245,7 @@ const ContentEditor = ({ initialContent = '', onSave }: ContentEditorProps) => {
             <Textarea
               ref={textareaRef}
               value={content}
-              onChange={(e) => setContent(e.target.value)}
+              onChange={(e) => handleContentUpdate(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Start writing your content here..."
               className="min-h-[400px] font-mono text-sm"
