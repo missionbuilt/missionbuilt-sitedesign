@@ -1100,6 +1100,92 @@ Source: https://drmikeisraetel.com/dr-mike-israetel-mv-mev-mav-mrv-explained/</p
 <p>Feedback is only useful if it lands.</p>
 
 <p>And that means learning how to listen — not just politely, but purposefully.</p>`
+      },
+      {
+        id: "listening-is-a-lift",
+        title: "Listening Is a Lift",
+        content: `<p>You've built the ritual. You're getting the feedback. Now comes the hard part: listening.</p>
+
+<p>Not passively. Not performatively. But actually listening — in a way that helps you grow.</p>
+
+<p>And here's the first thing to understand:</p>
+
+<blockquote>
+<p><em>Being user-obsessed doesn't mean the user is always right.</em></p>
+</blockquote>
+
+<p>Sometimes users give you feedback in the form of a solution. "Add a new button." "Change this flow." "Make it more like what Company X does."</p>
+
+<p>If you chase those suggestions blindly, you're not listening — you're outsourcing product design.</p>
+
+<p>The real job of a product manager is to listen deeper. To get past the request and find the root. Don't treat the feedback as the answer — treat it as a clue. Your job is to uncover the real problem.</p>
+
+<p>One thing I'm adamant about with my PMs: We don't hand our engineers a solution. We bring them a problem worth solving.</p>
+
+<p>That means doing the work. Talking to users. Studying how others have handled it. Mapping the friction. Listening for what's unsaid.</p>
+
+<p>We work with brilliant, creative engineers. Our job isn't to steal the "how." It's to own the "why." And collaborate on the "how" — together.</p>
+
+<p>Because feedback isn't always clear. It's not always clean. It can be noisy, misdirected, emotional, subtle, or even wrong.</p>
+
+<p>And when you're under pressure — in the middle of a hard training cycle or a high-stakes product push — it's easy to hear what you want to hear. Or to hear nothing at all.</p>
+
+<p>Listening is a skill. One that separates people who just collect feedback from those who actually use it.</p>
+
+<p>It's like lifting: you might record every set and log every number, but if you don't know what the soreness is telling you — if you don't know when to push and when to pause — you're not getting better. You're just getting tired.</p>
+
+<p>Sometimes, the most accurate feedback in a training session isn't in the weight or the timer — it's in how the set felt.</p>
+
+<p>How many reps did you leave in the tank?</p>
+
+<p>What was your rate of perceived exertion?</p>
+
+<p>RIR and RPE are qualitative cues — and they only work if the lifter is honest.</p>
+
+<p>Just like product feedback only works if the team is actually listening.</p>
+
+<h3>When the Data Lies — or We Lie to Ourselves</h3>
+
+<p>Take Fitbit.</p>
+
+<p>When they rolled out sleep scores, users were thrilled. Finally, a single number to tell you how well you slept. But the feedback loop backfired. People started optimizing for the score — going to bed earlier, waking up later — and still feeling exhausted.</p>
+
+<p>Why?</p>
+
+<p>Because the metric didn't tell the whole story. It rewarded quantity, not quality. It missed the impact of stress, caffeine, or real rest. And instead of helping people understand their bodies, it created sleep anxiety — people chasing a number instead of listening to what their bodies were actually telling them.</p>
+
+<blockquote>
+<p><em>That's the risk with metrics-as-truth: you end up listening to the wrong signal, just because it's the one that's easy to measure.</em></p>
+</blockquote>
+
+<p>And the same thing happens at scale.</p>
+
+<p>Take Target Canada.</p>
+
+<p>When Target expanded into Canada, the surface signals looked great: strong brand awareness, excited customers, big opening-week foot traffic. But underneath, stores were suffering. Inventory systems were broken. Shelves were empty. Pricing was inconsistent. And operational feedback from store teams was ignored or deprioritized.</p>
+
+<p>Leadership focused on the shiny signals — the PR, the launch buzz, the optimism — and missed the messy truths on the ground. They listened to the brand metrics and headlines, not the store managers and logistics teams waving red flags.</p>
+
+<p>Within two years, the entire operation collapsed — costing billions and ending in a full retreat.</p>
+
+<blockquote>
+<p><em>When you only listen to what makes you feel good, you stop seeing what's real.</em><br>
+<em>And in product — or business — that kind of selective hearing is deadly.</em></p>
+</blockquote>
+
+<h3>Real Strength Isn't in the Signal — It's in the Interpretation</h3>
+
+<p>Feedback isn't rare. It's everywhere. What's rare is someone strong enough to hear it clearly — and humble enough to act on what it really means.</p>
+
+<p>In lifting, that means paying attention to more than numbers. In product, it means resisting the urge to react — and learning to respond.</p>
+
+<p>You don't need more metrics. You need better listening. Listening that filters noise. That finds the root. That says: "I hear you. Let's fix the real thing."</p>
+
+<p>That's what strong teams do.</p>
+
+<p>That's what strong lifters do.</p>
+
+<p>And that's what we do when we care more about truth than comfort.</p>`
       }
     ],
     furtherReading: []
