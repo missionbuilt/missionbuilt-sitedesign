@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -13,6 +14,7 @@ import FieldNotes from "./pages/FieldNotes";
 import Chapter1 from "./pages/chapters/Chapter1";
 import Chapter2 from "./pages/chapters/Chapter2";
 import Chapter3 from "./pages/chapters/Chapter3";
+import Chapter4 from "./pages/chapters/Chapter4";
 
 const App = () => {
   // Create a new QueryClient instance inside the component
@@ -33,6 +35,7 @@ const App = () => {
                 <Route path="/field-notes/chapter-1" element={<Chapter1 />} />
                 <Route path="/field-notes/chapter-2" element={<Chapter2 />} />
                 <Route path="/field-notes/chapter-3" element={<Chapter3 />} />
+                <Route path="/field-notes/chapter-4" element={<Chapter4 />} />
                 <Route path="/privacy" element={<Privacy />} />
                 <Route path="/terms" element={<Privacy />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

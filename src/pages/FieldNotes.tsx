@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
@@ -35,19 +34,22 @@ const FieldNotes = () => {
       try {
         console.log('Loading chapter data...');
         
-        // Load chapter 1, chapter 2, and chapter 3 data
+        // Load chapter 1, chapter 2, chapter 3, and chapter 4 data
         console.log('About to call contentService methods...');
         const [
           content1, metadata1,
           content2, metadata2,
-          content3, metadata3
+          content3, metadata3,
+          content4, metadata4
         ] = await Promise.all([
           contentService.loadChapterContent('chapter-1'),
           contentService.loadChapterMetadata('chapter-1'),
           contentService.loadChapterContent('chapter-2'),
           contentService.loadChapterMetadata('chapter-2'),
           contentService.loadChapterContent('chapter-3'),
-          contentService.loadChapterMetadata('chapter-3')
+          contentService.loadChapterMetadata('chapter-3'),
+          contentService.loadChapterContent('chapter-4'),
+          contentService.loadChapterMetadata('chapter-4')
         ]);
         
         console.log('Chapter 1 content length:', content1?.length || 0);
@@ -56,6 +58,8 @@ const FieldNotes = () => {
         console.log('Chapter 2 metadata:', metadata2);
         console.log('Chapter 3 content length:', content3?.length || 0);
         console.log('Chapter 3 metadata:', metadata3);
+        console.log('Chapter 4 content length:', content4?.length || 0);
+        console.log('Chapter 4 metadata:', metadata4);
         
         const chaptersData = [];
         
@@ -109,6 +113,23 @@ const FieldNotes = () => {
         } else {
           console.log('Chapter 3 not added - metadata3:', metadata3, 'status:', metadata3?.status);
         }
+
+        if (metadata4 && metadata4.status === 'published') {
+          const readTime4 = calculateReadTime(content4);
+          chaptersData.push({
+            id: metadata4.id,
+            title: metadata4.title,
+            publishedDate: formatPublishDate(metadata4.publishedDate),
+            readTime: readTime4,
+            tags: metadata4.tags,
+            description: metadata4.description,
+            slug: 'chapter-4',
+            status: metadata4.status
+          });
+          console.log('Added chapter 4 to list');
+        } else {
+          console.log('Chapter 4 not added - metadata4:', metadata4, 'status:', metadata4?.status);
+        }
         
         console.log('Final chapters data:', chaptersData);
         console.log('Total chapters to display:', chaptersData.length);
@@ -149,7 +170,7 @@ const FieldNotes = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {[1, 2, 3].map((i) => (
+                  {[1, 2, 3, 4].map((i) => (
                     <TableRow key={i}>
                       <TableCell>
                         <Skeleton className="h-4 w-48 mb-2" />
