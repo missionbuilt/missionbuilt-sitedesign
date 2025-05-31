@@ -1,5 +1,6 @@
 
 import React, { useState, useRef, useEffect } from 'react';
+import ReactMarkdown from 'react-markdown';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Eye, Edit3, Save, Heading, List, Quote, Bold, Type } from 'lucide-react';
@@ -70,7 +71,7 @@ const ContentEditor = ({ initialContent = '', onSave }: ContentEditorProps) => {
     {
       label: 'Bullets',
       icon: List,
-      action: () => insertTextAtCursor('\n\n• Bullet point\n• Another point\n• Third point\n\n'),
+      action: () => insertTextAtCursor('\n\n- Bullet point\n- Another point\n- Third point\n\n'),
     },
     {
       label: 'Body',
@@ -174,12 +175,7 @@ const ContentEditor = ({ initialContent = '', onSave }: ContentEditorProps) => {
         ) : (
           <div className="prose prose-slate dark:prose-invert max-w-none">
             {content ? (
-              <div 
-                className="whitespace-pre-wrap"
-                dangerouslySetInnerHTML={{ 
-                  __html: content.replace(/\n/g, '<br />') 
-                }}
-              />
+              <ReactMarkdown>{content}</ReactMarkdown>
             ) : (
               <div className="text-center py-12 text-muted-foreground">
                 {isDevelopment ? (
@@ -201,12 +197,7 @@ const ContentEditor = ({ initialContent = '', onSave }: ContentEditorProps) => {
           </h3>
           <div className="prose prose-slate dark:prose-invert max-w-none">
             {content ? (
-              <div 
-                className="whitespace-pre-wrap"
-                dangerouslySetInnerHTML={{ 
-                  __html: content.replace(/\n/g, '<br />') 
-                }}
-              />
+              <ReactMarkdown>{content}</ReactMarkdown>
             ) : (
               <p className="text-muted-foreground">No content to preview.</p>
             )}
