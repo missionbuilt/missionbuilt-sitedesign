@@ -16,6 +16,16 @@ const Chapter1 = () => {
       
       <Navbar />
       
+      {/* Hero Image Section */}
+      <div className="relative h-96 overflow-hidden">
+        <img 
+          src="/lovable-uploads/e090226a-c451-4cfe-82ff-2d1c054040ae.png"
+          alt="Chapter 1 Hero"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-black/20"></div>
+      </div>
+      
       <main className="container-custom py-12">
         <div className="max-w-4xl mx-auto">
           <Link 
