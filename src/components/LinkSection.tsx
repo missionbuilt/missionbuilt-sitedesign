@@ -1,5 +1,4 @@
-
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -14,11 +13,13 @@ interface Link {
 }
 
 interface LinkSectionProps {
+  chapterId: string;
+  initialLinks: Link[];
   onLinksChange?: (links: Link[]) => void;
 }
 
-const LinkSection = ({ onLinksChange }: LinkSectionProps) => {
-  const [links, setLinks] = useState<Link[]>([]);
+const LinkSection = ({ chapterId, initialLinks, onLinksChange }: LinkSectionProps) => {
+  const [links, setLinks] = useState<Link[]>(initialLinks);
   const [isAdding, setIsAdding] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [formData, setFormData] = useState({
@@ -30,6 +31,11 @@ const LinkSection = ({ onLinksChange }: LinkSectionProps) => {
 
   // Check if we're in development mode (editing capability)
   const isDevelopment = process.env.NODE_ENV === 'development' || window.location.hostname === 'localhost';
+
+  // Update links when initialLinks changes
+  useEffect(() => {
+    setLinks(initialLinks);
+  }, [initialLinks]);
 
   const handleAdd = () => {
     if (formData.name.trim() && formData.url.trim()) {
