@@ -294,7 +294,7 @@ export const chapters: Chapter[] = [
 
 <p>Rituals give you direction.</p>
 
-<p>But progress? That comes from the work itself — the grind, the reps, the effort no one applauds.</p>`
+<p>But progress? That comes from the work itself — the grind, the reps, the effort no one applauds.</p>
       }
     ],
     furtherReading: [
@@ -445,7 +445,7 @@ export const chapters: Chapter[] = [
 
 <p>That's what makes progress sustainable.</p>
 
-<p>And that's what Mission Built is really about — building better products, one rep at a time.</p>`
+<p>And that's what Mission Built is really about — building better products, one rep at a time.</p>
       },
       {
         id: "repetition-is-not-redundancy",
@@ -491,7 +491,7 @@ Source: https://drmikeisraetel.com/dr-mike-israetel-mv-mev-mav-mrv-explained/</p
 
 <p>Reps alone build endurance. Smart variation builds power.</p>
 
-<p>This is how you break through the plateau — not by abandoning the reps, but by evolving them.</p>`
+<p>This is how you break through the plateau — not by abandoning the reps, but by evolving them.</p>
       },
       {
         id: "when-the-spark-fades",
@@ -536,7 +536,7 @@ Source: https://drmikeisraetel.com/dr-mike-israetel-mv-mev-mav-mrv-explained/</p
 
 <p>Because nothing recharges momentum like hearing someone say: "This made my day better."</p>
 
-<p>And that brings us to the next section: the power of the quiet reps — the multiplier of boring work.</p>`
+<p>And that brings us to the next section: the power of the quiet reps — the multiplier of boring work.</p>
       },
       {
         id: "the-multiplier-of-boring-work",
@@ -579,7 +579,7 @@ Source: https://drmikeisraetel.com/dr-mike-israetel-mv-mev-mav-mrv-explained/</p
 
 <p>It's about becoming the kind of person, or the kind of team, that keeps showing up.</p>
 
-<p>That's the real win. And that's where we end this chapter — not at the peak, but at the foundation.</p>`
+<p>That's the real win. And that's where we end this chapter — not at the peak, but at the foundation.</p>
       },
       {
         id: "the-work-becomes-the-win",
@@ -598,10 +598,89 @@ Source: https://drmikeisraetel.com/dr-mike-israetel-mv-mev-mav-mrv-explained/</p
 
 <p>Progress doesn't shout — it stacks.</p>
 
-<p>One quiet rep at a time.</p>`
+<p>One quiet rep at a time.</p>
       }
     ],
-    furtherReading: []
+    furtherReading: [
+      {
+        title: "No Filter: The Inside Story of Instagram",
+        description: "A detailed, behind-the-scenes look at Instagram's transformation from Burbn to a cultural phenomenon.",
+        url: "https://en.wikipedia.org/wiki/No_Filter_(book)",
+        note: "The Hidden Grind Behind Success"
+      },
+      {
+        title: "How Steve Jobs Faked His Way Through Unveiling the iPhone",
+        description: "The legendary 2007 keynote was held together with last-minute fixes — a reminder that polish often hides process.",
+        url: "https://nymag.com/intelligencer/2013/10/why-the-iphone-keynote-was-so-stressful.html",
+        note: "The Hidden Grind Behind Success"
+      },
+      {
+        title: "Instagram: Early History and Pivot from Burbn",
+        description: "A short overview of Instagram's shift from a check-in app to a global visual platform.",
+        url: "https://en.wikipedia.org/wiki/Instagram#History",
+        note: "The Hidden Grind Behind Success"
+      },
+      {
+        title: "Overcoming Strength Training Plateaus",
+        description: "Why strength stalls, how to adjust volume, intensity, and variation to keep progressing.",
+        url: "https://www.ironmaster.com/blogs/news/overcoming-strength-training-plateaus",
+        note: "Lifting Progress & Plateaus"
+      },
+      {
+        title: "MV, MEV, MAV, MRV Explained",
+        description: "A breakdown of effective training volume concepts, including minimums, maximums, and overreaching thresholds.",
+        url: "https://drmikeisraetel.com/dr-mike-israetel-mv-mev-mav-mrv-explained/",
+        note: "Lifting Progress & Plateaus"
+      },
+      {
+        title: "Atomic Habits",
+        description: "A guide to building systems that support long-term growth: \"You do not rise to the level of your goals. You fall to the level of your systems.\"",
+        url: "https://jamesclear.com/atomic-habits",
+        note: "Systems, Habits, and Iteration"
+      },
+      {
+        title: "The Compound Effect",
+        description: "Details how small actions done consistently lead to exponential outcomes — a key insight for boring but high-leverage work.",
+        url: "https://darrenhardy.com/the-compound-effect/",
+        note: "Systems, Habits, and Iteration"
+      },
+      {
+        title: "Grit: The Power of Passion and Perseverance",
+        description: "Explores how consistency beats intensity, and why sticking with it matters more than raw talent.",
+        url: "https://angeladuckworth.com/grit-book/",
+        note: "Systems, Habits, and Iteration"
+      },
+      {
+        title: "The Medici Effect",
+        description: "On finding creative inspiration in unlikely intersections — a key idea for hybrid thinkers and builders.",
+        url: "https://phoscreative.com/what-is-the-medici-effect/",
+        note: "Systems, Habits, and Iteration"
+      },
+      {
+        title: "Failing Fast: Why It's Essential for Entrepreneurs",
+        description: "A reminder that iteration is how we learn — not a sign of failure, but of refinement.",
+        url: "https://online.hbs.edu/blog/post/failing-fast",
+        note: "Product Development and Iterative Progress"
+      },
+      {
+        title: "Basecamp's Shape Up Method",
+        description: "An approach to product work that values thoughtful iteration, foundational improvements, and meaningful user feedback.",
+        url: "https://basecamp.com/shapeup",
+        note: "Product Development and Iterative Progress"
+      },
+      {
+        title: "Talking to Humans",
+        description: "A practical guide to rediscovering momentum by connecting directly with your users — and learning what really matters.",
+        url: "https://www.talkingtohumans.com/",
+        note: "Product Development and Iterative Progress"
+      },
+      {
+        title: "Is High Quality Software Worth the Cost?",
+        description: "Argues that invisible work like refactoring and testing pays off in speed and stability — a product parallel to mobility work and back-off sets in lifting.",
+        url: "https://martinfowler.com/articles/is-quality-worth-cost.html",
+        note: "Product Development and Iterative Progress"
+      }
+    ]
   },
   {
     id: 3,
