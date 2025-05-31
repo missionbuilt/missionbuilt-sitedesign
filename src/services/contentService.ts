@@ -1,4 +1,3 @@
-
 import { Chapter, ChapterMetadata } from '@/types/chapter';
 
 export interface ChapterLink {
@@ -81,6 +80,52 @@ class ContentService {
       localStorage.setItem(`chapter-${chapterId}-meta-timestamp`, new Date().toISOString());
       console.log(`Saved metadata for ${chapterId} to localStorage`);
     }
+  }
+
+  savePermanently(chapterId: string, content: string, metadata: ChapterMeta): void {
+    // Download content file
+    const contentBlob = new Blob([content], { type: 'text/markdown' });
+    const contentUrl = URL.createObjectURL(contentBlob);
+    const contentLink = document.createElement('a');
+    contentLink.href = contentUrl;
+    contentLink.download = `${chapterId}.md`;
+    document.body.appendChild(contentLink);
+    contentLink.click();
+    document.body.removeChild(contentLink);
+    URL.revokeObjectURL(contentUrl);
+
+    // Download metadata file
+    const metadataStr = JSON.stringify(metadata, null, 2);
+    const metadataBlob = new Blob([metadataStr], { type: 'application/json' });
+    const metadataUrl = URL.createObjectURL(metadataBlob);
+    const metadataLink = document.createElement('a');
+    metadataLink.href = metadataUrl;
+    metadataLink.download = `${chapterId}-meta.json`;
+    document.body.appendChild(metadataLink);
+    metadataLink.click();
+    document.body.removeChild(metadataLink);
+    URL.revokeObjectURL(metadataUrl);
+
+    console.log(`Downloaded permanent save files for ${chapterId}`);
+  }
+
+  clearLocalStorage(chapterId: string): void {
+    if (this.isDevelopment) {
+      localStorage.removeItem(`chapter-${chapterId}-content`);
+      localStorage.removeItem(`chapter-${chapterId}-meta`);
+      localStorage.removeItem(`chapter-${chapterId}-content-timestamp`);
+      localStorage.removeItem(`chapter-${chapterId}-meta-timestamp`);
+      console.log(`Cleared localStorage for ${chapterId}`);
+    }
+  }
+
+  hasUnsavedChanges(chapterId: string): boolean {
+    if (!this.isDevelopment) return false;
+    
+    const hasContent = localStorage.getItem(`chapter-${chapterId}-content`) !== null;
+    const hasMetadata = localStorage.getItem(`chapter-${chapterId}-meta`) !== null;
+    
+    return hasContent || hasMetadata;
   }
 
   exportChapterData(chapterId: string, content: string, metadata: ChapterMeta): void {

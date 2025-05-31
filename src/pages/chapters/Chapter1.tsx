@@ -2,7 +2,9 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Calendar, Clock } from 'lucide-react';
+import { ArrowLeft, Calendar, Clock, AlertCircle, Save, FileDown } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ContentEditor from '@/components/ContentEditor';
@@ -17,8 +19,12 @@ const Chapter1 = () => {
   const [metadata, setMetadata] = React.useState<ChapterMeta | null>(null);
   const [readTime, setReadTime] = React.useState('0 min read');
   const [isLoading, setIsLoading] = React.useState(true);
+  const { toast } = useToast();
 
   const chapterId = 'chapter-1';
+
+  // Check if we're in development mode
+  const isDevelopment = process.env.NODE_ENV === 'development' || window.location.hostname === 'localhost';
 
   React.useEffect(() => {
     const loadChapterData = async () => {
@@ -66,6 +72,39 @@ const Chapter1 = () => {
     }
   };
 
+  const handleSavePermanently = () => {
+    if (!metadata) {
+      toast({
+        title: "Error",
+        description: "Cannot save: metadata not loaded",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    contentService.savePermanently(chapterId, content, metadata);
+    
+    toast({
+      title: "Files Downloaded Successfully!",
+      description: "Replace the files in src/content/chapters/ folder and refresh the page to see permanent changes.",
+    });
+  };
+
+  const handleClearLocalStorage = () => {
+    contentService.clearLocalStorage(chapterId);
+    toast({
+      title: "Local changes cleared",
+      description: "Page will reload to show the original content.",
+    });
+    
+    // Reload the page to show the original content
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
+  };
+
+  const hasUnsavedChanges = contentService.hasUnsavedChanges(chapterId);
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
@@ -86,6 +125,45 @@ const Chapter1 = () => {
       
       <ReadingProgress />
       <Navbar />
+
+      {/* Unsaved Changes Banner - Only visible in development */}
+      {isDevelopment && hasUnsavedChanges && (
+        <div className="bg-amber-50 dark:bg-amber-900/20 border-b border-amber-200 dark:border-amber-800">
+          <div className="container-custom py-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <AlertCircle className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+                <div>
+                  <p className="text-sm font-medium text-amber-800 dark:text-amber-200">
+                    You have unsaved changes
+                  </p>
+                  <p className="text-xs text-amber-700 dark:text-amber-300">
+                    Changes are saved locally but not permanent. Download files to make them permanent.
+                  </p>
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleSavePermanently}
+                  className="flex items-center gap-2"
+                >
+                  <FileDown className="w-4 h-4" />
+                  Save Permanently
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleClearLocalStorage}
+                >
+                  Discard Changes
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       
       {/* Hero Image Section with improved overlay */}
       <div className="relative h-96 overflow-hidden">
