@@ -20,7 +20,7 @@ const Chapters = () => {
   const pageDescription = "An open-source book exploring how product leadership and powerlifting share the same foundation: discipline, mission, and care. New chapters weekly.";
 
   return (
-    <div className="min-h-screen flex flex-col bg-background font-sans">
+    <div className="min-h-screen flex flex-col bg-background">
       <Helmet>
         <title>{pageTitle}</title>
         <meta name="description" content={pageDescription} />
@@ -49,7 +49,7 @@ const Chapters = () => {
         <div className="max-w-6xl mx-auto">
           {/* Book Header */}
           <div className="mb-16 text-center">
-            <h1 className="heading-lg font-serif mb-6">
+            <h1 className="heading-lg mb-6">
               Mission Built
             </h1>
             <h2 className="heading-md font-light text-muted-foreground mb-8">
