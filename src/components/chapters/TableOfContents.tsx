@@ -122,7 +122,7 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ chapters }) => {
             {filteredChapters.map((chapter, index) => {
               const chapterNumber = String(chapter.id).padStart(2, '0');
               const isClickable = chapter.status === "published";
-              const dynamicReadingTime = getDynamicReadingTime(chapter);
+              const dynamicReadingTime = getDynamicReadingTime(chapter.wordCount);
               
               return (
                 <div
