@@ -71,7 +71,7 @@ export const chapters: Chapter[] = [
     slug: "mission-before-metrics",
     status: "published",
     publishDate: "May 24, 2025",
-    heroImage: "/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png",
+    heroImage: "/lovable-uploads/ac4df08f-40f2-4cde-a7f2-08a1413e3676.png",
     authorName: "Mike",
     sections: [],
     furtherReading: []
