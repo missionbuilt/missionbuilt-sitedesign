@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
@@ -11,7 +12,7 @@ const FieldNotes = () => {
     {
       id: 'chapter-1',
       title: 'Field Note 1: Mission Before Metrics',
-      publishedDate: '2025-05-25',
+      publishedDate: 'May 25th, 2025',
       readTime: '5 min read',
       tags: ['Getting Started'],
       description: 'Before progress can be measured, purpose must be clarified. This chapter explores how clear, motivating missions outlast vanity metrics — in both lifting and leadership. It draws on military, product, and gym floor lessons to show that true progress begins with alignment to something bigger than the numbers.',
@@ -65,7 +66,7 @@ const FieldNotes = () => {
                     <TableCell>
                       <div className="flex items-center text-sm text-muted-foreground">
                         <Calendar className="w-4 h-4 mr-1" />
-                        {new Date(chapter.publishedDate).toLocaleDateString()}
+                        {chapter.publishedDate}
                       </div>
                     </TableCell>
                     <TableCell>
