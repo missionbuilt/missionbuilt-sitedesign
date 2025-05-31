@@ -1,6 +1,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -105,7 +106,7 @@ const ContentEditor = ({ initialContent = '', onSave }: ContentEditorProps) => {
     console.log('Preview state will be:', !isPreview);
   };
 
-  // Custom components for ReactMarkdown with debugging
+  // Custom components for ReactMarkdown with proper table support
   const markdownComponents = {
     h1: ({node, ...props}: any) => <h1 className="text-4xl font-bold font-display mb-6 mt-8 text-foreground" {...props} />,
     h2: ({node, ...props}: any) => <h2 className="text-3xl font-semibold font-display mb-4 mt-6 text-foreground" {...props} />,
@@ -118,35 +119,55 @@ const ContentEditor = ({ initialContent = '', onSave }: ContentEditorProps) => {
     strong: ({node, ...props}: any) => <strong className="font-bold text-army dark:text-sunburst" {...props} />,
     em: ({node, ...props}: any) => <em className="italic" {...props} />,
     table: ({node, ...props}: any) => {
-      console.log('Table component rendered with props:', props);
+      console.log('Rendering table:', props);
       return (
-        <div className="my-4 overflow-x-auto">
-          <Table className="w-full border-collapse border border-gray-300 dark:border-gray-600">
+        <div className="my-6 overflow-x-auto">
+          <Table className="w-full border border-gray-200 dark:border-gray-700">
             {props.children}
           </Table>
         </div>
       );
     },
     thead: ({node, ...props}: any) => {
-      console.log('TableHeader component rendered');
-      return <TableHeader className="bg-gray-100 dark:bg-gray-800">{props.children}</TableHeader>;
+      console.log('Rendering thead:', props);
+      return <TableHeader>{props.children}</TableHeader>;
     },
     tbody: ({node, ...props}: any) => {
-      console.log('TableBody component rendered');
+      console.log('Rendering tbody:', props);
       return <TableBody>{props.children}</TableBody>;
     },
     tr: ({node, ...props}: any) => {
-      console.log('TableRow component rendered');
-      return <TableRow className="border-b border-gray-300 dark:border-gray-600">{props.children}</TableRow>;
+      console.log('Rendering tr:', props);
+      return <TableRow>{props.children}</TableRow>;
     },
     th: ({node, ...props}: any) => {
-      console.log('TableHead component rendered with content:', props.children);
-      return <TableHead className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-left font-semibold text-foreground">{props.children}</TableHead>;
+      console.log('Rendering th:', props.children);
+      return (
+        <TableHead className="font-semibold text-left">
+          {props.children}
+        </TableHead>
+      );
     },
     td: ({node, ...props}: any) => {
-      console.log('TableCell component rendered with content:', props.children);
-      return <TableCell className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-foreground">{props.children}</TableCell>;
+      console.log('Rendering td:', props.children);
+      return (
+        <TableCell>
+          {props.children}
+        </TableCell>
+      );
     },
+  };
+
+  const renderMarkdown = (markdownContent: string) => {
+    console.log('Rendering markdown content:', markdownContent.slice(0, 200) + '...');
+    return (
+      <ReactMarkdown 
+        components={markdownComponents}
+        remarkPlugins={[remarkGfm]}
+      >
+        {markdownContent}
+      </ReactMarkdown>
+    );
   };
 
   return (
@@ -231,9 +252,7 @@ const ContentEditor = ({ initialContent = '', onSave }: ContentEditorProps) => {
         ) : (
           <div className="prose prose-lg prose-slate dark:prose-invert max-w-none prose-headings:font-display prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-p:text-base prose-blockquote:border-l-4 prose-blockquote:border-sunburst prose-blockquote:italic prose-strong:text-army dark:prose-strong:text-sunburst">
             {content ? (
-              <ReactMarkdown components={markdownComponents}>
-                {content}
-              </ReactMarkdown>
+              renderMarkdown(content)
             ) : (
               <div className="text-center py-12 text-muted-foreground">
                 {isDevelopment ? (
@@ -255,9 +274,7 @@ const ContentEditor = ({ initialContent = '', onSave }: ContentEditorProps) => {
           </h3>
           <div className="prose prose-lg prose-slate dark:prose-invert max-w-none prose-headings:font-display prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-p:text-base prose-blockquote:border-l-4 prose-blockquote:border-sunburst prose-blockquote:italic prose-strong:text-army dark:prose-strong:text-sunburst">
             {content ? (
-              <ReactMarkdown components={markdownComponents}>
-                {content}
-              </ReactMarkdown>
+              renderMarkdown(content)
             ) : (
               <p className="text-muted-foreground">No content to preview.</p>
             )}
