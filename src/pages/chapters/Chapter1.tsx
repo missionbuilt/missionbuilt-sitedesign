@@ -24,6 +24,11 @@ const Chapter1 = () => {
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-black/20"></div>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <h1 className="font-display font-bold text-4xl md:text-5xl lg:text-6xl text-white text-center px-4">
+            Mission Before Metrics
+          </h1>
+        </div>
       </div>
       
       <main className="container-custom py-12">
