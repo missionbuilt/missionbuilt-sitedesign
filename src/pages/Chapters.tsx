@@ -1,17 +1,13 @@
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ChaptersHeader from "@/components/chapters/ChaptersHeader";
 import TableOfContents from "@/components/chapters/TableOfContents";
-import ContentUpload from "@/components/chapters/ContentUpload";
-import { chapters as initialChapters } from "@/data/chapters-data";
-import type { Chapter } from "@/data/chapters-data";
+import { chapters } from "@/data/chapters-data";
 
 const Chapters = () => {
-  const [chapters, setChapters] = useState<Chapter[]>(initialChapters);
-
   // Automatically scroll to the top when this component mounts
   useEffect(() => {
     window.scrollTo({
@@ -19,16 +15,6 @@ const Chapters = () => {
       behavior: "auto"
     });
   }, []);
-
-  const handleContentUpload = (chapterId: number, sections: { id: string; title: string; content: string; }[]) => {
-    setChapters(prevChapters => 
-      prevChapters.map(chapter => 
-        chapter.id === chapterId 
-          ? { ...chapter, sections }
-          : chapter
-      )
-    );
-  };
 
   const pageTitle = "Table of Contents | Mission Built: Lessons from the Barbell and the Boardroom";
   const pageDescription = "An open-source book exploring how product leadership and powerlifting share the same foundation: discipline, mission, and care. New chapters weekly.";
@@ -70,11 +56,6 @@ const Chapters = () => {
               Lessons from the Barbell and the Boardroom
             </h2>
             <div className="w-24 h-1 bg-primary mx-auto mb-8"></div>
-            
-            {/* Upload Button */}
-            <div className="mt-8">
-              <ContentUpload chapters={chapters} onContentUpload={handleContentUpload} />
-            </div>
           </div>
           
           {/* Table of Contents */}
