@@ -1,0 +1,17 @@
+
+{
+  "id": "chapter-2",
+  "title": "Chapter 2 Title",
+  "subtitle": "Chapter 2 Subtitle",
+  "publishedDate": "2025-05-25",
+  "readTime": "5 min read",
+  "tags": [
+    "Tag1",
+    "Tag2", 
+    "Tag3"
+  ],
+  "description": "Chapter 2 description placeholder.",
+  "slug": "chapter-2",
+  "status": "draft",
+  "links": []
+}

@@ -18,28 +18,48 @@ const FieldNotes = () => {
       setIsLoading(true);
       
       try {
-        // Load chapter 1 data from the same source as the log page
-        const [content, metadata] = await Promise.all([
+        // Load chapter 1 and chapter 2 data
+        const [
+          content1, metadata1,
+          content2, metadata2
+        ] = await Promise.all([
           contentService.loadChapterContent('chapter-1'),
-          contentService.loadChapterMetadata('chapter-1')
+          contentService.loadChapterMetadata('chapter-1'),
+          contentService.loadChapterContent('chapter-2'),
+          contentService.loadChapterMetadata('chapter-2')
         ]);
         
-        if (metadata) {
-          const readTime = calculateReadTime(content);
-          
-          const chapterData = {
-            id: metadata.id,
-            title: metadata.title,
+        const chaptersData = [];
+        
+        if (metadata1) {
+          const readTime1 = calculateReadTime(content1);
+          chaptersData.push({
+            id: metadata1.id,
+            title: metadata1.title,
             publishedDate: 'May 25th, 2025', // Keep hardcoded as requested
-            readTime: readTime,
-            tags: metadata.tags,
-            description: metadata.description,
+            readTime: readTime1,
+            tags: metadata1.tags,
+            description: metadata1.description,
             slug: 'chapter-1',
-            status: metadata.status
-          };
-          
-          setChapters([chapterData]);
+            status: metadata1.status
+          });
         }
+        
+        if (metadata2) {
+          const readTime2 = calculateReadTime(content2);
+          chaptersData.push({
+            id: metadata2.id,
+            title: metadata2.title,
+            publishedDate: 'May 25th, 2025', // Keep hardcoded as requested
+            readTime: readTime2,
+            tags: metadata2.tags,
+            description: metadata2.description,
+            slug: 'chapter-2',
+            status: metadata2.status
+          });
+        }
+        
+        setChapters(chaptersData);
       } catch (error) {
         console.error('Error loading chapters data:', error);
         // Fallback to empty array
