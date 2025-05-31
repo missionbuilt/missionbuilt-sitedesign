@@ -1,5 +1,4 @@
 
-
 export interface Chapter {
   id: number;
   title: string;
@@ -21,4 +20,3 @@ export interface Chapter {
     note: string;
   }[];
 }
-
