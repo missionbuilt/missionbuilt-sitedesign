@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
@@ -35,6 +36,7 @@ const FieldNotes = () => {
         console.log('Loading chapter data...');
         
         // Load chapter 1, chapter 2, and chapter 3 data
+        console.log('About to call contentService methods...');
         const [
           content1, metadata1,
           content2, metadata2,
@@ -48,13 +50,16 @@ const FieldNotes = () => {
           contentService.loadChapterMetadata('chapter-3')
         ]);
         
+        console.log('Chapter 1 content length:', content1?.length || 0);
         console.log('Chapter 1 metadata:', metadata1);
+        console.log('Chapter 2 content length:', content2?.length || 0);
         console.log('Chapter 2 metadata:', metadata2);
+        console.log('Chapter 3 content length:', content3?.length || 0);
         console.log('Chapter 3 metadata:', metadata3);
         
         const chaptersData = [];
         
-        if (metadata1) {
+        if (metadata1 && metadata1.status === 'published') {
           const readTime1 = calculateReadTime(content1);
           chaptersData.push({
             id: metadata1.id,
@@ -66,9 +71,12 @@ const FieldNotes = () => {
             slug: 'chapter-1',
             status: metadata1.status
           });
+          console.log('Added chapter 1 to list');
+        } else {
+          console.log('Chapter 1 not added - metadata1:', metadata1, 'status:', metadata1?.status);
         }
         
-        if (metadata2) {
+        if (metadata2 && metadata2.status === 'published') {
           const readTime2 = calculateReadTime(content2);
           chaptersData.push({
             id: metadata2.id,
@@ -80,9 +88,12 @@ const FieldNotes = () => {
             slug: 'chapter-2',
             status: metadata2.status
           });
+          console.log('Added chapter 2 to list');
+        } else {
+          console.log('Chapter 2 not added - metadata2:', metadata2, 'status:', metadata2?.status);
         }
 
-        if (metadata3) {
+        if (metadata3 && metadata3.status === 'published') {
           const readTime3 = calculateReadTime(content3);
           chaptersData.push({
             id: metadata3.id,
@@ -94,9 +105,13 @@ const FieldNotes = () => {
             slug: 'chapter-3',
             status: metadata3.status
           });
+          console.log('Added chapter 3 to list');
+        } else {
+          console.log('Chapter 3 not added - metadata3:', metadata3, 'status:', metadata3?.status);
         }
         
         console.log('Final chapters data:', chaptersData);
+        console.log('Total chapters to display:', chaptersData.length);
         setChapters(chaptersData);
       } catch (error) {
         console.error('Error loading chapters data:', error);
@@ -193,6 +208,8 @@ const FieldNotes = () => {
     );
   }
 
+  console.log('Rendering FieldNotes with chapters:', chapters);
+
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
@@ -212,6 +229,7 @@ const FieldNotes = () => {
             {chapters.length === 0 ? (
               <div className="text-center py-8">
                 <p className="text-muted-foreground">No field notes available at the moment.</p>
+                <p className="text-sm text-muted-foreground mt-2">Check the browser console for loading details.</p>
               </div>
             ) : (
               <Table>
