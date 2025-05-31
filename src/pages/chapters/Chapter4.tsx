@@ -1,35 +1,50 @@
 
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Calendar, Clock, Tag, ExternalLink } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { ArrowLeft, Calendar, Clock, AlertCircle, Save, FileDown } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import ReadingProgress from '@/components/ReadingProgress';
+import ContentEditor from '@/components/ContentEditor';
 import LinkSection from '@/components/LinkSection';
-import { contentService } from '@/services/contentService';
+import ReadingProgress from '@/components/ReadingProgress';
+import SectionDivider from '@/components/SectionDivider';
 import { calculateReadTime } from '@/utils/readTimeCalculator';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
+import { contentService, ChapterMeta, ChapterLink } from '@/services/contentService';
 
 const Chapter4 = () => {
-  const [content, setContent] = React.useState<string>('');
-  const [metadata, setMetadata] = React.useState<any>(null);
+  const [content, setContent] = React.useState('');
+  const [metadata, setMetadata] = React.useState<ChapterMeta | null>(null);
+  const [readTime, setReadTime] = React.useState('0 min read');
   const [isLoading, setIsLoading] = React.useState(true);
-  const [error, setError] = React.useState<string | null>(null);
+  const { toast } = useToast();
+
+  const chapterId = 'chapter-4';
+
+  // Enhanced development mode detection
+  const isDevelopment = process.env.NODE_ENV === 'development' || 
+                        window.location.hostname === 'localhost' || 
+                        window.location.hostname.includes('lovable.app') ||
+                        window.location.hostname.includes('127.0.0.1') ||
+                        window.location.port !== '';
 
   React.useEffect(() => {
     const loadChapterData = async () => {
+      setIsLoading(true);
+      
       try {
-        const [chapterContent, chapterMetadata] = await Promise.all([
-          contentService.loadChapterContent('chapter-4'),
-          contentService.loadChapterMetadata('chapter-4')
+        const [loadedContent, loadedMetadata] = await Promise.all([
+          contentService.loadChapterContent(chapterId),
+          contentService.loadChapterMetadata(chapterId)
         ]);
         
-        setContent(chapterContent);
-        setMetadata(chapterMetadata);
+        setContent(loadedContent);
+        setMetadata(loadedMetadata);
+        setReadTime(calculateReadTime(loadedContent));
       } catch (error) {
-        console.error('Error loading chapter 4:', error);
-        setError('Failed to load chapter content');
+        console.error('Error loading chapter data:', error);
       } finally {
         setIsLoading(false);
       }
@@ -38,140 +53,251 @@ const Chapter4 = () => {
     loadChapterData();
   }, []);
 
+  const handleContentSave = (newContent: string) => {
+    console.log('Content saved:', newContent);
+    setContent(newContent);
+    setReadTime(calculateReadTime(newContent));
+    contentService.saveContentToLocalStorage(chapterId, newContent);
+  };
+
+  const handleContentChange = (newContent: string) => {
+    setContent(newContent);
+    setReadTime(calculateReadTime(newContent));
+    // Auto-save to localStorage on every change
+    contentService.saveContentToLocalStorage(chapterId, newContent);
+  };
+
+  const handleLinksChange = (links: ChapterLink[]) => {
+    console.log('Links updated:', links);
+    if (metadata) {
+      const updatedMetadata = { ...metadata, links };
+      setMetadata(updatedMetadata);
+      contentService.saveMetadataToLocalStorage(chapterId, updatedMetadata);
+    }
+  };
+
+  const handleSavePermanently = () => {
+    if (!metadata) {
+      toast({
+        title: "Error",
+        description: "Cannot save: metadata not loaded",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    contentService.savePermanently(chapterId, content, metadata);
+    
+    toast({
+      title: "Files Downloaded Successfully!",
+      description: "Replace the files in src/content/chapters/ folder and refresh the page to see permanent changes.",
+    });
+  };
+
+  const handleClearLocalStorage = () => {
+    contentService.clearLocalStorage(chapterId);
+    toast({
+      title: "Local changes cleared",
+      description: "Page will reload to show the original content.",
+    });
+    
+    // Reload the page to show the original content
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
+  };
+
+  const handleDownloadContent = () => {
+    contentService.downloadContentFile(chapterId, content);
+    toast({
+      title: "Content File Downloaded",
+      description: "The .md file has been downloaded successfully.",
+    });
+  };
+
+  const handleDownloadMetadata = () => {
+    if (!metadata) {
+      toast({
+        title: "Error",
+        description: "Cannot download: metadata not loaded",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    contentService.downloadMetadataFile(chapterId, metadata);
+    toast({
+      title: "Metadata File Downloaded", 
+      description: "The .json file has been downloaded successfully.",
+    });
+  };
+
+  const hasUnsavedChanges = contentService.hasUnsavedChanges(chapterId);
+
+  // Helper function to format date properly
+  const formatPublishDate = (dateString: string) => {
+    // Create date object and add timezone offset to avoid timezone issues
+    const date = new Date(dateString + 'T12:00:00');
+    return date.toLocaleDateString('en-US', { 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    });
+  };
+
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-background">
-        <Navbar />
-        <main className="container-custom py-12">
-          <div className="max-w-4xl mx-auto">
-            <div className="animate-pulse">
-              <div className="h-8 bg-muted rounded w-3/4 mb-4"></div>
-              <div className="h-4 bg-muted rounded w-1/2 mb-8"></div>
-              <div className="space-y-4">
-                <div className="h-4 bg-muted rounded"></div>
-                <div className="h-4 bg-muted rounded w-5/6"></div>
-                <div className="h-4 bg-muted rounded w-4/5"></div>
-              </div>
-            </div>
-          </div>
-        </main>
-        <Footer />
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-army mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Loading chapter...</p>
+        </div>
       </div>
     );
   }
-
-  if (error) {
-    return (
-      <div className="min-h-screen bg-background">
-        <Navbar />
-        <main className="container-custom py-12">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-2xl font-bold text-destructive mb-4">Error Loading Chapter</h1>
-            <p className="text-muted-foreground">{error}</p>
-          </div>
-        </main>
-        <Footer />
-      </div>
-    );
-  }
-
-  const readTime = calculateReadTime(content);
 
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>{metadata?.title ? `${metadata.title} - MissionBuilt` : 'Chapter 4 - MissionBuilt'}</title>
-        <meta name="description" content={metadata?.description || 'Chapter 4 content'} />
+        <title>{metadata?.title || 'Field Note 4'} - MissionBuilt</title>
+        <meta name="description" content={metadata?.description || 'Field Note content'} />
       </Helmet>
       
       <ReadingProgress />
       <Navbar />
-      
-      <main className="container-custom py-12">
-        <div className="max-w-4xl mx-auto">
-          <header className="mb-12">
-            {metadata?.title && <h1 className="text-4xl font-bold text-foreground mb-4">{metadata.title}</h1>}
-            {metadata?.subtitle && <p className="text-xl text-muted-foreground mb-6">{metadata.subtitle}</p>}
-            
-            <div className="flex flex-wrap items-center gap-6 text-sm text-muted-foreground mb-6">
-              {metadata?.publishedDate && (
-                <div className="flex items-center">
-                  <Calendar className="w-4 h-4 mr-1" />
-                  {new Date(metadata.publishedDate + 'T12:00:00').toLocaleDateString('en-US', { 
-                    year: 'numeric', 
-                    month: 'long', 
-                    day: 'numeric' 
-                  })}
+
+      {/* Unsaved Changes Banner - Show in development environments */}
+      {isDevelopment && hasUnsavedChanges && (
+        <div className="bg-amber-50 dark:bg-amber-900/20 border-b border-amber-200 dark:border-amber-800">
+          <div className="container-custom py-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <AlertCircle className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+                <div>
+                  <p className="text-sm font-medium text-amber-800 dark:text-amber-200">
+                    You have unsaved changes
+                  </p>
+                  <p className="text-xs text-amber-700 dark:text-amber-300">
+                    Changes are saved locally but not permanent. Download files to make them permanent.
+                  </p>
                 </div>
-              )}
-              
-              <div className="flex items-center">
-                <Clock className="w-4 h-4 mr-1" />
-                {readTime}
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleDownloadContent}
+                  className="flex items-center gap-2"
+                >
+                  <FileDown className="w-4 h-4" />
+                  Download .md
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleDownloadMetadata}
+                  className="flex items-center gap-2"
+                >
+                  <FileDown className="w-4 h-4" />
+                  Download .json
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleClearLocalStorage}
+                >
+                  Discard Changes
+                </Button>
               </div>
             </div>
-            
-            {metadata?.tags && metadata.tags.length > 0 && (
-              <div className="flex flex-wrap gap-2 mb-8">
-                {metadata.tags.map((tag: string) => (
-                  <span 
-                    key={tag}
-                    className="inline-flex items-center px-3 py-1 rounded-full text-xs bg-army/10 text-army"
-                  >
-                    <Tag className="w-3 h-3 mr-1" />
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            )}
+          </div>
+        </div>
+      )}
+      
+      {/* Hero Image Section */}
+      <div className="relative h-96 overflow-hidden">
+        <img 
+          src="/lovable-uploads/placeholder.svg"
+          alt="Field Note 4 Hero"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/30 to-black/50"></div>
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
+          <Link 
+            to="/about" 
+            className="text-sunburst hover:text-sunburst/80 transition-colors text-lg font-medium mb-3 hover:underline"
+          >
+            by Mike
+          </Link>
+          <h1 className="font-display font-bold text-4xl md:text-5xl lg:text-6xl text-white mb-6 leading-tight drop-shadow-lg">
+            {metadata?.title || 'Field Note 4'}
+          </h1>
+          <div className="flex items-center gap-6 text-white/95 text-sm font-medium">
+            <div className="flex items-center">
+              <Calendar className="w-4 h-4 mr-2" />
+              Published {metadata?.publishedDate ? formatPublishDate(metadata.publishedDate) : 'May 31st, 2025'}
+            </div>
+            <div className="flex items-center">
+              <Clock className="w-4 h-4 mr-2" />
+              {readTime}
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <main className="container-custom py-16">
+        <div className="max-w-4xl mx-auto">
+          <Link 
+            to="/field-notes" 
+            className="inline-flex items-center text-army hover:text-army/80 transition-colors mb-12 group"
+          >
+            <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
+            Back to Field Notes
+          </Link>
+          
+          {/* Enhanced article header */}
+          <header className="mb-16">
+            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6 font-display leading-tight">
+              {metadata?.title || 'Field Note 4: Chapter Title'}
+            </h1>
+            <div className="flex items-center text-muted-foreground text-sm bg-gray-50 dark:bg-gray-800/50 px-4 py-3 rounded-lg">
+              <Clock className="w-4 h-4 mr-2" />
+              Estimated read time: {readTime}
+            </div>
           </header>
           
-          <article className="prose prose-lg prose-slate dark:prose-invert max-w-none mb-12">
-            <ReactMarkdown 
-              remarkPlugins={[remarkGfm]}
-              components={{
-                h1: ({children}) => <h1 className="text-3xl font-bold mb-6 text-foreground">{children}</h1>,
-                h2: ({children}) => <h2 className="text-2xl font-semibold mb-4 mt-8 text-foreground">{children}</h2>,
-                h3: ({children}) => <h3 className="text-xl font-semibold mb-3 mt-6 text-foreground">{children}</h3>,
-                p: ({children}) => <p className="mb-4 text-foreground leading-relaxed">{children}</p>,
-                blockquote: ({children}) => (
-                  <blockquote className="border-l-4 border-army pl-4 my-6 italic text-muted-foreground bg-muted/50 py-2">
-                    {children}
-                  </blockquote>
-                ),
-                strong: ({children}) => <strong className="font-semibold text-army">{children}</strong>,
-                a: ({href, children}) => (
-                  <a 
-                    href={href} 
-                    className="text-army hover:text-army/80 underline transition-colors inline-flex items-center"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {children}
-                    <ExternalLink className="w-3 h-3 ml-1" />
-                  </a>
-                ),
-                ul: ({children}) => <ul className="list-disc list-inside mb-4 space-y-1">{children}</ul>,
-                ol: ({children}) => <ol className="list-decimal list-inside mb-4 space-y-1">{children}</ol>,
-                li: ({children}) => <li className="text-foreground">{children}</li>,
-                code: ({children}) => (
-                  <code className="bg-muted px-1 py-0.5 rounded text-sm font-mono">{children}</code>
-                ),
-                pre: ({children}) => (
-                  <pre className="bg-muted p-4 rounded-lg overflow-x-auto mb-4">{children}</pre>
-                ),
-              }}
-            >
-              {content}
-            </ReactMarkdown>
-          </article>
-
-          {metadata?.links && metadata.links.length > 0 && (
-            <LinkSection 
-              chapterId="chapter-4"
-              initialLinks={metadata.links}
+          {/* Enhanced content area with better typography */}
+          <div className="prose prose-lg prose-slate dark:prose-invert max-w-none mb-16
+                          prose-headings:font-display prose-headings:tracking-tight
+                          prose-h1:text-4xl prose-h1:mb-8 prose-h1:mt-12
+                          prose-h2:text-3xl prose-h2:mb-6 prose-h2:mt-10
+                          prose-h3:text-2xl prose-h3:mb-4 prose-h3:mt-8
+                          prose-p:text-base prose-p:leading-relaxed prose-p:mb-6
+                          prose-li:text-base prose-li:leading-relaxed
+                          prose-blockquote:border-l-4 prose-blockquote:border-sunburst 
+                          prose-blockquote:bg-sunburst/5 prose-blockquote:rounded-r-lg
+                          prose-blockquote:py-4 prose-blockquote:px-6 prose-blockquote:my-8
+                          prose-blockquote:italic prose-blockquote:text-lg
+                          prose-strong:text-army dark:prose-strong:text-sunburst prose-strong:font-semibold
+                          prose-a:text-army dark:prose-a:text-sunburst prose-a:no-underline hover:prose-a:underline">
+            <ContentEditor 
+              initialContent={content}
+              chapterId={chapterId}
+              onSave={handleContentSave}
+              onContentChange={handleContentChange}
             />
-          )}
+          </div>
+
+          <SectionDivider />
+
+          {/* Enhanced Links Section */}
+          <div className="border-t border-gray-200 dark:border-gray-700 pt-12">
+            <LinkSection 
+              chapterId={chapterId}
+              initialLinks={metadata?.links || []}
+              onLinksChange={handleLinksChange} 
+            />
+          </div>
         </div>
       </main>
       
