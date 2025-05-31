@@ -34,13 +34,14 @@ const FieldNotes = () => {
       try {
         console.log('Loading chapter data...');
         
-        // Load chapter 1, chapter 2, chapter 3, and chapter 4 data
+        // Load chapter 1, chapter 2, chapter 3, chapter 4, and chapter 5 data
         console.log('About to call contentService methods...');
         const [
           content1, metadata1,
           content2, metadata2,
           content3, metadata3,
-          content4, metadata4
+          content4, metadata4,
+          content5, metadata5
         ] = await Promise.all([
           contentService.loadChapterContent('chapter-1'),
           contentService.loadChapterMetadata('chapter-1'),
@@ -49,7 +50,9 @@ const FieldNotes = () => {
           contentService.loadChapterContent('chapter-3'),
           contentService.loadChapterMetadata('chapter-3'),
           contentService.loadChapterContent('chapter-4'),
-          contentService.loadChapterMetadata('chapter-4')
+          contentService.loadChapterMetadata('chapter-4'),
+          contentService.loadChapterContent('chapter-5'),
+          contentService.loadChapterMetadata('chapter-5')
         ]);
         
         console.log('Chapter 1 content length:', content1?.length || 0);
@@ -60,6 +63,8 @@ const FieldNotes = () => {
         console.log('Chapter 3 metadata:', metadata3);
         console.log('Chapter 4 content length:', content4?.length || 0);
         console.log('Chapter 4 metadata:', metadata4);
+        console.log('Chapter 5 content length:', content5?.length || 0);
+        console.log('Chapter 5 metadata:', metadata5);
         
         const chaptersData = [];
         
@@ -129,6 +134,23 @@ const FieldNotes = () => {
           console.log('Added chapter 4 to list');
         } else {
           console.log('Chapter 4 not added - metadata4:', metadata4, 'status:', metadata4?.status);
+        }
+
+        if (metadata5 && metadata5.status === 'published') {
+          const readTime5 = calculateReadTime(content5);
+          chaptersData.push({
+            id: metadata5.id,
+            title: metadata5.title,
+            publishedDate: formatPublishDate(metadata5.publishedDate),
+            readTime: readTime5,
+            tags: metadata5.tags,
+            description: metadata5.description,
+            slug: 'chapter-5',
+            status: metadata5.status
+          });
+          console.log('Added chapter 5 to list');
+        } else {
+          console.log('Chapter 5 not added - metadata5:', metadata5, 'status:', metadata5?.status);
         }
         
         console.log('Final chapters data:', chaptersData);
