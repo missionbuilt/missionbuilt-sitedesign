@@ -3,25 +3,17 @@ import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import Logo from '@/components/Logo';
 import NightVisionToggle from '@/components/NightVisionToggle';
-import { Badge } from '@/components/ui/badge';
-import { useNewBadge } from '@/hooks/useNewBadge';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
-  const { hasVisitedTrainingLogs, markTrainingLogsAsVisited } = useNewBadge();
 
   // Function to handle scrolling to top when navigating to home
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: 'instant' // Changed from 'smooth' to 'instant' for immediate scrolling
+      behavior: 'instant'
     });
-  };
-
-  // Function to handle training logs click
-  const handleTrainingLogsClick = () => {
-    markTrainingLogsAsVisited();
   };
 
   // Effect to ensure we're at the top of the page when navigating to home
@@ -41,17 +33,6 @@ const Navbar = () => {
         <div className="hidden md:flex items-center">
           <nav className="flex items-center space-x-1 mr-6">
             <NavLink to="/" exact onClick={scrollToTop}>The Mission</NavLink>
-            <div className="relative">
-              <NavLink to="/traininglogs" onClick={handleTrainingLogsClick}>Training Logs</NavLink>
-              {!hasVisitedTrainingLogs && (
-                <Badge 
-                  variant="default" 
-                  className="absolute -top-2 -right-2 bg-sunburst text-slate text-xs px-1.5 py-0.5 animate-pulse"
-                >
-                  NEW
-                </Badge>
-              )}
-            </div>
             <NavLink to="/about">About</NavLink>
           </nav>
           
@@ -83,17 +64,6 @@ const Navbar = () => {
           <div className="absolute top-full left-0 right-0 bg-white/95 dark:bg-slate/90 backdrop-blur-md shadow-lg border-t border-slate/10 dark:border-slate/20 md:hidden py-2">
             <nav className="flex flex-col">
               <MobileNavLink to="/" onClick={() => {setIsMenuOpen(false); scrollToTop();}}>The Mission</MobileNavLink>
-              <div className="relative">
-                <MobileNavLink to="/traininglogs" onClick={() => {setIsMenuOpen(false); handleTrainingLogsClick();}}>Training Logs</MobileNavLink>
-                {!hasVisitedTrainingLogs && (
-                  <Badge 
-                    variant="default" 
-                    className="absolute top-3 right-4 bg-sunburst text-slate text-xs px-1.5 py-0.5 animate-pulse"
-                  >
-                    NEW
-                  </Badge>
-                )}
-              </div>
               <MobileNavLink to="/about" onClick={() => setIsMenuOpen(false)}>About</MobileNavLink>
               <div className="px-4 py-3">
                 <NightVisionToggle />
