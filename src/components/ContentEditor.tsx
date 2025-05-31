@@ -1,9 +1,8 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { Eye, Edit3, Save, Heading, List, Quote, Bold, Type } from 'lucide-react';
+import { Eye, Edit3, Save, Heading, List, Quote, Bold, Type, Table } from 'lucide-react';
 
 interface ContentEditorProps {
   initialContent?: string;
@@ -87,6 +86,11 @@ const ContentEditor = ({ initialContent = '', onSave }: ContentEditorProps) => {
       label: 'Quote',
       icon: Quote,
       action: () => insertTextAtCursor('\n\n> "This is a quote or important statement that stands out from the rest of the content."\n\n'),
+    },
+    {
+      label: 'Table',
+      icon: Table,
+      action: () => insertTextAtCursor('\n\n| Header 1 | Header 2 | Header 3 |\n|----------|----------|----------|\n| Row 1 Col 1 | Row 1 Col 2 | Row 1 Col 3 |\n| Row 2 Col 1 | Row 2 Col 2 | Row 2 Col 3 |\n\n'),
     },
   ];
 
