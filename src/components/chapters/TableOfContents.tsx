@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
@@ -166,10 +167,12 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ chapters }) => {
 
                   {/* Reading Time and Status */}
                   <div className="flex-shrink-0 flex items-center gap-4">
-                    <div className="flex items-center text-sm text-muted-foreground">
-                      <Clock className="mr-1 h-3 w-3" />
-                      <span>{dynamicReadingTime} min</span>
-                    </div>
+                    {chapter.status === "published" && (
+                      <div className="flex items-center text-sm text-muted-foreground">
+                        <Clock className="mr-1 h-3 w-3" />
+                        <span>{dynamicReadingTime} min</span>
+                      </div>
+                    )}
                     
                     <Badge 
                       variant={getBadgeVariant(chapter.status)} 
