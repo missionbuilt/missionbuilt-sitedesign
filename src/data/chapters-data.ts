@@ -879,12 +879,9 @@ Source: https://drmikeisraetel.com/dr-mike-israetel-mv-mev-mav-mrv-explained/</p
   {
     id: 4,
     title: "Feedback is a Superpower",
-    description: "Strength grows where feedback flows. This chapter will dig into how lifters and leaders alike depend on real, raw, and regular feedback to improve. Whether it's a bar path breakdown or a postmortem from a launch, feedback is the force multiplier — but only if you're strong enough to seek it.",
-    slug: "feedback-is-a-superpower",
-    status: "published",
-    publishDate: "May 30, 2025",
-    heroImage: "/lovable-uploads/a96316c8-c13a-4222-bdaa-b33931f2e996.png",
-    authorName: "Mike",
+    description: "How precise feedback—like laser-focused coaching cues—cuts through noise to drive real progress in both lifting and product development.",
+    status: "published" as const,
+    heroImage: "/lovable-uploads/fe278df4-1643-4dd0-9a61-51e73f29901d.png",
     sections: [
       {
         id: "cues-not-critiques",
@@ -1294,7 +1291,98 @@ That builds — not breaks.</em></p>
 <p>When it's anchored in empathy and aimed at the mission, feedback stops being friction — and becomes fuel.</p>`
       }
     ],
-    furtherReading: []
+    furtherReading: [
+      {
+        title: "Stefi Cohen's Coaching Evolution",
+        description: "Explores Stefi Cohen's evolving approach to training, blending isolation and compound movements, and emphasizing adaptability—a model of feedback-driven progression.",
+        url: "https://www.hybridperformancemethod.com/blog/are-isolation-movements-better-for-muscle-growth",
+        note: ""
+      },
+      {
+        title: "Motor Learning and Coaching Cues",
+        description: "Outlines effective coaching cues in baseball, including directional visual prompts like \"turn the flashlight,\" to support motor learning through immediate feedback.",
+        url: "https://www.drivelinebaseball.com/2017/02/coaching-hitting-mechanics-part-2-application/",
+        note: ""
+      },
+      {
+        title: "Duolingo's Onboarding and Retention Strategies",
+        description: "Analyzes Duolingo's onboarding process, highlighting how personalization and gamification contribute to user retention and engagement.",
+        url: "https://www.redfast.com/news/how-duolingos-modern-onboarding-drives-user-retention",
+        note: ""
+      },
+      {
+        title: "Elastic's Acquisition of Endgame",
+        description: "Provides context on the Endgame acquisition and the iterative, feedback-driven strategy that shaped its product approach.",
+        url: "https://techcrunch.com/2019/10/15/elastic-adds-endpoint-security-to-its-expanding-toolset/",
+        note: "Coverage of Elastic's acquisition of Endgame, including reference to its focus on a single, mature endpoint security product."
+      },
+      {
+        title: "Slack's Origins and Internal Tool Pivot",
+        description: "Details how Slack emerged from an internal communication tool at Tiny Speck, developed during the creation of the game Glitch, and evolved through continuous internal feedback loops.",
+        url: "https://www.wired.com/2014/08/the-most-fascinating-profile-youll-ever-read-about-a-guy-and-his-boring-startup",
+        note: ""
+      },
+      {
+        title: "Slack's Product Philosophy",
+        description: "Reveals how the team behind Slack ritualized internal feedback and refined the tool based on daily use, long before realizing it could become a standalone product.",
+        url: "https://review.firstround.com/from-0-to-1b-slacks-founder-shares-their-epic-launch-strategy",
+        note: ""
+      },
+      {
+        title: "Product Managers Must Talk to Users",
+        description: "Marty Cagan explains why user conversations are not optional for PMs, and how constant, intentional feedback is essential to product leadership.",
+        url: "https://www.svpg.com/discovery-feedback",
+        note: ""
+      },
+      {
+        title: "Fitbit Sleep Score Anxiety",
+        description: "Explores how Fitbit's sleep score feature, intended to empower users, inadvertently created stress and confusion as people began to fixate on a single metric rather than holistic health.",
+        url: "https://www.washingtonpost.com/business/2020/02/14/sleep-wellness-employer-oura/",
+        note: ""
+      },
+      {
+        title: "RPE and RIR in Strength Training",
+        description: "Outlines how Rate of Perceived Exertion (RPE) and Reps in Reserve (RIR) offer subjective yet critical feedback for athletes—emphasizing that true progress requires honest self-assessment, not just numbers.",
+        url: "https://www.strongerbyscience.com/reps-in-reserve/",
+        note: ""
+      },
+      {
+        title: "Target Canada Collapse",
+        description: "A detailed account of how Target's expansion into Canada failed due to systemic issues, misread data, and ignored frontline feedback—resulting in one of the most expensive retail failures in history.",
+        url: "https://canadianbusiness.com/ideas/the-last-days-of-target-canada/",
+        note: ""
+      },
+      {
+        title: "The Problem with Listening to Metrics",
+        description: "Highlights how organizations often misinterpret data due to cognitive biases, bad proxies, or unexamined assumptions, leading to poor strategic decisions.",
+        url: "https://hbr.org/2022/07/a-better-way-to-put-your-data-to-work",
+        note: ""
+      },
+      {
+        title: "The Medici Effect",
+        description: "Frans Johansson's concept of intersectional innovation emphasizes the value of early, diverse input—the \"share early\" principle is foundational to adaptive feedback.",
+        url: "https://www.fransjohansson.com/books",
+        note: ""
+      },
+      {
+        title: "Figma's Culture of Real-Time Feedback",
+        description: "Figma's built-in commenting and mock review workflows enable low-friction, high-impact feedback loops across product and design.",
+        url: "https://www.figma.com/blog/inside-figma-building-a-more-collaborative-design-process/",
+        note: ""
+      },
+      {
+        title: "Duolingo's Feedback-Driven UX",
+        description: "Duolingo uses micro-interactions and behavioral cues to offer real-time encouragement and course correction within its language learning platform.",
+        url: "https://blog.duolingo.com/duologues-design-conversations/",
+        note: ""
+      },
+      {
+        title: "Lovable AI and Creative Iteration",
+        description: "At UOttOhack, the Lovable team demonstrated how rapid iteration with AI tools can accelerate app development, enabling real-time feedback and collaborative creativity.",
+        url: "https://lovable.dev/blog/uottohack-umar-app-development",
+        note: ""
+      }
+    ]
   },
   {
     id: 5,
