@@ -83,30 +83,40 @@ class ContentService {
   }
 
   savePermanently(chapterId: string, content: string, metadata: ChapterMeta): void {
-    // Download content file
-    const contentBlob = new Blob([content], { type: 'text/markdown' });
-    const contentUrl = URL.createObjectURL(contentBlob);
-    const contentLink = document.createElement('a');
-    contentLink.href = contentUrl;
-    contentLink.download = `${chapterId}.md`;
-    document.body.appendChild(contentLink);
-    contentLink.click();
-    document.body.removeChild(contentLink);
-    URL.revokeObjectURL(contentUrl);
+    console.log('Starting permanent save for:', chapterId);
+    console.log('Content length:', content.length);
+    console.log('Metadata:', metadata);
 
-    // Download metadata file
+    // Create a small delay between downloads to ensure both complete
+    const downloadWithDelay = (blob: Blob, filename: string, delay: number = 0) => {
+      setTimeout(() => {
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        link.style.display = 'none';
+        
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        // Clean up the URL after a short delay
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+        
+        console.log(`Downloaded: ${filename}`);
+      }, delay);
+    };
+
+    // Download content file first
+    const contentBlob = new Blob([content], { type: 'text/markdown' });
+    downloadWithDelay(contentBlob, `${chapterId}.md`, 0);
+
+    // Download metadata file with a small delay
     const metadataStr = JSON.stringify(metadata, null, 2);
     const metadataBlob = new Blob([metadataStr], { type: 'application/json' });
-    const metadataUrl = URL.createObjectURL(metadataBlob);
-    const metadataLink = document.createElement('a');
-    metadataLink.href = metadataUrl;
-    metadataLink.download = `${chapterId}-meta.json`;
-    document.body.appendChild(metadataLink);
-    metadataLink.click();
-    document.body.removeChild(metadataLink);
-    URL.revokeObjectURL(metadataUrl);
+    downloadWithDelay(metadataBlob, `${chapterId}-meta.json`, 500);
 
-    console.log(`Downloaded permanent save files for ${chapterId}`);
+    console.log(`Initiated permanent save downloads for ${chapterId}`);
   }
 
   clearLocalStorage(chapterId: string): void {
