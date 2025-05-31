@@ -6,6 +6,13 @@ export interface Section {
   content: string;
 }
 
+export interface FurtherReadingResource {
+  title: string;
+  url: string;
+  description: string;
+  note?: string;
+}
+
 export interface Chapter {
   id: number;
   title: string;
@@ -16,6 +23,7 @@ export interface Chapter {
   status: "published" | "coming-soon" | "draft";
   sections?: Section[];
   loadContent?: () => Promise<{ sections: Section[] }>;
+  furtherReading?: FurtherReadingResource[];
 }
 
 // Helper function to calculate reading time dynamically
