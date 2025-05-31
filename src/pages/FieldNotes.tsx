@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
@@ -15,7 +14,7 @@ const FieldNotes = () => {
       publishedDate: '2025-05-25',
       readTime: '5 min read',
       tags: ['Getting Started'],
-      description: 'First chapter description',
+      description: 'Before progress can be measured, purpose must be clarified. This chapter explores how clear, motivating missions outlast vanity metrics — in both lifting and leadership. It draws on military, product, and gym floor lessons to show that true progress begins with alignment to something bigger than the numbers.',
       slug: 'chapter-1',
       status: 'published' as const
     }
