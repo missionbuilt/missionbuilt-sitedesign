@@ -34,9 +34,10 @@ const ChapterContent: React.FC<ChapterContentProps> = ({ chapter }) => {
           {chapter.sections.map((section, index) => (
             <section key={section.id} className="mb-12">
               <h2 className="text-2xl font-bold mb-6">{section.title}</h2>
-              <div className="prose-content">
-                {section.content}
-              </div>
+              <div 
+                className="prose-content"
+                dangerouslySetInnerHTML={{ __html: section.content }}
+              />
             </section>
           ))}
         </div>
