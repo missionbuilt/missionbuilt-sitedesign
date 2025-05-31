@@ -61,7 +61,7 @@ const getBadgeClass = (status: Chapter["status"]): string => {
     case "coming-soon":
       return "bg-sunburst text-slate dark:bg-sunburst/90 dark:text-slate";
     case "draft":
-      return "bg-slate-100 text-slate-800 dark:bg-slate-800/30 dark:text-slate-400";
+      return "bg-white text-slate-800 border border-slate-300 dark:bg-white dark:text-slate-800";
     default:
       return "";
   }
@@ -104,7 +104,7 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ chapters }) => {
           <Button
             variant={filterStatus === "draft" ? "outline" : "outline"}
             onClick={() => setFilterStatus(filterStatus === "draft" ? "all" : "draft")}
-            className="bg-slate-100 text-slate-800 hover:bg-slate-200 border-slate-300"
+            className="bg-white text-slate-800 hover:bg-slate-50 border-slate-300"
           >
             <Circle className="mr-2 h-4 w-4" />
             {draftChapters} Sipping the Pre
