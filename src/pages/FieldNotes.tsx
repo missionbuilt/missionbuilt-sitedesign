@@ -18,9 +18,6 @@ const FieldNotes = () => {
         <div className="max-w-4xl mx-auto">
           <header className="mb-12">
             <h1 className="text-4xl font-bold text-foreground mb-4">Field Notes</h1>
-            <p className="text-lg text-slate dark:text-slate-300">
-              A collection of thoughts, insights, and observations from the field.
-            </p>
           </header>
           
           {/* Table of contents will be populated here */}
