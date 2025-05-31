@@ -14,6 +14,17 @@ const FieldNotes = () => {
   const [isLoading, setIsLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
 
+  // Helper function to format date properly
+  const formatPublishDate = (dateString: string) => {
+    // Create date object and add timezone offset to avoid timezone issues
+    const date = new Date(dateString + 'T12:00:00');
+    return date.toLocaleDateString('en-US', { 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    });
+  };
+
   React.useEffect(() => {
     const loadChaptersData = async () => {
       setIsLoading(true);
@@ -48,7 +59,7 @@ const FieldNotes = () => {
           chaptersData.push({
             id: metadata1.id,
             title: metadata1.title,
-            publishedDate: 'May 25th, 2025', // Keep hardcoded as requested
+            publishedDate: formatPublishDate(metadata1.publishedDate),
             readTime: readTime1,
             tags: metadata1.tags,
             description: metadata1.description,
@@ -62,7 +73,7 @@ const FieldNotes = () => {
           chaptersData.push({
             id: metadata2.id,
             title: metadata2.title,
-            publishedDate: 'May 25th, 2025', // Keep hardcoded as requested
+            publishedDate: formatPublishDate(metadata2.publishedDate),
             readTime: readTime2,
             tags: metadata2.tags,
             description: metadata2.description,
@@ -76,7 +87,7 @@ const FieldNotes = () => {
           chaptersData.push({
             id: metadata3.id,
             title: metadata3.title,
-            publishedDate: 'May 25th, 2025', // Keep hardcoded as requested
+            publishedDate: formatPublishDate(metadata3.publishedDate),
             readTime: readTime3,
             tags: metadata3.tags,
             description: metadata3.description,
