@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
@@ -214,11 +213,11 @@ const Chapter2 = () => {
         </div>
       )}
       
-      {/* Hero Image Section with improved overlay */}
+      {/* Hero Image Section with new image */}
       <div className="relative h-96 overflow-hidden">
         <img 
-          src="/lovable-uploads/e090226a-c451-4cfe-82ff-2d1c054040ae.png"
-          alt="Field Note 2 Hero"
+          src="/lovable-uploads/a52b5ced-8395-4637-8819-542e53405b58.png"
+          alt="Field Note 2 Hero - Built Through Reps"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/30 to-black/50"></div>
