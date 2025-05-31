@@ -96,61 +96,66 @@ const FieldNotes = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {chapters.map((chapter) => (
-                  <TableRow key={chapter.id}>
-                    <TableCell>
-                      <Link 
-                        to={`/field-notes/${chapter.slug}`}
-                        className="font-medium text-army hover:text-army/80 transition-colors"
-                      >
-                        {chapter.title}
-                      </Link>
-                      {chapter.description && (
-                        <p className="text-sm text-muted-foreground mt-1">
-                          {chapter.description}
-                        </p>
-                      )}
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex items-center text-sm text-muted-foreground">
-                        <Calendar className="w-4 h-4 mr-1" />
-                        {chapter.publishedDate}
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex items-center text-sm text-muted-foreground">
-                        <Clock className="w-4 h-4 mr-1" />
-                        {chapter.readTime}
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex flex-wrap gap-1">
-                        {chapter.tags.map((tag) => (
-                          <span 
-                            key={tag}
-                            className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-army/10 text-army"
-                          >
-                            <Tag className="w-3 h-3 mr-1" />
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                        chapter.status === 'Good Lift'
-                          ? 'bg-army/10 text-army dark:bg-army/20 dark:text-army'
-                          : chapter.status === 'published' 
-                          ? 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400'
-                          : chapter.status === 'draft'
-                          ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400'
-                          : 'bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-400'
-                      }`}>
-                        {chapter.status}
-                      </span>
-                    </TableCell>
-                  </TableRow>
-                ))}
+                {chapters.map((chapter) => {
+                  console.log('Chapter status:', chapter.status);
+                  const statusClasses = chapter.status === 'Good Lift'
+                    ? 'bg-army/10 text-army dark:bg-army/20 dark:text-army'
+                    : chapter.status === 'published' 
+                    ? 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400'
+                    : chapter.status === 'draft'
+                    ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400'
+                    : 'bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-400';
+                  
+                  console.log('Status classes for', chapter.status, ':', statusClasses);
+                  
+                  return (
+                    <TableRow key={chapter.id}>
+                      <TableCell>
+                        <Link 
+                          to={`/field-notes/${chapter.slug}`}
+                          className="font-medium text-army hover:text-army/80 transition-colors"
+                        >
+                          {chapter.title}
+                        </Link>
+                        {chapter.description && (
+                          <p className="text-sm text-muted-foreground mt-1">
+                            {chapter.description}
+                          </p>
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex items-center text-sm text-muted-foreground">
+                          <Calendar className="w-4 h-4 mr-1" />
+                          {chapter.publishedDate}
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex items-center text-sm text-muted-foreground">
+                          <Clock className="w-4 h-4 mr-1" />
+                          {chapter.readTime}
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex flex-wrap gap-1">
+                          {chapter.tags.map((tag) => (
+                            <span 
+                              key={tag}
+                              className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-army/10 text-army"
+                            >
+                              <Tag className="w-3 h-3 mr-1" />
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${statusClasses}`}>
+                          {chapter.status}
+                        </span>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
               </TableBody>
             </Table>
           </div>
