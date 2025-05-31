@@ -59,7 +59,7 @@ const getBadgeClass = (status: Chapter["status"]): string => {
     case "published":
       return "bg-army text-white dark:bg-army/90 dark:text-white";
     case "coming-soon":
-      return "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400";
+      return "bg-sunburst text-slate dark:bg-sunburst/90 dark:text-slate";
     case "draft":
       return "bg-slate-100 text-slate-800 dark:bg-slate-800/30 dark:text-slate-400";
     default:
@@ -95,7 +95,7 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ chapters }) => {
           <Button
             variant={filterStatus === "coming-soon" ? "secondary" : "outline"}
             onClick={() => setFilterStatus(filterStatus === "coming-soon" ? "all" : "coming-soon")}
-            className="bg-blue-100 text-blue-800 hover:bg-blue-200 border-blue-300"
+            className="bg-sunburst text-slate hover:bg-sunburst/90 border-sunburst"
           >
             <Calendar className="mr-2 h-4 w-4" />
             {comingSoonChapters} Chalking Up
