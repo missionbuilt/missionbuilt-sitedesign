@@ -878,484 +878,423 @@ Source: https://drmikeisraetel.com/dr-mike-israetel-mv-mev-mav-mrv-explained/</p
   },
   {
     id: 4,
-    title: "Cues, Not Critiques",
-    slug: "cues-not-critiques",
-    description: "Laser-focused feedback cuts through noise. Whether under the bar or under deadline, the best guidance doesn't overwhelm—it illuminates what matters most.",
-    status: "published" as const,
-    publishDate: "2024-12-31",
-    authorName: "MissionBuilt.io",
-    heroImage: "/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png",
+    title: "Feedback is a Superpower",
+    description: "Strength grows where feedback flows. This chapter will dig into how lifters and leaders alike depend on real, raw, and regular feedback to improve. Whether it's a bar path breakdown or a postmortem from a launch, feedback is the force multiplier — but only if you're strong enough to seek it.",
+    slug: "feedback-is-a-superpower",
+    status: "published",
+    publishDate: "May 30, 2025",
+    heroImage: "/lovable-uploads/a96316c8-c13a-4222-bdaa-b33931f2e996.png",
+    authorName: "Mike",
     sections: [
       {
         id: "cues-not-critiques",
         title: "Cues, Not Critiques",
-        content: `My mentor Nate Fick used to talk about the power of laser focus. Not just attention — precision. That phrase gets thrown around a lot, but he meant it in the truest sense.
+        content: `<p>My mentor Nate Fick used to talk about the power of laser focus. Not just attention — precision. That phrase gets thrown around a lot, but he meant it in the truest sense.</p>
 
-Laser focus isn't about doing one thing. It's about doing the right thing — the move that creates the most impact. The shift that makes everything else click into place.
+<p>Laser focus isn't about doing one thing. It's about doing the right thing — the move that creates the most impact. The shift that makes everything else click into place.</p>
 
-I saw that principle in action during my early days at Endgame.
+<p>I saw that principle in action during my early days at Endgame.</p>
 
-When I joined, we had four different products — all in different markets, serving different users. Built with a small team. Sold with an even smaller one. The problem wasn't that the ideas were bad. They weren't. In fact, each had real potential.
+<p>When I joined, we had four different products — all in different markets, serving different users. Built with a small team. Sold with an even smaller one. The problem wasn't that the ideas were bad. They weren't. In fact, each had real potential.</p>
 
-But potential doesn't scale without focus.
+<p>But potential doesn't scale without focus.</p>
 
-Nate made a tough call. He chose to end-of-life three of the products — even though they were generating short-term revenue — and put every ounce of our talent behind a single one.
+<p>Nate made a tough call. He chose to end-of-life three of the products — even though they were generating short-term revenue — and put every ounce of our talent behind a single one.</p>
 
-It was a risk. But it paid off.
+<p>It was a risk. But it paid off.</p>
 
-We built a best-in-class endpoint protection product in one of the most competitive markets in cybersecurity. Not because we chased everything. But because we aligned everything to a singular mission.
+<p>We built a best-in-class endpoint protection product in one of the most competitive markets in cybersecurity. Not because we chased everything. But because we aligned everything to a singular mission.</p>
 
-That's what laser focus looks like in the real world. And feedback should work the same way.
+<p>That's what laser focus looks like in the real world. And feedback should work the same way.</p>
 
-When you're under pressure — under the bar, under deadline — you don't need a list of everything that's off. You need one cue. One phrase that slices through the noise and sticks when it counts.
+<p>When you're under pressure — under the bar, under deadline — you don't need a list of everything that's off. You need one cue. One phrase that slices through the noise and sticks when it counts.</p>
 
-### Point the Flashlight
+<h3>Point the Flashlight</h3>
 
-Like in baseball.
+<p>Like in baseball.</p>
 
-Coaches used to flood hitters with advice mid-swing. "Keep your hands back." "Level the bat." "Don't bail out." All technically true. None actually helpful in the moment.
+<p>Coaches used to flood hitters with advice mid-swing. "Keep your hands back." "Level the bat." "Don't bail out." All technically true. None actually helpful in the moment.</p>
 
-Then came this:
+<p>Then came this:</p>
 
-> "Your belly button's a flashlight. Point it at the pitcher."
+<blockquote>
+<p><em>"Your belly button's a flashlight. Point it at the pitcher."</em></p>
+</blockquote>
 
-It's weird. It's vivid. And it works. The batter stops overthinking and starts moving with intention. The hips rotate. The swing tightens. Power follows.
+<p>It's weird. It's vivid. And it works. The batter stops overthinking and starts moving with intention. The hips rotate. The swing tightens. Power follows.</p>
 
-That's the magic of laser-focused feedback — not more, just clearer.
+<p>That's the magic of laser-focused feedback — not more, just clearer.</p>
 
-### Two Words That Changed the Lift
+<h3>Two Words That Changed the Lift</h3>
 
-The same thing happens under the bar.
+<p>The same thing happens under the bar.</p>
 
-Stefi Cohen is one of the most accomplished powerlifters on the planet. But even the best get stuck. During a heavy squat cycle, she was losing depth and collapsing forward — the kind of breakdown that could invite a checklist of mechanical critiques.
+<p>Stefi Cohen is one of the most accomplished powerlifters on the planet. But even the best get stuck. During a heavy squat cycle, she was losing depth and collapsing forward — the kind of breakdown that could invite a checklist of mechanical critiques.</p>
 
-Her coach didn't do that. He gave her one cue:
+<p>Her coach didn't do that. He gave her one cue:</p>
 
-> "Knees out."
+<blockquote>
+<p><em>"Knees out."</em></p>
+</blockquote>
 
-Two words.
+<p>Two words.</p>
 
-Her glutes fired. Her hips opened. Her position locked in. No overcorrection. No overthinking. Just a precise adjustment that reconnected the movement.
+<p>Her glutes fired. Her hips opened. Her position locked in. No overcorrection. No overthinking. Just a precise adjustment that reconnected the movement.</p>
 
-That's what real feedback does. It doesn't flood you with everything that's wrong.
+<p>That's what real feedback does. It doesn't flood you with everything that's wrong.</p>
 
-> It's a spotlight, not a floodlight — aimed at what matters most, right now.
+<blockquote>
+<p><em>It's a spotlight, not a floodlight — aimed at what matters most, right now.</em></p>
+</blockquote>
 
-### From Backlog to Breakthrough
+<h3>From Backlog to Breakthrough</h3>
 
-Similarly, in product development, we're inundated with feedback. Users, developers, sales teams, executives — everyone has ideas, and most of them are shared with genuine excitement. Everyone wants the product to be better.
+<p>Similarly, in product development, we're inundated with feedback. Users, developers, sales teams, executives — everyone has ideas, and most of them are shared with genuine excitement. Everyone wants the product to be better.</p>
 
-But without focus, we risk becoming a jack of all trades and a master of none. Chasing every suggestion means delivering none of them well.
+<p>But without focus, we risk becoming a jack of all trades and a master of none. Chasing every suggestion means delivering none of them well.</p>
 
-The best product teams don't just collect feedback — they hone it. They find the thread, the theme, the one insight that can generate the most impact with the least investment.
+<p>The best product teams don't just collect feedback — they hone it. They find the thread, the theme, the one insight that can generate the most impact with the least investment.</p>
 
-Because here's the truth: In software, we can build almost anything — given infinite time and budget. But for some reason, executive teams rarely offer those.
+<p>Because here's the truth: In software, we can build almost anything — given infinite time and budget. But for some reason, executive teams rarely offer those.</p>
 
-So it takes real leadership to sift through the noise, spot what matters most, and act.
+<p>So it takes real leadership to sift through the noise, spot what matters most, and act.</p>
 
-Take an example from Dropbox.
+<p>Take an example from Dropbox.</p>
 
-Dropbox had a problem most product teams would recognize. Users were signing up… but not sticking around. Specifically, they were dropping off before installing the desktop client — the core part of the experience that made Dropbox more than just another web app.
+<p>Dropbox had a problem most product teams would recognize. Users were signing up… but not sticking around. Specifically, they were dropping off before installing the desktop client — the core part of the experience that made Dropbox more than just another web app.</p>
 
-The team started spinning on solutions. Maybe the onboarding flow needed to be redesigned. Maybe they needed more education, more nudges, more screens. The backlog of ideas kept growing.
+<p>The team started spinning on solutions. Maybe the onboarding flow needed to be redesigned. Maybe they needed more education, more nudges, more screens. The backlog of ideas kept growing.</p>
 
-Then a PM said something simple:
+<p>Then a PM said something simple:</p>
 
-> "You're treating the CTA like a destination, not a trigger."
+<blockquote>
+<p><em>"You're treating the CTA like a destination, not a trigger."</em></p>
+</blockquote>
 
-That one line cut through the noise.
+<p>That one line cut through the noise.</p>
 
-They changed the button copy from "Next" to "Install Dropbox." They added a subtle animation to guide the user forward. That was it.
+<p>They changed the button copy from "Next" to "Install Dropbox." They added a subtle animation to guide the user forward. That was it.</p>
 
-And conversion went up.
+<p>And conversion went up.</p>
 
-No massive rebuild. No big campaign. Just a focused shift — one that made it crystal clear what the user needed to do next.
+<p>No massive rebuild. No big campaign. Just a focused shift — one that made it crystal clear what the user needed to do next.</p>
 
-It wasn't about the volume of feedback. It was about knowing which piece would actually move the needle.
+<p>It wasn't about the volume of feedback. It was about knowing which piece would actually move the needle.</p>
 
-> That's product leadership: listening broadly, then acting precisely.
+<blockquote>
+<p><em>That's product leadership: listening broadly, then acting precisely.</em></p>
+</blockquote>
 
-### The Flashlight, Not the Floodlight
+<h3>The Flashlight, Not the Floodlight</h3>
 
-The same principle applies across every domain — lifting, sport, software.
+<p>The same principle applies across every domain — lifting, sport, software.</p>
 
-You don't have infinite time to build a product. You don't have infinite weights to lift and sculpt the perfect physique. You can't act on every idea, every error, every impulse.
+<p>You don't have infinite time to build a product. You don't have infinite weights to lift and sculpt the perfect physique. You can't act on every idea, every error, every impulse.</p>
 
-So you focus.
+<p>So you focus.</p>
 
-Whether you're adjusting your squat, refining your swing, or unblocking a user journey — the best feedback doesn't overwhelm. It illuminates.
+<p>Whether you're adjusting your squat, refining your swing, or unblocking a user journey — the best feedback doesn't overwhelm. It illuminates.</p>
 
-Not a floodlight that blinds.
+<p>Not a floodlight that blinds.</p>
 
-Not a laser that burns.
+<p>Not a laser that burns.</p>
 
-Just a flashlight, steady and clear, aimed at what matters most right now.
+<p>Just a flashlight, steady and clear, aimed at what matters most right now.</p>
 
-That's how progress happens. Not with noise — with precision.
+<p>That's how progress happens. Not with noise — with precision.</p>
 
-One cue, one rep at a time.`
+<p>One cue, one rep at a time.</p>`
       },
       {
-        id: "make-feedback-ritual",
+        id: "make-feedback-a-ritual",
         title: "Make Feedback a Ritual",
-        content: `Feedback isn't something you give once a quarter. It's not a Slack comment or a surprise at review time. It's a rhythm. A rep.
+        content: `<p>Feedback isn't something you give once a quarter. It's not a Slack comment or a surprise at review time. It's a rhythm. A rep.</p>
 
-If cues are the spark, rituals are the circuit — they keep the current flowing. The strongest teams and the strongest lifters don't just react to feedback when it shows up. They build it in. They expect it. They practice it. They normalize it.
+<p>If cues are the spark, rituals are the circuit — they keep the current flowing. The strongest teams and the strongest lifters don't just react to feedback when it shows up. They build it in. They expect it. They practice it. They normalize it.</p>
 
-In lifting, you log your sets. You reflect on what moved well, what felt off, what needs attention tomorrow. Feedback isn't an event — it's a ritual. Same goes for product.
+<p>In lifting, you log your sets. You reflect on what moved well, what felt off, what needs attention tomorrow. Feedback isn't an event — it's a ritual. Same goes for product.</p>
 
-And if you're a product manager, here's the simple truth:
+<p>And if you're a product manager, here's the simple truth:</p>
 
-> If you're not talking to users, you are failing at your job.
+<blockquote>
+<p><em>If you're not talking to users, you are failing at your job.</em></p>
+</blockquote>
 
-Not falling behind. Not missing a step. Failing.
+<p>Not falling behind. Not missing a step. Failing.</p>
 
-User feedback isn't a bonus. It's not a "nice to have." It's the core ritual of the role. If you're not making regular space to listen — directly, personally — then you're flying blind.
+<p>User feedback isn't a bonus. It's not a "nice to have." It's the core ritual of the role. If you're not making regular space to listen — directly, personally — then you're flying blind.</p>
 
-You're not a scrum master. You're not a backlog babysitter. You are the voice of the user.
+<p>You're not a scrum master. You're not a backlog babysitter. You are the voice of the user.</p>
 
-And here's what that really means: the user is not a secondary part of your job. They're not a "requirement" that emerges after the product is scoped. They are not a symptom of your development process.
+<p>And here's what that really means: the user is not a secondary part of your job. They're not a "requirement" that emerges after the product is scoped. They are not a symptom of your development process.</p>
 
-> The user — and their mission — is why you have a job.
+<blockquote>
+<p><em>The user — and their mission — is why you have a job.</em></p>
+</blockquote>
 
-That's the point of all of this.
+<p>That's the point of all of this.</p>
 
-The research, the roadmaps, the revenue — all of it is an outcome of solving the user's problem. Not the other way around.
+<p>The research, the roadmaps, the revenue — all of it is an outcome of solving the user's problem. Not the other way around.</p>
 
-Too many teams fall into the trap of building for elegance, or scale, or conversion — and forget to ask the most important question: Does this move the mission forward?
+<p>Too many teams fall into the trap of building for elegance, or scale, or conversion — and forget to ask the most important question: Does this move the mission forward?</p>
 
-That's your job as a PM. To hold that line. To make feedback a ritual — not just to improve the product, but to stay anchored to the reason it exists.
+<p>That's your job as a PM. To hold that line. To make feedback a ritual — not just to improve the product, but to stay anchored to the reason it exists.</p>
 
-Because metrics can drift. Roadmaps can get noisy. But the mission stays clear — if you keep listening.
+<p>Because metrics can drift. Roadmaps can get noisy. But the mission stays clear — if you keep listening.</p>
 
-### Slack: Feedback as the Product
+<h3>Slack: Feedback as the Product</h3>
 
-Slack didn't start out as a product idea. It started as an internal tool. The team at Tiny Speck built it for themselves while working on a multiplayer game called Glitch.
+<p>Slack didn't start out as a product idea. It started as an internal tool. The team at Tiny Speck built it for themselves while working on a multiplayer game called Glitch.</p>
 
-The game didn't succeed. But the internal chat tool did — because the team had built it by listening to their own pain.
+<p>The game didn't succeed. But the internal chat tool did — because the team had built it by listening to their own pain.</p>
 
-They weren't running customer interviews or user panels. They were simply using the tool every day — and treating their own experience as data. The engineers, designers, writers, and founders were all giving and receiving feedback constantly. What was slow? What was confusing? What needed to work better?
+<p>They weren't running customer interviews or user panels. They were simply using the tool every day — and treating their own experience as data. The engineers, designers, writers, and founders were all giving and receiving feedback constantly. What was slow? What was confusing? What needed to work better?</p>
 
-The users were them. The feedback was constant. And the ritual was built into the way they worked.
+<p>The users were them. The feedback was constant. And the ritual was built into the way they worked.</p>
 
-They didn't treat those observations as complaints. They treated them as cues — small signals that, over time, shaped something far more useful than they had originally intended.
+<p>They didn't treat those observations as complaints. They treated them as cues — small signals that, over time, shaped something far more useful than they had originally intended.</p>
 
-So when Glitch shut down, the pivot to Slack wasn't a Hail Mary. It was a progression. The team had already spent years listening to what they needed most — and building it.
+<p>So when Glitch shut down, the pivot to Slack wasn't a Hail Mary. It was a progression. The team had already spent years listening to what they needed most — and building it.</p>
 
-> Ritualized feedback didn't just improve the product. It revealed the product they should have been building all along.
+<blockquote>
+<p><em>Ritualized feedback didn't just improve the product. It revealed the product they should have been building all along.</em></p>
+</blockquote>
 
-Slack didn't become Slack by guessing what users wanted.
+<p>Slack didn't become Slack by guessing what users wanted.</p>
 
-It became Slack by listening to internal signals — consistently, honestly, and early.
+<p>It became Slack by listening to internal signals — consistently, honestly, and early.</p>
 
-### Elastic: Customer Zero and Design Partner Rituals
+<h3>Elastic: Customer Zero and Design Partner Rituals</h3>
 
-We've seen the same thing at Elastic.
+<p>We've seen the same thing at Elastic.</p>
 
-Our internal information security team — "customer zero" — is often the first to use upcoming Elastic Security features. They're not a test group. They're real users with real problems. When something's unclear, slow, or missing, they tell us — early and often. And because they sit just a few channels away, we can respond quickly and refine before anything reaches broader release.
+<p>Our internal information security team — "customer zero" — is often the first to use upcoming Elastic Security features. They're not a test group. They're real users with real problems. When something's unclear, slow, or missing, they tell us — early and often. And because they sit just a few channels away, we can respond quickly and refine before anything reaches broader release.</p>
 
-It's not just internal, either. Some of our most pivotal feedback comes from design partners — external users who've volunteered to be on the front lines with us. They opt into early access, knowing the feature might be raw, knowing it might break — because they care about shaping something real. Something that works not just in a demo, but in a live environment.
+<p>It's not just internal, either. Some of our most pivotal feedback comes from design partners — external users who've volunteered to be on the front lines with us. They opt into early access, knowing the feature might be raw, knowing it might break — because they care about shaping something real. Something that works not just in a demo, but in a live environment.</p>
 
-These aren't one-offs.
+<p>These aren't one-offs.</p>
 
-They're not spontaneous bursts of goodwill.
+<p>They're not spontaneous bursts of goodwill.</p>
 
-They're planned rituals — structured partnerships built into how we deliver great products.
+<p>They're planned rituals — structured partnerships built into how we deliver great products.</p>
 
-Embedded loops that make the product stronger long before it ever reaches general availability.
+<p>Embedded loops that make the product stronger long before it ever reaches general availability.</p>
 
-Ritualized feedback isn't about checking a box.
+<p>Ritualized feedback isn't about checking a box.</p>
 
-It's about building alongside the people who share the mission.
+<p>It's about building alongside the people who share the mission.</p>
 
-### Relationship-Level Listening
+<h3>Relationship-Level Listening</h3>
 
-Collecting feedback is the easy part.
+<p>Collecting feedback is the easy part.</p>
 
-Like in any relationship, getting someone to tell you what's on their mind is just the start. What really matters is what you do next.
+<p>Like in any relationship, getting someone to tell you what's on their mind is just the start. What really matters is what you do next.</p>
 
-Do you listen? Do you actually hear them? Or do you nod, say "totally," and go back to your plan?
+<p>Do you listen? Do you actually hear them? Or do you nod, say "totally," and go back to your plan?</p>
 
-It's the same in product. And in training.
+<p>It's the same in product. And in training.</p>
 
-You can run all the standups, retros, interviews, and training logs you want — but if you're not listening with intent, you're just gathering noise. You're not growing.
+<p>You can run all the standups, retros, interviews, and training logs you want — but if you're not listening with intent, you're just gathering noise. You're not growing.</p>
 
-Feedback is only useful if it lands.
+<p>Feedback is only useful if it lands.</p>
 
-And that means learning how to listen — not just politely, but purposefully.`
+<p>And that means learning how to listen — not just politely, but purposefully.</p>`
       },
       {
         id: "listening-is-a-lift",
         title: "Listening Is a Lift",
-        content: `You've built the ritual. You're getting the feedback. Now comes the hard part: listening.
+        content: `<p>You've built the ritual. You're getting the feedback. Now comes the hard part: listening.</p>
 
-Not passively. Not performatively. But actually listening — in a way that helps you grow.
+<p>Not passively. Not performatively. But actually listening — in a way that helps you grow.</p>
 
-And here's the first thing to understand:
+<p>And here's the first thing to understand:</p>
 
-> Being user-obsessed doesn't mean the user is always right.
+<blockquote>
+<p><em>Being user-obsessed doesn't mean the user is always right.</em></p>
+</blockquote>
 
-Sometimes users give you feedback in the form of a solution. "Add a new button." "Change this flow." "Make it more like what Company X does."
+<p>Sometimes users give you feedback in the form of a solution. "Add a new button." "Change this flow." "Make it more like what Company X does."</p>
 
-If you chase those suggestions blindly, you're not listening — you're outsourcing product design.
+<p>If you chase those suggestions blindly, you're not listening — you're outsourcing product design.</p>
 
-The real job of a product manager is to listen deeper. To get past the request and find the root. Don't treat the feedback as the answer — treat it as a clue. Your job is to uncover the real problem.
+<p>The real job of a product manager is to listen deeper. To get past the request and find the root. Don't treat the feedback as the answer — treat it as a clue. Your job is to uncover the real problem.</p>
 
-One thing I'm adamant about with my PMs: We don't hand our engineers a solution. We bring them a problem worth solving.
+<p>One thing I'm adamant about with my PMs: We don't hand our engineers a solution. We bring them a problem worth solving.</p>
 
-That means doing the work. Talking to users. Studying how others have handled it. Mapping the friction. Listening for what's unsaid.
+<p>That means doing the work. Talking to users. Studying how others have handled it. Mapping the friction. Listening for what's unsaid.</p>
 
-We work with brilliant, creative engineers. Our job isn't to steal the "how." It's to own the "why." And collaborate on the "how" — together.
+<p>We work with brilliant, creative engineers. Our job isn't to steal the "how." It's to own the "why." And collaborate on the "how" — together.</p>
 
-Because feedback isn't always clear. It's not always clean. It can be noisy, misdirected, emotional, subtle, or even wrong.
+<p>Because feedback isn't always clear. It's not always clean. It can be noisy, misdirected, emotional, subtle, or even wrong.</p>
 
-And when you're under pressure — in the middle of a hard training cycle or a high-stakes product push — it's easy to hear what you want to hear. Or to hear nothing at all.
+<p>And when you're under pressure — in the middle of a hard training cycle or a high-stakes product push — it's easy to hear what you want to hear. Or to hear nothing at all.</p>
 
-Listening is a skill. One that separates people who just collect feedback from those who actually use it.
+<p>Listening is a skill. One that separates people who just collect feedback from those who actually use it.</p>
 
-It's like lifting: you might record every set and log every number, but if you don't know what the soreness is telling you — if you don't know when to push and when to pause — you're not getting better. You're just getting tired.
+<p>It's like lifting: you might record every set and log every number, but if you don't know what the soreness is telling you — if you don't know when to push and when to pause — you're not getting better. You're just getting tired.</p>
 
-Sometimes, the most accurate feedback in a training session isn't in the weight or the timer — it's in how the set felt.
+<p>Sometimes, the most accurate feedback in a training session isn't in the weight or the timer — it's in how the set felt.</p>
 
-How many reps did you leave in the tank?
+<p>How many reps did you leave in the tank?</p>
 
-What was your rate of perceived exertion?
+<p>What was your rate of perceived exertion?</p>
 
-RIR and RPE are qualitative cues — and they only work if the lifter is honest.
+<p>RIR and RPE are qualitative cues — and they only work if the lifter is honest.</p>
 
-Just like product feedback only works if the team is actually listening.
+<p>Just like product feedback only works if the team is actually listening.</p>
 
-### When the Data Lies — or We Lie to Ourselves
+<h3>When the Data Lies — or We Lie to Ourselves</h3>
 
-Take Fitbit.
+<p>Take Fitbit.</p>
 
-When they rolled out sleep scores, users were thrilled. Finally, a single number to tell you how well you slept. But the feedback loop backfired. People started optimizing for the score — going to bed earlier, waking up later — and still feeling exhausted.
+<p>When they rolled out sleep scores, users were thrilled. Finally, a single number to tell you how well you slept. But the feedback loop backfired. People started optimizing for the score — going to bed earlier, waking up later — and still feeling exhausted.</p>
 
-Why?
+<p>Why?</p>
 
-Because the metric didn't tell the whole story. It rewarded quantity, not quality. It missed the impact of stress, caffeine, or real rest. And instead of helping people understand their bodies, it created sleep anxiety — people chasing a number instead of listening to what their bodies were actually telling them.
+<p>Because the metric didn't tell the whole story. It rewarded quantity, not quality. It missed the impact of stress, caffeine, or real rest. And instead of helping people understand their bodies, it created sleep anxiety — people chasing a number instead of listening to what their bodies were actually telling them.</p>
 
-> That's the risk with metrics-as-truth: you end up listening to the wrong signal, just because it's the one that's easy to measure.
+<blockquote>
+<p><em>That's the risk with metrics-as-truth: you end up listening to the wrong signal, just because it's the one that's easy to measure.</em></p>
+</blockquote>
 
-And the same thing happens at scale.
+<p>And the same thing happens at scale.</p>
 
-Take Target Canada.
+<p>Take Target Canada.</p>
 
-When Target expanded into Canada, the surface signals looked great: strong brand awareness, excited customers, big opening-week foot traffic. But underneath, stores were suffering. Inventory systems were broken. Shelves were empty. Pricing was inconsistent. And operational feedback from store teams was ignored or deprioritized.
+<p>When Target expanded into Canada, the surface signals looked great: strong brand awareness, excited customers, big opening-week foot traffic. But underneath, stores were suffering. Inventory systems were broken. Shelves were empty. Pricing was inconsistent. And operational feedback from store teams was ignored or deprioritized.</p>
 
-Leadership focused on the shiny signals — the PR, the launch buzz, the optimism — and missed the messy truths on the ground. They listened to the brand metrics and headlines, not the store managers and logistics teams waving red flags.
+<p>Leadership focused on the shiny signals — the PR, the launch buzz, the optimism — and missed the messy truths on the ground. They listened to the brand metrics and headlines, not the store managers and logistics teams waving red flags.</p>
 
-Within two years, the entire operation collapsed — costing billions and ending in a full retreat.
+<p>Within two years, the entire operation collapsed — costing billions and ending in a full retreat.</p>
 
-> When you only listen to what makes you feel good, you stop seeing what's real.
-And in product — or business — that kind of selective hearing is deadly.
+<blockquote>
+<p><em>When you only listen to what makes you feel good, you stop seeing what's real.<br>
+And in product — or business — that kind of selective hearing is deadly.</em></p>
+</blockquote>
 
-### Real Strength Isn't in the Signal — It's in the Interpretation
+<h3>Real Strength Isn't in the Signal — It's in the Interpretation</h3>
 
-Feedback isn't rare. It's everywhere. What's rare is someone strong enough to hear it clearly — and humble enough to act on what it really means.
+<p>Feedback isn't rare. It's everywhere. What's rare is someone strong enough to hear it clearly — and humble enough to act on what it really means.</p>
 
-In lifting, that means paying attention to more than numbers. In product, it means resisting the urge to react — and learning to respond.
+<p>In lifting, that means paying attention to more than numbers. In product, it means resisting the urge to react — and learning to respond.</p>
 
-You don't need more metrics. You need better listening. Listening that filters noise. That finds the root. That says: "I hear you. Let's fix the real thing."
+<p>You don't need more metrics. You need better listening. Listening that filters noise. That finds the root. That says: "I hear you. Let's fix the real thing."</p>
 
-That's what strong teams do.
+<p>That's what strong teams do.</p>
 
-That's what strong lifters do.
+<p>That's what strong lifters do.</p>
 
-And that's what we do when we care more about truth than comfort.`
+<p>And that's what we do when we care more about truth than comfort.</p>`
       },
       {
         id: "strong-feedback-strong-foundations",
         title: "Strong Feedback, Strong Foundations",
-        content: `We should strive for feedback that's constructive — not combative.
+        content: `<p>We should strive for feedback that's constructive — not combative.</p>
 
-I've learned this over the course of my career. As a passionate product leader, I've had to walk a line: How do you bring intensity without intimidation? How do you make sure your excitement doesn't land as insult?
+<p>I've learned this over the course of my career. As a passionate product leader, I've had to walk a line: How do you bring intensity without intimidation? How do you make sure your excitement doesn't land as insult?</p>
 
-It's not always easy. Passion can blur the edges. And in fast-moving teams, feedback can come fast and hot — even when it's meant to help.
+<p>It's not always easy. Passion can blur the edges. And in fast-moving teams, feedback can come fast and hot — even when it's meant to help.</p>
 
-But here's what I've come to believe:
+<p>But here's what I've come to believe:</p>
 
-> When feedback is anchored in empathy and structured around the mission, it becomes a lift — not a weight.
-It pushes people forward instead of pinning them down.
+<blockquote>
+<p><em>When feedback is anchored in empathy and structured around the mission, it becomes a lift — not a weight.<br>
+It pushes people forward instead of pinning them down.</em></p>
+</blockquote>
 
-These lessons apply well beyond product, and well beyond management. They show up in how we coach our teammates, how we parent, how we partner, how we grow.
+<p>These lessons apply well beyond product, and well beyond management. They show up in how we coach our teammates, how we parent, how we partner, how we grow.</p>
 
-If something matters enough to say out loud, then it matters enough to deliver with care.
+<p>If something matters enough to say out loud, then it matters enough to deliver with care.</p>
 
-Because what you say is only part of it.
+<p>Because what you say is only part of it.</p>
 
-How it lands — that's what makes it real.
+<p>How it lands — that's what makes it real.</p>
 
-### Strong Feedback Is Often Micro
+<h3>Strong Feedback Is Often Micro</h3>
 
-We tend to think feedback has to be a big moment. A review. A reset. A speech.
+<p>We tend to think feedback has to be a big moment. A review. A reset. A speech.</p>
 
-But most of the feedback that actually changes people — and changes outcomes — is micro.
+<p>But most of the feedback that actually changes people — and changes outcomes — is micro.</p>
 
-One cue, one adjustment, one rep at a time.
+<p>One cue, one adjustment, one rep at a time.</p>
 
-That's how coaching works on the platform. That's how great PMs guide a team. That's how trust is built — and how performance gets better.
+<p>That's how coaching works on the platform. That's how great PMs guide a team. That's how trust is built — and how performance gets better.</p>
 
-In the gym, the best feedback is short and specific: "Brace before the pull." "You're losing tension at the bottom." You don't wait until after the meet to say it — you say it in the warm-up room, in the moment, when it counts.
+<p>In the gym, the best feedback is short and specific: "Brace before the pull." "You're losing tension at the bottom." You don't wait until after the meet to say it — you say it in the warm-up room, in the moment, when it counts.</p>
 
-In product, it's the same. "This feature's drifting from the core user need — let's tighten it." "That's a great insight — let's surface that earlier in the deck."
+<p>In product, it's the same. "This feature's drifting from the core user need — let's tighten it." "That's a great insight — let's surface that earlier in the deck."</p>
 
-Micro feedback avoids defensiveness. It's less likely to be taken personally.
+<p>Micro feedback avoids defensiveness. It's less likely to be taken personally.</p>
 
-It's just the next rep, done better.
+<p>It's just the next rep, done better.</p>
 
-### Share Early, Improve Always
+<h3>Share Early, Improve Always</h3>
 
-Too many teams wait too long.
+<p>Too many teams wait too long.</p>
 
-They polish. They perfect. They fear showing something unfinished. But by the time the feedback comes, the team is too attached — or too far gone — to adapt.
+<p>They polish. They perfect. They fear showing something unfinished. But by the time the feedback comes, the team is too attached — or too far gone — to adapt.</p>
 
-The best teams share early.
+<p>The best teams share early.</p>
 
-> That's the Medici principle: seek feedback while ideas are still flexible — not fixed.
-Let people shape the work before it's locked in.
+<blockquote>
+<p><em>That's the Medici principle: seek feedback while ideas are still flexible — not fixed.<br>
+Let people shape the work before it's locked in.</em></p>
+</blockquote>
 
-You can see this principle in action at Figma.
+<p>You can see this principle in action at Figma.</p>
 
-From the start, Figma built real-time collaboration into their product — not as a feature, but as a philosophy. Designers could share mockups midstream, collect comments in context, and adjust in the flow. No long feedback loops. No over-polished reveals. Just open collaboration, one comment at a time.
+<p>From the start, Figma built real-time collaboration into their product — not as a feature, but as a philosophy. Designers could share mockups midstream, collect comments in context, and adjust in the flow. No long feedback loops. No over-polished reveals. Just open collaboration, one comment at a time.</p>
 
-At Elastic, we embraced that same mindset — first in design, then across product teams.
+<p>At Elastic, we embraced that same mindset — first in design, then across product teams.</p>
 
-Figma became a shared space for early feedback: PMs sketch rough flows, designers wire up concepts, and teams review together before a line of code is written. Mock reviews aren't a gate. They're a ritual.
+<p>Figma became a shared space for early feedback: PMs sketch rough flows, designers wire up concepts, and teams review together before a line of code is written. Mock reviews aren't a gate. They're a ritual.</p>
 
-And like everything else, we've evolved it.
+<p>And like everything else, we've evolved it.</p>
 
-Now we're layering in AI tools like Lovable to explore more ideas faster — iterating on copy, visuals, and layouts in minutes, not weeks. It's not about replacing creative work. It's about accelerating how quickly we get to the good ideas — and how early we can gather feedback that makes those ideas stronger.
+<p>Now we're layering in AI tools like Lovable to explore more ideas faster — iterating on copy, visuals, and layouts in minutes, not weeks. It's not about replacing creative work. It's about accelerating how quickly we get to the good ideas — and how early we can gather feedback that makes those ideas stronger.</p>
 
-And feedback doesn't always need to come through conversation.
+<p>And feedback doesn't always need to come through conversation.</p>
 
-Just look at Duolingo, one of the most successful learning platforms in the world — and proudly Pittsburgh-built.
+<p>Just look at Duolingo, one of the most successful learning platforms in the world — and proudly Pittsburgh-built.</p>
 
-They've designed feedback directly into the product experience. From streak celebrations to in-app corrections, every interaction is a tiny nudge: "You're close." "Try again." "You're on track."
+<p>They've designed feedback directly into the product experience. From streak celebrations to in-app corrections, every interaction is a tiny nudge: "You're close." "Try again." "You're on track."</p>
 
-There's no giant review. No sit-down critique.
+<p>There's no giant review. No sit-down critique.</p>
 
-Just micro feedback, in real time, helping users improve without ever slowing them down.
+<p>Just micro feedback, in real time, helping users improve without ever slowing them down.</p>
 
-> The earlier you share, the better the outcome.
-The smaller the feedback, the bigger the impact — if it comes at the right time.
+<blockquote>
+<p><em>The earlier you share, the better the outcome.<br>
+The smaller the feedback, the bigger the impact — if it comes at the right time.</em></p>
+</blockquote>
 
-### Strong Feedback Builds Strong People
+<h3>Strong Feedback Builds Strong People</h3>
 
-Strong feedback doesn't come from shouting. It comes from someone who's done the work. Someone who's built themselves up — not just to be heard, but to be helpful.
+<p>Strong feedback doesn't come from shouting. It comes from someone who's done the work. Someone who's built themselves up — not just to be heard, but to be helpful.</p>
 
-The best coaches don't bark orders. They observe, they care, and they offer what helps — when it helps.
+<p>The best coaches don't bark orders. They observe, they care, and they offer what helps — when it helps.</p>
 
-In product, the same rule applies.
+<p>In product, the same rule applies.</p>
 
-You don't build trust by waiting until things break.
+<p>You don't build trust by waiting until things break.</p>
 
-You build it one cue at a time. One adjustment. One shared win.
+<p>You build it one cue at a time. One adjustment. One shared win.</p>
 
-> Feedback that fuels — not frustrates.
-That builds — not breaks.
+<blockquote>
+<p><em>Feedback that fuels — not frustrates.<br>
+That builds — not breaks.</em></p>
+</blockquote>
 
-Even in our personal lives, the principle holds. A daily affirmation. A kind word. A check-in after a hard day. These are all acts of feedback — they tell someone how they're doing, and that you're still with them.
+<p>Even in our personal lives, the principle holds. A daily affirmation. A kind word. A check-in after a hard day. These are all acts of feedback — they tell someone how they're doing, and that you're still with them.</p>
 
-That's how we get stronger. As partners. As teammates. As leaders.
+<p>That's how we get stronger. As partners. As teammates. As leaders.</p>
 
-Not through silence. Not through softness.
+<p>Not through silence. Not through softness.</p>
 
-When it's anchored in empathy and aimed at the mission, feedback stops being friction — and becomes fuel.`
+<p>When it's anchored in empathy and aimed at the mission, feedback stops being friction — and becomes fuel.</p>`
       }
     ],
-    furtherReading: [
-      {
-        title: "Stefi Cohen's Coaching Evolution",
-        description: "Explores Stefi Cohen's evolving approach to training, blending isolation and compound movements, and emphasizing adaptability—a model of feedback-driven progression.",
-        url: "https://www.hybridperformancemethod.com/blog/are-isolation-movements-better-for-muscle-growth",
-        note: ""
-      },
-      {
-        title: "Motor Learning and Coaching Cues",
-        description: "Outlines effective coaching cues in baseball, including directional visual prompts like \"turn the flashlight,\" to support motor learning through immediate feedback.",
-        url: "https://www.drivelinebaseball.com/2017/02/coaching-hitting-mechanics-part-2-application/",
-        note: ""
-      },
-      {
-        title: "Duolingo's Onboarding and Retention Strategies",
-        description: "Analyzes Duolingo's onboarding process, highlighting how personalization and gamification contribute to user retention and engagement.",
-        url: "https://www.redfast.com/news/how-duolingos-modern-onboarding-drives-user-retention",
-        note: ""
-      },
-      {
-        title: "Elastic's Acquisition of Endgame",
-        description: "Provides context on the Endgame acquisition and the iterative, feedback-driven strategy that shaped its product approach.",
-        url: "https://techcrunch.com/2019/10/15/elastic-adds-endpoint-security-to-its-expanding-toolset/",
-        note: "Coverage of Elastic's acquisition of Endgame, including reference to its focus on a single, mature endpoint security product."
-      },
-      {
-        title: "Slack's Origins and Internal Tool Pivot",
-        description: "Details how Slack emerged from an internal communication tool at Tiny Speck, developed during the creation of the game Glitch, and evolved through continuous internal feedback loops.",
-        url: "https://www.wired.com/2014/08/the-most-fascinating-profile-youll-ever-read-about-a-guy-and-his-boring-startup",
-        note: ""
-      },
-      {
-        title: "Slack's Product Philosophy",
-        description: "Reveals how the team behind Slack ritualized internal feedback and refined the tool based on daily use, long before realizing it could become a standalone product.",
-        url: "https://review.firstround.com/from-0-to-1b-slacks-founder-shares-their-epic-launch-strategy",
-        note: ""
-      },
-      {
-        title: "Product Managers Must Talk to Users",
-        description: "Marty Cagan explains why user conversations are not optional for PMs, and how constant, intentional feedback is essential to product leadership.",
-        url: "https://www.svpg.com/discovery-feedback",
-        note: ""
-      },
-      {
-        title: "Fitbit Sleep Score Anxiety",
-        description: "Explores how Fitbit's sleep score feature, intended to empower users, inadvertently created stress and confusion as people began to fixate on a single metric rather than holistic health.",
-        url: "https://www.washingtonpost.com/business/2020/02/14/sleep-wellness-employer-oura/",
-        note: ""
-      },
-      {
-        title: "RPE and RIR in Strength Training",
-        description: "Outlines how Rate of Perceived Exertion (RPE) and Reps in Reserve (RIR) offer subjective yet critical feedback for athletes—emphasizing that true progress requires honest self-assessment, not just numbers.",
-        url: "https://www.strongerbyscience.com/reps-in-reserve/",
-        note: ""
-      },
-      {
-        title: "Target Canada Collapse",
-        description: "A detailed account of how Target's expansion into Canada failed due to systemic issues, misread data, and ignored frontline feedback—resulting in one of the most expensive retail failures in history.",
-        url: "https://canadianbusiness.com/ideas/the-last-days-of-target-canada/",
-        note: ""
-      },
-      {
-        title: "The Problem with Listening to Metrics",
-        description: "Highlights how organizations often misinterpret data due to cognitive biases, bad proxies, or unexamined assumptions, leading to poor strategic decisions.",
-        url: "https://hbr.org/2022/07/a-better-way-to-put-your-data-to-work",
-        note: ""
-      },
-      {
-        title: "The Medici Effect",
-        description: "Frans Johansson's concept of intersectional innovation emphasizes the value of early, diverse input—the \"share early\" principle is foundational to adaptive feedback.",
-        url: "https://www.fransjohansson.com/books",
-        note: ""
-      },
-      {
-        title: "Figma's Culture of Real-Time Feedback",
-        description: "Figma's built-in commenting and mock review workflows enable low-friction, high-impact feedback loops across product and design.",
-        url: "https://www.figma.com/blog/inside-figma-building-a-more-collaborative-design-process/",
-        note: ""
-      },
-      {
-        title: "Duolingo's Feedback-Driven UX",
-        description: "Duolingo uses micro-interactions and behavioral cues to offer real-time encouragement and course correction within its language learning platform.",
-        url: "https://blog.duolingo.com/duologues-design-conversations/",
-        note: ""
-      },
-      {
-        title: "Lovable AI and Creative Iteration",
-        description: "At UOttOhack, the Lovable team demonstrated how rapid iteration with AI tools can accelerate app development, enabling real-time feedback and collaborative creativity.",
-        url: "https://lovable.dev/blog/uottohack-umar-app-development",
-        note: ""
-      }
-    ]
+    furtherReading: []
   },
   {
     id: 5,
