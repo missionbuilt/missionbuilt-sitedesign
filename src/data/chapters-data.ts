@@ -605,13 +605,13 @@ Source: https://drmikeisraetel.com/dr-mike-israetel-mv-mev-mav-mrv-explained/</p
       {
         title: "No Filter: The Inside Story of Instagram",
         description: "A detailed, behind-the-scenes look at Instagram's transformation from Burbn to a cultural phenomenon.",
-        url: "https://en.wikipedia.org/wiki/No_Filter_(book)",
+        url: "https://en.wikipedia.org/wiki/No_Filter:_The_Inside_Story_of_Instagram",
         note: "The Hidden Grind Behind Success"
       },
       {
         title: "How Steve Jobs Faked His Way Through Unveiling the iPhone",
         description: "The legendary 2007 keynote was held together with last-minute fixes — a reminder that polish often hides process.",
-        url: "https://nymag.com/intelligencer/2013/10/why-the-iphone-keynote-was-so-stressful.html",
+        url: "https://nymag.com/intelligencer/2017/01/how-steve-jobs-faked-his-way-through-unveiling-the-iphone.html",
         note: "The Hidden Grind Behind Success"
       },
       {
@@ -623,7 +623,7 @@ Source: https://drmikeisraetel.com/dr-mike-israetel-mv-mev-mav-mrv-explained/</p
       {
         title: "Overcoming Strength Training Plateaus",
         description: "Why strength stalls, how to adjust volume, intensity, and variation to keep progressing.",
-        url: "https://www.ironmaster.com/blogs/news/overcoming-strength-training-plateaus",
+        url: "https://www.ironmaster.com/blog/strength-training-plateau/",
         note: "Lifting Progress & Plateaus"
       },
       {
@@ -641,25 +641,25 @@ Source: https://drmikeisraetel.com/dr-mike-israetel-mv-mev-mav-mrv-explained/</p
       {
         title: "The Compound Effect",
         description: "Details how small actions done consistently lead to exponential outcomes — a key insight for boring but high-leverage work.",
-        url: "https://darrenhardy.com/the-compound-effect/",
+        url: "https://www.thecompoundeffect.com",
         note: "Systems, Habits, and Iteration"
       },
       {
         title: "Grit: The Power of Passion and Perseverance",
         description: "Explores how consistency beats intensity, and why sticking with it matters more than raw talent.",
-        url: "https://angeladuckworth.com/grit-book/",
+        url: "https://angeladuckworth.com/grit-book",
         note: "Systems, Habits, and Iteration"
       },
       {
         title: "The Medici Effect",
         description: "On finding creative inspiration in unlikely intersections — a key idea for hybrid thinkers and builders.",
-        url: "https://phoscreative.com/what-is-the-medici-effect/",
+        url: "https://phoscreative.com/articles/the-medici-effect/",
         note: "Systems, Habits, and Iteration"
       },
       {
         title: "Failing Fast: Why It's Essential for Entrepreneurs",
         description: "A reminder that iteration is how we learn — not a sign of failure, but of refinement.",
-        url: "https://online.hbs.edu/blog/post/failing-fast",
+        url: "https://online.hbs.edu/blog/post/fail-fast",
         note: "Product Development and Iterative Progress"
       },
       {
@@ -671,7 +671,7 @@ Source: https://drmikeisraetel.com/dr-mike-israetel-mv-mev-mav-mrv-explained/</p
       {
         title: "Talking to Humans",
         description: "A practical guide to rediscovering momentum by connecting directly with your users — and learning what really matters.",
-        url: "https://www.talkingtohumans.com/",
+        url: "https://talkingtohumans.com",
         note: "Product Development and Iterative Progress"
       },
       {
