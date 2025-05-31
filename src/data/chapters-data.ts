@@ -5,7 +5,7 @@ export interface Chapter {
   slug: string;
   title: string;
   description: string;
-  status: "draft" | "published" | "archived";
+  status: "draft" | "published" | "archived" | "coming-soon";
   publishDate: string;
   authorName: string;
   heroImage: string;
@@ -25,6 +25,20 @@ export interface Resource {
   url: string;
   note?: string;
 }
+
+// Function to calculate dynamic reading time based on content
+export const getDynamicReadingTime = (chapter: Chapter): number => {
+  const wordsPerMinute = 200;
+  let totalWords = 0;
+  
+  // Count words in all sections
+  chapter.sections.forEach(section => {
+    totalWords += section.content.split(/\s+/).length;
+  });
+  
+  const readingTime = Math.ceil(totalWords / wordsPerMinute);
+  return Math.max(1, readingTime); // Minimum 1 minute
+};
 
 export const chapters: Chapter[] = [
   {
