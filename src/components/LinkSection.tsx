@@ -1,4 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
+
+import React, { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -13,12 +14,11 @@ interface Link {
 }
 
 interface LinkSectionProps {
-  initialLinks?: Link[];
   onLinksChange?: (links: Link[]) => void;
 }
 
-const LinkSection = ({ initialLinks = [], onLinksChange }: LinkSectionProps) => {
-  const [links, setLinks] = useState<Link[]>(initialLinks);
+const LinkSection = ({ onLinksChange }: LinkSectionProps) => {
+  const [links, setLinks] = useState<Link[]>([]);
   const [isAdding, setIsAdding] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [formData, setFormData] = useState({
@@ -31,15 +31,6 @@ const LinkSection = ({ initialLinks = [], onLinksChange }: LinkSectionProps) => 
   // Check if we're in development mode (editing capability)
   const isDevelopment = process.env.NODE_ENV === 'development' || window.location.hostname === 'localhost';
 
-  React.useEffect(() => {
-    setLinks(initialLinks);
-  }, [initialLinks]);
-
-  const updateLinks = (newLinks: Link[]) => {
-    setLinks(newLinks);
-    onLinksChange?.(newLinks);
-  };
-
   const handleAdd = () => {
     if (formData.name.trim() && formData.url.trim()) {
       const newLink: Link = {
@@ -50,7 +41,8 @@ const LinkSection = ({ initialLinks = [], onLinksChange }: LinkSectionProps) => 
       };
       
       const updatedLinks = [...links, newLink];
-      updateLinks(updatedLinks);
+      setLinks(updatedLinks);
+      onLinksChange?.(updatedLinks);
       
       setFormData({ name: '', summary: '', url: '' });
       setIsAdding(false);
@@ -79,7 +71,8 @@ const LinkSection = ({ initialLinks = [], onLinksChange }: LinkSectionProps) => 
           : link
       );
       
-      updateLinks(updatedLinks);
+      setLinks(updatedLinks);
+      onLinksChange?.(updatedLinks);
       
       setFormData({ name: '', summary: '', url: '' });
       setEditingId(null);
@@ -88,7 +81,8 @@ const LinkSection = ({ initialLinks = [], onLinksChange }: LinkSectionProps) => 
 
   const handleDelete = (id: string) => {
     const updatedLinks = links.filter(link => link.id !== id);
-    updateLinks(updatedLinks);
+    setLinks(updatedLinks);
+    onLinksChange?.(updatedLinks);
   };
 
   const handleCancel = () => {
@@ -134,7 +128,8 @@ const LinkSection = ({ initialLinks = [], onLinksChange }: LinkSectionProps) => 
               }));
               
               const updatedLinks = [...links, ...newLinks];
-              updateLinks(updatedLinks);
+              setLinks(updatedLinks);
+              onLinksChange?.(updatedLinks);
               console.log(`Imported ${newLinks.length} links successfully`);
             }
           }
