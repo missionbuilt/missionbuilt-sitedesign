@@ -145,6 +145,29 @@ const Chapter4 = () => {
     });
   };
 
+  React.useEffect(() => {
+    const loadChapterData = async () => {
+      setIsLoading(true);
+      
+      try {
+        const [loadedContent, loadedMetadata] = await Promise.all([
+          contentService.loadChapterContent(chapterId),
+          contentService.loadChapterMetadata(chapterId)
+        ]);
+        
+        setContent(loadedContent);
+        setMetadata(loadedMetadata);
+        setReadTime(calculateReadTime(loadedContent));
+      } catch (error) {
+        console.error('Error loading chapter data:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadChapterData();
+  }, []);
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
@@ -217,7 +240,7 @@ const Chapter4 = () => {
       {/* Hero Image Section */}
       <div className="relative h-96 overflow-hidden">
         <img 
-          src="/lovable-uploads/placeholder.svg"
+          src="/lovable-uploads/8dbb8bdb-6a96-4dd9-adb7-06cb1bbc5e08.png"
           alt="Field Note 4 Hero"
           className="w-full h-full object-cover"
         />
