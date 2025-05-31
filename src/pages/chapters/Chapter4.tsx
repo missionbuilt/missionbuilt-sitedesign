@@ -167,7 +167,10 @@ const Chapter4 = () => {
           </article>
 
           {metadata?.links && metadata.links.length > 0 && (
-            <LinkSection links={metadata.links} />
+            <LinkSection 
+              chapterId="chapter-4"
+              initialLinks={metadata.links}
+            />
           )}
         </div>
       </main>
