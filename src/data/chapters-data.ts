@@ -294,7 +294,7 @@ export const chapters: Chapter[] = [
 
 <p>Rituals give you direction.</p>
 
-<p>But progress? That comes from the work itself — the grind, the reps, the effort no one applauds.</p>
+<p>But progress? That comes from the work itself — the grind, the reps, the effort no one applauds.</p>`
       }
     ],
     furtherReading: [
@@ -445,7 +445,7 @@ export const chapters: Chapter[] = [
 
 <p>That's what makes progress sustainable.</p>
 
-<p>And that's what Mission Built is really about — building better products, one rep at a time.</p>
+<p>And that's what Mission Built is really about — building better products, one rep at a time.</p>`
       },
       {
         id: "repetition-is-not-redundancy",
@@ -491,7 +491,7 @@ Source: https://drmikeisraetel.com/dr-mike-israetel-mv-mev-mav-mrv-explained/</p
 
 <p>Reps alone build endurance. Smart variation builds power.</p>
 
-<p>This is how you break through the plateau — not by abandoning the reps, but by evolving them.</p>
+<p>This is how you break through the plateau — not by abandoning the reps, but by evolving them.</p>`
       },
       {
         id: "when-the-spark-fades",
@@ -536,7 +536,7 @@ Source: https://drmikeisraetel.com/dr-mike-israetel-mv-mev-mav-mrv-explained/</p
 
 <p>Because nothing recharges momentum like hearing someone say: "This made my day better."</p>
 
-<p>And that brings us to the next section: the power of the quiet reps — the multiplier of boring work.</p>
+<p>And that brings us to the next section: the power of the quiet reps — the multiplier of boring work.</p>`
       },
       {
         id: "the-multiplier-of-boring-work",
@@ -579,7 +579,7 @@ Source: https://drmikeisraetel.com/dr-mike-israetel-mv-mev-mav-mrv-explained/</p
 
 <p>It's about becoming the kind of person, or the kind of team, that keeps showing up.</p>
 
-<p>That's the real win. And that's where we end this chapter — not at the peak, but at the foundation.</p>
+<p>That's the real win. And that's where we end this chapter — not at the peak, but at the foundation.</p>`
       },
       {
         id: "the-work-becomes-the-win",
@@ -598,7 +598,7 @@ Source: https://drmikeisraetel.com/dr-mike-israetel-mv-mev-mav-mrv-explained/</p
 
 <p>Progress doesn't shout — it stacks.</p>
 
-<p>One quiet rep at a time.</p>
+<p>One quiet rep at a time.</p>`
       }
     ],
     furtherReading: [
