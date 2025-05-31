@@ -1,4 +1,3 @@
-
 // Chapter type definition
 export interface Chapter {
   id: number;
@@ -52,7 +51,7 @@ export const chapters: Chapter[] = [
   },
   {
     id: 2,
-    title: "Progressive Overload",
+    title: "",
     subtitle: "Building Strength Through Systematic Challenge",
     description: "Chapter 2 placeholder - ready for your content.",
     author: "Author Name", 
