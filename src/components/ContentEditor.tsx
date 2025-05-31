@@ -21,8 +21,12 @@ const ContentEditor = ({ initialContent = '', chapterId, onSave, onContentChange
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Check if we're in development mode (editing capability)
-  const isDevelopment = process.env.NODE_ENV === 'development' || window.location.hostname === 'localhost';
+  // Enhanced development mode detection
+  const isDevelopment = process.env.NODE_ENV === 'development' || 
+                        window.location.hostname === 'localhost' || 
+                        window.location.hostname.includes('lovable.app') ||
+                        window.location.hostname.includes('127.0.0.1') ||
+                        window.location.port !== '';
 
   useEffect(() => {
     setContent(initialContent);
@@ -224,7 +228,7 @@ const ContentEditor = ({ initialContent = '', chapterId, onSave, onContentChange
 
   return (
     <div className="w-full">
-      {/* Editor Controls - Only visible in development */}
+      {/* Editor Controls - Show in development environments */}
       {isDevelopment && (
         <div className="flex flex-col gap-4 mb-4 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600">
           <div className="flex flex-wrap gap-2">

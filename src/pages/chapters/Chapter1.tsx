@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
@@ -22,8 +23,12 @@ const Chapter1 = () => {
 
   const chapterId = 'chapter-1';
 
-  // Check if we're in development mode
-  const isDevelopment = process.env.NODE_ENV === 'development' || window.location.hostname === 'localhost';
+  // Enhanced development mode detection
+  const isDevelopment = process.env.NODE_ENV === 'development' || 
+                        window.location.hostname === 'localhost' || 
+                        window.location.hostname.includes('lovable.app') ||
+                        window.location.hostname.includes('127.0.0.1') ||
+                        window.location.port !== '';
 
   React.useEffect(() => {
     const loadChapterData = async () => {
@@ -150,7 +155,7 @@ const Chapter1 = () => {
       <ReadingProgress />
       <Navbar />
 
-      {/* Unsaved Changes Banner - Only visible in development */}
+      {/* Unsaved Changes Banner - Show in development environments */}
       {isDevelopment && hasUnsavedChanges && (
         <div className="bg-amber-50 dark:bg-amber-900/20 border-b border-amber-200 dark:border-amber-800">
           <div className="container-custom py-3">

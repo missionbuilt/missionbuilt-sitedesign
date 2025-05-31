@@ -13,11 +13,15 @@ export interface ChapterMeta extends ChapterMetadata {
 }
 
 class ContentService {
-  private isDevelopment = process.env.NODE_ENV === 'development' || window.location.hostname === 'localhost';
+  private isDevelopment = process.env.NODE_ENV === 'development' || 
+                          window.location.hostname === 'localhost' || 
+                          window.location.hostname.includes('lovable.app') ||
+                          window.location.hostname.includes('127.0.0.1') ||
+                          window.location.port !== '';
 
   async loadChapterContent(chapterId: string): Promise<string> {
     try {
-      // In development, try to load from localStorage first
+      // Always try localStorage first in development environments
       if (this.isDevelopment) {
         const localContent = localStorage.getItem(`chapter-${chapterId}-content`);
         if (localContent) {
@@ -43,7 +47,7 @@ class ContentService {
 
   async loadChapterMetadata(chapterId: string): Promise<ChapterMeta | null> {
     try {
-      // In development, try to load from localStorage first
+      // Always try localStorage first in development environments
       if (this.isDevelopment) {
         const localMeta = localStorage.getItem(`chapter-${chapterId}-meta`);
         if (localMeta) {
