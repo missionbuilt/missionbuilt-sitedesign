@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Upload, FileText } from "lucide-react";
 import { Chapter } from "@/data/chapters-data";
 import { useToast } from "@/hooks/use-toast";
+import mammoth from "mammoth";
 
 interface ContentUploadProps {
   chapters: Chapter[];
@@ -21,17 +22,44 @@ const ContentUpload: React.FC<ContentUploadProps> = ({ chapters, onContentUpload
   const [parsedSections, setParsedSections] = useState<{ id: string; title: string; content: string; }[]>([]);
   const { toast } = useToast();
 
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
 
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const content = e.target?.result as string;
+    try {
+      let content = "";
+      
+      if (file.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document" || file.name.endsWith('.docx')) {
+        // Handle Word document
+        const arrayBuffer = await file.arrayBuffer();
+        const result = await mammoth.extractRawText({ arrayBuffer });
+        content = result.value;
+        
+        if (result.messages && result.messages.length > 0) {
+          console.log("Word parsing messages:", result.messages);
+        }
+      } else {
+        // Handle text files
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const textContent = e.target?.result as string;
+          setUploadedContent(textContent);
+          parseContent(textContent);
+        };
+        reader.readAsText(file);
+        return;
+      }
+
       setUploadedContent(content);
       parseContent(content);
-    };
-    reader.readAsText(file);
+    } catch (error) {
+      console.error("Error reading file:", error);
+      toast({
+        title: "Error",
+        description: "Failed to read the file. Please try again.",
+        variant: "destructive"
+      });
+    }
   };
 
   const parseContent = (content: string) => {
@@ -150,17 +178,17 @@ const ContentUpload: React.FC<ContentUploadProps> = ({ chapters, onContentUpload
 
           {/* File Upload */}
           <div>
-            <Label htmlFor="file-upload">Upload Text File</Label>
+            <Label htmlFor="file-upload">Upload Document</Label>
             <div className="mt-2">
               <input
                 id="file-upload"
                 type="file"
-                accept=".txt,.md"
+                accept=".txt,.md,.docx"
                 onChange={handleFileUpload}
                 className="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-slate-50 file:text-slate-700 hover:file:bg-slate-100"
               />
               <p className="mt-1 text-sm text-gray-500">
-                Upload a .txt or .md file with your chapter content
+                Upload a .txt, .md, or .docx file with your chapter content
               </p>
             </div>
           </div>
