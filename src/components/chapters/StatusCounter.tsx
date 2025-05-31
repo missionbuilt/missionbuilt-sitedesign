@@ -17,17 +17,17 @@ const StatusCounter: React.FC<StatusCounterProps> = ({ chapters }) => {
     <div className="flex flex-wrap gap-4 justify-center">
       <Badge variant="default" className="bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400 px-4 py-2">
         <CheckCircle2 className="mr-2 h-4 w-4" />
-        {publishedCount} Published
+        {publishedCount} Good Lift
       </Badge>
       
       <Badge variant="secondary" className="bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400 px-4 py-2">
         <Calendar className="mr-2 h-4 w-4" />
-        {comingSoonCount} Coming Soon
+        {comingSoonCount} Chalking Up
       </Badge>
       
       <Badge variant="outline" className="bg-slate-100 text-slate-800 dark:bg-slate-800/30 dark:text-slate-400 px-4 py-2">
         <Circle className="mr-2 h-4 w-4" />
-        {draftCount} Draft
+        {draftCount} Sipping the Pre
       </Badge>
     </div>
   );

@@ -31,21 +31,21 @@ const getBadgeContent = (status: Chapter["status"]) => {
       return (
         <>
           <CheckCircle2 className="mr-1 h-3 w-3" />
-          <span>Published</span>
+          <span>Good Lift</span>
         </>
       );
     case "coming-soon":
       return (
         <>
           <Calendar className="mr-1 h-3 w-3" />
-          <span>Coming Soon</span>
+          <span>Chalking Up</span>
         </>
       );
     case "draft":
       return (
         <>
           <Circle className="mr-1 h-3 w-3" />
-          <span>Draft</span>
+          <span>Sipping the Pre</span>
         </>
       );
     default:
