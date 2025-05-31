@@ -1,7 +1,7 @@
 
-import { ChapterSection } from "../chapters-data";
+import { Chapter } from "../chapters-data";
 
-export const chapter1Sections: ChapterSection[] = [
+export const chapter1Sections = [
   // Chapter sections will be added here
 ];
 
