@@ -299,100 +299,100 @@ export const chapters: Chapter[] = [
     ],
     furtherReading: [
       {
-        title: "Cyberpunk 2077 Launch & CD Projekt Red",
+        title: "CD Projekt Red Stock Drops After Buggy, Messy 'Cyberpunk 2077' Launch",
         description: "A case study in date-driven shipping that sacrificed long-term trust for short-term metrics.",
-        url: "https://www.forbes.com/sites/erikkain/2020/12/19/cd-projekt-red-stock-drops-after-buggy-messy-cyberpunk-2077-launch/",
-        note: "Case Study: Metrics Over Mission"
+        url: "https://www.forbes.com/sites/davidthier/2020/12/11/cd-projekt-red-stock-drops-after-buggy-messy-cyberpunk-2077-launch/",
+        note: "Cyberpunk 2077 Launch & CD Projekt Red"
       },
       {
         title: "What Really Brought Down the Boeing 737 Max?",
         description: "How engineering culture and metric pressures at Boeing overtook the company's safety-driven mission — with catastrophic results.",
-        url: "https://www.nytimes.com/2019/04/08/business/boeing-737-max-.html",
-        note: "Case Study: Metrics Over Mission"
+        url: "https://www.nytimes.com/2019/09/18/magazine/boeing-737-max-crashes.html",
+        note: "Case Study: Product & Organizational Drift"
       },
       {
-        title: "Hafthor Björnsson on Pec Injury",
+        title: "Probably My Biggest Mistake - Hafthor Björnsson on Pec Injury",
         description: "A personal reflection on chasing numbers too hard — and paying the price with injury.",
-        url: "https://www.essentiallysports.com/strongman-news-hafthor-julius-bjornsson-pec-tear-confession/",
+        url: "https://www.essentiallysports.com/bodybuilding-news-probably-my-biggest-mistake-months-after-a-horrifying-pec-tear-while-bench-pressing-strongman-legend-makes-a-candid-confession-about-his-injury-hafthor-bjornsson/",
         note: "Individual Drift: Strength and Misalignment"
       },
       {
-        title: "Hafthor Björnsson Injury Coverage",
-        description: "News coverage reinforcing the story's cautionary angle.",
-        url: "https://en.as.com/en/2024/06/28/other_sports/1719566715_673504.html",
+        title: "Game of Thrones Star Hafthor Björnsson Suffers Nasty Injury",
+        description: "News coverage providing details and public reaction to the injury — reinforces the story's cautionary angle.",
+        url: "https://en.as.com/entertainment/game-of-thrones-star-hafthor-bjornsson-suffers-nasty-injury-while-bench-pressing-n/",
         note: "Individual Drift: Strength and Misalignment"
       },
       {
-        title: "Simone Biles & Mental Health",
+        title: "\"I Don't Have to Be Fine\": Everything Simone Biles Has Said About Mental Health",
         description: "An athlete choosing alignment over achievement — and sparking a global conversation.",
         url: "https://people.com/sports/everything-simone-biles-has-said-about-mental-health/",
-        note: "Mission-Aligned Decision-Making"
+        note: "Simone Biles & Mission-Aligned Decision-Making"
       },
       {
-        title: "Don't Buy This Jacket – Patagonia",
+        title: "Don't Buy This Jacket",
         description: "Iconic ad campaign where brand values overrode short-term sales incentives.",
-        url: "https://www.patagonia.com/stories/dont-buy-this-jacket-black-friday-and-the-new-york-times/story-18615.html",
-        note: "Purpose-Driven Brand Behavior"
+        url: "https://www.patagonia.com/stories/dont-buy-this-jacket/story-18615.html",
+        note: "Patagonia & Purpose-Driven Brand Behavior"
       },
       {
         title: "The Business Case for Purpose",
         description: "Purpose-driven companies see higher retention, satisfaction, and performance.",
-        url: "https://hbr.org/2018/10/the-business-case-for-purpose",
-        note: "Research: Purpose & Retention"
+        url: "https://hbr.org/sponsored/2016/04/the-business-case-for-purpose",
+        note: "Research on Purpose & Fulfillment"
       },
       {
-        title: "Purpose at Work – Imperative & NYU Study (2016)",
+        title: "2016 Workforce Purpose Index",
         description: "54% of purpose-driven employees are more likely to stay 5+ years.",
-        url: "https://www.imperative.com/workforce-purpose-index",
-        note: "Research: Purpose & Retention"
+        url: "https://www.imperative.com/resource/2016-workforce-purpose-index",
+        note: "Research on Purpose & Fulfillment"
       },
       {
         title: "Purpose: Shifting from Why to How",
         description: "A roadmap for operationalizing purpose across the org.",
-        url: "https://www.mckinsey.com/business-functions/organization/our-insights/purpose-shifting-from-why-to-how",
-        note: "Research: Purpose & Retention"
+        url: "https://www.mckinsey.com/business-functions/people-and-organizational-performance/our-insights/purpose-shifting-from-why-to-how",
+        note: "Research on Purpose & Fulfillment"
       },
       {
         title: "Improving Employee Retention",
-        description: "Research-based strategies for retention, highlighting mission alignment and culture.",
-        url: "https://guidehouse.com/insights/energy/2022/improving-employee-retention",
-        note: "Research: Purpose & Retention"
+        description: "Research-based strategies for employee retention, including mission alignment and culture as key levers.",
+        url: "https://guidehouse.com/-/media/new-library/industries/defense-and-security/documents/2023/gh-161-wp-improving-employee-retention.pdf",
+        note: "Research: Purpose and Retention"
       },
       {
-        title: "Benevity Talent Retention Study",
-        description: "Mission-driven workers are significantly more likely to stay long-term.",
-        url: "https://www.benevity.com/resources/reports/talent-retention-study",
-        note: "Research: Purpose & Retention"
+        title: "Talent Retention Study",
+        description: "Mission-driven workers are significantly more likely to stay long-term — supports your thesis with compelling data.",
+        url: "https://benevity.com/talent-retention-study",
+        note: "Research: Purpose and Retention"
       },
       {
         title: "Stefi Cohen's Hybrid Methodology",
         description: "An elite athlete's fusion of structure and adaptation in strength programming.",
-        url: "https://www.hybridperformancemethod.com/stefi-cohen",
-        note: "Rituals, Adaptation & Innovation"
+        url: "https://www.hybridperformancemethod.com/",
+        note: "Rituals, Adaptation, and Innovation"
       },
       {
-        title: "Agile Retrospectives",
+        title: "Agile Retrospectives: Making Good Teams Great",
         description: "A guide to turning recurring team reviews into meaningful improvement rituals.",
-        url: "https://www.agilealliance.org/glossary/retrospective/",
-        note: "Rituals, Adaptation & Innovation"
+        url: "https://www.agilealliance.org/resources/books/agile-retrospectives-making-good-teams-great/",
+        note: "Rituals, Adaptation, and Innovation"
       },
       {
-        title: "Atlassian ShipIt (Hack Week)",
-        description: "A structured ritual encouraging innovation through autonomy and creativity.",
+        title: "Atlassian ShipIt",
+        description: "A structured ritual encouraging innovation through autonomy and creative freedom.",
         url: "https://www.atlassian.com/company/shipit",
-        note: "Rituals, Adaptation & Innovation"
+        note: "Rituals, Adaptation, and Innovation"
       },
       {
-        title: "Spotify Hack Culture",
+        title: "Scaling Agile @ Spotify",
         description: "How Spotify built agility and creativity into team rituals — not rigid processes.",
         url: "https://blog.crisp.se/wp-content/uploads/2012/11/SpotifyScaling.pdf",
-        note: "Rituals, Adaptation & Innovation"
+        note: "Rituals, Adaptation, and Innovation"
       },
       {
-        title: "John Boyd's OODA Loop",
+        title: "OODA Loop",
         description: "Military strategy model focused on Observation, Orientation, Decision, and Action. Useful for product and performance under uncertainty.",
         url: "https://en.wikipedia.org/wiki/OODA_loop",
-        note: "Strategic Framing"
+        note: "Strategic Framing: The OODA Loop"
       }
     ]
   },
