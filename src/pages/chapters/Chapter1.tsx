@@ -24,7 +24,13 @@ const Chapter1 = () => {
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-black/20"></div>
-        <div className="absolute inset-0 flex items-center justify-center">
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
+          <Link 
+            to="/about" 
+            className="text-sunburst hover:text-sunburst/80 transition-colors mb-4 text-lg font-medium"
+          >
+            Mike
+          </Link>
           <h1 className="font-display font-bold text-4xl md:text-5xl lg:text-6xl text-white text-center px-4">
             Mission Before Metrics
           </h1>
