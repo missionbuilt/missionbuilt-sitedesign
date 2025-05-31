@@ -2,7 +2,7 @@
 // Chapter status types
 export type ChapterStatus = "published" | "coming-soon" | "draft";
 
-// Chapter interface
+// Chapter interface - metadata only
 export interface Chapter {
   id: number;
   title: string;
@@ -12,9 +12,10 @@ export interface Chapter {
   status: ChapterStatus;
   heroImage: string;
   wordCount?: number;
+  tags?: string[];
 }
 
-// Log content interfaces
+// Log content interfaces for separate log data files
 export interface LogSection {
   id: string;
   title: string;
@@ -41,5 +42,19 @@ export const getDynamicReadingTime = (wordCount?: number): number => {
   return Math.ceil(wordCount / 200);
 };
 
-// Empty chapters array - all content has been cleared
-export const chapters: Chapter[] = [];
+// Metadata-only chapters array
+// Actual log content will be stored in separate files: src/data/logs/log-{id}.ts
+export const chapters: Chapter[] = [
+  // Example structure - remove when adding real logs:
+  // {
+  //   id: 1,
+  //   title: "Log Title",
+  //   description: "Log description",
+  //   author: "Author Name",
+  //   date: "2025-05-31",
+  //   status: "published",
+  //   heroImage: "/path/to/image.jpg",
+  //   wordCount: 1200,
+  //   tags: ["product", "leadership"]
+  // }
+];
