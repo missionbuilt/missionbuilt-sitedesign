@@ -5,8 +5,14 @@ import { Link } from 'react-router-dom';
 import { ArrowLeft, Calendar } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import ContentEditor from '@/components/ContentEditor';
 
 const Chapter1 = () => {
+  const handleContentSave = (content: string) => {
+    // In a real application, you might save this to localStorage, a database, etc.
+    console.log('Content saved:', content);
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
@@ -56,7 +62,10 @@ const Chapter1 = () => {
           </header>
           
           <div className="prose prose-slate dark:prose-invert max-w-none">
-            {/* Chapter content will go here */}
+            <ContentEditor 
+              initialContent=""
+              onSave={handleContentSave}
+            />
           </div>
         </div>
       </main>
