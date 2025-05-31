@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
@@ -102,7 +101,7 @@ const FieldNotes = () => {
                     <TableHead>Published</TableHead>
                     <TableHead>Read Time</TableHead>
                     <TableHead>Tags</TableHead>
-                    <TableHead>Status</TableHead>
+                    <TableHead className="text-center">Status</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -124,8 +123,8 @@ const FieldNotes = () => {
                           <Skeleton className="h-6 w-20 rounded-full" />
                         </div>
                       </TableCell>
-                      <TableCell>
-                        <Skeleton className="h-6 w-20 rounded-full" />
+                      <TableCell className="text-center">
+                        <Skeleton className="h-6 w-20 rounded-full mx-auto" />
                       </TableCell>
                     </TableRow>
                   ))}
@@ -193,7 +192,7 @@ const FieldNotes = () => {
                     <TableHead>Published</TableHead>
                     <TableHead>Read Time</TableHead>
                     <TableHead>Tags</TableHead>
-                    <TableHead>Status</TableHead>
+                    <TableHead className="text-center">Status</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -237,7 +236,7 @@ const FieldNotes = () => {
                           ))}
                         </div>
                       </TableCell>
-                      <TableCell>
+                      <TableCell className="text-center">
                         <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
                           chapter.status === 'published' 
                             ? 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400'
