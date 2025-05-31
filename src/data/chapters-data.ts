@@ -63,7 +63,7 @@ export const chapters: Chapter[] = [
   },
   {
     id: 3,
-    title: "Mental Resilience",
+    title: "",
     subtitle: "Developing Unshakeable Focus",
     description: "Chapter 3 placeholder - ready for your content.",
     author: "Author Name",
