@@ -24,6 +24,10 @@ export interface FurtherReadingResource {
 }
 
 export interface LogContent {
+  heroImage?: string;
+  title?: string;
+  author?: string;
+  datePublished?: string;
   sections: LogSection[];
   furtherReading?: FurtherReadingResource[];
 }

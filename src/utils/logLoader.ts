@@ -1,9 +1,8 @@
-
 import { LogContent } from "@/data/chapters-data";
 
 // Dynamic imports for log content - will be added as logs are created
 const logImports: Record<number, () => Promise<{ [key: string]: LogContent }>> = {
-  // Log imports will be added here as content is created
+  1: () => import("@/data/logs/log-1").then(module => ({ log1Content: module.log1Content }))
 };
 
 export const loadLogContent = async (logId: number): Promise<LogContent | null> => {
