@@ -10,13 +10,33 @@ import LinkSection from '@/components/LinkSection';
 import ReadingProgress from '@/components/ReadingProgress';
 import SectionDivider from '@/components/SectionDivider';
 import { calculateReadTime } from '@/utils/readTimeCalculator';
+import { FileUpdateService } from '@/services/fileUpdateService';
+import { ChapterData } from '@/utils/contentStorage';
+
+// Static content data - Auto-generated, do not edit manually
+const CHAPTER_CONTENT = ``;
+
+const CHAPTER_LINKS: ChapterLink[] = [];
+
+interface ChapterLink {
+  id: string;
+  name: string;
+  summary: string;
+  url: string;
+}
 
 const Chapter1 = () => {
-  const [content, setContent] = React.useState('');
+  const [content, setContent] = React.useState(CHAPTER_CONTENT);
+  const [links, setLinks] = React.useState(CHAPTER_LINKS);
   const [readTime, setReadTime] = React.useState('0 min read');
+  const [isSaving, setIsSaving] = React.useState(false);
 
-  const handleContentSave = (newContent: string) => {
-    console.log('Content saved:', newContent);
+  React.useEffect(() => {
+    setReadTime(calculateReadTime(content));
+  }, [content]);
+
+  const handleContentSave = async (newContent: string) => {
+    console.log('Content saved locally:', newContent);
     setContent(newContent);
     setReadTime(calculateReadTime(newContent));
   };
@@ -26,9 +46,37 @@ const Chapter1 = () => {
     setReadTime(calculateReadTime(newContent));
   };
 
-  const handleLinksChange = (links: any[]) => {
-    console.log('Links updated:', links);
+  const handleLinksChange = (newLinks: any[]) => {
+    console.log('Links updated:', newLinks);
+    setLinks(newLinks);
   };
+
+  const handleSaveToFile = async () => {
+    setIsSaving(true);
+    try {
+      const chapterData: ChapterData = {
+        content: content,
+        links: links
+      };
+      
+      const success = await FileUpdateService.saveChapterContent('src/pages/chapters/Chapter1.tsx', chapterData);
+      
+      if (success) {
+        console.log('Successfully saved content to file!');
+      } else {
+        console.error('Failed to save content to file');
+        alert('Failed to save content to file. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error saving to file:', error);
+      alert('Error saving to file. Please check the console for details.');
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  // Check if we're in development mode (editing capability)
+  const isDevelopment = process.env.NODE_ENV === 'development' || window.location.hostname === 'localhost';
 
   return (
     <div className="min-h-screen bg-background">
@@ -86,9 +134,22 @@ const Chapter1 = () => {
             <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6 font-display leading-tight">
               Field Note 1: Mission Before Metrics
             </h1>
-            <div className="flex items-center text-muted-foreground text-sm bg-gray-50 dark:bg-gray-800/50 px-4 py-3 rounded-lg">
-              <Clock className="w-4 h-4 mr-2" />
-              Estimated read time: {readTime}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center text-muted-foreground text-sm bg-gray-50 dark:bg-gray-800/50 px-4 py-3 rounded-lg">
+                <Clock className="w-4 h-4 mr-2" />
+                Estimated read time: {readTime}
+              </div>
+              
+              {/* Save to File Button - Only visible in development */}
+              {isDevelopment && (
+                <button
+                  onClick={handleSaveToFile}
+                  disabled={isSaving}
+                  className="px-4 py-2 bg-army text-white rounded-lg hover:bg-army/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isSaving ? 'Saving...' : 'Save to File'}
+                </button>
+              )}
             </div>
           </header>
           
@@ -107,7 +168,7 @@ const Chapter1 = () => {
                           prose-strong:text-army dark:prose-strong:text-sunburst prose-strong:font-semibold
                           prose-a:text-army dark:prose-a:text-sunburst prose-a:no-underline hover:prose-a:underline">
             <ContentEditor 
-              initialContent=""
+              initialContent={content}
               onSave={handleContentSave}
               onContentChange={handleContentChange}
             />
@@ -117,7 +178,10 @@ const Chapter1 = () => {
 
           {/* Enhanced Links Section */}
           <div className="border-t border-gray-200 dark:border-gray-700 pt-12">
-            <LinkSection onLinksChange={handleLinksChange} />
+            <LinkSection 
+              initialLinks={links}
+              onLinksChange={handleLinksChange} 
+            />
           </div>
         </div>
       </main>
