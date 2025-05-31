@@ -687,7 +687,7 @@ Source: https://drmikeisraetel.com/dr-mike-israetel-mv-mev-mav-mrv-explained/</p
     title: "Rituals Over Rules",
     description: "Systems that scale aren't built on rigid rules — they're powered by meaningful rituals. This chapter explores how intentional, repeatable behaviors unlock both innovation and resilience. Drawing from training cycles, product cadences, and team habits, it makes the case for flexible structure over dogma.",
     slug: "rituals-over-rules",
-    status: "draft",
+    status: "published",
     publishDate: "May 29, 2025",
     heroImage: "/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png",
     authorName: "Mike",
