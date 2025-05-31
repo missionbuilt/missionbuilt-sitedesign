@@ -1,4 +1,17 @@
+
 import { Chapter } from "@/types";
+
+// Helper function to calculate dynamic reading time
+export const getDynamicReadingTime = (chapter: Chapter): number => {
+  if (!chapter.sections) return 5;
+  
+  const totalWords = chapter.sections.reduce((total, section) => {
+    const wordsInContent = section.content.replace(/<[^>]*>/g, '').split(/\s+/).length;
+    return total + wordsInContent;
+  }, 0);
+  
+  return Math.max(1, Math.ceil(totalWords / 200));
+};
 
 export const chapters: Chapter[] = [
   {
@@ -305,3 +318,5 @@ export const chapters: Chapter[] = [
     ]
   },
 ];
+
+export type { Chapter };
