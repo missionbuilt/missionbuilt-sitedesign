@@ -33,6 +33,36 @@ export const calculateReadingTime = (wordCount: number): number => {
   return Math.max(1, Math.ceil(wordCount / 200));
 };
 
+// Utility function to calculate word count from chapter content
+export const calculateWordCount = (chapter: Chapter): number => {
+  let totalWords = 0;
+  
+  // Count words in description
+  if (chapter.description) {
+    totalWords += chapter.description.split(/\s+/).filter(word => word.length > 0).length;
+  }
+  
+  // Count words in all sections
+  if (chapter.sections && chapter.sections.length > 0) {
+    chapter.sections.forEach(section => {
+      if (section.title) {
+        totalWords += section.title.split(/\s+/).filter(word => word.length > 0).length;
+      }
+      if (section.content) {
+        totalWords += section.content.split(/\s+/).filter(word => word.length > 0).length;
+      }
+    });
+  }
+  
+  return totalWords;
+};
+
+// Utility function to get dynamic reading time for a chapter
+export const getDynamicReadingTime = (chapter: Chapter): number => {
+  const wordCount = calculateWordCount(chapter);
+  return calculateReadingTime(wordCount);
+};
+
 // Chapter data - clean slate
 export const chapters: Chapter[] = [
   {
@@ -45,9 +75,7 @@ export const chapters: Chapter[] = [
     heroImage: "/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png",
     authorName: "Mike",
     sections: [],
-    furtherReading: [],
-    wordCount: 2500,
-    readingTime: calculateReadingTime(2500)
+    furtherReading: []
   },
   {
     id: 2,
@@ -59,9 +87,7 @@ export const chapters: Chapter[] = [
     heroImage: "/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png",
     authorName: "Mike",
     sections: [],
-    furtherReading: [],
-    wordCount: 3200,
-    readingTime: calculateReadingTime(3200)
+    furtherReading: []
   },
   {
     id: 3,
@@ -73,9 +99,7 @@ export const chapters: Chapter[] = [
     heroImage: "/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png",
     authorName: "Mike",
     sections: [],
-    furtherReading: [],
-    wordCount: 2800,
-    readingTime: calculateReadingTime(2800)
+    furtherReading: []
   },
   {
     id: 4,
@@ -87,9 +111,7 @@ export const chapters: Chapter[] = [
     heroImage: "/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png",
     authorName: "Mike",
     sections: [],
-    furtherReading: [],
-    wordCount: 3500,
-    readingTime: calculateReadingTime(3500)
+    furtherReading: []
   },
   {
     id: 5,
@@ -101,9 +123,7 @@ export const chapters: Chapter[] = [
     heroImage: "/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png",
     authorName: "Mike",
     sections: [],
-    furtherReading: [],
-    wordCount: 2900,
-    readingTime: calculateReadingTime(2900)
+    furtherReading: []
   },
   {
     id: 6,
@@ -115,9 +135,7 @@ export const chapters: Chapter[] = [
     heroImage: "/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png",
     authorName: "Mike",
     sections: [],
-    furtherReading: [],
-    wordCount: 2600,
-    readingTime: calculateReadingTime(2600)
+    furtherReading: []
   },
   {
     id: 7,
@@ -129,9 +147,7 @@ export const chapters: Chapter[] = [
     heroImage: "/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png",
     authorName: "Mike",
     sections: [],
-    furtherReading: [],
-    wordCount: 3100,
-    readingTime: calculateReadingTime(3100)
+    furtherReading: []
   },
   {
     id: 8,
@@ -143,9 +159,7 @@ export const chapters: Chapter[] = [
     heroImage: "/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png",
     authorName: "Mike",
     sections: [],
-    furtherReading: [],
-    wordCount: 2700,
-    readingTime: calculateReadingTime(2700)
+    furtherReading: []
   },
   {
     id: 9,
@@ -157,9 +171,7 @@ export const chapters: Chapter[] = [
     heroImage: "/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png",
     authorName: "Mike",
     sections: [],
-    furtherReading: [],
-    wordCount: 3000,
-    readingTime: calculateReadingTime(3000)
+    furtherReading: []
   },
   {
     id: 10,
@@ -171,9 +183,7 @@ export const chapters: Chapter[] = [
     heroImage: "/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png",
     authorName: "Mike",
     sections: [],
-    furtherReading: [],
-    wordCount: 2400,
-    readingTime: calculateReadingTime(2400)
+    furtherReading: []
   },
   {
     id: 11,
@@ -185,9 +195,7 @@ export const chapters: Chapter[] = [
     heroImage: "/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png",
     authorName: "Mike",
     sections: [],
-    furtherReading: [],
-    wordCount: 2300,
-    readingTime: calculateReadingTime(2300)
+    furtherReading: []
   },
   {
     id: 12,
@@ -199,9 +207,7 @@ export const chapters: Chapter[] = [
     heroImage: "/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png",
     authorName: "Mike",
     sections: [],
-    furtherReading: [],
-    wordCount: 2800,
-    readingTime: calculateReadingTime(2800)
+    furtherReading: []
   },
   {
     id: 13,
@@ -213,8 +219,6 @@ export const chapters: Chapter[] = [
     heroImage: "/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png",
     authorName: "Mike",
     sections: [],
-    furtherReading: [],
-    wordCount: 3400,
-    readingTime: calculateReadingTime(3400)
+    furtherReading: []
   }
 ];

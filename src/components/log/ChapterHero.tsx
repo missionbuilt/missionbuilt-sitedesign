@@ -1,27 +1,15 @@
 
 import React from "react";
-import { Chapter } from "@/data/chapters-data";
+import { Chapter, getDynamicReadingTime } from "@/data/chapters-data";
 import { Calendar, User, Clock } from "lucide-react";
 
 interface ChapterHeroProps {
   chapter: Chapter;
 }
 
-// Simple read time calculation utility
-const calculateReadTime = (sections: any[]): string => {
-  if (!sections || sections.length === 0) return "1 min read";
-  
-  const totalWords = sections.reduce((total, section) => {
-    const wordCount = section.content ? section.content.split(/\s+/).filter((word: string) => word.length > 0).length : 0;
-    return total + wordCount;
-  }, 0);
-  
-  const wordsPerMinute = 250;
-  const readTime = Math.ceil(totalWords / wordsPerMinute);
-  return `${Math.max(1, readTime)} min read`;
-};
-
 const ChapterHero: React.FC<ChapterHeroProps> = ({ chapter }) => {
+  const dynamicReadingTime = getDynamicReadingTime(chapter);
+  
   return (
     <div className="relative">
       {/* Hero Image */}
@@ -57,7 +45,7 @@ const ChapterHero: React.FC<ChapterHeroProps> = ({ chapter }) => {
               </div>
               <div className="flex items-center gap-2">
                 <Clock className="h-4 w-4" />
-                <span>{calculateReadTime(chapter.sections)}</span>
+                <span>{dynamicReadingTime} min read</span>
               </div>
             </div>
           </div>

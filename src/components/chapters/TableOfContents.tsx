@@ -1,9 +1,8 @@
-
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Chapter } from "@/data/chapters-data";
+import { Chapter, getDynamicReadingTime } from "@/data/chapters-data";
 import { Clock, CheckCircle2, Circle, Calendar } from "lucide-react";
 
 interface TableOfContentsProps {
@@ -123,6 +122,7 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ chapters }) => {
             {filteredChapters.map((chapter, index) => {
               const chapterNumber = String(chapter.id).padStart(2, '0');
               const isClickable = chapter.status === "published" || chapter.id === 1;
+              const dynamicReadingTime = getDynamicReadingTime(chapter);
               
               return (
                 <div
@@ -166,12 +166,10 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ chapters }) => {
 
                   {/* Reading Time and Status */}
                   <div className="flex-shrink-0 flex items-center gap-4">
-                    {chapter.readingTime && (
-                      <div className="flex items-center text-sm text-muted-foreground">
-                        <Clock className="mr-1 h-3 w-3" />
-                        <span>{chapter.readingTime} min</span>
-                      </div>
-                    )}
+                    <div className="flex items-center text-sm text-muted-foreground">
+                      <Clock className="mr-1 h-3 w-3" />
+                      <span>{dynamicReadingTime} min</span>
+                    </div>
                     
                     <Badge 
                       variant={getBadgeVariant(chapter.status)} 
