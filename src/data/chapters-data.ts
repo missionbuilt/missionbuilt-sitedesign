@@ -31,6 +31,22 @@ export interface Chapter {
   }[];
 }
 
+// Function to calculate dynamic reading time based on chapter content
+export const getDynamicReadingTime = (chapter: Chapter): number => {
+  if (!chapter.sections) return 5; // Default reading time for chapters without sections
+  
+  const totalWords = chapter.sections.reduce((total, section) => {
+    // Strip HTML tags and count words
+    const textContent = section.content.replace(/<[^>]*>/g, '');
+    const wordCount = textContent.trim().split(/\s+/).length;
+    return total + wordCount;
+  }, 0);
+  
+  // Average reading speed is about 200-250 words per minute
+  const readingTime = Math.ceil(totalWords / 225);
+  return Math.max(readingTime, 1); // Minimum 1 minute
+};
+
 export const chapters: Chapter[] = [
   {
     id: 1,
