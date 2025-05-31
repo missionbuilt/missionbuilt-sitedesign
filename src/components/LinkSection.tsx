@@ -209,7 +209,7 @@ const LinkSection = ({ onLinksChange }: LinkSectionProps) => {
       {/* Published Links Display */}
       {links.length > 0 && (
         <div className="space-y-4">
-          <h3 className="text-xl font-semibold font-display">Related Links</h3>
+          <h3 className="text-xl font-semibold font-display">Further Reading</h3>
           <div className="space-y-3">
             {links.map((link) => (
               <div key={link.id} className="group">
