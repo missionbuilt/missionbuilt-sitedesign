@@ -294,7 +294,7 @@ export const chapters: Chapter[] = [
 
 <p>Rituals give you direction.</p>
 
-<p>But progress? That comes from the work itself — the grind, the reps, the effort no one applauds.</p>
+<p>But progress? That comes from the work itself — the grind, the reps, the effort no one applauds.</p>`
       }
     ],
     furtherReading: [
