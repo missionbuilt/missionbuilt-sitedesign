@@ -883,7 +883,7 @@ Source: https://drmikeisraetel.com/dr-mike-israetel-mv-mev-mav-mrv-explained/</p
     slug: "feedback-is-a-superpower",
     status: "published",
     publishDate: "May 30, 2025",
-    heroImage: "/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png",
+    heroImage: "/lovable-uploads/a96316c8-c13a-4222-bdaa-b33931f2e996.png",
     authorName: "Mike",
     sections: [],
     furtherReading: []
