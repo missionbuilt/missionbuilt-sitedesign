@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Textarea } from '@/components/ui/textarea';
@@ -104,6 +105,50 @@ const ContentEditor = ({ initialContent = '', onSave }: ContentEditorProps) => {
     console.log('Preview state will be:', !isPreview);
   };
 
+  // Custom components for ReactMarkdown with debugging
+  const markdownComponents = {
+    h1: ({node, ...props}: any) => <h1 className="text-4xl font-bold font-display mb-6 mt-8 text-foreground" {...props} />,
+    h2: ({node, ...props}: any) => <h2 className="text-3xl font-semibold font-display mb-4 mt-6 text-foreground" {...props} />,
+    h3: ({node, ...props}: any) => <h3 className="text-2xl font-medium font-display mb-3 mt-5 text-foreground" {...props} />,
+    p: ({node, ...props}: any) => <p className="text-base mb-4 leading-relaxed text-foreground" {...props} />,
+    ul: ({node, ...props}: any) => <ul className="list-disc list-inside mb-4 space-y-2 text-foreground" {...props} />,
+    ol: ({node, ...props}: any) => <ol className="list-decimal list-inside mb-4 space-y-2 text-foreground" {...props} />,
+    li: ({node, ...props}: any) => <li className="text-base text-foreground" {...props} />,
+    blockquote: ({node, ...props}: any) => <blockquote className="border-l-4 border-sunburst pl-4 py-2 my-6 italic text-lg bg-gray-50 dark:bg-gray-800 rounded-r text-foreground" {...props} />,
+    strong: ({node, ...props}: any) => <strong className="font-bold text-army dark:text-sunburst" {...props} />,
+    em: ({node, ...props}: any) => <em className="italic" {...props} />,
+    table: ({node, ...props}: any) => {
+      console.log('Table component rendered with props:', props);
+      return (
+        <div className="my-4 overflow-x-auto">
+          <Table className="w-full border-collapse border border-gray-300 dark:border-gray-600">
+            {props.children}
+          </Table>
+        </div>
+      );
+    },
+    thead: ({node, ...props}: any) => {
+      console.log('TableHeader component rendered');
+      return <TableHeader className="bg-gray-100 dark:bg-gray-800">{props.children}</TableHeader>;
+    },
+    tbody: ({node, ...props}: any) => {
+      console.log('TableBody component rendered');
+      return <TableBody>{props.children}</TableBody>;
+    },
+    tr: ({node, ...props}: any) => {
+      console.log('TableRow component rendered');
+      return <TableRow className="border-b border-gray-300 dark:border-gray-600">{props.children}</TableRow>;
+    },
+    th: ({node, ...props}: any) => {
+      console.log('TableHead component rendered with content:', props.children);
+      return <TableHead className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-left font-semibold text-foreground">{props.children}</TableHead>;
+    },
+    td: ({node, ...props}: any) => {
+      console.log('TableCell component rendered with content:', props.children);
+      return <TableCell className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-foreground">{props.children}</TableCell>;
+    },
+  };
+
   return (
     <div className="w-full">
       {/* Editor Controls - Only visible in development */}
@@ -186,30 +231,7 @@ const ContentEditor = ({ initialContent = '', onSave }: ContentEditorProps) => {
         ) : (
           <div className="prose prose-lg prose-slate dark:prose-invert max-w-none prose-headings:font-display prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-p:text-base prose-blockquote:border-l-4 prose-blockquote:border-sunburst prose-blockquote:italic prose-strong:text-army dark:prose-strong:text-sunburst">
             {content ? (
-              <ReactMarkdown
-                components={{
-                  h1: ({node, ...props}) => <h1 className="text-4xl font-bold font-display mb-6 mt-8 text-foreground" {...props} />,
-                  h2: ({node, ...props}) => <h2 className="text-3xl font-semibold font-display mb-4 mt-6 text-foreground" {...props} />,
-                  h3: ({node, ...props}) => <h3 className="text-2xl font-medium font-display mb-3 mt-5 text-foreground" {...props} />,
-                  p: ({node, ...props}) => <p className="text-base mb-4 leading-relaxed text-foreground" {...props} />,
-                  ul: ({node, ...props}) => <ul className="list-disc list-inside mb-4 space-y-2 text-foreground" {...props} />,
-                  ol: ({node, ...props}) => <ol className="list-decimal list-inside mb-4 space-y-2 text-foreground" {...props} />,
-                  li: ({node, ...props}) => <li className="text-base text-foreground" {...props} />,
-                  blockquote: ({node, ...props}) => <blockquote className="border-l-4 border-sunburst pl-4 py-2 my-6 italic text-lg bg-gray-50 dark:bg-gray-800 rounded-r text-foreground" {...props} />,
-                  strong: ({node, ...props}) => <strong className="font-bold text-army dark:text-sunburst" {...props} />,
-                  em: ({node, ...props}) => <em className="italic" {...props} />,
-                  table: ({node, ...props}) => (
-                    <div className="my-4 overflow-hidden rounded-lg border">
-                      <Table {...props} />
-                    </div>
-                  ),
-                  thead: ({node, ...props}) => <TableHeader {...props} />,
-                  tbody: ({node, ...props}) => <TableBody {...props} />,
-                  tr: ({node, ...props}) => <TableRow {...props} />,
-                  th: ({node, ...props}) => <TableHead className="font-semibold" {...props} />,
-                  td: ({node, ...props}) => <TableCell {...props} />,
-                }}
-              >
+              <ReactMarkdown components={markdownComponents}>
                 {content}
               </ReactMarkdown>
             ) : (
@@ -233,30 +255,7 @@ const ContentEditor = ({ initialContent = '', onSave }: ContentEditorProps) => {
           </h3>
           <div className="prose prose-lg prose-slate dark:prose-invert max-w-none prose-headings:font-display prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-p:text-base prose-blockquote:border-l-4 prose-blockquote:border-sunburst prose-blockquote:italic prose-strong:text-army dark:prose-strong:text-sunburst">
             {content ? (
-              <ReactMarkdown
-                components={{
-                  h1: ({node, ...props}) => <h1 className="text-4xl font-bold font-display mb-6 mt-8 text-foreground" {...props} />,
-                  h2: ({node, ...props}) => <h2 className="text-3xl font-semibold font-display mb-4 mt-6 text-foreground" {...props} />,
-                  h3: ({node, ...props}) => <h3 className="text-2xl font-medium font-display mb-3 mt-5 text-foreground" {...props} />,
-                  p: ({node, ...props}) => <p className="text-base mb-4 leading-relaxed text-foreground" {...props} />,
-                  ul: ({node, ...props}) => <ul className="list-disc list-inside mb-4 space-y-2 text-foreground" {...props} />,
-                  ol: ({node, ...props}) => <ol className="list-decimal list-inside mb-4 space-y-2 text-foreground" {...props} />,
-                  li: ({node, ...props}) => <li className="text-base text-foreground" {...props} />,
-                  blockquote: ({node, ...props}) => <blockquote className="border-l-4 border-sunburst pl-4 py-2 my-6 italic text-lg bg-gray-50 dark:bg-gray-800 rounded-r text-foreground" {...props} />,
-                  strong: ({node, ...props}) => <strong className="font-bold text-army dark:text-sunburst" {...props} />,
-                  em: ({node, ...props}) => <em className="italic" {...props} />,
-                  table: ({node, ...props}) => (
-                    <div className="my-4 overflow-hidden rounded-lg border">
-                      <Table {...props} />
-                    </div>
-                  ),
-                  thead: ({node, ...props}) => <TableHeader {...props} />,
-                  tbody: ({node, ...props}) => <TableBody {...props} />,
-                  tr: ({node, ...props}) => <TableRow {...props} />,
-                  th: ({node, ...props}) => <TableHead className="font-semibold" {...props} />,
-                  td: ({node, ...props}) => <TableCell {...props} />,
-                }}
-              >
+              <ReactMarkdown components={markdownComponents}>
                 {content}
               </ReactMarkdown>
             ) : (
