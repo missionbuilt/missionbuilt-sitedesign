@@ -2,7 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { Eye, Edit3, Save, Heading, List, Quote, Bold, Type, Table } from 'lucide-react';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Eye, Edit3, Save, Heading, List, Quote, Bold, Type, Table as TableIcon } from 'lucide-react';
 
 interface ContentEditorProps {
   initialContent?: string;
@@ -89,7 +90,7 @@ const ContentEditor = ({ initialContent = '', onSave }: ContentEditorProps) => {
     },
     {
       label: 'Table',
-      icon: Table,
+      icon: TableIcon,
       action: () => insertTextAtCursor('\n\n| Header 1 | Header 2 | Header 3 |\n|----------|----------|----------|\n| Row 1 Col 1 | Row 1 Col 2 | Row 1 Col 3 |\n| Row 2 Col 1 | Row 2 Col 2 | Row 2 Col 3 |\n\n'),
     },
   ];
@@ -197,12 +198,16 @@ const ContentEditor = ({ initialContent = '', onSave }: ContentEditorProps) => {
                   blockquote: ({node, ...props}) => <blockquote className="border-l-4 border-sunburst pl-4 py-2 my-6 italic text-lg bg-gray-50 dark:bg-gray-800 rounded-r text-foreground" {...props} />,
                   strong: ({node, ...props}) => <strong className="font-bold text-army dark:text-sunburst" {...props} />,
                   em: ({node, ...props}) => <em className="italic" {...props} />,
-                  table: ({node, ...props}) => <table className="w-full border-collapse border border-gray-300 dark:border-gray-600 my-4" {...props} />,
-                  thead: ({node, ...props}) => <thead className="bg-gray-100 dark:bg-gray-800" {...props} />,
-                  tbody: ({node, ...props}) => <tbody {...props} />,
-                  tr: ({node, ...props}) => <tr className="border-b border-gray-300 dark:border-gray-600" {...props} />,
-                  th: ({node, ...props}) => <th className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-left font-semibold text-foreground" {...props} />,
-                  td: ({node, ...props}) => <td className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-foreground" {...props} />,
+                  table: ({node, ...props}) => (
+                    <div className="my-4 overflow-hidden rounded-lg border">
+                      <Table {...props} />
+                    </div>
+                  ),
+                  thead: ({node, ...props}) => <TableHeader {...props} />,
+                  tbody: ({node, ...props}) => <TableBody {...props} />,
+                  tr: ({node, ...props}) => <TableRow {...props} />,
+                  th: ({node, ...props}) => <TableHead className="font-semibold" {...props} />,
+                  td: ({node, ...props}) => <TableCell {...props} />,
                 }}
               >
                 {content}
@@ -240,12 +245,16 @@ const ContentEditor = ({ initialContent = '', onSave }: ContentEditorProps) => {
                   blockquote: ({node, ...props}) => <blockquote className="border-l-4 border-sunburst pl-4 py-2 my-6 italic text-lg bg-gray-50 dark:bg-gray-800 rounded-r text-foreground" {...props} />,
                   strong: ({node, ...props}) => <strong className="font-bold text-army dark:text-sunburst" {...props} />,
                   em: ({node, ...props}) => <em className="italic" {...props} />,
-                  table: ({node, ...props}) => <table className="w-full border-collapse border border-gray-300 dark:border-gray-600 my-4" {...props} />,
-                  thead: ({node, ...props}) => <thead className="bg-gray-100 dark:bg-gray-800" {...props} />,
-                  tbody: ({node, ...props}) => <tbody {...props} />,
-                  tr: ({node, ...props}) => <tr className="border-b border-gray-300 dark:border-gray-600" {...props} />,
-                  th: ({node, ...props}) => <th className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-left font-semibold text-foreground" {...props} />,
-                  td: ({node, ...props}) => <td className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-foreground" {...props} />,
+                  table: ({node, ...props}) => (
+                    <div className="my-4 overflow-hidden rounded-lg border">
+                      <Table {...props} />
+                    </div>
+                  ),
+                  thead: ({node, ...props}) => <TableHeader {...props} />,
+                  tbody: ({node, ...props}) => <TableBody {...props} />,
+                  tr: ({node, ...props}) => <TableRow {...props} />,
+                  th: ({node, ...props}) => <TableHead className="font-semibold" {...props} />,
+                  td: ({node, ...props}) => <TableCell {...props} />,
                 }}
               >
                 {content}
