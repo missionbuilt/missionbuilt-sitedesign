@@ -173,9 +173,24 @@ const ContentEditor = ({ initialContent = '', onSave }: ContentEditorProps) => {
             </p>
           </div>
         ) : (
-          <div className="prose prose-slate dark:prose-invert max-w-none">
+          <div className="prose prose-lg prose-slate dark:prose-invert max-w-none prose-headings:font-display prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-p:text-base prose-blockquote:border-l-4 prose-blockquote:border-sunburst prose-blockquote:italic prose-strong:text-army dark:prose-strong:text-sunburst">
             {content ? (
-              <ReactMarkdown>{content}</ReactMarkdown>
+              <ReactMarkdown
+                components={{
+                  h1: ({node, ...props}) => <h1 className="text-4xl font-bold font-display mb-6 mt-8 text-foreground" {...props} />,
+                  h2: ({node, ...props}) => <h2 className="text-3xl font-semibold font-display mb-4 mt-6 text-foreground" {...props} />,
+                  h3: ({node, ...props}) => <h3 className="text-2xl font-medium font-display mb-3 mt-5 text-foreground" {...props} />,
+                  p: ({node, ...props}) => <p className="text-base mb-4 leading-relaxed text-foreground" {...props} />,
+                  ul: ({node, ...props}) => <ul className="list-disc list-inside mb-4 space-y-2 text-foreground" {...props} />,
+                  ol: ({node, ...props}) => <ol className="list-decimal list-inside mb-4 space-y-2 text-foreground" {...props} />,
+                  li: ({node, ...props}) => <li className="text-base text-foreground" {...props} />,
+                  blockquote: ({node, ...props}) => <blockquote className="border-l-4 border-sunburst pl-4 py-2 my-6 italic text-lg bg-gray-50 dark:bg-gray-800 rounded-r text-foreground" {...props} />,
+                  strong: ({node, ...props}) => <strong className="font-bold text-army dark:text-sunburst" {...props} />,
+                  em: ({node, ...props}) => <em className="italic" {...props} />,
+                }}
+              >
+                {content}
+              </ReactMarkdown>
             ) : (
               <div className="text-center py-12 text-muted-foreground">
                 {isDevelopment ? (
@@ -195,9 +210,24 @@ const ContentEditor = ({ initialContent = '', onSave }: ContentEditorProps) => {
           <h3 className="font-semibold text-blue-900 dark:text-blue-100 mb-2">
             Published Preview (How visitors will see it):
           </h3>
-          <div className="prose prose-slate dark:prose-invert max-w-none">
+          <div className="prose prose-lg prose-slate dark:prose-invert max-w-none prose-headings:font-display prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-p:text-base prose-blockquote:border-l-4 prose-blockquote:border-sunburst prose-blockquote:italic prose-strong:text-army dark:prose-strong:text-sunburst">
             {content ? (
-              <ReactMarkdown>{content}</ReactMarkdown>
+              <ReactMarkdown
+                components={{
+                  h1: ({node, ...props}) => <h1 className="text-4xl font-bold font-display mb-6 mt-8 text-foreground" {...props} />,
+                  h2: ({node, ...props}) => <h2 className="text-3xl font-semibold font-display mb-4 mt-6 text-foreground" {...props} />,
+                  h3: ({node, ...props}) => <h3 className="text-2xl font-medium font-display mb-3 mt-5 text-foreground" {...props} />,
+                  p: ({node, ...props}) => <p className="text-base mb-4 leading-relaxed text-foreground" {...props} />,
+                  ul: ({node, ...props}) => <ul className="list-disc list-inside mb-4 space-y-2 text-foreground" {...props} />,
+                  ol: ({node, ...props}) => <ol className="list-decimal list-inside mb-4 space-y-2 text-foreground" {...props} />,
+                  li: ({node, ...props}) => <li className="text-base text-foreground" {...props} />,
+                  blockquote: ({node, ...props}) => <blockquote className="border-l-4 border-sunburst pl-4 py-2 my-6 italic text-lg bg-gray-50 dark:bg-gray-800 rounded-r text-foreground" {...props} />,
+                  strong: ({node, ...props}) => <strong className="font-bold text-army dark:text-sunburst" {...props} />,
+                  em: ({node, ...props}) => <em className="italic" {...props} />,
+                }}
+              >
+                {content}
+              </ReactMarkdown>
             ) : (
               <p className="text-muted-foreground">No content to preview.</p>
             )}
