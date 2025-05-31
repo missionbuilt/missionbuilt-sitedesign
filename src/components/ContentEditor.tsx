@@ -1,23 +1,32 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Eye, Edit3, Save, Heading, List, Quote, Bold, Type, Table as TableIcon } from 'lucide-react';
+import { Eye, Edit3, Save, Heading, List, Quote, Bold, Type, Table as TableIcon, Download, Upload, FileText } from 'lucide-react';
+import { contentService } from '@/services/contentService';
 
 interface ContentEditorProps {
   initialContent?: string;
+  chapterId?: string;
   onSave?: (content: string) => void;
   onContentChange?: (content: string) => void;
 }
 
-const ContentEditor = ({ initialContent = '', onSave, onContentChange }: ContentEditorProps) => {
+const ContentEditor = ({ initialContent = '', chapterId, onSave, onContentChange }: ContentEditorProps) => {
   const [content, setContent] = useState(initialContent);
   const [isEditing, setIsEditing] = useState(false);
   const [isPreview, setIsPreview] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Check if we're in development mode (editing capability)
+  const isDevelopment = process.env.NODE_ENV === 'development' || window.location.hostname === 'localhost';
+
+  useEffect(() => {
+    setContent(initialContent);
+  }, [initialContent]);
 
   useEffect(() => {
     if (isEditing && textareaRef.current) {
@@ -41,6 +50,47 @@ const ContentEditor = ({ initialContent = '', onSave, onContentChange }: Content
       handleSave();
     }
   };
+
+  const handleExportContent = () => {
+    if (!chapterId) return;
+    
+    const dataStr = content;
+    const dataBlob = new Blob([dataStr], { type: 'text/markdown' });
+    const url = URL.createObjectURL(dataBlob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `${chapterId}-content-${new Date().toISOString().split('T')[0]}.md`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
+  const handleImportContent = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const importedContent = e.target?.result as string;
+        if (importedContent) {
+          handleContentUpdate(importedContent);
+          console.log('Content imported successfully');
+        }
+      };
+      reader.readAsText(file);
+    }
+    // Reset the input value
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
+  const getBackupInfo = () => {
+    if (!chapterId) return null;
+    return contentService.getLocalStorageBackupInfo(chapterId);
+  };
+
+  const backupInfo = getBackupInfo();
 
   const insertTextAtCursor = (textToInsert: string) => {
     if (!textareaRef.current) return;
@@ -103,16 +153,12 @@ const ContentEditor = ({ initialContent = '', onSave, onContentChange }: Content
     },
   ];
 
-  // Check if we're in development mode (editing capability)
-  const isDevelopment = process.env.NODE_ENV === 'development' || window.location.hostname === 'localhost';
-
   const handlePreviewToggle = () => {
     console.log('Preview button clicked, current isPreview:', isPreview);
     setIsPreview(!isPreview);
     console.log('Preview state will be:', !isPreview);
   };
 
-  // Custom components for ReactMarkdown with proper table support
   const markdownComponents = {
     h1: ({node, ...props}: any) => <h1 className="text-4xl font-bold font-display mb-6 mt-8 text-foreground" {...props} />,
     h2: ({node, ...props}: any) => <h2 className="text-3xl font-semibold font-display mb-4 mt-6 text-foreground" {...props} />,
@@ -181,7 +227,7 @@ const ContentEditor = ({ initialContent = '', onSave, onContentChange }: Content
       {/* Editor Controls - Only visible in development */}
       {isDevelopment && (
         <div className="flex flex-col gap-4 mb-4 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600">
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             <Button
               variant="outline"
               size="sm"
@@ -213,7 +259,43 @@ const ContentEditor = ({ initialContent = '', onSave, onContentChange }: Content
               <Eye className="w-4 h-4" />
               {isPreview ? 'Hide Preview' : 'Show Preview'}
             </Button>
+
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleExportContent}
+              className="flex items-center gap-2"
+            >
+              <Download className="w-4 h-4" />
+              Export
+            </Button>
+            
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => fileInputRef.current?.click()}
+              className="flex items-center gap-2"
+            >
+              <Upload className="w-4 h-4" />
+              Import
+            </Button>
+            
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept=".md,.txt"
+              onChange={handleImportContent}
+              className="hidden"
+            />
           </div>
+
+          {/* Backup Info */}
+          {backupInfo && (backupInfo.hasContent || backupInfo.hasMetadata) && (
+            <div className="text-xs text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20 px-3 py-2 rounded border border-green-200 dark:border-green-800">
+              <FileText className="w-3 h-3 inline mr-1" />
+              Auto-backup available{backupInfo.lastSaved ? ` (last saved: ${backupInfo.lastSaved})` : ''}
+            </div>
+          )}
 
           {/* Formatting Buttons - Only visible when editing */}
           {isEditing && (
@@ -252,7 +334,7 @@ const ContentEditor = ({ initialContent = '', onSave, onContentChange }: Content
               rows={20}
             />
             <p className="text-sm text-muted-foreground">
-              Tip: Use Ctrl+S to save. Click the format buttons above to insert styled text.
+              Tip: Use Ctrl+S to save. Content is auto-saved to localStorage while editing.
             </p>
           </div>
         ) : (

@@ -10,31 +10,78 @@ import LinkSection from '@/components/LinkSection';
 import ReadingProgress from '@/components/ReadingProgress';
 import SectionDivider from '@/components/SectionDivider';
 import { calculateReadTime } from '@/utils/readTimeCalculator';
+import { contentService, ChapterMeta, ChapterLink } from '@/services/contentService';
 
 const Chapter1 = () => {
   const [content, setContent] = React.useState('');
+  const [metadata, setMetadata] = React.useState<ChapterMeta | null>(null);
   const [readTime, setReadTime] = React.useState('0 min read');
+  const [isLoading, setIsLoading] = React.useState(true);
+
+  const chapterId = 'chapter-1';
+
+  React.useEffect(() => {
+    const loadChapterData = async () => {
+      setIsLoading(true);
+      
+      try {
+        const [loadedContent, loadedMetadata] = await Promise.all([
+          contentService.loadChapterContent(chapterId),
+          contentService.loadChapterMetadata(chapterId)
+        ]);
+        
+        setContent(loadedContent);
+        setMetadata(loadedMetadata);
+        setReadTime(calculateReadTime(loadedContent));
+      } catch (error) {
+        console.error('Error loading chapter data:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadChapterData();
+  }, []);
 
   const handleContentSave = (newContent: string) => {
     console.log('Content saved:', newContent);
     setContent(newContent);
     setReadTime(calculateReadTime(newContent));
+    contentService.saveContentToLocalStorage(chapterId, newContent);
   };
 
   const handleContentChange = (newContent: string) => {
     setContent(newContent);
     setReadTime(calculateReadTime(newContent));
+    // Auto-save to localStorage on every change
+    contentService.saveContentToLocalStorage(chapterId, newContent);
   };
 
-  const handleLinksChange = (links: any[]) => {
+  const handleLinksChange = (links: ChapterLink[]) => {
     console.log('Links updated:', links);
+    if (metadata) {
+      const updatedMetadata = { ...metadata, links };
+      setMetadata(updatedMetadata);
+      contentService.saveMetadataToLocalStorage(chapterId, updatedMetadata);
+    }
   };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-army mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Loading chapter...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>Field Note 1: Mission Before Metrics - MissionBuilt</title>
-        <meta name="description" content="Field Note 1: Mission Before Metrics content" />
+        <title>{metadata?.title || 'Field Note 1'} - MissionBuilt</title>
+        <meta name="description" content={metadata?.description || 'Field Note content'} />
       </Helmet>
       
       <ReadingProgress />
@@ -56,12 +103,12 @@ const Chapter1 = () => {
             by Mike
           </Link>
           <h1 className="font-display font-bold text-4xl md:text-5xl lg:text-6xl text-white mb-6 leading-tight drop-shadow-lg">
-            Mission Before Metrics
+            {metadata?.title || 'Mission Before Metrics'}
           </h1>
           <div className="flex items-center gap-6 text-white/95 text-sm font-medium">
             <div className="flex items-center">
               <Calendar className="w-4 h-4 mr-2" />
-              Published May 25th, 2025
+              Published {metadata?.publishedDate ? new Date(metadata.publishedDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : 'May 25th, 2025'}
             </div>
             <div className="flex items-center">
               <Clock className="w-4 h-4 mr-2" />
@@ -84,7 +131,7 @@ const Chapter1 = () => {
           {/* Enhanced article header */}
           <header className="mb-16">
             <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6 font-display leading-tight">
-              Field Note 1: Mission Before Metrics
+              {metadata?.title || 'Field Note 1: Mission Before Metrics'}
             </h1>
             <div className="flex items-center text-muted-foreground text-sm bg-gray-50 dark:bg-gray-800/50 px-4 py-3 rounded-lg">
               <Clock className="w-4 h-4 mr-2" />
@@ -107,7 +154,8 @@ const Chapter1 = () => {
                           prose-strong:text-army dark:prose-strong:text-sunburst prose-strong:font-semibold
                           prose-a:text-army dark:prose-a:text-sunburst prose-a:no-underline hover:prose-a:underline">
             <ContentEditor 
-              initialContent=""
+              initialContent={content}
+              chapterId={chapterId}
               onSave={handleContentSave}
               onContentChange={handleContentChange}
             />
@@ -117,7 +165,11 @@ const Chapter1 = () => {
 
           {/* Enhanced Links Section */}
           <div className="border-t border-gray-200 dark:border-gray-700 pt-12">
-            <LinkSection onLinksChange={handleLinksChange} />
+            <LinkSection 
+              chapterId={chapterId}
+              initialLinks={metadata?.links || []}
+              onLinksChange={handleLinksChange} 
+            />
           </div>
         </div>
       </main>
