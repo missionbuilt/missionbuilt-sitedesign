@@ -134,6 +134,17 @@ const Chapter1 = () => {
 
   const hasUnsavedChanges = contentService.hasUnsavedChanges(chapterId);
 
+  // Helper function to format date properly
+  const formatPublishDate = (dateString: string) => {
+    // Create date object and add timezone offset to avoid timezone issues
+    const date = new Date(dateString + 'T12:00:00');
+    return date.toLocaleDateString('en-US', { 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    });
+  };
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
@@ -224,7 +235,7 @@ const Chapter1 = () => {
           <div className="flex items-center gap-6 text-white/95 text-sm font-medium">
             <div className="flex items-center">
               <Calendar className="w-4 h-4 mr-2" />
-              Published {metadata?.publishedDate ? new Date(metadata.publishedDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : 'May 25th, 2025'}
+              Published {metadata?.publishedDate ? formatPublishDate(metadata.publishedDate) : 'May 25th, 2025'}
             </div>
             <div className="flex items-center">
               <Clock className="w-4 h-4 mr-2" />
