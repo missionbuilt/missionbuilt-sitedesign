@@ -1,7 +1,7 @@
 
 {
   "id": "chapter-2",
-  "title": "Chapter 2 Title",
+  "title": "Built Through Reps",
   "subtitle": "Chapter 2 Subtitle",
   "publishedDate": "2025-05-25",
   "readTime": "5 min read",
@@ -10,7 +10,7 @@
     "Tag2", 
     "Tag3"
   ],
-  "description": "Chapter 2 description placeholder.",
+  "description": "Mastery doesn't happen in a moment — it's forged through consistent, intentional repetition. This chapter examines how showing up, rep after rep, creates strength and strategy alike. Featuring parallels between building great software and building great squats, it's a case for doing the work — especially when it's boring.",
   "slug": "chapter-2",
   "status": "draft",
   "links": []
