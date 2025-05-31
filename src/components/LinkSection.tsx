@@ -154,35 +154,31 @@ const LinkSection = ({ onLinksChange }: LinkSectionProps) => {
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-semibold">Manage Links</h3>
             <div className="flex gap-2">
-              {links.length > 0 && (
-                <>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={handleExportLinks}
-                    className="flex items-center gap-2"
-                  >
-                    <Download className="w-4 h-4" />
-                    Export
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => fileInputRef.current?.click()}
-                    className="flex items-center gap-2"
-                  >
-                    <Upload className="w-4 h-4" />
-                    Import
-                  </Button>
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept=".json"
-                    onChange={handleImportLinks}
-                    className="hidden"
-                  />
-                </>
-              )}
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleExportLinks}
+                className="flex items-center gap-2"
+              >
+                <Download className="w-4 h-4" />
+                Export
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => fileInputRef.current?.click()}
+                className="flex items-center gap-2"
+              >
+                <Upload className="w-4 h-4" />
+                Import
+              </Button>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept=".json"
+                onChange={handleImportLinks}
+                className="hidden"
+              />
               {!isAdding && !editingId && (
                 <Button
                   variant="outline"
