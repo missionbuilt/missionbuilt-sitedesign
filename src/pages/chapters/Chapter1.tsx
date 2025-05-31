@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
@@ -12,6 +11,7 @@ import SectionDivider from '@/components/SectionDivider';
 import { calculateReadTime } from '@/utils/readTimeCalculator';
 import { FileUpdateService } from '@/services/fileUpdateService';
 import { ChapterData } from '@/utils/contentStorage';
+import SaveFileDialog from '@/components/SaveFileDialog';
 
 // Static content data - Auto-generated, do not edit manually
 const CHAPTER_CONTENT = ``;
@@ -30,6 +30,8 @@ const Chapter1 = () => {
   const [links, setLinks] = React.useState(CHAPTER_LINKS);
   const [readTime, setReadTime] = React.useState('0 min read');
   const [isSaving, setIsSaving] = React.useState(false);
+  const [showSaveDialog, setShowSaveDialog] = React.useState(false);
+  const [saveDialogContent, setSaveDialogContent] = React.useState({ fileName: '', content: '' });
 
   React.useEffect(() => {
     setReadTime(calculateReadTime(content));
@@ -54,6 +56,12 @@ const Chapter1 = () => {
   const handleSaveToFile = async () => {
     setIsSaving(true);
     try {
+      // Set up the dialog callback
+      FileUpdateService.setSaveDialogCallback((fileName: string, content: string) => {
+        setSaveDialogContent({ fileName, content });
+        setShowSaveDialog(true);
+      });
+
       const chapterData: ChapterData = {
         content: content,
         links: links
@@ -62,14 +70,14 @@ const Chapter1 = () => {
       const success = await FileUpdateService.saveChapterContent('src/pages/chapters/Chapter1.tsx', chapterData);
       
       if (success) {
-        console.log('Successfully saved content to file!');
+        console.log('Successfully prepared content for saving!');
       } else {
-        console.error('Failed to save content to file');
-        alert('Failed to save content to file. Please try again.');
+        console.error('Failed to prepare content for saving');
+        alert('Failed to prepare content for saving. Please try again.');
       }
     } catch (error) {
-      console.error('Error saving to file:', error);
-      alert('Error saving to file. Please check the console for details.');
+      console.error('Error preparing content for saving:', error);
+      alert('Error preparing content for saving. Please check the console for details.');
     } finally {
       setIsSaving(false);
     }
@@ -187,6 +195,13 @@ const Chapter1 = () => {
       </main>
       
       <Footer />
+      
+      <SaveFileDialog
+        open={showSaveDialog}
+        onOpenChange={setShowSaveDialog}
+        fileName={saveDialogContent.fileName}
+        fileContent={saveDialogContent.content}
+      />
     </div>
   );
 };

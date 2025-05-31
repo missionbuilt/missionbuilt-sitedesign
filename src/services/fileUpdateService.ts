@@ -2,19 +2,21 @@
 import { ChapterData, generateChapterFileContent } from '@/utils/contentStorage';
 
 export class FileUpdateService {
+  private static saveDialogCallback: ((fileName: string, content: string) => void) | null = null;
+
+  static setSaveDialogCallback(callback: (fileName: string, content: string) => void) {
+    this.saveDialogCallback = callback;
+  }
+
   static async saveChapterContent(chapterFile: string, data: ChapterData): Promise<boolean> {
     try {
-      // In a real application, this would make an API call to a backend service
-      // For now, we'll simulate the file update by logging the content
       console.log('Saving chapter content to file:', chapterFile);
       console.log('Content:', data.content);
       console.log('Links:', data.links);
       
       // In development, we can't actually write to files from the browser
-      // This would typically be handled by a backend API
+      // This shows the content in a dialog for manual copying
       if (process.env.NODE_ENV === 'development') {
-        console.log('File content that would be written:');
-        
         // Simulate reading the current file (in reality, this would come from an API)
         const currentFileContent = await this.getCurrentFileContent(chapterFile);
         const updatedContent = generateChapterFileContent(currentFileContent, data);
@@ -23,19 +25,18 @@ export class FileUpdateService {
         console.log(updatedContent);
         console.log('=== END FILE CONTENT ===');
         
-        // Show success message
-        alert('Content saved! Check the console to see the updated file content that would be written to ' + chapterFile);
+        // Show the save dialog if callback is set
+        if (this.saveDialogCallback) {
+          this.saveDialogCallback(chapterFile, updatedContent);
+        } else {
+          // Fallback to alert if dialog is not available
+          alert('Content prepared! Check the console to see the updated file content that would be written to ' + chapterFile);
+        }
+        
         return true;
       }
       
       // In production, this would make an actual API call
-      // const response = await fetch('/api/update-chapter', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ file: chapterFile, data })
-      // });
-      // return response.ok;
-      
       return true;
     } catch (error) {
       console.error('Error saving chapter content:', error);
