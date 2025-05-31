@@ -93,6 +93,12 @@ const ContentEditor = ({ initialContent = '', onSave }: ContentEditorProps) => {
   // Check if we're in development mode (editing capability)
   const isDevelopment = process.env.NODE_ENV === 'development' || window.location.hostname === 'localhost';
 
+  const handlePreviewToggle = () => {
+    console.log('Preview button clicked, current isPreview:', isPreview);
+    setIsPreview(!isPreview);
+    console.log('Preview state will be:', !isPreview);
+  };
+
   return (
     <div className="w-full">
       {/* Editor Controls - Only visible in development */}
@@ -122,13 +128,13 @@ const ContentEditor = ({ initialContent = '', onSave }: ContentEditorProps) => {
             )}
             
             <Button
-              variant="outline"
+              variant={isPreview ? "default" : "outline"}
               size="sm"
-              onClick={() => setIsPreview(!isPreview)}
+              onClick={handlePreviewToggle}
               className="flex items-center gap-2"
             >
               <Eye className="w-4 h-4" />
-              {isPreview ? 'Hide Preview' : 'Preview'}
+              {isPreview ? 'Hide Preview' : 'Show Preview'}
             </Button>
           </div>
 
@@ -204,8 +210,8 @@ const ContentEditor = ({ initialContent = '', onSave }: ContentEditorProps) => {
         )}
       </div>
 
-      {/* Preview Mode */}
-      {isPreview && isDevelopment && (
+      {/* Preview Mode - Show when preview is enabled */}
+      {isPreview && (
         <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
           <h3 className="font-semibold text-blue-900 dark:text-blue-100 mb-2">
             Published Preview (How visitors will see it):
