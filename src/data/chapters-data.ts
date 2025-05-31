@@ -10,6 +10,30 @@ export interface Chapter {
   status: ChapterStatus;
 }
 
+// Log content structure for dynamic loading
+export interface LogSection {
+  id: string;
+  title: string;
+  content: string;
+}
+
+export interface FurtherReadingResource {
+  title: string;
+  url: string;
+  description: string;
+}
+
+export interface LogContent {
+  sections: LogSection[];
+  furtherReading?: FurtherReadingResource[];
+}
+
+// Utility function for reading time calculation
+export const getDynamicReadingTime = (wordCount: number = 0): number => {
+  const wordsPerMinute = 200;
+  return Math.max(1, Math.ceil(wordCount / wordsPerMinute));
+};
+
 // Metadata-only chapters array
 export const chapters: Chapter[] = [
   {

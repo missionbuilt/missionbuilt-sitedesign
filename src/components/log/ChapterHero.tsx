@@ -8,14 +8,15 @@ interface ChapterHeroProps {
 }
 
 const ChapterHero: React.FC<ChapterHeroProps> = ({ chapter }) => {
-  const dynamicReadingTime = getDynamicReadingTime(chapter.wordCount);
+  // Default fallback image for hero section
+  const defaultHeroImage = "/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png";
   
   return (
     <div className="relative">
       {/* Hero Image */}
       <div className="relative h-96 md:h-[500px] overflow-hidden">
         <img
-          src={chapter.heroImage}
+          src={defaultHeroImage}
           alt={chapter.title}
           className="w-full h-full object-cover"
         />
@@ -37,16 +38,16 @@ const ChapterHero: React.FC<ChapterHeroProps> = ({ chapter }) => {
             <div className="flex flex-wrap gap-6 text-sm">
               <div className="flex items-center gap-2">
                 <User className="h-4 w-4" />
-                <span>{chapter.author}</span>
+                <span>MissionBuilt.io</span>
               </div>
               <div className="flex items-center gap-2">
                 <Calendar className="h-4 w-4" />
-                <span>{chapter.date}</span>
+                <span>Coming Soon</span>
               </div>
-              {chapter.status === "published" && chapter.wordCount && chapter.wordCount > 0 && (
+              {chapter.status === "published" && (
                 <div className="flex items-center gap-2">
                   <Clock className="h-4 w-4" />
-                  <span>{dynamicReadingTime} min read</span>
+                  <span>{getDynamicReadingTime(0)} min read</span>
                 </div>
               )}
             </div>
