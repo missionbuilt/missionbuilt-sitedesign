@@ -11,7 +11,7 @@ const FieldNotes = () => {
   const chapters = [
     {
       id: 'chapter-1',
-      title: 'Chapter 1',
+      title: 'Field Note 1: Mission Before Metrics',
       publishedDate: '2024-01-01',
       readTime: '5 min read',
       tags: ['Getting Started'],

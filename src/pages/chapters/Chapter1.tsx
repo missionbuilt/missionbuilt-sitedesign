@@ -16,8 +16,8 @@ const Chapter1 = () => {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>Chapter 1 - MissionBuilt</title>
-        <meta name="description" content="Chapter 1 content" />
+        <title>Field Note 1: Mission Before Metrics - MissionBuilt</title>
+        <meta name="description" content="Field Note 1: Mission Before Metrics content" />
       </Helmet>
       
       <Navbar />
@@ -26,7 +26,7 @@ const Chapter1 = () => {
       <div className="relative h-96 overflow-hidden">
         <img 
           src="/lovable-uploads/e090226a-c451-4cfe-82ff-2d1c054040ae.png"
-          alt="Chapter 1 Hero"
+          alt="Field Note 1 Hero"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-black/30"></div>
@@ -58,7 +58,7 @@ const Chapter1 = () => {
           </Link>
           
           <header className="mb-12">
-            <h1 className="text-4xl font-bold text-foreground mb-4">Chapter 1</h1>
+            <h1 className="text-4xl font-bold text-foreground mb-4">Field Note 1: Mission Before Metrics</h1>
           </header>
           
           <div className="prose prose-slate dark:prose-invert max-w-none">
