@@ -47,7 +47,7 @@ const HeroSection = () => {
               What if building great products had less to do with frameworks and more to do with focus? Less with process and more with passion? That's the idea behind MissionBuilt — a free, open-source book sharing lessons I've learned across decades of product leadership, through a unique and sometimes sweaty lens: powerlifting.
             </p>
             
-            <p className="body-md mb-8">
+            <p className="body-lg mb-6">
               This isn't a manifesto. It's not a masterclass. It's a perspective — one forged from military discipline, startup chaos, scaling software, and lifting very heavy things. You won't find a one-size-fits-all product method here. You will find honest stories, field-tested tactics, and a philosophy grounded in a single belief:
             </p>
             
