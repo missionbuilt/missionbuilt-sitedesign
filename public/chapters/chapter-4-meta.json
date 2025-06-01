@@ -1,3 +1,4 @@
+
 {
   "id": "chapter-4",
   "title": "Feedback Is a Superpower",
@@ -16,20 +17,20 @@
   "links": [
     {
       "id": "1748734619218",
-      "name": "Stefi Cohen’s Coaching Evolution",
-      "summary": "Explores Stefi Cohen’s evolving approach to training, blending isolation and compound movements, and emphasizing adaptability — a model of feedback-driven progression.",
+      "name": "Stefi Cohen's Coaching Evolution",
+      "summary": "Explores Stefi Cohen's evolving approach to training, blending isolation and compound movements, and emphasizing adaptability — a model of feedback-driven progression.",
       "url": "https://www.hybridperformancemethod.com/blog/are-isolation-movements-better-for-muscle-growth"
     },
     {
       "id": "1748734635936",
       "name": "Motor Learning and Coaching Cues",
-      "summary": "Outlines effective coaching cues in baseball, including directional visual prompts like “turn the flashlight,” to support motor learning through immediate feedback.",
+      "summary": "Outlines effective coaching cues in baseball, including directional visual prompts like \"turn the flashlight,\" to support motor learning through immediate feedback.",
       "url": "https://www.drivelinebaseball.com/2017/02/coaching-hitting-mechanics-part-2-application/"
     },
     {
       "id": "1748734652734",
       "name": "Fitbit Sleep Score Anxiety",
-      "summary": "Explores how Fitbit’s sleep score feature, intended to empower users, inadvertently created stress and confusion as people began to fixate on a single metric rather than holistic health.",
+      "summary": "Explores how Fitbit's sleep score feature, intended to empower users, inadvertently created stress and confusion as people began to fixate on a single metric rather than holistic health.",
       "url": "https://www.washingtonpost.com/business/2020/02/14/sleep-wellness-employer-oura/"
     },
     {
@@ -41,12 +42,12 @@
     {
       "id": "1748734682688",
       "name": "Target Canada Collapse",
-      "summary": "A detailed account of how Target’s expansion into Canada failed due to systemic issues, misread data, and ignored frontline feedback — resulting in one of the most expensive retail failures in history.",
+      "summary": "A detailed account of how Target's expansion into Canada failed due to systemic issues, misread data, and ignored frontline feedback — resulting in one of the most expensive retail failures in history.",
       "url": "https://canadianbusiness.com/ideas/the-last-days-of-target-canada/"
     },
     {
       "id": "1748734699442",
-      "name": "Elastic’s Acquisition of Endgame",
+      "name": "Elastic's Acquisition of Endgame",
       "summary": "Provides context on the Endgame acquisition and the iterative, feedback-driven strategy that shaped its product approach.",
       "url": "https://techcrunch.com/2019/10/15/elastic-adds-endpoint-security-to-its-expanding-toolset/"
     },
@@ -58,14 +59,14 @@
     },
     {
       "id": "1748734727710",
-      "name": "Slack’s Product Philosophy",
+      "name": "Slack's Product Philosophy",
       "summary": "Reveals how the team behind Slack ritualized internal feedback and refined the tool based on daily use, long before realizing it could become a standalone product.",
       "url": "https://review.firstround.com/from-0-to-1b-slacks-founder-shares-their-epic-launch-strategy"
     },
     {
       "id": "1748734742631",
-      "name": "Figma’s Culture of Real-Time Feedback",
-      "summary": "Figma’s built-in commenting and mock review workflows enable low-friction, high-impact feedback loops across product and design.",
+      "name": "Figma's Culture of Real-Time Feedback",
+      "summary": "Figma's built-in commenting and mock review workflows enable low-friction, high-impact feedback loops across product and design.",
       "url": "https://www.figma.com/blog/inside-figma-building-a-more-collaborative-design-process/"
     },
     {
@@ -76,13 +77,13 @@
     },
     {
       "id": "1748734777862",
-      "name": "Duolingo’s Onboarding and Retention Strategies",
+      "name": "Duolingo's Onboarding and Retention Strategies",
       "summary": "Analyzes Duolingo's onboarding process, highlighting how personalization and gamification contribute to user retention and engagement.",
       "url": "https://www.redfast.com/news/how-duolingos-modern-onboarding-drives-user-retention"
     },
     {
       "id": "1748734794781",
-      "name": "Duolingo’s Feedback-Driven UX",
+      "name": "Duolingo's Feedback-Driven UX",
       "summary": "Duolingo uses micro-interactions and behavioral cues to offer real-time encouragement and course correction within its language learning platform.",
       "url": "https://blog.duolingo.com/duologues-design-conversations/"
     },
@@ -101,7 +102,7 @@
     {
       "id": "1748734839111",
       "name": "The Medici Effect",
-      "summary": "Frans Johansson’s concept of intersectional innovation emphasizes the value of early, diverse input — the “share early” principle is foundational to adaptive feedback.",
+      "summary": "Frans Johansson's concept of intersectional innovation emphasizes the value of early, diverse input — the \"share early\" principle is foundational to adaptive feedback.",
       "url": "https://www.fransjohansson.com/books"
     }
   ]
