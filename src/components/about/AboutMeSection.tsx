@@ -1,10 +1,17 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const AboutMeSection = () => {
   const [imageLoaded, setImageLoaded] = useState(false);
+  
+  // Preload the image
+  useEffect(() => {
+    const img = new Image();
+    img.src = "/lovable-uploads/82a6be17-e317-4ba1-ba98-d1c365af5e76.png";
+    img.onload = () => setImageLoaded(true);
+  }, []);
   
   return (
     <div className="flex flex-col items-center space-y-8 mb-16">
@@ -18,8 +25,9 @@ const AboutMeSection = () => {
           className={`w-full h-full object-cover transition-opacity duration-300 ${
             imageLoaded ? 'opacity-100' : 'opacity-0'
           }`}
-          loading="lazy"
-          onLoad={() => setImageLoaded(true)}
+          loading="eager"
+          decoding="async"
+          fetchpriority="high"
         />
       </div>
 
