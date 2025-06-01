@@ -24,7 +24,7 @@ const CallToAction = () => {
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="heading-md mb-6">Ready to Start Building Better?</h2>
           
-          <div className="bg-gradient-to-br from-slate/5 to-army/5 p-8 md:p-10 rounded-2xl border border-slate/10 mb-8 shadow-sm">
+          <div className="bg-gradient-to-br from-slate/5 to-army/5 p-8 md:p-10 rounded-2xl border border-slate/10 mb-4 shadow-sm">
             <p className="body-md mb-8">
               This is more than a book – it's an evolving conversation about how to build products that truly matter. 
               Begin with the field notes, share your thoughts, and help shape where this goes next.
