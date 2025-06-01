@@ -219,24 +219,24 @@ const FieldNotes = () => {
             
             <div className="grid gap-6 md:grid-cols-2">
               {[1, 2, 3, 4].map((i) => (
-                <Card key={i} className="h-48">
+                <Card key={i} className="h-48 dark:border-slate-700 dark:bg-slate-900/50">
                   <CardHeader>
                     <div className="flex items-center gap-2 mb-2">
-                      <Skeleton className="h-6 w-20 rounded-full" />
-                      <Skeleton className="h-4 w-16 rounded-full" />
+                      <Skeleton className="h-6 w-20 rounded-full dark:bg-slate-700" />
+                      <Skeleton className="h-4 w-16 rounded-full dark:bg-slate-700" />
                     </div>
-                    <Skeleton className="h-6 w-3/4 mb-2" />
-                    <Skeleton className="h-4 w-full" />
-                    <Skeleton className="h-4 w-2/3" />
+                    <Skeleton className="h-6 w-3/4 mb-2 dark:bg-slate-700" />
+                    <Skeleton className="h-4 w-full dark:bg-slate-700" />
+                    <Skeleton className="h-4 w-2/3 dark:bg-slate-700" />
                   </CardHeader>
                   <CardContent>
                     <div className="flex items-center gap-4 mb-3">
-                      <Skeleton className="h-4 w-24" />
-                      <Skeleton className="h-4 w-16" />
+                      <Skeleton className="h-4 w-24 dark:bg-slate-700" />
+                      <Skeleton className="h-4 w-16 dark:bg-slate-700" />
                     </div>
                     <div className="flex gap-2">
-                      <Skeleton className="h-6 w-16 rounded-full" />
-                      <Skeleton className="h-6 w-20 rounded-full" />
+                      <Skeleton className="h-6 w-16 rounded-full dark:bg-slate-700" />
+                      <Skeleton className="h-6 w-20 rounded-full dark:bg-slate-700" />
                     </div>
                   </CardContent>
                 </Card>
@@ -260,10 +260,10 @@ const FieldNotes = () => {
             </header>
             
             <div className="text-center py-8">
-              <p className="text-destructive mb-4">{error}</p>
+              <p className="text-destructive mb-4 dark:text-red-400">{error}</p>
               <button 
                 onClick={() => window.location.reload()} 
-                className="bg-army text-white px-4 py-2 rounded hover:bg-army/80 transition-colors"
+                className="bg-army text-white px-4 py-2 rounded hover:bg-army/80 transition-colors dark:bg-army/90 dark:hover:bg-army dark:text-slate-100"
               >
                 Retry
               </button>
@@ -291,8 +291,8 @@ const FieldNotes = () => {
           <header className="mb-12">
             <div className="flex justify-between items-start">
               <div>
-                <h2 className="text-lg font-medium text-army mb-2">Mission Built: Lessons from the Barbell and the Boardroom</h2>
-                <h1 className="text-4xl font-bold text-foreground mb-4">Field Notes</h1>
+                <h2 className="text-lg font-medium text-army mb-2 dark:text-sunburst">Mission Built: Lessons from the Barbell and the Boardroom</h2>
+                <h1 className="text-4xl font-bold text-foreground mb-4 dark:text-slate-100">Field Notes</h1>
               </div>
               <div className="mt-4">
                 <PdfDownloadButton />
@@ -303,27 +303,27 @@ const FieldNotes = () => {
           <div className="space-y-6">
             {chapters.length === 0 ? (
               <div className="text-center py-8">
-                <p className="text-muted-foreground">No field notes available at the moment.</p>
-                <p className="text-sm text-muted-foreground mt-2">Check the browser console for loading details.</p>
+                <p className="text-muted-foreground dark:text-slate-300">No field notes available at the moment.</p>
+                <p className="text-sm text-muted-foreground mt-2 dark:text-slate-400">Check the browser console for loading details.</p>
               </div>
             ) : (
               <>
                 <div className="grid gap-6 md:grid-cols-2">
                   {chapters.map((chapter) => {
                     const CardComponent = (
-                      <Card key={chapter.id} className="card-hover transition-all duration-200 hover:shadow-lg">
+                      <Card key={chapter.id} className="card-hover transition-all duration-200 hover:shadow-lg dark:border-slate-700 dark:bg-slate-900/50 dark:hover:bg-slate-800/50 dark:hover:border-slate-600">
                         <CardHeader className="pb-3">
                           <div className="flex items-center justify-between mb-2">
                             <div className="flex items-center gap-2">
-                              <Badge variant="outline" className="text-xs font-semibold">
+                              <Badge variant="outline" className="text-xs font-semibold dark:border-slate-600 dark:text-slate-200">
                                 Chapter {chapter.chapterNumber}
                               </Badge>
                               <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
                                 chapter.status === 'published' 
-                                  ? 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400'
+                                  ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300 dark:border dark:border-green-700'
                                   : chapter.status === 'draft'
-                                  ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400'
-                                  : 'bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-400'
+                                  ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300 dark:border dark:border-yellow-700'
+                                  : 'bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-300 dark:border dark:border-gray-700'
                               }`}>
                                 {chapter.status === 'published' ? 'Good Lift' : chapter.status === 'draft' ? 'Chalking Up' : chapter.status}
                               </span>
@@ -331,20 +331,20 @@ const FieldNotes = () => {
                           </div>
                           
                           <CardTitle className="text-xl leading-tight">
-                            <span className={chapter.slug ? "text-army" : "text-muted-foreground"}>
+                            <span className={chapter.slug ? "text-army dark:text-sunburst" : "text-muted-foreground dark:text-slate-400"}>
                               {chapter.title}
                             </span>
                           </CardTitle>
                           
                           {chapter.description && (
-                            <CardDescription className="text-sm leading-relaxed">
+                            <CardDescription className="text-sm leading-relaxed dark:text-slate-300">
                               {chapter.description}
                             </CardDescription>
                           )}
                         </CardHeader>
                         
                         <CardContent className="pt-0">
-                          <div className="flex items-center gap-4 mb-3 text-sm text-muted-foreground">
+                          <div className="flex items-center gap-4 mb-3 text-sm text-muted-foreground dark:text-slate-400">
                             <div className="flex items-center">
                               <Calendar className="w-4 h-4 mr-1" />
                               {chapter.publishedDate}
@@ -359,7 +359,7 @@ const FieldNotes = () => {
                             {chapter.tags.map((tag) => (
                               <span 
                                 key={tag}
-                                className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-army/10 text-army"
+                                className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-army/10 text-army dark:bg-sunburst/20 dark:text-sunburst dark:border dark:border-sunburst/30"
                               >
                                 <Tag className="w-3 h-3 mr-1" />
                                 {tag}
@@ -376,7 +376,7 @@ const FieldNotes = () => {
                         <Link 
                           key={chapter.id}
                           to={`/field-notes/${chapter.slug}`}
-                          className="block hover:text-army/80 transition-colors"
+                          className="block hover:text-army/80 dark:hover:text-sunburst/80 transition-colors"
                         >
                           {CardComponent}
                         </Link>
@@ -388,8 +388,8 @@ const FieldNotes = () => {
                   })}
                 </div>
                 
-                <div className="mt-8 text-center py-6 border-t border-border">
-                  <p className="text-muted-foreground text-sm">
+                <div className="mt-8 text-center py-6 border-t border-border dark:border-slate-700">
+                  <p className="text-muted-foreground text-sm dark:text-slate-300">
                     More chapters are on the way
                   </p>
                 </div>
