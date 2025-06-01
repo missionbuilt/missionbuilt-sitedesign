@@ -309,74 +309,83 @@ const FieldNotes = () => {
             ) : (
               <>
                 <div className="grid gap-6 md:grid-cols-2">
-                  {chapters.map((chapter) => (
-                    <Card key={chapter.id} className="card-hover transition-all duration-200 hover:shadow-lg">
-                      <CardHeader className="pb-3">
-                        <div className="flex items-center justify-between mb-2">
-                          <div className="flex items-center gap-2">
-                            <Badge variant="outline" className="text-xs font-semibold">
-                              Chapter {chapter.chapterNumber}
-                            </Badge>
-                            <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                              chapter.status === 'published' 
-                                ? 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400'
-                                : chapter.status === 'draft'
-                                ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400'
-                                : 'bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-400'
-                            }`}>
-                              {chapter.status === 'published' ? 'Good Lift' : chapter.status === 'draft' ? 'Chalking Up' : chapter.status}
-                            </span>
+                  {chapters.map((chapter) => {
+                    const CardComponent = (
+                      <Card key={chapter.id} className="card-hover transition-all duration-200 hover:shadow-lg">
+                        <CardHeader className="pb-3">
+                          <div className="flex items-center justify-between mb-2">
+                            <div className="flex items-center gap-2">
+                              <Badge variant="outline" className="text-xs font-semibold">
+                                Chapter {chapter.chapterNumber}
+                              </Badge>
+                              <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+                                chapter.status === 'published' 
+                                  ? 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400'
+                                  : chapter.status === 'draft'
+                                  ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400'
+                                  : 'bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-400'
+                              }`}>
+                                {chapter.status === 'published' ? 'Good Lift' : chapter.status === 'draft' ? 'Chalking Up' : chapter.status}
+                              </span>
+                            </div>
                           </div>
-                        </div>
-                        
-                        <CardTitle className="text-xl leading-tight">
-                          {chapter.slug ? (
-                            <Link 
-                              to={`/field-notes/${chapter.slug}`}
-                              className="text-army hover:text-army/80 transition-colors"
-                            >
-                              {chapter.title}
-                            </Link>
-                          ) : (
-                            <span className="text-muted-foreground">
+                          
+                          <CardTitle className="text-xl leading-tight">
+                            <span className={chapter.slug ? "text-army" : "text-muted-foreground"}>
                               {chapter.title}
                             </span>
+                          </CardTitle>
+                          
+                          {chapter.description && (
+                            <CardDescription className="text-sm leading-relaxed">
+                              {chapter.description}
+                            </CardDescription>
                           )}
-                        </CardTitle>
+                        </CardHeader>
                         
-                        {chapter.description && (
-                          <CardDescription className="text-sm leading-relaxed">
-                            {chapter.description}
-                          </CardDescription>
-                        )}
-                      </CardHeader>
-                      
-                      <CardContent className="pt-0">
-                        <div className="flex items-center gap-4 mb-3 text-sm text-muted-foreground">
-                          <div className="flex items-center">
-                            <Calendar className="w-4 h-4 mr-1" />
-                            {chapter.publishedDate}
+                        <CardContent className="pt-0">
+                          <div className="flex items-center gap-4 mb-3 text-sm text-muted-foreground">
+                            <div className="flex items-center">
+                              <Calendar className="w-4 h-4 mr-1" />
+                              {chapter.publishedDate}
+                            </div>
+                            <div className="flex items-center">
+                              <Clock className="w-4 h-4 mr-1" />
+                              {chapter.readTime}
+                            </div>
                           </div>
-                          <div className="flex items-center">
-                            <Clock className="w-4 h-4 mr-1" />
-                            {chapter.readTime}
+                          
+                          <div className="flex flex-wrap gap-1">
+                            {chapter.tags.map((tag) => (
+                              <span 
+                                key={tag}
+                                className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-army/10 text-army"
+                              >
+                                <Tag className="w-3 h-3 mr-1" />
+                                {tag}
+                              </span>
+                            ))}
                           </div>
-                        </div>
-                        
-                        <div className="flex flex-wrap gap-1">
-                          {chapter.tags.map((tag) => (
-                            <span 
-                              key={tag}
-                              className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-army/10 text-army"
-                            >
-                              <Tag className="w-3 h-3 mr-1" />
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
+                        </CardContent>
+                      </Card>
+                    );
+
+                    // If the chapter has a slug (is published), wrap the entire card with Link
+                    if (chapter.slug) {
+                      return (
+                        <Link 
+                          key={chapter.id}
+                          to={`/field-notes/${chapter.slug}`}
+                          className="block hover:text-army/80 transition-colors"
+                        >
+                          {CardComponent}
+                        </Link>
+                      );
+                    }
+
+                    // If no slug (unpublished), return the card without Link
+                    return CardComponent;
+                  })}
                 </div>
                 
                 <div className="mt-8 text-center py-6 border-t border-border">
