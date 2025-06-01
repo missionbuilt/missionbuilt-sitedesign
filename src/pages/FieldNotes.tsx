@@ -164,6 +164,18 @@ const FieldNotes = () => {
           slug: null,
           status: 'draft'
         });
+
+        // Add another draft chapter entry for showcase
+        chaptersData.push({
+          id: 'chapter-7-draft',
+          title: '',
+          publishedDate: 'Coming Soon',
+          readTime: 'TBD',
+          tags: ['Coming Soon'],
+          description: '',
+          slug: null,
+          status: 'draft'
+        });
         
         console.log('Final chapters data:', chaptersData);
         console.log('Total chapters to display:', chaptersData.length);
