@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
@@ -13,6 +14,14 @@ const Navbar = () => {
     window.scrollTo({
       top: 0,
       behavior: 'instant'
+    });
+  };
+
+  // Function to handle scrolling to top when navigating to field notes
+  const scrollToTopFieldNotes = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
     });
   };
 
@@ -33,7 +42,7 @@ const Navbar = () => {
         <div className="hidden md:flex items-center">
           <nav className="flex items-center space-x-1 mr-6">
             <NavLink to="/" exact onClick={scrollToTop}>The Mission</NavLink>
-            <NavLink to="/field-notes">Field Notes</NavLink>
+            <NavLink to="/field-notes" onClick={scrollToTopFieldNotes}>Field Notes</NavLink>
             <NavLink to="/about">About</NavLink>
           </nav>
           
@@ -65,7 +74,7 @@ const Navbar = () => {
           <div className="absolute top-full left-0 right-0 bg-white/95 dark:bg-slate/90 backdrop-blur-md shadow-lg border-t border-slate/10 dark:border-slate/20 md:hidden py-2">
             <nav className="flex flex-col">
               <MobileNavLink to="/" onClick={() => {setIsMenuOpen(false); scrollToTop();}}>The Mission</MobileNavLink>
-              <MobileNavLink to="/field-notes" onClick={() => setIsMenuOpen(false)}>Field Notes</MobileNavLink>
+              <MobileNavLink to="/field-notes" onClick={() => {setIsMenuOpen(false); scrollToTopFieldNotes();}}>Field Notes</MobileNavLink>
               <MobileNavLink to="/about" onClick={() => setIsMenuOpen(false)}>About</MobileNavLink>
               <div className="px-4 py-3">
                 <NightVisionToggle />
