@@ -214,10 +214,10 @@ const Chapter3 = () => {
         </div>
       )}
       
-      {/* Hero Image Section - updated with new image */}
+      {/* Hero Image Section */}
       <div className="relative h-96 overflow-hidden">
         <img 
-          src="/lovable-uploads/f244683d-a384-4d5c-8a23-a2e82790137f.png"
+          src="/lovable-uploads/ac4df08f-40f2-4cde-a7f2-08a1413e3676.png"
           alt="Field Note 3 Hero"
           className="w-full h-full object-cover"
         />
@@ -235,7 +235,7 @@ const Chapter3 = () => {
           <div className="flex items-center gap-6 text-white/95 text-sm font-medium">
             <div className="flex items-center">
               <Calendar className="w-4 h-4 mr-2" />
-              Published {metadata?.publishedDate ? formatPublishDate(metadata.publishedDate) : 'May 29th, 2025'}
+              Published May 30th, 2025
             </div>
             <div className="flex items-center">
               <Clock className="w-4 h-4 mr-2" />
@@ -250,7 +250,7 @@ const Chapter3 = () => {
           <div className="flex items-center justify-between mb-12">
             <Link 
               to="/field-notes" 
-              className="inline-flex items-center text-army hover:text-army/80 transition-colors group"
+              className="inline-flex items-center text-army hover:text-army/80 dark:text-sunburst dark:hover:text-sunburst/80 transition-colors group"
             >
               <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
               Back to Field Notes

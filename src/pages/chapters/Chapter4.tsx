@@ -145,29 +145,6 @@ const Chapter4 = () => {
     });
   };
 
-  React.useEffect(() => {
-    const loadChapterData = async () => {
-      setIsLoading(true);
-      
-      try {
-        const [loadedContent, loadedMetadata] = await Promise.all([
-          contentService.loadChapterContent(chapterId),
-          contentService.loadChapterMetadata(chapterId)
-        ]);
-        
-        setContent(loadedContent);
-        setMetadata(loadedMetadata);
-        setReadTime(calculateReadTime(loadedContent));
-      } catch (error) {
-        console.error('Error loading chapter data:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    loadChapterData();
-  }, []);
-
   if (isLoading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
@@ -253,12 +230,12 @@ const Chapter4 = () => {
             by Mike
           </Link>
           <h1 className="font-display font-bold text-4xl md:text-5xl lg:text-6xl text-white mb-6 leading-tight drop-shadow-lg">
-            {metadata?.title || 'Field Note 4'}
+            {metadata?.title || 'Chapter 4 Title'}
           </h1>
           <div className="flex items-center gap-6 text-white/95 text-sm font-medium">
             <div className="flex items-center">
               <Calendar className="w-4 h-4 mr-2" />
-              Published {metadata?.publishedDate ? formatPublishDate(metadata.publishedDate) : 'May 31st, 2025'}
+              Published June 5th, 2025
             </div>
             <div className="flex items-center">
               <Clock className="w-4 h-4 mr-2" />
@@ -273,7 +250,7 @@ const Chapter4 = () => {
           <div className="flex items-center justify-between mb-12">
             <Link 
               to="/field-notes" 
-              className="inline-flex items-center text-army hover:text-army/80 transition-colors group"
+              className="inline-flex items-center text-army hover:text-army/80 dark:text-sunburst dark:hover:text-sunburst/80 transition-colors group"
             >
               <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
               Back to Field Notes

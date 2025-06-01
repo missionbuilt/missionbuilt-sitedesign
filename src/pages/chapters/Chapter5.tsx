@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Calendar, Clock, AlertCircle, FileDown } from 'lucide-react';
+import { ArrowLeft, Calendar, Clock, AlertCircle, Save, FileDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import Navbar from '@/components/Navbar';
@@ -74,6 +74,24 @@ const Chapter5 = () => {
       setMetadata(updatedMetadata);
       contentService.saveMetadataToLocalStorage(chapterId, updatedMetadata);
     }
+  };
+
+  const handleSavePermanently = () => {
+    if (!metadata) {
+      toast({
+        title: "Error",
+        description: "Cannot save: metadata not loaded",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    contentService.savePermanently(chapterId, content, metadata);
+    
+    toast({
+      title: "Files Downloaded Successfully!",
+      description: "Replace the files in src/content/chapters/ folder and refresh the page to see permanent changes.",
+    });
   };
 
   const handleClearLocalStorage = () => {
@@ -199,7 +217,7 @@ const Chapter5 = () => {
       {/* Hero Image Section */}
       <div className="relative h-96 overflow-hidden">
         <img 
-          src="/lovable-uploads/1bc86f03-aa83-4ffc-8083-cba950a57590.png"
+          src="/lovable-uploads/e090226a-c451-4cfe-82ff-2d1c054040ae.png"
           alt="Field Note 5 Hero"
           className="w-full h-full object-cover"
         />
@@ -212,12 +230,12 @@ const Chapter5 = () => {
             by Mike
           </Link>
           <h1 className="font-display font-bold text-4xl md:text-5xl lg:text-6xl text-white mb-6 leading-tight drop-shadow-lg">
-            {metadata?.title || 'Field Note 5'}
+            {metadata?.title || 'Chapter 5 Title'}
           </h1>
           <div className="flex items-center gap-6 text-white/95 text-sm font-medium">
             <div className="flex items-center">
               <Calendar className="w-4 h-4 mr-2" />
-              Published {metadata?.publishedDate ? formatPublishDate(metadata.publishedDate) : 'May 31st, 2025'}
+              Published June 10th, 2025
             </div>
             <div className="flex items-center">
               <Clock className="w-4 h-4 mr-2" />
@@ -232,7 +250,7 @@ const Chapter5 = () => {
           <div className="flex items-center justify-between mb-12">
             <Link 
               to="/field-notes" 
-              className="inline-flex items-center text-army hover:text-army/80 transition-colors group"
+              className="inline-flex items-center text-army hover:text-army/80 dark:text-sunburst dark:hover:text-sunburst/80 transition-colors group"
             >
               <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
               Back to Field Notes

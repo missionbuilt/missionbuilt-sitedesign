@@ -214,11 +214,11 @@ const Chapter1 = () => {
         </div>
       )}
       
-      {/* Hero Image Section with improved overlay */}
+      {/* Hero Image Section */}
       <div className="relative h-96 overflow-hidden">
         <img 
-          src="/lovable-uploads/e090226a-c451-4cfe-82ff-2d1c054040ae.png"
-          alt="Field Note 1 Hero"
+          src="/lovable-uploads/f244683d-a384-4d5c-8a23-a2e82790137f.png"
+          alt="Field Note 1 Hero - Foundations and Systems"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/30 to-black/50"></div>
@@ -230,12 +230,12 @@ const Chapter1 = () => {
             by Mike
           </Link>
           <h1 className="font-display font-bold text-4xl md:text-5xl lg:text-6xl text-white mb-6 leading-tight drop-shadow-lg">
-            {metadata?.title || 'Mission Before Metrics'}
+            {metadata?.title || 'Chapter 1 Title'}
           </h1>
           <div className="flex items-center gap-6 text-white/95 text-sm font-medium">
             <div className="flex items-center">
               <Calendar className="w-4 h-4 mr-2" />
-              Published May 25th, 2025
+              Published May 20th, 2025
             </div>
             <div className="flex items-center">
               <Clock className="w-4 h-4 mr-2" />
@@ -250,7 +250,7 @@ const Chapter1 = () => {
           <div className="flex items-center justify-between mb-12">
             <Link 
               to="/field-notes" 
-              className="inline-flex items-center text-army hover:text-army/80 transition-colors group"
+              className="inline-flex items-center text-army hover:text-army/80 dark:text-sunburst dark:hover:text-sunburst/80 transition-colors group"
             >
               <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
               Back to Field Notes
@@ -261,7 +261,7 @@ const Chapter1 = () => {
           {/* Enhanced article header */}
           <header className="mb-16">
             <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6 font-display leading-tight">
-              {metadata?.title || 'Field Note 1: Mission Before Metrics'}
+              {metadata?.title || 'Field Note 1: Chapter Title'}
             </h1>
             <div className="flex items-center text-muted-foreground text-sm bg-gray-50 dark:bg-gray-800/50 px-4 py-3 rounded-lg">
               <Clock className="w-4 h-4 mr-2" />
