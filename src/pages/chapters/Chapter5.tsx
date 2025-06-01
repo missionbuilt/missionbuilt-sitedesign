@@ -11,6 +11,7 @@ import LinkSection from '@/components/LinkSection';
 import ReadingProgress from '@/components/ReadingProgress';
 import SectionDivider from '@/components/SectionDivider';
 import PdfDownloadButton from '@/components/PdfDownloadButton';
+import ChapterNavigation from '@/components/ChapterNavigation';
 import { calculateReadTime } from '@/utils/readTimeCalculator';
 import { contentService, ChapterMeta, ChapterLink } from '@/services/contentService';
 
@@ -290,6 +291,8 @@ const Chapter5 = () => {
               onContentChange={handleContentChange}
             />
           </div>
+
+          <ChapterNavigation currentChapter={5} />
 
           <SectionDivider />
 
