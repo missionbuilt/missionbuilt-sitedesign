@@ -299,78 +299,86 @@ const FieldNotes = () => {
                 <p className="text-sm text-muted-foreground mt-2">Check the browser console for loading details.</p>
               </div>
             ) : (
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Title</TableHead>
-                    <TableHead>Published</TableHead>
-                    <TableHead>Read Time</TableHead>
-                    <TableHead>Tags</TableHead>
-                    <TableHead className="text-center">Status</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {chapters.map((chapter) => (
-                    <TableRow key={chapter.id}>
-                      <TableCell>
-                        {chapter.slug ? (
-                          <Link 
-                            to={`/field-notes/${chapter.slug}`}
-                            className="font-medium text-army hover:text-army/80 transition-colors"
-                          >
-                            {chapter.title}
-                          </Link>
-                        ) : (
-                          <span className="font-medium text-muted-foreground">
-                            {chapter.title}
-                          </span>
-                        )}
-                        {chapter.description && (
-                          <p className="text-sm text-muted-foreground mt-1">
-                            {chapter.description}
-                          </p>
-                        )}
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex items-center text-sm text-muted-foreground">
-                          <Calendar className="w-4 h-4 mr-1" />
-                          {chapter.publishedDate}
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex items-center text-sm text-muted-foreground">
-                          <Clock className="w-4 h-4 mr-1" />
-                          {chapter.readTime}
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex flex-wrap gap-1">
-                          {chapter.tags.map((tag) => (
-                            <span 
-                              key={tag}
-                              className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-army/10 text-army"
-                            >
-                              <Tag className="w-3 h-3 mr-1" />
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-                      </TableCell>
-                      <TableCell className="text-center">
-                        <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                          chapter.status === 'published' 
-                            ? 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400'
-                            : chapter.status === 'draft'
-                            ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400'
-                            : 'bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-400'
-                        }`}>
-                          {chapter.status === 'published' ? 'Good Lift' : chapter.status === 'draft' ? 'Chalking Up' : chapter.status}
-                        </span>
-                      </TableCell>
+              <>
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Title</TableHead>
+                      <TableHead>Published</TableHead>
+                      <TableHead>Read Time</TableHead>
+                      <TableHead>Tags</TableHead>
+                      <TableHead className="text-center">Status</TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                  </TableHeader>
+                  <TableBody>
+                    {chapters.map((chapter) => (
+                      <TableRow key={chapter.id}>
+                        <TableCell>
+                          {chapter.slug ? (
+                            <Link 
+                              to={`/field-notes/${chapter.slug}`}
+                              className="font-medium text-army hover:text-army/80 transition-colors"
+                            >
+                              {chapter.title}
+                            </Link>
+                          ) : (
+                            <span className="font-medium text-muted-foreground">
+                              {chapter.title}
+                            </span>
+                          )}
+                          {chapter.description && (
+                            <p className="text-sm text-muted-foreground mt-1">
+                              {chapter.description}
+                            </p>
+                          )}
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center text-sm text-muted-foreground">
+                            <Calendar className="w-4 h-4 mr-1" />
+                            {chapter.publishedDate}
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center text-sm text-muted-foreground">
+                            <Clock className="w-4 h-4 mr-1" />
+                            {chapter.readTime}
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex flex-wrap gap-1">
+                            {chapter.tags.map((tag) => (
+                              <span 
+                                key={tag}
+                                className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-army/10 text-army"
+                              >
+                                <Tag className="w-3 h-3 mr-1" />
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-center">
+                          <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+                            chapter.status === 'published' 
+                              ? 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400'
+                              : chapter.status === 'draft'
+                              ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400'
+                              : 'bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-400'
+                          }`}>
+                            {chapter.status === 'published' ? 'Good Lift' : chapter.status === 'draft' ? 'Chalking Up' : chapter.status}
+                          </span>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+                
+                <div className="mt-8 text-center py-6 border-t border-border">
+                  <p className="text-muted-foreground text-sm">
+                    More chapters are on the way
+                  </p>
+                </div>
+              </>
             )}
           </div>
         </div>
