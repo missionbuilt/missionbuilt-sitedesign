@@ -27,11 +27,11 @@ const CallToAction = () => {
           <div className="bg-gradient-to-br from-slate/5 to-army/5 p-8 md:p-10 rounded-2xl border border-slate/10 mb-8 shadow-sm">
             <p className="body-md mb-8">
               This is more than a book – it's an evolving conversation about how to build products that truly matter. 
-              Begin with the training logs, share your thoughts, and help shape where this goes next.
+              Begin with the field notes, share your thoughts, and help shape where this goes next.
             </p>
             
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Link to="/traininglogs" onClick={scrollToTop} className="btn-army flex items-center justify-center gap-2 group animate-fade-in">
+              <Link to="/field-notes" onClick={scrollToTop} className="btn-army flex items-center justify-center gap-2 group animate-fade-in">
                 <span>Start Reading</span>
                 <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </Link>
