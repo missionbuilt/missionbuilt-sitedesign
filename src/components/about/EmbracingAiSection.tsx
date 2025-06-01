@@ -7,7 +7,7 @@ const EmbracingAiSection = () => {
   return (
     <div className="mb-16">
       <h3 className="text-2xl font-semibold mb-6 text-center">Embracing AI</h3>
-      <Card className="bg-gradient-to-br from-steel/5 to-slate/5 hover:shadow-md transition-shadow duration-300 border border-slate/10">
+      <Card className="bg-white dark:bg-white hover:shadow-md transition-shadow duration-300 border border-slate/10">
         <CardContent className="p-8">
           <div className="flex justify-center mb-6">
             <div className="p-3 bg-steel/10 rounded-full">
@@ -15,7 +15,7 @@ const EmbracingAiSection = () => {
             </div>
           </div>
           
-          <div className="space-y-6 text-slate dark:text-slate-200 leading-relaxed">
+          <div className="space-y-6 text-slate dark:text-slate leading-relaxed">
             <p>
               We're not just okay with using AI — we depend on it. MissionBuilt is a product of passion, purpose, and pragmatic tooling. AI is our creative amplifier. It's how we move faster without burning out. It's how we stay honest to the mission while still making time for our kids, our training, our teams.
             </p>

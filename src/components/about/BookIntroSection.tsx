@@ -6,7 +6,7 @@ import { Github } from "lucide-react";
 const BookIntroSection = () => {
   return (
     <div className="mb-16">
-      <Card className="bg-gradient-to-br from-slate/5 to-army/5 hover:shadow-md transition-shadow duration-300 border border-slate/10 overflow-hidden">
+      <Card className="bg-white dark:bg-white hover:shadow-md transition-shadow duration-300 border border-slate/10 overflow-hidden">
         <CardContent className="p-8">
           <div className="flex items-center justify-center mb-6">
             <div className="p-3 bg-army/10 rounded-full">
@@ -16,7 +16,7 @@ const BookIntroSection = () => {
             </div>
           </div>
           
-          <div className="space-y-6 text-slate dark:text-slate-200 leading-relaxed">
+          <div className="space-y-6 text-slate dark:text-slate leading-relaxed">
             <p className="text-lg">
               MissionBuilt was born from a simple idea: that the principles driving successful product teams and driven lifters are more alike than they seem. After decades in both worlds—tech product management and competitive powerlifting—it became clear that each domain thrives on the same core truths: consistency, purpose, and relentless focus on the mission.
             </p>
