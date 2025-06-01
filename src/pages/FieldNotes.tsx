@@ -1,10 +1,10 @@
-
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { Calendar, Clock, Tag } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import PdfDownloadButton from '@/components/PdfDownloadButton';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -291,6 +291,9 @@ const FieldNotes = () => {
             <div className="text-center">
               <h2 className="text-lg font-medium text-army mb-2">Mission Built: Lessons from the Barbell and the Boardroom</h2>
               <h1 className="text-4xl font-bold text-foreground mb-4">Field Notes</h1>
+              <div className="mt-4">
+                <PdfDownloadButton />
+              </div>
             </div>
           </header>
           

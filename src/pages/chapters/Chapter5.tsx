@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
@@ -11,6 +10,7 @@ import ContentEditor from '@/components/ContentEditor';
 import LinkSection from '@/components/LinkSection';
 import ReadingProgress from '@/components/ReadingProgress';
 import SectionDivider from '@/components/SectionDivider';
+import PdfDownloadButton from '@/components/PdfDownloadButton';
 import { calculateReadTime } from '@/utils/readTimeCalculator';
 import { contentService, ChapterMeta, ChapterLink } from '@/services/contentService';
 
@@ -229,13 +229,16 @@ const Chapter5 = () => {
       
       <main className="container-custom py-16">
         <div className="max-w-4xl mx-auto">
-          <Link 
-            to="/field-notes" 
-            className="inline-flex items-center text-army hover:text-army/80 transition-colors mb-12 group"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
-            Back to Field Notes
-          </Link>
+          <div className="flex items-center justify-between mb-12">
+            <Link 
+              to="/field-notes" 
+              className="inline-flex items-center text-army hover:text-army/80 transition-colors group"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
+              Back to Field Notes
+            </Link>
+            <PdfDownloadButton />
+          </div>
           
           {/* Enhanced article header */}
           <header className="mb-16">
