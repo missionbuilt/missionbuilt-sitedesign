@@ -218,7 +218,7 @@ const Chapter1 = () => {
       {/* Hero Image Section */}
       <div className="relative h-96 overflow-hidden">
         <img 
-          src="/lovable-uploads/f244683d-a384-4d5c-8a23-a2e82790137f.png"
+          src="/lovable-uploads/f1cc2f96-82c1-4469-b2a2-c50ca532dd1e.png"
           alt="Field Note 1 Hero - Foundations and Systems"
           className="w-full h-full object-cover"
         />
