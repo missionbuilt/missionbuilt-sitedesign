@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
@@ -5,6 +6,7 @@ import { Calendar, Clock, Tag } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { contentService } from '@/services/contentService';
 import { calculateReadTime } from '@/utils/readTimeCalculator';
@@ -78,7 +80,8 @@ const FieldNotes = () => {
             tags: metadata1.tags,
             description: metadata1.description,
             slug: 'chapter-1',
-            status: metadata1.status
+            status: metadata1.status,
+            chapterNumber: 1
           });
           console.log('Added chapter 1 to list');
         } else {
@@ -95,7 +98,8 @@ const FieldNotes = () => {
             tags: metadata2.tags,
             description: metadata2.description,
             slug: 'chapter-2',
-            status: metadata2.status
+            status: metadata2.status,
+            chapterNumber: 2
           });
           console.log('Added chapter 2 to list');
         } else {
@@ -112,7 +116,8 @@ const FieldNotes = () => {
             tags: metadata3.tags,
             description: metadata3.description,
             slug: 'chapter-3',
-            status: metadata3.status
+            status: metadata3.status,
+            chapterNumber: 3
           });
           console.log('Added chapter 3 to list');
         } else {
@@ -129,7 +134,8 @@ const FieldNotes = () => {
             tags: metadata4.tags,
             description: metadata4.description,
             slug: 'chapter-4',
-            status: metadata4.status
+            status: metadata4.status,
+            chapterNumber: 4
           });
           console.log('Added chapter 4 to list');
         } else {
@@ -146,7 +152,8 @@ const FieldNotes = () => {
             tags: metadata5.tags,
             description: metadata5.description,
             slug: 'chapter-5',
-            status: metadata5.status
+            status: metadata5.status,
+            chapterNumber: 5
           });
           console.log('Added chapter 5 to list');
         } else {
@@ -162,7 +169,8 @@ const FieldNotes = () => {
           tags: ['Coming Soon'],
           description: 'High performance can\'t be sustained without strategic rest. Just like training cycles include deload weeks, leadership must include space to reset. This chapter explores burnout, recovery rhythms, and how stillness fuels strength.',
           slug: null,
-          status: 'draft'
+          status: 'draft',
+          chapterNumber: 6
         });
 
         // Add another draft chapter entry for showcase
@@ -174,8 +182,12 @@ const FieldNotes = () => {
           tags: ['Coming Soon'],
           description: 'Don\'t just chase flashy features or max lifts — build the engine underneath. This chapter will cover foundational systems thinking, aerobic capacity, platform architecture, and the quiet capabilities that make everything else possible.',
           slug: null,
-          status: 'draft'
+          status: 'draft',
+          chapterNumber: 7
         });
+        
+        // Sort chapters by chapter number to ensure proper reading order
+        chaptersData.sort((a, b) => a.chapterNumber - b.chapterNumber);
         
         console.log('Final chapters data:', chaptersData);
         console.log('Total chapters to display:', chaptersData.length);
@@ -208,6 +220,10 @@ const FieldNotes = () => {
               {[1, 2, 3, 4].map((i) => (
                 <Card key={i} className="h-48">
                   <CardHeader>
+                    <div className="flex items-center gap-2 mb-2">
+                      <Skeleton className="h-6 w-20 rounded-full" />
+                      <Skeleton className="h-4 w-16 rounded-full" />
+                    </div>
                     <Skeleton className="h-6 w-3/4 mb-2" />
                     <Skeleton className="h-4 w-full" />
                     <Skeleton className="h-4 w-2/3" />
@@ -288,15 +304,20 @@ const FieldNotes = () => {
                     <Card key={chapter.id} className="card-hover transition-all duration-200 hover:shadow-lg">
                       <CardHeader className="pb-3">
                         <div className="flex items-center justify-between mb-2">
-                          <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                            chapter.status === 'published' 
-                              ? 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400'
-                              : chapter.status === 'draft'
-                              ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400'
-                              : 'bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-400'
-                          }`}>
-                            {chapter.status === 'published' ? 'Good Lift' : chapter.status === 'draft' ? 'Chalking Up' : chapter.status}
-                          </span>
+                          <div className="flex items-center gap-2">
+                            <Badge variant="outline" className="text-xs font-semibold">
+                              Chapter {chapter.chapterNumber}
+                            </Badge>
+                            <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+                              chapter.status === 'published' 
+                                ? 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400'
+                                : chapter.status === 'draft'
+                                ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400'
+                                : 'bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-400'
+                            }`}>
+                              {chapter.status === 'published' ? 'Good Lift' : chapter.status === 'draft' ? 'Chalking Up' : chapter.status}
+                            </span>
+                          </div>
                         </div>
                         
                         <CardTitle className="text-xl leading-tight">
