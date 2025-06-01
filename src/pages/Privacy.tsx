@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import Navbar from '@/components/Navbar';
@@ -68,7 +67,7 @@ const Privacy = () => {
                 </p>
                 
                 <p className="mb-4">
-                  More info on the license: <a href="https://creativecommons.org/licenses/by-nc-sa/4.0" target="_blank" rel="noopener noreferrer" className="text-army hover:underline" onClick={scrollToTop}>creativecommons.org/licenses/by-nc-sa/4.0</a>
+                  More info on the license: <a href="https://creativecommons.org/licenses/by-nc-sa/4.0" target="_blank" rel="noopener noreferrer" className="text-army hover:underline dark:text-sunburst dark:hover:text-sunburst/80" onClick={scrollToTop}>creativecommons.org/licenses/by-nc-sa/4.0</a>
                 </p>
               </div>
             </section>
@@ -131,7 +130,7 @@ const Privacy = () => {
               <div className="space-y-4">
                 <p className="mb-4">
                   Questions, concerns, or brilliant ideas?<br />
-                  Bluesky: <a href="https://bsky.app/profile/missionbuilt.bsky.social" className="text-army hover:underline" onClick={scrollToTop}>missionbuilt.bsky.social</a>
+                  Bluesky: <a href="https://bsky.app/profile/missionbuilt.bsky.social" className="text-army hover:underline dark:text-sunburst dark:hover:text-sunburst/80" onClick={scrollToTop}>missionbuilt.bsky.social</a>
                 </p>
               </div>
             </section>
