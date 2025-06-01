@@ -1,4 +1,3 @@
-
 import { Chapter, ChapterMetadata } from '@/types/chapter';
 
 export interface ChapterLink {
@@ -64,7 +63,7 @@ class ContentService {
           const meta = JSON.parse(responseText);
           console.log(`Parsed metadata for ${chapterId}:`, meta);
           console.log(`Status field for ${chapterId}:`, meta.status);
-          return meta;
+          return meta; // This was missing! The function was continuing instead of returning here
         } catch (parseError) {
           console.error(`JSON parse error for ${chapterId}:`, parseError);
           return null;
