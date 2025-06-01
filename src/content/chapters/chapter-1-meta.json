@@ -1,1 +1,119 @@
-
+{
+  "id": "chapter-1",
+  "title": "Mission Before Metrics",
+  "subtitle": "Finding Your North Star in a Metrics-Driven World",
+  "publishedDate": "2025-05-25",
+  "readTime": "5 min read",
+  "tags": [
+    "mission",
+    "leadership",
+    "purpose"
+  ],
+  "description": "Discover why starting with mission rather than metrics leads to more meaningful and sustainable success.",
+  "slug": "mission-before-metrics",
+  "status": "published",
+  "links": [
+    {
+      "id": "1748722065714hid849r0c",
+      "name": "One Bullet Away: The Making of a Marine Officer",
+      "summary": "Memoir by Nathaniel Fick chronicling his journey from Dartmouth student to Recon Marine officer, revealing the tension between military ideals and battlefield reality.",
+      "url": "https://en.wikipedia.org/wiki/One_Bullet_Away"
+    },
+    {
+      "id": "1748722065714hv0h2qrbj",
+      "name": "CD Projekt Red Stock Drops After Buggy, Messy ‘Cyberpunk 2077’ Launch – Forbes",
+      "summary": "A case study in date-driven shipping that sacrificed long-term trust for short-term metrics.",
+      "url": "https://www.forbes.com/sites/davidthier/2020/12/11/cd-projekt-red-stock-drops-after-buggy-messy-cyberpunk-2077-launch/"
+    },
+    {
+      "id": "1748722065714vcfou86sv",
+      "name": "\"I Don't Have to Be Fine\": Everything Simone Biles Has Said About Mental Health – People Magazine",
+      "summary": "An athlete choosing alignment over achievement — and sparking a global conversation.",
+      "url": "https://people.com/sports/everything-simone-biles-has-said-about-mental-health/"
+    },
+    {
+      "id": "17487220657146h11qk1p6",
+      "name": "Don’t Buy This Jacket – Patagonia",
+      "summary": "Iconic ad campaign where brand values overrode short-term sales incentives.",
+      "url": "https://www.patagonia.com/stories/dont-buy-this-jacket/story-18615.html"
+    },
+    {
+      "id": "1748722065714loqmiggwq",
+      "name": "The Business Case for Purpose – Harvard Business Review, 2016",
+      "summary": "Purpose-driven companies see higher retention, satisfaction, and performance.",
+      "url": "https://hbr.org/sponsored/2016/04/the-business-case-for-purpose"
+    },
+    {
+      "id": "17487220657140q1bea79f",
+      "name": "Purpose at Work – Imperative & NYU Study, 2016",
+      "summary": "54% of purpose-driven employees are more likely to stay 5+ years.",
+      "url": "https://www.imperative.com/resource/2016-workforce-purpose-index"
+    },
+    {
+      "id": "17487220657141bs75w75o",
+      "name": "Purpose: Shifting from Why to How – McKinsey & Company, 2020",
+      "summary": "A roadmap for operationalizing purpose across the org.",
+      "url": "https://www.mckinsey.com/business-functions/people-and-organizational-performance/our-insights/purpose-shifting-from-why-to-how"
+    },
+    {
+      "id": "1748722065714ycoup67um",
+      "name": "John Boyd – OODA Loop – Wikipedia",
+      "summary": "Military strategy model focused on Observation, Orientation, Decision, and Action. Useful for product and performance under uncertainty.",
+      "url": "https://en.wikipedia.org/wiki/OODA_loop"
+    },
+    {
+      "id": "1748722065714ffd4wllyy",
+      "name": "What Really Brought Down the Boeing 737 Max? – The New York Times",
+      "summary": "How engineering culture and metric pressures at Boeing overtook the company’s safety-driven mission — with catastrophic results.",
+      "url": "https://www.nytimes.com/2019/09/18/magazine/boeing-737-max-crashes.html"
+    },
+    {
+      "id": "17487220657146l0azgpmk",
+      "name": "Hafthor Björnsson on Pec Injury – Essentially Sports",
+      "summary": "A personal reflection on chasing numbers too hard — and paying the price with injury.",
+      "url": "https://www.essentiallysports.com/bodybuilding-news-probably-my-biggest-mistake-months-after-a-horrifying-pec-tear-while-bench-pressing-strongman-legend-makes-a-candid-confession-about-his-injury-hafthor-bjornsson/"
+    },
+    {
+      "id": "1748722065714cv3oy5xl0",
+      "name": "Hafthor Björnsson Injury Coverage – AS.com",
+      "summary": "News coverage providing details and public reaction to the injury — reinforces the story’s cautionary angle.",
+      "url": "https://en.as.com/entertainment/game-of-thrones-star-hafthor-bjornsson-suffers-nasty-injury-while-bench-pressing-n/"
+    },
+    {
+      "id": "1748722065714bcpen8w37",
+      "name": "Improving Employee Retention – Guidehouse",
+      "summary": "Research-based strategies for employee retention, including mission alignment and culture as key levers.",
+      "url": "https://guidehouse.com/-/media/new-library/industries/defense-and-security/documents/2023/gh-161-wp-improving-employee-retention.pdf"
+    },
+    {
+      "id": "1748722065714blz2fmyxk",
+      "name": "Purpose-Driven Work and Turnover – Benevity Talent Retention Study",
+      "summary": "Mission-driven workers are significantly more likely to stay long-term — supports your thesis with compelling data.",
+      "url": "https://benevity.com/talent-retention-study"
+    },
+    {
+      "id": "1748722065714kswglrrw2",
+      "name": "Stefi Cohen’s Training Philosophy and Hybrid Methodology – Hybrid Performance Method",
+      "summary": "An elite athlete’s fusion of structure and adaptation in strength programming.",
+      "url": "https://www.hybridperformancemethod.com/"
+    },
+    {
+      "id": "1748722065714v9dumq1si",
+      "name": "Agile Retrospectives and Team Rituals – Esther Derby & Diana Larsen",
+      "summary": "A guide to turning recurring team reviews into meaningful improvement rituals.",
+      "url": "https://www.agilealliance.org/resources/books/agile-retrospectives-making-good-teams-great/"
+    },
+    {
+      "id": "1748722065714o0htu62ea",
+      "name": "Atlassian ShipIt (Hack Week Model) – Atlassian",
+      "summary": "A structured ritual encouraging innovation through autonomy and creative freedom.",
+      "url": "https://www.atlassian.com/company/shipit"
+    },
+    {
+      "id": "1748722065714ul7r7o4vl",
+      "name": "Spotify Hack Culture Overview – Scaling Agile @ Spotify (Whitepaper)",
+      "summary": "How Spotify built agility and creativity into team rituals — not rigid processes.",
+      "url": "https://blog.crisp.se/wp-content/uploads/2012/11/SpotifyScaling.pdf"
+    }
+  ]
+}
