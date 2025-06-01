@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Calendar, Clock, Tag } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { contentService } from '@/services/contentService';
 import { calculateReadTime } from '@/utils/readTimeCalculator';
@@ -204,43 +204,26 @@ const FieldNotes = () => {
               <h1 className="text-4xl font-bold text-foreground mb-4">Field Notes</h1>
             </header>
             
-            <div className="space-y-6">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Title</TableHead>
-                    <TableHead>Published</TableHead>
-                    <TableHead>Read Time</TableHead>
-                    <TableHead>Tags</TableHead>
-                    <TableHead className="text-center">Status</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {[1, 2, 3, 4].map((i) => (
-                    <TableRow key={i}>
-                      <TableCell>
-                        <Skeleton className="h-4 w-48 mb-2" />
-                        <Skeleton className="h-3 w-64" />
-                      </TableCell>
-                      <TableCell>
-                        <Skeleton className="h-4 w-24" />
-                      </TableCell>
-                      <TableCell>
-                        <Skeleton className="h-4 w-16" />
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex gap-1">
-                          <Skeleton className="h-6 w-16 rounded-full" />
-                          <Skeleton className="h-6 w-20 rounded-full" />
-                        </div>
-                      </TableCell>
-                      <TableCell className="text-center">
-                        <Skeleton className="h-6 w-20 rounded-full mx-auto" />
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+            <div className="grid gap-6 md:grid-cols-2">
+              {[1, 2, 3, 4].map((i) => (
+                <Card key={i} className="h-48">
+                  <CardHeader>
+                    <Skeleton className="h-6 w-3/4 mb-2" />
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-2/3" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex items-center gap-4 mb-3">
+                      <Skeleton className="h-4 w-24" />
+                      <Skeleton className="h-4 w-16" />
+                    </div>
+                    <div className="flex gap-2">
+                      <Skeleton className="h-6 w-16 rounded-full" />
+                      <Skeleton className="h-6 w-20 rounded-full" />
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
             </div>
           </div>
         </main>
@@ -300,64 +283,11 @@ const FieldNotes = () => {
               </div>
             ) : (
               <>
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Title</TableHead>
-                      <TableHead>Published</TableHead>
-                      <TableHead>Read Time</TableHead>
-                      <TableHead>Tags</TableHead>
-                      <TableHead className="text-center">Status</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {chapters.map((chapter) => (
-                      <TableRow key={chapter.id}>
-                        <TableCell>
-                          {chapter.slug ? (
-                            <Link 
-                              to={`/field-notes/${chapter.slug}`}
-                              className="font-medium text-army hover:text-army/80 transition-colors"
-                            >
-                              {chapter.title}
-                            </Link>
-                          ) : (
-                            <span className="font-medium text-muted-foreground">
-                              {chapter.title}
-                            </span>
-                          )}
-                          {chapter.description && (
-                            <p className="text-sm text-muted-foreground mt-1">
-                              {chapter.description}
-                            </p>
-                          )}
-                        </TableCell>
-                        <TableCell>
-                          <div className="flex items-center text-sm text-muted-foreground">
-                            <Calendar className="w-4 h-4 mr-1" />
-                            {chapter.publishedDate}
-                          </div>
-                        </TableCell>
-                        <TableCell>
-                          <div className="flex items-center text-sm text-muted-foreground">
-                            <Clock className="w-4 h-4 mr-1" />
-                            {chapter.readTime}
-                          </div>
-                        </TableCell>
-                        <TableCell>
-                          <div className="flex flex-wrap gap-1">
-                            {chapter.tags.map((tag) => (
-                              <span 
-                                key={tag}
-                                className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-army/10 text-army"
-                              >
-                                <Tag className="w-3 h-3 mr-1" />
-                                {tag}
-                              </span>
-                            ))}
-                          </div>
-                        </TableCell>
-                        <TableCell className="text-center">
+                <div className="grid gap-6 md:grid-cols-2">
+                  {chapters.map((chapter) => (
+                    <Card key={chapter.id} className="card-hover transition-all duration-200 hover:shadow-lg">
+                      <CardHeader className="pb-3">
+                        <div className="flex items-center justify-between mb-2">
                           <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
                             chapter.status === 'published' 
                               ? 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400'
@@ -367,11 +297,57 @@ const FieldNotes = () => {
                           }`}>
                             {chapter.status === 'published' ? 'Good Lift' : chapter.status === 'draft' ? 'Chalking Up' : chapter.status}
                           </span>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
+                        </div>
+                        
+                        <CardTitle className="text-xl leading-tight">
+                          {chapter.slug ? (
+                            <Link 
+                              to={`/field-notes/${chapter.slug}`}
+                              className="text-army hover:text-army/80 transition-colors"
+                            >
+                              {chapter.title}
+                            </Link>
+                          ) : (
+                            <span className="text-muted-foreground">
+                              {chapter.title}
+                            </span>
+                          )}
+                        </CardTitle>
+                        
+                        {chapter.description && (
+                          <CardDescription className="text-sm leading-relaxed">
+                            {chapter.description}
+                          </CardDescription>
+                        )}
+                      </CardHeader>
+                      
+                      <CardContent className="pt-0">
+                        <div className="flex items-center gap-4 mb-3 text-sm text-muted-foreground">
+                          <div className="flex items-center">
+                            <Calendar className="w-4 h-4 mr-1" />
+                            {chapter.publishedDate}
+                          </div>
+                          <div className="flex items-center">
+                            <Clock className="w-4 h-4 mr-1" />
+                            {chapter.readTime}
+                          </div>
+                        </div>
+                        
+                        <div className="flex flex-wrap gap-1">
+                          {chapter.tags.map((tag) => (
+                            <span 
+                              key={tag}
+                              className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-army/10 text-army"
+                            >
+                              <Tag className="w-3 h-3 mr-1" />
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
                 
                 <div className="mt-8 text-center py-6 border-t border-border">
                   <p className="text-muted-foreground text-sm">
