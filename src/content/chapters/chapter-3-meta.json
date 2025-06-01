@@ -1,1 +1,96 @@
-
+{
+  "id": "chapter-3",
+  "title": "Rituals Over Rules",
+  "subtitle": "Chapter 3 Subtitle",
+  "publishedDate": "2025-05-29",
+  "readTime": "5 min read",
+  "tags": [
+    "Habits",
+    "Adaptation",
+    "Reflect",
+    "Work Better"
+  ],
+  "description": "Systems that scale aren't built on rigid rules — they're powered by meaningful rituals. This chapter explores how intentional, repeatable behaviors unlock both innovation and resilience. Drawing from training cycles, product cadences, and team habits, it makes the case for flexible structure over dogma.",
+  "slug": "chapter-3",
+  "status": "draft",
+  "links": [
+    {
+      "id": "1748730111533",
+      "name": "Chalk Up: Rituals That Prepare the Mind and Body",
+      "summary": "Explores how pre-lift rituals like chalking hands and visualization prepare athletes mentally and physically.",
+      "url": "https://www.elitefts.com/education/pre-workout-ritual-instructions"
+    },
+    {
+      "id": "1748730126148",
+      "name": "Stefi Cohen’s Hybrid Training Philosophy",
+      "summary": "Discusses balancing compound and isolation movements, emphasizing adaptability in training.",
+      "url": "https://www.hybridperformancemethod.com/blog/are-isolation-movements-better-for-muscle-growth"
+    },
+    {
+      "id": "1748730142578",
+      "name": "Autoregulation: Can It Be Beneficial for Every Type of Strength Athlete?",
+      "summary": "Details how lifters adjust training intensity based on daily readiness, promoting flexibility within structured programs.",
+      "url": "https://barbend.com/autoregulation/"
+    },
+    {
+      "id": "1748730157743",
+      "name": "CNS Fatigue: Symptoms and Recovery Strategies",
+      "summary": "Addresses central nervous system fatigue and strategies for recovery, highlighting the importance of listening to one's body.",
+      "url": "https://www.strongerbyscience.com/qa/"
+    },
+    {
+      "id": "1748730174520",
+      "name": "What is a Stand-Up Meeting? [+ Expert Tips]",
+      "summary": "Provides guidance on conducting effective stand-up meetings to maintain team alignment.",
+      "url": "https://www.atlassian.com/agile/scrum/standups"
+    },
+    {
+      "id": "1748730191338",
+      "name": "Leadership @ Elastic | Kevin Kluge: Distributed for the Better",
+      "summary": "Discusses Elastic's approach to distributed work and maintaining engineering culture.",
+      "url": "https://www.elastic.co/blog/leadership-elastic-kevin-kluge-distributed-for-the-better"
+    },
+    {
+      "id": "1748730207197",
+      "name": "How to Collaborate Effectively If Your Team Is Remote",
+      "summary": "Harvard Business Review offers evidence-based strategies for improving communication and trust across distributed teams — reinforcing the importance of intentional, adaptive rituals in asynchronous environments.",
+      "url": "https://hbr.org/2018/02/how-to-collaborate-effectively-if-your-team-is-remote"
+    },
+    {
+      "id": "1748730224188",
+      "name": "Shape Up: Stop Running in Circles and Ship Work that Matters",
+      "summary": "Introduces a methodology that emphasizes flexible work cycles over rigid sprints.",
+      "url": "https://basecamp.com/shapeup"
+    },
+    {
+      "id": "1748730239287",
+      "name": "Understanding Developer Burnout",
+      "summary": "Breaks down the causes, symptoms, and strategies for preventing developer burnout — with a focus on workload balance, autonomy, and the importance of adaptive team rituals.",
+      "url": "https://devskiller.com/blog/developer-burnout/"
+    },
+    {
+      "id": "1748730255751",
+      "name": "The Hidden Power of Workplace Rituals",
+      "summary": "Explores how intentional rituals in the workplace can strengthen psychological safety, enhance purpose, and boost performance.",
+      "url": "https://hbr.org/2022/08/the-hidden-power-of-workplace-rituals"
+    },
+    {
+      "id": "1748730271794",
+      "name": "Crunch Culture: How Game Development Becomes Toxic",
+      "summary": "Investigates the detrimental effects of excessive overtime in the gaming industry, highlighting how passion-driven projects can lead to burnout and decreased quality.",
+      "url": "https://reporter.rit.edu/6288/tech/crunch-culture-how-game-development-becomes-toxic/"
+    },
+    {
+      "id": "1748730285124",
+      "name": "Red Dead Redemption 2 Exposes the Gaming Industry's Dangerous Addiction to Overtime",
+      "summary": "WIRED investigates the systemic issue of “crunch culture” in game development, using Rockstar Games as a focal point. The article highlights how extended overtime, driven by passion and pressure, can lead to long-term burnout and erode product quality.",
+      "url": "https://www.wired.com/story/red-dead-redemption-2-rockstar-overtime-crunch/"
+    },
+    {
+      "id": "1748730302906",
+      "name": "How Product Leaders Can Learn to Say No",
+      "summary": "Ken Norton, a former Google product leader and GV partner, emphasizes the critical skill of saying “no” in product management. He discusses how ambiguity can derail teams and the necessity for PMs to set clear boundaries, even when facing pressure from executives. This essay provides practical advice on maintaining focus and protecting the team's priorities.",
+      "url": "https://www.bringthedonuts.com/essays/discipline-of-no.html"
+    }
+  ]
+}
