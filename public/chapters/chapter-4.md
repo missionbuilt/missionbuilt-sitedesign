@@ -28,7 +28,7 @@ Coaches used to flood hitters with advice mid-swing. “Keep your hands back.”
 
 Then came this:
 
-Imagine the knob of the bat is a flashlight. You want to aim that light directly at the catcher’s face. This means holding the bat at an upward angle, with the knob pointing straight toward the catcher. It mimics the way you'd hold and aim a flashlight — which is exactly where the name comes from. Now, all that advice is conveyed in one word.
+Picture the knob of the bat as a flashlight. In the "flashlight position," you're aiming that light beam right at the catcher’s face. This cue helps you set the correct bat angle — slightly upward, with the knob directed toward the target. It’s called the flashlight position because you're holding and pointing the bat the same way you'd shine a flashlight in someone’s eyes.
 
 > “Flashlight!”
 
