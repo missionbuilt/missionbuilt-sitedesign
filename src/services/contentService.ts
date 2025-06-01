@@ -29,11 +29,11 @@ class ContentService {
         }
       }
 
-      // Load from static file
-      const response = await fetch(`/src/content/chapters/${chapterId}.md`);
+      // Load from public directory (works in both dev and production)
+      const response = await fetch(`/chapters/${chapterId}.md`);
       if (response.ok) {
         const content = await response.text();
-        console.log(`Loaded content for ${chapterId} from static file`);
+        console.log(`Loaded content for ${chapterId} from public file`);
         return content;
       }
       
@@ -46,15 +46,15 @@ class ContentService {
 
   async loadChapterMetadata(chapterId: string): Promise<ChapterMeta | null> {
     try {
-      // Load from static file first to get the latest data
-      const response = await fetch(`/src/content/chapters/${chapterId}-meta.json`);
+      // Load from public directory (works in both dev and production)
+      const response = await fetch(`/chapters/${chapterId}-meta.json`);
       if (response.ok) {
         const meta = await response.json();
-        console.log(`Loaded metadata for ${chapterId} from static file with status:`, meta.status);
+        console.log(`Loaded metadata for ${chapterId} from public file with status:`, meta.status);
         return meta;
       }
 
-      // Fallback to localStorage only if static file fails
+      // Fallback to localStorage only if public file fails
       if (this.isDevelopment) {
         const localMeta = localStorage.getItem(`chapter-${chapterId}-meta`);
         if (localMeta) {

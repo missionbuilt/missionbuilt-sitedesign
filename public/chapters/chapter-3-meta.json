@@ -1,0 +1,79 @@
+
+{
+  "id": "chapter-3",
+  "title": "Mind Your Form",
+  "subtitle": "",
+  "publishedDate": "2025-05-28",
+  "readTime": "",
+  "tags": [
+    "Excellence",
+    "Craft",
+    "Train Better",
+    "Work Better"
+  ],
+  "description": "Speed means nothing if you're heading in the wrong direction. This chapter covers technique, precision, and the discipline to do things right even when no one's watching. From squat depth to code reviews, form is what separates good from great.",
+  "slug": "chapter-3",
+  "status": "published",
+  "links": [
+    {
+      "id": "1748734869949",
+      "name": "Ryan Hall's training philosophy",
+      "summary": "Detailed explanation of how proper running form and technique create efficiency and prevent injury.",
+      "url": "https://www.runnersworld.com/advanced/a20812270/ryan-hall-running-form/"
+    },
+    {
+      "id": "1748734888598",
+      "name": "Olympic lifting technique emphasis",
+      "summary": "Analysis of why Olympic weightlifters prioritize technical mastery over max loads in training.",
+      "url": "https://www.catalystathletics.com/article/131/Technique-First-Always/"
+    },
+    {
+      "id": "1748734906669",
+      "name": "Clean Code by Robert C. Martin",
+      "summary": "Foundational text on writing maintainable, readable code with proper structure and naming.",
+      "url": "https://www.oreilly.com/library/view/clean-code-a/9780136083238/"
+    },
+    {
+      "id": "1748734925031",
+      "name": "Code Complete by Steve McConnell",
+      "summary": "Comprehensive guide to software construction practices and attention to detail in programming.",
+      "url": "https://www.microsoftpressstore.com/store/code-complete-9780735619678"
+    },
+    {
+      "id": "1748734943162",
+      "name": "The Pragmatic Programmer",
+      "summary": "Classic text emphasizing craftsmanship and deliberate practice in software development.",
+      "url": "https://pragprog.com/titles/tpp20/the-pragmatic-programmer-20th-anniversary-edition/"
+    },
+    {
+      "id": "1748734961031",
+      "name": "Google's code review practices",
+      "summary": "Documentation of Google's engineering standards and code review process.",
+      "url": "https://google.github.io/eng-practices/review/"
+    },
+    {
+      "id": "1748734979136",
+      "name": "Airbnb's JavaScript Style Guide",
+      "summary": "Example of comprehensive coding standards that prioritize consistency and readability.",
+      "url": "https://github.com/airbnb/javascript"
+    },
+    {
+      "id": "1748734997301",
+      "name": "The Joel Test for software teams",
+      "summary": "Joel Spolsky's 12-point checklist for evaluating software development team quality.",
+      "url": "https://www.joelonsoftware.com/2000/08/09/the-joel-test-12-steps-to-better-code/"
+    },
+    {
+      "id": "1748735016045",
+      "name": "Toyota Production System principles",
+      "summary": "The philosophy of continuous improvement and quality focus that influenced modern software practices.",
+      "url": "https://global.toyota/en/company/vision-and-philosophy/production-system/"
+    },
+    {
+      "id": "1748735034228",
+      "name": "Martin Fowler on technical excellence",
+      "summary": "Essays on why internal quality and craftsmanship matter for long-term software success.",
+      "url": "https://martinfowler.com/articles/is-quality-worth-cost.html"
+    }
+  ]
+}

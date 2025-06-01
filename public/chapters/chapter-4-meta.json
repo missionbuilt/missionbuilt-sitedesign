@@ -1,0 +1,79 @@
+
+{
+  "id": "chapter-4",
+  "title": "Find Your Training Partners",
+  "subtitle": "",
+  "publishedDate": "2025-05-30",
+  "readTime": "",
+  "tags": [
+    "Collaboration",
+    "Community",
+    "Train Better",
+    "Work Better"
+  ],
+  "description": "Iron sharpens iron, and great products are built by great teams. This chapter dives into collaboration, finding the right people to challenge and support your growth, and creating environments where everyone gets stronger together.",
+  "slug": "chapter-4",
+  "status": "published",
+  "links": [
+    {
+      "id": "1748735549987",
+      "name": "Stripe's engineering culture",
+      "summary": "How Stripe builds and maintains high-performing engineering teams through collaboration and shared standards.",
+      "url": "https://stripe.com/blog/engineering-culture"
+    },
+    {
+      "id": "1748735568221",
+      "name": "Google's Project Aristotle",
+      "summary": "Research on what makes teams effective, highlighting psychological safety as the key factor.",
+      "url": "https://rework.withgoogle.com/print/guides/5312495641321472/"
+    },
+    {
+      "id": "1748735586894",
+      "name": "The Wisdom of Teams by Katzenbach & Smith",
+      "summary": "Foundational text on what distinguishes real teams from working groups.",
+      "url": "https://www.harpercollins.com/products/the-wisdom-of-teams-jon-r-katzenbach"
+    },
+    {
+      "id": "1748735606111",
+      "name": "Shopify's development practices",
+      "summary": "How Shopify structures teams and maintains quality through collaborative development.",
+      "url": "https://shopify.engineering/how-shopify-scales-up-its-development-teams"
+    },
+    {
+      "id": "1748735624513",
+      "name": "GitHub's remote collaboration model",
+      "summary": "Lessons from GitHub on building distributed teams that ship quality software.",
+      "url": "https://github.blog/2020-07-06-how-github-uses-github-to-be-productive-and-collaborative/"
+    },
+    {
+      "id": "1748735642835",
+      "name": "The Culture Code by Daniel Coyle",
+      "summary": "How successful groups create belonging, vulnerability, and purpose.",
+      "url": "https://danielcoyle.com/the-culture-code/"
+    },
+    {
+      "id": "1748735661179",
+      "name": "Extreme Programming (XP) practices",
+      "summary": "How pair programming and collective code ownership build stronger teams and better software.",
+      "url": "http://www.extremeprogramming.org/"
+    },
+    {
+      "id": "1748735679738",
+      "name": "The Five Dysfunctions of a Team",
+      "summary": "Patrick Lencioni's model for understanding and overcoming team dysfunction.",
+      "url": "https://www.tablegroup.com/books/dysfunctions"
+    },
+    {
+      "id": "1748735698199",
+      "name": "High Output Management by Andy Grove",
+      "summary": "Intel's former CEO on building productive teams and management systems.",
+      "url": "https://www.penguinrandomhouse.com/books/129650/high-output-management-by-andrew-s-grove/"
+    },
+    {
+      "id": "1748735716653",
+      "name": "Team of Teams by General Stanley McChrystal",
+      "summary": "Military lessons on building adaptive, networked organizations.",
+      "url": "https://www.mcchrystalgroup.com/team-of-teams/"
+    }
+  ]
+}
