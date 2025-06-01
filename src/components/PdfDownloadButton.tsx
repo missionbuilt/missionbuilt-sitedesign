@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
@@ -50,7 +49,7 @@ const PdfDownloadButton: React.FC = () => {
   };
 
   return (
-    <div className="inline-block">
+    <div className="inline-block text-right">
       <Button
         onClick={handleDownload}
         variant="outline"
@@ -60,7 +59,7 @@ const PdfDownloadButton: React.FC = () => {
         <Download className="h-4 w-4" />
         Download PDF
       </Button>
-      <p className="text-sm text-muted-foreground mt-2 text-left">
+      <p className="text-sm text-muted-foreground mt-2">
         Mission Built - PDF edition is a work in progress
       </p>
     </div>
