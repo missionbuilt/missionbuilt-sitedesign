@@ -168,11 +168,11 @@ const FieldNotes = () => {
         // Add another draft chapter entry for showcase
         chaptersData.push({
           id: 'chapter-7-draft',
-          title: '',
+          title: 'Train the Engine, Not Just the Output',
           publishedDate: 'Coming Soon',
           readTime: 'TBD',
           tags: ['Coming Soon'],
-          description: '',
+          description: 'Don\'t just chase flashy features or max lifts — build the engine underneath. This chapter will cover foundational systems thinking, aerobic capacity, platform architecture, and the quiet capabilities that make everything else possible.',
           slug: null,
           status: 'draft'
         });
