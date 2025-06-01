@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
@@ -236,7 +237,7 @@ const Chapter5 = () => {
           <div className="flex items-center gap-6 text-white/95 text-sm font-medium">
             <div className="flex items-center">
               <Calendar className="w-4 h-4 mr-2" />
-              Published June 10th, 2025
+              Published {metadata?.publishedDate ? formatPublishDate(metadata.publishedDate) : 'TBD'}
             </div>
             <div className="flex items-center">
               <Clock className="w-4 h-4 mr-2" />
