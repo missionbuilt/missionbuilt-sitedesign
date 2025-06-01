@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
@@ -157,11 +156,11 @@ const FieldNotes = () => {
         // Add a draft chapter entry for showcase
         chaptersData.push({
           id: 'chapter-6-draft',
-          title: 'Chapter 6',
+          title: 'The Mission Demands Recovery',
           publishedDate: 'Coming Soon',
           readTime: 'TBD',
           tags: ['Coming Soon'],
-          description: 'More insights coming soon...',
+          description: 'High performance can\'t be sustained without strategic rest. Just like training cycles include deload weeks, leadership must include space to reset. This chapter explores burnout, recovery rhythms, and how stillness fuels strength.',
           slug: null,
           status: 'draft'
         });
