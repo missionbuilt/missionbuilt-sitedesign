@@ -250,7 +250,7 @@ const Chapter2 = () => {
           <div className="flex items-center justify-between mb-12">
             <Link 
               to="/field-notes" 
-              className="inline-flex items-center text-army hover:text-army/80 transition-colors group"
+              className="inline-flex items-center text-army hover:text-army/80 dark:text-sunburst dark:hover:text-sunburst/80 transition-colors group"
             >
               <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
               Back to Field Notes
