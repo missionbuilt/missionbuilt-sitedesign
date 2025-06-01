@@ -311,8 +311,8 @@ const FieldNotes = () => {
                 <div className="grid gap-6 md:grid-cols-2">
                   {chapters.map((chapter) => {
                     const CardComponent = (
-                      <Card key={chapter.id} className="card-hover transition-all duration-200 hover:shadow-lg dark:border-slate-700 dark:bg-slate-900/50 dark:hover:bg-slate-800/50 dark:hover:border-slate-600">
-                        <CardHeader className="pb-3">
+                      <Card key={chapter.id} className="card-hover transition-all duration-200 hover:shadow-lg dark:border-slate-700 dark:bg-slate-900/50 dark:hover:bg-slate-800/50 dark:hover:border-slate-600 h-full min-h-[280px] flex flex-col">
+                        <CardHeader className="pb-3 flex-shrink-0">
                           <div className="flex items-center justify-between mb-2">
                             <div className="flex items-center gap-2">
                               <Badge variant="outline" className="text-xs font-semibold dark:border-slate-600 dark:text-slate-200">
@@ -330,20 +330,20 @@ const FieldNotes = () => {
                             </div>
                           </div>
                           
-                          <CardTitle className="text-xl leading-tight">
+                          <CardTitle className="text-xl leading-tight mb-3">
                             <span className={chapter.slug ? "text-army dark:text-sunburst" : "text-muted-foreground dark:text-slate-400"}>
                               {chapter.title}
                             </span>
                           </CardTitle>
                           
                           {chapter.description && (
-                            <CardDescription className="text-sm leading-relaxed dark:text-slate-300">
+                            <CardDescription className="text-sm leading-relaxed dark:text-slate-300 flex-grow">
                               {chapter.description}
                             </CardDescription>
                           )}
                         </CardHeader>
                         
-                        <CardContent className="pt-0">
+                        <CardContent className="pt-0 mt-auto">
                           <div className="flex items-center gap-4 mb-3 text-sm text-muted-foreground dark:text-slate-400">
                             <div className="flex items-center">
                               <Calendar className="w-4 h-4 mr-1" />
@@ -376,7 +376,7 @@ const FieldNotes = () => {
                         <Link 
                           key={chapter.id}
                           to={`/field-notes/${chapter.slug}`}
-                          className="block hover:text-army/80 dark:hover:text-sunburst/80 transition-colors"
+                          className="block hover:text-army/80 dark:hover:text-sunburst/80 transition-colors h-full"
                         >
                           {CardComponent}
                         </Link>
