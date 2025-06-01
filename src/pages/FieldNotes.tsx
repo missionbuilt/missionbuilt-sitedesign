@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
@@ -288,9 +289,11 @@ const FieldNotes = () => {
       <main className="container-custom py-12">
         <div className="max-w-4xl mx-auto">
           <header className="mb-12">
-            <div className="text-center">
-              <h2 className="text-lg font-medium text-army mb-2">Mission Built: Lessons from the Barbell and the Boardroom</h2>
-              <h1 className="text-4xl font-bold text-foreground mb-4">Field Notes</h1>
+            <div className="flex justify-between items-start">
+              <div>
+                <h2 className="text-lg font-medium text-army mb-2">Mission Built: Lessons from the Barbell and the Boardroom</h2>
+                <h1 className="text-4xl font-bold text-foreground mb-4">Field Notes</h1>
+              </div>
               <div className="mt-4">
                 <PdfDownloadButton />
               </div>
