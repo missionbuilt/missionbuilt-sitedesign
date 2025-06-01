@@ -292,6 +292,8 @@ const Chapter3 = () => {
             />
           </div>
 
+          <ChapterNavigation currentChapter={3} />
+
           <SectionDivider />
 
           {/* Enhanced Links Section */}
