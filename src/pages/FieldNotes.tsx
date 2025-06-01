@@ -352,7 +352,7 @@ const FieldNotes = () => {
                             ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400'
                             : 'bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-400'
                         }`}>
-                          {chapter.status === 'published' ? 'Good Lift' : chapter.status}
+                          {chapter.status === 'published' ? 'Good Lift' : chapter.status === 'draft' ? 'Chalking Up' : chapter.status}
                         </span>
                       </TableCell>
                     </TableRow>
