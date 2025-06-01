@@ -34,8 +34,8 @@ const AboutMeSection = () => {
       <Card className="w-full bg-card shadow-md border border-slate/10">
         <CardContent className="pt-6">
           <h2 className="text-2xl font-bold mb-4 text-center">Hi, I'm Mike</h2>
-          <div className="space-y-6 text-slate dark:text-slate-200 prose-bullets">
-            <style jsx>{`
+          <div className="space-y-6 text-slate dark:text-slate-200">
+            <style>{`
               .prose-bullets ul {
                 list-style-type: disc;
                 margin-left: 1.5rem;
