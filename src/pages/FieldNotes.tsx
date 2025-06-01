@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
@@ -152,6 +153,18 @@ const FieldNotes = () => {
         } else {
           console.log('Chapter 5 not added - metadata5:', metadata5, 'status:', metadata5?.status);
         }
+
+        // Add a draft chapter entry for showcase
+        chaptersData.push({
+          id: 'chapter-6-draft',
+          title: 'Chapter 6',
+          publishedDate: 'Coming Soon',
+          readTime: 'TBD',
+          tags: ['Coming Soon'],
+          description: 'More insights coming soon...',
+          slug: null,
+          status: 'draft'
+        });
         
         console.log('Final chapters data:', chaptersData);
         console.log('Total chapters to display:', chaptersData.length);
@@ -289,12 +302,18 @@ const FieldNotes = () => {
                   {chapters.map((chapter) => (
                     <TableRow key={chapter.id}>
                       <TableCell>
-                        <Link 
-                          to={`/field-notes/${chapter.slug}`}
-                          className="font-medium text-army hover:text-army/80 transition-colors"
-                        >
-                          {chapter.title}
-                        </Link>
+                        {chapter.slug ? (
+                          <Link 
+                            to={`/field-notes/${chapter.slug}`}
+                            className="font-medium text-army hover:text-army/80 transition-colors"
+                          >
+                            {chapter.title}
+                          </Link>
+                        ) : (
+                          <span className="font-medium text-muted-foreground">
+                            {chapter.title}
+                          </span>
+                        )}
                         {chapter.description && (
                           <p className="text-sm text-muted-foreground mt-1">
                             {chapter.description}
