@@ -11,7 +11,7 @@ const OpenThanksSection = () => {
           
           <div className="space-y-6 text-slate dark:text-slate leading-relaxed">
             <p>
-              The Unity of Product & Power isn't just a book. It's a collaboration across domains, disciplines, and even dimensions. It's an open-source memoir shaped by years of lifting, building, and listening—made possible by a growing circle of co-authors, contributors, and creative forces.
+              Mission Built isn't just a book. It's a collaboration across domains, disciplines, and even dimensions. It's an open-source memoir shaped by years of lifting, building, and listening—made possible by a growing circle of co-authors, contributors, and creative forces.
             </p>
             
             <p className="font-medium text-army dark:text-army">This project wouldn't exist without:</p>
