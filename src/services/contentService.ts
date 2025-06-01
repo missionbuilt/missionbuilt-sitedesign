@@ -48,16 +48,31 @@ class ContentService {
   async loadChapterMetadata(chapterId: string): Promise<ChapterMeta | null> {
     try {
       // Load from public directory (works in both dev and production)
-      console.log(`Attempting to load metadata for ${chapterId} from /chapters/${chapterId}-meta.json`);
-      const response = await fetch(`/chapters/${chapterId}-meta.json`);
+      const url = `/chapters/${chapterId}-meta.json`;
+      console.log(`Attempting to load metadata for ${chapterId} from ${url}`);
+      console.log(`Full URL: ${window.location.origin}${url}`);
+      
+      const response = await fetch(url);
       console.log(`Response status for ${chapterId}:`, response.status, response.ok);
+      console.log(`Response headers:`, Object.fromEntries(response.headers.entries()));
       
       if (response.ok) {
-        const meta = await response.json();
-        console.log(`Loaded metadata for ${chapterId} from public file with status:`, meta.status);
-        return meta;
+        const responseText = await response.text();
+        console.log(`Raw response text for ${chapterId}:`, responseText.substring(0, 200) + '...');
+        
+        try {
+          const meta = JSON.parse(responseText);
+          console.log(`Parsed metadata for ${chapterId}:`, meta);
+          console.log(`Status field for ${chapterId}:`, meta.status);
+          return meta;
+        } catch (parseError) {
+          console.error(`JSON parse error for ${chapterId}:`, parseError);
+          return null;
+        }
       } else {
         console.log(`Failed to load from public, response status: ${response.status}`);
+        const errorText = await response.text();
+        console.log(`Error response body for ${chapterId}:`, errorText);
       }
 
       // Fallback to localStorage only if public file fails
