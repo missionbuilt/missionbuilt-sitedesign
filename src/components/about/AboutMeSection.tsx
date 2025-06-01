@@ -34,7 +34,20 @@ const AboutMeSection = () => {
       <Card className="w-full bg-card shadow-md border border-slate/10">
         <CardContent className="pt-6">
           <h2 className="text-2xl font-bold mb-4 text-center">Hi, I'm Mike</h2>
-          <div className="space-y-6 text-slate dark:text-slate-200">
+          <div className="space-y-6 text-slate dark:text-slate-200 prose-bullets">
+            <style jsx>{`
+              .prose-bullets ul {
+                list-style-type: disc;
+                margin-left: 1.5rem;
+              }
+              .prose-bullets ul li::marker {
+                color: #4A5A68;
+              }
+              .dark .prose-bullets ul li::marker {
+                color: #CBD5E1;
+              }
+            `}</style>
+            
             <p className="text-lg">
               A product leader by trade, a powerlifter by obsession, and a father before all else.
             </p>
