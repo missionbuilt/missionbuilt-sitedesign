@@ -1,3 +1,4 @@
+
 import { Chapter, ChapterMetadata } from '@/types/chapter';
 
 export interface ChapterLink {
@@ -47,11 +48,16 @@ class ContentService {
   async loadChapterMetadata(chapterId: string): Promise<ChapterMeta | null> {
     try {
       // Load from public directory (works in both dev and production)
+      console.log(`Attempting to load metadata for ${chapterId} from /chapters/${chapterId}-meta.json`);
       const response = await fetch(`/chapters/${chapterId}-meta.json`);
+      console.log(`Response status for ${chapterId}:`, response.status, response.ok);
+      
       if (response.ok) {
         const meta = await response.json();
         console.log(`Loaded metadata for ${chapterId} from public file with status:`, meta.status);
         return meta;
+      } else {
+        console.log(`Failed to load from public, response status: ${response.status}`);
       }
 
       // Fallback to localStorage only if public file fails
@@ -64,6 +70,7 @@ class ContentService {
         }
       }
       
+      console.log(`No metadata found for ${chapterId} in either location`);
       return null;
     } catch (error) {
       console.error(`Error loading metadata for ${chapterId}:`, error);
