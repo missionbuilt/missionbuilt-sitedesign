@@ -314,17 +314,17 @@ const LinkSection = ({ chapterId, initialLinks, onLinksChange }: LinkSectionProp
                   <div className="flex items-start gap-4">
                     <ExternalLink className="w-6 h-6 text-army dark:text-sunburst mt-1 flex-shrink-0 
                                            group-hover:scale-110 transition-transform" />
-                    <div className="flex-1 min-w-0">
+                    <div className="flex-1 min-w-0 overflow-hidden">
                       <h4 className="font-semibold text-lg text-foreground group-hover:text-army 
-                                   dark:group-hover:text-sunburst transition-colors mb-2">
+                                   dark:group-hover:text-sunburst transition-colors mb-2 break-words">
                         {link.name}
                       </h4>
                       {link.summary && (
-                        <p className="text-muted-foreground leading-relaxed mb-3">
+                        <p className="text-muted-foreground leading-relaxed mb-3 break-words">
                           {link.summary}
                         </p>
                       )}
-                      <p className="text-sm text-blue-600 dark:text-blue-400 font-medium truncate">
+                      <p className="text-sm text-blue-600 dark:text-blue-400 font-medium break-all">
                         {link.url}
                       </p>
                     </div>
