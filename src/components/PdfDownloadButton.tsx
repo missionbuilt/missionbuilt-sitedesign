@@ -50,15 +50,20 @@ const PdfDownloadButton: React.FC = () => {
   };
 
   return (
-    <Button
-      onClick={handleDownload}
-      variant="outline"
-      size="sm"
-      className="flex items-center gap-2"
-    >
-      <Download className="h-4 w-4" />
-      Download PDF
-    </Button>
+    <div className="text-center">
+      <Button
+        onClick={handleDownload}
+        variant="outline"
+        size="sm"
+        className="flex items-center gap-2"
+      >
+        <Download className="h-4 w-4" />
+        Download PDF
+      </Button>
+      <p className="text-sm text-muted-foreground mt-2">
+        Mission Built - PDF edition is a work in progress
+      </p>
+    </div>
   );
 };
 
