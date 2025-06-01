@@ -50,7 +50,7 @@ const PdfDownloadButton: React.FC = () => {
   };
 
   return (
-    <div className="text-center">
+    <div className="inline-block">
       <Button
         onClick={handleDownload}
         variant="outline"
@@ -60,7 +60,7 @@ const PdfDownloadButton: React.FC = () => {
         <Download className="h-4 w-4" />
         Download PDF
       </Button>
-      <p className="text-sm text-muted-foreground mt-2">
+      <p className="text-sm text-muted-foreground mt-2 text-left">
         Mission Built - PDF edition is a work in progress
       </p>
     </div>
