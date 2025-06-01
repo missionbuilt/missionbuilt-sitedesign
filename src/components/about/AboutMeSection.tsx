@@ -27,7 +27,7 @@ const AboutMeSection = () => {
           }`}
           loading="eager"
           decoding="async"
-          fetchpriority="high"
+          fetchPriority="high"
         />
       </div>
 
