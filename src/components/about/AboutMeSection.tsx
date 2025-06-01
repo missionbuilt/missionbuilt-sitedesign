@@ -44,7 +44,7 @@ const AboutMeSection = () => {
                 color: hsl(var(--foreground));
               }
               .dark .prose-bullets ul li::marker {
-                color: #FFC300;
+                color: #FFC300 !important;
               }
             `}</style>
             
