@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
@@ -37,14 +36,15 @@ const FieldNotes = () => {
       try {
         console.log('Loading chapter data...');
         
-        // Load chapter 1, chapter 2, chapter 3, chapter 4, and chapter 5 data
+        // Load all chapters data
         console.log('About to call contentService methods...');
         const [
           content1, metadata1,
           content2, metadata2,
           content3, metadata3,
           content4, metadata4,
-          content5, metadata5
+          content5, metadata5,
+          content6, metadata6
         ] = await Promise.all([
           contentService.loadChapterContent('chapter-1'),
           contentService.loadChapterMetadata('chapter-1'),
@@ -55,7 +55,9 @@ const FieldNotes = () => {
           contentService.loadChapterContent('chapter-4'),
           contentService.loadChapterMetadata('chapter-4'),
           contentService.loadChapterContent('chapter-5'),
-          contentService.loadChapterMetadata('chapter-5')
+          contentService.loadChapterMetadata('chapter-5'),
+          contentService.loadChapterContent('chapter-6'),
+          contentService.loadChapterMetadata('chapter-6')
         ]);
         
         console.log('Chapter 1 content length:', content1?.length || 0);
@@ -68,6 +70,8 @@ const FieldNotes = () => {
         console.log('Chapter 4 metadata:', metadata4);
         console.log('Chapter 5 content length:', content5?.length || 0);
         console.log('Chapter 5 metadata:', metadata5);
+        console.log('Chapter 6 content length:', content6?.length || 0);
+        console.log('Chapter 6 metadata:', metadata6);
         
         const chaptersData = [];
         
@@ -161,20 +165,25 @@ const FieldNotes = () => {
           console.log('Chapter 5 not added - metadata5:', metadata5, 'status:', metadata5?.status);
         }
 
-        // Add a draft chapter entry for showcase
-        chaptersData.push({
-          id: 'chapter-6-draft',
-          title: 'The Mission Demands Recovery',
-          publishedDate: 'Coming Soon',
-          readTime: 'TBD',
-          tags: ['Coming Soon'],
-          description: 'High performance can\'t be sustained without strategic rest. Just like training cycles include deload weeks, leadership must include space to reset. This chapter explores burnout, recovery rhythms, and how stillness fuels strength.',
-          slug: null,
-          status: 'draft',
-          chapterNumber: 6
-        });
+        if (metadata6 && metadata6.status === 'published') {
+          const readTime6 = calculateReadTime(content6);
+          chaptersData.push({
+            id: metadata6.id,
+            title: metadata6.title,
+            publishedDate: formatPublishDate(metadata6.publishedDate),
+            readTime: readTime6,
+            tags: metadata6.tags,
+            description: metadata6.description,
+            slug: 'chapter-6',
+            status: metadata6.status,
+            chapterNumber: 6
+          });
+          console.log('Added chapter 6 to list');
+        } else {
+          console.log('Chapter 6 not added - metadata6:', metadata6, 'status:', metadata6?.status);
+        }
 
-        // Add another draft chapter entry for showcase
+        // Add a draft chapter entry for showcase
         chaptersData.push({
           id: 'chapter-7-draft',
           title: 'Train the Engine, Not Just the Output',
