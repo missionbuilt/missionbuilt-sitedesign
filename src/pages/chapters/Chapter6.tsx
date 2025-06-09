@@ -41,9 +41,6 @@ const Chapter6 = () => {
           contentService.loadChapterMetadata(chapterId)
         ]);
         
-        console.log('Chapter 6 loaded content:', loadedContent?.length || 0, 'characters');
-        console.log('Chapter 6 loaded metadata:', loadedMetadata);
-        
         setContent(loadedContent);
         setMetadata(loadedMetadata);
         setReadTime(calculateReadTime(loadedContent));
@@ -163,7 +160,7 @@ const Chapter6 = () => {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>{metadata?.title || 'The Mission Demands Recovery'} - MissionBuilt</title>
+        <title>{metadata?.title || 'Field Note 6'} - MissionBuilt</title>
         <meta name="description" content={metadata?.description || 'Field Note content'} />
       </Helmet>
       
@@ -234,7 +231,7 @@ const Chapter6 = () => {
             by Mike
           </Link>
           <h1 className="font-display font-bold text-4xl md:text-5xl lg:text-6xl text-white mb-6 leading-tight drop-shadow-lg">
-            {metadata?.title || 'The Mission Demands Recovery'}
+            {metadata?.title || 'Chapter 6 Title'}
           </h1>
           <div className="flex items-center gap-6 text-white/95 text-sm font-medium">
             <div className="flex items-center">
@@ -265,7 +262,7 @@ const Chapter6 = () => {
           {/* Enhanced article header */}
           <header className="mb-16">
             <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6 font-display leading-tight">
-              {metadata?.title || 'The Mission Demands Recovery'}
+              {metadata?.title || 'Field Note 6: Chapter Title'}
             </h1>
             <div className="flex items-center text-muted-foreground text-sm bg-gray-50 dark:bg-gray-800/50 px-4 py-3 rounded-lg">
               <Clock className="w-4 h-4 mr-2" />
