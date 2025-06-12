@@ -12,8 +12,8 @@ const PdfExportButton: React.FC = () => {
       console.log("Starting PDF download...");
       console.log("Current URL:", window.location.href);
       
-      // Use the new filename without spaces
-      const pdfPath = '/mission-built-v1-4.pdf';
+      // Use the new filename
+      const pdfPath = '/mission-built-v1-5.pdf';
       console.log("Attempting to fetch:", window.location.origin + pdfPath);
       
       // First, check if the file exists by making a HEAD request
@@ -28,7 +28,7 @@ const PdfExportButton: React.FC = () => {
       // Create a link element to trigger download
       const link = document.createElement('a');
       link.href = pdfPath;
-      link.download = 'mission-built-v1-4.pdf';
+      link.download = 'mission-built-v1-5.pdf';
       link.style.display = 'none';
       document.body.appendChild(link);
       
@@ -40,7 +40,7 @@ const PdfExportButton: React.FC = () => {
 
       toast({
         title: "Download Started",
-        description: "Mission Built v1.4 is downloading.",
+        description: "Mission Built v1.5 is downloading.",
       });
     } catch (error) {
       console.error("Download failed:", error);
