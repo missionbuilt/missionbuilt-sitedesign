@@ -1,13 +1,71 @@
-
 {
   "id": "chapter-7",
   "title": "Train the Engine, Not Just the Output",
   "subtitle": "",
   "publishedDate": "2025-01-14",
   "readTime": "8 min read",
-  "tags": ["Systems", "Foundation", "Engine"],
+  "tags": [
+    "Systems",
+    "Foundation",
+    "Engine"
+  ],
   "description": "Don't just chase flashy features or max lifts — build the engine underneath. This chapter covers foundational systems thinking, aerobic capacity, platform architecture, and the quiet capabilities that make everything else possible.",
   "slug": "chapter-7",
   "status": "published",
-  "links": []
+  "links": [
+    {
+      "id": "1749944306924",
+      "name": "General Physical Preparedness: What It Is, Why You Need It",
+      "summary": "A foundational overview of GPP and how broad, base-building capacity improves performance and resilience.",
+      "url": "https://www.crossfit.com/essentials/general-physical-preparedness"
+    },
+    {
+      "id": "1749944331409",
+      "name": "The Need for GPP Training",
+      "summary": "Louie Simmons outlines how general conditioning supports elite strength development — echoing the engine-building work beneath visible gains.",
+      "url": "https://www.westside-barbell.com/blogs/the-blog/the-need-for-g-p-p-training"
+    },
+    {
+      "id": "1749944352559",
+      "name": "GPP for Lifters",
+      "summary": "A modern, practical breakdown of how strength athletes can implement GPP into their training without sacrificing progress.",
+      "url": "https://www.barbellmedicine.com/blog/general-physical-preparedness-gpp-training-for-lifters/"
+    },
+    {
+      "id": "1749944371908",
+      "name": "Product Leadership Is Hard",
+      "summary": "Marty Cagan on the hidden weight of product leadership — and how the boring, essential work often defines long-term success.",
+      "url": "https://www.svpg.com/product-leadership-is-hard"
+    },
+    {
+      "id": "1749944389993",
+      "name": "Why Every Leader Needs Mental Toughness",
+      "summary": "A concise case for mental strength as a core leadership trait — especially under pressure.",
+      "url": "https://www.entrepreneur.com/leadership/why-every-leader-needs-mental-toughness/368965"
+    },
+    {
+      "id": "1749944417658",
+      "name": "Cognitive Resilience in Military Personnel",
+      "summary": "A clinical look at how military-style stress inoculation (like SERE) builds internal systems that hold under psychological load.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/35369170/"
+    },
+    {
+      "id": "1749944437174",
+      "name": "How Superhuman Built an Engine to Find Product-Market Fit",
+      "summary": "Rahul Vohra’s data-driven approach to measuring purpose, alignment, and user obsession inside a product team.",
+      "url": "https://review.firstround.com/how-superhuman-built-an-engine-to-find-product-market-fit"
+    },
+    {
+      "id": "1749944461041",
+      "name": "The Product Frameworks Behind Superhuman",
+      "summary": "A deeper dive into Superhuman’s obsessive product strategy — built on clarity, delight, and speed.",
+      "url": "https://www.nfx.com/post/superhuman-product-frameworks"
+    },
+    {
+      "id": "1749944478944",
+      "name": "Empathetic and Kind Product Leadership",
+      "summary": "Why purpose matters not just in mission statements, but in how leaders show up for their teams and users.",
+      "url": "https://www.mindtheproduct.com/empathetic-and-kind-product-leadership/"
+    }
+  ]
 }
