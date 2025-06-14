@@ -36,7 +36,7 @@ const FieldNotes = () => {
       try {
         console.log('Loading chapter data...');
         
-        // Load all chapters data
+        // Load all chapters data including Chapter 7
         console.log('About to call contentService methods...');
         const [
           content1, metadata1,
@@ -44,7 +44,8 @@ const FieldNotes = () => {
           content3, metadata3,
           content4, metadata4,
           content5, metadata5,
-          content6, metadata6
+          content6, metadata6,
+          content7, metadata7
         ] = await Promise.all([
           contentService.loadChapterContent('chapter-1'),
           contentService.loadChapterMetadata('chapter-1'),
@@ -57,7 +58,9 @@ const FieldNotes = () => {
           contentService.loadChapterContent('chapter-5'),
           contentService.loadChapterMetadata('chapter-5'),
           contentService.loadChapterContent('chapter-6'),
-          contentService.loadChapterMetadata('chapter-6')
+          contentService.loadChapterMetadata('chapter-6'),
+          contentService.loadChapterContent('chapter-7'),
+          contentService.loadChapterMetadata('chapter-7')
         ]);
         
         console.log('Chapter 1 content length:', content1?.length || 0);
@@ -72,6 +75,8 @@ const FieldNotes = () => {
         console.log('Chapter 5 metadata:', metadata5);
         console.log('Chapter 6 content length:', content6?.length || 0);
         console.log('Chapter 6 metadata:', metadata6);
+        console.log('Chapter 7 content length:', content7?.length || 0);
+        console.log('Chapter 7 metadata:', metadata7);
         
         const chaptersData = [];
         
@@ -183,19 +188,24 @@ const FieldNotes = () => {
           console.log('Chapter 6 not added - metadata6:', metadata6, 'status:', metadata6?.status);
         }
 
-        // Add a draft chapter entry for showcase
-        chaptersData.push({
-          id: 'chapter-7-draft',
-          title: 'Train the Engine, Not Just the Output',
-          publishedDate: 'Coming Soon',
-          readTime: 'TBD',
-          tags: ['Coming Soon'],
-          description: 'Don\'t just chase flashy features or max lifts — build the engine underneath. This chapter will cover foundational systems thinking, aerobic capacity, platform architecture, and the quiet capabilities that make everything else possible.',
-          slug: null,
-          status: 'draft',
-          chapterNumber: 7
-        });
-        
+        if (metadata7 && metadata7.status === 'published') {
+          const readTime7 = calculateReadTime(content7);
+          chaptersData.push({
+            id: metadata7.id,
+            title: metadata7.title,
+            publishedDate: formatPublishDate(metadata7.publishedDate),
+            readTime: readTime7,
+            tags: metadata7.tags,
+            description: metadata7.description,
+            slug: 'chapter-7',
+            status: metadata7.status,
+            chapterNumber: 7
+          });
+          console.log('Added chapter 7 to list');
+        } else {
+          console.log('Chapter 7 not added - metadata7:', metadata7, 'status:', metadata7?.status);
+        }
+
         // Sort chapters by chapter number to ensure proper reading order
         chaptersData.sort((a, b) => a.chapterNumber - b.chapterNumber);
         
