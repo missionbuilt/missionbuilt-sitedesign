@@ -6,6 +6,7 @@ import WhyThisWhyNow from "../components/WhyThisWhyNow";
 import BookUniqueAspects from "../components/BookUniqueAspects";
 import CallToAction from "../components/CallToAction";
 import FeaturedLogs from "../components/FeaturedLogs";
+import Chapter7Banner from "../components/Chapter7Banner";
 import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 
@@ -40,6 +41,7 @@ const Index = () => {
       </Helmet>
       
       <Navbar />
+      <Chapter7Banner />
       
       <main className="flex-grow">
         <HeroSection />
