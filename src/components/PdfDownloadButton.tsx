@@ -11,7 +11,7 @@ const PdfDownloadButton: React.FC = () => {
     try {
       console.log("Starting PDF download...");
       
-      const pdfPath = '/mission-built-v1-5.pdf';
+      const pdfPath = '/mission-built-v1-6.pdf';
       console.log("Attempting to fetch:", window.location.origin + pdfPath);
       
       // First, check if the file exists by making a HEAD request
@@ -25,7 +25,7 @@ const PdfDownloadButton: React.FC = () => {
       // Create a link element to trigger download
       const link = document.createElement('a');
       link.href = pdfPath;
-      link.download = 'mission-built-v1-5.pdf';
+      link.download = 'mission-built-v1-6.pdf';
       link.style.display = 'none';
       document.body.appendChild(link);
       
@@ -37,7 +37,7 @@ const PdfDownloadButton: React.FC = () => {
 
       toast({
         title: "Download Started",
-        description: "Mission Built v1.5 is downloading.",
+        description: "Mission Built v1.6 is downloading.",
       });
     } catch (error) {
       console.error("Download failed:", error);
