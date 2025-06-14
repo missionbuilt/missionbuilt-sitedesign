@@ -218,7 +218,12 @@ const Chapter7 = () => {
       
       {/* Hero Image Section */}
       <div className="relative h-96 overflow-hidden">
-        <div className="w-full h-full bg-gradient-to-br from-gray-800 to-gray-900"></div>
+        <div 
+          className="w-full h-full bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: `url('/lovable-uploads/647b4145-8610-49de-a754-c19fc666708d.png')`
+          }}
+        ></div>
         <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/30 to-black/50"></div>
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
           <Link 
