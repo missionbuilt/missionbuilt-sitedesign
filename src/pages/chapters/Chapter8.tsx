@@ -5,11 +5,20 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ReadingProgress from '@/components/ReadingProgress';
 import ChapterNavigation from '@/components/ChapterNavigation';
+import ContentEditor from '@/components/ContentEditor';
 
 const Chapter8 = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const handleSave = (content: string) => {
+    console.log('Chapter 8 content saved:', content.length, 'characters');
+  };
+
+  const handleContentChange = (content: string) => {
+    console.log('Chapter 8 content changed:', content.length, 'characters');
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -36,10 +45,11 @@ const Chapter8 = () => {
           </header>
           
           <article className="prose prose-lg max-w-none dark:prose-invert prose-headings:text-foreground prose-p:text-foreground/90 prose-strong:text-foreground prose-code:text-foreground prose-blockquote:text-foreground/80 prose-blockquote:border-l-army dark:prose-blockquote:border-l-sunburst prose-a:text-army dark:prose-a:text-sunburst hover:prose-a:text-army/80 dark:hover:prose-a:text-sunburst/80">
-            {/* Chapter content would go here - but not generating content as requested */}
-            <div className="text-center py-12 text-muted-foreground">
-              <p>Chapter content coming soon...</p>
-            </div>
+            <ContentEditor
+              chapterId="chapter-8"
+              onSave={handleSave}
+              onContentChange={handleContentChange}
+            />
           </article>
           
           <ChapterNavigation currentChapter={8} />
