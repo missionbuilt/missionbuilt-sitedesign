@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
@@ -37,7 +36,7 @@ const FieldNotes = () => {
       try {
         console.log('Loading chapter data...');
         
-        // Load all chapters data including Chapter 7
+        // Load all chapters data including Chapter 8
         console.log('About to call contentService methods...');
         const [
           content1, metadata1,
@@ -46,7 +45,8 @@ const FieldNotes = () => {
           content4, metadata4,
           content5, metadata5,
           content6, metadata6,
-          content7, metadata7
+          content7, metadata7,
+          content8, metadata8
         ] = await Promise.all([
           contentService.loadChapterContent('chapter-1'),
           contentService.loadChapterMetadata('chapter-1'),
@@ -61,7 +61,9 @@ const FieldNotes = () => {
           contentService.loadChapterContent('chapter-6'),
           contentService.loadChapterMetadata('chapter-6'),
           contentService.loadChapterContent('chapter-7'),
-          contentService.loadChapterMetadata('chapter-7')
+          contentService.loadChapterMetadata('chapter-7'),
+          contentService.loadChapterContent('chapter-8'),
+          contentService.loadChapterMetadata('chapter-8')
         ]);
         
         console.log('Chapter 1 content length:', content1?.length || 0);
@@ -78,6 +80,8 @@ const FieldNotes = () => {
         console.log('Chapter 6 metadata:', metadata6);
         console.log('Chapter 7 content length:', content7?.length || 0);
         console.log('Chapter 7 metadata:', metadata7);
+        console.log('Chapter 8 content length:', content8?.length || 0);
+        console.log('Chapter 8 metadata:', metadata8);
         
         const chaptersData = [];
         
@@ -207,20 +211,24 @@ const FieldNotes = () => {
           console.log('Chapter 7 not added - metadata7:', metadata7, 'status:', metadata7?.status);
         }
 
-        // Add Chapter 8 as draft
-        chaptersData.push({
-          id: 'chapter-8',
-          title: 'Decisions Are Made Under Load',
-          publishedDate: 'Coming Soon',
-          readTime: 'TBD',
-          tags: ['Decision-Making', 'Pressure', 'Leadership'],
-          description: 'Stress reveals the truth — in your form, your product, and your team. From crisis decision-making to heavy triples, this chapter explores how clarity, composure, and character are tested under pressure.',
-          slug: null, // No slug means it won't be clickable
-          status: 'draft',
-          chapterNumber: 8
-        });
-        console.log('Added chapter 8 to list as draft');
-        
+        if (metadata8 && metadata8.status === 'published') {
+          const readTime8 = calculateReadTime(content8);
+          chaptersData.push({
+            id: metadata8.id,
+            title: metadata8.title,
+            publishedDate: formatPublishDate(metadata8.publishedDate),
+            readTime: readTime8,
+            tags: metadata8.tags,
+            description: metadata8.description,
+            slug: 'chapter-8',
+            status: metadata8.status,
+            chapterNumber: 8
+          });
+          console.log('Added chapter 8 to list');
+        } else {
+          console.log('Chapter 8 not added - metadata8:', metadata8, 'status:', metadata8?.status);
+        }
+
         // Sort chapters by chapter number to ensure proper reading order
         chaptersData.sort((a, b) => a.chapterNumber - b.chapterNumber);
         
