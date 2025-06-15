@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -168,8 +169,8 @@ const ContentEditor = ({ initialContent = '', chapterId, onSave, onContentChange
     h2: ({node, ...props}: any) => <h2 className="text-3xl font-semibold font-display mb-4 mt-6 text-foreground" {...props} />,
     h3: ({node, ...props}: any) => <h3 className="text-2xl font-medium font-display mb-3 mt-5 text-foreground" {...props} />,
     p: ({node, ...props}: any) => <p className="text-base mb-4 leading-relaxed text-foreground" {...props} />,
-    ul: ({node, ...props}: any) => <ul className="list-disc list-inside mb-4 space-y-2 text-foreground" {...props} />,
-    ol: ({node, ...props}: any) => <ol className="list-decimal list-inside mb-4 space-y-2 text-foreground" {...props} />,
+    ul: ({node, ...props}: any) => <ul className="list-disc list-outside mb-4 space-y-2 text-foreground ml-6" {...props} />,
+    ol: ({node, ...props}: any) => <ol className="list-decimal list-outside mb-4 space-y-2 text-foreground ml-6" {...props} />,
     li: ({node, ...props}: any) => <li className="text-base text-foreground" {...props} />,
     blockquote: ({node, ...props}: any) => <blockquote className="border-l-4 border-sunburst pl-4 py-2 my-6 italic text-lg bg-gray-50 dark:bg-gray-800 rounded-r text-foreground" {...props} />,
     strong: ({node, ...props}: any) => <strong className="font-bold text-army dark:text-sunburst" {...props} />,
