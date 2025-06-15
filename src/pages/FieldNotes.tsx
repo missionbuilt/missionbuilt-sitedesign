@@ -229,6 +229,19 @@ const FieldNotes = () => {
           console.log('Chapter 8 not added - metadata8:', metadata8, 'status:', metadata8?.status);
         }
 
+        // Add Chapter 9 as draft
+        chaptersData.push({
+          id: 'chapter-9',
+          title: 'Ship It Like You Show Up',
+          publishedDate: 'Coming Soon',
+          readTime: 'TBD',
+          tags: ['Execution', 'Integrity', 'Team Performance', 'Professional Excellence'],
+          description: 'Great teams ship with the same integrity they train with. This chapter draws a line between effort in the gym and excellence in execution — showing how preparation, not perfection, defines professional momentum.',
+          slug: null,
+          status: 'draft',
+          chapterNumber: 9
+        });
+
         // Sort chapters by chapter number to ensure proper reading order
         chaptersData.sort((a, b) => a.chapterNumber - b.chapterNumber);
         
