@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
@@ -206,19 +207,19 @@ const FieldNotes = () => {
           console.log('Chapter 7 not added - metadata7:', metadata7, 'status:', metadata7?.status);
         }
 
-        // Add Chapter 8 as published
+        // Add Chapter 8 as draft
         chaptersData.push({
           id: 'chapter-8',
           title: 'Decisions Are Made Under Load',
-          publishedDate: formatPublishDate('2025-06-15'),
-          readTime: '7 min read',
+          publishedDate: 'Coming Soon',
+          readTime: 'TBD',
           tags: ['Decision-Making', 'Pressure', 'Leadership'],
           description: 'Stress reveals the truth — in your form, your product, and your team. From crisis decision-making to heavy triples, this chapter explores how clarity, composure, and character are tested under pressure.',
-          slug: 'chapter-8',
-          status: 'published',
+          slug: null, // No slug means it won't be clickable
+          status: 'draft',
           chapterNumber: 8
         });
-        console.log('Added chapter 8 to list as published');
+        console.log('Added chapter 8 to list as draft');
         
         // Sort chapters by chapter number to ensure proper reading order
         chaptersData.sort((a, b) => a.chapterNumber - b.chapterNumber);
