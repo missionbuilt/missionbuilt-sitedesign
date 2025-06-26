@@ -226,7 +226,7 @@ const Chapter9 = () => {
       {/* Hero Image Section */}
       <div className="relative h-96 overflow-hidden">
         <img 
-          src="https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80"
+          src="/lovable-uploads/38659e84-2fce-4ca5-aa66-5a48c1a3cdbf.png"
           alt="Ship It Like You Show Up"
           className="w-full h-full object-cover"
         />
