@@ -7,6 +7,7 @@ import Footer from '@/components/Footer';
 import ContentEditor from '@/components/ContentEditor';
 import ChapterNavigation from '@/components/ChapterNavigation';
 import ReadingProgress from '@/components/ReadingProgress';
+import LinkSection from '@/components/LinkSection';
 import { Badge } from '@/components/ui/badge';
 import { contentService } from '@/services/contentService';
 import { calculateReadTime } from '@/utils/readTimeCalculator';
@@ -16,6 +17,7 @@ const Chapter9 = () => {
   const [metadata, setMetadata] = React.useState<any>(null);
   const [isLoading, setIsLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
+  const [links, setLinks] = React.useState<any[]>([]);
 
   const chapterId = 'chapter-9';
 
@@ -46,6 +48,16 @@ const Chapter9 = () => {
         
         setContent(chapterContent || '');
         setMetadata(chapterMetadata);
+
+        // Load links from localStorage
+        const savedLinks = localStorage.getItem(`${chapterId}-links`);
+        if (savedLinks) {
+          try {
+            setLinks(JSON.parse(savedLinks));
+          } catch (error) {
+            console.error('Error parsing saved links:', error);
+          }
+        }
       } catch (error) {
         console.error(`Error loading ${chapterId} data:`, error);
         setError(`Failed to load chapter content. Please try refreshing the page.`);
@@ -65,6 +77,11 @@ const Chapter9 = () => {
     } catch (error) {
       console.error(`Error saving ${chapterId} content:`, error);
     }
+  };
+
+  const handleLinksChange = (newLinks: any[]) => {
+    setLinks(newLinks);
+    localStorage.setItem(`${chapterId}-links`, JSON.stringify(newLinks));
   };
 
   if (isLoading) {
@@ -180,6 +197,19 @@ const Chapter9 = () => {
             </div>
           </header>
 
+          {/* Hero Image Section */}
+          <div className="mb-12">
+            <div className="relative h-64 md:h-80 lg:h-96 rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-800">
+              <img
+                src="https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80"
+                alt="Chapter 9 hero image"
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-black/20"></div>
+            </div>
+          </div>
+
           {/* Content */}
           <article className="mb-12">
             <ContentEditor
@@ -188,6 +218,15 @@ const Chapter9 = () => {
               onSave={handleContentSave}
             />
           </article>
+
+          {/* Links Section */}
+          <div className="mb-12">
+            <LinkSection
+              chapterId={chapterId}
+              initialLinks={links}
+              onLinksChange={handleLinksChange}
+            />
+          </div>
 
           {/* Navigation */}
           <ChapterNavigation currentChapter={9} />
