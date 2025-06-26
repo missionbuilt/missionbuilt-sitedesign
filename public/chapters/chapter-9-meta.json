@@ -22,6 +22,60 @@
       "name": "",
       "summary": "",
       "url": ""
+    },
+    {
+      "id": "1750966646621icqjw8bwn",
+      "name": "The Legacy of Lü Xiaojun: From Champion to Icon",
+      "summary": "Official blog post detailing how Lü’s grip, breath, posture, and movement combine into a seamless, integrated elite lifting system.",
+      "url": "https://luxiaojun.com/blogs/blogs/the-legacy-of-lu-xiaojun-from-champion-to-icon"
+    },
+    {
+      "id": "1750966646621bi3hf6i5d",
+      "name": "Great Ormond Street Hospital for Children: Ferrari’s Formula One Handovers",
+      "summary": "ASQ case study on how a pediatric cardiac team adopted pit-stop choreography to reduce handoff errors and improve ICU transitions.",
+      "url": "https://asq.org/quality-resources/articles/case-studies/great-ormond-street-hospital-for-children-ferraris-formula-one-handovers-and-handovers-from-surgery-to-intensive-care?id=fbc699af11d04980ade06f409a5d6f98"
+    },
+    {
+      "id": "1750966646621t4a0x52k1",
+      "name": "Great Ormond Street Hospital Learns from Ferrari F1 Pitstop",
+      "summary": "Substack narrative on using race‑style coordination to streamline critical surgical handovers.",
+      "url": "https://outsideinlens.substack.com/p/great-ormand-hospital-learns-from"
+    },
+    {
+      "id": "1750966646621iwnwd50em",
+      "name": "What Mr. Rogers Can Teach Us About Empathy and Why It Matters",
+      "summary": "Emotional Intelligence Magazine explores Fred Rogers’ mastery of empathic listening and emotional depth.",
+      "url": "https://www.ei-magazine.com/post/what-mr-rogers-can-teach-us-about-empathy-and-why-it-matters"
+    },
+    {
+      "id": "1750966646621sv2lcegnc",
+      "name": "Mindsight and Kindness: Emotions are “Mentionable and Manageable”",
+      "summary": "Neuroscientist Dan Siegel examines Rogers’ emotional clarity and how it shaped his compassionate communication.",
+      "url": "https://drdansiegel.com/emotions-are-mentionable-and-manageable-the-mindsight-and-kindness-of-mr-rogers-brain/"
+    },
+    {
+      "id": "1750966646621eidielj9v",
+      "name": "Seven Lessons from Mister Rogers That Can Help Americans Be Neighbors Again",
+      "summary": "A Greater Good article on how Fred Rogers modeled calm communication, empathy, and social cohesion for over 30 years.",
+      "url": "https://greatergood.berkeley.edu/article/item/seven_lessons_from_mister_rogers_that_can_help_americans_be_neighbors_again"
+    },
+    {
+      "id": "1750966646621rk87umwqi",
+      "name": "Introducing Project Paper Cuts",
+      "summary": "GitHub engineers describe how fixing small UX issues—or “papercuts”—improves experience and builds trust.",
+      "url": "https://github.blog/news-insights/product-news/announcing-paper-cuts/"
+    },
+    {
+      "id": "1750966646621y3e9dy5hx",
+      "name": "Keeping Customers Streaming — The Centralized Site Reliability Practice at Netflix",
+      "summary": "Netflix CORE team shares how owning reliability across the stack ensures consistent service and aligns with mission-first shipping.",
+      "url": "https://netflixtechblog.com/keeping-customers-streaming-the-centralized-site-reliability-practice-at-netflix-205cc37aa9fb"
+    },
+    {
+      "id": "17509666466211xrlfd64h",
+      "name": "Mistakes and Discoveries While Cultivating Ownership",
+      "summary": "Discussion on Netflix’s five-level ownership model—from demonstration to vision—and its impact on quality and accountability.",
+      "url": "https://www.infoq.com/presentations/netflix-five-level-ownership/"
     }
   ]
 }
