@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
@@ -60,7 +59,7 @@ const Chapter9 = () => {
 
   const handleContentSave = async (newContent: string) => {
     try {
-      await contentService.saveChapterContent(chapterId, newContent);
+      contentService.saveContentToLocalStorage(chapterId, newContent);
       setContent(newContent);
       console.log(`${chapterId} content saved successfully`);
     } catch (error) {
