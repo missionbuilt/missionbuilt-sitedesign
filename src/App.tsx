@@ -19,6 +19,7 @@ import Chapter5 from "./pages/chapters/Chapter5";
 import Chapter6 from "./pages/chapters/Chapter6";
 import Chapter7 from "./pages/chapters/Chapter7";
 import Chapter8 from "./pages/chapters/Chapter8";
+import Chapter9 from "./pages/chapters/Chapter9";
 
 const App = () => {
   // Create a new QueryClient instance inside the component
@@ -44,6 +45,7 @@ const App = () => {
                 <Route path="/field-notes/chapter-6" element={<Chapter6 />} />
                 <Route path="/field-notes/chapter-7" element={<Chapter7 />} />
                 <Route path="/field-notes/chapter-8" element={<Chapter8 />} />
+                <Route path="/field-notes/chapter-9" element={<Chapter9 />} />
                 <Route path="/privacy" element={<Privacy />} />
                 <Route path="/terms" element={<Privacy />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

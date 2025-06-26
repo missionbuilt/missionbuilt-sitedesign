@@ -36,7 +36,7 @@ const FieldNotes = () => {
       try {
         console.log('Loading chapter data...');
         
-        // Load all chapters data including Chapter 8
+        // Load all chapters data including Chapter 8 and 9
         console.log('About to call contentService methods...');
         const [
           content1, metadata1,
@@ -46,7 +46,8 @@ const FieldNotes = () => {
           content5, metadata5,
           content6, metadata6,
           content7, metadata7,
-          content8, metadata8
+          content8, metadata8,
+          content9, metadata9
         ] = await Promise.all([
           contentService.loadChapterContent('chapter-1'),
           contentService.loadChapterMetadata('chapter-1'),
@@ -63,7 +64,9 @@ const FieldNotes = () => {
           contentService.loadChapterContent('chapter-7'),
           contentService.loadChapterMetadata('chapter-7'),
           contentService.loadChapterContent('chapter-8'),
-          contentService.loadChapterMetadata('chapter-8')
+          contentService.loadChapterMetadata('chapter-8'),
+          contentService.loadChapterContent('chapter-9'),
+          contentService.loadChapterMetadata('chapter-9')
         ]);
         
         console.log('Chapter 1 content length:', content1?.length || 0);
@@ -82,6 +85,8 @@ const FieldNotes = () => {
         console.log('Chapter 7 metadata:', metadata7);
         console.log('Chapter 8 content length:', content8?.length || 0);
         console.log('Chapter 8 metadata:', metadata8);
+        console.log('Chapter 9 content length:', content9?.length || 0);
+        console.log('Chapter 9 metadata:', metadata9);
         
         const chaptersData = [];
         
@@ -229,18 +234,19 @@ const FieldNotes = () => {
           console.log('Chapter 8 not added - metadata8:', metadata8, 'status:', metadata8?.status);
         }
 
-        // Add Chapter 9 as draft
+        // Add Chapter 9 as published
         chaptersData.push({
           id: 'chapter-9',
           title: 'Ship It Like You Show Up',
-          publishedDate: 'Coming Soon',
-          readTime: 'TBD',
+          publishedDate: formatPublishDate('2025-01-15'),
+          readTime: calculateReadTime(content9),
           tags: ['Execution', 'Integrity', 'Team Performance', 'Professional Excellence'],
           description: 'Great teams ship with the same integrity they train with. This chapter draws a line between effort in the gym and excellence in execution — showing how preparation, not perfection, defines professional momentum.',
-          slug: null,
-          status: 'draft',
+          slug: 'chapter-9',
+          status: 'published',
           chapterNumber: 9
         });
+        console.log('Added chapter 9 to list');
 
         // Sort chapters by chapter number to ensure proper reading order
         chaptersData.sort((a, b) => a.chapterNumber - b.chapterNumber);
