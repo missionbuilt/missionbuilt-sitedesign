@@ -248,6 +248,20 @@ const FieldNotes = () => {
         });
         console.log('Added chapter 9 to list');
 
+        // Add Chapter 10 as draft
+        chaptersData.push({
+          id: 'chapter-10',
+          title: 'The Team Is the Tool',
+          publishedDate: formatPublishDate('2025-01-22'),
+          readTime: '5 min read',
+          tags: ['Teamwork', 'Leadership', 'Collaboration', 'Trust'],
+          description: 'No matter how skilled you are, you\'re only as strong as your squad. In lifting and in leadership, collaboration compounds results. This chapter will emphasize humility, trust, and the compound power of working in sync.',
+          slug: null, // No slug for draft chapters
+          status: 'draft',
+          chapterNumber: 10
+        });
+        console.log('Added chapter 10 to list');
+
         // Sort chapters by chapter number to ensure proper reading order
         chaptersData.sort((a, b) => a.chapterNumber - b.chapterNumber);
         
