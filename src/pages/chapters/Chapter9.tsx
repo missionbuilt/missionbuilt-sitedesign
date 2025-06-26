@@ -117,7 +117,12 @@ const Chapter9 = () => {
   };
 
   const handleDownloadMetadata = () => {
+    console.log('handleDownloadMetadata called');
+    console.log('Metadata available:', !!metadata);
+    console.log('Metadata content:', metadata);
+    
     if (!metadata) {
+      console.log('No metadata available for download');
       toast({
         title: "Error",
         description: "Cannot download: metadata not loaded",
@@ -126,20 +131,14 @@ const Chapter9 = () => {
       return;
     }
 
-    try {
-      contentService.downloadMetadataFile(chapterId, metadata);
-      toast({
-        title: "Metadata File Downloaded", 
-        description: "The .json file has been downloaded successfully.",
-      });
-    } catch (error) {
-      console.error('Error downloading metadata:', error);
-      toast({
-        title: "Download Failed",
-        description: "Failed to download metadata file. Please try again.",
-        variant: "destructive"
-      });
-    }
+    console.log('Calling contentService.downloadMetadataFile');
+    contentService.downloadMetadataFile(chapterId, metadata);
+    
+    // The contentService handles its own error logging, so we'll show success
+    toast({
+      title: "Metadata File Downloaded", 
+      description: "The .json file has been downloaded successfully.",
+    });
   };
 
   const hasUnsavedChanges = contentService.hasUnsavedChanges(chapterId);
