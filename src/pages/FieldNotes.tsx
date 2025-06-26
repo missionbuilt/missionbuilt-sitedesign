@@ -234,19 +234,23 @@ const FieldNotes = () => {
           console.log('Chapter 8 not added - metadata8:', metadata8, 'status:', metadata8?.status);
         }
 
-        // Add Chapter 9 as published
-        chaptersData.push({
-          id: 'chapter-9',
-          title: 'Ship It Like You Show Up',
-          publishedDate: formatPublishDate('2025-01-15'),
-          readTime: calculateReadTime(content9),
-          tags: ['Execution', 'Integrity', 'Team Performance', 'Professional Excellence'],
-          description: 'Great teams ship with the same integrity they train with. This chapter draws a line between effort in the gym and excellence in execution — showing how preparation, not perfection, defines professional momentum.',
-          slug: 'chapter-9',
-          status: 'published',
-          chapterNumber: 9
-        });
-        console.log('Added chapter 9 to list');
+        if (metadata9 && metadata9.status === 'published') {
+          const readTime9 = calculateReadTime(content9);
+          chaptersData.push({
+            id: metadata9.id,
+            title: metadata9.title,
+            publishedDate: formatPublishDate(metadata9.publishedDate),
+            readTime: readTime9,
+            tags: metadata9.tags,
+            description: metadata9.description,
+            slug: 'chapter-9',
+            status: metadata9.status,
+            chapterNumber: 9
+          });
+          console.log('Added chapter 9 to list');
+        } else {
+          console.log('Chapter 9 not added - metadata9:', metadata9, 'status:', metadata9?.status);
+        }
 
         // Add Chapter 10 as draft
         chaptersData.push({
