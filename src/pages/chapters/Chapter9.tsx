@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
@@ -127,11 +126,20 @@ const Chapter9 = () => {
       return;
     }
 
-    contentService.downloadMetadataFile(chapterId, metadata);
-    toast({
-      title: "Metadata File Downloaded", 
-      description: "The .json file has been downloaded successfully.",
-    });
+    try {
+      contentService.downloadMetadataFile(chapterId, metadata);
+      toast({
+        title: "Metadata File Downloaded", 
+        description: "The .json file has been downloaded successfully.",
+      });
+    } catch (error) {
+      console.error('Error downloading metadata:', error);
+      toast({
+        title: "Download Failed",
+        description: "Failed to download metadata file. Please try again.",
+        variant: "destructive"
+      });
+    }
   };
 
   const hasUnsavedChanges = contentService.hasUnsavedChanges(chapterId);
