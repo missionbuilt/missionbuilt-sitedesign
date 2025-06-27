@@ -174,7 +174,7 @@ const Chapter10 = () => {
 
           {/* Links Section */}
           {metadata.links && metadata.links.length > 0 && (
-            <LinkSection links={metadata.links} />
+            <LinkSection chapterId="chapter-10" initialLinks={metadata.links || []} />
           )}
 
           {/* Chapter Navigation */}
