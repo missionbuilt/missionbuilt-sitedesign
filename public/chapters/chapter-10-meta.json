@@ -1,13 +1,60 @@
-
 {
   "id": "chapter-10",
   "title": "The Team Is the Tool",
   "subtitle": "Collaboration and Trust",
   "publishedDate": "2025-01-22",
   "readTime": "5 min read",
-  "tags": ["Teamwork", "Leadership", "Collaboration", "Trust"],
+  "tags": [
+    "Teamwork",
+    "Leadership",
+    "Collaboration",
+    "Trust"
+  ],
   "description": "No matter how skilled you are, you're only as strong as your squad. In lifting and in leadership, collaboration compounds results. This chapter will emphasize humility, trust, and the compound power of working in sync.",
   "slug": "chapter-10",
   "status": "published",
-  "links": []
+  "links": [
+    {
+      "id": "1751053024148",
+      "name": "The Five Dysfunctions of a Team",
+      "summary": "An overview of Patrick Lencioni’s Five Dysfunctions model, explaining each dysfunction and offering insights into how leaders can build trust and cohesive teams.",
+      "url": "https://en.wikipedia.org/wiki/The_Five_Dysfunctions_of_a_Team"
+    },
+    {
+      "id": "1751053046406",
+      "name": "Psychological Safety: The Key to High-Performing Teams",
+      "summary": "A practical Harvard Business Review guide on how leaders can foster safety so teams take risks, speak up, and learn together.",
+      "url": "https://hbr.org/2017/08/high-performing-teams-need-psychological-safety-heres-how-to-create-it"
+    },
+    {
+      "id": "1751053072202",
+      "name": "Level 5 Leadership: The Triumph of Humility and Fierce Resolve",
+      "summary": "Jim Collins’ original Harvard Business Review article introducing Level 5 Leadership, showing how humility combined with fierce resolve creates exceptional leaders.",
+      "url": "https://hbr.org/2001/01/level-5-leadership-the-triumph-of-humility-and-fierce-resolve-2"
+    },
+    {
+      "id": "1751053095668",
+      "name": "Abraham Lincoln’s “Team of Rivals” Leadership",
+      "summary": "An overview of Doris Kearns Goodwin’s book Team of Rivals, exploring how Lincoln’s strategy of embracing dissent and surrounding himself with strong, opposing voices made him an extraordinary leader.",
+      "url": "https://en.wikipedia.org/wiki/Team_of_Rivals"
+    },
+    {
+      "id": "1751053120323",
+      "name": "Radical Candor: How to Give Feedback That’s Kind and Clear",
+      "summary": "Kim Scott’s Radical Candor model teaches how to challenge directly and care personally, just like a great spotter.",
+      "url": "https://review.firstround.com/radical-candor-the-surprising-secret-to-being-a-good-boss"
+    },
+    {
+      "id": "1751053146857",
+      "name": "The Leader as Coach",
+      "summary": "A Harvard Business Review article explaining why modern leaders should act as coaches, helping their teams grow through guidance and empowerment rather than control—echoing the chapter’s message about spotting and enabling others.",
+      "url": "https://hbr.org/2019/11/the-leader-as-coach"
+    },
+    {
+      "id": "1751053174836",
+      "name": "Inside the Fall of WeWork",
+      "summary": "A detailed account of how Adam Neumann’s ego, reckless decisions, and cult of personality led to WeWork’s spectacular collapse, reinforcing the chapter’s cautionary lessons about the dangers of ego-driven leadership.",
+      "url": "https://www.vanityfair.com/news/2019/11/inside-the-fall-of-wework"
+    }
+  ]
 }
