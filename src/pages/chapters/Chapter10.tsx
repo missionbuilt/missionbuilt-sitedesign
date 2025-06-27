@@ -1,184 +1,310 @@
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Calendar, Clock, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
+import { ArrowLeft, Calendar, Clock, AlertCircle, Save, FileDown } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import ReadingProgress from '@/components/ReadingProgress';
-import ChapterNavigation from '@/components/ChapterNavigation';
+import ContentEditor from '@/components/ContentEditor';
 import LinkSection from '@/components/LinkSection';
-import { contentService } from '@/services/contentService';
+import ReadingProgress from '@/components/ReadingProgress';
+import SectionDivider from '@/components/SectionDivider';
+import PdfDownloadButton from '@/components/PdfDownloadButton';
+import ChapterNavigation from '@/components/ChapterNavigation';
 import { calculateReadTime } from '@/utils/readTimeCalculator';
+import { contentService, ChapterMeta, ChapterLink } from '@/services/contentService';
 
 const Chapter10 = () => {
-  const [content, setContent] = useState<string>('');
-  const [metadata, setMetadata] = useState<any>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [content, setContent] = React.useState('');
+  const [metadata, setMetadata] = React.useState<ChapterMeta | null>(null);
+  const [readTime, setReadTime] = React.useState('0 min read');
+  const [isLoading, setIsLoading] = React.useState(true);
+  const { toast } = useToast();
 
-  useEffect(() => {
-    const loadChapter = async () => {
+  const chapterId = 'chapter-10';
+
+  // Enhanced development mode detection
+  const isDevelopment = process.env.NODE_ENV === 'development' || 
+                        window.location.hostname === 'localhost' || 
+                        window.location.hostname.includes('lovable.app') ||
+                        window.location.hostname.includes('127.0.0.1') ||
+                        window.location.port !== '';
+
+  React.useEffect(() => {
+    const loadChapterData = async () => {
+      setIsLoading(true);
+      
       try {
-        console.log('Loading Chapter 10...');
-        const [chapterContent, chapterMetadata] = await Promise.all([
-          contentService.loadChapterContent('chapter-10'),
-          contentService.loadChapterMetadata('chapter-10')
+        const [loadedContent, loadedMetadata] = await Promise.all([
+          contentService.loadChapterContent(chapterId),
+          contentService.loadChapterMetadata(chapterId)
         ]);
         
-        console.log('Chapter 10 content loaded:', chapterContent?.length || 0, 'characters');
-        console.log('Chapter 10 metadata loaded:', chapterMetadata);
-        
-        setContent(chapterContent || '');
-        setMetadata(chapterMetadata);
-      } catch (err) {
-        console.error('Error loading Chapter 10:', err);
-        setError('Failed to load chapter content');
+        setContent(loadedContent);
+        setMetadata(loadedMetadata);
+        setReadTime(calculateReadTime(loadedContent));
+      } catch (error) {
+        console.error('Error loading chapter data:', error);
       } finally {
         setIsLoading(false);
       }
     };
 
-    loadChapter();
+    loadChapterData();
   }, []);
+
+  const handleContentSave = (newContent: string) => {
+    console.log('Content saved:', newContent);
+    setContent(newContent);
+    setReadTime(calculateReadTime(newContent));
+    contentService.saveContentToLocalStorage(chapterId, newContent);
+  };
+
+  const handleContentChange = (newContent: string) => {
+    setContent(newContent);
+    setReadTime(calculateReadTime(newContent));
+    // Auto-save to localStorage on every change
+    contentService.saveContentToLocalStorage(chapterId, newContent);
+  };
+
+  const handleLinksChange = (links: ChapterLink[]) => {
+    console.log('Links updated:', links);
+    if (metadata) {
+      const updatedMetadata = { ...metadata, links };
+      setMetadata(updatedMetadata);
+      contentService.saveMetadataToLocalStorage(chapterId, updatedMetadata);
+    }
+  };
+
+  const handleSavePermanently = () => {
+    if (!metadata) {
+      toast({
+        title: "Error",
+        description: "Cannot save: metadata not loaded",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    contentService.savePermanently(chapterId, content, metadata);
+    
+    toast({
+      title: "Files Downloaded Successfully!",
+      description: "Replace the files in src/content/chapters/ folder and refresh the page to see permanent changes.",
+    });
+  };
+
+  const handleClearLocalStorage = () => {
+    contentService.clearLocalStorage(chapterId);
+    toast({
+      title: "Local changes cleared",
+      description: "Page will reload to show the original content.",
+    });
+    
+    // Reload the page to show the original content
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
+  };
+
+  const handleDownloadContent = () => {
+    contentService.downloadContentFile(chapterId, content);
+    toast({
+      title: "Content File Downloaded",
+      description: "The .md file has been downloaded successfully.",
+    });
+  };
+
+  const handleDownloadMetadata = () => {
+    if (!metadata) {
+      toast({
+        title: "Error",
+        description: "Cannot download: metadata not loaded",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    contentService.downloadMetadataFile(chapterId, metadata);
+    toast({
+      title: "Metadata File Downloaded", 
+      description: "The .json file has been downloaded successfully.",
+    });
+  };
+
+  const hasUnsavedChanges = contentService.hasUnsavedChanges(chapterId);
+
+  // Helper function to format date properly
+  const formatPublishDate = (dateString: string) => {
+    // Create date object and add timezone offset to avoid timezone issues
+    const date = new Date(dateString + 'T12:00:00');
+    return date.toLocaleDateString('en-US', { 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    });
+  };
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-background">
-        <Navbar />
-        <main className="container-custom py-12">
-          <div className="max-w-4xl mx-auto">
-            <div className="animate-pulse">
-              <div className="h-8 bg-muted rounded w-3/4 mb-4"></div>
-              <div className="h-4 bg-muted rounded w-1/2 mb-8"></div>
-              <div className="space-y-4">
-                <div className="h-4 bg-muted rounded"></div>
-                <div className="h-4 bg-muted rounded w-5/6"></div>
-                <div className="h-4 bg-muted rounded w-4/6"></div>
-              </div>
-            </div>
-          </div>
-        </main>
-        <Footer />
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-army mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Loading chapter...</p>
+        </div>
       </div>
     );
   }
-
-  if (error || !metadata) {
-    return (
-      <div className="min-h-screen bg-background">
-        <Navbar />
-        <main className="container-custom py-12">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-2xl font-bold text-destructive mb-4">Error Loading Chapter</h1>
-            <p className="text-muted-foreground mb-8">{error || 'Chapter metadata not found'}</p>
-            <Link to="/field-notes" className="btn-primary">
-              Back to Field Notes
-            </Link>
-          </div>
-        </main>
-        <Footer />
-      </div>
-    );
-  }
-
-  const readTime = calculateReadTime(content);
-  const publishedDate = new Date(metadata.publishedDate + 'T12:00:00').toLocaleDateString('en-US', { 
-    year: 'numeric', 
-    month: 'long', 
-    day: 'numeric' 
-  });
 
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>{metadata.title} - Chapter 10 - MissionBuilt</title>
-        <meta name="description" content={metadata.description} />
-        <meta property="og:title" content={`${metadata.title} - Chapter 10`} />
-        <meta property="og:description" content={metadata.description} />
-        <meta name="twitter:title" content={`${metadata.title} - Chapter 10`} />
-        <meta name="twitter:description" content={metadata.description} />
+        <title>{metadata?.title || 'Field Note 10'} - MissionBuilt</title>
+        <meta name="description" content={metadata?.description || 'Field Note content'} />
       </Helmet>
       
       <ReadingProgress />
       <Navbar />
-      
-      <main className="container-custom py-8">
-        <div className="max-w-4xl mx-auto">
-          {/* Back to Field Notes */}
-          <Link 
-            to="/field-notes" 
-            className="inline-flex items-center text-army hover:text-army/80 dark:text-sunburst dark:hover:text-sunburst/80 transition-colors mb-8 group"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
-            Back to Field Notes
-          </Link>
 
-          {/* Chapter Header */}
-          <header className="mb-12">
-            <div className="flex items-center gap-4 mb-4 text-sm text-muted-foreground dark:text-slate-400">
-              <span className="bg-army/10 text-army dark:bg-sunburst/20 dark:text-sunburst px-3 py-1 rounded-full font-medium">
-                Chapter 10
-              </span>
-              <div className="flex items-center">
-                <Calendar className="w-4 h-4 mr-1" />
-                {publishedDate}
+      {/* Unsaved Changes Banner - Show in development environments */}
+      {isDevelopment && hasUnsavedChanges && (
+        <div className="bg-amber-50 dark:bg-amber-900/20 border-b border-amber-200 dark:border-amber-800">
+          <div className="container-custom py-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <AlertCircle className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+                <div>
+                  <p className="text-sm font-medium text-amber-800 dark:text-amber-200">
+                    You have unsaved changes
+                  </p>
+                  <p className="text-xs text-amber-700 dark:text-amber-300">
+                    Changes are saved locally but not permanent. Download files to make them permanent.
+                  </p>
+                </div>
               </div>
-              <div className="flex items-center">
-                <Clock className="w-4 h-4 mr-1" />
-                {readTime}
+              <div className="flex gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleDownloadContent}
+                  className="flex items-center gap-2"
+                >
+                  <FileDown className="w-4 h-4" />
+                  Download .md
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleDownloadMetadata}
+                  className="flex items-center gap-2"
+                >
+                  <FileDown className="w-4 h-4" />
+                  Download .json
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleClearLocalStorage}
+                >
+                  Discard Changes
+                </Button>
               </div>
             </div>
-            
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4 dark:text-slate-100">
-              {metadata.title}
-            </h1>
-            
-            {metadata.subtitle && (
-              <p className="text-xl text-muted-foreground dark:text-slate-300 mb-6">
-                {metadata.subtitle}
-              </p>
-            )}
-            
-            <p className="text-lg text-muted-foreground dark:text-slate-300 leading-relaxed">
-              {metadata.description}
-            </p>
-          </header>
-
-          {/* Chapter Content */}
-          <article className="prose prose-lg dark:prose-invert max-w-none mb-16">
-            <ReactMarkdown 
-              remarkPlugins={[remarkGfm]}
-              components={{
-                h1: ({children}) => <h1 className="text-3xl font-bold text-foreground mb-6 dark:text-slate-100">{children}</h1>,
-                h2: ({children}) => <h2 className="text-2xl font-bold text-foreground mt-12 mb-6 dark:text-slate-100">{children}</h2>,
-                h3: ({children}) => <h3 className="text-xl font-bold text-foreground mt-8 mb-4 dark:text-slate-100">{children}</h3>,
-                p: ({children}) => <p className="text-foreground mb-6 leading-relaxed dark:text-slate-200">{children}</p>,
-                blockquote: ({children}) => (
-                  <blockquote className="border-l-4 border-army dark:border-sunburst pl-6 my-8 italic text-muted-foreground dark:text-slate-300">
-                    {children}
-                  </blockquote>
-                ),
-                ul: ({children}) => <ul className="list-disc list-inside mb-6 space-y-2 text-foreground dark:text-slate-200">{children}</ul>,
-                ol: ({children}) => <ol className="list-decimal list-inside mb-6 space-y-2 text-foreground dark:text-slate-200">{children}</ol>,
-                li: ({children}) => <li className="leading-relaxed">{children}</li>,
-                strong: ({children}) => <strong className="font-bold text-army dark:text-sunburst">{children}</strong>,
-                em: ({children}) => <em className="italic text-muted-foreground dark:text-slate-300">{children}</em>,
-              }}
+          </div>
+        </div>
+      )}
+      
+      {/* Hero Image Section */}
+      <div className="relative h-96 overflow-hidden">
+        <img 
+          src="/lovable-uploads/b5ec062b-4bf1-4cfc-8a26-4e012f2fc940.png"
+          alt="Field Note 10 Hero"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/30 to-black/50"></div>
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
+          <Link 
+            to="/about" 
+            className="text-sunburst hover:text-sunburst/80 transition-colors text-lg font-medium mb-3 hover:underline"
+          >
+            by Mike
+          </Link>
+          <h1 className="font-display font-bold text-4xl md:text-5xl lg:text-6xl text-white mb-6 leading-tight drop-shadow-lg">
+            {metadata?.title || 'Chapter 10 Title'}
+          </h1>
+          <div className="flex items-center gap-6 text-white/95 text-sm font-medium">
+            <div className="flex items-center">
+              <Calendar className="w-4 h-4 mr-2" />
+              Published {metadata?.publishedDate ? formatPublishDate(metadata.publishedDate) : 'TBD'}
+            </div>
+            <div className="flex items-center">
+              <Clock className="w-4 h-4 mr-2" />
+              {readTime}
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <main className="container-custom py-16">
+        <div className="max-w-4xl mx-auto">
+          <div className="flex items-center justify-between mb-12">
+            <Link 
+              to="/field-notes" 
+              className="inline-flex items-center text-army hover:text-army/80 dark:text-sunburst dark:hover:text-sunburst/80 transition-colors group"
             >
-              {content}
-            </ReactMarkdown>
-          </article>
+              <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
+              Back to Field Notes
+            </Link>
+            <PdfDownloadButton />
+          </div>
+          
+          {/* Enhanced article header */}
+          <header className="mb-16">
+            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6 font-display leading-tight">
+              {metadata?.title || 'Field Note 10: Chapter Title'}
+            </h1>
+            <div className="flex items-center text-muted-foreground text-sm bg-gray-50 dark:bg-gray-800/50 px-4 py-3 rounded-lg">
+              <Clock className="w-4 h-4 mr-2" />
+              Estimated read time: {readTime}
+            </div>
+          </header>
+          
+          {/* Enhanced content area with better typography */}
+          <div className="prose prose-lg prose-slate dark:prose-invert max-w-none mb-16
+                          prose-headings:font-display prose-headings:tracking-tight
+                          prose-h1:text-4xl prose-h1:mb-8 prose-h1:mt-12
+                          prose-h2:text-3xl prose-h2:mb-6 prose-h2:mt-10
+                          prose-h3:text-2xl prose-h3:mb-4 prose-h3:mt-8
+                          prose-p:text-base prose-p:leading-relaxed prose-p:mb-6
+                          prose-li:text-base prose-li:leading-relaxed
+                          prose-blockquote:border-l-4 prose-blockquote:border-sunburst 
+                          prose-blockquote:bg-sunburst/5 prose-blockquote:rounded-r-lg
+                          prose-blockquote:py-4 prose-blockquote:px-6 prose-blockquote:my-8
+                          prose-blockquote:italic prose-blockquote:text-lg
+                          prose-strong:text-army dark:prose-strong:text-sunburst prose-strong:font-semibold
+                          prose-a:text-army dark:prose-a:text-sunburst prose-a:no-underline hover:prose-a:underline">
+            <ContentEditor 
+              initialContent={content}
+              chapterId={chapterId}
+              onSave={handleContentSave}
+              onContentChange={handleContentChange}
+            />
+          </div>
 
-          {/* Links Section */}
-          {metadata.links && metadata.links.length > 0 && (
-            <LinkSection chapterId="chapter-10" initialLinks={metadata.links || []} />
-          )}
-
-          {/* Chapter Navigation */}
           <ChapterNavigation currentChapter={10} />
+
+          <SectionDivider />
+
+          {/* Enhanced Links Section */}
+          <div className="border-t border-gray-200 dark:border-gray-700 pt-12">
+            <LinkSection 
+              chapterId={chapterId}
+              initialLinks={metadata?.links || []}
+              onLinksChange={handleLinksChange} 
+            />
+          </div>
         </div>
       </main>
       
