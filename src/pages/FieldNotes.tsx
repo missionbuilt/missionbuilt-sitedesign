@@ -36,7 +36,7 @@ const FieldNotes = () => {
       try {
         console.log('Loading chapter data...');
         
-        // Load all chapters data including Chapter 8 and 9
+        // Load all chapters data including Chapter 8, 9, and 10
         console.log('About to call contentService methods...');
         const [
           content1, metadata1,
@@ -47,7 +47,8 @@ const FieldNotes = () => {
           content6, metadata6,
           content7, metadata7,
           content8, metadata8,
-          content9, metadata9
+          content9, metadata9,
+          content10, metadata10
         ] = await Promise.all([
           contentService.loadChapterContent('chapter-1'),
           contentService.loadChapterMetadata('chapter-1'),
@@ -66,7 +67,9 @@ const FieldNotes = () => {
           contentService.loadChapterContent('chapter-8'),
           contentService.loadChapterMetadata('chapter-8'),
           contentService.loadChapterContent('chapter-9'),
-          contentService.loadChapterMetadata('chapter-9')
+          contentService.loadChapterMetadata('chapter-9'),
+          contentService.loadChapterContent('chapter-10'),
+          contentService.loadChapterMetadata('chapter-10')
         ]);
         
         console.log('Chapter 1 content length:', content1?.length || 0);
@@ -87,6 +90,8 @@ const FieldNotes = () => {
         console.log('Chapter 8 metadata:', metadata8);
         console.log('Chapter 9 content length:', content9?.length || 0);
         console.log('Chapter 9 metadata:', metadata9);
+        console.log('Chapter 10 content length:', content10?.length || 0);
+        console.log('Chapter 10 metadata:', metadata10);
         
         const chaptersData = [];
         
@@ -252,19 +257,23 @@ const FieldNotes = () => {
           console.log('Chapter 9 not added - metadata9:', metadata9, 'status:', metadata9?.status);
         }
 
-        // Add Chapter 10 as draft
-        chaptersData.push({
-          id: 'chapter-10',
-          title: 'The Team Is the Tool',
-          publishedDate: formatPublishDate('2025-01-22'),
-          readTime: '5 min read',
-          tags: ['Teamwork', 'Leadership', 'Collaboration', 'Trust'],
-          description: 'No matter how skilled you are, you\'re only as strong as your squad. In lifting and in leadership, collaboration compounds results. This chapter will emphasize humility, trust, and the compound power of working in sync.',
-          slug: null, // No slug for draft chapters
-          status: 'draft',
-          chapterNumber: 10
-        });
-        console.log('Added chapter 10 to list');
+        if (metadata10 && metadata10.status === 'published') {
+          const readTime10 = calculateReadTime(content10);
+          chaptersData.push({
+            id: metadata10.id,
+            title: metadata10.title,
+            publishedDate: formatPublishDate(metadata10.publishedDate),
+            readTime: readTime10,
+            tags: metadata10.tags,
+            description: metadata10.description,
+            slug: 'chapter-10',
+            status: metadata10.status,
+            chapterNumber: 10
+          });
+          console.log('Added chapter 10 to list');
+        } else {
+          console.log('Chapter 10 not added - metadata10:', metadata10, 'status:', metadata10?.status);
+        }
 
         // Sort chapters by chapter number to ensure proper reading order
         chaptersData.sort((a, b) => a.chapterNumber - b.chapterNumber);
