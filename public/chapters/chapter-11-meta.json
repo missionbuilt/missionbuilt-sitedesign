@@ -1,13 +1,36 @@
-
 {
   "id": "chapter-11",
   "title": "Strong Enough to Listen",
   "subtitle": "Active Listening and Feedback",
   "publishedDate": "2025-01-29",
   "readTime": "5 min read",
-  "tags": ["Listening", "User Research", "Feedback", "Leadership"],
+  "tags": [
+    "Listening",
+    "User Research",
+    "Feedback",
+    "Leadership"
+  ],
   "description": "Listening is a strength skill. Whether you're spotting a lift or guiding a product, hearing others — really hearing them — is what separates amateurs from pros. This chapter explores user research, active listening, and feedback loops from the bar to the boardroom.",
   "slug": "chapter-11",
   "status": "published",
-  "links": []
+  "links": [
+    {
+      "id": "1751219884279",
+      "name": "Leadership Lessons from Alan Mulally — Transforming Company Strategy",
+      "summary": "An in-depth look at how Mulally’s focus on honesty, transparency, and active listening transformed Ford’s culture and strategic direction.",
+      "url": "https://www.c-suite-strategy.com/blog/leadership-lessons-from-alan-mulally-transforming-company-strategy"
+    },
+    {
+      "id": "1751219926594",
+      "name": "What Got You Here Won’t Get You There — Book Summary by James Clear",
+      "summary": "A concise, practical summary of Goldsmith’s key lessons on how past strengths can become future obstacles, and why leaders must keep evolving.",
+      "url": "https://jamesclear.com/book-summaries/what-got-you-here-wont-get-you-there"
+    },
+    {
+      "id": "1751219959993",
+      "name": "The Founder’s Dilemma — Harvard Business Review",
+      "summary": "Research on how founders’ reluctance to evolve their role can stall growth, and why stepping back can save their company.",
+      "url": "https://hbr.org/2008/02/the-founders-dilemma"
+    }
+  ]
 }
