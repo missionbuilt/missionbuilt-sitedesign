@@ -8,7 +8,7 @@ const Chapter7Banner = () => {
 
   useEffect(() => {
     // Check if banner was previously dismissed
-    const dismissed = localStorage.getItem('chapter10-banner-dismissed');
+    const dismissed = localStorage.getItem('chapter11-banner-dismissed');
     if (!dismissed) {
       setIsVisible(true);
     }
@@ -16,7 +16,7 @@ const Chapter7Banner = () => {
 
   const handleDismiss = () => {
     setIsVisible(false);
-    localStorage.setItem('chapter10-banner-dismissed', 'true');
+    localStorage.setItem('chapter11-banner-dismissed', 'true');
   };
 
   if (!isVisible) return null;
@@ -31,15 +31,15 @@ const Chapter7Banner = () => {
             </div>
             <div className="flex-1">
               <p className="text-sm font-medium text-foreground">
-                <span className="text-sunburst font-bold">Chapter 10 out now:</span>{' '}
-                The Team Is the Tool
+                <span className="text-sunburst font-bold">Chapter 11 out now:</span>{' '}
+                Strong Enough to Listen
               </p>
             </div>
           </div>
           
           <div className="flex items-center gap-3">
             <Link 
-              to="/field-notes/chapter-10"
+              to="/field-notes/chapter-11"
               className="flex items-center gap-1 text-sm font-medium text-foreground hover:text-sunburst transition-colors group"
             >
               Read now
