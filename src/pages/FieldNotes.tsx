@@ -36,7 +36,7 @@ const FieldNotes = () => {
       try {
         console.log('Loading chapter data...');
         
-        // Load all chapters data including Chapter 8, 9, and 10
+        // Load all chapters data including Chapters 8, 9, 10, and 11
         console.log('About to call contentService methods...');
         const [
           content1, metadata1,
@@ -48,7 +48,8 @@ const FieldNotes = () => {
           content7, metadata7,
           content8, metadata8,
           content9, metadata9,
-          content10, metadata10
+          content10, metadata10,
+          content11, metadata11
         ] = await Promise.all([
           contentService.loadChapterContent('chapter-1'),
           contentService.loadChapterMetadata('chapter-1'),
@@ -69,7 +70,9 @@ const FieldNotes = () => {
           contentService.loadChapterContent('chapter-9'),
           contentService.loadChapterMetadata('chapter-9'),
           contentService.loadChapterContent('chapter-10'),
-          contentService.loadChapterMetadata('chapter-10')
+          contentService.loadChapterMetadata('chapter-10'),
+          contentService.loadChapterContent('chapter-11').catch(() => null),
+          contentService.loadChapterMetadata('chapter-11').catch(() => null)
         ]);
         
         console.log('Chapter 1 content length:', content1?.length || 0);
@@ -92,6 +95,8 @@ const FieldNotes = () => {
         console.log('Chapter 9 metadata:', metadata9);
         console.log('Chapter 10 content length:', content10?.length || 0);
         console.log('Chapter 10 metadata:', metadata10);
+        console.log('Chapter 11 content length:', content11?.length || 0);
+        console.log('Chapter 11 metadata:', metadata11);
         
         const chaptersData = [];
         
@@ -273,6 +278,37 @@ const FieldNotes = () => {
           console.log('Added chapter 10 to list');
         } else {
           console.log('Chapter 10 not added - metadata10:', metadata10, 'status:', metadata10?.status);
+        }
+
+        // Add Chapter 11 - either from metadata or as a placeholder
+        if (metadata11) {
+          const readTime11 = calculateReadTime(content11);
+          chaptersData.push({
+            id: metadata11.id,
+            title: metadata11.title,
+            publishedDate: formatPublishDate(metadata11.publishedDate),
+            readTime: readTime11,
+            tags: metadata11.tags,
+            description: metadata11.description,
+            slug: metadata11.slug,
+            status: metadata11.status,
+            chapterNumber: 11
+          });
+          console.log('Added chapter 11 to list from metadata');
+        } else {
+          // Add Chapter 11 as a placeholder with the provided information
+          chaptersData.push({
+            id: 'chapter-11',
+            title: 'Strong Enough to Listen',
+            publishedDate: 'Coming Soon',
+            readTime: '5 min read',
+            tags: ['Listening', 'User Research', 'Feedback', 'Leadership'],
+            description: 'Listening is a strength skill. Whether you\'re spotting a lift or guiding a product, hearing others — really hearing them — is what separates amateurs from pros. This chapter explores user research, active listening, and feedback loops from the bar to the boardroom.',
+            slug: null, // No slug means it's not published yet
+            status: 'draft',
+            chapterNumber: 11
+          });
+          console.log('Added chapter 11 to list as placeholder');
         }
 
         // Sort chapters by chapter number to ensure proper reading order
