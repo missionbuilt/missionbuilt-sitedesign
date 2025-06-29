@@ -71,8 +71,8 @@ const FieldNotes = () => {
           contentService.loadChapterMetadata('chapter-9'),
           contentService.loadChapterContent('chapter-10'),
           contentService.loadChapterMetadata('chapter-10'),
-          contentService.loadChapterContent('chapter-11').catch(() => null),
-          contentService.loadChapterMetadata('chapter-11').catch(() => null)
+          contentService.loadChapterContent('chapter-11'),
+          contentService.loadChapterMetadata('chapter-11')
         ]);
         
         console.log('Chapter 1 content length:', content1?.length || 0);
@@ -280,7 +280,7 @@ const FieldNotes = () => {
           console.log('Chapter 10 not added - metadata10:', metadata10, 'status:', metadata10?.status);
         }
 
-        // Add Chapter 11 - either from metadata or as a placeholder
+        // Add Chapter 11 - use metadata if available
         if (metadata11) {
           const readTime11 = calculateReadTime(content11);
           chaptersData.push({
@@ -296,19 +296,7 @@ const FieldNotes = () => {
           });
           console.log('Added chapter 11 to list from metadata');
         } else {
-          // Add Chapter 11 as a placeholder with the provided information
-          chaptersData.push({
-            id: 'chapter-11',
-            title: 'Strong Enough to Listen',
-            publishedDate: 'Coming Soon',
-            readTime: '5 min read',
-            tags: ['Listening', 'User Research', 'Feedback', 'Leadership'],
-            description: 'Listening is a strength skill. Whether you\'re spotting a lift or guiding a product, hearing others — really hearing them — is what separates amateurs from pros. This chapter explores user research, active listening, and feedback loops from the bar to the boardroom.',
-            slug: null, // No slug means it's not published yet
-            status: 'draft',
-            chapterNumber: 11
-          });
-          console.log('Added chapter 11 to list as placeholder');
+          console.log('Chapter 11 metadata not found');
         }
 
         // Sort chapters by chapter number to ensure proper reading order
