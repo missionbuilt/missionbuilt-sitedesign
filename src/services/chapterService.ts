@@ -39,6 +39,34 @@ export interface ChapterData {
 }
 
 export const chapterService = {
+  async loadChapterMetadata(): Promise<ChapterData[]> {
+    const chapters: ChapterData[] = [];
+    
+    for (const config of CHAPTER_CONFIG) {
+      try {
+        const metadata = await contentService.loadChapterMetadata(config.id);
+
+        if (metadata && (metadata.status === 'published' || metadata.status === 'draft')) {
+          chapters.push({
+            id: metadata.id,
+            title: metadata.title,
+            publishedDate: this.formatPublishDate(metadata.publishedDate),
+            readTime: metadata.readTime,
+            tags: metadata.tags,
+            description: metadata.description,
+            slug: metadata.slug || config.slug,
+            status: metadata.status,
+            chapterNumber: config.chapterNumber
+          });
+        }
+      } catch (error) {
+        console.warn(`Failed to load metadata for chapter ${config.id}:`, error);
+      }
+    }
+
+    return chapters.sort((a, b) => a.chapterNumber - b.chapterNumber);
+  },
+
   async loadAllChapters(): Promise<ChapterData[]> {
     const chapters: ChapterData[] = [];
     

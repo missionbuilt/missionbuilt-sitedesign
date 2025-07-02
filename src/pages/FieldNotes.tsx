@@ -1,116 +1,48 @@
 
-import React, { useState, useMemo } from 'react';
+import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import { BookOpen } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import PdfDownloadButton from '@/components/PdfDownloadButton';
-import { Skeleton } from '@/components/ui/skeleton';
-import { useChapterData } from '@/hooks/useChapterData';
 import ChapterCard from '@/components/fieldnotes/ChapterCard';
+import ChapterCardSkeleton from '@/components/fieldnotes/ChapterCardSkeleton';
 import ChapterFilters from '@/components/fieldnotes/ChapterFilters';
-import { ChapterData } from '@/services/chapterService';
+import ReadingProgress from '@/components/fieldnotes/ReadingProgress';
+import { useChapterData } from '@/hooks/useChapterData';
 
 const FieldNotes = () => {
-  const { chapters, isLoading, error, readingProgress, markChapterAsRead, refetch } = useChapterData();
-  const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState('all');
-  const [sortBy, setSortBy] = useState('chapter');
-  const [showFilters, setShowFilters] = useState(false);
+  const { chapters, isLoading, error, readingProgress, markChapterAsRead } = useChapterData();
+  const [selectedStatus, setSelectedStatus] = React.useState<string>('all');
+  const [selectedTags, setSelectedTags] = React.useState<string[]>([]);
 
-  // Get read chapters from localStorage
-  const readChapters = useMemo(() => {
-    return JSON.parse(localStorage.getItem('readChapters') || '[]');
+  // Get unique tags from all chapters
+  const allTags = React.useMemo(() => {
+    const tags = new Set<string>();
+    chapters.forEach(chapter => {
+      chapter.tags.forEach(tag => tags.add(tag));
+    });
+    return Array.from(tags).sort();
   }, [chapters]);
 
-  // Filter and sort chapters
-  const filteredAndSortedChapters = useMemo(() => {
-    let filtered = chapters;
-
-    // Filter by search term
-    if (searchTerm) {
-      filtered = filtered.filter(chapter =>
-        chapter.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        chapter.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        chapter.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
-      );
-    }
-
-    // Filter by status
-    if (statusFilter !== 'all') {
-      filtered = filtered.filter(chapter => chapter.status === statusFilter);
-    }
-
-    // Sort chapters
-    const sorted = [...filtered].sort((a, b) => {
-      switch (sortBy) {
-        case 'date':
-          return new Date(b.publishedDate).getTime() - new Date(a.publishedDate).getTime();
-        case 'readTime':
-          const timeA = parseInt(a.readTime.replace(/\D/g, ''));
-          const timeB = parseInt(b.readTime.replace(/\D/g, ''));
-          return timeA - timeB;
-        case 'title':
-          return a.title.localeCompare(b.title);
-        case 'chapter':
-        default:
-          return a.chapterNumber - b.chapterNumber;
-      }
+  // Filter chapters based on selected filters
+  const filteredChapters = React.useMemo(() => {
+    return chapters.filter(chapter => {
+      const statusMatch = selectedStatus === 'all' || chapter.status === selectedStatus;
+      const tagsMatch = selectedTags.length === 0 || selectedTags.some(tag => chapter.tags.includes(tag));
+      return statusMatch && tagsMatch;
     });
+  }, [chapters, selectedStatus, selectedTags]);
 
-    return sorted;
-  }, [chapters, searchTerm, statusFilter, sortBy]);
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-background">
-        <Navbar />
-        <main className="container-custom py-12">
-          <div className="max-w-6xl mx-auto">
-            <header className="mb-12">
-              <div className="flex justify-between items-start">
-                <div>
-                  <h2 className="text-lg font-medium text-muted-foreground mb-2 dark:text-slate-400">The Core Chapters of Mission Built: Lessons from the Barbell and the Boardroom</h2>
-                  <h1 className="text-4xl font-bold text-foreground mb-4 dark:text-slate-100">Playbook</h1>
-                </div>
-                <Skeleton className="h-10 w-32" />
-              </div>
-            </header>
-            
-            <Skeleton className="h-32 w-full mb-8" />
-            
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {Array.from({ length: 6 }).map((_, i) => (
-                <div key={i} className="h-80">
-                  <Skeleton className="h-full w-full rounded-lg" />
-                </div>
-              ))}
-            </div>
-          </div>
-        </main>
-        <Footer />
-      </div>
-    );
-  }
+  // Get read chapters from localStorage
+  const readChapters = JSON.parse(localStorage.getItem('readChapters') || '[]');
 
   if (error) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30">
         <Navbar />
-        <main className="container-custom py-12">
-          <div className="max-w-6xl mx-auto">
-            <header className="mb-12">
-              <h1 className="text-4xl font-bold text-foreground mb-4">Playbook</h1>
-            </header>
-            
-            <div className="text-center py-8">
-              <p className="text-destructive mb-4 dark:text-red-400">{error}</p>
-              <button 
-                onClick={refetch} 
-                className="bg-army text-white px-4 py-2 rounded hover:bg-army/80 transition-colors dark:bg-army/90 dark:hover:bg-army dark:text-slate-100"
-              >
-                Retry
-              </button>
-            </div>
+        <main className="container-custom py-16">
+          <div className="text-center">
+            <p className="text-destructive">{error}</p>
           </div>
         </main>
         <Footer />
@@ -119,85 +51,74 @@ const FieldNotes = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <>
       <Helmet>
-        <title>Playbook - MissionBuilt</title>
-        <meta name="description" content="Table of contents for all field notes and chapters" />
+        <title>Field Notes | MissionBuilt</title>
+        <meta name="description" content="A collection of field notes on building better products, one rep at a time." />
       </Helmet>
-      
-      <Navbar />
-      
-      <main className="container-custom py-12">
-        <div className="max-w-6xl mx-auto">
-          <header className="mb-12">
-            <div className="flex justify-between items-start">
-              <div>
-                <h2 className="text-lg font-medium text-muted-foreground mb-2 dark:text-slate-400">The Core Chapters of Mission Built: Lessons from the Barbell and the Boardroom</h2>
-                <h1 className="text-4xl font-bold text-foreground mb-4 dark:text-slate-100">Playbook</h1>
-              </div>
-              <div className="mt-4">
-                <PdfDownloadButton />
+
+      <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30">
+        <Navbar />
+        
+        <main className="container-custom py-16">
+          {/* Header Section */}
+          <div className="text-center mb-16">
+            <div className="flex justify-center mb-6">
+              <div className="p-4 rounded-full bg-gradient-to-br from-army/10 to-steel/10 dark:from-sunburst/10 dark:to-army/10">
+                <BookOpen className="h-12 w-12 text-army dark:text-sunburst" />
               </div>
             </div>
-          </header>
-          
-          {/* Welcome Blurb */}
-          <div className="mb-8 bg-slate/5 dark:bg-slate/10 border border-slate/10 dark:border-slate/20 rounded-lg p-6">
-            <p className="text-foreground dark:text-slate-200 leading-relaxed">
-              Welcome to The Playbook — these are the foundational chapters of Mission Built, where each lesson combines real experiences from the gym and the boardroom to give you practical strategies for mission-driven growth.
-              Here, you'll find the complete set of insights, stories, and tools that define the book's philosophy, helping you align your actions with your purpose and build strength that lasts.
+            <h1 className="heading-lg mb-6 bg-gradient-to-r from-army via-steel to-sunburst bg-clip-text text-transparent">
+              Field Notes
+            </h1>
+            <p className="body-lg text-muted-foreground max-w-3xl mx-auto mb-8">
+              Building better products, one rep at a time. These field notes share lessons learned 
+              across decades of product leadership through the lens of powerlifting discipline.
             </p>
+            
+            <ReadingProgress {...readingProgress} />
           </div>
-          
+
+          {/* Filters */}
           <ChapterFilters
-            searchTerm={searchTerm}
-            onSearchChange={setSearchTerm}
-            statusFilter={statusFilter}
-            onStatusFilterChange={setStatusFilter}
-            sortBy={sortBy}
-            onSortChange={setSortBy}
-            showFilters={showFilters}
-            onToggleFilters={() => setShowFilters(!showFilters)}
+            selectedStatus={selectedStatus}
+            onStatusChange={setSelectedStatus}
+            selectedTags={selectedTags}
+            onTagsChange={setSelectedTags}
+            availableTags={allTags}
+            isLoading={isLoading}
           />
-          
-          <div className="mt-8">
-            {filteredAndSortedChapters.length === 0 ? (
-              <div className="text-center py-12">
-                <p className="text-muted-foreground dark:text-slate-300 mb-2">
-                  {searchTerm || statusFilter !== 'all' 
-                    ? 'No chapters match your current filters.' 
-                    : 'No field notes available at the moment.'}
-                </p>
-                {(searchTerm || statusFilter !== 'all') && (
-                  <button
-                    onClick={() => {
-                      setSearchTerm('');
-                      setStatusFilter('all');
-                    }}
-                    className="text-army dark:text-sunburst hover:underline text-sm"
-                  >
-                    Clear filters
-                  </button>
-                )}
-              </div>
+
+          {/* Chapter Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {isLoading ? (
+              // Show skeleton cards while loading
+              Array.from({ length: 12 }).map((_, index) => (
+                <ChapterCardSkeleton key={index} />
+              ))
             ) : (
-              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {filteredAndSortedChapters.map((chapter) => (
-                  <ChapterCard
-                    key={chapter.id}
-                    chapter={chapter}
-                    isRead={readChapters.includes(chapter.chapterNumber)}
-                    onMarkAsRead={markChapterAsRead}
-                  />
-                ))}
-              </div>
+              filteredChapters.map((chapter) => (
+                <ChapterCard
+                  key={chapter.id}
+                  chapter={chapter}
+                  isRead={readChapters.includes(chapter.chapterNumber)}
+                  onMarkAsRead={markChapterAsRead}
+                />
+              ))
             )}
           </div>
-        </div>
-      </main>
-      
-      <Footer />
-    </div>
+
+          {/* No Results Message */}
+          {!isLoading && filteredChapters.length === 0 && chapters.length > 0 && (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground">No field notes match your current filters.</p>
+            </div>
+          )}
+        </main>
+
+        <Footer />
+      </div>
+    </>
   );
 };
 

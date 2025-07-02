@@ -25,7 +25,7 @@ export const useChapterData = () => {
       setError(null);
       
       try {
-        const chaptersData = await chapterService.loadAllChapters();
+        const chaptersData = await chapterService.loadChapterMetadata();
         setChapters(chaptersData);
         
         // Calculate reading progress
