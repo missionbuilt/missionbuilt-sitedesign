@@ -443,93 +443,85 @@ const FieldNotes = () => {
                 <p className="text-sm text-muted-foreground mt-2 dark:text-slate-400">Check the browser console for loading details.</p>
               </div>
             ) : (
-              <>
-                <div className="grid gap-6 md:grid-cols-2">
-                  {chapters.map((chapter) => {
-                    const CardComponent = (
-                      <Card key={chapter.id} className="card-hover transition-all duration-200 hover:shadow-lg dark:border-slate-700 dark:bg-slate-900/50 dark:hover:bg-slate-800/50 dark:hover:border-slate-600 h-full min-h-[280px] flex flex-col">
-                        <CardHeader className="pb-3 flex-shrink-0">
-                          <div className="flex items-center justify-between mb-2">
-                            <div className="flex items-center gap-2">
-                              <Badge variant="outline" className="text-xs font-semibold dark:border-slate-600 dark:text-slate-200">
-                                Chapter {chapter.chapterNumber}
-                              </Badge>
-                              <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                                chapter.status === 'published' 
-                                  ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300 dark:border dark:border-green-700'
-                                  : chapter.status === 'draft'
-                                  ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300 dark:border dark:border-yellow-700'
-                                  : 'bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-300 dark:border dark:border-gray-700'
-                              }`}>
-                                {chapter.status === 'published' ? 'Good Lift' : chapter.status === 'draft' ? 'Chalking Up' : chapter.status}
-                              </span>
-                            </div>
-                          </div>
-                          
-                          <CardTitle className="text-xl leading-tight mb-3">
-                            <span className={chapter.slug ? "text-army dark:text-sunburst" : "text-muted-foreground dark:text-slate-400"}>
-                              {chapter.title}
+              <div className="grid gap-6 md:grid-cols-2">
+                {chapters.map((chapter) => {
+                  const CardComponent = (
+                    <Card key={chapter.id} className="card-hover transition-all duration-200 hover:shadow-lg dark:border-slate-700 dark:bg-slate-900/50 dark:hover:bg-slate-800/50 dark:hover:border-slate-600 h-full min-h-[280px] flex flex-col">
+                      <CardHeader className="pb-3 flex-shrink-0">
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="flex items-center gap-2">
+                            <Badge variant="outline" className="text-xs font-semibold dark:border-slate-600 dark:text-slate-200">
+                              Chapter {chapter.chapterNumber}
+                            </Badge>
+                            <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+                              chapter.status === 'published' 
+                                ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300 dark:border dark:border-green-700'
+                                : chapter.status === 'draft'
+                                ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300 dark:border dark:border-yellow-700'
+                                : 'bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-300 dark:border dark:border-gray-700'
+                            }`}>
+                              {chapter.status === 'published' ? 'Good Lift' : chapter.status === 'draft' ? 'Chalking Up' : chapter.status}
                             </span>
-                          </CardTitle>
-                          
-                          {chapter.description && (
-                            <CardDescription className="text-sm leading-relaxed dark:text-slate-300 flex-grow">
-                              {chapter.description}
-                            </CardDescription>
-                          )}
-                        </CardHeader>
+                          </div>
+                        </div>
                         
-                        <CardContent className="pt-0 mt-auto">
-                          <div className="flex items-center gap-4 mb-3 text-sm text-muted-foreground dark:text-slate-400">
-                            <div className="flex items-center">
-                              <Calendar className="w-4 h-4 mr-1" />
-                              {chapter.publishedDate}
-                            </div>
-                            <div className="flex items-center">
-                              <Clock className="w-4 h-4 mr-1" />
-                              {chapter.readTime}
-                            </div>
+                        <CardTitle className="text-xl leading-tight mb-3">
+                          <span className={chapter.slug ? "text-army dark:text-sunburst" : "text-muted-foreground dark:text-slate-400"}>
+                            {chapter.title}
+                          </span>
+                        </CardTitle>
+                        
+                        {chapter.description && (
+                          <CardDescription className="text-sm leading-relaxed dark:text-slate-300 flex-grow">
+                            {chapter.description}
+                          </CardDescription>
+                        )}
+                      </CardHeader>
+                      
+                      <CardContent className="pt-0 mt-auto">
+                        <div className="flex items-center gap-4 mb-3 text-sm text-muted-foreground dark:text-slate-400">
+                          <div className="flex items-center">
+                            <Calendar className="w-4 h-4 mr-1" />
+                            {chapter.publishedDate}
                           </div>
-                          
-                          <div className="flex flex-wrap gap-1">
-                            {chapter.tags.map((tag) => (
-                              <span 
-                                key={tag}
-                                className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-army/10 text-army dark:bg-sunburst/20 dark:text-sunburst dark:border dark:border-sunburst/30"
-                              >
-                                <Tag className="w-3 h-3 mr-1" />
-                                {tag}
-                              </span>
-                            ))}
+                          <div className="flex items-center">
+                            <Clock className="w-4 h-4 mr-1" />
+                            {chapter.readTime}
                           </div>
-                        </CardContent>
-                      </Card>
+                        </div>
+                        
+                        <div className="flex flex-wrap gap-1">
+                          {chapter.tags.map((tag) => (
+                            <span 
+                              key={tag}
+                              className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-army/10 text-army dark:bg-sunburst/20 dark:text-sunburst dark:border dark:border-sunburst/30"
+                            >
+                              <Tag className="w-3 h-3 mr-1" />
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  );
+
+                  // If the chapter has a slug (is published), wrap the entire card with Link
+                  if (chapter.slug) {
+                    return (
+                      <Link 
+                        key={chapter.id}
+                        to={`/field-notes/${chapter.slug}`}
+                        className="block hover:text-army/80 dark:hover:text-sunburst/80 transition-colors h-full"
+                      >
+                        {CardComponent}
+                      </Link>
                     );
+                  }
 
-                    // If the chapter has a slug (is published), wrap the entire card with Link
-                    if (chapter.slug) {
-                      return (
-                        <Link 
-                          key={chapter.id}
-                          to={`/field-notes/${chapter.slug}`}
-                          className="block hover:text-army/80 dark:hover:text-sunburst/80 transition-colors h-full"
-                        >
-                          {CardComponent}
-                        </Link>
-                      );
-                    }
-
-                    // If no slug (unpublished), return the card without Link
-                    return CardComponent;
-                  })}
-                </div>
-                
-                <div className="mt-8 text-center py-6 border-t border-border dark:border-slate-700">
-                  <p className="text-muted-foreground text-sm dark:text-slate-300">
-                    More chapters are on the way
-                  </p>
-                </div>
-              </>
+                  // If no slug (unpublished), return the card without Link
+                  return CardComponent;
+                })}
+              </div>
             )}
           </div>
         </div>
