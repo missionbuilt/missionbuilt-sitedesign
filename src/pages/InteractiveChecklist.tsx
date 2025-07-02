@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -16,42 +17,42 @@ interface ChecklistItem {
 }
 
 const checklistItems: ChecklistItem[] = [
-  // Mission Foundation - Mission Clarity (items 1–3) - 2 points each
+  // Mission Foundation - Mission Clarity (2 points each)
   { id: '1', text: 'Have I clearly articulated the mission behind this effort?', points: 2, category: 'Mission Clarity', group: 'Mission Foundation' },
   { id: '2', text: 'Can every team member (or I personally) explain why this matters without referring to metrics?', points: 2, category: 'Mission Clarity', group: 'Mission Foundation' },
   { id: '3', text: 'Does this mission align with my/our long-term purpose?', points: 2, category: 'Mission Clarity', group: 'Mission Foundation' },
   
-  // Mission Foundation - Metric Awareness (items 4–6) - 1.5 points each
-  { id: '4', text: 'Do I know what metrics might reflect progress — but also recognize they\'re indicators, not the mission itself?', points: 1.5, category: 'Metric Awareness', group: 'Mission Foundation' },
-  { id: '5', text: 'Are these metrics supporting the mission, or starting to dictate behavior?', points: 1.5, category: 'Metric Awareness', group: 'Mission Foundation' },
+  // Mission Foundation - Metric Awareness (2 points each)
+  { id: '4', text: 'Do I know what metrics might reflect progress — but also recognize they\'re indicators, not the mission itself?', points: 2, category: 'Metric Awareness (Not Obsession)', group: 'Mission Foundation' },
+  { id: '5', text: 'Are these metrics supporting the mission, or are they starting to dictate behavior?', points: 2, category: 'Metric Awareness (Not Obsession)', group: 'Mission Foundation' },
   
-  // Mission Foundation - Drift Detection (items 6-7) - 1.5 and 1 points
-  { id: '6', text: 'Am I or my team currently pursuing work or reps that look busy but don\'t move us closer to the mission?', points: 1.5, category: 'Drift Detection', group: 'Mission Foundation' },
-  { id: '7', text: 'Have I noticed recent moments of drifting into comfort zones or distractions?', points: 1, category: 'Drift Detection', group: 'Mission Foundation' },
+  // Mission Foundation - Drift Detection (2 points each)
+  { id: '6', text: 'Am I or my team currently pursuing work or reps that look busy but don\'t move us closer to the mission?', points: 2, category: 'Drift Detection', group: 'Mission Foundation' },
+  { id: '7', text: 'Have I noticed recent moments of drifting into comfort zones or distractions?', points: 2, category: 'Drift Detection', group: 'Mission Foundation' },
   
-  // Execution & Adaptation - Ritual Reinforcement (items 8-9) - 1 point each
-  { id: '8', text: 'Have I established or maintained meaningful rituals that keep me connected to the mission?', points: 1, category: 'Ritual Reinforcement', group: 'Execution & Adaptation' },
-  { id: '9', text: 'Are these rituals adaptable when conditions change, so they don\'t become rigid rules?', points: 1, category: 'Ritual Reinforcement', group: 'Execution & Adaptation' },
+  // Execution & Adaptation - Ritual Reinforcement (1.5 points each)
+  { id: '8', text: 'Have I established or maintained meaningful rituals that keep me connected to the mission?', points: 1.5, category: 'Ritual Reinforcement', group: 'Execution & Adaptation' },
+  { id: '9', text: 'Are these rituals adaptable when conditions change, so they don\'t become rigid rules?', points: 1.5, category: 'Ritual Reinforcement', group: 'Execution & Adaptation' },
   
-  // Execution & Adaptation - Feedback Loops (items 11-12) - 1 point each
-  { id: '11', text: 'Am I seeking feedback that tells me if I\'m aligned with the mission, not just if I\'m hitting numbers?', points: 1, category: 'Feedback Loops', group: 'Execution & Adaptation' },
-  { id: '12', text: 'Do I have a system or trusted peers who can call out mission drift?', points: 1, category: 'Feedback Loops', group: 'Execution & Adaptation' },
+  // Execution & Adaptation - Feedback Loops (1.5 points each)
+  { id: '10', text: 'Am I seeking feedback that tells me if I\'m aligned with the mission, rather than just if I\'m hitting numbers?', points: 1.5, category: 'Feedback Loops', group: 'Execution & Adaptation' },
+  { id: '11', text: 'Do I have a system or trusted peers who can call out mission drift?', points: 1.5, category: 'Feedback Loops', group: 'Execution & Adaptation' },
   
-  // Execution & Adaptation - Decision Alignment (items 14-15) - 1 point each
-  { id: '14', text: 'When making a key decision, am I asking: Does this move us/me closer to the mission or just satisfy a short-term metric?', points: 1, category: 'Decision Alignment', group: 'Execution & Adaptation' },
-  { id: '15', text: 'Can I trace a clear line from today\'s work to the bigger mission?', points: 1, category: 'Decision Alignment', group: 'Execution & Adaptation' },
+  // Execution & Adaptation - Decision Alignment (1.5 points each)
+  { id: '12', text: 'When making a key decision, am I asking: Does this move us/me closer to the mission or just satisfy a short-term metric?', points: 1.5, category: 'Decision Alignment', group: 'Execution & Adaptation' },
+  { id: '13', text: 'Can I trace a clear line from today\'s work to the bigger mission?', points: 1.5, category: 'Decision Alignment', group: 'Execution & Adaptation' },
   
-  // Sustainability & Culture - System Check Under Stress (items 17-18) - 1 point each
-  { id: '17', text: 'Have I validated that our systems (product, training plan, or team workflows) can withstand real-world stress and unexpected challenges?', points: 1, category: 'System Check Under Stress', group: 'Sustainability & Culture' },
-  { id: '18', text: 'Have we proactively rehearsed potential crises or failure points so we\'re prepared, not reactive?', points: 1, category: 'System Check Under Stress', group: 'Sustainability & Culture' },
+  // Sustainability & Culture - System Check Under Stress (1 point each)
+  { id: '14', text: 'Have I validated that our systems (product, training plan, or team workflows) can withstand real-world stress and unexpected challenges?', points: 1, category: 'System Check Under Stress', group: 'Sustainability & Culture' },
+  { id: '15', text: 'Have we proactively rehearsed potential crises or failure points so we\'re prepared, not reactive?', points: 1, category: 'System Check Under Stress', group: 'Sustainability & Culture' },
   
-  // Sustainability & Culture - Recovery Rhythm Review (items 20-21) - 1 point each
-  { id: '20', text: 'Have I built intentional recovery time into my plan — whether that means deload weeks, cooldown cycles, or strategy days — to prevent burnout and maintain long-term alignment with the mission?', points: 1, category: 'Recovery Rhythm Review', group: 'Sustainability & Culture' },
-  { id: '21', text: 'Do I recognize recovery as a requirement, not a reward?', points: 1, category: 'Recovery Rhythm Review', group: 'Sustainability & Culture' },
+  // Sustainability & Culture - Recovery Rhythm Review (1 point each)
+  { id: '16', text: 'Have I built intentional recovery time into my plan — whether that means deload weeks, cooldown cycles, or strategy days — to prevent burnout and maintain long-term alignment with the mission?', points: 1, category: 'Recovery Rhythm Review', group: 'Sustainability & Culture' },
+  { id: '17', text: 'Do I recognize recovery as a requirement, not a reward?', points: 1, category: 'Recovery Rhythm Review', group: 'Sustainability & Culture' },
   
-  // Sustainability & Culture - Shared PR Reflection (items 23-24) - 1 point each
-  { id: '23', text: 'Have I recognized and celebrated recent team or personal milestones as shared wins, reinforcing that we succeed together, not alone?', points: 1, category: 'Shared PR Reflection', group: 'Sustainability & Culture' },
-  { id: '24', text: 'Are our current incentives and recognition systems encouraging shared ownership rather than individual heroics?', points: 1, category: 'Shared PR Reflection', group: 'Sustainability & Culture' }
+  // Sustainability & Culture - Shared PR Reflection (1 point each)
+  { id: '18', text: 'Have I recognized and celebrated recent team or personal milestones as shared wins, reinforcing that we succeed together, not alone?', points: 1, category: 'Shared PR Reflection', group: 'Sustainability & Culture' },
+  { id: '19', text: 'Are our current incentives and recognition systems encouraging shared ownership rather than individual heroics?', points: 1, category: 'Shared PR Reflection', group: 'Sustainability & Culture' }
 ];
 
 const InteractiveChecklist = () => {
@@ -128,7 +129,7 @@ const InteractiveChecklist = () => {
 
   const categoryOrder = [
     'Mission Clarity',
-    'Metric Awareness',
+    'Metric Awareness (Not Obsession)',
     'Drift Detection', 
     'Ritual Reinforcement',
     'Feedback Loops',
@@ -144,11 +145,11 @@ const InteractiveChecklist = () => {
   const getGroupDescription = (group: string) => {
     switch (group) {
       case 'Mission Foundation':
-        return 'Mission clarity, metric awareness, and drift detection (most important)';
+        return 'Mission clarity, metric awareness, and drift detection (2 points per question)';
       case 'Execution & Adaptation':
-        return 'Rituals, feedback loops, and decision-making alignment';
+        return 'Rituals, feedback loops, and decision-making alignment (1.5 points per question)';
       case 'Sustainability & Culture':
-        return 'System resilience, recovery rhythms, and shared success';
+        return 'System resilience, recovery rhythms, and shared success (1 point per question)';
       default:
         return '';
     }
@@ -270,7 +271,7 @@ const InteractiveChecklist = () => {
                                 </a>
                               </div>
                             )}
-                            {categoryName === 'Metric Awareness' && (
+                            {categoryName === 'Metric Awareness (Not Obsession)' && (
                               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                                 <span>Learn more:</span>
                                 <a 
