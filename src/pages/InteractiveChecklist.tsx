@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -37,9 +38,8 @@ const checklistItems: ChecklistItem[] = [
   { id: '12', text: 'Do I have a system or trusted peers who can call out mission drift?', points: 9, category: 'Feedback Loops' },
   
   // Decision Alignment
-  { id: '14', text: 'Do major decisions clearly support your mission?', points: 10, category: 'Decision Alignment' },
-  { id: '15', text: 'Can you explain how daily choices connect to larger goals?', points: 6, category: 'Decision Alignment' },
-  { id: '16', text: 'Do you have criteria for saying no to opportunities?', points: 8, category: 'Decision Alignment' },
+  { id: '14', text: 'When making a key decision, am I asking: Does this move us/me closer to the mission or just satisfy a short-term metric?', points: 10, category: 'Decision Alignment' },
+  { id: '15', text: 'Can I trace a clear line from today\'s work to the bigger mission?', points: 8, category: 'Decision Alignment' },
   
   // System Check Under Stress
   { id: '17', text: 'Do your systems hold up when under pressure?', points: 9, category: 'System Check Under Stress' },
@@ -277,6 +277,18 @@ const InteractiveChecklist = () => {
                           className="text-army dark:text-sunburst hover:underline flex items-center gap-1"
                         >
                           Chapter 4: Feedback Is a Superpower, Section 1: Cues, Not Critiques
+                          <ExternalLink className="h-3 w-3" />
+                        </a>
+                      </div>
+                    )}
+                    {categoryName === 'Decision Alignment' && (
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <span>Learn more:</span>
+                        <a 
+                          href="/field-notes/chapter-8" 
+                          className="text-army dark:text-sunburst hover:underline flex items-center gap-1"
+                        >
+                          Chapter 8: Decisions Are Made Under Load, Section 2: Clarity Beats Certainty
                           <ExternalLink className="h-3 w-3" />
                         </a>
                       </div>
