@@ -1,9 +1,10 @@
 
 import React from 'react';
-import { Search, Filter, SortAsc } from 'lucide-react';
+import { Search, Filter, SortAsc, Info } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 interface ChapterFiltersProps {
   searchTerm: string;
@@ -29,15 +30,30 @@ const ChapterFilters: React.FC<ChapterFiltersProps> = ({
   return (
     <div className="space-y-4">
       <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-        <div className="relative flex-1 max-w-md">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-          <Input
-            type="text"
-            placeholder="Search chapters..."
-            value={searchTerm}
-            onChange={(e) => onSearchChange(e.target.value)}
-            className="pl-10"
-          />
+        <div className="flex-1 max-w-md">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+            <Input
+              type="text"
+              placeholder="Search titles, descriptions, and tags..."
+              value={searchTerm}
+              onChange={(e) => onSearchChange(e.target.value)}
+              className="pl-10"
+            />
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Info className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4 cursor-help" />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p className="text-sm">Search chapter titles, descriptions, and tags only.<br />Chapter content is not searched.</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
+          <p className="text-xs text-muted-foreground mt-1 dark:text-slate-400">
+            Searches chapter metadata only
+          </p>
         </div>
         
         <Button
