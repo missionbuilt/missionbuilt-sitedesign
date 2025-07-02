@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -13,45 +12,40 @@ interface ChecklistItem {
   text: string;
   points: number;
   category: string;
+  group: string;
 }
 
 const checklistItems: ChecklistItem[] = [
-  // Mission Clarity
-  { id: '1', text: 'Have I clearly articulated the mission behind this effort?', points: 2, category: 'Mission Clarity' },
-  { id: '2', text: 'Can every team member (or I personally) explain why this matters without referring to metrics?', points: 2, category: 'Mission Clarity' },
-  { id: '3', text: 'Does this mission align with my/our long-term purpose?', points: 2, category: 'Mission Clarity' },
+  // Mission Foundation (items 1–3) - 2 points each
+  { id: '1', text: 'Have I clearly articulated the mission behind this effort?', points: 2, category: 'Mission Clarity', group: 'Mission Foundation' },
+  { id: '2', text: 'Can every team member (or I personally) explain why this matters without referring to metrics?', points: 2, category: 'Mission Clarity', group: 'Mission Foundation' },
+  { id: '3', text: 'Does this mission align with my/our long-term purpose?', points: 2, category: 'Mission Clarity', group: 'Mission Foundation' },
   
-  // Metric Awareness (Not Obsession)
-  { id: '4', text: 'Do I know what metrics might reflect progress — but also recognize they\'re indicators, not the mission itself?', points: 1.5, category: 'Metric Awareness' },
-  { id: '5', text: 'Are these metrics supporting the mission, or starting to dictate behavior?', points: 1.5, category: 'Metric Awareness' },
+  // Execution & Adaptation (items 4–6) - 1.5 points each
+  { id: '4', text: 'Do I know what metrics might reflect progress — but also recognize they\'re indicators, not the mission itself?', points: 1.5, category: 'Metric Awareness', group: 'Execution & Adaptation' },
+  { id: '5', text: 'Are these metrics supporting the mission, or starting to dictate behavior?', points: 1.5, category: 'Metric Awareness', group: 'Execution & Adaptation' },
+  { id: '6', text: 'Am I or my team currently pursuing work or reps that look busy but don\'t move us closer to the mission?', points: 1.5, category: 'Drift Detection', group: 'Execution & Adaptation' },
   
-  // Drift Detection
-  { id: '6', text: 'Am I or my team currently pursuing work or reps that look busy but don\'t move us closer to the mission?', points: 1.5, category: 'Drift Detection' },
-  { id: '7', text: 'Have I noticed recent moments of drifting into comfort zones or distractions?', points: 1, category: 'Drift Detection' },
+  // Sustainability & Culture (items 7–9) - 1 point each
+  { id: '7', text: 'Have I noticed recent moments of drifting into comfort zones or distractions?', points: 1, category: 'Drift Detection', group: 'Sustainability & Culture' },
+  { id: '8', text: 'Have I established or maintained meaningful rituals that keep me connected to the mission?', points: 1, category: 'Ritual Reinforcement', group: 'Sustainability & Culture' },
+  { id: '9', text: 'Are these rituals adaptable when conditions change, so they don\'t become rigid rules?', points: 1, category: 'Ritual Reinforcement', group: 'Sustainability & Culture' },
   
-  // Ritual Reinforcement
-  { id: '8', text: 'Have I established or maintained meaningful rituals that keep me connected to the mission?', points: 1, category: 'Ritual Reinforcement' },
-  { id: '9', text: 'Are these rituals adaptable when conditions change, so they don\'t become rigid rules?', points: 1, category: 'Ritual Reinforcement' },
+  // Additional items continue with 1 point each
+  { id: '11', text: 'Am I seeking feedback that tells me if I\'m aligned with the mission, not just if I\'m hitting numbers?', points: 1, category: 'Feedback Loops', group: 'Sustainability & Culture' },
+  { id: '12', text: 'Do I have a system or trusted peers who can call out mission drift?', points: 1, category: 'Feedback Loops', group: 'Sustainability & Culture' },
   
-  // Feedback Loops
-  { id: '11', text: 'Am I seeking feedback that tells me if I\'m aligned with the mission, not just if I\'m hitting numbers?', points: 1, category: 'Feedback Loops' },
-  { id: '12', text: 'Do I have a system or trusted peers who can call out mission drift?', points: 1, category: 'Feedback Loops' },
+  { id: '14', text: 'When making a key decision, am I asking: Does this move us/me closer to the mission or just satisfy a short-term metric?', points: 1, category: 'Decision Alignment', group: 'Execution & Adaptation' },
+  { id: '15', text: 'Can I trace a clear line from today\'s work to the bigger mission?', points: 1, category: 'Decision Alignment', group: 'Execution & Adaptation' },
   
-  // Decision Alignment
-  { id: '14', text: 'When making a key decision, am I asking: Does this move us/me closer to the mission or just satisfy a short-term metric?', points: 1, category: 'Decision Alignment' },
-  { id: '15', text: 'Can I trace a clear line from today\'s work to the bigger mission?', points: 1, category: 'Decision Alignment' },
+  { id: '17', text: 'Have I validated that our systems (product, training plan, or team workflows) can withstand real-world stress and unexpected challenges?', points: 1, category: 'System Check Under Stress', group: 'Execution & Adaptation' },
+  { id: '18', text: 'Have we proactively rehearsed potential crises or failure points so we\'re prepared, not reactive?', points: 1, category: 'System Check Under Stress', group: 'Execution & Adaptation' },
   
-  // System Check Under Stress
-  { id: '17', text: 'Have I validated that our systems (product, training plan, or team workflows) can withstand real-world stress and unexpected challenges?', points: 1, category: 'System Check Under Stress' },
-  { id: '18', text: 'Have we proactively rehearsed potential crises or failure points so we\'re prepared, not reactive?', points: 1, category: 'System Check Under Stress' },
+  { id: '20', text: 'Have I built intentional recovery time into my plan — whether that means deload weeks, cooldown cycles, or strategy days — to prevent burnout and maintain long-term alignment with the mission?', points: 1, category: 'Recovery Rhythm Review', group: 'Sustainability & Culture' },
+  { id: '21', text: 'Do I recognize recovery as a requirement, not a reward?', points: 1, category: 'Recovery Rhythm Review', group: 'Sustainability & Culture' },
   
-  // Recovery Rhythm Review
-  { id: '20', text: 'Have I built intentional recovery time into my plan — whether that means deload weeks, cooldown cycles, or strategy days — to prevent burnout and maintain long-term alignment with the mission?', points: 1, category: 'Recovery Rhythm Review' },
-  { id: '21', text: 'Do I recognize recovery as a requirement, not a reward?', points: 1, category: 'Recovery Rhythm Review' },
-  
-  // Shared PR Reflection
-  { id: '23', text: 'Have I recognized and celebrated recent team or personal milestones as shared wins, reinforcing that we succeed together, not alone?', points: 1, category: 'Shared PR Reflection' },
-  { id: '24', text: 'Are our current incentives and recognition systems encouraging shared ownership rather than individual heroics?', points: 1, category: 'Shared PR Reflection' }
+  { id: '23', text: 'Have I recognized and celebrated recent team or personal milestones as shared wins, reinforcing that we succeed together, not alone?', points: 1, category: 'Shared PR Reflection', group: 'Sustainability & Culture' },
+  { id: '24', text: 'Are our current incentives and recognition systems encouraging shared ownership rather than individual heroics?', points: 1, category: 'Shared PR Reflection', group: 'Sustainability & Culture' }
 ];
 
 const InteractiveChecklist = () => {
@@ -67,7 +61,7 @@ const InteractiveChecklist = () => {
     setCheckedItems(newCheckedItems);
   };
 
-  const { totalScore, maxScore, completionPercentage, categoryScores } = useMemo(() => {
+  const { totalScore, maxScore, completionPercentage, categoryScores, groupScores } = useMemo(() => {
     const total = checklistItems
       .filter(item => checkedItems.has(item.id))
       .reduce((sum, item) => sum + item.points, 0);
@@ -87,11 +81,23 @@ const InteractiveChecklist = () => {
       return acc;
     }, {} as Record<string, { total: number; max: number }>);
 
+    const groups = checklistItems.reduce((acc, item) => {
+      if (!acc[item.group]) {
+        acc[item.group] = { total: 0, max: 0 };
+      }
+      acc[item.group].max += item.points;
+      if (checkedItems.has(item.id)) {
+        acc[item.group].total += item.points;
+      }
+      return acc;
+    }, {} as Record<string, { total: number; max: number }>);
+
     return {
       totalScore: total,
       maxScore: max,
       completionPercentage: percentage,
-      categoryScores: categories
+      categoryScores: categories,
+      groupScores: groups
     };
   }, [checkedItems]);
 
@@ -126,6 +132,22 @@ const InteractiveChecklist = () => {
     'Shared PR Reflection'
   ];
 
+  // Group categories by their group
+  const groupOrder = ['Mission Foundation', 'Execution & Adaptation', 'Sustainability & Culture'];
+  
+  const getGroupDescription = (group: string) => {
+    switch (group) {
+      case 'Mission Foundation':
+        return 'Core mission alignment and clarity (most important)';
+      case 'Execution & Adaptation':
+        return 'Metrics awareness, drift detection, and decision-making';
+      case 'Sustainability & Culture':
+        return 'Long-term sustainability, rituals, and team culture';
+      default:
+        return '';
+    }
+  };
+
   return (
     <>
       <Helmet>
@@ -140,14 +162,14 @@ const InteractiveChecklist = () => {
             <div>
               <h1 className="heading-lg mb-4">Mission Alignment Checklist</h1>
               <p className="body text-muted-foreground max-w-2xl">
-                Track your progress and see your mission score update in real-time as you complete each task.
+                Track your progress across three key areas: Mission Foundation, Execution & Adaptation, and Sustainability & Culture.
               </p>
             </div>
             <NightVisionToggle />
           </div>
 
           {/* Score Dashboard */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
             <Card>
               <CardHeader className="pb-3">
                 <CardTitle className="text-lg">Total Score</CardTitle>
@@ -163,233 +185,53 @@ const InteractiveChecklist = () => {
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader className="pb-3">
-                <CardTitle className="text-lg">Completed Tasks</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-3xl font-bold text-steel dark:text-cloud mb-2">
-                  {checkedItems.size}/{checklistItems.length}
-                </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle className="h-4 w-4 text-army dark:text-sunburst" />
-                  <span className="text-sm text-muted-foreground">
-                    Tasks Complete
-                  </span>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader className="pb-3">
-                <CardTitle className="text-lg">Highest Category</CardTitle>
-              </CardHeader>
-              <CardContent>
-                {Object.entries(categoryScores).length > 0 ? (
-                  (() => {
-                    const topCategory = Object.entries(categoryScores)
-                      .sort(([,a], [,b]) => (b.total/b.max) - (a.total/a.max))[0];
-                    const percentage = Math.round((topCategory[1].total / topCategory[1].max) * 100);
-                    return (
-                      <>
-                        <div className="text-2xl font-bold text-army dark:text-sunburst mb-2">
-                          {topCategory[0]}
-                        </div>
-                        <div className="text-sm text-muted-foreground">
-                          {percentage}% complete
-                        </div>
-                      </>
-                    );
-                  })()
-                ) : (
-                  <div className="text-muted-foreground">No progress yet</div>
-                )}
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Checklist by Category */}
-          <div className="space-y-8">
-            {categoryOrder.map((categoryName) => {
-              const categoryItems = groupedItems[categoryName] || [];
-              if (categoryItems.length === 0) return null;
+            {groupOrder.map((groupName) => {
+              const groupScore = groupScores[groupName];
+              const percentage = groupScore ? Math.round((groupScore.total / groupScore.max) * 100) : 0;
               
               return (
-                <Card key={categoryName}>
-                  <CardHeader>
-                    <CardTitle className="heading-md">{categoryName}</CardTitle>
-                    {categoryName === 'Mission Clarity' && (
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <span>Learn more:</span>
-                        <a 
-                          href="/field-notes/chapter-1" 
-                          className="text-army dark:text-sunburst hover:underline flex items-center gap-1"
-                        >
-                          Chapter 1: Mission Before Metrics, Section 1: The Mission Is the Magnet
-                          <ExternalLink className="h-3 w-3" />
-                        </a>
-                      </div>
-                    )}
-                    {categoryName === 'Metric Awareness' && (
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <span>Learn more:</span>
-                        <a 
-                          href="/field-notes/chapter-1" 
-                          className="text-army dark:text-sunburst hover:underline flex items-center gap-1"
-                        >
-                          Chapter 1: Mission Before Metrics, Section 3: Repetition with Intention
-                          <ExternalLink className="h-3 w-3" />
-                        </a>
-                      </div>
-                    )}
-                    {categoryName === 'Drift Detection' && (
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <span>Learn more:</span>
-                        <a 
-                          href="/field-notes/chapter-1" 
-                          className="text-army dark:text-sunburst hover:underline flex items-center gap-1"
-                        >
-                          Chapter 1: Mission Before Metrics, Section 2: The Drift
-                          <ExternalLink className="h-3 w-3" />
-                        </a>
-                      </div>
-                    )}
-                    {categoryName === 'Ritual Reinforcement' && (
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <span>Learn more:</span>
-                        <a 
-                          href="/field-notes/chapter-3" 
-                          className="text-army dark:text-sunburst hover:underline flex items-center gap-1"
-                        >
-                          Chapter 3: Rituals Over Rules, Sections 1–3
-                          <ExternalLink className="h-3 w-3" />
-                        </a>
-                      </div>
-                    )}
-                    {categoryName === 'Feedback Loops' && (
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <span>Learn more:</span>
-                        <a 
-                          href="/field-notes/chapter-4" 
-                          className="text-army dark:text-sunburst hover:underline flex items-center gap-1"
-                        >
-                          Chapter 4: Feedback Is a Superpower, Section 1: Cues, Not Critiques
-                          <ExternalLink className="h-3 w-3" />
-                        </a>
-                      </div>
-                    )}
-                    {categoryName === 'Decision Alignment' && (
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <span>Learn more:</span>
-                        <a 
-                          href="/field-notes/chapter-8" 
-                          className="text-army dark:text-sunburst hover:underline flex items-center gap-1"
-                        >
-                          Chapter 8: Decisions Are Made Under Load, Section 2: Clarity Beats Certainty
-                          <ExternalLink className="h-3 w-3" />
-                        </a>
-                      </div>
-                    )}
-                    {categoryName === 'System Check Under Stress' && (
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <span>Learn more:</span>
-                        <a 
-                          href="/field-notes/chapter-8" 
-                          className="text-army dark:text-sunburst hover:underline flex items-center gap-1"
-                        >
-                          Chapter 8: Decisions Are Made Under Load, Section 1: Stress Tests the System
-                          <ExternalLink className="h-3 w-3" />
-                        </a>
-                      </div>
-                    )}
-                    {categoryName === 'Recovery Rhythm Review' && (
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <span>Learn more:</span>
-                        <a 
-                          href="/field-notes/chapter-6" 
-                          className="text-army dark:text-sunburst hover:underline flex items-center gap-1"
-                        >
-                          Chapter 6: The Mission Demands Recovery, Sections 1–3
-                          <ExternalLink className="h-3 w-3" />
-                        </a>
-                      </div>
-                    )}
-                    {categoryName === 'Shared PR Reflection' && (
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <span>Learn more:</span>
-                        <a 
-                          href="/field-notes/chapter-10" 
-                          className="text-army dark:text-sunburst hover:underline flex items-center gap-1"
-                        >
-                          Chapter 10: The Team Is the Tool, Section 2: Trust is a Shared PR
-                          <ExternalLink className="h-3 w-3" />
-                        </a>
-                      </div>
-                    )}
+                <Card key={groupName}>
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-lg">{groupName}</CardTitle>
                   </CardHeader>
-                  <CardContent className="space-y-4">
-                    {categoryItems.map((item) => {
-                      const isChecked = checkedItems.has(item.id);
-                      return (
-                        <div
-                          key={item.id}
-                          className={`flex items-center space-x-4 p-4 rounded-lg border transition-all duration-200 ${
-                            isChecked 
-                              ? 'bg-army/5 dark:bg-sunburst/5 border-army/20 dark:border-sunburst/20' 
-                              : 'bg-card hover:bg-muted/50'
-                          }`}
-                        >
-                          <Checkbox
-                            id={item.id}
-                            checked={isChecked}
-                            onCheckedChange={(checked) => handleItemCheck(item.id, checked as boolean)}
-                            className="data-[state=checked]:bg-army dark:data-[state=checked]:bg-sunburst"
-                          />
-                          <div className="flex-1">
-                            <label
-                              htmlFor={item.id}
-                              className={`body cursor-pointer ${
-                                isChecked ? 'line-through text-muted-foreground' : ''
-                              }`}
-                            >
-                              {item.text}
-                            </label>
-                          </div>
-                          <Badge 
-                            className={`text-xs ${
-                              isChecked ? 'bg-army text-white dark:bg-sunburst dark:text-slate' : 'bg-muted'
-                            }`}
-                          >
-                            {item.points} pts
-                          </Badge>
-                        </div>
-                      );
-                    })}
+                  <CardContent>
+                    <div className="text-2xl font-bold text-army dark:text-sunburst mb-2">
+                      {groupScore?.total || 0}/{groupScore?.max || 0}
+                    </div>
+                    <Progress value={percentage} className="mb-2" />
+                    <div className="text-sm text-muted-foreground">
+                      {percentage}% complete
+                    </div>
                   </CardContent>
                 </Card>
               );
             })}
           </div>
 
-          {/* Category Breakdown */}
-          <Card className="mt-8">
+          {/* Group Progress Overview */}
+          <Card className="mb-8">
             <CardHeader>
-              <CardTitle className="heading-md">Category Progress</CardTitle>
+              <CardTitle className="heading-md">Group Progress Overview</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {Object.entries(categoryScores).map(([category, scores]) => {
-                  const percentage = Math.round((scores.total / scores.max) * 100);
+              <div className="space-y-6">
+                {groupOrder.map((groupName) => {
+                  const groupScore = groupScores[groupName];
+                  const percentage = groupScore ? Math.round((groupScore.total / groupScore.max) * 100) : 0;
+                  
                   return (
-                    <div key={category} className="space-y-2">
+                    <div key={groupName} className="space-y-2">
                       <div className="flex justify-between items-center">
-                        <span className="font-medium text-sm">{category}</span>
-                        <span className="text-sm text-muted-foreground">
-                          {scores.total}/{scores.max} pts
+                        <div>
+                          <span className="font-semibold">{groupName}</span>
+                          <p className="text-sm text-muted-foreground">{getGroupDescription(groupName)}</p>
+                        </div>
+                        <span className="text-sm font-medium">
+                          {groupScore?.total || 0}/{groupScore?.max || 0} pts
                         </span>
                       </div>
-                      <Progress value={percentage} className="h-2" />
-                      <div className="text-xs text-muted-foreground text-right">
+                      <Progress value={percentage} className="h-3" />
+                      <div className="text-right text-sm text-muted-foreground">
                         {percentage}%
                       </div>
                     </div>
@@ -398,6 +240,186 @@ const InteractiveChecklist = () => {
               </div>
             </CardContent>
           </Card>
+
+          {/* Checklist by Group */}
+          <div className="space-y-12">
+            {groupOrder.map((groupName) => (
+              <div key={groupName} className="space-y-6">
+                <div className="text-center">
+                  <h2 className="heading-lg text-army dark:text-sunburst mb-2">{groupName}</h2>
+                  <p className="body text-muted-foreground">{getGroupDescription(groupName)}</p>
+                </div>
+                
+                <div className="space-y-8">
+                  {categoryOrder
+                    .filter(categoryName => {
+                      const categoryItems = groupedItems[categoryName] || [];
+                      return categoryItems.some(item => item.group === groupName);
+                    })
+                    .map((categoryName) => {
+                      const categoryItems = groupedItems[categoryName]?.filter(item => item.group === groupName) || [];
+                      if (categoryItems.length === 0) return null;
+                      
+                      return (
+                        <Card key={categoryName}>
+                          <CardHeader>
+                            <CardTitle className="heading-md">{categoryName}</CardTitle>
+                            
+                            {categoryName === 'Mission Clarity' && (
+                              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                <span>Learn more:</span>
+                                <a 
+                                  href="/field-notes/chapter-1" 
+                                  className="text-army dark:text-sunburst hover:underline flex items-center gap-1"
+                                >
+                                  Chapter 1: Mission Before Metrics, Section 1: The Mission Is the Magnet
+                                  <ExternalLink className="h-3 w-3" />
+                                </a>
+                              </div>
+                            )}
+                            {categoryName === 'Metric Awareness' && (
+                              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                <span>Learn more:</span>
+                                <a 
+                                  href="/field-notes/chapter-1" 
+                                  className="text-army dark:text-sunburst hover:underline flex items-center gap-1"
+                                >
+                                  Chapter 1: Mission Before Metrics, Section 3: Repetition with Intention
+                                  <ExternalLink className="h-3 w-3" />
+                                </a>
+                              </div>
+                            )}
+                            {categoryName === 'Drift Detection' && (
+                              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                <span>Learn more:</span>
+                                <a 
+                                  href="/field-notes/chapter-1" 
+                                  className="text-army dark:text-sunburst hover:underline flex items-center gap-1"
+                                >
+                                  Chapter 1: Mission Before Metrics, Section 2: The Drift
+                                  <ExternalLink className="h-3 w-3" />
+                                </a>
+                              </div>
+                            )}
+                            {categoryName === 'Ritual Reinforcement' && (
+                              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                <span>Learn more:</span>
+                                <a 
+                                  href="/field-notes/chapter-3" 
+                                  className="text-army dark:text-sunburst hover:underline flex items-center gap-1"
+                                >
+                                  Chapter 3: Rituals Over Rules, Sections 1–3
+                                  <ExternalLink className="h-3 w-3" />
+                                </a>
+                              </div>
+                            )}
+                            {categoryName === 'Feedback Loops' && (
+                              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                <span>Learn more:</span>
+                                <a 
+                                  href="/field-notes/chapter-4" 
+                                  className="text-army dark:text-sunburst hover:underline flex items-center gap-1"
+                                >
+                                  Chapter 4: Feedback Is a Superpower, Section 1: Cues, Not Critiques
+                                  <ExternalLink className="h-3 w-3" />
+                                </a>
+                              </div>
+                            )}
+                            {categoryName === 'Decision Alignment' && (
+                              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                <span>Learn more:</span>
+                                <a 
+                                  href="/field-notes/chapter-8" 
+                                  className="text-army dark:text-sunburst hover:underline flex items-center gap-1"
+                                >
+                                  Chapter 8: Decisions Are Made Under Load, Section 2: Clarity Beats Certainty
+                                  <ExternalLink className="h-3 w-3" />
+                                </a>
+                              </div>
+                            )}
+                            {categoryName === 'System Check Under Stress' && (
+                              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                <span>Learn more:</span>
+                                <a 
+                                  href="/field-notes/chapter-8" 
+                                  className="text-army dark:text-sunburst hover:underline flex items-center gap-1"
+                                >
+                                  Chapter 8: Decisions Are Made Under Load, Section 1: Stress Tests the System
+                                  <ExternalLink className="h-3 w-3" />
+                                </a>
+                              </div>
+                            )}
+                            {categoryName === 'Recovery Rhythm Review' && (
+                              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                <span>Learn more:</span>
+                                <a 
+                                  href="/field-notes/chapter-6" 
+                                  className="text-army dark:text-sunburst hover:underline flex items-center gap-1"
+                                >
+                                  Chapter 6: The Mission Demands Recovery, Sections 1–3
+                                  <ExternalLink className="h-3 w-3" />
+                                </a>
+                              </div>
+                            )}
+                            {categoryName === 'Shared PR Reflection' && (
+                              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                <span>Learn more:</span>
+                                <a 
+                                  href="/field-notes/chapter-10" 
+                                  className="text-army dark:text-sunburst hover:underline flex items-center gap-1"
+                                >
+                                  Chapter 10: The Team Is the Tool, Section 2: Trust is a Shared PR
+                                  <ExternalLink className="h-3 w-3" />
+                                </a>
+                              </div>
+                            )}
+                          </CardHeader>
+                          <CardContent className="space-y-4">
+                            {categoryItems.map((item) => {
+                              const isChecked = checkedItems.has(item.id);
+                              return (
+                                <div
+                                  key={item.id}
+                                  className={`flex items-center space-x-4 p-4 rounded-lg border transition-all duration-200 ${
+                                    isChecked 
+                                      ? 'bg-army/5 dark:bg-sunburst/5 border-army/20 dark:border-sunburst/20' 
+                                      : 'bg-card hover:bg-muted/50'
+                                  }`}
+                                >
+                                  <Checkbox
+                                    id={item.id}
+                                    checked={isChecked}
+                                    onCheckedChange={(checked) => handleItemCheck(item.id, checked as boolean)}
+                                    className="data-[state=checked]:bg-army dark:data-[state=checked]:bg-sunburst"
+                                  />
+                                  <div className="flex-1">
+                                    <label
+                                      htmlFor={item.id}
+                                      className={`body cursor-pointer ${
+                                        isChecked ? 'line-through text-muted-foreground' : ''
+                                      }`}
+                                    >
+                                      {item.text}
+                                    </label>
+                                  </div>
+                                  <Badge 
+                                    className={`text-xs ${
+                                      isChecked ? 'bg-army text-white dark:bg-sunburst dark:text-slate' : 'bg-muted'
+                                    }`}
+                                  >
+                                    {item.points} pts
+                                  </Badge>
+                                </div>
+                              );
+                            })}
+                          </CardContent>
+                        </Card>
+                      );
+                    })}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </>
