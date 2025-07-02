@@ -62,18 +62,23 @@ const Resources = () => {
                   A comprehensive assessment tool with 19 carefully crafted questions across three key areas: Mission Foundation, Execution & Adaptation, and Sustainability & Culture. Track your alignment score and export your results as a PDF.
                 </CardDescription>
                 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                  <div className="text-center p-4 rounded-lg bg-muted/30">
-                    <div className="text-2xl font-bold text-army dark:text-sunburst mb-1">4 pts</div>
-                    <div className="text-sm text-muted-foreground">Mission Foundation</div>
-                  </div>
-                  <div className="text-center p-4 rounded-lg bg-muted/30">
-                    <div className="text-2xl font-bold text-steel mb-1">3 pts</div>
-                    <div className="text-sm text-muted-foreground">Execution & Adaptation</div>
-                  </div>
-                  <div className="text-center p-4 rounded-lg bg-muted/30">
-                    <div className="text-2xl font-bold text-sunburst mb-1">2 pts</div>
-                    <div className="text-sm text-muted-foreground">Sustainability & Culture</div>
+                <div className="mb-4">
+                  <h4 className="text-sm font-semibold text-muted-foreground mb-3 uppercase tracking-wide">
+                    Assessment Categories (Max Points Each)
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="text-center p-4 rounded-lg bg-muted/30">
+                      <div className="text-2xl font-bold text-army dark:text-sunburst mb-1">4 pts</div>
+                      <div className="text-sm text-muted-foreground">Mission Foundation</div>
+                    </div>
+                    <div className="text-center p-4 rounded-lg bg-muted/30">
+                      <div className="text-2xl font-bold text-steel mb-1">3 pts</div>
+                      <div className="text-sm text-muted-foreground">Execution & Adaptation</div>
+                    </div>
+                    <div className="text-center p-4 rounded-lg bg-muted/30">
+                      <div className="text-2xl font-bold text-sunburst mb-1">2 pts</div>
+                      <div className="text-sm text-muted-foreground">Sustainability & Culture</div>
+                    </div>
                   </div>
                 </div>
 
