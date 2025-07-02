@@ -69,7 +69,7 @@ const FieldNotes = () => {
             <header className="mb-12">
               <div className="flex justify-between items-start">
                 <div>
-                  <h2 className="text-lg font-medium text-army mb-2 dark:text-sunburst">Mission Built: Lessons from the Barbell and the Boardroom</h2>
+                  <h2 className="text-lg font-medium text-muted-foreground mb-2 dark:text-slate-400">The Core Chapters of Mission Built: Lessons from the Barbell and the Boardroom</h2>
                   <h1 className="text-4xl font-bold text-foreground mb-4 dark:text-slate-100">Playbook</h1>
                 </div>
                 <Skeleton className="h-10 w-32" />
@@ -132,7 +132,7 @@ const FieldNotes = () => {
           <header className="mb-12">
             <div className="flex justify-between items-start">
               <div>
-                <h2 className="text-lg font-medium text-army mb-2 dark:text-sunburst">Mission Built: Lessons from the Barbell and the Boardroom</h2>
+                <h2 className="text-lg font-medium text-muted-foreground mb-2 dark:text-slate-400">The Core Chapters of Mission Built: Lessons from the Barbell and the Boardroom</h2>
                 <h1 className="text-4xl font-bold text-foreground mb-4 dark:text-slate-100">Playbook</h1>
               </div>
               <div className="mt-4">
