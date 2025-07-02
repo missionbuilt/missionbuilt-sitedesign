@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Button } from '@/components/ui/button';
@@ -246,16 +247,6 @@ const InteractiveChecklist = () => {
             </div>
           </div>
 
-          {/* Scoring Clarification */}
-          <div className="mb-8 p-4 bg-gradient-to-r from-muted/30 to-muted/10 rounded-lg border border-muted/50">
-            <h3 className="font-semibold text-foreground mb-2">Scoring System</h3>
-            <div className="text-sm text-muted-foreground space-y-1">
-              <p><strong>Mission Strong (56-71 pts):</strong> Requires both high score AND at least 5 out of 7 Mission Foundation questions checked</p>
-              <p><strong>Mission Drifting (36-55 pts):</strong> Partial alignment; some areas need attention</p>
-              <p><strong>Mission Lost (0-35 pts):</strong> Severe misalignment; immediate reassessment needed</p>
-            </div>
-          </div>
-
           <ScoreDashboard
             totalScore={totalScore}
             maxScore={maxScore}
@@ -276,6 +267,16 @@ const InteractiveChecklist = () => {
                 onItemCheck={handleItemCheck}
               />
             ))}
+          </div>
+
+          {/* Scoring Clarification - Moved to bottom */}
+          <div className="mt-16 p-4 bg-gradient-to-r from-muted/30 to-muted/10 rounded-lg border border-muted/50">
+            <h3 className="font-semibold text-foreground mb-2">Scoring System</h3>
+            <div className="text-sm text-muted-foreground space-y-1">
+              <p><strong>Mission Strong (56-71 pts):</strong> Requires both high score AND at least 5 out of 7 Mission Foundation questions checked</p>
+              <p><strong>Mission Drifting (36-55 pts):</strong> Partial alignment; some areas need attention</p>
+              <p><strong>Mission Lost (0-35 pts):</strong> Severe misalignment; immediate reassessment needed</p>
+            </div>
           </div>
         </div>
 
