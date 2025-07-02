@@ -42,6 +42,7 @@ const Navbar = () => {
           <nav className="flex items-center space-x-1 mr-6">
             <NavLink to="/" exact onClick={scrollToTop}>The Mission</NavLink>
             <NavLink to="/playbook" onClick={scrollToTopFieldNotes}>Playbook</NavLink>
+            <NavLink to="/field-notes" onClick={scrollToTopFieldNotes}>Field Notes</NavLink>
             <NavLink to="/resources">Resources</NavLink>
             <NavLink to="/about">About</NavLink>
           </nav>
@@ -75,6 +76,7 @@ const Navbar = () => {
             <nav className="flex flex-col">
               <MobileNavLink to="/" onClick={() => {setIsMenuOpen(false); scrollToTop();}}>The Mission</MobileNavLink>
               <MobileNavLink to="/playbook" onClick={() => {setIsMenuOpen(false); scrollToTopFieldNotes();}}>Playbook</MobileNavLink>
+              <MobileNavLink to="/field-notes" onClick={() => {setIsMenuOpen(false); scrollToTopFieldNotes();}}>Field Notes</MobileNavLink>
               <MobileNavLink to="/resources" onClick={() => setIsMenuOpen(false)}>Resources</MobileNavLink>
               <MobileNavLink to="/about" onClick={() => setIsMenuOpen(false)}>About</MobileNavLink>
               <div className="px-4 py-3">
