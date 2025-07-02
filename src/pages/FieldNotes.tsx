@@ -141,6 +141,14 @@ const FieldNotes = () => {
             </div>
           </header>
           
+          {/* Welcome Blurb */}
+          <div className="mb-8 bg-slate/5 dark:bg-slate/10 border border-slate/10 dark:border-slate/20 rounded-lg p-6">
+            <p className="text-foreground dark:text-slate-200 leading-relaxed">
+              Welcome to The Playbook — these are the foundational chapters of Mission Built, where each lesson combines real experiences from the gym and the boardroom to give you practical strategies for mission-driven growth.
+              Here, you'll find the complete set of insights, stories, and tools that define the book's philosophy, helping you align your actions with your purpose and build strength that lasts.
+            </p>
+          </div>
+          
           <ChapterFilters
             searchTerm={searchTerm}
             onSearchChange={setSearchTerm}
