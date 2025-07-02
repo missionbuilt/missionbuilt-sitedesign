@@ -49,7 +49,7 @@ const Resources = () => {
                           Interactive Tool
                         </Badge>
                         <Badge variant="outline" className="text-xs">
-                          19 Questions
+                          24 Questions
                         </Badge>
                       </div>
                     </div>
@@ -59,7 +59,7 @@ const Resources = () => {
               </CardHeader>
               <CardContent>
                 <CardDescription className="text-base leading-relaxed mb-6">
-                  A comprehensive assessment tool with 19 carefully crafted questions across three key areas: Mission Foundation, Execution & Adaptation, and Sustainability & Culture. Track your alignment score and export your results as a PDF.
+                  A comprehensive assessment tool with 24 carefully crafted questions across three key areas: Mission Foundation, Execution & Adaptation, and Sustainability & Culture. Track your alignment score and export your results as a PDF.
                 </CardDescription>
                 
                 <div className="mb-4">
