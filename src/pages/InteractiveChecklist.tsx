@@ -1,15 +1,13 @@
 
 import React, { useState, useMemo, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
 import NightVisionToggle from '@/components/NightVisionToggle';
 import ChecklistPdfExport from '@/components/ChecklistPdfExport';
-import { CheckCircle, Circle, ExternalLink, Target, TrendingUp, Shield, RotateCcw } from 'lucide-react';
-import { getCategoryLink } from '@/utils/anchorUtils';
+import ScoreDashboard from '@/components/checklist/ScoreDashboard';
+import StickyHeader from '@/components/checklist/StickyHeader';
+import ChecklistGroup from '@/components/checklist/ChecklistGroup';
+import { RotateCcw } from 'lucide-react';
 
 interface ChecklistItem {
   id: string;
@@ -186,34 +184,7 @@ const InteractiveChecklist = () => {
     'Shared PR Reflection'
   ];
 
-  // Group categories by their group
   const groupOrder = ['Mission Foundation', 'Execution & Adaptation', 'Sustainability & Culture'];
-  
-  const getGroupDescription = (group: string) => {
-    switch (group) {
-      case 'Mission Foundation':
-        return 'Mission clarity, metric awareness, and drift detection (4 points per question)';
-      case 'Execution & Adaptation':
-        return 'Rituals, feedback loops, and decision-making alignment (3 points per question)';
-      case 'Sustainability & Culture':
-        return 'System resilience, recovery rhythms, and shared success (2 points per question)';
-      default:
-        return '';
-    }
-  };
-
-  const getGroupIcon = (group: string) => {
-    switch (group) {
-      case 'Mission Foundation':
-        return <Target className="h-8 w-8 text-army dark:text-sunburst" />;
-      case 'Execution & Adaptation':
-        return <TrendingUp className="h-8 w-8 text-steel dark:text-steel" />;
-      case 'Sustainability & Culture':
-        return <Shield className="h-8 w-8 text-sunburst dark:text-sunburst" />;
-      default:
-        return null;
-    }
-  };
 
   return (
     <>
@@ -223,38 +194,13 @@ const InteractiveChecklist = () => {
       </Helmet>
 
       <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30">
-        {/* Sticky Header */}
-        <div className={`fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b shadow-sm transition-all duration-300 ${
-          showStickyHeader ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
-        }`}>
-          <div className="container-custom py-3">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <div className="flex items-center gap-2">
-                  <Target className="h-5 w-5 text-army dark:text-sunburst" />
-                  <span className="font-semibold text-foreground">Mission Alignment</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="text-2xl font-bold text-army dark:text-sunburst">
-                    {totalScore}
-                  </div>
-                  <div className="text-sm text-muted-foreground">
-                    / {maxScore}
-                  </div>
-                  <Badge className={`${scoreLevel.color} text-sm px-3 py-1 font-semibold`}>
-                    {scoreLevel.label}
-                  </Badge>
-                </div>
-              </div>
-              <div className="flex items-center gap-2">
-                <Progress value={completionPercentage} className="w-32 h-2" />
-                <span className="text-sm font-medium text-muted-foreground min-w-[3ch]">
-                  {completionPercentage}%
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
+        <StickyHeader
+          showStickyHeader={showStickyHeader}
+          totalScore={totalScore}
+          maxScore={maxScore}
+          completionPercentage={completionPercentage}
+          scoreLevel={scoreLevel}
+        />
 
         <div className="container-custom py-8">
           {/* Header without Logo */}
@@ -289,166 +235,25 @@ const InteractiveChecklist = () => {
             </div>
           </div>
 
-          {/* Score Dashboard - Enhanced with Colors */}
-          <div id="score-dashboard" className="mb-8">
-            {/* Total Score - Large and Prominent with Gradient */}
-            <Card className={`mb-4 border-2 ${scoreLevel.ring} ring-4 bg-gradient-to-br from-card to-card/50 shadow-xl`}>
-              <CardHeader className="pb-4 text-center">
-                <div className="flex items-center justify-center gap-3 mb-2">
-                  <div className="p-2 rounded-full bg-army/10 dark:bg-sunburst/10">
-                    <Target className="h-6 w-6 text-army dark:text-sunburst" />
-                  </div>
-                  <CardTitle className="text-2xl bg-gradient-to-r from-army to-steel bg-clip-text text-transparent">
-                    Mission Alignment Score
-                  </CardTitle>
-                </div>
-              </CardHeader>
-              <CardContent className="text-center">
-                <div className="relative mb-6">
-                  <div className="text-6xl font-bold text-army dark:text-sunburst mb-2 tracking-tight">
-                    {totalScore}
-                  </div>
-                  <div className="text-2xl text-muted-foreground">
-                    / {maxScore}
-                  </div>
-                </div>
-                <Progress value={completionPercentage} className="mb-4 h-4 bg-muted" />
-                <Badge className={`${scoreLevel.color} text-lg px-6 py-3 font-semibold shadow-lg mb-4`}>
-                  {scoreLevel.label}
-                </Badge>
-                <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
-                  {scoreLevel.description}
-                </p>
-              </CardContent>
-            </Card>
-
-            {/* Group Scores - Enhanced with Icons and Colors */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {groupOrder.map((groupName) => {
-                const groupScore = groupScores[groupName];
-                const percentage = groupScore ? Math.round((groupScore.total / groupScore.max) * 100) : 0;
-                
-                return (
-                  <Card key={groupName} className="border-2 border-muted/50 bg-gradient-to-br from-card to-muted/20 hover:shadow-lg transition-all duration-300">
-                    <CardContent className="p-4">
-                      <div className="flex items-center gap-3 mb-3">
-                        {getGroupIcon(groupName)}
-                        <div>
-                          <h3 className="font-semibold text-sm text-foreground leading-tight">{groupName}</h3>
-                          <div className="text-lg font-bold text-army dark:text-sunburst">
-                            {groupScore?.total || 0}/{groupScore?.max || 0}
-                          </div>
-                        </div>
-                      </div>
-                      <Progress value={percentage} className="h-2 mb-2" />
-                      <div className="text-sm text-muted-foreground text-right font-medium">
-                        {percentage}%
-                      </div>
-                    </CardContent>
-                  </Card>
-                );
-              })}
-            </div>
-          </div>
+          <ScoreDashboard
+            totalScore={totalScore}
+            maxScore={maxScore}
+            completionPercentage={completionPercentage}
+            scoreLevel={scoreLevel}
+            groupScores={groupScores}
+          />
 
           {/* Checklist by Group - Enhanced Design */}
           <div className="space-y-16">
-            {groupOrder.map((groupName, groupIndex) => (
-              <div key={groupName} className="space-y-8">
-                <div className="text-center">
-                  <div className="flex items-center justify-center gap-4 mb-4">
-                    <div className="p-3 rounded-full bg-gradient-to-br from-army/10 to-steel/10 dark:from-sunburst/10 dark:to-army/10">
-                      {getGroupIcon(groupName)}
-                    </div>
-                    <h2 className="heading-lg bg-gradient-to-r from-army via-steel to-sunburst bg-clip-text text-transparent">
-                      {groupName}
-                    </h2>
-                  </div>
-                  <p className="body text-muted-foreground max-w-2xl mx-auto">
-                    {getGroupDescription(groupName)}
-                  </p>
-                </div>
-                
-                <div className="space-y-8">
-                  {categoryOrder
-                    .filter(categoryName => {
-                      const categoryItems = groupedItems[categoryName] || [];
-                      return categoryItems.some(item => item.group === groupName);
-                    })
-                    .map((categoryName, categoryIndex) => {
-                      const categoryItems = groupedItems[categoryName]?.filter(item => item.group === groupName) || [];
-                      if (categoryItems.length === 0) return null;
-                      
-                      return (
-                        <Card key={categoryName} className="border-2 border-muted/30 bg-gradient-to-br from-card to-muted/10 shadow-lg hover:shadow-xl transition-all duration-300">
-                          <CardHeader className="bg-gradient-to-r from-muted/20 via-transparent to-muted/20">
-                            <CardTitle className="heading-md text-foreground">{categoryName}</CardTitle>
-                            
-                            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                              <span>Learn more:</span>
-                              <a 
-                                href={getCategoryLink(categoryName)}
-                                className="text-army dark:text-sunburst hover:underline flex items-center gap-1 font-medium hover:text-steel dark:hover:text-army transition-colors"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                              >
-                                {categoryName === 'Mission Clarity' && 'Chapter 1: Mission Before Metrics, Section 1: The Mission Is the Magnet'}
-                                {categoryName === 'Metric Awareness (Not Obsession)' && 'Chapter 1: Mission Before Metrics, Section 3: Repetition with Intention'}
-                                {categoryName === 'Drift Detection' && 'Chapter 1: Mission Before Metrics, Section 2: The Drift'}
-                                {categoryName === 'Ritual Reinforcement' && 'Chapter 3: Rituals Over Rules, Sections 1–3'}
-                                {categoryName === 'Feedback Loops' && 'Chapter 4: Feedback Is a Superpower, Section 1: Cues, Not Critiques'}
-                                {categoryName === 'Decision Alignment' && 'Chapter 8: Decisions Are Made Under Load, Section 2: Clarity Beats Certainty'}
-                                {categoryName === 'System Check Under Stress' && 'Chapter 8: Decisions Are Made Under Load, Section 1: Stress Tests the System'}
-                                {categoryName === 'Recovery Rhythm Review' && 'Chapter 6: The Mission Demands Recovery, Sections 1–3'}
-                                {categoryName === 'Shared PR Reflection' && 'Chapter 10: The Team Is the Tool, Section 2: Trust is a Shared PR'}
-                                <ExternalLink className="h-3 w-3" />
-                              </a>
-                            </div>
-                          </CardHeader>
-                          <CardContent className="space-y-4">
-                            {categoryItems.map((item) => {
-                              const isChecked = checkedItems.has(item.id);
-                              return (
-                                <div
-                                  key={item.id}
-                                  className={`flex items-center space-x-4 p-4 rounded-lg border-2 transition-all duration-300 ${
-                                    isChecked 
-                                      ? 'bg-gradient-to-r from-army/5 to-steel/5 dark:from-sunburst/5 dark:to-army/5 border-army/30 dark:border-sunburst/30 shadow-md' 
-                                      : 'bg-card hover:bg-gradient-to-r hover:from-muted/30 hover:to-muted/10 border-muted/30 hover:border-muted/50 hover:shadow-md'
-                                  }`}
-                                >
-                                  <Checkbox
-                                    id={item.id}
-                                    checked={isChecked}
-                                    onCheckedChange={(checked) => handleItemCheck(item.id, checked as boolean)}
-                                    className="data-[state=checked]:bg-army dark:data-[state=checked]:bg-sunburst data-[state=checked]:border-army dark:data-[state=checked]:border-sunburst"
-                                  />
-                                  <div className="flex-1">
-                                    <label
-                                      htmlFor={item.id}
-                                      className={`body cursor-pointer transition-all duration-200 ${
-                                        isChecked ? 'line-through text-muted-foreground' : 'text-foreground hover:text-army dark:hover:text-sunburst'
-                                      }`}
-                                    >
-                                      {item.text}
-                                    </label>
-                                  </div>
-                                  <Badge 
-                                    className={`text-xs font-semibold transition-all duration-200 ${
-                                      isChecked ? 'bg-army text-white dark:bg-sunburst dark:text-slate shadow-md' : 'bg-muted hover:bg-muted/80'
-                                    }`}
-                                  >
-                                    {item.points} pts
-                                  </Badge>
-                                </div>
-                              );
-                            })}
-                          </CardContent>
-                        </Card>
-                      );
-                    })}
-                </div>
-              </div>
+            {groupOrder.map((groupName) => (
+              <ChecklistGroup
+                key={groupName}
+                groupName={groupName}
+                categories={categoryOrder}
+                groupedItems={groupedItems}
+                checkedItems={checkedItems}
+                onItemCheck={handleItemCheck}
+              />
             ))}
           </div>
         </div>
