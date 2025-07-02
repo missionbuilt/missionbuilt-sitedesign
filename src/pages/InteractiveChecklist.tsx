@@ -148,19 +148,19 @@ const InteractiveChecklist = () => {
     
     if (score >= 56) return { 
       label: 'Mission Strong', 
-      description: 'you\'re deeply aligned; keep reinforcing your purpose, rituals, and team dynamics.',
+      description: 'fully aligned; your mindset, execution, and culture support the mission.',
       color: 'bg-army text-white', 
       ring: 'ring-army/20' 
     };
-    if (score >= 37) return { 
+    if (score >= 36) return { 
       label: 'Mission Drifting', 
-      description: 'you\'re partially aligned, but risk losing focus; revisit mission clarity, feedback systems, or recovery plans.',
+      description: 'partial alignment; mission clarity, rituals, or sustainability may be slipping.',
       color: 'bg-sunburst text-slate', 
       ring: 'ring-sunburst/20' 
     };
     return { 
       label: 'Mission Lost', 
-      description: 'serious misalignment; pause, reassess, and realign your actions with your mission before proceeding.',
+      description: 'severe misalignment; immediate reassessment needed.',
       color: 'bg-destructive text-destructive-foreground', 
       ring: 'ring-destructive/20' 
     };
