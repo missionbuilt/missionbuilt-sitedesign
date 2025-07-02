@@ -46,7 +46,7 @@ const ChapterCard: React.FC<ChapterCardProps> = ({ chapter, isRead = false, onMa
             </Badge>
             <Badge className={`text-xs font-medium ${
               chapter.status === 'published' 
-                ? 'bg-army/10 text-army dark:bg-sunburst/20 dark:text-sunburst border-army/20 dark:border-sunburst/30'
+                ? 'bg-army text-white dark:bg-army dark:text-white border-army'
                 : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300 border-yellow-200 dark:border-yellow-700'
             }`}>
               {chapter.status === 'published' ? 'Published' : 'Draft'}
