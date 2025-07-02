@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { BookOpen } from 'lucide-react';
@@ -80,8 +81,8 @@ const FieldNotes = () => {
   return (
     <>
       <Helmet>
-        <title>Field Notes | MissionBuilt</title>
-        <meta name="description" content="A collection of field notes on building better products, one rep at a time." />
+        <title>The Playbook | MissionBuilt</title>
+        <meta name="description" content="The Core Chapters of Mission Built: Lessons from the Barbell and the Boardroom" />
       </Helmet>
 
       <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30">
@@ -96,11 +97,14 @@ const FieldNotes = () => {
               </div>
             </div>
             <h1 className="heading-lg mb-6 bg-gradient-to-r from-army via-steel to-sunburst bg-clip-text text-transparent">
-              Field Notes
+              The Playbook
             </h1>
+            <h2 className="text-xl font-medium text-muted-foreground mb-8 max-w-4xl mx-auto">
+              The Core Chapters of Mission Built: Lessons from the Barbell and the Boardroom
+            </h2>
             <p className="body-lg text-muted-foreground max-w-3xl mx-auto mb-8">
-              Building better products, one rep at a time. These field notes share lessons learned 
-              across decades of product leadership through the lens of powerlifting discipline.
+              Welcome to The Playbook — these are the foundational chapters of Mission Built, where each lesson combines real experiences from the gym and the boardroom to give you practical strategies for mission-driven growth.
+              Here, you'll find the complete set of insights, stories, and tools that define the book's philosophy, helping you align your actions with your purpose and build strength that lasts.
             </p>
             
           </div>
@@ -139,7 +143,7 @@ const FieldNotes = () => {
           {/* No Results Message */}
           {!isLoading && sortedChapters.length === 0 && chapters.length > 0 && (
             <div className="text-center py-12">
-              <p className="text-muted-foreground">No field notes match your current filters.</p>
+              <p className="text-muted-foreground">No chapters match your current filters.</p>
             </div>
           )}
         </main>
