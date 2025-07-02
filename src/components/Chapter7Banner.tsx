@@ -8,7 +8,7 @@ const Chapter7Banner = () => {
 
   useEffect(() => {
     // Check if banner was previously dismissed
-    const dismissed = localStorage.getItem('chapter12-banner-dismissed');
+    const dismissed = localStorage.getItem('playbook-banner-dismissed');
     if (!dismissed) {
       setIsVisible(true);
     }
@@ -16,7 +16,7 @@ const Chapter7Banner = () => {
 
   const handleDismiss = () => {
     setIsVisible(false);
-    localStorage.setItem('chapter12-banner-dismissed', 'true');
+    localStorage.setItem('playbook-banner-dismissed', 'true');
   };
 
   if (!isVisible) return null;
@@ -31,18 +31,18 @@ const Chapter7Banner = () => {
             </div>
             <div className="flex-1">
               <p className="text-sm font-medium text-foreground">
-                <span className="text-sunburst font-bold">Chapter 12 out now:</span>{' '}
-                The Weight Is Real. Own It.
+                <span className="text-sunburst font-bold">The Mission Begins:</span>{' '}
+                Explore the first edition of Mission Built: Lessons from the Barbell and the Boardroom.
               </p>
             </div>
           </div>
           
           <div className="flex items-center gap-3">
             <Link 
-              to="/playbook/chapter-12"
+              to="/playbook"
               className="flex items-center gap-1 text-sm font-medium text-foreground hover:text-sunburst transition-colors group"
             >
-              Read now
+              Start Reading
               <ArrowRight className="h-3 w-3 group-hover:translate-x-0.5 transition-transform" />
             </Link>
             
