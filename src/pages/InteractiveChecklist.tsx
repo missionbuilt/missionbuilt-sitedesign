@@ -33,9 +33,8 @@ const checklistItems: ChecklistItem[] = [
   { id: '9', text: 'Are these rituals adaptable when conditions change, so they don\'t become rigid rules?', points: 7, category: 'Ritual Reinforcement' },
   
   // Feedback Loops
-  { id: '11', text: 'Do you have systems to gather honest feedback regularly?', points: 8, category: 'Feedback Loops' },
-  { id: '12', text: 'Can you quickly identify what\'s working vs what isn\'t?', points: 7, category: 'Feedback Loops' },
-  { id: '13', text: 'Do you act on feedback within 48-72 hours?', points: 9, category: 'Feedback Loops' },
+  { id: '11', text: 'Am I seeking feedback that tells me if I\'m aligned with the mission, not just if I\'m hitting numbers?', points: 8, category: 'Feedback Loops' },
+  { id: '12', text: 'Do I have a system or trusted peers who can call out mission drift?', points: 9, category: 'Feedback Loops' },
   
   // Decision Alignment
   { id: '14', text: 'Do major decisions clearly support your mission?', points: 10, category: 'Decision Alignment' },
@@ -266,6 +265,18 @@ const InteractiveChecklist = () => {
                           className="text-army dark:text-sunburst hover:underline flex items-center gap-1"
                         >
                           Chapter 3: Rituals Over Rules, Sections 1–3
+                          <ExternalLink className="h-3 w-3" />
+                        </a>
+                      </div>
+                    )}
+                    {categoryName === 'Feedback Loops' && (
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <span>Learn more:</span>
+                        <a 
+                          href="/field-notes/chapter-4" 
+                          className="text-army dark:text-sunburst hover:underline flex items-center gap-1"
+                        >
+                          Chapter 4: Feedback Is a Superpower, Section 1: Cues, Not Critiques
                           <ExternalLink className="h-3 w-3" />
                         </a>
                       </div>
