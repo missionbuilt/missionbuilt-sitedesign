@@ -36,7 +36,7 @@ const FieldNotes = () => {
       try {
         console.log('Loading chapter data...');
         
-        // Load all chapters data including Chapters 8, 9, 10, and 11
+        // Load all chapters data including Chapters 8, 9, 10, 11, and 12
         console.log('About to call contentService methods...');
         const [
           content1, metadata1,
@@ -49,7 +49,8 @@ const FieldNotes = () => {
           content8, metadata8,
           content9, metadata9,
           content10, metadata10,
-          content11, metadata11
+          content11, metadata11,
+          content12, metadata12
         ] = await Promise.all([
           contentService.loadChapterContent('chapter-1'),
           contentService.loadChapterMetadata('chapter-1'),
@@ -72,7 +73,9 @@ const FieldNotes = () => {
           contentService.loadChapterContent('chapter-10'),
           contentService.loadChapterMetadata('chapter-10'),
           contentService.loadChapterContent('chapter-11'),
-          contentService.loadChapterMetadata('chapter-11')
+          contentService.loadChapterMetadata('chapter-11'),
+          contentService.loadChapterContent('chapter-12'),
+          contentService.loadChapterMetadata('chapter-12')
         ]);
         
         console.log('Chapter 1 content length:', content1?.length || 0);
@@ -97,6 +100,8 @@ const FieldNotes = () => {
         console.log('Chapter 10 metadata:', metadata10);
         console.log('Chapter 11 content length:', content11?.length || 0);
         console.log('Chapter 11 metadata:', metadata11);
+        console.log('Chapter 12 content length:', content12?.length || 0);
+        console.log('Chapter 12 metadata:', metadata12);
         
         const chaptersData = [];
         
@@ -297,6 +302,25 @@ const FieldNotes = () => {
           console.log('Added chapter 11 to list from metadata');
         } else {
           console.log('Chapter 11 metadata not found');
+        }
+
+        // Add Chapter 12 - use metadata if available
+        if (metadata12) {
+          const readTime12 = calculateReadTime(content12);
+          chaptersData.push({
+            id: metadata12.id,
+            title: metadata12.title,
+            publishedDate: formatPublishDate(metadata12.publishedDate),
+            readTime: readTime12,
+            tags: metadata12.tags,
+            description: metadata12.description,
+            slug: metadata12.slug,
+            status: metadata12.status,
+            chapterNumber: 12
+          });
+          console.log('Added chapter 12 to list from metadata');
+        } else {
+          console.log('Chapter 12 metadata not found');
         }
 
         // Sort chapters by chapter number to ensure proper reading order

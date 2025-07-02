@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
@@ -9,7 +8,7 @@ interface ChapterNavigationProps {
 
 const ChapterNavigation: React.FC<ChapterNavigationProps> = ({ currentChapter }) => {
   // Define which chapters are published
-  const publishedChapters = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+  const publishedChapters = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   
   const previousChapter = currentChapter > 1 && publishedChapters.includes(currentChapter - 1) 
     ? currentChapter - 1 
@@ -31,7 +30,8 @@ const ChapterNavigation: React.FC<ChapterNavigationProps> = ({ currentChapter })
       8: "Decisions Are Made Under Load",
       9: "Ship It Like You Show Up",
       10: "The Team Is the Tool",
-      11: "Strong Enough to Listen"
+      11: "Strong Enough to Listen",
+      12: "The Weight Is Real. Own It."
     };
     return titles[chapterNum as keyof typeof titles] || `Chapter ${chapterNum}`;
   };
