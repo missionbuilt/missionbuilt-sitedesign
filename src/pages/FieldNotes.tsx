@@ -61,7 +61,7 @@ const FieldNotes = () => {
     }
   }, [filteredChapters, sortBy]);
 
-  // Get read chapters from localStorage - use React state to avoid repeated localStorage calls
+  // Optimize read chapters tracking with memoization
   const [readChapters, setReadChapters] = React.useState<number[]>(() => {
     try {
       return JSON.parse(localStorage.getItem('readChapters') || '[]');
@@ -70,13 +70,14 @@ const FieldNotes = () => {
     }
   });
 
-  // Update read chapters when markChapterAsRead is called
+  // Optimize callback to prevent unnecessary re-renders
   const handleMarkAsRead = React.useCallback((chapterNumber: number) => {
     markChapterAsRead(chapterNumber);
-    if (!readChapters.includes(chapterNumber)) {
-      setReadChapters(prev => [...prev, chapterNumber]);
-    }
-  }, [markChapterAsRead, readChapters]);
+    setReadChapters(prev => {
+      if (prev.includes(chapterNumber)) return prev;
+      return [...prev, chapterNumber];
+    });
+  }, [markChapterAsRead]);
 
   if (error) {
     return (
@@ -136,8 +137,8 @@ const FieldNotes = () => {
             {/* Chapter Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {isLoading ? (
-                // Show fewer skeleton cards initially for faster perceived loading
-                Array.from({ length: 6 }).map((_, index) => (
+                // Show 3 skeleton cards for faster perceived loading
+                Array.from({ length: 3 }).map((_, index) => (
                   <ChapterCardSkeleton key={index} />
                 ))
               ) : (

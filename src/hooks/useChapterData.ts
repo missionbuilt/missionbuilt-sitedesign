@@ -22,31 +22,38 @@ export const useChapterData = () => {
   useEffect(() => {
     const loadChapters = async () => {
       try {
-        // Start loading immediately
+        // Get read chapters once at the start
+        const readChapters = (() => {
+          try {
+            return JSON.parse(localStorage.getItem('readChapters') || '[]');
+          } catch {
+            return [];
+          }
+        })();
+
+        // Load chapters in parallel
         const chaptersData = await chapterService.loadChapterMetadata();
-        setChapters(chaptersData);
         
-        // Calculate reading progress
+        // Calculate all values in one go to minimize state updates
         const totalChapters = chapterService.getTotalChapters();
         const publishedChapters = chaptersData.filter(c => c.status === 'published').length;
-        
-        // Get reading progress from localStorage
-        const readChapters = JSON.parse(localStorage.getItem('readChapters') || '[]');
         const completedChapters = readChapters.length;
         
+        // Update all state at once
+        setChapters(chaptersData);
         setReadingProgress({
           totalChapters,
           publishedChapters,
           completedChapters,
           currentChapter: readChapters[readChapters.length - 1]
         });
-        
         setError(null);
+        setIsLoading(false);
+        
       } catch (error) {
         console.error('Error loading chapters:', error);
         setError('Failed to load field notes. Please try refreshing the page.');
         setChapters([]);
-      } finally {
         setIsLoading(false);
       }
     };

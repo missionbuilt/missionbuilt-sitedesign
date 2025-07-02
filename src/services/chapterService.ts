@@ -40,14 +40,13 @@ export interface ChapterData {
 
 export const chapterService = {
   async loadChapterMetadata(): Promise<ChapterData[]> {
-    const chapters: ChapterData[] = [];
-    
-    for (const config of CHAPTER_CONFIG) {
+    // Load all chapters in parallel for much faster loading
+    const chapterPromises = CHAPTER_CONFIG.map(async (config) => {
       try {
         const metadata = await contentService.loadChapterMetadata(config.id);
-
+        
         if (metadata && (metadata.status === 'published' || metadata.status === 'draft')) {
-          chapters.push({
+          return {
             id: metadata.id,
             title: metadata.title,
             publishedDate: this.formatPublishDate(metadata.publishedDate),
@@ -57,13 +56,18 @@ export const chapterService = {
             slug: metadata.slug || config.slug,
             status: metadata.status,
             chapterNumber: config.chapterNumber
-          });
+          };
         }
+        return null;
       } catch (error) {
         console.warn(`Failed to load metadata for chapter ${config.id}:`, error);
+        return null;
       }
-    }
+    });
 
+    const results = await Promise.all(chapterPromises);
+    const chapters = results.filter((chapter): chapter is ChapterData => chapter !== null);
+    
     return chapters.sort((a, b) => a.chapterNumber - b.chapterNumber);
   },
 
