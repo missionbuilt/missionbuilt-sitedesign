@@ -1,0 +1,13 @@
+
+{
+  "id": "chapter-12",
+  "title": "Chapter 12 Title",
+  "subtitle": "Chapter 12 Subtitle",
+  "publishedDate": "2025-02-05",
+  "readTime": "5 min read",
+  "tags": ["Tag1", "Tag2", "Tag3"],
+  "description": "Chapter 12 description will be added through the editor.",
+  "slug": "chapter-12",
+  "status": "draft",
+  "links": []
+}
