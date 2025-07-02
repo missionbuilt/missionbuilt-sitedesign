@@ -1,4 +1,5 @@
 
+
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { BookOpen } from 'lucide-react';
@@ -88,21 +89,21 @@ const FieldNotes = () => {
       <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30">
         <Navbar />
         
-        <main className="container-custom py-16">
+        <main className="container-custom py-8">
           {/* Header Section */}
-          <div className="text-center mb-16">
-            <div className="flex justify-center mb-6">
-              <div className="p-4 rounded-full bg-gradient-to-br from-army/10 to-steel/10 dark:from-sunburst/10 dark:to-army/10">
-                <BookOpen className="h-12 w-12 text-army dark:text-sunburst" />
+          <div className="text-center mb-8">
+            <div className="flex justify-center mb-4">
+              <div className="p-3 rounded-full bg-gradient-to-br from-army/10 to-steel/10 dark:from-sunburst/10 dark:to-army/10">
+                <BookOpen className="h-10 w-10 text-army dark:text-sunburst" />
               </div>
             </div>
-            <h1 className="heading-lg mb-6 bg-gradient-to-r from-army via-steel to-sunburst bg-clip-text text-transparent">
+            <h1 className="heading-lg mb-3 bg-gradient-to-r from-army via-steel to-sunburst bg-clip-text text-transparent">
               The Playbook
             </h1>
-            <h2 className="text-xl font-medium text-muted-foreground mb-8 max-w-4xl mx-auto">
+            <h2 className="text-xl font-medium text-muted-foreground mb-4 max-w-4xl mx-auto">
               The Core Chapters of Mission Built: Lessons from the Barbell and the Boardroom
             </h2>
-            <p className="body-lg text-muted-foreground max-w-3xl mx-auto mb-8">
+            <p className="body-lg text-muted-foreground max-w-3xl mx-auto mb-6">
               Welcome to The Playbook — these are the foundational chapters of Mission Built, where each lesson combines real experiences from the gym and the boardroom to give you practical strategies for mission-driven growth.
               Here, you'll find the complete set of insights, stories, and tools that define the book's philosophy, helping you align your actions with your purpose and build strength that lasts.
             </p>
@@ -155,3 +156,4 @@ const FieldNotes = () => {
 };
 
 export default FieldNotes;
+
