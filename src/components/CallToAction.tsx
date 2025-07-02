@@ -27,7 +27,7 @@ const CallToAction = () => {
           <div className="bg-gradient-to-br from-slate/5 to-army/5 p-8 md:p-10 rounded-2xl border border-slate/10 mb-4 shadow-sm">
             <p className="body-md mb-8">
               This is more than a book – it's an evolving conversation about how to build products that truly matter. 
-              Begin with the field notes, share your thoughts, and help shape where this goes next.
+              Begin with the playbook, share your thoughts, and help shape where this goes next.
             </p>
             
             <div className="flex flex-col sm:flex-row justify-center gap-4">
