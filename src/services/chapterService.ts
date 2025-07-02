@@ -1,3 +1,4 @@
+
 import { contentService } from './contentService';
 import { calculateReadTime } from '@/utils/readTimeCalculator';
 
@@ -55,7 +56,7 @@ export const chapterService = {
             slug: metadata.slug || config.slug,
             status: metadata.status,
             chapterNumber: config.chapterNumber
-          };
+          } as ChapterData;
         }
         return null;
       } catch (error) {
@@ -65,7 +66,9 @@ export const chapterService = {
     });
 
     const results = await Promise.all(chapterPromises);
-    const chapters = results.filter((chapter): chapter is ChapterData => chapter !== null);
+    const chapters = results.filter((chapter): chapter is ChapterData => 
+      chapter !== null && (chapter.status === 'published' || chapter.status === 'draft')
+    );
     
     return chapters.sort((a, b) => a.chapterNumber - b.chapterNumber);
   },
