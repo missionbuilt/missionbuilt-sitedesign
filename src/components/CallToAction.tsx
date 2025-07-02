@@ -31,7 +31,7 @@ const CallToAction = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Link to="/field-notes" onClick={scrollToTop} className="btn-army flex items-center justify-center gap-2 group animate-fade-in">
+              <Link to="/playbook" onClick={scrollToTop} className="btn-army flex items-center justify-center gap-2 group animate-fade-in">
                 <span>Start Reading</span>
                 <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </Link>

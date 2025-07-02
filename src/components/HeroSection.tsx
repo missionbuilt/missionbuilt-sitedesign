@@ -57,7 +57,7 @@ const HeroSection = () => {
           </div>
           
           <div className="mt-10 flex flex-col sm:flex-row justify-center gap-4">
-            <Link to="/field-notes" className="btn-army flex items-center justify-center gap-2 group">
+            <Link to="/playbook" className="btn-army flex items-center justify-center gap-2 group">
               <span>Start Reading</span>
               <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
             </Link>
