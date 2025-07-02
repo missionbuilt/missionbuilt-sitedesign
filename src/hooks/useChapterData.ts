@@ -21,10 +21,8 @@ export const useChapterData = () => {
 
   useEffect(() => {
     const loadChapters = async () => {
-      setIsLoading(true);
-      setError(null);
-      
       try {
+        // Start loading immediately
         const chaptersData = await chapterService.loadChapterMetadata();
         setChapters(chaptersData);
         
@@ -42,6 +40,8 @@ export const useChapterData = () => {
           completedChapters,
           currentChapter: readChapters[readChapters.length - 1]
         });
+        
+        setError(null);
       } catch (error) {
         console.error('Error loading chapters:', error);
         setError('Failed to load field notes. Please try refreshing the page.');

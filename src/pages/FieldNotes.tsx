@@ -61,8 +61,22 @@ const FieldNotes = () => {
     }
   }, [filteredChapters, sortBy]);
 
-  // Get read chapters from localStorage
-  const readChapters = JSON.parse(localStorage.getItem('readChapters') || '[]');
+  // Get read chapters from localStorage - use React state to avoid repeated localStorage calls
+  const [readChapters, setReadChapters] = React.useState<number[]>(() => {
+    try {
+      return JSON.parse(localStorage.getItem('readChapters') || '[]');
+    } catch {
+      return [];
+    }
+  });
+
+  // Update read chapters when markChapterAsRead is called
+  const handleMarkAsRead = React.useCallback((chapterNumber: number) => {
+    markChapterAsRead(chapterNumber);
+    if (!readChapters.includes(chapterNumber)) {
+      setReadChapters(prev => [...prev, chapterNumber]);
+    }
+  }, [markChapterAsRead, readChapters]);
 
   if (error) {
     return (
@@ -88,9 +102,9 @@ const FieldNotes = () => {
       <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30">
         <Navbar />
         
-        <main className="container-custom py-12">
+        <main className="container-custom py-8">
           <div className="max-w-6xl mx-auto">
-            <header className="mb-12">
+            <header className="mb-8">
               <div className="flex justify-between items-start">
                 <div>
                   <h2 className="text-lg font-medium text-muted-foreground mb-2 dark:text-slate-400">The Core Chapters of Mission Built: Lessons from the Barbell and the Boardroom</h2>
@@ -122,8 +136,8 @@ const FieldNotes = () => {
             {/* Chapter Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {isLoading ? (
-                // Show skeleton cards while loading
-                Array.from({ length: 12 }).map((_, index) => (
+                // Show fewer skeleton cards initially for faster perceived loading
+                Array.from({ length: 6 }).map((_, index) => (
                   <ChapterCardSkeleton key={index} />
                 ))
               ) : (
@@ -132,7 +146,7 @@ const FieldNotes = () => {
                     key={chapter.id}
                     chapter={chapter}
                     isRead={readChapters.includes(chapter.chapterNumber)}
-                    onMarkAsRead={markChapterAsRead}
+                    onMarkAsRead={handleMarkAsRead}
                   />
                 ))
               )}
