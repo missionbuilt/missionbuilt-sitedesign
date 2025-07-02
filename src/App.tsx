@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -10,6 +11,7 @@ import NotFound from "./pages/NotFound";
 import AboutMe from "./pages/AboutMe";
 import Privacy from "./pages/Privacy";
 import FieldNotes from "./pages/FieldNotes";
+import InteractiveChecklist from "./pages/InteractiveChecklist";
 import Chapter1 from "./pages/chapters/Chapter1";
 import Chapter2 from "./pages/chapters/Chapter2";
 import Chapter3 from "./pages/chapters/Chapter3";
@@ -39,6 +41,7 @@ const App = () => {
                 <Route path="/" element={<Index />} />
                 <Route path="/about" element={<AboutMe />} />
                 <Route path="/field-notes" element={<FieldNotes />} />
+                <Route path="/interactive-checklist" element={<InteractiveChecklist />} />
                 <Route path="/field-notes/chapter-1" element={<Chapter1 />} />
                 <Route path="/field-notes/chapter-2" element={<Chapter2 />} />
                 <Route path="/field-notes/chapter-3" element={<Chapter3 />} />
