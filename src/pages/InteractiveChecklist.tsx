@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -169,7 +170,7 @@ const InteractiveChecklist = () => {
             <div>
               <h1 className="heading-lg mb-4">Mission Alignment Checklist</h1>
               <p className="body text-muted-foreground max-w-2xl">
-                Track your progress across three key areas: Mission Foundation, Execution & Adaptation, and Sustainability & Culture.
+                Questions to Ensure Every Step Serves the Mission
               </p>
             </div>
             <NightVisionToggle />
