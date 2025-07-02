@@ -16,16 +16,50 @@ interface ChecklistItem {
 }
 
 const checklistItems: ChecklistItem[] = [
-  { id: '1', text: 'Complete morning routine before 7 AM', points: 5, category: 'Discipline' },
-  { id: '2', text: 'Exercise for at least 30 minutes', points: 10, category: 'Physical' },
-  { id: '3', text: 'Read for 20 minutes', points: 8, category: 'Growth' },
-  { id: '4', text: 'Plan tomorrow\'s priorities', points: 6, category: 'Planning' },
-  { id: '5', text: 'Connect with someone important', points: 7, category: 'Relationships' },
-  { id: '6', text: 'Practice gratitude (3 things)', points: 4, category: 'Mindset' },
-  { id: '7', text: 'Complete most important task first', points: 12, category: 'Productivity' },
-  { id: '8', text: 'Maintain proper nutrition', points: 8, category: 'Physical' },
-  { id: '9', text: 'Review and reflect on the day', points: 5, category: 'Growth' },
-  { id: '10', text: 'Prepare for tomorrow', points: 6, category: 'Planning' }
+  // Mission Clarity
+  { id: '1', text: 'Can you state your primary mission in one clear sentence?', points: 10, category: 'Mission Clarity' },
+  { id: '2', text: 'Do your daily actions align with your stated mission?', points: 8, category: 'Mission Clarity' },
+  { id: '3', text: 'Have you communicated your mission to key stakeholders?', points: 6, category: 'Mission Clarity' },
+  
+  // Metric Awareness (Not Obsession)
+  { id: '4', text: 'Do you track 2-3 key metrics that matter most?', points: 8, category: 'Metric Awareness' },
+  { id: '5', text: 'Can you identify which metrics are leading vs lagging indicators?', points: 7, category: 'Metric Awareness' },
+  { id: '6', text: 'Do you review metrics weekly without becoming obsessed?', points: 6, category: 'Metric Awareness' },
+  
+  // Drift Detection
+  { id: '7', text: 'Have you identified early warning signs of mission drift?', points: 9, category: 'Drift Detection' },
+  { id: '8', text: 'Do you regularly audit your time allocation against priorities?', points: 7, category: 'Drift Detection' },
+  { id: '9', text: 'Can you spot when you\'re saying yes to the wrong things?', points: 8, category: 'Drift Detection' },
+  
+  // Ritual Reinforcement
+  { id: '10', text: 'Do you have daily rituals that reinforce your mission?', points: 6, category: 'Ritual Reinforcement' },
+  { id: '11', text: 'Have you established weekly review sessions?', points: 5, category: 'Ritual Reinforcement' },
+  { id: '12', text: 'Do your rituals adapt when circumstances change?', points: 7, category: 'Ritual Reinforcement' },
+  
+  // Feedback Loops
+  { id: '13', text: 'Do you have systems to gather honest feedback regularly?', points: 8, category: 'Feedback Loops' },
+  { id: '14', text: 'Can you quickly identify what\'s working vs what isn\'t?', points: 7, category: 'Feedback Loops' },
+  { id: '15', text: 'Do you act on feedback within 48-72 hours?', points: 9, category: 'Feedback Loops' },
+  
+  // Decision Alignment
+  { id: '16', text: 'Do major decisions clearly support your mission?', points: 10, category: 'Decision Alignment' },
+  { id: '17', text: 'Can you explain how daily choices connect to larger goals?', points: 6, category: 'Decision Alignment' },
+  { id: '18', text: 'Do you have criteria for saying no to opportunities?', points: 8, category: 'Decision Alignment' },
+  
+  // System Check Under Stress
+  { id: '19', text: 'Do your systems hold up when under pressure?', points: 9, category: 'System Check Under Stress' },
+  { id: '20', text: 'Can you maintain mission focus during crisis?', points: 10, category: 'System Check Under Stress' },
+  { id: '21', text: 'Do you have backup plans for key mission components?', points: 7, category: 'System Check Under Stress' },
+  
+  // Recovery Rhythm Review
+  { id: '22', text: 'Do you have sustainable recovery practices built in?', points: 8, category: 'Recovery Rhythm Review' },
+  { id: '23', text: 'Can you maintain performance without burnout?', points: 9, category: 'Recovery Rhythm Review' },
+  { id: '24', text: 'Do you regularly assess and adjust your pace?', points: 6, category: 'Recovery Rhythm Review' },
+  
+  // Shared PR Reflection
+  { id: '25', text: 'Do you share progress reports with accountability partners?', points: 7, category: 'Shared PR Reflection' },
+  { id: '26', text: 'Can you articulate lessons learned from recent wins/losses?', points: 8, category: 'Shared PR Reflection' },
+  { id: '27', text: 'Do you celebrate mission-aligned victories with your team?', points: 5, category: 'Shared PR Reflection' }
 ];
 
 const InteractiveChecklist = () => {
@@ -78,6 +112,27 @@ const InteractiveChecklist = () => {
   };
 
   const scoreLevel = getScoreLevel(completionPercentage);
+
+  // Group items by category for organized display
+  const groupedItems = checklistItems.reduce((acc, item) => {
+    if (!acc[item.category]) {
+      acc[item.category] = [];
+    }
+    acc[item.category].push(item);
+    return acc;
+  }, {} as Record<string, ChecklistItem[]>);
+
+  const categoryOrder = [
+    'Mission Clarity',
+    'Metric Awareness',
+    'Drift Detection', 
+    'Ritual Reinforcement',
+    'Feedback Loops',
+    'Decision Alignment',
+    'System Check Under Stress',
+    'Recovery Rhythm Review',
+    'Shared PR Reflection'
+  ];
 
   return (
     <>
@@ -161,56 +216,60 @@ const InteractiveChecklist = () => {
             </Card>
           </div>
 
-          {/* Checklist */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="heading-md">Your Daily Missions</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {checklistItems.map((item) => {
-                const isChecked = checkedItems.has(item.id);
-                return (
-                  <div
-                    key={item.id}
-                    className={`flex items-center space-x-4 p-4 rounded-lg border transition-all duration-200 ${
-                      isChecked 
-                        ? 'bg-army/5 dark:bg-sunburst/5 border-army/20 dark:border-sunburst/20' 
-                        : 'bg-card hover:bg-muted/50'
-                    }`}
-                  >
-                    <Checkbox
-                      id={item.id}
-                      checked={isChecked}
-                      onCheckedChange={(checked) => handleItemCheck(item.id, checked as boolean)}
-                      className="data-[state=checked]:bg-army dark:data-[state=checked]:bg-sunburst"
-                    />
-                    <div className="flex-1">
-                      <label
-                        htmlFor={item.id}
-                        className={`body cursor-pointer ${
-                          isChecked ? 'line-through text-muted-foreground' : ''
-                        }`}
-                      >
-                        {item.text}
-                      </label>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Badge variant="outline" className="text-xs">
-                        {item.category}
-                      </Badge>
-                      <Badge 
-                        className={`text-xs ${
-                          isChecked ? 'bg-army text-white dark:bg-sunburst dark:text-slate' : 'bg-muted'
-                        }`}
-                      >
-                        {item.points} pts
-                      </Badge>
-                    </div>
-                  </div>
-                );
-              })}
-            </CardContent>
-          </Card>
+          {/* Checklist by Category */}
+          <div className="space-y-8">
+            {categoryOrder.map((categoryName) => {
+              const categoryItems = groupedItems[categoryName] || [];
+              if (categoryItems.length === 0) return null;
+              
+              return (
+                <Card key={categoryName}>
+                  <CardHeader>
+                    <CardTitle className="heading-md">{categoryName}</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    {categoryItems.map((item) => {
+                      const isChecked = checkedItems.has(item.id);
+                      return (
+                        <div
+                          key={item.id}
+                          className={`flex items-center space-x-4 p-4 rounded-lg border transition-all duration-200 ${
+                            isChecked 
+                              ? 'bg-army/5 dark:bg-sunburst/5 border-army/20 dark:border-sunburst/20' 
+                              : 'bg-card hover:bg-muted/50'
+                          }`}
+                        >
+                          <Checkbox
+                            id={item.id}
+                            checked={isChecked}
+                            onCheckedChange={(checked) => handleItemCheck(item.id, checked as boolean)}
+                            className="data-[state=checked]:bg-army dark:data-[state=checked]:bg-sunburst"
+                          />
+                          <div className="flex-1">
+                            <label
+                              htmlFor={item.id}
+                              className={`body cursor-pointer ${
+                                isChecked ? 'line-through text-muted-foreground' : ''
+                              }`}
+                            >
+                              {item.text}
+                            </label>
+                          </div>
+                          <Badge 
+                            className={`text-xs ${
+                              isChecked ? 'bg-army text-white dark:bg-sunburst dark:text-slate' : 'bg-muted'
+                            }`}
+                          >
+                            {item.points} pts
+                          </Badge>
+                        </div>
+                      );
+                    })}
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
 
           {/* Category Breakdown */}
           <Card className="mt-8">
@@ -218,13 +277,13 @@ const InteractiveChecklist = () => {
               <CardTitle className="heading-md">Category Progress</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {Object.entries(categoryScores).map(([category, scores]) => {
                   const percentage = Math.round((scores.total / scores.max) * 100);
                   return (
                     <div key={category} className="space-y-2">
                       <div className="flex justify-between items-center">
-                        <span className="font-medium">{category}</span>
+                        <span className="font-medium text-sm">{category}</span>
                         <span className="text-sm text-muted-foreground">
                           {scores.total}/{scores.max} pts
                         </span>
