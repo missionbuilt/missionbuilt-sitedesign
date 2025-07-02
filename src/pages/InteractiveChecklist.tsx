@@ -5,7 +5,8 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import NightVisionToggle from '@/components/NightVisionToggle';
-import { CheckCircle, Circle, ExternalLink } from 'lucide-react';
+import Logo from '@/components/Logo';
+import { CheckCircle, Circle, ExternalLink, Target, TrendingUp, Shield } from 'lucide-react';
 import { getCategoryLink } from '@/utils/anchorUtils';
 
 interface ChecklistItem {
@@ -109,11 +110,11 @@ const InteractiveChecklist = () => {
   }, [checkedItems]);
 
   const getScoreLevel = (percentage: number) => {
-    if (percentage >= 90) return { label: 'Elite', color: 'bg-army text-white' };
-    if (percentage >= 75) return { label: 'Strong', color: 'bg-steel text-white' };
-    if (percentage >= 60) return { label: 'Solid', color: 'bg-sunburst text-slate' };
-    if (percentage >= 40) return { label: 'Building', color: 'bg-secondary text-secondary-foreground' };
-    return { label: 'Starting', color: 'bg-muted text-muted-foreground' };
+    if (percentage >= 90) return { label: 'Elite', color: 'bg-army text-white', ring: 'ring-army/20' };
+    if (percentage >= 75) return { label: 'Strong', color: 'bg-steel text-white', ring: 'ring-steel/20' };
+    if (percentage >= 60) return { label: 'Solid', color: 'bg-sunburst text-slate', ring: 'ring-sunburst/20' };
+    if (percentage >= 40) return { label: 'Building', color: 'bg-secondary text-secondary-foreground', ring: 'ring-secondary/20' };
+    return { label: 'Starting', color: 'bg-muted text-muted-foreground', ring: 'ring-muted/20' };
   };
 
   const scoreLevel = getScoreLevel(completionPercentage);
@@ -155,6 +156,19 @@ const InteractiveChecklist = () => {
     }
   };
 
+  const getGroupIcon = (group: string) => {
+    switch (group) {
+      case 'Mission Foundation':
+        return <Target className="h-8 w-8 text-army dark:text-sunburst" />;
+      case 'Execution & Adaptation':
+        return <TrendingUp className="h-8 w-8 text-steel dark:text-steel" />;
+      case 'Sustainability & Culture':
+        return <Shield className="h-8 w-8 text-sunburst dark:text-sunburst" />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <>
       <Helmet>
@@ -162,68 +176,99 @@ const InteractiveChecklist = () => {
         <meta name="description" content="Track your daily mission alignment with our interactive checklist and dynamic scoring system." />
       </Helmet>
 
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30">
         <div className="container-custom py-8">
-          {/* Header */}
+          {/* Header with Logo */}
           <div className="flex justify-between items-start mb-8">
-            <div>
-              <h1 className="heading-lg mb-4">Mission Alignment Checklist</h1>
-              <p className="body text-muted-foreground max-w-2xl">
-                Questions to Ensure Every Step Serves the Mission
-              </p>
+            <div className="flex items-center gap-6">
+              <Logo size="lg" asLink={false} colorScheme="default" />
+              <div>
+                <h1 className="heading-lg mb-4 bg-gradient-to-r from-army via-steel to-sunburst bg-clip-text text-transparent">
+                  Mission Alignment Checklist
+                </h1>
+                <p className="body text-muted-foreground max-w-2xl">
+                  Questions to Ensure Every Step Serves the Mission
+                </p>
+              </div>
             </div>
             <NightVisionToggle />
           </div>
 
-          {/* Score Dashboard - Redesigned for Visual Hierarchy */}
+          {/* Score Dashboard - Enhanced with Colors */}
           <div className="mb-8">
-            {/* Total Score - Large and Prominent */}
-            <Card className="mb-4 border-2 border-army/20 dark:border-sunburst/20">
-              <CardHeader className="pb-4">
-                <CardTitle className="text-2xl text-center">Mission Alignment Score</CardTitle>
+            {/* Total Score - Large and Prominent with Gradient */}
+            <Card className={`mb-4 border-2 ${scoreLevel.ring} ring-4 bg-gradient-to-br from-card to-card/50 shadow-xl`}>
+              <CardHeader className="pb-4 text-center">
+                <div className="flex items-center justify-center gap-3 mb-2">
+                  <div className="p-2 rounded-full bg-army/10 dark:bg-sunburst/10">
+                    <Target className="h-6 w-6 text-army dark:text-sunburst" />
+                  </div>
+                  <CardTitle className="text-2xl bg-gradient-to-r from-army to-steel bg-clip-text text-transparent">
+                    Mission Alignment Score
+                  </CardTitle>
+                </div>
               </CardHeader>
               <CardContent className="text-center">
-                <div className="text-6xl font-bold text-army dark:text-sunburst mb-4">
-                  {totalScore}/{maxScore}
+                <div className="relative mb-6">
+                  <div className="text-6xl font-bold text-army dark:text-sunburst mb-2 tracking-tight">
+                    {totalScore}
+                  </div>
+                  <div className="text-2xl text-muted-foreground">
+                    / {maxScore}
+                  </div>
                 </div>
-                <Progress value={completionPercentage} className="mb-4 h-3" />
-                <Badge className={`${scoreLevel.color} text-lg px-4 py-2`}>
+                <Progress value={completionPercentage} className="mb-4 h-4 bg-muted" />
+                <Badge className={`${scoreLevel.color} text-lg px-6 py-3 font-semibold shadow-lg`}>
                   {scoreLevel.label} - {completionPercentage}%
                 </Badge>
               </CardContent>
             </Card>
 
-            {/* Group Scores - Very Compact */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+            {/* Group Scores - Enhanced with Icons and Colors */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {groupOrder.map((groupName) => {
                 const groupScore = groupScores[groupName];
                 const percentage = groupScore ? Math.round((groupScore.total / groupScore.max) * 100) : 0;
                 
                 return (
-                  <div key={groupName} className="bg-muted/20 rounded-md p-2 border border-muted/30">
-                    <div className="flex justify-between items-center mb-1">
-                      <span className="text-xs font-medium text-muted-foreground">{groupName}</span>
-                      <span className="text-xs font-semibold text-army dark:text-sunburst">
-                        {groupScore?.total || 0}/{groupScore?.max || 0}
-                      </span>
-                    </div>
-                    <Progress value={percentage} className="h-1" />
-                    <div className="text-xs text-muted-foreground mt-0.5 text-right">
-                      {percentage}%
-                    </div>
-                  </div>
+                  <Card key={groupName} className="border-2 border-muted/50 bg-gradient-to-br from-card to-muted/20 hover:shadow-lg transition-all duration-300">
+                    <CardContent className="p-4">
+                      <div className="flex items-center gap-3 mb-3">
+                        {getGroupIcon(groupName)}
+                        <div>
+                          <h3 className="font-semibold text-sm text-foreground leading-tight">{groupName}</h3>
+                          <div className="text-lg font-bold text-army dark:text-sunburst">
+                            {groupScore?.total || 0}/{groupScore?.max || 0}
+                          </div>
+                        </div>
+                      </div>
+                      <Progress value={percentage} className="h-2 mb-2" />
+                      <div className="text-sm text-muted-foreground text-right font-medium">
+                        {percentage}%
+                      </div>
+                    </CardContent>
+                  </Card>
                 );
               })}
             </div>
           </div>
 
-          {/* Checklist by Group */}
-          <div className="space-y-12">
-            {groupOrder.map((groupName) => (
-              <div key={groupName} className="space-y-6">
+          {/* Checklist by Group - Enhanced Design */}
+          <div className="space-y-16">
+            {groupOrder.map((groupName, groupIndex) => (
+              <div key={groupName} className="space-y-8">
                 <div className="text-center">
-                  <h2 className="heading-lg text-army dark:text-sunburst mb-2">{groupName}</h2>
-                  <p className="body text-muted-foreground">{getGroupDescription(groupName)}</p>
+                  <div className="flex items-center justify-center gap-4 mb-4">
+                    <div className="p-3 rounded-full bg-gradient-to-br from-army/10 to-steel/10 dark:from-sunburst/10 dark:to-army/10">
+                      {getGroupIcon(groupName)}
+                    </div>
+                    <h2 className="heading-lg bg-gradient-to-r from-army via-steel to-sunburst bg-clip-text text-transparent">
+                      {groupName}
+                    </h2>
+                  </div>
+                  <p className="body text-muted-foreground max-w-2xl mx-auto">
+                    {getGroupDescription(groupName)}
+                  </p>
                 </div>
                 
                 <div className="space-y-8">
@@ -232,20 +277,20 @@ const InteractiveChecklist = () => {
                       const categoryItems = groupedItems[categoryName] || [];
                       return categoryItems.some(item => item.group === groupName);
                     })
-                    .map((categoryName) => {
+                    .map((categoryName, categoryIndex) => {
                       const categoryItems = groupedItems[categoryName]?.filter(item => item.group === groupName) || [];
                       if (categoryItems.length === 0) return null;
                       
                       return (
-                        <Card key={categoryName}>
-                          <CardHeader>
-                            <CardTitle className="heading-md">{categoryName}</CardTitle>
+                        <Card key={categoryName} className="border-2 border-muted/30 bg-gradient-to-br from-card to-muted/10 shadow-lg hover:shadow-xl transition-all duration-300">
+                          <CardHeader className="bg-gradient-to-r from-muted/20 via-transparent to-muted/20">
+                            <CardTitle className="heading-md text-foreground">{categoryName}</CardTitle>
                             
                             <div className="flex items-center gap-2 text-sm text-muted-foreground">
                               <span>Learn more:</span>
                               <a 
                                 href={getCategoryLink(categoryName)}
-                                className="text-army dark:text-sunburst hover:underline flex items-center gap-1"
+                                className="text-army dark:text-sunburst hover:underline flex items-center gap-1 font-medium hover:text-steel dark:hover:text-army transition-colors"
                                 target="_blank"
                                 rel="noopener noreferrer"
                               >
@@ -268,31 +313,31 @@ const InteractiveChecklist = () => {
                               return (
                                 <div
                                   key={item.id}
-                                  className={`flex items-center space-x-4 p-4 rounded-lg border transition-all duration-200 ${
+                                  className={`flex items-center space-x-4 p-4 rounded-lg border-2 transition-all duration-300 ${
                                     isChecked 
-                                      ? 'bg-army/5 dark:bg-sunburst/5 border-army/20 dark:border-sunburst/20' 
-                                      : 'bg-card hover:bg-muted/50'
+                                      ? 'bg-gradient-to-r from-army/5 to-steel/5 dark:from-sunburst/5 dark:to-army/5 border-army/30 dark:border-sunburst/30 shadow-md' 
+                                      : 'bg-card hover:bg-gradient-to-r hover:from-muted/30 hover:to-muted/10 border-muted/30 hover:border-muted/50 hover:shadow-md'
                                   }`}
                                 >
                                   <Checkbox
                                     id={item.id}
                                     checked={isChecked}
                                     onCheckedChange={(checked) => handleItemCheck(item.id, checked as boolean)}
-                                    className="data-[state=checked]:bg-army dark:data-[state=checked]:bg-sunburst"
+                                    className="data-[state=checked]:bg-army dark:data-[state=checked]:bg-sunburst data-[state=checked]:border-army dark:data-[state=checked]:border-sunburst"
                                   />
                                   <div className="flex-1">
                                     <label
                                       htmlFor={item.id}
-                                      className={`body cursor-pointer ${
-                                        isChecked ? 'line-through text-muted-foreground' : ''
+                                      className={`body cursor-pointer transition-all duration-200 ${
+                                        isChecked ? 'line-through text-muted-foreground' : 'text-foreground hover:text-army dark:hover:text-sunburst'
                                       }`}
                                     >
                                       {item.text}
                                     </label>
                                   </div>
                                   <Badge 
-                                    className={`text-xs ${
-                                      isChecked ? 'bg-army text-white dark:bg-sunburst dark:text-slate' : 'bg-muted'
+                                    className={`text-xs font-semibold transition-all duration-200 ${
+                                      isChecked ? 'bg-army text-white dark:bg-sunburst dark:text-slate shadow-md' : 'bg-muted hover:bg-muted/80'
                                     }`}
                                   >
                                     {item.points} pts
