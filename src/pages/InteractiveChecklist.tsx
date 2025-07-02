@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Button } from '@/components/ui/button';
@@ -95,7 +94,7 @@ const InteractiveChecklist = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const { totalScore, maxScore, completionPercentage, categoryScores, groupScores } = useMemo(() => {
+  const { totalScore, maxScore, completionPercentage, categoryScores, groupScores, missionFoundationChecked } = useMemo(() => {
     const total = checklistItems
       .filter(item => checkedItems.has(item.id))
       .reduce((sum, item) => sum + item.points, 0);
@@ -126,16 +125,21 @@ const InteractiveChecklist = () => {
       return acc;
     }, {} as Record<string, { total: number; max: number }>);
 
+    // Check Mission Foundation requirements
+    const missionFoundationItems = checklistItems.filter(item => item.group === 'Mission Foundation');
+    const missionFoundationCheckedCount = missionFoundationItems.filter(item => checkedItems.has(item.id)).length;
+
     return {
       totalScore: total,
       maxScore: max,
       completionPercentage: percentage,
       categoryScores: categories,
-      groupScores: groups
+      groupScores: groups,
+      missionFoundationChecked: missionFoundationCheckedCount
     };
   }, [checkedItems]);
 
-  const getScoreLevel = (score: number, hasStarted: boolean) => {
+  const getScoreLevel = (score: number, hasStarted: boolean, missionFoundationCount: number) => {
     // If no items are checked yet, show a neutral getting started state
     if (!hasStarted) {
       return { 
@@ -146,7 +150,7 @@ const InteractiveChecklist = () => {
       };
     }
     
-    if (score >= 56) return { 
+    if (score >= 56 && missionFoundationCount >= 5) return { 
       label: 'Mission Strong', 
       description: 'fully aligned; your mindset, execution, and culture support the mission.',
       color: 'bg-army text-white', 
@@ -167,7 +171,7 @@ const InteractiveChecklist = () => {
   };
 
   const hasStarted = checkedItems.size > 0;
-  const scoreLevel = getScoreLevel(totalScore, hasStarted);
+  const scoreLevel = getScoreLevel(totalScore, hasStarted, missionFoundationChecked);
 
   // Group items by category for organized display
   const groupedItems = checklistItems.reduce((acc, item) => {
@@ -239,6 +243,16 @@ const InteractiveChecklist = () => {
                 <RotateCcw className="h-4 w-4" />
                 Reset All
               </Button>
+            </div>
+          </div>
+
+          {/* Scoring Clarification */}
+          <div className="mb-8 p-4 bg-gradient-to-r from-muted/30 to-muted/10 rounded-lg border border-muted/50">
+            <h3 className="font-semibold text-foreground mb-2">Scoring System</h3>
+            <div className="text-sm text-muted-foreground space-y-1">
+              <p><strong>Mission Strong (56-71 pts):</strong> Requires both high score AND at least 5 out of 7 Mission Foundation questions checked</p>
+              <p><strong>Mission Drifting (36-55 pts):</strong> Partial alignment; some areas need attention</p>
+              <p><strong>Mission Lost (0-35 pts):</strong> Severe misalignment; immediate reassessment needed</p>
             </div>
           </div>
 
