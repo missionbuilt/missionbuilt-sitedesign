@@ -82,6 +82,11 @@ const Footer = () => {
                   </Link>
                 </li>
                 <li>
+                  <Link to="/resources" onClick={scrollToTop} className="text-slate/80 dark:text-slate-300 hover:text-army dark:hover:text-army transition-colors">
+                    Resources
+                  </Link>
+                </li>
+                <li>
                   <Link to="/about" onClick={scrollToTop} className="text-slate/80 dark:text-slate-300 hover:text-army dark:hover:text-army transition-colors">
                     About
                   </Link>
@@ -91,7 +96,7 @@ const Footer = () => {
             
             {/* Resources Links */}
             <div className="mb-8 md:mb-0">
-              <h3 className="font-display font-semibold mb-4 text-slate dark:text-slate-100">Resources</h3>
+              <h3 className="font-display font-semibold mb-4 text-slate dark:text-slate-100">Legal</h3>
               <ul className="space-y-3 text-sm">
                 <li>
                   <Link to="/terms" onClick={scrollToTop} className="text-slate/80 dark:text-slate-300 hover:text-army dark:hover:text-army transition-colors">
