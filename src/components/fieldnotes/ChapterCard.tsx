@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Calendar, Clock, Tag, CheckCircle, BookOpen } from 'lucide-react';
@@ -109,7 +108,7 @@ const ChapterCard: React.FC<ChapterCardProps> = ({ chapter, isRead = false, onMa
     return (
       <Link 
         key={chapter.id}
-        to={`/playbook/${chapter.slug}`}
+        to={`/playbook/chapter-${chapter.chapterNumber}`}
         className="block hover:scale-[1.02] transition-transform duration-200 group"
         onClick={handleCardClick}
       >
