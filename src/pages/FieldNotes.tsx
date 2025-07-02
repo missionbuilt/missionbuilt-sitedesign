@@ -14,6 +14,9 @@ const FieldNotes = () => {
   const { chapters, isLoading, error, readingProgress, markChapterAsRead } = useChapterData();
   const [selectedStatus, setSelectedStatus] = React.useState<string>('all');
   const [selectedTags, setSelectedTags] = React.useState<string[]>([]);
+  const [searchTerm, setSearchTerm] = React.useState<string>('');
+  const [sortBy, setSortBy] = React.useState<string>('chapter');
+  const [showFilters, setShowFilters] = React.useState<boolean>(false);
 
   // Get unique tags from all chapters
   const allTags = React.useMemo(() => {
@@ -27,11 +30,37 @@ const FieldNotes = () => {
   // Filter chapters based on selected filters
   const filteredChapters = React.useMemo(() => {
     return chapters.filter(chapter => {
+      // Search filter
+      const searchMatch = searchTerm === '' || 
+        chapter.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        chapter.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        chapter.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
+
+      // Status filter
       const statusMatch = selectedStatus === 'all' || chapter.status === selectedStatus;
+      
+      // Tags filter
       const tagsMatch = selectedTags.length === 0 || selectedTags.some(tag => chapter.tags.includes(tag));
-      return statusMatch && tagsMatch;
+      
+      return searchMatch && statusMatch && tagsMatch;
     });
-  }, [chapters, selectedStatus, selectedTags]);
+  }, [chapters, searchTerm, selectedStatus, selectedTags]);
+
+  // Sort filtered chapters
+  const sortedChapters = React.useMemo(() => {
+    const sorted = [...filteredChapters];
+    switch (sortBy) {
+      case 'date':
+        return sorted.sort((a, b) => new Date(b.publishedDate).getTime() - new Date(a.publishedDate).getTime());
+      case 'readTime':
+        return sorted.sort((a, b) => parseInt(a.readTime) - parseInt(b.readTime));
+      case 'title':
+        return sorted.sort((a, b) => a.title.localeCompare(b.title));
+      case 'chapter':
+      default:
+        return sorted.sort((a, b) => a.chapterNumber - b.chapterNumber);
+    }
+  }, [filteredChapters, sortBy]);
 
   // Get read chapters from localStorage
   const readChapters = JSON.parse(localStorage.getItem('readChapters') || '[]');
@@ -76,17 +105,19 @@ const FieldNotes = () => {
               across decades of product leadership through the lens of powerlifting discipline.
             </p>
             
-            <ReadingProgress {...readingProgress} />
+            <ReadingProgress progress={readingProgress} />
           </div>
 
           {/* Filters */}
           <ChapterFilters
-            selectedStatus={selectedStatus}
-            onStatusChange={setSelectedStatus}
-            selectedTags={selectedTags}
-            onTagsChange={setSelectedTags}
-            availableTags={allTags}
-            isLoading={isLoading}
+            searchTerm={searchTerm}
+            onSearchChange={setSearchTerm}
+            statusFilter={selectedStatus}
+            onStatusFilterChange={setSelectedStatus}
+            sortBy={sortBy}
+            onSortChange={setSortBy}
+            showFilters={showFilters}
+            onToggleFilters={() => setShowFilters(!showFilters)}
           />
 
           {/* Chapter Grid */}
@@ -97,7 +128,7 @@ const FieldNotes = () => {
                 <ChapterCardSkeleton key={index} />
               ))
             ) : (
-              filteredChapters.map((chapter) => (
+              sortedChapters.map((chapter) => (
                 <ChapterCard
                   key={chapter.id}
                   chapter={chapter}
@@ -109,7 +140,7 @@ const FieldNotes = () => {
           </div>
 
           {/* No Results Message */}
-          {!isLoading && filteredChapters.length === 0 && chapters.length > 0 && (
+          {!isLoading && sortedChapters.length === 0 && chapters.length > 0 && (
             <div className="text-center py-12">
               <p className="text-muted-foreground">No field notes match your current filters.</p>
             </div>
