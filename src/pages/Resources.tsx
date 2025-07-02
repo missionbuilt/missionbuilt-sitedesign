@@ -91,7 +91,7 @@ const Resources = () => {
           {/* Coming Soon Section */}
           <div className="text-center mt-16 pt-12 border-t border-muted/30">
             <p className="body text-muted-foreground italic">
-              More resources will be delivered over time
+              Stay tuned—this library will keep growing over time.
             </p>
           </div>
         </main>
