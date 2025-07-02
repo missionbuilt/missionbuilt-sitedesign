@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { BookOpen } from 'lucide-react';
@@ -7,7 +6,6 @@ import Footer from '@/components/Footer';
 import ChapterCard from '@/components/fieldnotes/ChapterCard';
 import ChapterCardSkeleton from '@/components/fieldnotes/ChapterCardSkeleton';
 import ChapterFilters from '@/components/fieldnotes/ChapterFilters';
-import ReadingProgress from '@/components/fieldnotes/ReadingProgress';
 import { useChapterData } from '@/hooks/useChapterData';
 
 const FieldNotes = () => {
@@ -105,7 +103,6 @@ const FieldNotes = () => {
               across decades of product leadership through the lens of powerlifting discipline.
             </p>
             
-            <ReadingProgress progress={readingProgress} />
           </div>
 
           {/* Filters */}
