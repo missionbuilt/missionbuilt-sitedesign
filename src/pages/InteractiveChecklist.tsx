@@ -29,9 +29,8 @@ const checklistItems: ChecklistItem[] = [
   { id: '7', text: 'Have I noticed recent moments of drifting into comfort zones or distractions?', points: 7, category: 'Drift Detection' },
   
   // Ritual Reinforcement
-  { id: '8', text: 'Do you have daily rituals that reinforce your mission?', points: 6, category: 'Ritual Reinforcement' },
-  { id: '9', text: 'Have you established weekly review sessions?', points: 5, category: 'Ritual Reinforcement' },
-  { id: '10', text: 'Do your rituals adapt when circumstances change?', points: 7, category: 'Ritual Reinforcement' },
+  { id: '8', text: 'Have I established or maintained meaningful rituals that keep me connected to the mission?', points: 8, category: 'Ritual Reinforcement' },
+  { id: '9', text: 'Are these rituals adaptable when conditions change, so they don\'t become rigid rules?', points: 7, category: 'Ritual Reinforcement' },
   
   // Feedback Loops
   { id: '11', text: 'Do you have systems to gather honest feedback regularly?', points: 8, category: 'Feedback Loops' },
@@ -255,6 +254,18 @@ const InteractiveChecklist = () => {
                           className="text-army dark:text-sunburst hover:underline flex items-center gap-1"
                         >
                           Chapter 1: Mission Before Metrics, Section 2: The Drift
+                          <ExternalLink className="h-3 w-3" />
+                        </a>
+                      </div>
+                    )}
+                    {categoryName === 'Ritual Reinforcement' && (
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <span>Learn more:</span>
+                        <a 
+                          href="/field-notes/chapter-3" 
+                          className="text-army dark:text-sunburst hover:underline flex items-center gap-1"
+                        >
+                          Chapter 3: Rituals Over Rules, Sections 1–3
                           <ExternalLink className="h-3 w-3" />
                         </a>
                       </div>
