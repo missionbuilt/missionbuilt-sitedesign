@@ -11,6 +11,7 @@ import NotFound from "./pages/NotFound";
 import AboutMe from "./pages/AboutMe";
 import Privacy from "./pages/Privacy";
 import FieldNotes from "./pages/FieldNotes";
+import Resources from "./pages/Resources";
 import InteractiveChecklist from "./pages/InteractiveChecklist";
 import Chapter1 from "./pages/chapters/Chapter1";
 import Chapter2 from "./pages/chapters/Chapter2";
@@ -41,6 +42,7 @@ const App = () => {
                 <Route path="/" element={<Index />} />
                 <Route path="/about" element={<AboutMe />} />
                 <Route path="/field-notes" element={<FieldNotes />} />
+                <Route path="/resources" element={<Resources />} />
                 <Route path="/mission-alignment-checklist" element={<InteractiveChecklist />} />
                 <Route path="/field-notes/chapter-1" element={<Chapter1 />} />
                 <Route path="/field-notes/chapter-2" element={<Chapter2 />} />
