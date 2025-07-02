@@ -61,7 +61,7 @@ const PdfDownloadButton: React.FC = () => {
         Download PDF
       </Button>
       <p className="text-sm text-muted-foreground mt-2">
-        Mission Built - PDF edition - first edition
+        Mission Built (pdf) is a first edition
       </p>
     </div>
   );
