@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -7,7 +6,6 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
 import NightVisionToggle from '@/components/NightVisionToggle';
-import Logo from '@/components/Logo';
 import { CheckCircle, Circle, ExternalLink, Target, TrendingUp, Shield, RotateCcw } from 'lucide-react';
 import { getCategoryLink } from '@/utils/anchorUtils';
 
@@ -184,18 +182,15 @@ const InteractiveChecklist = () => {
 
       <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30">
         <div className="container-custom py-8">
-          {/* Header with Logo */}
+          {/* Header without Logo */}
           <div className="flex justify-between items-start mb-8">
-            <div className="flex items-center gap-6">
-              <Logo size="lg" asLink={false} colorScheme="default" />
-              <div>
-                <h1 className="heading-lg mb-4 bg-gradient-to-r from-army via-steel to-sunburst bg-clip-text text-transparent">
-                  Mission Alignment Checklist
-                </h1>
-                <p className="body text-muted-foreground max-w-2xl">
-                  Questions to Ensure Every Step Serves the Mission
-                </p>
-              </div>
+            <div>
+              <h1 className="heading-lg mb-4 bg-gradient-to-r from-army via-steel to-sunburst bg-clip-text text-transparent">
+                Mission Alignment Checklist
+              </h1>
+              <p className="body text-muted-foreground max-w-2xl">
+                Questions to Ensure Every Step Serves the Mission
+              </p>
             </div>
             <div className="flex items-center gap-4">
               <Button
