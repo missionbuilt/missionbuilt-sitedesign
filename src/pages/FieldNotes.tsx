@@ -7,6 +7,7 @@ import Footer from '@/components/Footer';
 import ChapterCard from '@/components/fieldnotes/ChapterCard';
 import ChapterCardSkeleton from '@/components/fieldnotes/ChapterCardSkeleton';
 import ChapterFilters from '@/components/fieldnotes/ChapterFilters';
+import PdfDownloadButton from '@/components/PdfDownloadButton';
 import { useChapterData } from '@/hooks/useChapterData';
 
 const FieldNotes = () => {
@@ -111,6 +112,7 @@ const FieldNotes = () => {
                   <h2 className="text-lg font-medium text-muted-foreground mb-2 dark:text-slate-400">The Core Chapters of Mission Built: Lessons from the Barbell and the Boardroom</h2>
                   <h1 className="text-4xl font-bold text-foreground mb-4 dark:text-slate-100">The Playbook</h1>
                 </div>
+                <PdfDownloadButton />
               </div>
             </header>
             
