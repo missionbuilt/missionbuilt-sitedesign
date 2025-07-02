@@ -1,0 +1,91 @@
+
+import { contentService } from './contentService';
+import { calculateReadTime } from '@/utils/readTimeCalculator';
+
+export interface ChapterConfig {
+  id: string;
+  chapterNumber: number;
+  slug: string;
+  published: boolean;
+}
+
+// Centralized chapter configuration - easily extensible
+const CHAPTER_CONFIG: ChapterConfig[] = [
+  { id: 'chapter-1', chapterNumber: 1, slug: 'chapter-1', published: true },
+  { id: 'chapter-2', chapterNumber: 2, slug: 'chapter-2', published: true },
+  { id: 'chapter-3', chapterNumber: 3, slug: 'chapter-3', published: true },
+  { id: 'chapter-4', chapterNumber: 4, slug: 'chapter-4', published: true },
+  { id: 'chapter-5', chapterNumber: 5, slug: 'chapter-5', published: true },
+  { id: 'chapter-6', chapterNumber: 6, slug: 'chapter-6', published: true },
+  { id: 'chapter-7', chapterNumber: 7, slug: 'chapter-7', published: true },
+  { id: 'chapter-8', chapterNumber: 8, slug: 'chapter-8', published: true },
+  { id: 'chapter-9', chapterNumber: 9, slug: 'chapter-9', published: true },
+  { id: 'chapter-10', chapterNumber: 10, slug: 'chapter-10', published: true },
+  { id: 'chapter-11', chapterNumber: 11, slug: 'chapter-11', published: true },
+  { id: 'chapter-12', chapterNumber: 12, slug: 'chapter-12', published: true }
+];
+
+export interface ChapterData {
+  id: string;
+  title: string;
+  publishedDate: string;
+  readTime: string;
+  tags: string[];
+  description: string;
+  slug: string;
+  status: string;
+  chapterNumber: number;
+  content?: string;
+}
+
+export const chapterService = {
+  async loadAllChapters(): Promise<ChapterData[]> {
+    const chapters: ChapterData[] = [];
+    
+    for (const config of CHAPTER_CONFIG) {
+      try {
+        const [content, metadata] = await Promise.all([
+          contentService.loadChapterContent(config.id),
+          contentService.loadChapterMetadata(config.id)
+        ]);
+
+        if (metadata && (metadata.status === 'published' || metadata.status === 'draft')) {
+          const readTime = calculateReadTime(content);
+          chapters.push({
+            id: metadata.id,
+            title: metadata.title,
+            publishedDate: this.formatPublishDate(metadata.publishedDate),
+            readTime,
+            tags: metadata.tags,
+            description: metadata.description,
+            slug: metadata.slug || config.slug,
+            status: metadata.status,
+            chapterNumber: config.chapterNumber,
+            content: content
+          });
+        }
+      } catch (error) {
+        console.warn(`Failed to load chapter ${config.id}:`, error);
+      }
+    }
+
+    return chapters.sort((a, b) => a.chapterNumber - b.chapterNumber);
+  },
+
+  formatPublishDate(dateString: string): string {
+    const date = new Date(dateString + 'T12:00:00');
+    return date.toLocaleDateString('en-US', { 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    });
+  },
+
+  getPublishedChapters(): ChapterConfig[] {
+    return CHAPTER_CONFIG.filter(chapter => chapter.published);
+  },
+
+  getTotalChapters(): number {
+    return CHAPTER_CONFIG.length;
+  }
+};
