@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -7,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import NightVisionToggle from '@/components/NightVisionToggle';
 import { CheckCircle, Circle, ExternalLink } from 'lucide-react';
+import { getCategoryLink } from '@/utils/anchorUtils';
 
 interface ChecklistItem {
   id: string;
@@ -259,114 +259,26 @@ const InteractiveChecklist = () => {
                           <CardHeader>
                             <CardTitle className="heading-md">{categoryName}</CardTitle>
                             
-                            {categoryName === 'Mission Clarity' && (
-                              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                                <span>Learn more:</span>
-                                <a 
-                                  href="/field-notes/chapter-1" 
-                                  className="text-army dark:text-sunburst hover:underline flex items-center gap-1"
-                                >
-                                  Chapter 1: Mission Before Metrics, Section 1: The Mission Is the Magnet
-                                  <ExternalLink className="h-3 w-3" />
-                                </a>
-                              </div>
-                            )}
-                            {categoryName === 'Metric Awareness (Not Obsession)' && (
-                              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                                <span>Learn more:</span>
-                                <a 
-                                  href="/field-notes/chapter-1" 
-                                  className="text-army dark:text-sunburst hover:underline flex items-center gap-1"
-                                >
-                                  Chapter 1: Mission Before Metrics, Section 3: Repetition with Intention
-                                  <ExternalLink className="h-3 w-3" />
-                                </a>
-                              </div>
-                            )}
-                            {categoryName === 'Drift Detection' && (
-                              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                                <span>Learn more:</span>
-                                <a 
-                                  href="/field-notes/chapter-1" 
-                                  className="text-army dark:text-sunburst hover:underline flex items-center gap-1"
-                                >
-                                  Chapter 1: Mission Before Metrics, Section 2: The Drift
-                                  <ExternalLink className="h-3 w-3" />
-                                </a>
-                              </div>
-                            )}
-                            {categoryName === 'Ritual Reinforcement' && (
-                              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                                <span>Learn more:</span>
-                                <a 
-                                  href="/field-notes/chapter-3" 
-                                  className="text-army dark:text-sunburst hover:underline flex items-center gap-1"
-                                >
-                                  Chapter 3: Rituals Over Rules, Sections 1–3
-                                  <ExternalLink className="h-3 w-3" />
-                                </a>
-                              </div>
-                            )}
-                            {categoryName === 'Feedback Loops' && (
-                              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                                <span>Learn more:</span>
-                                <a 
-                                  href="/field-notes/chapter-4" 
-                                  className="text-army dark:text-sunburst hover:underline flex items-center gap-1"
-                                >
-                                  Chapter 4: Feedback Is a Superpower, Section 1: Cues, Not Critiques
-                                  <ExternalLink className="h-3 w-3" />
-                                </a>
-                              </div>
-                            )}
-                            {categoryName === 'Decision Alignment' && (
-                              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                                <span>Learn more:</span>
-                                <a 
-                                  href="/field-notes/chapter-8" 
-                                  className="text-army dark:text-sunburst hover:underline flex items-center gap-1"
-                                >
-                                  Chapter 8: Decisions Are Made Under Load, Section 2: Clarity Beats Certainty
-                                  <ExternalLink className="h-3 w-3" />
-                                </a>
-                              </div>
-                            )}
-                            {categoryName === 'System Check Under Stress' && (
-                              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                                <span>Learn more:</span>
-                                <a 
-                                  href="/field-notes/chapter-8" 
-                                  className="text-army dark:text-sunburst hover:underline flex items-center gap-1"
-                                >
-                                  Chapter 8: Decisions Are Made Under Load, Section 1: Stress Tests the System
-                                  <ExternalLink className="h-3 w-3" />
-                                </a>
-                              </div>
-                            )}
-                            {categoryName === 'Recovery Rhythm Review' && (
-                              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                                <span>Learn more:</span>
-                                <a 
-                                  href="/field-notes/chapter-6" 
-                                  className="text-army dark:text-sunburst hover:underline flex items-center gap-1"
-                                >
-                                  Chapter 6: The Mission Demands Recovery, Sections 1–3
-                                  <ExternalLink className="h-3 w-3" />
-                                </a>
-                              </div>
-                            )}
-                            {categoryName === 'Shared PR Reflection' && (
-                              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                                <span>Learn more:</span>
-                                <a 
-                                  href="/field-notes/chapter-10" 
-                                  className="text-army dark:text-sunburst hover:underline flex items-center gap-1"
-                                >
-                                  Chapter 10: The Team Is the Tool, Section 2: Trust is a Shared PR
-                                  <ExternalLink className="h-3 w-3" />
-                                </a>
-                              </div>
-                            )}
+                            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                              <span>Learn more:</span>
+                              <a 
+                                href={getCategoryLink(categoryName)}
+                                className="text-army dark:text-sunburst hover:underline flex items-center gap-1"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                {categoryName === 'Mission Clarity' && 'Chapter 1: Mission Before Metrics, Section 1: The Mission Is the Magnet'}
+                                {categoryName === 'Metric Awareness (Not Obsession)' && 'Chapter 1: Mission Before Metrics, Section 3: Repetition with Intention'}
+                                {categoryName === 'Drift Detection' && 'Chapter 1: Mission Before Metrics, Section 2: The Drift'}
+                                {categoryName === 'Ritual Reinforcement' && 'Chapter 3: Rituals Over Rules, Sections 1–3'}
+                                {categoryName === 'Feedback Loops' && 'Chapter 4: Feedback Is a Superpower, Section 1: Cues, Not Critiques'}
+                                {categoryName === 'Decision Alignment' && 'Chapter 8: Decisions Are Made Under Load, Section 2: Clarity Beats Certainty'}
+                                {categoryName === 'System Check Under Stress' && 'Chapter 8: Decisions Are Made Under Load, Section 1: Stress Tests the System'}
+                                {categoryName === 'Recovery Rhythm Review' && 'Chapter 6: The Mission Demands Recovery, Sections 1–3'}
+                                {categoryName === 'Shared PR Reflection' && 'Chapter 10: The Team Is the Tool, Section 2: Trust is a Shared PR'}
+                                <ExternalLink className="h-3 w-3" />
+                              </a>
+                            </div>
                           </CardHeader>
                           <CardContent className="space-y-4">
                             {categoryItems.map((item) => {

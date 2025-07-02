@@ -1,12 +1,9 @@
-
 import React, { useState, useRef, useEffect } from 'react';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Eye, Edit3, Save, Heading, List, Quote, Bold, Type, Table as TableIcon, Download, Upload, FileText } from 'lucide-react';
 import { contentService } from '@/services/contentService';
+import MarkdownRenderer from './MarkdownRenderer';
 
 interface ContentEditorProps {
   initialContent?: string;
@@ -38,6 +35,24 @@ const ContentEditor = ({ initialContent = '', chapterId, onSave, onContentChange
       textareaRef.current.focus();
     }
   }, [isEditing]);
+
+  // Scroll to anchor on page load if present in URL
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash) {
+      setTimeout(() => {
+        const element = document.getElementById(hash.slice(1));
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+          // Add temporary highlight effect
+          element.style.backgroundColor = 'rgba(255, 235, 59, 0.3)';
+          setTimeout(() => {
+            element.style.backgroundColor = '';
+          }, 2000);
+        }
+      }, 100);
+    }
+  }, [content]);
 
   const handleContentUpdate = (newContent: string) => {
     setContent(newContent);
@@ -164,74 +179,12 @@ const ContentEditor = ({ initialContent = '', chapterId, onSave, onContentChange
     console.log('Preview state will be:', !isPreview);
   };
 
-  const markdownComponents = {
-    h1: ({node, ...props}: any) => <h1 className="text-4xl font-bold font-display mb-6 mt-8 text-foreground" {...props} />,
-    h2: ({node, ...props}: any) => <h2 className="text-3xl font-semibold font-display mb-4 mt-6 text-foreground" {...props} />,
-    h3: ({node, ...props}: any) => <h3 className="text-2xl font-medium font-display mb-3 mt-5 text-foreground" {...props} />,
-    p: ({node, ...props}: any) => <p className="text-base mb-4 leading-relaxed text-foreground" {...props} />,
-    ul: ({node, ...props}: any) => <ul className="list-disc list-outside mb-4 space-y-2 text-foreground ml-6" {...props} />,
-    ol: ({node, ...props}: any) => <ol className="list-decimal list-outside mb-4 space-y-2 text-foreground ml-6" {...props} />,
-    li: ({node, ...props}: any) => <li className="text-base text-foreground" {...props} />,
-    blockquote: ({node, ...props}: any) => <blockquote className="border-l-4 border-sunburst pl-4 py-2 my-6 italic text-lg bg-gray-50 dark:bg-gray-800 rounded-r text-foreground" {...props} />,
-    strong: ({node, ...props}: any) => <strong className="font-bold text-army dark:text-sunburst" {...props} />,
-    em: ({node, ...props}: any) => <em className="italic" {...props} />,
-    table: ({node, ...props}: any) => {
-      console.log('Rendering table:', props);
-      return (
-        <div className="my-6 overflow-x-auto">
-          <Table className="w-full border border-gray-200 dark:border-gray-700">
-            {props.children}
-          </Table>
-        </div>
-      );
-    },
-    thead: ({node, ...props}: any) => {
-      console.log('Rendering thead:', props);
-      return <TableHeader>{props.children}</TableHeader>;
-    },
-    tbody: ({node, ...props}: any) => {
-      console.log('Rendering tbody:', props);
-      return <TableBody>{props.children}</TableBody>;
-    },
-    tr: ({node, ...props}: any) => {
-      console.log('Rendering tr:', props);
-      return <TableRow>{props.children}</TableRow>;
-    },
-    th: ({node, ...props}: any) => {
-      console.log('Rendering th:', props.children);
-      return (
-        <TableHead className="font-semibold text-left">
-          {props.children}
-        </TableHead>
-      );
-    },
-    td: ({node, ...props}: any) => {
-      console.log('Rendering td:', props.children);
-      return (
-        <TableCell>
-          {props.children}
-        </TableCell>
-      );
-    },
-  };
-
-  const renderMarkdown = (markdownContent: string) => {
-    console.log('Rendering markdown content:', markdownContent.slice(0, 200) + '...');
-    return (
-      <ReactMarkdown 
-        components={markdownComponents}
-        remarkPlugins={[remarkGfm]}
-      >
-        {markdownContent}
-      </ReactMarkdown>
-    );
-  };
-
   return (
     <div className="w-full">
       {/* Editor Controls - Show in development environments */}
       {isDevelopment && (
         <div className="flex flex-col gap-4 mb-4 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600">
+          {/* ... keep existing code (controls section) */}
           <div className="flex flex-wrap gap-2">
             <Button
               variant="outline"
@@ -343,9 +296,9 @@ const ContentEditor = ({ initialContent = '', chapterId, onSave, onContentChange
             </p>
           </div>
         ) : (
-          <div className="prose prose-lg prose-slate dark:prose-invert max-w-none prose-headings:font-display prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-p:text-base prose-blockquote:border-l-4 prose-blockquote:border-sunburst prose-blockquote:italic prose-strong:text-army dark:prose-strong:text-sunburst">
+          <div>
             {content ? (
-              renderMarkdown(content)
+              <MarkdownRenderer content={content} />
             ) : (
               <div className="text-center py-12 text-muted-foreground">
                 {isDevelopment ? (
@@ -365,13 +318,11 @@ const ContentEditor = ({ initialContent = '', chapterId, onSave, onContentChange
           <h3 className="font-semibold text-blue-900 dark:text-blue-100 mb-2">
             Published Preview (How visitors will see it):
           </h3>
-          <div className="prose prose-lg prose-slate dark:prose-invert max-w-none prose-headings:font-display prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-p:text-base prose-blockquote:border-l-4 prose-blockquote:border-sunburst prose-blockquote:italic prose-strong:text-army dark:prose-strong:text-sunburst">
-            {content ? (
-              renderMarkdown(content)
-            ) : (
-              <p className="text-muted-foreground">No content to preview.</p>
-            )}
-          </div>
+          {content ? (
+            <MarkdownRenderer content={content} />
+          ) : (
+            <p className="text-muted-foreground">No content to preview.</p>
+          )}
         </div>
       )}
     </div>
