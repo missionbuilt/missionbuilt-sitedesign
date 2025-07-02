@@ -1,3 +1,4 @@
+
 import { Link } from 'react-router-dom';
 import Logo from '@/components/Logo';
 import { Heart, ExternalLink } from "lucide-react";
@@ -11,6 +12,14 @@ const Footer = () => {
   
   // Function to handle scrolling to top when links are clicked
   const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+  
+  // Function to handle scrolling to top when navigating to field notes
+  const scrollToTopFieldNotes = () => {
     window.scrollTo({
       top: 0,
       behavior: 'smooth'
@@ -78,6 +87,11 @@ const Footer = () => {
                 <li>
                   <Link to="/playbook" onClick={scrollToTop} className="text-slate/80 dark:text-slate-300 hover:text-army dark:hover:text-army transition-colors">
                     Playbook
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/field-notes" onClick={scrollToTopFieldNotes} className="text-slate/80 dark:text-slate-300 hover:text-army dark:hover:text-army transition-colors">
+                    Field Notes
                   </Link>
                 </li>
                 <li>
