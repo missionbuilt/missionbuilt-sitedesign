@@ -113,15 +113,28 @@ const InteractiveChecklist = () => {
     };
   }, [checkedItems]);
 
-  const getScoreLevel = (percentage: number) => {
-    if (percentage >= 90) return { label: 'Elite', color: 'bg-army text-white', ring: 'ring-army/20' };
-    if (percentage >= 75) return { label: 'Strong', color: 'bg-steel text-white', ring: 'ring-steel/20' };
-    if (percentage >= 60) return { label: 'Solid', color: 'bg-sunburst text-slate', ring: 'ring-sunburst/20' };
-    if (percentage >= 40) return { label: 'Building', color: 'bg-secondary text-secondary-foreground', ring: 'ring-secondary/20' };
-    return { label: 'Starting', color: 'bg-muted text-muted-foreground', ring: 'ring-muted/20' };
+  const getScoreLevel = (score: number) => {
+    if (score >= 46) return { 
+      label: 'Mission Strong', 
+      description: 'you\'re deeply aligned; keep reinforcing your purpose, rituals, and team dynamics.',
+      color: 'bg-army text-white', 
+      ring: 'ring-army/20' 
+    };
+    if (score >= 30) return { 
+      label: 'Mission Drifting', 
+      description: 'you\'re partially aligned, but risk losing focus; revisit mission clarity, feedback systems, or recovery plans.',
+      color: 'bg-sunburst text-slate', 
+      ring: 'ring-sunburst/20' 
+    };
+    return { 
+      label: 'Mission Lost', 
+      description: 'serious misalignment; pause, reassess, and realign your actions with your mission before proceeding.',
+      color: 'bg-destructive text-destructive-foreground', 
+      ring: 'ring-destructive/20' 
+    };
   };
 
-  const scoreLevel = getScoreLevel(completionPercentage);
+  const scoreLevel = getScoreLevel(totalScore);
 
   // Group items by category for organized display
   const groupedItems = checklistItems.reduce((acc, item) => {
@@ -229,9 +242,12 @@ const InteractiveChecklist = () => {
                   </div>
                 </div>
                 <Progress value={completionPercentage} className="mb-4 h-4 bg-muted" />
-                <Badge className={`${scoreLevel.color} text-lg px-6 py-3 font-semibold shadow-lg`}>
-                  {scoreLevel.label} - {completionPercentage}%
+                <Badge className={`${scoreLevel.color} text-lg px-6 py-3 font-semibold shadow-lg mb-4`}>
+                  {scoreLevel.label}
                 </Badge>
+                <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
+                  {scoreLevel.description}
+                </p>
               </CardContent>
             </Card>
 
