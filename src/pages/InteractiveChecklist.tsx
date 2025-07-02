@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Button } from '@/components/ui/button';
@@ -57,7 +56,8 @@ const checklistItems: ChecklistItem[] = [
   
   // Sustainability & Culture - Shared PR Reflection (2 points each)
   { id: '21', text: 'Have I recognized and celebrated recent team or personal milestones as shared wins, reinforcing that we succeed together, not alone?', points: 2, category: 'Shared PR Reflection', group: 'Sustainability & Culture' },
-  { id: '22', text: 'Are our current incentives and recognition systems encouraging shared ownership rather than individual heroics?', points: 2, category: 'Shared PR Reflection', group: 'Sustainability & Culture' }
+  { id: '22', text: 'Are our current incentives and recognition systems encouraging shared ownership rather than individual heroics?', points: 2, category: 'Shared PR Reflection', group: 'Sustainability & Culture' },
+  { id: '23', text: 'Is the team aligned on expectations, ownership, and success criteria for this effort, minimizing surprises or misinterpretations?', points: 2, category: 'Shared PR Reflection', group: 'Sustainability & Culture' }
 ];
 
 const InteractiveChecklist = () => {
@@ -144,13 +144,13 @@ const InteractiveChecklist = () => {
       };
     }
     
-    if (score >= 52) return { 
+    if (score >= 54) return { 
       label: 'Mission Strong', 
       description: 'you\'re deeply aligned; keep reinforcing your purpose, rituals, and team dynamics.',
       color: 'bg-army text-white', 
       ring: 'ring-army/20' 
     };
-    if (score >= 35) return { 
+    if (score >= 36) return { 
       label: 'Mission Drifting', 
       description: 'you\'re partially aligned, but risk losing focus; revisit mission clarity, feedback systems, or recovery plans.',
       color: 'bg-sunburst text-slate', 
