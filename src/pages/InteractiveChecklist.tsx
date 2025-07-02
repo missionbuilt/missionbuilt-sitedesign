@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -58,6 +58,7 @@ const checklistItems: ChecklistItem[] = [
 
 const InteractiveChecklist = () => {
   const [checkedItems, setCheckedItems] = useState<Set<string>>(new Set());
+  const [showStickyHeader, setShowStickyHeader] = useState(false);
 
   const handleItemCheck = (itemId: string, checked: boolean) => {
     const newCheckedItems = new Set(checkedItems);
@@ -72,6 +73,21 @@ const InteractiveChecklist = () => {
   const handleResetAll = () => {
     setCheckedItems(new Set());
   };
+
+  // Scroll detection for sticky header
+  useEffect(() => {
+    const handleScroll = () => {
+      const scoreDashboard = document.getElementById('score-dashboard');
+      if (scoreDashboard) {
+        const rect = scoreDashboard.getBoundingClientRect();
+        // Show sticky header when the score dashboard is mostly scrolled out of view
+        setShowStickyHeader(rect.bottom < 100);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const { totalScore, maxScore, completionPercentage, categoryScores, groupScores } = useMemo(() => {
     const total = checklistItems
@@ -194,6 +210,39 @@ const InteractiveChecklist = () => {
       </Helmet>
 
       <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30">
+        {/* Sticky Header */}
+        <div className={`fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b shadow-sm transition-all duration-300 ${
+          showStickyHeader ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
+        }`}>
+          <div className="container-custom py-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2">
+                  <Target className="h-5 w-5 text-army dark:text-sunburst" />
+                  <span className="font-semibold text-foreground">Mission Alignment</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="text-2xl font-bold text-army dark:text-sunburst">
+                    {totalScore}
+                  </div>
+                  <div className="text-sm text-muted-foreground">
+                    / {maxScore}
+                  </div>
+                  <Badge className={`${scoreLevel.color} text-sm px-3 py-1 font-semibold`}>
+                    {scoreLevel.label}
+                  </Badge>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <Progress value={completionPercentage} className="w-32 h-2" />
+                <span className="text-sm font-medium text-muted-foreground min-w-[3ch]">
+                  {completionPercentage}%
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className="container-custom py-8">
           {/* Header without Logo */}
           <div className="flex justify-between items-start mb-8">
@@ -219,7 +268,7 @@ const InteractiveChecklist = () => {
           </div>
 
           {/* Score Dashboard - Enhanced with Colors */}
-          <div className="mb-8">
+          <div id="score-dashboard" className="mb-8">
             {/* Total Score - Large and Prominent with Gradient */}
             <Card className={`mb-4 border-2 ${scoreLevel.ring} ring-4 bg-gradient-to-br from-card to-card/50 shadow-xl`}>
               <CardHeader className="pb-4 text-center">
