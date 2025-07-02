@@ -25,39 +25,38 @@ const checklistItems: ChecklistItem[] = [
   { id: '5', text: 'Are these metrics supporting the mission, or starting to dictate behavior?', points: 7, category: 'Metric Awareness' },
   
   // Drift Detection
-  { id: '6', text: 'Have you identified early warning signs of mission drift?', points: 9, category: 'Drift Detection' },
-  { id: '7', text: 'Do you regularly audit your time allocation against priorities?', points: 7, category: 'Drift Detection' },
-  { id: '8', text: 'Can you spot when you\'re saying yes to the wrong things?', points: 8, category: 'Drift Detection' },
+  { id: '6', text: 'Am I or my team currently pursuing work or reps that look busy but don\'t move us closer to the mission?', points: 9, category: 'Drift Detection' },
+  { id: '7', text: 'Have I noticed recent moments of drifting into comfort zones or distractions?', points: 7, category: 'Drift Detection' },
   
   // Ritual Reinforcement
-  { id: '9', text: 'Do you have daily rituals that reinforce your mission?', points: 6, category: 'Ritual Reinforcement' },
-  { id: '10', text: 'Have you established weekly review sessions?', points: 5, category: 'Ritual Reinforcement' },
-  { id: '11', text: 'Do your rituals adapt when circumstances change?', points: 7, category: 'Ritual Reinforcement' },
+  { id: '8', text: 'Do you have daily rituals that reinforce your mission?', points: 6, category: 'Ritual Reinforcement' },
+  { id: '9', text: 'Have you established weekly review sessions?', points: 5, category: 'Ritual Reinforcement' },
+  { id: '10', text: 'Do your rituals adapt when circumstances change?', points: 7, category: 'Ritual Reinforcement' },
   
   // Feedback Loops
-  { id: '12', text: 'Do you have systems to gather honest feedback regularly?', points: 8, category: 'Feedback Loops' },
-  { id: '13', text: 'Can you quickly identify what\'s working vs what isn\'t?', points: 7, category: 'Feedback Loops' },
-  { id: '14', text: 'Do you act on feedback within 48-72 hours?', points: 9, category: 'Feedback Loops' },
+  { id: '11', text: 'Do you have systems to gather honest feedback regularly?', points: 8, category: 'Feedback Loops' },
+  { id: '12', text: 'Can you quickly identify what\'s working vs what isn\'t?', points: 7, category: 'Feedback Loops' },
+  { id: '13', text: 'Do you act on feedback within 48-72 hours?', points: 9, category: 'Feedback Loops' },
   
   // Decision Alignment
-  { id: '15', text: 'Do major decisions clearly support your mission?', points: 10, category: 'Decision Alignment' },
-  { id: '16', text: 'Can you explain how daily choices connect to larger goals?', points: 6, category: 'Decision Alignment' },
-  { id: '17', text: 'Do you have criteria for saying no to opportunities?', points: 8, category: 'Decision Alignment' },
+  { id: '14', text: 'Do major decisions clearly support your mission?', points: 10, category: 'Decision Alignment' },
+  { id: '15', text: 'Can you explain how daily choices connect to larger goals?', points: 6, category: 'Decision Alignment' },
+  { id: '16', text: 'Do you have criteria for saying no to opportunities?', points: 8, category: 'Decision Alignment' },
   
   // System Check Under Stress
-  { id: '18', text: 'Do your systems hold up when under pressure?', points: 9, category: 'System Check Under Stress' },
-  { id: '19', text: 'Can you maintain mission focus during crisis?', points: 10, category: 'System Check Under Stress' },
-  { id: '20', text: 'Do you have backup plans for key mission components?', points: 7, category: 'System Check Under Stress' },
+  { id: '17', text: 'Do your systems hold up when under pressure?', points: 9, category: 'System Check Under Stress' },
+  { id: '18', text: 'Can you maintain mission focus during crisis?', points: 10, category: 'System Check Under Stress' },
+  { id: '19', text: 'Do you have backup plans for key mission components?', points: 7, category: 'System Check Under Stress' },
   
   // Recovery Rhythm Review
-  { id: '21', text: 'Do you have sustainable recovery practices built in?', points: 8, category: 'Recovery Rhythm Review' },
-  { id: '22', text: 'Can you maintain performance without burnout?', points: 9, category: 'Recovery Rhythm Review' },
-  { id: '23', text: 'Do you regularly assess and adjust your pace?', points: 6, category: 'Recovery Rhythm Review' },
+  { id: '20', text: 'Do you have sustainable recovery practices built in?', points: 8, category: 'Recovery Rhythm Review' },
+  { id: '21', text: 'Can you maintain performance without burnout?', points: 9, category: 'Recovery Rhythm Review' },
+  { id: '22', text: 'Do you regularly assess and adjust your pace?', points: 6, category: 'Recovery Rhythm Review' },
   
   // Shared PR Reflection
-  { id: '24', text: 'Do you share progress reports with accountability partners?', points: 7, category: 'Shared PR Reflection' },
-  { id: '25', text: 'Can you articulate lessons learned from recent wins/losses?', points: 8, category: 'Shared PR Reflection' },
-  { id: '26', text: 'Do you celebrate mission-aligned victories with your team?', points: 5, category: 'Shared PR Reflection' }
+  { id: '23', text: 'Do you share progress reports with accountability partners?', points: 7, category: 'Shared PR Reflection' },
+  { id: '24', text: 'Can you articulate lessons learned from recent wins/losses?', points: 8, category: 'Shared PR Reflection' },
+  { id: '25', text: 'Do you celebrate mission-aligned victories with your team?', points: 5, category: 'Shared PR Reflection' }
 ];
 
 const InteractiveChecklist = () => {
@@ -244,6 +243,18 @@ const InteractiveChecklist = () => {
                           className="text-army dark:text-sunburst hover:underline flex items-center gap-1"
                         >
                           Chapter 1: Mission Before Metrics, Section 3: Repetition with Intention
+                          <ExternalLink className="h-3 w-3" />
+                        </a>
+                      </div>
+                    )}
+                    {categoryName === 'Drift Detection' && (
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <span>Learn more:</span>
+                        <a 
+                          href="/field-notes/chapter-1" 
+                          className="text-army dark:text-sunburst hover:underline flex items-center gap-1"
+                        >
+                          Chapter 1: Mission Before Metrics, Section 2: The Drift
                           <ExternalLink className="h-3 w-3" />
                         </a>
                       </div>
