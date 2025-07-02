@@ -47,9 +47,8 @@ const checklistItems: ChecklistItem[] = [
   { id: '18', text: 'Have we proactively rehearsed potential crises or failure points so we\'re prepared, not reactive?', points: 10, category: 'System Check Under Stress' },
   
   // Recovery Rhythm Review
-  { id: '20', text: 'Do you have sustainable recovery practices built in?', points: 8, category: 'Recovery Rhythm Review' },
-  { id: '21', text: 'Can you maintain performance without burnout?', points: 9, category: 'Recovery Rhythm Review' },
-  { id: '22', text: 'Do you regularly assess and adjust your pace?', points: 6, category: 'Recovery Rhythm Review' },
+  { id: '20', text: 'Have I built intentional recovery time into my plan — whether that means deload weeks, cooldown cycles, or strategy days — to prevent burnout and maintain long-term alignment with the mission?', points: 8, category: 'Recovery Rhythm Review' },
+  { id: '21', text: 'Do I recognize recovery as a requirement, not a reward?', points: 9, category: 'Recovery Rhythm Review' },
   
   // Shared PR Reflection
   { id: '23', text: 'Do you share progress reports with accountability partners?', points: 7, category: 'Shared PR Reflection' },
@@ -301,6 +300,18 @@ const InteractiveChecklist = () => {
                           className="text-army dark:text-sunburst hover:underline flex items-center gap-1"
                         >
                           Chapter 8: Decisions Are Made Under Load, Section 1: Stress Tests the System
+                          <ExternalLink className="h-3 w-3" />
+                        </a>
+                      </div>
+                    )}
+                    {categoryName === 'Recovery Rhythm Review' && (
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <span>Learn more:</span>
+                        <a 
+                          href="/field-notes/chapter-6" 
+                          className="text-army dark:text-sunburst hover:underline flex items-center gap-1"
+                        >
+                          Chapter 6: The Mission Demands Recovery, Sections 1–3
                           <ExternalLink className="h-3 w-3" />
                         </a>
                       </div>
