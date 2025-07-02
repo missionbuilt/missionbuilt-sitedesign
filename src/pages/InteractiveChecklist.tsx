@@ -1,5 +1,3 @@
-
-
 import React, { useState, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -51,9 +49,8 @@ const checklistItems: ChecklistItem[] = [
   { id: '21', text: 'Do I recognize recovery as a requirement, not a reward?', points: 9, category: 'Recovery Rhythm Review' },
   
   // Shared PR Reflection
-  { id: '23', text: 'Do you share progress reports with accountability partners?', points: 7, category: 'Shared PR Reflection' },
-  { id: '24', text: 'Can you articulate lessons learned from recent wins/losses?', points: 8, category: 'Shared PR Reflection' },
-  { id: '25', text: 'Do you celebrate mission-aligned victories with your team?', points: 5, category: 'Shared PR Reflection' }
+  { id: '23', text: 'Have I recognized and celebrated recent team or personal milestones as shared wins, reinforcing that we succeed together, not alone?', points: 7, category: 'Shared PR Reflection' },
+  { id: '24', text: 'Are our current incentives and recognition systems encouraging shared ownership rather than individual heroics?', points: 8, category: 'Shared PR Reflection' }
 ];
 
 const InteractiveChecklist = () => {
@@ -316,6 +313,18 @@ const InteractiveChecklist = () => {
                         </a>
                       </div>
                     )}
+                    {categoryName === 'Shared PR Reflection' && (
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <span>Learn more:</span>
+                        <a 
+                          href="/field-notes/chapter-10" 
+                          className="text-army dark:text-sunburst hover:underline flex items-center gap-1"
+                        >
+                          Chapter 10: The Team Is the Tool, Section 2: Trust is a Shared PR
+                          <ExternalLink className="h-3 w-3" />
+                        </a>
+                      </div>
+                    )}
                   </CardHeader>
                   <CardContent className="space-y-4">
                     {categoryItems.map((item) => {
@@ -395,4 +404,3 @@ const InteractiveChecklist = () => {
 };
 
 export default InteractiveChecklist;
-
