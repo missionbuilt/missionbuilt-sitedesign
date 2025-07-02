@@ -1,4 +1,5 @@
 
+
 import React, { useState, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -42,9 +43,8 @@ const checklistItems: ChecklistItem[] = [
   { id: '15', text: 'Can I trace a clear line from today\'s work to the bigger mission?', points: 8, category: 'Decision Alignment' },
   
   // System Check Under Stress
-  { id: '17', text: 'Do your systems hold up when under pressure?', points: 9, category: 'System Check Under Stress' },
-  { id: '18', text: 'Can you maintain mission focus during crisis?', points: 10, category: 'System Check Under Stress' },
-  { id: '19', text: 'Do you have backup plans for key mission components?', points: 7, category: 'System Check Under Stress' },
+  { id: '17', text: 'Have I validated that our systems (product, training plan, or team workflows) can withstand real-world stress and unexpected challenges?', points: 9, category: 'System Check Under Stress' },
+  { id: '18', text: 'Have we proactively rehearsed potential crises or failure points so we\'re prepared, not reactive?', points: 10, category: 'System Check Under Stress' },
   
   // Recovery Rhythm Review
   { id: '20', text: 'Do you have sustainable recovery practices built in?', points: 8, category: 'Recovery Rhythm Review' },
@@ -293,6 +293,18 @@ const InteractiveChecklist = () => {
                         </a>
                       </div>
                     )}
+                    {categoryName === 'System Check Under Stress' && (
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <span>Learn more:</span>
+                        <a 
+                          href="/field-notes/chapter-8" 
+                          className="text-army dark:text-sunburst hover:underline flex items-center gap-1"
+                        >
+                          Chapter 8: Decisions Are Made Under Load, Section 1: Stress Tests the System
+                          <ExternalLink className="h-3 w-3" />
+                        </a>
+                      </div>
+                    )}
                   </CardHeader>
                   <CardContent className="space-y-4">
                     {categoryItems.map((item) => {
@@ -372,3 +384,4 @@ const InteractiveChecklist = () => {
 };
 
 export default InteractiveChecklist;
+
