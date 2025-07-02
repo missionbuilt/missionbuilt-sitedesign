@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Button } from '@/components/ui/button';
@@ -208,7 +209,7 @@ const InteractiveChecklist = () => {
           {/* Header */}
           <div className="flex justify-between items-start mb-8">
             <div>
-              <h1 className="heading-lg mb-4 bg-gradient-to-r from-army via-steel to-sunburst bg-clip-text text-transparent">
+              <h1 className="heading-lg mb-4 bg-gradient-to-r from-army via-steel to-sunburst bg-clip-text text-transparent leading-tight pb-2">
                 Mission Alignment Checklist
               </h1>
               <p className="body text-muted-foreground max-w-2xl">
