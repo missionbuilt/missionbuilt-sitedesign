@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -18,42 +17,42 @@ interface ChecklistItem {
 }
 
 const checklistItems: ChecklistItem[] = [
-  // Mission Foundation - Mission Clarity (2 points each)
-  { id: '1', text: 'Have I clearly articulated the mission behind this effort?', points: 2, category: 'Mission Clarity', group: 'Mission Foundation' },
-  { id: '2', text: 'Can every team member (or I personally) explain why this matters without referring to metrics?', points: 2, category: 'Mission Clarity', group: 'Mission Foundation' },
-  { id: '3', text: 'Does this mission align with my/our long-term purpose?', points: 2, category: 'Mission Clarity', group: 'Mission Foundation' },
+  // Mission Foundation - Mission Clarity (4 points each)
+  { id: '1', text: 'Have I clearly articulated the mission behind this effort?', points: 4, category: 'Mission Clarity', group: 'Mission Foundation' },
+  { id: '2', text: 'Can every team member (or I personally) explain why this matters without referring to metrics?', points: 4, category: 'Mission Clarity', group: 'Mission Foundation' },
+  { id: '3', text: 'Does this mission align with my/our long-term purpose?', points: 4, category: 'Mission Clarity', group: 'Mission Foundation' },
   
-  // Mission Foundation - Metric Awareness (2 points each)
-  { id: '4', text: 'Do I know what metrics might reflect progress — but also recognize they\'re indicators, not the mission itself?', points: 2, category: 'Metric Awareness (Not Obsession)', group: 'Mission Foundation' },
-  { id: '5', text: 'Are these metrics supporting the mission, or are they starting to dictate behavior?', points: 2, category: 'Metric Awareness (Not Obsession)', group: 'Mission Foundation' },
+  // Mission Foundation - Metric Awareness (4 points each)
+  { id: '4', text: 'Do I know what metrics might reflect progress — but also recognize they\'re indicators, not the mission itself?', points: 4, category: 'Metric Awareness (Not Obsession)', group: 'Mission Foundation' },
+  { id: '5', text: 'Are these metrics supporting the mission, or are they starting to dictate behavior?', points: 4, category: 'Metric Awareness (Not Obsession)', group: 'Mission Foundation' },
   
-  // Mission Foundation - Drift Detection (2 points each)
-  { id: '6', text: 'Am I or my team currently pursuing work or reps that look busy but don\'t move us closer to the mission?', points: 2, category: 'Drift Detection', group: 'Mission Foundation' },
-  { id: '7', text: 'Have I noticed recent moments of drifting into comfort zones or distractions?', points: 2, category: 'Drift Detection', group: 'Mission Foundation' },
+  // Mission Foundation - Drift Detection (4 points each)
+  { id: '6', text: 'Am I or my team currently pursuing work or reps that look busy but don\'t move us closer to the mission?', points: 4, category: 'Drift Detection', group: 'Mission Foundation' },
+  { id: '7', text: 'Have I noticed recent moments of drifting into comfort zones or distractions?', points: 4, category: 'Drift Detection', group: 'Mission Foundation' },
   
-  // Execution & Adaptation - Ritual Reinforcement (1.5 points each)
-  { id: '8', text: 'Have I established or maintained meaningful rituals that keep me connected to the mission?', points: 1.5, category: 'Ritual Reinforcement', group: 'Execution & Adaptation' },
-  { id: '9', text: 'Are these rituals adaptable when conditions change, so they don\'t become rigid rules?', points: 1.5, category: 'Ritual Reinforcement', group: 'Execution & Adaptation' },
+  // Execution & Adaptation - Ritual Reinforcement (3 points each)
+  { id: '8', text: 'Have I established or maintained meaningful rituals that keep me connected to the mission?', points: 3, category: 'Ritual Reinforcement', group: 'Execution & Adaptation' },
+  { id: '9', text: 'Are these rituals adaptable when conditions change, so they don\'t become rigid rules?', points: 3, category: 'Ritual Reinforcement', group: 'Execution & Adaptation' },
   
-  // Execution & Adaptation - Feedback Loops (1.5 points each)
-  { id: '10', text: 'Am I seeking feedback that tells me if I\'m aligned with the mission, rather than just if I\'m hitting numbers?', points: 1.5, category: 'Feedback Loops', group: 'Execution & Adaptation' },
-  { id: '11', text: 'Do I have a system or trusted peers who can call out mission drift?', points: 1.5, category: 'Feedback Loops', group: 'Execution & Adaptation' },
+  // Execution & Adaptation - Feedback Loops (3 points each)
+  { id: '10', text: 'Am I seeking feedback that tells me if I\'m aligned with the mission, rather than just if I\'m hitting numbers?', points: 3, category: 'Feedback Loops', group: 'Execution & Adaptation' },
+  { id: '11', text: 'Do I have a system or trusted peers who can call out mission drift?', points: 3, category: 'Feedback Loops', group: 'Execution & Adaptation' },
   
-  // Execution & Adaptation - Decision Alignment (1.5 points each)
-  { id: '12', text: 'When making a key decision, am I asking: Does this move us/me closer to the mission or just satisfy a short-term metric?', points: 1.5, category: 'Decision Alignment', group: 'Execution & Adaptation' },
-  { id: '13', text: 'Can I trace a clear line from today\'s work to the bigger mission?', points: 1.5, category: 'Decision Alignment', group: 'Execution & Adaptation' },
+  // Execution & Adaptation - Decision Alignment (3 points each)
+  { id: '12', text: 'When making a key decision, am I asking: Does this move us/me closer to the mission or just satisfy a short-term metric?', points: 3, category: 'Decision Alignment', group: 'Execution & Adaptation' },
+  { id: '13', text: 'Can I trace a clear line from today\'s work to the bigger mission?', points: 3, category: 'Decision Alignment', group: 'Execution & Adaptation' },
   
-  // Sustainability & Culture - System Check Under Stress (1 point each)
-  { id: '14', text: 'Have I validated that our systems (product, training plan, or team workflows) can withstand real-world stress and unexpected challenges?', points: 1, category: 'System Check Under Stress', group: 'Sustainability & Culture' },
-  { id: '15', text: 'Have we proactively rehearsed potential crises or failure points so we\'re prepared, not reactive?', points: 1, category: 'System Check Under Stress', group: 'Sustainability & Culture' },
+  // Sustainability & Culture - System Check Under Stress (2 points each)
+  { id: '14', text: 'Have I validated that our systems (product, training plan, or team workflows) can withstand real-world stress and unexpected challenges?', points: 2, category: 'System Check Under Stress', group: 'Sustainability & Culture' },
+  { id: '15', text: 'Have we proactively rehearsed potential crises or failure points so we\'re prepared, not reactive?', points: 2, category: 'System Check Under Stress', group: 'Sustainability & Culture' },
   
-  // Sustainability & Culture - Recovery Rhythm Review (1 point each)
-  { id: '16', text: 'Have I built intentional recovery time into my plan — whether that means deload weeks, cooldown cycles, or strategy days — to prevent burnout and maintain long-term alignment with the mission?', points: 1, category: 'Recovery Rhythm Review', group: 'Sustainability & Culture' },
-  { id: '17', text: 'Do I recognize recovery as a requirement, not a reward?', points: 1, category: 'Recovery Rhythm Review', group: 'Sustainability & Culture' },
+  // Sustainability & Culture - Recovery Rhythm Review (2 points each)
+  { id: '16', text: 'Have I built intentional recovery time into my plan — whether that means deload weeks, cooldown cycles, or strategy days — to prevent burnout and maintain long-term alignment with the mission?', points: 2, category: 'Recovery Rhythm Review', group: 'Sustainability & Culture' },
+  { id: '17', text: 'Do I recognize recovery as a requirement, not a reward?', points: 2, category: 'Recovery Rhythm Review', group: 'Sustainability & Culture' },
   
-  // Sustainability & Culture - Shared PR Reflection (1 point each)
-  { id: '18', text: 'Have I recognized and celebrated recent team or personal milestones as shared wins, reinforcing that we succeed together, not alone?', points: 1, category: 'Shared PR Reflection', group: 'Sustainability & Culture' },
-  { id: '19', text: 'Are our current incentives and recognition systems encouraging shared ownership rather than individual heroics?', points: 1, category: 'Shared PR Reflection', group: 'Sustainability & Culture' }
+  // Sustainability & Culture - Shared PR Reflection (2 points each)
+  { id: '18', text: 'Have I recognized and celebrated recent team or personal milestones as shared wins, reinforcing that we succeed together, not alone?', points: 2, category: 'Shared PR Reflection', group: 'Sustainability & Culture' },
+  { id: '19', text: 'Are our current incentives and recognition systems encouraging shared ownership rather than individual heroics?', points: 2, category: 'Shared PR Reflection', group: 'Sustainability & Culture' }
 ];
 
 const InteractiveChecklist = () => {
@@ -146,11 +145,11 @@ const InteractiveChecklist = () => {
   const getGroupDescription = (group: string) => {
     switch (group) {
       case 'Mission Foundation':
-        return 'Mission clarity, metric awareness, and drift detection (2 points per question)';
+        return 'Mission clarity, metric awareness, and drift detection (4 points per question)';
       case 'Execution & Adaptation':
-        return 'Rituals, feedback loops, and decision-making alignment (1.5 points per question)';
+        return 'Rituals, feedback loops, and decision-making alignment (3 points per question)';
       case 'Sustainability & Culture':
-        return 'System resilience, recovery rhythms, and shared success (1 point per question)';
+        return 'System resilience, recovery rhythms, and shared success (2 points per question)';
       default:
         return '';
     }
@@ -195,21 +194,21 @@ const InteractiveChecklist = () => {
             </Card>
 
             {/* Group Scores - Very Compact */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
               {groupOrder.map((groupName) => {
                 const groupScore = groupScores[groupName];
                 const percentage = groupScore ? Math.round((groupScore.total / groupScore.max) * 100) : 0;
                 
                 return (
-                  <div key={groupName} className="bg-muted/30 rounded-lg p-3 border border-muted/50">
-                    <div className="flex justify-between items-center mb-2">
+                  <div key={groupName} className="bg-muted/20 rounded-md p-2 border border-muted/30">
+                    <div className="flex justify-between items-center mb-1">
                       <span className="text-xs font-medium text-muted-foreground">{groupName}</span>
-                      <span className="text-sm font-semibold text-army dark:text-sunburst">
+                      <span className="text-xs font-semibold text-army dark:text-sunburst">
                         {groupScore?.total || 0}/{groupScore?.max || 0}
                       </span>
                     </div>
-                    <Progress value={percentage} className="h-1.5" />
-                    <div className="text-xs text-muted-foreground mt-1 text-right">
+                    <Progress value={percentage} className="h-1" />
+                    <div className="text-xs text-muted-foreground mt-0.5 text-right">
                       {percentage}%
                     </div>
                   </div>
