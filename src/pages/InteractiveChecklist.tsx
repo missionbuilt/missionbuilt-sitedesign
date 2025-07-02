@@ -208,38 +208,25 @@ const InteractiveChecklist = () => {
             })}
           </div>
 
-          {/* Group Progress Overview */}
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle className="heading-md">Group Progress Overview</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-6">
-                {groupOrder.map((groupName) => {
-                  const groupScore = groupScores[groupName];
-                  const percentage = groupScore ? Math.round((groupScore.total / groupScore.max) * 100) : 0;
-                  
-                  return (
-                    <div key={groupName} className="space-y-2">
-                      <div className="flex justify-between items-center">
-                        <div>
-                          <span className="font-semibold">{groupName}</span>
-                          <p className="text-sm text-muted-foreground">{getGroupDescription(groupName)}</p>
-                        </div>
-                        <span className="text-sm font-medium">
-                          {groupScore?.total || 0}/{groupScore?.max || 0} pts
-                        </span>
-                      </div>
-                      <Progress value={percentage} className="h-3" />
-                      <div className="text-right text-sm text-muted-foreground">
-                        {percentage}%
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </CardContent>
-          </Card>
+          {/* Simplified Progress Overview */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            {groupOrder.map((groupName) => {
+              const groupScore = groupScores[groupName];
+              const percentage = groupScore ? Math.round((groupScore.total / groupScore.max) * 100) : 0;
+              
+              return (
+                <div key={groupName} className="bg-muted/50 rounded-lg p-4">
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="font-medium text-sm">{groupName}</span>
+                    <span className="text-xs text-muted-foreground">
+                      {groupScore?.total || 0}/{groupScore?.max || 0}
+                    </span>
+                  </div>
+                  <Progress value={percentage} className="h-2" />
+                </div>
+              );
+            })}
+          </div>
 
           {/* Checklist by Group */}
           <div className="space-y-12">
