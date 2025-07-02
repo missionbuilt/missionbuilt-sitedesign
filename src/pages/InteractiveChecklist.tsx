@@ -227,7 +227,7 @@ const InteractiveChecklist = () => {
                     <CardTitle className="heading-md">{categoryName}</CardTitle>
                     {categoryName === 'Mission Clarity' && (
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <span>📖 Learn more:</span>
+                        <span>Learn more:</span>
                         <a 
                           href="/field-notes/chapter-1" 
                           className="text-army dark:text-sunburst hover:underline flex items-center gap-1"
