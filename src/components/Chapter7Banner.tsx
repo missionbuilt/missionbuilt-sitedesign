@@ -8,7 +8,7 @@ const Chapter7Banner = () => {
 
   useEffect(() => {
     // Check if banner was previously dismissed
-    const dismissed = localStorage.getItem('chapter11-banner-dismissed');
+    const dismissed = localStorage.getItem('chapter12-banner-dismissed');
     if (!dismissed) {
       setIsVisible(true);
     }
@@ -16,7 +16,7 @@ const Chapter7Banner = () => {
 
   const handleDismiss = () => {
     setIsVisible(false);
-    localStorage.setItem('chapter11-banner-dismissed', 'true');
+    localStorage.setItem('chapter12-banner-dismissed', 'true');
   };
 
   if (!isVisible) return null;
@@ -31,15 +31,15 @@ const Chapter7Banner = () => {
             </div>
             <div className="flex-1">
               <p className="text-sm font-medium text-foreground">
-                <span className="text-sunburst font-bold">Chapter 11 out now:</span>{' '}
-                Strong Enough to Listen
+                <span className="text-sunburst font-bold">Chapter 12 out now:</span>{' '}
+                The Weight Is Real. Own It.
               </p>
             </div>
           </div>
           
           <div className="flex items-center gap-3">
             <Link 
-              to="/field-notes/chapter-11"
+              to="/field-notes/chapter-12"
               className="flex items-center gap-1 text-sm font-medium text-foreground hover:text-sunburst transition-colors group"
             >
               Read now
