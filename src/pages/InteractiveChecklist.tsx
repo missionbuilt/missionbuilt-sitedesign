@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -16,41 +17,41 @@ interface ChecklistItem {
 
 const checklistItems: ChecklistItem[] = [
   // Mission Clarity
-  { id: '1', text: 'Have I clearly articulated the mission behind this effort?', points: 10, category: 'Mission Clarity' },
-  { id: '2', text: 'Can every team member (or I personally) explain why this matters without referring to metrics?', points: 10, category: 'Mission Clarity' },
-  { id: '3', text: 'Does this mission align with my/our long-term purpose?', points: 10, category: 'Mission Clarity' },
+  { id: '1', text: 'Have I clearly articulated the mission behind this effort?', points: 2, category: 'Mission Clarity' },
+  { id: '2', text: 'Can every team member (or I personally) explain why this matters without referring to metrics?', points: 2, category: 'Mission Clarity' },
+  { id: '3', text: 'Does this mission align with my/our long-term purpose?', points: 2, category: 'Mission Clarity' },
   
   // Metric Awareness (Not Obsession)
-  { id: '4', text: 'Do I know what metrics might reflect progress — but also recognize they\'re indicators, not the mission itself?', points: 8, category: 'Metric Awareness' },
-  { id: '5', text: 'Are these metrics supporting the mission, or starting to dictate behavior?', points: 7, category: 'Metric Awareness' },
+  { id: '4', text: 'Do I know what metrics might reflect progress — but also recognize they\'re indicators, not the mission itself?', points: 1.5, category: 'Metric Awareness' },
+  { id: '5', text: 'Are these metrics supporting the mission, or starting to dictate behavior?', points: 1.5, category: 'Metric Awareness' },
   
   // Drift Detection
-  { id: '6', text: 'Am I or my team currently pursuing work or reps that look busy but don\'t move us closer to the mission?', points: 9, category: 'Drift Detection' },
-  { id: '7', text: 'Have I noticed recent moments of drifting into comfort zones or distractions?', points: 7, category: 'Drift Detection' },
+  { id: '6', text: 'Am I or my team currently pursuing work or reps that look busy but don\'t move us closer to the mission?', points: 1.5, category: 'Drift Detection' },
+  { id: '7', text: 'Have I noticed recent moments of drifting into comfort zones or distractions?', points: 1, category: 'Drift Detection' },
   
   // Ritual Reinforcement
-  { id: '8', text: 'Have I established or maintained meaningful rituals that keep me connected to the mission?', points: 8, category: 'Ritual Reinforcement' },
-  { id: '9', text: 'Are these rituals adaptable when conditions change, so they don\'t become rigid rules?', points: 7, category: 'Ritual Reinforcement' },
+  { id: '8', text: 'Have I established or maintained meaningful rituals that keep me connected to the mission?', points: 1, category: 'Ritual Reinforcement' },
+  { id: '9', text: 'Are these rituals adaptable when conditions change, so they don\'t become rigid rules?', points: 1, category: 'Ritual Reinforcement' },
   
   // Feedback Loops
-  { id: '11', text: 'Am I seeking feedback that tells me if I\'m aligned with the mission, not just if I\'m hitting numbers?', points: 8, category: 'Feedback Loops' },
-  { id: '12', text: 'Do I have a system or trusted peers who can call out mission drift?', points: 9, category: 'Feedback Loops' },
+  { id: '11', text: 'Am I seeking feedback that tells me if I\'m aligned with the mission, not just if I\'m hitting numbers?', points: 1, category: 'Feedback Loops' },
+  { id: '12', text: 'Do I have a system or trusted peers who can call out mission drift?', points: 1, category: 'Feedback Loops' },
   
   // Decision Alignment
-  { id: '14', text: 'When making a key decision, am I asking: Does this move us/me closer to the mission or just satisfy a short-term metric?', points: 10, category: 'Decision Alignment' },
-  { id: '15', text: 'Can I trace a clear line from today\'s work to the bigger mission?', points: 8, category: 'Decision Alignment' },
+  { id: '14', text: 'When making a key decision, am I asking: Does this move us/me closer to the mission or just satisfy a short-term metric?', points: 1, category: 'Decision Alignment' },
+  { id: '15', text: 'Can I trace a clear line from today\'s work to the bigger mission?', points: 1, category: 'Decision Alignment' },
   
   // System Check Under Stress
-  { id: '17', text: 'Have I validated that our systems (product, training plan, or team workflows) can withstand real-world stress and unexpected challenges?', points: 9, category: 'System Check Under Stress' },
-  { id: '18', text: 'Have we proactively rehearsed potential crises or failure points so we\'re prepared, not reactive?', points: 10, category: 'System Check Under Stress' },
+  { id: '17', text: 'Have I validated that our systems (product, training plan, or team workflows) can withstand real-world stress and unexpected challenges?', points: 1, category: 'System Check Under Stress' },
+  { id: '18', text: 'Have we proactively rehearsed potential crises or failure points so we\'re prepared, not reactive?', points: 1, category: 'System Check Under Stress' },
   
   // Recovery Rhythm Review
-  { id: '20', text: 'Have I built intentional recovery time into my plan — whether that means deload weeks, cooldown cycles, or strategy days — to prevent burnout and maintain long-term alignment with the mission?', points: 8, category: 'Recovery Rhythm Review' },
-  { id: '21', text: 'Do I recognize recovery as a requirement, not a reward?', points: 9, category: 'Recovery Rhythm Review' },
+  { id: '20', text: 'Have I built intentional recovery time into my plan — whether that means deload weeks, cooldown cycles, or strategy days — to prevent burnout and maintain long-term alignment with the mission?', points: 1, category: 'Recovery Rhythm Review' },
+  { id: '21', text: 'Do I recognize recovery as a requirement, not a reward?', points: 1, category: 'Recovery Rhythm Review' },
   
   // Shared PR Reflection
-  { id: '23', text: 'Have I recognized and celebrated recent team or personal milestones as shared wins, reinforcing that we succeed together, not alone?', points: 7, category: 'Shared PR Reflection' },
-  { id: '24', text: 'Are our current incentives and recognition systems encouraging shared ownership rather than individual heroics?', points: 8, category: 'Shared PR Reflection' }
+  { id: '23', text: 'Have I recognized and celebrated recent team or personal milestones as shared wins, reinforcing that we succeed together, not alone?', points: 1, category: 'Shared PR Reflection' },
+  { id: '24', text: 'Are our current incentives and recognition systems encouraging shared ownership rather than individual heroics?', points: 1, category: 'Shared PR Reflection' }
 ];
 
 const InteractiveChecklist = () => {
