@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -6,7 +5,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import NightVisionToggle from '@/components/NightVisionToggle';
-import { CheckCircle, Circle } from 'lucide-react';
+import { CheckCircle, Circle, ExternalLink } from 'lucide-react';
 
 interface ChecklistItem {
   id: string;
@@ -17,9 +16,9 @@ interface ChecklistItem {
 
 const checklistItems: ChecklistItem[] = [
   // Mission Clarity
-  { id: '1', text: 'Can you state your primary mission in one clear sentence?', points: 10, category: 'Mission Clarity' },
-  { id: '2', text: 'Do your daily actions align with your stated mission?', points: 8, category: 'Mission Clarity' },
-  { id: '3', text: 'Have you communicated your mission to key stakeholders?', points: 6, category: 'Mission Clarity' },
+  { id: '1', text: 'Have I clearly articulated the mission behind this effort?', points: 10, category: 'Mission Clarity' },
+  { id: '2', text: 'Can every team member (or I personally) explain why this matters without referring to metrics?', points: 10, category: 'Mission Clarity' },
+  { id: '3', text: 'Does this mission align with my/our long-term purpose?', points: 10, category: 'Mission Clarity' },
   
   // Metric Awareness (Not Obsession)
   { id: '4', text: 'Do you track 2-3 key metrics that matter most?', points: 8, category: 'Metric Awareness' },
@@ -226,6 +225,18 @@ const InteractiveChecklist = () => {
                 <Card key={categoryName}>
                   <CardHeader>
                     <CardTitle className="heading-md">{categoryName}</CardTitle>
+                    {categoryName === 'Mission Clarity' && (
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <span>📖 Learn more:</span>
+                        <a 
+                          href="/field-notes/chapter-1" 
+                          className="text-army dark:text-sunburst hover:underline flex items-center gap-1"
+                        >
+                          Chapter 1: Mission Before Metrics, Section 1: The Mission Is the Magnet
+                          <ExternalLink className="h-3 w-3" />
+                        </a>
+                      </div>
+                    )}
                   </CardHeader>
                   <CardContent className="space-y-4">
                     {categoryItems.map((item) => {
