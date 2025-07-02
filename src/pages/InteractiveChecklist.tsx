@@ -129,7 +129,17 @@ const InteractiveChecklist = () => {
     };
   }, [checkedItems]);
 
-  const getScoreLevel = (score: number) => {
+  const getScoreLevel = (score: number, hasStarted: boolean) => {
+    // If no items are checked yet, show a neutral getting started state
+    if (!hasStarted) {
+      return { 
+        label: 'Getting Started', 
+        description: 'begin checking items to see your mission alignment score.',
+        color: 'bg-muted text-muted-foreground', 
+        ring: 'ring-muted/20' 
+      };
+    }
+    
     if (score >= 46) return { 
       label: 'Mission Strong', 
       description: 'you\'re deeply aligned; keep reinforcing your purpose, rituals, and team dynamics.',
@@ -150,7 +160,8 @@ const InteractiveChecklist = () => {
     };
   };
 
-  const scoreLevel = getScoreLevel(totalScore);
+  const hasStarted = checkedItems.size > 0;
+  const scoreLevel = getScoreLevel(totalScore, hasStarted);
 
   // Group items by category for organized display
   const groupedItems = checklistItems.reduce((acc, item) => {
