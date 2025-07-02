@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Button } from '@/components/ui/button';
@@ -38,24 +39,25 @@ const checklistItems: ChecklistItem[] = [
   // Execution & Adaptation - Feedback Loops (3 points each)
   { id: '10', text: 'Am I seeking feedback that tells me if I\'m aligned with the mission, rather than just if I\'m hitting numbers?', points: 3, category: 'Feedback Loops', group: 'Execution & Adaptation' },
   { id: '11', text: 'Do I have a system or trusted peers who can call out mission drift?', points: 3, category: 'Feedback Loops', group: 'Execution & Adaptation' },
+  { id: '12', text: 'Have I defined how we\'ll measure and observe progress over time — beyond static metrics — to capture qualitative and quantitative signals of improvement?', points: 3, category: 'Feedback Loops', group: 'Execution & Adaptation' },
   
   // Execution & Adaptation - Decision Alignment (3 points each)
-  { id: '12', text: 'When making a key decision, am I asking: Does this move us/me closer to the mission or just satisfy a short-term metric?', points: 3, category: 'Decision Alignment', group: 'Execution & Adaptation' },
-  { id: '13', text: 'Can I trace a clear line from today\'s work to the bigger mission?', points: 3, category: 'Decision Alignment', group: 'Execution & Adaptation' },
-  { id: '14', text: 'Does this feature or initiative integrate smoothly into existing product workflows, minimizing friction and supporting the overall user journey?', points: 3, category: 'Decision Alignment', group: 'Execution & Adaptation' },
-  { id: '15', text: 'Does this work meaningfully improve the user\'s experience, solving a real pain point or enabling real progress?', points: 3, category: 'Decision Alignment', group: 'Execution & Adaptation' },
+  { id: '13', text: 'When making a key decision, am I asking: Does this move us/me closer to the mission or just satisfy a short-term metric?', points: 3, category: 'Decision Alignment', group: 'Execution & Adaptation' },
+  { id: '14', text: 'Can I trace a clear line from today\'s work to the bigger mission?', points: 3, category: 'Decision Alignment', group: 'Execution & Adaptation' },
+  { id: '15', text: 'Does this feature or initiative integrate smoothly into existing product workflows, minimizing friction and supporting the overall user journey?', points: 3, category: 'Decision Alignment', group: 'Execution & Adaptation' },
+  { id: '16', text: 'Does this work meaningfully improve the user\'s experience, solving a real pain point or enabling real progress?', points: 3, category: 'Decision Alignment', group: 'Execution & Adaptation' },
   
   // Sustainability & Culture - System Check Under Stress (2 points each)
-  { id: '16', text: 'Have I validated that our systems (product, training plan, or team workflows) can withstand real-world stress and unexpected challenges?', points: 2, category: 'System Check Under Stress', group: 'Sustainability & Culture' },
-  { id: '17', text: 'Have we proactively rehearsed potential crises or failure points so we\'re prepared, not reactive?', points: 2, category: 'System Check Under Stress', group: 'Sustainability & Culture' },
+  { id: '17', text: 'Have I validated that our systems (product, training plan, or team workflows) can withstand real-world stress and unexpected challenges?', points: 2, category: 'System Check Under Stress', group: 'Sustainability & Culture' },
+  { id: '18', text: 'Have we proactively rehearsed potential crises or failure points so we\'re prepared, not reactive?', points: 2, category: 'System Check Under Stress', group: 'Sustainability & Culture' },
   
   // Sustainability & Culture - Recovery Rhythm Review (2 points each)
-  { id: '18', text: 'Have I built intentional recovery time into my plan — whether that means deload weeks, cooldown cycles, or strategy days — to prevent burnout and maintain long-term alignment with the mission?', points: 2, category: 'Recovery Rhythm Review', group: 'Sustainability & Culture' },
-  { id: '19', text: 'Do I recognize recovery as a requirement, not a reward?', points: 2, category: 'Recovery Rhythm Review', group: 'Sustainability & Culture' },
+  { id: '19', text: 'Have I built intentional recovery time into my plan — whether that means deload weeks, cooldown cycles, or strategy days — to prevent burnout and maintain long-term alignment with the mission?', points: 2, category: 'Recovery Rhythm Review', group: 'Sustainability & Culture' },
+  { id: '20', text: 'Do I recognize recovery as a requirement, not a reward?', points: 2, category: 'Recovery Rhythm Review', group: 'Sustainability & Culture' },
   
   // Sustainability & Culture - Shared PR Reflection (2 points each)
-  { id: '20', text: 'Have I recognized and celebrated recent team or personal milestones as shared wins, reinforcing that we succeed together, not alone?', points: 2, category: 'Shared PR Reflection', group: 'Sustainability & Culture' },
-  { id: '21', text: 'Are our current incentives and recognition systems encouraging shared ownership rather than individual heroics?', points: 2, category: 'Shared PR Reflection', group: 'Sustainability & Culture' }
+  { id: '21', text: 'Have I recognized and celebrated recent team or personal milestones as shared wins, reinforcing that we succeed together, not alone?', points: 2, category: 'Shared PR Reflection', group: 'Sustainability & Culture' },
+  { id: '22', text: 'Are our current incentives and recognition systems encouraging shared ownership rather than individual heroics?', points: 2, category: 'Shared PR Reflection', group: 'Sustainability & Culture' }
 ];
 
 const InteractiveChecklist = () => {
