@@ -1,4 +1,3 @@
-
 import { contentService } from './contentService';
 import { calculateReadTime } from '@/utils/readTimeCalculator';
 
@@ -33,7 +32,7 @@ export interface ChapterData {
   tags: string[];
   description: string;
   slug: string;
-  status: string;
+  status: 'draft' | 'published' | 'archived';
   chapterNumber: number;
   content?: string;
 }
