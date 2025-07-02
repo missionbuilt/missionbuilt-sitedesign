@@ -39,7 +39,7 @@ const Chapter7Banner = () => {
           
           <div className="flex items-center gap-3">
             <Link 
-              to="/field-notes/chapter-12"
+              to="/playbook/chapter-12"
               className="flex items-center gap-1 text-sm font-medium text-foreground hover:text-sunburst transition-colors group"
             >
               Read now

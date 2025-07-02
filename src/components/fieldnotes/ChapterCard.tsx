@@ -109,7 +109,7 @@ const ChapterCard: React.FC<ChapterCardProps> = ({ chapter, isRead = false, onMa
     return (
       <Link 
         key={chapter.id}
-        to={`/field-notes/${chapter.slug}`}
+        to={`/playbook/${chapter.slug}`}
         className="block hover:scale-[1.02] transition-transform duration-200 group"
         onClick={handleCardClick}
       >

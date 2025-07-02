@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
@@ -45,7 +46,7 @@ const ChapterNavigation: React.FC<ChapterNavigationProps> = ({ currentChapter })
       <div className="flex-1">
         {previousChapter && (
           <Link 
-            to={`/field-notes/chapter-${previousChapter}`}
+            to={`/playbook/chapter-${previousChapter}`}
             className="inline-flex items-center text-army hover:text-army/80 dark:text-sunburst dark:hover:text-sunburst/80 transition-colors group"
           >
             <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
@@ -60,7 +61,7 @@ const ChapterNavigation: React.FC<ChapterNavigationProps> = ({ currentChapter })
       <div className="flex-1 text-right">
         {nextChapter && (
           <Link 
-            to={`/field-notes/chapter-${nextChapter}`}
+            to={`/playbook/chapter-${nextChapter}`}
             className="inline-flex items-center text-army hover:text-army/80 dark:text-sunburst dark:hover:text-sunburst/80 transition-colors group"
           >
             <div className="text-right">
