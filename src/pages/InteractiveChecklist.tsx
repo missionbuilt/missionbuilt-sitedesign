@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Button } from '@/components/ui/button';
@@ -43,18 +42,19 @@ const checklistItems: ChecklistItem[] = [
   // Execution & Adaptation - Decision Alignment (3 points each)
   { id: '12', text: 'When making a key decision, am I asking: Does this move us/me closer to the mission or just satisfy a short-term metric?', points: 3, category: 'Decision Alignment', group: 'Execution & Adaptation' },
   { id: '13', text: 'Can I trace a clear line from today\'s work to the bigger mission?', points: 3, category: 'Decision Alignment', group: 'Execution & Adaptation' },
+  { id: '14', text: 'Does this feature or initiative integrate smoothly into existing product workflows, minimizing friction and supporting the overall user journey?', points: 3, category: 'Decision Alignment', group: 'Execution & Adaptation' },
   
   // Sustainability & Culture - System Check Under Stress (2 points each)
-  { id: '14', text: 'Have I validated that our systems (product, training plan, or team workflows) can withstand real-world stress and unexpected challenges?', points: 2, category: 'System Check Under Stress', group: 'Sustainability & Culture' },
-  { id: '15', text: 'Have we proactively rehearsed potential crises or failure points so we\'re prepared, not reactive?', points: 2, category: 'System Check Under Stress', group: 'Sustainability & Culture' },
+  { id: '15', text: 'Have I validated that our systems (product, training plan, or team workflows) can withstand real-world stress and unexpected challenges?', points: 2, category: 'System Check Under Stress', group: 'Sustainability & Culture' },
+  { id: '16', text: 'Have we proactively rehearsed potential crises or failure points so we\'re prepared, not reactive?', points: 2, category: 'System Check Under Stress', group: 'Sustainability & Culture' },
   
   // Sustainability & Culture - Recovery Rhythm Review (2 points each)
-  { id: '16', text: 'Have I built intentional recovery time into my plan — whether that means deload weeks, cooldown cycles, or strategy days — to prevent burnout and maintain long-term alignment with the mission?', points: 2, category: 'Recovery Rhythm Review', group: 'Sustainability & Culture' },
-  { id: '17', text: 'Do I recognize recovery as a requirement, not a reward?', points: 2, category: 'Recovery Rhythm Review', group: 'Sustainability & Culture' },
+  { id: '17', text: 'Have I built intentional recovery time into my plan — whether that means deload weeks, cooldown cycles, or strategy days — to prevent burnout and maintain long-term alignment with the mission?', points: 2, category: 'Recovery Rhythm Review', group: 'Sustainability & Culture' },
+  { id: '18', text: 'Do I recognize recovery as a requirement, not a reward?', points: 2, category: 'Recovery Rhythm Review', group: 'Sustainability & Culture' },
   
   // Sustainability & Culture - Shared PR Reflection (2 points each)
-  { id: '18', text: 'Have I recognized and celebrated recent team or personal milestones as shared wins, reinforcing that we succeed together, not alone?', points: 2, category: 'Shared PR Reflection', group: 'Sustainability & Culture' },
-  { id: '19', text: 'Are our current incentives and recognition systems encouraging shared ownership rather than individual heroics?', points: 2, category: 'Shared PR Reflection', group: 'Sustainability & Culture' }
+  { id: '19', text: 'Have I recognized and celebrated recent team or personal milestones as shared wins, reinforcing that we succeed together, not alone?', points: 2, category: 'Shared PR Reflection', group: 'Sustainability & Culture' },
+  { id: '20', text: 'Are our current incentives and recognition systems encouraging shared ownership rather than individual heroics?', points: 2, category: 'Shared PR Reflection', group: 'Sustainability & Culture' }
 ];
 
 const InteractiveChecklist = () => {
@@ -141,13 +141,13 @@ const InteractiveChecklist = () => {
       };
     }
     
-    if (score >= 46) return { 
+    if (score >= 49) return { 
       label: 'Mission Strong', 
       description: 'you\'re deeply aligned; keep reinforcing your purpose, rituals, and team dynamics.',
       color: 'bg-army text-white', 
       ring: 'ring-army/20' 
     };
-    if (score >= 30) return { 
+    if (score >= 33) return { 
       label: 'Mission Drifting', 
       description: 'you\'re partially aligned, but risk losing focus; revisit mission clarity, feedback systems, or recovery plans.',
       color: 'bg-sunburst text-slate', 
@@ -209,7 +209,7 @@ const InteractiveChecklist = () => {
           {/* Header */}
           <div className="flex justify-between items-start mb-8">
             <div>
-              <h1 className="heading-lg mb-4 bg-gradient-to-r from-army via-steel to-sunburst bg-clip-text text-transparent leading-tight pb-2">
+              <h1 className="heading-lg mb-4 bg-gradient-to-r from-army via-steel to-sunburst bg-clip-text text-transparent leading-normal">
                 Mission Alignment Checklist
               </h1>
               <p className="body text-muted-foreground max-w-2xl">
