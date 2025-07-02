@@ -1,12 +1,14 @@
+
 import React, { useState, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
+import { Button } from '@/components/ui/button';
 import NightVisionToggle from '@/components/NightVisionToggle';
 import Logo from '@/components/Logo';
-import { CheckCircle, Circle, ExternalLink, Target, TrendingUp, Shield } from 'lucide-react';
+import { CheckCircle, Circle, ExternalLink, Target, TrendingUp, Shield, RotateCcw } from 'lucide-react';
 import { getCategoryLink } from '@/utils/anchorUtils';
 
 interface ChecklistItem {
@@ -67,6 +69,10 @@ const InteractiveChecklist = () => {
       newCheckedItems.delete(itemId);
     }
     setCheckedItems(newCheckedItems);
+  };
+
+  const handleResetAll = () => {
+    setCheckedItems(new Set());
   };
 
   const { totalScore, maxScore, completionPercentage, categoryScores, groupScores } = useMemo(() => {
@@ -191,7 +197,17 @@ const InteractiveChecklist = () => {
                 </p>
               </div>
             </div>
-            <NightVisionToggle />
+            <div className="flex items-center gap-4">
+              <Button
+                onClick={handleResetAll}
+                variant="outline"
+                className="flex items-center gap-2 hover:bg-destructive/10 hover:text-destructive hover:border-destructive/30"
+              >
+                <RotateCcw className="h-4 w-4" />
+                Reset All
+              </Button>
+              <NightVisionToggle />
+            </div>
           </div>
 
           {/* Score Dashboard - Enhanced with Colors */}
