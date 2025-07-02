@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Navbar from '@/components/Navbar';
@@ -7,7 +6,6 @@ import PdfDownloadButton from '@/components/PdfDownloadButton';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useChapterData } from '@/hooks/useChapterData';
 import ChapterCard from '@/components/fieldnotes/ChapterCard';
-import ReadingProgress from '@/components/fieldnotes/ReadingProgress';
 import ChapterFilters from '@/components/fieldnotes/ChapterFilters';
 import { ChapterData } from '@/services/chapterService';
 
@@ -141,8 +139,6 @@ const FieldNotes = () => {
               </div>
             </div>
           </header>
-          
-          <ReadingProgress progress={readingProgress} />
           
           <ChapterFilters
             searchTerm={searchTerm}
