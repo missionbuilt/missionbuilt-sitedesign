@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { BookOpen } from 'lucide-react';
@@ -87,64 +88,63 @@ const FieldNotes = () => {
       <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30">
         <Navbar />
         
-        <main className="container-custom py-16">
-          {/* Header Section */}
-          <div className="text-center mb-16">
-            <div className="flex justify-center mb-6">
-              <div className="p-4 rounded-full bg-gradient-to-br from-army/10 to-steel/10 dark:from-sunburst/10 dark:to-army/10">
-                <BookOpen className="h-12 w-12 text-army dark:text-sunburst" />
+        <main className="container-custom py-12">
+          <div className="max-w-6xl mx-auto">
+            <header className="mb-12">
+              <div className="flex justify-between items-start">
+                <div>
+                  <h2 className="text-lg font-medium text-muted-foreground mb-2 dark:text-slate-400">The Core Chapters of Mission Built: Lessons from the Barbell and the Boardroom</h2>
+                  <h1 className="text-4xl font-bold text-foreground mb-4 dark:text-slate-100">The Playbook</h1>
+                </div>
               </div>
-            </div>
-            <h1 className="heading-lg mb-6 bg-gradient-to-r from-army via-steel to-sunburst bg-clip-text text-transparent">
-              The Playbook
-            </h1>
-            <h2 className="text-xl font-medium text-muted-foreground mb-8 max-w-4xl mx-auto">
-              The Core Chapters of Mission Built: Lessons from the Barbell and the Boardroom
-            </h2>
-            <p className="body-lg text-muted-foreground max-w-3xl mx-auto mb-8">
-              Welcome to The Playbook — these are the foundational chapters of Mission Built, where each lesson combines real experiences from the gym and the boardroom to give you practical strategies for mission-driven growth.
-              Here, you'll find the complete set of insights, stories, and tools that define the book's philosophy, helping you align your actions with your purpose and build strength that lasts.
-            </p>
+            </header>
             
-          </div>
+            {/* Welcome Blurb */}
+            <div className="mb-8 bg-slate/5 dark:bg-slate/10 border border-slate/10 dark:border-slate/20 rounded-lg p-6">
+              <p className="text-foreground dark:text-slate-200 leading-relaxed">
+                Welcome to The Playbook — these are the foundational chapters of Mission Built, where each lesson combines real experiences from the gym and the boardroom to give you practical strategies for mission-driven growth.
+                Here, you'll find the complete set of insights, stories, and tools that define the book's philosophy, helping you align your actions with your purpose and build strength that lasts.
+              </p>
+            </div>
 
-          {/* Filters */}
-          <ChapterFilters
-            searchTerm={searchTerm}
-            onSearchChange={setSearchTerm}
-            statusFilter={selectedStatus}
-            onStatusFilterChange={setSelectedStatus}
-            sortBy={sortBy}
-            onSortChange={setSortBy}
-            showFilters={showFilters}
-            onToggleFilters={() => setShowFilters(!showFilters)}
-          />
+            {/* Filters */}
+            <ChapterFilters
+              searchTerm={searchTerm}
+              onSearchChange={setSearchTerm}
+              statusFilter={selectedStatus}
+              onStatusFilterChange={setSelectedStatus}
+              sortBy={sortBy}
+              onSortChange={setSortBy}
+              showFilters={showFilters}
+              onToggleFilters={() => setShowFilters(!showFilters)}
+            />
 
-          {/* Chapter Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {isLoading ? (
-              // Show skeleton cards while loading
-              Array.from({ length: 12 }).map((_, index) => (
-                <ChapterCardSkeleton key={index} />
-              ))
-            ) : (
-              sortedChapters.map((chapter) => (
-                <ChapterCard
-                  key={chapter.id}
-                  chapter={chapter}
-                  isRead={readChapters.includes(chapter.chapterNumber)}
-                  onMarkAsRead={markChapterAsRead}
-                />
-              ))
+            {/* Chapter Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {isLoading ? (
+                // Show skeleton cards while loading
+                Array.from({ length: 12 }).map((_, index) => (
+                  <ChapterCardSkeleton key={index} />
+                ))
+              ) : (
+                sortedChapters.map((chapter) => (
+                  <ChapterCard
+                    key={chapter.id}
+                    chapter={chapter}
+                    isRead={readChapters.includes(chapter.chapterNumber)}
+                    onMarkAsRead={markChapterAsRead}
+                  />
+                ))
+              )}
+            </div>
+
+            {/* No Results Message */}
+            {!isLoading && sortedChapters.length === 0 && chapters.length > 0 && (
+              <div className="text-center py-12">
+                <p className="text-muted-foreground">No chapters match your current filters.</p>
+              </div>
             )}
           </div>
-
-          {/* No Results Message */}
-          {!isLoading && sortedChapters.length === 0 && chapters.length > 0 && (
-            <div className="text-center py-12">
-              <p className="text-muted-foreground">No chapters match your current filters.</p>
-            </div>
-          )}
         </main>
 
         <Footer />
