@@ -1,10 +1,8 @@
-
 import React, { useState, useMemo, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Button } from '@/components/ui/button';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import NightVisionToggle from '@/components/NightVisionToggle';
 import ChecklistPdfExport from '@/components/ChecklistPdfExport';
 import ScoreDashboard from '@/components/checklist/ScoreDashboard';
 import StickyHeader from '@/components/checklist/StickyHeader';
@@ -235,7 +233,6 @@ const InteractiveChecklist = () => {
                 <RotateCcw className="h-4 w-4" />
                 Reset All
               </Button>
-              <NightVisionToggle />
             </div>
           </div>
 
