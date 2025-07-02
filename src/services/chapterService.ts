@@ -1,4 +1,5 @@
 
+
 import { contentService } from './contentService';
 import { calculateReadTime } from '@/utils/readTimeCalculator';
 
@@ -43,14 +44,20 @@ export const chapterService = {
     // Load all chapters in parallel for much faster loading
     const chapterPromises = CHAPTER_CONFIG.map(async (config) => {
       try {
-        const metadata = await contentService.loadChapterMetadata(config.id);
+        const [metadata, content] = await Promise.all([
+          contentService.loadChapterMetadata(config.id),
+          contentService.loadChapterContent(config.id)
+        ]);
         
         if (metadata && (metadata.status === 'published' || metadata.status === 'draft')) {
+          // Calculate actual reading time from content
+          const actualReadTime = calculateReadTime(content);
+          
           return {
             id: metadata.id,
             title: metadata.title,
             publishedDate: this.formatPublishDate(metadata.publishedDate),
-            readTime: metadata.readTime,
+            readTime: actualReadTime,
             tags: metadata.tags,
             description: metadata.description,
             slug: metadata.slug || config.slug,
@@ -123,3 +130,4 @@ export const chapterService = {
     return CHAPTER_CONFIG.length;
   }
 };
+
