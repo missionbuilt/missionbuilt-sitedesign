@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -6,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
 import NightVisionToggle from '@/components/NightVisionToggle';
+import ChecklistPdfExport from '@/components/ChecklistPdfExport';
 import { CheckCircle, Circle, ExternalLink, Target, TrendingUp, Shield, RotateCcw } from 'lucide-react';
 import { getCategoryLink } from '@/utils/anchorUtils';
 
@@ -266,6 +268,15 @@ const InteractiveChecklist = () => {
               </p>
             </div>
             <div className="flex items-center gap-4">
+              <ChecklistPdfExport
+                checkedItems={checkedItems}
+                checklistItems={checklistItems}
+                totalScore={totalScore}
+                maxScore={maxScore}
+                completionPercentage={completionPercentage}
+                scoreLevel={scoreLevel}
+                groupScores={groupScores}
+              />
               <Button
                 onClick={handleResetAll}
                 variant="outline"
