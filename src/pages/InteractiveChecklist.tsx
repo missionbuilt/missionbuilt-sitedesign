@@ -178,7 +178,7 @@ const InteractiveChecklist = () => {
           {/* Score Dashboard - Redesigned for Visual Hierarchy */}
           <div className="mb-8">
             {/* Total Score - Large and Prominent */}
-            <Card className="mb-6 border-2 border-army/20 dark:border-sunburst/20">
+            <Card className="mb-4 border-2 border-army/20 dark:border-sunburst/20">
               <CardHeader className="pb-4">
                 <CardTitle className="text-2xl text-center">Mission Alignment Score</CardTitle>
               </CardHeader>
@@ -193,29 +193,25 @@ const InteractiveChecklist = () => {
               </CardContent>
             </Card>
 
-            {/* Group Scores - Smaller and Compact */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {/* Group Scores - Very Compact */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               {groupOrder.map((groupName) => {
                 const groupScore = groupScores[groupName];
                 const percentage = groupScore ? Math.round((groupScore.total / groupScore.max) * 100) : 0;
                 
                 return (
-                  <Card key={groupName} className="border border-muted">
-                    <CardHeader className="pb-2">
-                      <CardTitle className="text-sm font-medium">{groupName}</CardTitle>
-                    </CardHeader>
-                    <CardContent className="pt-0">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-lg font-semibold text-army dark:text-sunburst">
-                          {groupScore?.total || 0}/{groupScore?.max || 0}
-                        </span>
-                        <span className="text-sm text-muted-foreground">
-                          {percentage}%
-                        </span>
-                      </div>
-                      <Progress value={percentage} className="h-2" />
-                    </CardContent>
-                  </Card>
+                  <div key={groupName} className="bg-muted/30 rounded-lg p-3 border border-muted/50">
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="text-xs font-medium text-muted-foreground">{groupName}</span>
+                      <span className="text-sm font-semibold text-army dark:text-sunburst">
+                        {groupScore?.total || 0}/{groupScore?.max || 0}
+                      </span>
+                    </div>
+                    <Progress value={percentage} className="h-1.5" />
+                    <div className="text-xs text-muted-foreground mt-1 text-right">
+                      {percentage}%
+                    </div>
+                  </div>
                 );
               })}
             </div>
