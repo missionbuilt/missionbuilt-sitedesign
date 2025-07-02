@@ -2,6 +2,8 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Button } from '@/components/ui/button';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import NightVisionToggle from '@/components/NightVisionToggle';
 import ChecklistPdfExport from '@/components/ChecklistPdfExport';
 import ScoreDashboard from '@/components/checklist/ScoreDashboard';
@@ -194,6 +196,8 @@ const InteractiveChecklist = () => {
       </Helmet>
 
       <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30">
+        <Navbar />
+        
         <StickyHeader
           showStickyHeader={showStickyHeader}
           totalScore={totalScore}
@@ -203,7 +207,7 @@ const InteractiveChecklist = () => {
         />
 
         <div className="container-custom py-8">
-          {/* Header without Logo */}
+          {/* Header */}
           <div className="flex justify-between items-start mb-8">
             <div>
               <h1 className="heading-lg mb-4 bg-gradient-to-r from-army via-steel to-sunburst bg-clip-text text-transparent">
@@ -257,6 +261,8 @@ const InteractiveChecklist = () => {
             ))}
           </div>
         </div>
+
+        <Footer />
       </div>
     </>
   );
