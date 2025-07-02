@@ -82,8 +82,8 @@ const InteractiveChecklist = () => {
   return (
     <>
       <Helmet>
-        <title>Interactive Checklist | Mission Built</title>
-        <meta name="description" content="Track your daily mission with our interactive checklist and dynamic scoring system." />
+        <title>Mission Alignment Checklist | Mission Built</title>
+        <meta name="description" content="Track your daily mission alignment with our interactive checklist and dynamic scoring system." />
       </Helmet>
 
       <div className="min-h-screen bg-background">
@@ -91,7 +91,7 @@ const InteractiveChecklist = () => {
           {/* Header */}
           <div className="flex justify-between items-start mb-8">
             <div>
-              <h1 className="heading-lg mb-4">Daily Mission Checklist</h1>
+              <h1 className="heading-lg mb-4">Mission Alignment Checklist</h1>
               <p className="body text-muted-foreground max-w-2xl">
                 Track your progress and see your mission score update in real-time as you complete each task.
               </p>

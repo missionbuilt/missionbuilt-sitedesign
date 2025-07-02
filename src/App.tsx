@@ -41,7 +41,7 @@ const App = () => {
                 <Route path="/" element={<Index />} />
                 <Route path="/about" element={<AboutMe />} />
                 <Route path="/field-notes" element={<FieldNotes />} />
-                <Route path="/interactive-checklist" element={<InteractiveChecklist />} />
+                <Route path="/mission-alignment-checklist" element={<InteractiveChecklist />} />
                 <Route path="/field-notes/chapter-1" element={<Chapter1 />} />
                 <Route path="/field-notes/chapter-2" element={<Chapter2 />} />
                 <Route path="/field-notes/chapter-3" element={<Chapter3 />} />
