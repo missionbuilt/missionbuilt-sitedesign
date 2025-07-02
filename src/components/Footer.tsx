@@ -78,7 +78,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <Link to="/field-notes" onClick={scrollToTop} className="text-slate/80 dark:text-slate-300 hover:text-army dark:hover:text-army transition-colors">
-                    Field Notes
+                    Playbook
                   </Link>
                 </li>
                 <li>

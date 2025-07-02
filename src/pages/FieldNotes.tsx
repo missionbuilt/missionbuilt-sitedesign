@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Navbar from '@/components/Navbar';
@@ -69,7 +70,7 @@ const FieldNotes = () => {
               <div className="flex justify-between items-start">
                 <div>
                   <h2 className="text-lg font-medium text-army mb-2 dark:text-sunburst">Mission Built: Lessons from the Barbell and the Boardroom</h2>
-                  <h1 className="text-4xl font-bold text-foreground mb-4 dark:text-slate-100">Field Notes</h1>
+                  <h1 className="text-4xl font-bold text-foreground mb-4 dark:text-slate-100">Playbook</h1>
                 </div>
                 <Skeleton className="h-10 w-32" />
               </div>
@@ -98,7 +99,7 @@ const FieldNotes = () => {
         <main className="container-custom py-12">
           <div className="max-w-6xl mx-auto">
             <header className="mb-12">
-              <h1 className="text-4xl font-bold text-foreground mb-4">Field Notes</h1>
+              <h1 className="text-4xl font-bold text-foreground mb-4">Playbook</h1>
             </header>
             
             <div className="text-center py-8">
@@ -120,7 +121,7 @@ const FieldNotes = () => {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>Field Notes - MissionBuilt</title>
+        <title>Playbook - MissionBuilt</title>
         <meta name="description" content="Table of contents for all field notes and chapters" />
       </Helmet>
       
@@ -132,7 +133,7 @@ const FieldNotes = () => {
             <div className="flex justify-between items-start">
               <div>
                 <h2 className="text-lg font-medium text-army mb-2 dark:text-sunburst">Mission Built: Lessons from the Barbell and the Boardroom</h2>
-                <h1 className="text-4xl font-bold text-foreground mb-4 dark:text-slate-100">Field Notes</h1>
+                <h1 className="text-4xl font-bold text-foreground mb-4 dark:text-slate-100">Playbook</h1>
               </div>
               <div className="mt-4">
                 <PdfDownloadButton />
