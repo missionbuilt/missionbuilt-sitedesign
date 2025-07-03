@@ -23,7 +23,8 @@ const CHAPTER_CONFIG: ChapterConfig[] = [
   { id: 'chapter-9', chapterNumber: 9, slug: 'chapter-9', published: true },
   { id: 'chapter-10', chapterNumber: 10, slug: 'chapter-10', published: true },
   { id: 'chapter-11', chapterNumber: 11, slug: 'chapter-11', published: true },
-  { id: 'chapter-12', chapterNumber: 12, slug: 'chapter-12', published: true }
+  { id: 'chapter-12', chapterNumber: 12, slug: 'chapter-12', published: true },
+  { id: 'chapter-13', chapterNumber: 13, slug: 'chapter-13', published: true }
 ];
 
 export interface ChapterData {
