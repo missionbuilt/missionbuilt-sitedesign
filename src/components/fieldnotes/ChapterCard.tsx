@@ -1,8 +1,10 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Calendar, Clock, Tag, CheckCircle, BookOpen } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { ChapterData } from '@/services/chapterService';
 
 interface ChapterCardProps {
@@ -17,6 +19,9 @@ const ChapterCard: React.FC<ChapterCardProps> = ({ chapter, isRead = false, onMa
       onMarkAsRead(chapter.chapterNumber);
     }
   };
+
+  const visibleTags = chapter.tags.slice(0, 3);
+  const remainingTags = chapter.tags.slice(3);
 
   const CardComponent = (
     <Card className={`card-hover transition-all duration-300 hover:shadow-xl dark:border-slate-700 dark:bg-slate-900/50 dark:hover:bg-slate-800/50 dark:hover:border-slate-600 h-full min-h-[320px] flex flex-col relative overflow-hidden ${
@@ -84,7 +89,7 @@ const ChapterCard: React.FC<ChapterCardProps> = ({ chapter, isRead = false, onMa
         </div>
         
         <div className="flex flex-wrap gap-1">
-          {chapter.tags.slice(0, 3).map((tag) => (
+          {visibleTags.map((tag) => (
             <span 
               key={tag}
               className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-muted/50 text-muted-foreground dark:bg-slate-800/50 dark:text-slate-300 border border-muted dark:border-slate-700"
@@ -93,10 +98,29 @@ const ChapterCard: React.FC<ChapterCardProps> = ({ chapter, isRead = false, onMa
               {tag}
             </span>
           ))}
-          {chapter.tags.length > 3 && (
-            <span className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-muted/30 text-muted-foreground dark:bg-slate-800/30 dark:text-slate-400">
-              +{chapter.tags.length - 3} more
-            </span>
+          {remainingTags.length > 0 && (
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <span className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-muted/30 text-muted-foreground dark:bg-slate-800/30 dark:text-slate-400 cursor-help">
+                    +{remainingTags.length} more
+                  </span>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <div className="flex flex-wrap gap-1 max-w-xs">
+                    {remainingTags.map((tag) => (
+                      <span 
+                        key={tag}
+                        className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-muted/50 text-muted-foreground"
+                      >
+                        <Tag className="w-3 h-3 mr-1" />
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           )}
         </div>
       </CardContent>
