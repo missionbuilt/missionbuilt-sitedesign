@@ -1,5 +1,3 @@
-
-
 import { contentService } from './contentService';
 import { calculateReadTime } from '@/utils/readTimeCalculator';
 
@@ -23,7 +21,8 @@ const CHAPTER_CONFIG: ChapterConfig[] = [
   { id: 'chapter-9', chapterNumber: 9, slug: 'chapter-9', published: true },
   { id: 'chapter-10', chapterNumber: 10, slug: 'chapter-10', published: true },
   { id: 'chapter-11', chapterNumber: 11, slug: 'chapter-11', published: true },
-  { id: 'chapter-12', chapterNumber: 12, slug: 'chapter-12', published: true }
+  { id: 'chapter-12', chapterNumber: 12, slug: 'chapter-12', published: true },
+  { id: 'conclusion', chapterNumber: 13, slug: 'conclusion', published: true }
 ];
 
 export interface ChapterData {
@@ -130,4 +129,3 @@ export const chapterService = {
     return CHAPTER_CONFIG.length;
   }
 };
-

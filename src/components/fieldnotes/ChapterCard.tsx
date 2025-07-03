@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Calendar, Clock, Tag, CheckCircle, BookOpen } from 'lucide-react';
@@ -42,7 +43,7 @@ const ChapterCard: React.FC<ChapterCardProps> = ({ chapter, isRead = false, onMa
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
             <Badge variant="outline" className="text-xs font-semibold dark:border-slate-600 dark:text-slate-200">
-              Chapter {chapter.chapterNumber}
+              {chapter.id === 'conclusion' ? 'Conclusion' : `Chapter ${chapter.chapterNumber}`}
             </Badge>
             <Badge className={`text-xs font-medium ${
               chapter.status === 'published' 
@@ -108,7 +109,7 @@ const ChapterCard: React.FC<ChapterCardProps> = ({ chapter, isRead = false, onMa
     return (
       <Link 
         key={chapter.id}
-        to={`/playbook/chapter-${chapter.chapterNumber}`}
+        to={`/playbook/${chapter.slug}`}
         className="block hover:scale-[1.02] transition-transform duration-200 group"
         onClick={handleCardClick}
       >
