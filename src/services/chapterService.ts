@@ -1,5 +1,3 @@
-
-
 import { contentService } from './contentService';
 import { calculateReadTime } from '@/utils/readTimeCalculator';
 
@@ -42,13 +40,18 @@ export interface ChapterData {
 
 export const chapterService = {
   async loadChapterMetadata(): Promise<ChapterData[]> {
+    console.log('Loading chapter metadata for', CHAPTER_CONFIG.length, 'chapters');
+    
     // Load all chapters in parallel for much faster loading
     const chapterPromises = CHAPTER_CONFIG.map(async (config) => {
       try {
+        console.log(`Loading metadata for ${config.id}`);
         const [metadata, content] = await Promise.all([
           contentService.loadChapterMetadata(config.id),
           contentService.loadChapterContent(config.id)
         ]);
+        
+        console.log(`Metadata loaded for ${config.id}:`, metadata?.status);
         
         if (metadata && (metadata.status === 'published' || metadata.status === 'draft')) {
           // Calculate actual reading time from content
@@ -77,6 +80,8 @@ export const chapterService = {
     const chapters = results.filter((chapter): chapter is ChapterData => 
       chapter !== null && (chapter.status === 'published' || chapter.status === 'draft')
     );
+    
+    console.log('Final chapters loaded:', chapters.length, 'chapters:', chapters.map(c => c.id));
     
     return chapters.sort((a, b) => a.chapterNumber - b.chapterNumber);
   },
@@ -131,4 +136,3 @@ export const chapterService = {
     return CHAPTER_CONFIG.length;
   }
 };
-
