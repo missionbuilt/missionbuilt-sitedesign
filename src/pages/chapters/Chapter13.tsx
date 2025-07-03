@@ -219,11 +219,11 @@ const Chapter13 = () => {
       {/* Hero Image Section */}
       <div className="relative h-96 overflow-hidden">
         <img 
-          src="/lovable-uploads/3cc52877-b3d2-494e-a2b6-6e3f1fa8d4a0.png"
-          alt="Field Note 13 Hero"
-          className="w-full h-full object-cover"
+          src="/lovable-uploads/401ae95f-3c10-4b53-b45b-229734a6ac26.png"
+          alt="Give A Shit - Chapter 13 Hero"
+          className="w-full h-full object-cover object-center"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/30 to-black/50"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/20 to-black/40"></div>
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
           <Link 
             to="/about" 
