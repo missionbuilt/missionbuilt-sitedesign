@@ -58,6 +58,7 @@ const App = () => {
                 <Route path="/playbook/chapter-10" element={<Chapter10 />} />
                 <Route path="/playbook/chapter-11" element={<Chapter11 />} />
                 <Route path="/playbook/chapter-12" element={<Chapter12 />} />
+                <Route path="/playbook/conclusion" element={<Chapter12 />} />
                 <Route path="/privacy" element={<Privacy />} />
                 <Route path="/terms" element={<Privacy />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
