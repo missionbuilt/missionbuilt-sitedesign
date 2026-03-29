@@ -13,23 +13,11 @@ import FieldNotes from "./pages/FieldNotes";
 import FieldNotesBlog from "./pages/FieldNotesBlog";
 import Resources from "./pages/Resources";
 import InteractiveChecklist from "./pages/InteractiveChecklist";
-import Chapter1 from "./pages/chapters/Chapter1";
-import Chapter2 from "./pages/chapters/Chapter2";
-import Chapter3 from "./pages/chapters/Chapter3";
-import Chapter4 from "./pages/chapters/Chapter4";
-import Chapter5 from "./pages/chapters/Chapter5";
-import Chapter6 from "./pages/chapters/Chapter6";
-import Chapter7 from "./pages/chapters/Chapter7";
-import Chapter8 from "./pages/chapters/Chapter8";
-import Chapter9 from "./pages/chapters/Chapter9";
-import Chapter10 from "./pages/chapters/Chapter10";
-import Chapter11 from "./pages/chapters/Chapter11";
-import Chapter12 from "./pages/chapters/Chapter12";
-import Chapter13 from "./pages/chapters/Chapter13";
+import ChapterPage from "./pages/chapters/ChapterPage";
+
+const queryClient = new QueryClient();
 
 const App = () => {
-  // Create a new QueryClient instance inside the component
-  const queryClient = new QueryClient();
   
   return (
     <QueryClientProvider client={queryClient}>
@@ -46,19 +34,7 @@ const App = () => {
                 <Route path="/field-notes" element={<FieldNotesBlog />} />
                 <Route path="/resources" element={<Resources />} />
                 <Route path="/mission-alignment-checklist" element={<InteractiveChecklist />} />
-                <Route path="/playbook/chapter-1" element={<Chapter1 />} />
-                <Route path="/playbook/chapter-2" element={<Chapter2 />} />
-                <Route path="/playbook/chapter-3" element={<Chapter3 />} />
-                <Route path="/playbook/chapter-4" element={<Chapter4 />} />
-                <Route path="/playbook/chapter-5" element={<Chapter5 />} />
-                <Route path="/playbook/chapter-6" element={<Chapter6 />} />
-                <Route path="/playbook/chapter-7" element={<Chapter7 />} />
-                <Route path="/playbook/chapter-8" element={<Chapter8 />} />
-                <Route path="/playbook/chapter-9" element={<Chapter9 />} />
-                <Route path="/playbook/chapter-10" element={<Chapter10 />} />
-                <Route path="/playbook/chapter-11" element={<Chapter11 />} />
-                <Route path="/playbook/chapter-12" element={<Chapter12 />} />
-                <Route path="/playbook/chapter-13" element={<Chapter13 />} />
+                <Route path="/playbook/:chapterSlug" element={<ChapterPage />} />
                 <Route path="/privacy" element={<Privacy />} />
                 <Route path="/terms" element={<Privacy />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
