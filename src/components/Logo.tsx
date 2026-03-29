@@ -93,13 +93,14 @@ const Logo = ({
     )}>
       {showImage && (
         <div className="flex items-center justify-center">
-          <img 
-            src="/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png" 
-            alt="MissionBuilt Logo" 
+          <img
+            src="/logo.webp"
+            alt="MissionBuilt Logo"
             className={cn(
               imageSizes[size],
               "dark:brightness-0 dark:invert"
             )}
+            fetchPriority="high"
           />
         </div>
       )}

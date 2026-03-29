@@ -26,13 +26,13 @@ const HeroSection = () => {
               {!logoLoaded && (
                 <Skeleton className="h-20 w-20 rounded-full relative z-10" />
               )}
-              <img 
-                src="/lovable-uploads/4827977a-5d7e-4623-8106-38556f67728e.png" 
-                alt="Logo" 
+              <img
+                src="/logo.webp"
+                alt="Logo"
                 className={`h-20 w-auto relative z-10 transition-opacity duration-300 ${
                   logoLoaded ? 'opacity-100' : 'opacity-0'
                 }`}
-                loading="lazy"
+                fetchPriority="high"
                 onLoad={() => setLogoLoaded(true)}
               />
             </div>

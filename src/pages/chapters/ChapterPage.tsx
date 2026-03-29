@@ -15,19 +15,19 @@ import { calculateReadTime } from '@/utils/readTimeCalculator';
 import { contentService, ChapterMeta } from '@/services/contentService';
 
 const CHAPTER_IMAGES: Record<number, { src: string; alt: string }> = {
-  1:  { src: '/lovable-uploads/f1cc2f96-82c1-4469-b2a2-c50ca532dd1e.png', alt: 'Field Note 1 Hero - Foundations and Systems' },
-  2:  { src: '/lovable-uploads/a52b5ced-8395-4637-8819-542e53405b58.png', alt: 'Field Note 2 Hero - Built Through Reps' },
-  3:  { src: '/lovable-uploads/71ded1e2-6a98-450e-93bb-a5f84f67cab8.png', alt: 'Field Note 3 Hero' },
-  4:  { src: '/lovable-uploads/8dbb8bdb-6a96-4dd9-adb7-06cb1bbc5e08.png', alt: 'Field Note 4 Hero' },
-  5:  { src: '/lovable-uploads/5dfc9c65-14fa-4b3a-9bca-fa90b8907d40.png', alt: 'Field Note 5 Hero' },
-  6:  { src: '/lovable-uploads/b5ec062b-4bf1-4cfc-8a26-4e012f2fc940.png', alt: 'Field Note 6 Hero' },
-  7:  { src: '/lovable-uploads/647b4145-8610-49de-a754-c19fc666708d.png', alt: 'Field Note 7 Hero' },
-  8:  { src: '/lovable-uploads/71c86e54-ebdf-4d51-8c3d-daaac4d85983.png', alt: 'Field Note 8 Hero' },
-  9:  { src: '/lovable-uploads/38659e84-2fce-4ca5-aa66-5a48c1a3cdbf.png', alt: 'Ship It Like You Show Up' },
-  10: { src: '/lovable-uploads/f357558e-9d1c-47f0-91e2-391294cd6668.png', alt: 'Field Note 10 Hero' },
-  11: { src: '/lovable-uploads/a6c09deb-04f6-4f55-877b-24c5fe7e417b.png', alt: 'Field Note 11 Hero' },
-  12: { src: '/lovable-uploads/3cc52877-b3d2-494e-a2b6-6e3f1fa8d4a0.png', alt: 'Field Note 12 Hero' },
-  13: { src: '/lovable-uploads/401ae95f-3c10-4b53-b45b-229734a6ac26.png', alt: 'Give A Shit - Chapter 13 Hero' },
+  1:  { src: '/hero-images/chapter-1.webp',  alt: 'Field Note 1 Hero - Foundations and Systems' },
+  2:  { src: '/hero-images/chapter-2.webp',  alt: 'Field Note 2 Hero - Built Through Reps' },
+  3:  { src: '/hero-images/chapter-3.webp',  alt: 'Field Note 3 Hero' },
+  4:  { src: '/hero-images/chapter-4.webp',  alt: 'Field Note 4 Hero' },
+  5:  { src: '/hero-images/chapter-5.webp',  alt: 'Field Note 5 Hero' },
+  6:  { src: '/hero-images/chapter-6.webp',  alt: 'Field Note 6 Hero' },
+  7:  { src: '/hero-images/chapter-7.webp',  alt: 'Field Note 7 Hero' },
+  8:  { src: '/hero-images/chapter-8.webp',  alt: 'Field Note 8 Hero' },
+  9:  { src: '/hero-images/chapter-9.webp',  alt: 'Ship It Like You Show Up' },
+  10: { src: '/hero-images/chapter-10.webp', alt: 'Field Note 10 Hero' },
+  11: { src: '/hero-images/chapter-11.webp', alt: 'Field Note 11 Hero' },
+  12: { src: '/hero-images/chapter-12.webp', alt: 'Field Note 12 Hero' },
+  13: { src: '/hero-images/chapter-13.webp', alt: 'Give A Shit - Chapter 13 Hero' },
 };
 
 const TOTAL_CHAPTERS = 13;
@@ -89,17 +89,20 @@ const ChapterPage = () => {
       <Helmet>
         <title>{metadata?.title || `Field Note ${chapterNum}`} - MissionBuilt</title>
         <meta name="description" content={metadata?.description || 'Field Note content'} />
+        <link rel="preload" as="image" href={heroImage.src} />
       </Helmet>
 
       <ReadingProgress />
       <Navbar />
 
       {/* Hero Image */}
-      <div className="relative h-96 overflow-hidden">
+      <div className="relative h-96 overflow-hidden bg-gray-900">
         <img
           src={heroImage.src}
           alt={heroImage.alt}
           className="w-full h-full object-cover"
+          fetchPriority="high"
+          decoding="sync"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/30 to-black/50"></div>
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
