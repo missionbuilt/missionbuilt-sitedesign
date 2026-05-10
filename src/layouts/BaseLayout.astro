@@ -6,14 +6,29 @@
 interface Props {
   title?: string;
   description?: string;
+  /** og:type — 'website' for marketing pages, 'book' or 'article' for chapters */
+  ogType?: 'website' | 'book' | 'article';
+  /** Path (or absolute URL) of the share image. Defaults to /og-image.jpg. */
+  ogImage?: string;
+  /** Alt text for the og:image. */
+  ogImageAlt?: string;
   /** Active top-nav link key: 'book' | 'chapters' | 'about' | 'source' */
   active?: 'book' | 'chapters' | 'about' | 'source' | undefined;
 }
 
+const SITE = 'https://missionbuilt.io';
+
 const {
   title = 'Mission Built · A Field Guide for Building Things That Matter',
   description = "An open-source philosophy forged through reps in the gym and lessons from the field. By Mike Nichols.",
+  ogType = 'website',
+  ogImage = '/og-image.jpg',
+  ogImageAlt = "Mission Built — a field guide for building things that matter, by Mike Nichols. Second edition, 2026.",
 } = Astro.props;
+
+// Absolute URLs for everything social scrapers need
+const canonicalUrl = new URL(Astro.url.pathname, SITE).toString();
+const absoluteOgImage = ogImage.startsWith('http') ? ogImage : new URL(ogImage, SITE).toString();
 ---
 <!doctype html>
 <html lang="en">
@@ -23,12 +38,25 @@ const {
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
 
     {/* Open Graph */}
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://missionbuilt.io/" />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content="Mission Built" />
+    <meta property="og:image" content={absoluteOgImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={ogImageAlt} />
+
+    {/* Twitter / X — summary_large_image so the OG image renders full-width */}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={absoluteOgImage} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
 
     {/* Theme color — match charcoal bg so mobile chrome blends */}
     <meta name="theme-color" content="#171513" />
@@ -41,8 +69,11 @@ const {
       rel="stylesheet"
     />
 
-    {/* Favicon: 32x32 charcoal canvas with a 14x14 oxblood square centered */}
+    {/* Favicon set: barbell mark — oxblood plates, chalk bar, charcoal canvas */}
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
   </head>
   <body>
     <slot />
