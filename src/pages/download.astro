@@ -1,0 +1,230 @@
+---
+/**
+ * Download — formats of the book a reader can take offline.
+ *
+ * Files served from /downloads/ (Astro copies anything under public/ as-is).
+ * If you regenerate the PDF, drop the new file at
+ *   public/downloads/mission-built.pdf
+ * and the link below picks it up automatically.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TopNav from '../components/TopNav.astro';
+
+const formats = [
+  {
+    kicker: 'PDF',
+    title: 'mission-built.pdf',
+    blurb:
+      "The full book in print-ready PDF. 6 by 9 trade paperback, designed " +
+      "to match the website's chalk-on-charcoal language. Read on screen " +
+      "or print at home.",
+    href: '/downloads/mission-built.pdf',
+    accent: 'blood' as const,
+  },
+  {
+    kicker: 'Markdown',
+    title: 'mission-built.md',
+    blurb:
+      "The raw manuscript as markdown. For developers, contributors, and " +
+      "anyone who wants to fork the source. Same content, ready for any " +
+      "tool that reads .md.",
+    href: '/downloads/mission-built.md',
+    accent: 'army' as const,
+  },
+];
+---
+<BaseLayout
+  title="Download · Mission Built"
+  description="Download Mission Built as PDF or Markdown. Free. CC BY-NC-SA 4.0."
+>
+  <TopNav />
+
+  <main class="page">
+    <header class="hero">
+      <p class="eyebrow">Download</p>
+      <h1 class="hero-h1">Take it offline.</h1>
+      <p class="lede">
+        The book is free in two formats. The same content the website serves,
+        ready for the screen on the plane or the printer in the garage.
+      </p>
+    </header>
+
+    <section class="formats">
+      {formats.map((f) => (
+        <a
+          href={f.href}
+          class:list={["format", `accent-${f.accent}`]}
+          download
+        >
+          <div class="format-meta">
+            <p class="format-kicker">{f.kicker}</p>
+            <h2 class="format-title">{f.title}</h2>
+            <p class="format-blurb">{f.blurb}</p>
+          </div>
+          <div class="format-cta">
+            <span class="format-label">Download</span>
+            <span class="format-arrow" aria-hidden="true">↓</span>
+          </div>
+        </a>
+      ))}
+    </section>
+
+    <p class="license">
+      Both formats are licensed under
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener license">CC&nbsp;BY-NC-SA 4.0</a>.
+      Share, remix, attribute. Commercial use prohibited.
+    </p>
+  </main>
+</BaseLayout>
+
+<style>
+  .hero {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 56px var(--pad-page-x) 28px;
+  }
+  .eyebrow {
+    margin: 0 0 14px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.24em;
+    color: var(--color-blood);
+    text-transform: uppercase;
+  }
+  .hero-h1 {
+    margin: 0 0 14px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(34px, 5vw, 52px);
+    line-height: 1.0;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: var(--color-chalk);
+  }
+  .lede {
+    margin: 0;
+    max-width: 600px;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 1.45;
+    letter-spacing: 0.015em;
+    color: var(--color-chalk-dim);
+  }
+
+  .formats {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 8px var(--pad-page-x) 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .format {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 28px;
+    padding: 22px 24px 22px 26px;
+    background: var(--color-panel);
+    transition: background 120ms ease-out;
+  }
+  .format:hover { background: #232020; }
+
+  .format::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+  }
+  .format.accent-blood::before { background: var(--color-blood); }
+  .format.accent-army::before  { background: var(--color-army); }
+
+  .format-kicker {
+    margin: 0 0 6px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    color: var(--color-chalk-faint);
+    text-transform: uppercase;
+  }
+  .format-title {
+    margin: 0 0 10px;
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: 18px;
+    letter-spacing: 0.02em;
+    color: var(--color-chalk);
+  }
+  .format-blurb {
+    margin: 0;
+    max-width: 520px;
+    font-family: var(--font-serif);
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--color-chalk-dim);
+  }
+
+  .format-cta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+  .format-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-chalk-dim);
+    transition: color 120ms ease-out;
+  }
+  .format-arrow {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--color-chalk-dim);
+    transition: color 120ms ease-out;
+  }
+  .format:hover .format-label,
+  .format:hover .format-arrow { color: var(--color-chalk); }
+
+  .license {
+    max-width: 720px;
+    margin: 32px auto 80px;
+    padding: 0 var(--pad-page-x);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--color-chalk-faint);
+    line-height: 1.5;
+  }
+  .license a {
+    color: var(--color-chalk-dim);
+    border-bottom: 1px dotted var(--color-rule);
+    transition: color 120ms ease-out, border-color 120ms ease-out;
+  }
+  .license a:hover {
+    color: var(--color-chalk);
+    border-bottom-color: var(--color-chalk-dim);
+  }
+
+  @media (max-width: 720px) {
+    .hero { padding: 36px var(--pad-page-x-mobile) 20px; }
+    .lede { font-size: 17px; }
+    .formats { padding: 8px var(--pad-page-x-mobile) 0; }
+    .format {
+      grid-template-columns: 1fr;
+      gap: 14px;
+      padding: 18px 18px 18px 20px;
+    }
+    .format-cta { justify-content: flex-start; }
+    .license {
+      margin: 24px auto 60px;
+      padding: 0 var(--pad-page-x-mobile);
+    }
+  }
+</style>
