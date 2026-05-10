@@ -3,7 +3,11 @@
   "type": "module",
   "version": "0.1.0",
   "private": true,
-  "description": "missionbuilt.io — open-source home for Mission Built: Lessons from the Barbell and the Boardroom",
+  "description": "missionbuilt.io. Open-source home for Mission Built: A Field Guide for Building Things That Matter.",
+  "engines": {
+    "node": ">=20"
+  },
+  "packageManager": "npm@10.9.2",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
