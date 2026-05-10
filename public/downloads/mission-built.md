@@ -2895,7 +2895,6 @@ Many of the ideas and reflections in *Mission Built* were forged through years o
 
 - **OpenAI's ChatGPT** helped organize thoughts, iterate on structure, and edit raw field notes into something more readable, while preserving voice and intent.
 - **Sora** was used to generate visual representations of the book's themes — from garage gyms to home offices — bringing energy and imagination to the creative process.
-- **Lovable** inspired much of the visual language and layout structure, especially in how early decks and storyboards translated the mission into motion.
 - **Anthropic's Claude** served as a senior editorial collaborator on the second edition — pressure-testing structure, surfacing redundancies, drafting the new AI chapter, and verifying citations across the manuscript.
 
 Every word, story, and metaphor came from real reps and real reflection. Just like good gear and strong teammates, these tools helped bring it all together with more clarity and care.
