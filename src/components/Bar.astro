@@ -1,0 +1,46 @@
+---
+/**
+ * Bar — the mini-barbell mark used in Chapter Index Part headers.
+ *
+ *   ▢ ▬ ▢   off  (army-outline plates, army bar)
+ *   ▣ ▬ ▣   on   (chalk plates, chalk bar)
+ *
+ * Pure CSS — three boxes side-by-side, no SVG. The "on" state means
+ * the reader has finished at least one chapter in the Part.
+ */
+interface Props {
+  on?: boolean;
+}
+const { on = false } = Astro.props;
+---
+<div class:list={["bar", on ? "on" : "off"]} aria-hidden="true">
+  <span class="plate"></span>
+  <span class="rod"></span>
+  <span class="plate"></span>
+</div>
+
+<style>
+  .bar {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    height: 9px;
+  }
+  .plate {
+    width: 8px;
+    height: 8px;
+    display: inline-block;
+    border: 1px solid var(--color-army);
+  }
+  .rod {
+    width: 14px;
+    height: 2px;
+    display: inline-block;
+  }
+
+  .off .plate { background: var(--color-army-dim); border-color: var(--color-army); }
+  .off .rod   { background: var(--color-army); }
+
+  .on .plate  { background: var(--color-chalk); border-color: var(--color-chalk); }
+  .on .rod    { background: var(--color-chalk); }
+</style>

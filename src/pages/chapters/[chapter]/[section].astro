@@ -1,0 +1,90 @@
+---
+/**
+ * Dynamic Reading View — renders any section in the book by chapter + slug.
+ *
+ * Routes generated from the `chapters` content collection. The MDX body is
+ * rendered inside ReadingLayout's prose slot.
+ *
+ * URL pattern: /chapters/{chapter}/{section-slug}
+ *   - chapter: '00' (prologue), '01'–'12' (chapters), '13' (conclusion)
+ *   - section-slug: kebab-case derivative of section title
+ */
+import { getCollection, type CollectionEntry } from 'astro:content';
+import ReadingLayout from '../../../layouts/ReadingLayout.astro';
+import { MB, sectionUrl } from '../../../data/book.ts';
+
+type Entry = CollectionEntry<'chapters'>;
+
+/**
+ * Read order across the entire book: prologue → chapters 01–12 → conclusion.
+ * Used to compute prev/next links across chapter boundaries.
+ */
+const READ_ORDER_FOLDERS = [
+  'prologue',
+  '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12',
+  'conclusion',
+];
+
+/** Sort entries into book reading order (folder index, then `order` frontmatter). */
+function sortEntries(all: Entry[]): Entry[] {
+  return [...all].sort((a, b) => {
+    const aFolder = a.id.split('/')[0];
+    const bFolder = b.id.split('/')[0];
+    const ai = READ_ORDER_FOLDERS.indexOf(aFolder);
+    const bi = READ_ORDER_FOLDERS.indexOf(bFolder);
+    if (ai !== bi) return ai - bi;
+    return a.data.order - b.data.order;
+  });
+}
+
+export async function getStaticPaths() {
+  const all = await getCollection('chapters', ({ data }) => !data.obsolete);
+  const folderOrder = ['prologue','01','02','03','04','05','06','07','08','09','10','11','12','13','conclusion'];
+  const ordered = [...all].sort((a, b) => {
+    const aFolder = a.id.split('/')[0];
+    const bFolder = b.id.split('/')[0];
+    const ai = folderOrder.indexOf(aFolder);
+    const bi = folderOrder.indexOf(bFolder);
+    if (ai !== bi) return ai - bi;
+    return a.data.order - b.data.order;
+  });
+
+  return ordered.map((entry, i) => {
+    const sectionSlug = entry.id.split('/').pop()!.replace(/\.mdx$/, '');
+    const prev = i > 0 ? ordered[i - 1] : null;
+    const next = i < ordered.length - 1 ? ordered[i + 1] : null;
+
+    return {
+      params: { chapter: entry.data.chapter, section: sectionSlug },
+      props: {
+        entry,
+        prevLink: prev ? { url: sectionUrl(prev.data.chapter, prev.data.title), title: prev.data.title } : null,
+        nextLink: next ? { url: sectionUrl(next.data.chapter, next.data.title), title: next.data.title } : null,
+      },
+    };
+  });
+}
+
+const { entry, prevLink, nextLink } = Astro.props;
+const { Content } = await entry.render();
+
+// For chapters 01–12, pull the chapter's section list for the left rail.
+// Prologue and conclusion have only one section each, so we render just that.
+const parentChapter = MB.chapters.find((c) => c.n === entry.data.chapter);
+const sections = parentChapter ? parentChapter.sections : [entry.data.title];
+const activeIndex = entry.data.order - 1;
+---
+<ReadingLayout
+  chapterN={entry.data.chapter}
+  chapterTitle={entry.data.chapterTitle}
+  sectionN={entry.data.section}
+  sectionTitle={entry.data.title}
+  sections={sections}
+  activeIndex={activeIndex}
+  prev={prevLink}
+  next={nextLink}
+  draft={entry.data.draft}
+  kicker={entry.data.kicker}
+>
+  <Content />
+</ReadingLayout>

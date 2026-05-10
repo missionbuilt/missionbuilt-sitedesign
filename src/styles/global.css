@@ -1,0 +1,68 @@
+/* ============================================================
+   Mission Built — Global / Reset
+   ============================================================ */
+
+@import "./tokens.css";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--color-bg);
+  color: var(--color-chalk);
+  font-family: var(--font-serif);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  min-height: 100vh;
+  /* Industrial: no rounded corners anywhere by default */
+}
+
+/* Universal: kill border-radius. The aesthetic is sharp 90° edges. */
+button, input, select, textarea, fieldset, img, video, canvas, .panel, .card {
+  border-radius: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+p { margin: 0 0 1em; }
+
+img, svg, video, canvas { display: block; max-width: 100%; }
+
+/* Focus: 2px oxblood outline, 2px offset, on all interactive elements */
+:focus-visible {
+  outline: 2px solid var(--color-blood);
+  outline-offset: 2px;
+}
+
+/* Selection: chalk on oxblood — matches book aesthetic */
+::selection {
+  background: var(--color-blood-dim);
+  color: var(--color-chalk);
+}
+
+/* Utility: hide visually but keep available to screen readers */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

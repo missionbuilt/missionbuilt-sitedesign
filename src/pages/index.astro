@@ -1,0 +1,457 @@
+---
+/**
+ * Home — landing page.
+ *
+ * Layout (top → bottom):
+ *   1. TopNav
+ *   2. Hero (eyebrow + display headline + subtitle)
+ *   3. Meta strip (4 stat cells)
+ *   4. Two-column section (blurb + buttons + author block | Start Here panel)
+ *
+ * Ambient: a fixed radial gradient overlay sits above the page bg
+ * (chalk-dust glow top-left, faint oxblood vignette bottom-right).
+ *
+ * Recreated from `design_handoff_missionbuilt/` Variant A "Iron Log".
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TopNav from '../components/TopNav.astro';
+import { MB, TOTAL_CHAPTERS, TOTAL_SECTIONS, totalReadTime, firstSectionUrl, sectionUrl } from '../data/book.ts';
+
+const featured = MB.chapters.slice(0, 3);
+
+const stats = [
+  { key: 'The book',  value: `${TOTAL_CHAPTERS} chapters`,   accent: 'chalk' as const, href: undefined },
+  { key: 'Sections',  value: `${TOTAL_SECTIONS} logs`,       accent: 'chalk' as const, href: undefined },
+  { key: 'Read time', value: totalReadTime(),                accent: 'chalk' as const, href: undefined },
+  { key: 'License',   value: MB.license.replace(' 4.0',''),  accent: 'army'  as const,
+    href: 'https://creativecommons.org/licenses/by-nc-sa/4.0/' },
+];
+---
+<BaseLayout title="Mission Built · A Field Guide for Building Things That Matter" active="book">
+  <div class="ambient" aria-hidden="true"></div>
+
+  <TopNav active="book" />
+
+  <main class="page">
+    {/* ---------- HERO ---------- */}
+    <section class="hero">
+      <p class="eyebrow">
+        <span class="dots" aria-hidden="true">▮▮▮</span>
+        <span>An open-source book by Mike Nichols</span>
+        <span class="dots" aria-hidden="true">▮▮▮</span>
+      </p>
+
+      <h1 class="display">
+        <span class="line">Mission</span>
+        <span class="line built">Built.</span>
+      </h1>
+
+      <p class="subtitle">
+        A field guide for building things that matter.
+      </p>
+    </section>
+
+    {/* ---------- META STRIP ---------- */}
+    <section class="meta-strip" aria-label="Book at a glance">
+      {stats.map((s) => (
+        <div class="stat">
+          <div class="stat-key">{s.key}</div>
+          {s.href ? (
+            <a
+              class:list={["stat-value", "linked", s.accent === 'army' && "army"]}
+              href={s.href}
+              target="_blank"
+              rel="noopener license"
+            >{s.value}</a>
+          ) : (
+            <div class:list={["stat-value", s.accent === 'army' && "army"]}>{s.value}</div>
+          )}
+        </div>
+      ))}
+    </section>
+
+    {/* ---------- TWO COLUMNS ---------- */}
+    <section class="two-col">
+      <div class="col-left">
+        <p class="blurb">
+          <span class="blurb-lead">{MB.blurbLong}</span>
+        </p>
+
+        <div class="buttons">
+          <a href={firstSectionUrl(MB.chapters[0])} class="btn primary">
+            Get to work <span aria-hidden="true">→</span>
+          </a>
+          <a href={sectionUrl(MB.prologue.n, MB.prologue.title)} class="btn ghost">Read the prologue</a>
+          <a href="https://github.com/missionbuilt/missionbuilt-book" class="btn ghost dim" target="_blank" rel="noopener">
+            <span aria-hidden="true">↗</span> View on GitHub
+          </a>
+        </div>
+
+        <div class="author">
+          <div class="avatar" aria-hidden="true">MN</div>
+          <div class="author-meta">
+            <a
+              href="https://www.linkedin.com/in/hmikenichols"
+              class="author-name"
+              target="_blank"
+              rel="noopener"
+              aria-label={`${MB.author} on LinkedIn`}
+            >{MB.author}<span class="ext" aria-hidden="true"> ↗</span></a>
+            <div class="author-tag">{MB.authorTagline}</div>
+          </div>
+        </div>
+      </div>
+
+      {/* ---------- START HERE PANEL ---------- */}
+      <aside class="start-here panel" aria-label="Start here">
+        <div class="panel-header">
+          <span>Start here</span>
+          <span>Ch.01–03</span>
+        </div>
+
+        {featured.map((c, i) => (
+          <a href={firstSectionUrl(c)} class:list={["chapter-row", i === 0 && "first"]}>
+            <div class:list={["c-num", i === 0 ? "blood" : "faint"]}>{c.n}</div>
+            <div class="c-body">
+              <div class="c-title">{c.title}</div>
+              <div class="c-meta">{c.sections.length} sections · {c.mins} min</div>
+            </div>
+            <div class:list={["c-status", i === 0 ? "reading" : "next"]}>
+              {i === 0 ? '◐ Reading' : 'Up next'}
+            </div>
+          </a>
+        ))}
+      </aside>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  /* ============ Ambient background ============ */
+  .ambient {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.55;
+    background:
+      radial-gradient(1200px 600px at 20% -10%, rgba(255,250,235,.04), transparent 60%),
+      radial-gradient(800px 500px at 110% 110%, rgba(168,33,26,.10), transparent 60%);
+    z-index: 0;
+  }
+  .page { position: relative; z-index: 1; }
+
+  /* ============ HERO ============ */
+  .hero {
+    padding: 52px var(--pad-page-x) 28px;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    margin: 0 0 18px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    /* Full oxblood for legibility against charcoal — muted bloodDim
+       was too dark on a real screen. */
+    color: var(--color-blood);
+    text-transform: uppercase;
+  }
+  .eyebrow .dots {
+    letter-spacing: 0.04em;
+    color: var(--color-blood);
+    opacity: 0.65;
+  }
+
+  .display {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 700;
+    /* Hero clamps from 40px (mobile) → 132px (desktop), ~14vw */
+    font-size: clamp(56px, 14vw, 132px);
+    line-height: 0.86;
+    letter-spacing: -0.02em;
+    color: var(--color-chalk);
+    text-transform: uppercase;
+  }
+  .display .line { display: block; }
+  .display .built { color: var(--color-blood); }
+
+  .subtitle {
+    margin: 22px 0 0;
+    max-width: 900px;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(15px, 2.4vw, 22px);
+    color: var(--color-chalk-dim);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .subtitle .dot { margin: 0 0.4em; }
+
+  /* ============ META STRIP ============ */
+  .meta-strip {
+    margin: 0 var(--pad-page-x);
+    padding: 14px 0;
+    border-top: var(--border-thin);
+    border-bottom: var(--border-thin);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-chalk-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+  }
+  .stat-key {
+    color: var(--color-chalk-faint);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+  }
+  .stat-value {
+    margin-top: 2px;
+    color: var(--color-chalk);
+    font-family: var(--font-display);
+    font-size: 22px;
+    letter-spacing: 0.04em;
+    display: inline-block;
+  }
+  .stat-value.army { color: var(--color-army); }
+  /* Linked stat values get a subtle underline on hover, same color */
+  .stat-value.linked {
+    border-bottom: 1px solid transparent;
+    transition: border-bottom-color 120ms ease-out;
+  }
+  .stat-value.linked:hover { border-bottom-color: currentColor; }
+
+  /* ============ TWO COLUMNS ============ */
+  .two-col {
+    padding: 30px var(--pad-page-x) 56px;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 56px;
+  }
+
+  /* Home blurb — was set in serif, but on this page that font appears
+     only here, which made it stand out from the surrounding Oswald +
+     mono. Keep the blurb in the page's voice (Oswald 400, untransformed)
+     so the home reads as one cohesive system. Serif lives in the book
+     itself (Chapter Index + Reading View). */
+  .blurb {
+    margin: 0;
+    max-width: 560px;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.5;
+    letter-spacing: 0.015em;
+    color: var(--color-chalk-dim);
+  }
+  .blurb-lead { color: var(--color-chalk); }
+
+  /* ---- Buttons ---- */
+  .buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 24px;
+  }
+
+  .btn {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 14px 22px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: background 120ms ease-out, color 120ms ease-out, filter 120ms ease-out;
+    white-space: nowrap;
+  }
+  .btn.primary {
+    background: var(--color-blood);
+    color: var(--color-chalk);
+    border-color: var(--color-blood);
+  }
+  .btn.primary:hover { filter: brightness(1.06); }
+  .btn.ghost {
+    background: transparent;
+    color: var(--color-chalk);
+    border-color: var(--color-rule);
+  }
+  .btn.ghost.dim { color: var(--color-chalk-dim); }
+  .btn.ghost:hover { background: var(--color-panel); color: var(--color-chalk); }
+
+  /* ---- Author block ---- */
+  .author {
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: var(--border-dashed);
+    display: flex;
+    gap: 14px;
+    align-items: center;
+  }
+  .avatar {
+    width: 44px;
+    height: 44px;
+    border: var(--border-thin);
+    background: var(--color-panel);
+    color: var(--color-chalk-dim);
+    font-family: var(--font-display);
+    font-size: 16px;
+    letter-spacing: 0.04em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .author-name {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+    font-family: var(--font-display);
+    font-size: 14px;
+    color: var(--color-chalk);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: color 120ms ease-out;
+  }
+  .author-name:hover { color: var(--color-blood); }
+  .author-name .ext {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--color-chalk-faint);
+    letter-spacing: 0;
+    transition: color 120ms ease-out;
+  }
+  .author-name:hover .ext { color: var(--color-blood); }
+  .author-tag {
+    margin-top: 2px;
+    font-family: var(--font-serif);
+    font-size: 11px;
+    color: var(--color-chalk-faint);
+    letter-spacing: 0.06em;
+  }
+
+  /* ============ START HERE PANEL ============ */
+  .start-here {
+    padding: 18px 22px;
+    background: var(--color-panel);
+    border: var(--border-thin);
+    align-self: start;
+  }
+  .panel-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    color: var(--color-chalk-faint);
+    text-transform: uppercase;
+  }
+
+  .chapter-row {
+    display: grid;
+    grid-template-columns: 42px 1fr 80px;
+    gap: 12px;
+    align-items: center;
+    padding: 12px 0;
+    border-top: var(--border-dashed);
+    transition: background 120ms ease-out;
+  }
+  .chapter-row.first { border-top: none; }
+  .chapter-row:hover { background: rgba(255,255,255,0.02); }
+
+  .c-num {
+    font-family: var(--font-display);
+    font-size: 24px;
+    line-height: 1;
+  }
+  .c-num.blood  { color: var(--color-blood); }
+  .c-num.faint  { color: var(--color-chalk-faint); }
+
+  .c-title {
+    font-family: var(--font-display);
+    font-size: 17px;
+    color: var(--color-chalk);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.05;
+  }
+  .c-meta {
+    margin-top: 4px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--color-chalk-faint);
+    letter-spacing: 0.06em;
+  }
+
+  .c-status {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-align: right;
+  }
+  .c-status.reading { color: var(--color-army); }
+  .c-status.next    { color: var(--color-chalk-faint); }
+
+  /* ============ Responsive ============ */
+
+  /* Mid: collapse 4-col meta to 2 columns; allow buttons to wrap */
+  @media (max-width: 1099px) {
+    .two-col {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    .start-here { max-width: 540px; }
+  }
+
+  @media (max-width: 720px) {
+    :root { /* override the page padding for mobile */ }
+    .hero {
+      padding: 36px var(--pad-page-x-mobile) 20px;
+    }
+    .eyebrow {
+      gap: 8px;
+      flex-wrap: wrap;
+      font-size: 10px;
+    }
+    .eyebrow .dots { display: none; }
+
+    .meta-strip {
+      margin: 0 var(--pad-page-x-mobile);
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px 24px;
+      padding: 16px 0;
+    }
+    .stat-value { font-size: 20px; }
+
+    .two-col {
+      padding: 24px var(--pad-page-x-mobile) 40px;
+      gap: 32px;
+    }
+
+    .buttons { gap: 8px; }
+    .btn { padding: 12px 18px; font-size: 13px; flex: 1 1 auto; min-width: 0; text-align: center; }
+    .btn.ghost.dim { flex-basis: 100%; }
+
+    .chapter-row {
+      grid-template-columns: 36px 1fr;
+      gap: 10px;
+    }
+    .c-status {
+      grid-column: 1 / -1;
+      text-align: left;
+      padding-left: 46px;
+    }
+    .c-title { font-size: 16px; }
+  }
+</style>

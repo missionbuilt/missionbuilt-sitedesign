@@ -1,0 +1,246 @@
+---
+/**
+ * Source — disambiguation page for "open source." MissionBuilt is open
+ * in two places: the book content (chapters, edits) and the site code
+ * (this thing you're looking at). This page exists so a reader who
+ * clicks "Source" lands somewhere honest about which repo is which.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TopNav from '../components/TopNav.astro';
+
+const repos = [
+  {
+    kicker: 'The book',
+    title: 'missionbuilt-book',
+    blurb:
+      "Chapters, sections, and edits. The open-source content of Mission Built. " +
+      "File issues, suggest a fix, or watch the work happen in public.",
+    href: 'https://github.com/missionbuilt/missionbuilt-book',
+    accent: 'blood' as const,
+  },
+  {
+    kicker: 'This site',
+    title: 'missionbuilt-sitedesign',
+    blurb:
+      "The site you're reading right now. Astro + MDX, design tokens, components. " +
+      "Forkable, copyable, learnable.",
+    href: 'https://github.com/missionbuilt/missionbuilt-sitedesign',
+    accent: 'army' as const,
+  },
+];
+---
+<BaseLayout
+  title="Source · Mission Built"
+  description="MissionBuilt is open in two places: the book content and the site code. Both repos live on GitHub."
+  active="source"
+>
+  <TopNav active="source" />
+
+  <main class="page">
+    <header class="hero">
+      <p class="eyebrow">Source</p>
+      <h1 class="hero-h1">Open work.</h1>
+      <p class="lede">
+        MissionBuilt is open in two places: the book and the site that hosts it.
+        Both live on GitHub.
+      </p>
+    </header>
+
+    <section class="repos">
+      {repos.map((r) => (
+        <a
+          href={r.href}
+          class:list={["repo", `accent-${r.accent}`]}
+          target="_blank"
+          rel="noopener"
+        >
+          <div class="repo-meta">
+            <p class="repo-kicker">{r.kicker}</p>
+            <h2 class="repo-title">{r.title}</h2>
+            <p class="repo-blurb">{r.blurb}</p>
+          </div>
+          <div class="repo-cta">
+            <span class="repo-label">View on GitHub</span>
+            <span class="repo-arrow" aria-hidden="true">↗</span>
+          </div>
+        </a>
+      ))}
+    </section>
+
+    <p class="license">
+      Content licensed
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener license">CC&nbsp;BY-NC-SA 4.0</a>.
+      Site code licensed
+      <a href="https://opensource.org/license/mit" target="_blank" rel="noopener license">MIT</a>.
+      Contributions welcome on either side.
+    </p>
+  </main>
+</BaseLayout>
+
+<style>
+  /* ============ HEADER ============ */
+  .hero {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 56px var(--pad-page-x) 28px;
+  }
+
+  .eyebrow {
+    margin: 0 0 14px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.24em;
+    color: var(--color-blood);
+    text-transform: uppercase;
+  }
+
+  .hero-h1 {
+    margin: 0 0 14px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(34px, 5vw, 52px);
+    line-height: 1.0;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: var(--color-chalk);
+  }
+
+  .lede {
+    margin: 0;
+    max-width: 600px;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 1.45;
+    letter-spacing: 0.015em;
+    color: var(--color-chalk-dim);
+  }
+
+  /* ============ REPO BLOCKS ============ */
+  .repos {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 8px var(--pad-page-x) 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .repo {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 28px;
+    padding: 22px 24px 22px 26px;
+    background: var(--color-panel);
+    transition: background 120ms ease-out;
+  }
+  .repo:hover { background: #232020; }
+
+  /* Accent rail — book = blood, site = army */
+  .repo::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+  }
+  .repo.accent-blood::before { background: var(--color-blood); }
+  .repo.accent-army::before  { background: var(--color-army); }
+
+  .repo-kicker {
+    margin: 0 0 6px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    color: var(--color-chalk-faint);
+    text-transform: uppercase;
+  }
+
+  .repo-title {
+    margin: 0 0 10px;
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: 18px;
+    letter-spacing: 0.02em;
+    color: var(--color-chalk);
+  }
+
+  .repo-blurb {
+    margin: 0;
+    max-width: 520px;
+    font-family: var(--font-serif);
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--color-chalk-dim);
+  }
+
+  .repo-cta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+  .repo-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-chalk-dim);
+    transition: color 120ms ease-out;
+  }
+  .repo-arrow {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--color-chalk-dim);
+    transition: color 120ms ease-out;
+  }
+  .repo:hover .repo-label,
+  .repo:hover .repo-arrow { color: var(--color-chalk); }
+
+  /* ============ LICENSE LINE ============ */
+  .license {
+    max-width: 720px;
+    margin: 32px auto 80px;
+    padding: 0 var(--pad-page-x);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--color-chalk-faint);
+    line-height: 1.5;
+  }
+  .license a {
+    color: var(--color-chalk-dim);
+    border-bottom: 1px dotted var(--color-rule);
+    transition: color 120ms ease-out, border-color 120ms ease-out;
+  }
+  .license a:hover {
+    color: var(--color-chalk);
+    border-bottom-color: var(--color-chalk-dim);
+  }
+
+  /* ============ Responsive ============ */
+  @media (max-width: 720px) {
+    .hero {
+      padding: 36px var(--pad-page-x-mobile) 20px;
+    }
+    .lede { font-size: 17px; }
+
+    .repos {
+      padding: 8px var(--pad-page-x-mobile) 0;
+    }
+    .repo {
+      grid-template-columns: 1fr;
+      gap: 14px;
+      padding: 18px 18px 18px 20px;
+    }
+    .repo-cta { justify-content: flex-start; }
+
+    .license {
+      margin: 24px auto 60px;
+      padding: 0 var(--pad-page-x-mobile);
+    }
+  }
+</style>

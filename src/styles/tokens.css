@@ -1,0 +1,83 @@
+/* ============================================================
+   Mission Built — Design Tokens
+   "Iron Log" variant. Sourced from design_handoff_missionbuilt/.
+   Single dark theme. No border-radius. No drop shadows.
+   ============================================================ */
+
+:root {
+  /* ---- Colors ----------------------------------------------- */
+  /* Backgrounds */
+  --color-bg:            #171513; /* Page background (charcoal) */
+  --color-panel:         #1f1c19; /* Sunken panel, active row, prologue/conclusion bookends */
+  --color-rule:          #2a2622; /* 1px borders, dividers */
+  --color-rule-soft:     #221f1c; /* Softer dashed dividers */
+
+  /* Foregrounds */
+  --color-chalk:         #ebe5d8; /* Primary foreground (off-white, warm) */
+  --color-chalk-dim:     #a8a094; /* Secondary foreground / body copy */
+  --color-chalk-faint:   #5a564f; /* Tertiary / metadata */
+
+  /* Primary accent — oxblood */
+  --color-blood:         #a8211a;
+  --color-blood-dim:     #5e1e1c;
+
+  /* Secondary accent — army green */
+  --color-army:          #7a8b3a;
+  --color-army-deep:     #3a4521;
+  --color-army-dim:      #4a5527;
+
+  /* Reserved neutral */
+  --color-steel:         #7a7873;
+
+  /* ---- Typography families --------------------------------- */
+  --font-display: "Oswald", "Archivo Narrow", "Helvetica Neue", Arial, sans-serif;
+  /* Body serif: Merriweather. Designed by Sorkin Type for screen
+     readability — generous x-height, sturdy strokes, sturdy on small
+     screens. Pairs with the industrial Oswald display. */
+  --font-serif:   "Merriweather", Georgia, "Times New Roman", serif;
+  --font-mono:    "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* ---- Type scale ------------------------------------------ */
+  /* role: size / line-height / weight / tracking / case        */
+  --fs-hero:           132px;
+  --fs-page-h1:        60px;
+  --fs-section-h1:     56px;
+  --fs-part-title:     28px;
+  --fs-stat-value:     26px;
+  --fs-hero-sub:       22px;
+  --fs-chapter-title:  18px;
+  --fs-pull-quote:     26px;
+  --fs-body:           16px;
+  --fs-blurb:          15px;
+  --fs-margin-note:    13px;
+  --fs-kicker:         11px;
+  --fs-stat-key:       10px;
+  --fs-pill:           10px;
+  --fs-section-num:    10px;
+
+  /* ---- Spacing — loose 8px grid ---------------------------- */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  14px;
+  --space-5:  18px;
+  --space-6:  22px;
+  --space-7:  28px;
+  --space-8:  36px;
+  --space-9:  48px;
+  --space-10: 56px;
+
+  /* Page side-padding (desktop default) */
+  --pad-page-x: 56px;
+  --pad-page-x-mid: 36px;
+  --pad-page-x-mobile: 24px;
+
+  /* ---- Borders --------------------------------------------- */
+  --border-thin: 1px solid var(--color-rule);
+  --border-dashed: 1px dashed var(--color-rule);
+
+  /* ---- Layout breakpoints (reference; used in @media) ------ */
+  /*  large:  >= 1100px  three-column reading view              */
+  /*  mid:    720–1099px collapse right rail                    */
+  /*  small:  <= 720px   single column, sticky nav              */
+}

@@ -1,0 +1,69 @@
+---
+/**
+ * Lockup — the MISSION ▪ BUILT mark.
+ *
+ * The bullet between the words is a 7×7px oxblood square (no SVG —
+ * just a styled inline-block). Sized via the `size` prop which scales
+ * the whole mark.
+ *
+ * Per the design spec: Oswald 700, letter-spacing .08em, uppercase.
+ * The square is 7×7 at 16px text size; we scale it proportionally.
+ */
+interface Props {
+  /** Font-size in px. Default 16 (used in TopNav). Reading-view rail uses 14. */
+  size?: number;
+  /** When true, the wordmark renders white-on-bg with no version label */
+  bare?: boolean;
+}
+
+const { size = 16, bare = false } = Astro.props;
+
+// Square scales with the wordmark — about 7/16 of the font-size.
+const squarePx = Math.max(5, Math.round(size * 7 / 16));
+---
+<span class="lockup" style={`--lockup-size:${size}px; --square:${squarePx}px;`}>
+  <span class="word">Mission</span>
+  <span class="bar" aria-hidden="true"></span>
+  <span class="word">Built</span>
+  {!bare && <span class="version">v1.13 · open source</span>}
+</span>
+
+<style>
+  .lockup {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--lockup-size);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-chalk);
+    line-height: 1;
+  }
+
+  .bar {
+    display: inline-block;
+    width: var(--square);
+    height: var(--square);
+    background: var(--color-blood);
+    /* nudge the square down to optical-center against capital letters */
+    transform: translateY(-0.05em);
+  }
+
+  .version {
+    display: inline-block;
+    margin-left: 14px;
+    font-family: var(--font-mono);
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: var(--color-chalk-faint);
+    text-transform: uppercase;
+  }
+
+  /* On narrow screens, hide the version label — too cramped */
+  @media (max-width: 720px) {
+    .version { display: none; }
+  }
+</style>

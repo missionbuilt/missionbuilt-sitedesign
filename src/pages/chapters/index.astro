@@ -1,0 +1,468 @@
+---
+/**
+ * Chapter Index — the table of contents. The spine of the book.
+ *
+ * Calm-pass values: smaller hero, no boxed stat grid, transparent
+ * Part headers with a subtle army left rail, lighter row treatment,
+ * single dashed divider only between rows, softer active state.
+ *
+ * Layout:
+ *   1. TopNav
+ *   2. Hero — Loadout eyebrow + H1 + simple meta line
+ *   3. Prologue row (transparent, just dashed top/bottom)
+ *   4. Three Part blocks: quiet header column + chapter rows
+ *   5. Conclusion row (mirror of prologue)
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import TopNav from '../../components/TopNav.astro';
+import Bar from '../../components/Bar.astro';
+import {
+  MB,
+  TOTAL_CHAPTERS,
+  TOTAL_SECTIONS,
+  totalReadTime,
+  firstSectionUrl,
+  sectionUrl,
+} from '../../data/book.ts';
+
+const READING_CH = MB.reading.chapterN;
+
+function sectionPreview(sections: string[]): { head: string; overflow: number } {
+  const head = sections.slice(0, 2).join(' · ');
+  const overflow = Math.max(0, sections.length - 2);
+  return { head, overflow };
+}
+---
+<BaseLayout title="Chapters · Mission Built" active="chapters">
+  <TopNav active="chapters" />
+
+  <main class="page">
+    {/* ---------- HERO ---------- */}
+    <section class="hero" aria-label="Book overview">
+      <p class="loadout-eyebrow">
+        <span class="dot" aria-hidden="true"></span>
+        The Loadout
+      </p>
+
+      <h1 class="hero-h1">
+        All thirteen chapters.<br />
+        <span class="blood">Three parts.</span>
+      </h1>
+
+      <ul class="hero-meta" aria-label="At a glance">
+        <li><span class="k">Chapters</span><span class="v">{TOTAL_CHAPTERS}</span></li>
+        <li><span class="k">Sections</span><span class="v">{TOTAL_SECTIONS}</span></li>
+        <li><span class="k">Read time</span><span class="v">{totalReadTime()}</span></li>
+        <li>
+          <span class="k">License</span>
+          <a
+            class="v army linked"
+            href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
+            target="_blank"
+            rel="noopener license"
+          >CC BY-NC-SA</a>
+        </li>
+      </ul>
+    </section>
+
+    {/* ---------- PROLOGUE ---------- */}
+    <a class="bookend" href={sectionUrl(MB.prologue.n, MB.prologue.title)} aria-label="Prologue: Built for More">
+      <span class="be-kicker">{MB.prologue.kicker}</span>
+      <span class="be-title">{MB.prologue.title}</span>
+      <span class="be-mins">{MB.prologue.mins} min</span>
+    </a>
+
+    {/* ---------- PARTS ---------- */}
+    <div class="parts">
+      {MB.parts.map((p) => {
+        const part = MB.chapters.slice(p.range[0], p.range[1]);
+        return (
+          <section class="part" aria-label={`${p.label}: ${p.title}`}>
+            <header class="part-header">
+              <div class="part-meta">
+                <div class="part-eyebrow">
+                  {p.label} · {part.length} chapters
+                </div>
+                <h2 class="part-title">{p.title}</h2>
+                <p class="part-blurb">{p.blurb}</p>
+              </div>
+              <div class="part-progress">
+                <Bar on={p.done > 0} />
+                <span class="part-progress-label">{p.done} / {part.length} done</span>
+              </div>
+            </header>
+
+            <ol class="rows">
+              {part.map((c, ci) => {
+                const isReading = c.n === READING_CH;
+                const { head, overflow } = sectionPreview(c.sections);
+                return (
+                  <li>
+                    <a
+                      href={firstSectionUrl(c)}
+                      class:list={["row", ci > 0 && "divided", isReading && "reading"]}
+                      aria-current={isReading ? 'true' : undefined}
+                    >
+                      <span class:list={["c-num", isReading && "blood"]}>{c.n}</span>
+                      <span class="c-body">
+                        <span class="c-title">{c.title}</span>
+                        <span class="c-sections">
+                          {head}
+                          {overflow > 0 && <span class="overflow"> + {overflow}</span>}
+                        </span>
+                      </span>
+                      <span class="c-aside">
+                        <span class="c-mins">{c.sections.length} · {c.mins} min</span>
+                        {isReading && <span class="c-status">Reading</span>}
+                      </span>
+                    </a>
+                  </li>
+                );
+              })}
+            </ol>
+          </section>
+        );
+      })}
+    </div>
+
+    {/* ---------- CONCLUSION ---------- */}
+    <a class="bookend" href={sectionUrl(MB.conclusion.n, MB.conclusion.title)} aria-label="Conclusion: Giving a Shit Works">
+      <span class="be-kicker">{MB.conclusion.kicker}</span>
+      <span class="be-title">{MB.conclusion.title}</span>
+      <span class="be-mins">{MB.conclusion.mins} min</span>
+    </a>
+  </main>
+</BaseLayout>
+
+<style>
+  /* ============ HERO ============ */
+  .hero {
+    padding: 48px var(--pad-page-x) 28px;
+    border-bottom: var(--border-thin);
+    max-width: 1100px;
+  }
+
+  .loadout-eyebrow {
+    margin: 0 0 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.24em;
+    color: var(--color-army);
+    text-transform: uppercase;
+  }
+  .loadout-eyebrow .dot {
+    width: 8px;
+    height: 8px;
+    background: var(--color-army);
+    display: inline-block;
+  }
+
+  .hero-h1 {
+    margin: 0;
+    font-family: var(--font-display);
+    /* Lighter weight + smaller size — calm down the shouty headline */
+    font-weight: 600;
+    font-size: clamp(34px, 4.6vw, 44px);
+    line-height: 1.0;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: var(--color-chalk);
+    max-width: 16ch;
+  }
+  .hero-h1 .blood { color: var(--color-blood); }
+
+  /* Inline meta — replaces the boxed 2x2 stat grid */
+  .hero-meta {
+    margin: 28px 0 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px 36px;
+  }
+  .hero-meta li {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .hero-meta .k {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    color: var(--color-chalk-faint);
+    text-transform: uppercase;
+  }
+  .hero-meta .v {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-chalk);
+    white-space: nowrap;
+  }
+  .hero-meta .v.army { color: var(--color-army); }
+  /* Linked stat — subtle underline on hover, color stays the same */
+  .hero-meta .v.linked {
+    border-bottom: 1px solid transparent;
+    transition: border-bottom-color 120ms ease-out;
+  }
+  .hero-meta .v.linked:hover { border-bottom-color: currentColor; }
+
+  /* ============ BOOKENDS (Prologue / Conclusion) ============ */
+  /* Quiet, transparent. Just a hairline above and a kicker label. */
+  .bookend {
+    display: grid;
+    grid-template-columns: 140px 1fr 80px;
+    align-items: baseline;
+    gap: 18px;
+    padding: 18px var(--pad-page-x);
+    border-bottom: var(--border-thin);
+    transition: background 120ms ease-out;
+  }
+  .bookend:hover { background: rgba(255, 255, 255, 0.02); }
+
+  .be-kicker {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    color: var(--color-chalk-faint);
+    text-transform: uppercase;
+  }
+  .be-title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 17px;
+    color: var(--color-chalk);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .be-mins {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--color-chalk-faint);
+    text-transform: uppercase;
+    text-align: right;
+  }
+
+  /* ============ PARTS ============ */
+  .parts { padding: 0 var(--pad-page-x); }
+
+  .part {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 28px;
+    padding: 36px 0;
+    border-bottom: var(--border-thin);
+  }
+  .part:last-of-type { border-bottom: none; }
+
+  /* Part header — quiet, on the page bg, no rail, no fill */
+  .part-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 24px;
+    padding-top: 4px;
+  }
+
+  .part-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--color-army);
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .part-title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 1.0;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--color-chalk);
+  }
+
+  .part-blurb {
+    margin: 10px 0 0;
+    font-family: var(--font-serif);
+    font-size: 13px;
+    color: var(--color-chalk-dim);
+    line-height: 1.55;
+  }
+
+  .part-progress {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .part-progress-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--color-army);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  /* ---- Chapter rows ---- */
+  .rows {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .row {
+    position: relative;
+    display: grid;
+    grid-template-columns: 48px 1fr auto;
+    align-items: center;
+    gap: 18px;
+    padding: 16px 16px 16px 18px;
+    transition: background 120ms ease-out;
+  }
+  /* Single soft divider between rows (not before first) */
+  .row.divided { border-top: 1px dashed var(--color-rule-soft); }
+  .row:hover { background: rgba(255, 255, 255, 0.02); }
+
+  .row.reading { background: var(--color-panel); }
+  .row.reading::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--color-blood);
+  }
+  .row.reading:hover { background: #232020; }
+
+  .c-num {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    color: var(--color-chalk-faint);
+  }
+  .c-num.blood { color: var(--color-blood); }
+
+  .c-body {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+  }
+
+  .c-title {
+    font-family: var(--font-display);
+    /* Lighter weight — was reading too heavy in caps */
+    font-weight: 500;
+    font-size: 17px;
+    color: var(--color-chalk);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    line-height: 1.15;
+  }
+
+  .c-sections {
+    font-family: var(--font-serif);
+    font-size: 13px;
+    color: var(--color-chalk-dim);
+    line-height: 1.5;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .c-sections .overflow { color: var(--color-chalk-faint); }
+
+  .c-aside {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    text-align: right;
+    min-width: 84px;
+  }
+  .c-mins {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--color-chalk-faint);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .c-status {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--color-chalk-dim);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  /* ============ Responsive ============ */
+  @media (max-width: 1099px) {
+    .part {
+      gap: 20px;
+      grid-template-columns: 180px 1fr;
+    }
+    .row {
+      gap: 14px;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .hero { padding: 36px var(--pad-page-x-mobile) 24px; }
+
+    .hero-meta { gap: 12px 24px; }
+
+    .bookend {
+      grid-template-columns: 1fr auto;
+      grid-template-rows: auto auto;
+      gap: 4px 14px;
+      padding: 16px var(--pad-page-x-mobile);
+    }
+    .be-kicker { grid-column: 1; grid-row: 1; }
+    .be-mins   { grid-column: 2; grid-row: 1; }
+    .be-title  { grid-column: 1 / -1; grid-row: 2; font-size: 16px; }
+
+    .parts { padding: 0; }
+
+    .part {
+      grid-template-columns: 1fr;
+      gap: 16px;
+      padding: 28px var(--pad-page-x-mobile);
+    }
+
+    .part-header { gap: 14px; padding-top: 0; }
+
+    .row {
+      grid-template-columns: 36px 1fr;
+      grid-template-rows: auto auto;
+      column-gap: 12px;
+      row-gap: 4px;
+      padding: 14px 14px 14px 16px;
+    }
+    .c-num    { grid-row: 1 / span 2; align-self: start; padding-top: 2px; font-size: 20px; }
+    .c-body   { grid-column: 2; grid-row: 1; }
+    .c-aside  {
+      grid-column: 2;
+      grid-row: 2;
+      flex-direction: row;
+      align-items: center;
+      gap: 12px;
+      text-align: left;
+      min-width: 0;
+    }
+    .c-title { font-size: 15px; }
+    .c-sections { white-space: normal; }
+  }
+</style>

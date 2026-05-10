@@ -1,0 +1,41 @@
+---
+/**
+ * Static route for Ch.01 §1. Kept as a thin shim because the macOS mount
+ * didn't permit deletion of this file when MDX scaffolding landed. Static
+ * routes take precedence over dynamic in Astro, so this page is what serves
+ * /chapters/01/the-mission-is-the-magnet/. It delegates to the same
+ * ReadingLayout the [chapter]/[section].astro dynamic route uses.
+ */
+import { getEntry } from 'astro:content';
+import ReadingLayout from '../../../layouts/ReadingLayout.astro';
+import { MB, sectionUrl } from '../../../data/book.ts';
+
+const entry = await getEntry('chapters', '01/the-mission-is-the-magnet');
+if (!entry) throw new Error('Missing MDX: 01/the-mission-is-the-magnet');
+const { Content } = await entry.render();
+
+const chapter = MB.chapters.find((c) => c.n === '01')!;
+
+const prologue = await getEntry('chapters', 'prologue/built-for-more');
+const nextSection = await getEntry('chapters', '01/the-drift');
+
+const prevLink = prologue
+  ? { url: sectionUrl(prologue.data.chapter, prologue.data.title), title: prologue.data.title }
+  : null;
+const nextLink = nextSection
+  ? { url: sectionUrl(nextSection.data.chapter, nextSection.data.title), title: nextSection.data.title }
+  : null;
+---
+<ReadingLayout
+  chapterN={entry.data.chapter}
+  chapterTitle={entry.data.chapterTitle}
+  sectionN={entry.data.section}
+  sectionTitle={entry.data.title}
+  sections={chapter.sections}
+  activeIndex={entry.data.order - 1}
+  prev={prevLink}
+  next={nextLink}
+  draft={entry.data.draft}
+>
+  <Content />
+</ReadingLayout>

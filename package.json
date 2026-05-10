@@ -1,0 +1,18 @@
+{
+  "name": "missionbuilt",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "description": "missionbuilt.io — open-source home for Mission Built: Lessons from the Barbell and the Boardroom",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^3.1.9",
+    "astro": "^4.16.18"
+  }
+}

@@ -1,0 +1,437 @@
+---
+/**
+ * ReadingLayout — the three-column reading experience shell.
+ *
+ * Left rail (chapter contents) / Main (the prose, slot) / Right rail (section meta).
+ * The MDX body content is passed in via the default <slot/>.
+ *
+ * Originally this was inlined in src/pages/chapters/01/the-mission-is-the-magnet.astro.
+ * Extracted here so the dynamic [chapter]/[section].astro route can reuse it.
+ */
+import BaseLayout from './BaseLayout.astro';
+import Lockup from '../components/Lockup.astro';
+import { sectionUrl } from '../data/book.ts';
+
+interface SectionLink {
+  url: string;
+  title: string;
+}
+
+interface Props {
+  chapterN: string;
+  chapterTitle: string;
+  sectionN: string;
+  sectionTitle: string;
+  /** All section titles in this chapter, in order (used for the left rail). */
+  sections: string[];
+  /** 0-based index of the active section within `sections`. */
+  activeIndex: number;
+  prev: SectionLink | null;
+  next: SectionLink | null;
+  /** True for placeholder sections (no real content yet). */
+  draft?: boolean;
+  /** Optional kicker shown above the section eyebrow (e.g. "Prologue"). */
+  kicker?: string;
+}
+
+const {
+  chapterN,
+  chapterTitle,
+  sectionN,
+  sectionTitle,
+  sections,
+  activeIndex,
+  prev,
+  next,
+  draft = false,
+  kicker,
+} = Astro.props;
+
+/** Mock per-section progress until scroll-driven progress is wired up.
+ *  Used to fill the top sticky progress bar across the main column. */
+const progress = 0;
+---
+<BaseLayout
+  title={`§${sectionN} ${sectionTitle} · Mission Built`}
+  description={`Chapter ${chapterN}: ${chapterTitle} · ${sectionTitle}`}
+  active="chapters"
+>
+  <div class="reader">
+    {/* ============ LEFT RAIL ============ */}
+    <aside class="rail rail-left" aria-label="Chapter contents">
+      <a href="/" class="rail-lockup" aria-label="Mission Built, home">
+        <Lockup size={14} bare />
+      </a>
+
+      <div class="rail-block">
+        <div class="rail-eyebrow">
+          {kicker ?? `Chapter ${chapterN}`}
+        </div>
+        <h2 class="rail-chapter-title">{chapterTitle}</h2>
+        {sections.length > 1 && (
+          <ol class="section-list">
+            {sections.map((s, i) => {
+              const num = `${parseInt(chapterN, 10)}.${i + 1}`;
+              const isActive = i === activeIndex;
+              return (
+                <li>
+                  <a
+                    href={sectionUrl(chapterN, s)}
+                    class:list={["section-item", isActive && "active"]}
+                    aria-current={isActive ? 'true' : undefined}
+                  >
+                    <span class="section-num">{num}</span>
+                    <span class="section-name">{s}</span>
+                  </a>
+                </li>
+              );
+            })}
+          </ol>
+        )}
+      </div>
+
+      {next && (
+        <div class="rail-block">
+          <div class="rail-eyebrow">Up next</div>
+          <a href={next.url} class="up-next">
+            <span class="up-next-title">{next.title}</span>
+          </a>
+        </div>
+      )}
+
+      <div class="rail-block rail-bottom">
+        <a href="/chapters" class="rail-link">All chapters <span aria-hidden="true">→</span></a>
+      </div>
+    </aside>
+
+    {/* ============ MAIN COLUMN ============ */}
+    <article class="main">
+      <div class="progress-track" aria-hidden="true">
+        <div class="progress-fill" style={`width:${progress}%;`}></div>
+      </div>
+
+      <div class="main-inner">
+        <p class="section-eyebrow">
+          §{sectionN} · {chapterTitle}
+        </p>
+
+        <h1 class="section-h1">{sectionTitle}</h1>
+
+        {draft && (
+          <p class="draft-flag">
+            <span aria-hidden="true">◐</span> Draft section. Content not yet written.
+          </p>
+        )}
+
+        <div class="prose">
+          <slot />
+        </div>
+
+        <nav class="prev-next" aria-label="Section navigation">
+          {prev ? (
+            <a href={prev.url} class="pn-link prev">
+              <span class="pn-dir"><span aria-hidden="true">←</span> Previous</span>
+              <span class="pn-title">{prev.title}</span>
+            </a>
+          ) : <span></span>}
+          {next ? (
+            <a href={next.url} class="pn-link next">
+              <span class="pn-dir">Next <span aria-hidden="true">→</span></span>
+              <span class="pn-title">{next.title}</span>
+            </a>
+          ) : <span></span>}
+        </nav>
+      </div>
+    </article>
+
+  </div>
+</BaseLayout>
+
+<style>
+  /* ============ Layout ============ */
+  .reader {
+    display: grid;
+    grid-template-columns: 240px minmax(0, 1fr);
+    min-height: 100vh;
+  }
+  .rail-left  { border-right: var(--border-thin); }
+
+  .rail {
+    padding: 24px 18px;
+    display: flex;
+    flex-direction: column;
+  }
+  .rail-block + .rail-block { margin-top: 24px; }
+  .rail-bottom { margin-top: auto; padding-top: 28px; }
+
+  .rail-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-chalk-faint);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  /* ============ LEFT RAIL ============ */
+  .rail-lockup { display: inline-flex; margin-bottom: 24px; }
+
+  .rail-chapter-title {
+    margin: 0 0 16px;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 18px;
+    color: var(--color-chalk);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    line-height: 1.15;
+  }
+
+  .section-list { margin: 0; padding: 0; list-style: none; }
+
+  .section-item {
+    position: relative;
+    display: grid;
+    grid-template-columns: 26px 1fr;
+    gap: 8px;
+    align-items: baseline;
+    padding: 8px 6px 8px 8px;
+    transition: background 120ms ease-out;
+    border-left: 2px solid transparent;
+  }
+  .section-item:hover { background: rgba(255,255,255,0.02); }
+  .section-item.active {
+    background: var(--color-panel);
+    border-left-color: var(--color-blood);
+  }
+
+  .section-num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-chalk-faint);
+    letter-spacing: 0.12em;
+  }
+  .section-name {
+    font-family: var(--font-serif);
+    font-size: 15px;
+    line-height: 1.3;
+    color: var(--color-chalk-dim);
+  }
+  .section-item.active .section-name { color: var(--color-chalk); }
+
+  .up-next { display: flex; flex-direction: column; gap: 2px; transition: color 120ms ease-out; }
+  .up-next:hover .up-next-title { color: var(--color-chalk); }
+  .up-next-title {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--color-chalk-dim);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    line-height: 1.2;
+    transition: color 120ms ease-out;
+  }
+
+  .rail-link {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--color-chalk-dim);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    transition: color 120ms ease-out;
+  }
+  .rail-link:hover { color: var(--color-chalk); }
+
+  /* ============ MAIN ============ */
+  .main { position: relative; padding: 0; }
+  .main-inner {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 56px 64px 80px;
+  }
+
+  .progress-track {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--color-rule);
+    z-index: 2;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--color-blood);
+    transition: width 200ms ease-out;
+  }
+
+  .section-eyebrow {
+    margin: 0 0 14px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--color-blood);
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+  }
+
+  .section-h1 {
+    margin: 0 0 28px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(30px, 4.4vw, 42px);
+    line-height: 1.0;
+    letter-spacing: -0.005em;
+    text-transform: uppercase;
+    color: var(--color-chalk);
+  }
+
+  .draft-flag {
+    margin: 0 0 28px;
+    padding: 12px 14px;
+    background: var(--color-panel);
+    border-left: 2px solid var(--color-army);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--color-chalk-dim);
+    letter-spacing: 0.06em;
+  }
+
+  /* Prose styles target the rendered MDX body */
+  .prose :global(p) {
+    margin: 0 0 20px;
+    font-family: var(--font-serif);
+    font-size: 18px;
+    line-height: 1.65;
+    color: var(--color-chalk);
+  }
+  .prose :global(p:last-child) { margin-bottom: 0; }
+  .prose :global(em) { color: var(--color-chalk-dim); }
+  .prose :global(strong) { color: var(--color-chalk); font-weight: 700; }
+
+  /* Pull quote — markdown blockquote rendered as the iron-log pull */
+  .prose :global(blockquote) {
+    margin: 28px 0;
+    padding: 18px 22px;
+    border-left: 2px solid var(--color-blood);
+    background: var(--color-panel);
+  }
+  .prose :global(blockquote p) {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 1.25;
+    letter-spacing: -0.005em;
+    color: var(--color-chalk);
+  }
+
+  /* Headings within prose body (sub-section h2/h3 inside MDX) */
+  .prose :global(h2) {
+    margin: 36px 0 14px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 24px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--color-chalk);
+  }
+  .prose :global(h3) {
+    margin: 28px 0 10px;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 18px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-chalk-dim);
+  }
+
+  /* Inline links inside prose */
+  .prose :global(a) {
+    color: var(--color-chalk);
+    border-bottom: 1px solid var(--color-blood-dim);
+    transition: border-bottom-color 120ms ease-out;
+  }
+  .prose :global(a:hover) { border-bottom-color: var(--color-blood); }
+
+  /* Bullet/ordered lists inside prose */
+  .prose :global(ul),
+  .prose :global(ol) {
+    margin: 0 0 20px;
+    padding-left: 22px;
+  }
+  .prose :global(li) {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    line-height: 1.65;
+    color: var(--color-chalk);
+    margin-bottom: 6px;
+  }
+
+  .prose :global(hr) {
+    margin: 36px 0;
+    border: 0;
+    height: 1px;
+    background: var(--color-rule);
+  }
+
+  /* ============ Prev / Next ============ */
+  .prev-next {
+    margin-top: 56px;
+    padding-top: 24px;
+    border-top: var(--border-thin);
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .pn-link {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-width: 280px;
+    transition: color 120ms ease-out;
+  }
+  .pn-link.next { text-align: right; margin-left: auto; }
+  .pn-dir {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-chalk-faint);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .pn-title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 18px;
+    color: var(--color-chalk-dim);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    line-height: 1.2;
+    transition: color 120ms ease-out;
+  }
+  .pn-link:hover .pn-title { color: var(--color-chalk); }
+
+  /* ============ Responsive ============ */
+  @media (max-width: 1099px) {
+    .reader { grid-template-columns: 200px 1fr; }
+    .main-inner { padding: 44px 40px 60px; }
+  }
+
+  @media (max-width: 720px) {
+    .reader { grid-template-columns: 1fr; }
+    .rail-left {
+      border-right: none;
+      border-bottom: var(--border-thin);
+      padding: 18px 24px;
+    }
+    .rail-left .rail-block + .rail-block { margin-top: 18px; }
+    .main-inner { padding: 32px 24px 56px; }
+    .section-h1 { font-size: clamp(28px, 8vw, 36px); }
+    .prose :global(p),
+    .prose :global(li) { font-size: 16px; }
+    .prose :global(blockquote) { padding: 14px 16px; }
+    .prose :global(blockquote p) { font-size: 19px; }
+    .prev-next { flex-direction: column; gap: 18px; }
+    .pn-link { max-width: none; }
+    .pn-link.next { text-align: left; margin-left: 0; }
+  }
+</style>

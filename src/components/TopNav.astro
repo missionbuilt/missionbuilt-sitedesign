@@ -1,0 +1,150 @@
+---
+/**
+ * TopNav — full-width strip used on Home, Chapter Index, About, Notes.
+ *
+ * Layout: lockup left, nav links right. Border-bottom 1px rule.
+ * On <=720px, links collapse to a hamburger placeholder (CSS-only details/summary).
+ */
+import Lockup from './Lockup.astro';
+
+interface Props {
+  active?: 'book' | 'chapters' | 'about' | 'source' | undefined;
+}
+const { active } = Astro.props;
+
+const links = [
+  { key: 'book',     label: 'The Book',  href: '/' },
+  { key: 'chapters', label: 'Chapters',  href: '/chapters' },
+  { key: 'about',    label: 'About',     href: '/about' },
+  { key: 'source',   label: 'Source',    href: '/source' },
+] as const;
+---
+<header class="top-nav">
+  <a href="/" class="brand" aria-label="Mission Built, home">
+    <Lockup size={16} bare />
+  </a>
+
+  <nav class="nav-links" aria-label="Primary">
+    <ul>
+      {links.map((l) => (
+        <li>
+          <a
+            href={l.href}
+            class:list={["nav-link", { active: active === l.key }]}
+            aria-current={active === l.key ? 'page' : undefined}
+          >
+            {l.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+
+  <details class="mobile-menu">
+    <summary aria-label="Open menu">
+      <span class="bars" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </span>
+    </summary>
+    <ul class="mobile-list">
+      {links.map((l) => (
+        <li>
+          <a
+            href={l.href}
+            class:list={["nav-link", { active: active === l.key }]}
+            aria-current={active === l.key ? 'page' : undefined}
+          >
+            {l.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </details>
+</header>
+
+<style>
+  .top-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 28px;
+    border-bottom: var(--border-thin);
+    background: var(--color-bg);
+    position: relative;
+    z-index: 5;
+  }
+
+  .brand { display: inline-flex; align-items: center; }
+
+  .nav-links ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+
+  .nav-link {
+    font-family: var(--font-mono);
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-chalk-dim);
+    transition: color 120ms ease-out;
+    white-space: nowrap;
+  }
+  .nav-link:hover { color: var(--color-chalk); }
+  .nav-link.active { color: var(--color-chalk); }
+  .nav-link.source { color: var(--color-chalk); }
+
+  /* ------- Mobile menu ------- */
+  .mobile-menu { display: none; }
+  .mobile-menu summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 6px 4px;
+  }
+  .mobile-menu summary::-webkit-details-marker { display: none; }
+
+  .bars {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 22px;
+  }
+  .bars > span {
+    display: block;
+    width: 100%;
+    height: 1px;
+    background: var(--color-chalk);
+  }
+
+  .mobile-list {
+    list-style: none;
+    margin: 0;
+    padding: 14px 0 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* ------- Responsive ------- */
+  @media (max-width: 720px) {
+    .top-nav {
+      padding: 14px 24px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .nav-links { display: none; }
+    .mobile-menu { display: block; }
+    .mobile-menu[open] {
+      width: 100%;
+      order: 3;
+      border-top: var(--border-thin);
+      margin-top: 14px;
+      padding-top: 4px;
+    }
+  }
+</style>
