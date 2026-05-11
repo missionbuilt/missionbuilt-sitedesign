@@ -102,6 +102,7 @@ const progress = 0;
 
       <div class="rail-block rail-bottom">
         <a href="/chapters" class="rail-link">All chapters <span aria-hidden="true">→</span></a>
+        <a href="/loadout" class="rail-link rail-link-soft">The Loadout <span aria-hidden="true">→</span></a>
       </div>
     </aside>
 
@@ -234,6 +235,7 @@ const progress = 0;
   }
 
   .rail-link {
+    display: block;
     font-family: var(--font-mono);
     font-size: 12px;
     color: var(--color-chalk-dim);
@@ -242,6 +244,12 @@ const progress = 0;
     transition: color 120ms ease-out;
   }
   .rail-link:hover { color: var(--color-chalk); }
+  /* Secondary rail link — same family, fainter weight, smaller */
+  .rail-link-soft {
+    margin-top: 10px;
+    font-size: 11px;
+    color: var(--color-chalk-faint);
+  }
 
   /* ============ MAIN ============ */
   .main { position: relative; padding: 0; }
