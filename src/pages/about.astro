@@ -22,7 +22,15 @@ import TopNav from '../components/TopNav.astro';
     {/* ---------- HEADER ---------- */}
     <header class="hero">
       <p class="eyebrow">About</p>
-      <h1 class="hero-h1">Hi, I'm Mike.</h1>
+      <h1 class="hero-h1">
+        Hi, I'm <a
+          class="hero-link"
+          href="https://www.linkedin.com/in/hmikenichols"
+          target="_blank"
+          rel="noopener"
+          aria-label="Mike Nichols on LinkedIn"
+        >Mike<span class="ext" aria-hidden="true"> ↗</span></a>.
+      </h1>
       <p class="lede">
         Product leader by trade. Powerlifter by obsession. Father before all else.
       </p>
@@ -273,6 +281,29 @@ import TopNav from '../components/TopNav.astro';
     text-transform: uppercase;
     color: var(--color-chalk);
   }
+  /* "Mike" in the headline links to LinkedIn — subtle underline that
+     lifts to oxblood on hover, mirroring the home page author block. */
+  .hero-link {
+    color: inherit;
+    border-bottom: 1px solid var(--color-rule);
+    transition: color 120ms ease-out, border-bottom-color 120ms ease-out;
+  }
+  .hero-link:hover {
+    color: var(--color-blood);
+    border-bottom-color: var(--color-blood);
+  }
+  .hero-link .ext {
+    display: inline-block;
+    margin-left: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.42em;
+    color: var(--color-chalk-faint);
+    letter-spacing: 0;
+    text-transform: none;
+    vertical-align: 0.35em;
+    transition: color 120ms ease-out;
+  }
+  .hero-link:hover .ext { color: var(--color-blood); }
 
   .lede {
     margin: 0;
