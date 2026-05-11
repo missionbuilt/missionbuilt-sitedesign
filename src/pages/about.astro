@@ -23,13 +23,13 @@ import TopNav from '../components/TopNav.astro';
     <header class="hero">
       <p class="eyebrow">About</p>
       <h1 class="hero-h1">
-        Hi, I'm <a
+        Hi, I'm <span class="hero-name-wrap"><a
           class="hero-link"
           href="https://www.linkedin.com/in/hmikenichols"
           target="_blank"
           rel="noopener"
           aria-label="Mike Nichols on LinkedIn"
-        >Mike<span class="ext" aria-hidden="true"> ↗</span></a>.
+        >Mike<span class="ext" aria-hidden="true"> ↗</span></a>.</span>
       </h1>
       <p class="lede">
         Product leader by trade. Powerlifter by obsession. Father before all else.
@@ -282,7 +282,13 @@ import TopNav from '../components/TopNav.astro';
     color: var(--color-chalk);
   }
   /* "Mike" in the headline links to LinkedIn — subtle underline that
-     lifts to oxblood on hover, mirroring the home page author block. */
+     lifts to oxblood on hover, mirroring the home page author block.
+     The wrap span prevents the trailing period from breaking to a new
+     line on its own (the arrow's vertical-align makes the link behave
+     like inline-block, which orphans the period without this). */
+  .hero-name-wrap {
+    white-space: nowrap;
+  }
   .hero-link {
     color: inherit;
     border-bottom: 1px solid var(--color-rule);
