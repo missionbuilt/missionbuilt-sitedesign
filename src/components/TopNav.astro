@@ -8,15 +8,16 @@
 import Lockup from './Lockup.astro';
 
 interface Props {
-  active?: 'book' | 'chapters' | 'about' | 'source' | undefined;
+  active?: 'book' | 'chapters' | 'loadout' | 'about' | 'source' | undefined;
 }
 const { active } = Astro.props;
 
 const links = [
-  { key: 'book',     label: 'The Book',  href: '/' },
-  { key: 'chapters', label: 'Chapters',  href: '/chapters' },
-  { key: 'about',    label: 'About',     href: '/about' },
-  { key: 'source',   label: 'Source',    href: '/source' },
+  { key: 'book',     label: 'The Book',     href: '/' },
+  { key: 'chapters', label: 'Chapters',     href: '/chapters' },
+  { key: 'loadout',  label: 'The Loadout',  href: '/loadout' },
+  { key: 'about',    label: 'About',        href: '/about' },
+  { key: 'source',   label: 'Source',       href: '/source' },
 ] as const;
 ---
 <header class="top-nav">

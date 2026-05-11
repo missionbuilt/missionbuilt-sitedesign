@@ -1,0 +1,955 @@
+---
+/**
+ * The Spotter — standalone page.
+ *
+ * The live skill from the Loadout. A product epic review tool using
+ * nine product-leadership lenses. The page walks through:
+ *  - what it does
+ *  - the three phases (Build / Iterate / Review)
+ *  - who it is for
+ *  - the verdict signals (white/red powerlifting lights)
+ *  - a sample Review-mode output
+ *  - two install options (local skill, hosted MCP server)
+ *  - open source / license
+ *
+ * Color discipline: oxblood for the hero period, eyebrows, section
+ * labels, the closer accent, the "missing" verdict marks, and the
+ * sample corner badge. Army green only for the Live tag under the hero.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import TopNav from '../../components/TopNav.astro';
+
+const stats = [
+  { key: 'Phases',   value: '3' },
+  { key: 'Lenses',   value: '9' },
+  { key: 'Examples', value: '64' },
+  { key: 'License',  value: 'MIT' },
+];
+
+type Phase = { num: string; mode: string; when: string; body: string; deliverable: string };
+const phases: Phase[] = [
+  {
+    num: '01',
+    mode: 'Build',
+    when: 'Starting from blank',
+    body:
+      "You have a new initiative and a blank page. The Spotter asks targeted questions for each lens and helps you draft an epic that's already lens-aware from the first version.",
+    deliverable: 'A working first draft, structured against all nine lenses.',
+  },
+  {
+    num: '02',
+    mode: 'Iterate',
+    when: 'Working a draft',
+    body:
+      'You have a draft in progress and want to strengthen one part of it. Pick a lens, or let the Spotter pick the weakest one, and work on that section without rewriting the whole epic.',
+    deliverable: 'A focused round of suggestions on the lens you are working on.',
+  },
+  {
+    num: '03',
+    mode: 'Review',
+    when: 'Before stakeholders see it',
+    body:
+      'You have a complete epic and need a final pass before sending it for review. The Spotter walks all nine lenses, calls verdicts with the powerlifting lights, and flags what to tighten.',
+    deliverable: 'A structured read with a verdict per lens and specific suggestions.',
+  },
+];
+
+type Audience = { who: string; what: string };
+const audience: Audience[] = [
+  {
+    who: 'Product managers',
+    what:
+      'Tightening an epic before sending it for review. Catching gaps before someone senior catches them.',
+  },
+  {
+    who: 'Product leaders',
+    what:
+      "Calibrating the team's writing without sitting in every working doc. A consistent bar across the org.",
+  },
+  {
+    who: 'Founders and operators',
+    what:
+      'Building product instincts without a coach. Learning the questions a seasoned PM would ask.',
+  },
+  {
+    who: 'Engineers and designers',
+    what:
+      "Reading an epic critically before standup. Spotting what is missing before kickoff.",
+  },
+];
+
+type Verdict = 'pass' | 'work' | 'miss';
+type Lens = { name: string; marks: Verdict[]; verdict: string; weight: string };
+
+// W = chalk square (pass), R = oxblood square (miss). Three per lens.
+const lenses: Lens[] = [
+  { name: 'Customer empathy',         marks: ['pass','pass','pass'], verdict: 'Pass',       weight: '12%' },
+  { name: 'Competitive landscape',    marks: ['pass','pass','pass'], verdict: 'Pass',       weight: '10%' },
+  { name: 'Strategic differentiation',marks: ['pass','pass','pass'], verdict: 'Pass',       weight: '14%' },
+  { name: 'Solution approach',        marks: ['miss','pass','miss'], verdict: 'Needs work', weight: '12%' },
+  { name: 'Holistic impact',          marks: ['pass','pass','pass'], verdict: 'Pass',       weight: '10%' },
+  { name: 'Packaging',                marks: ['miss','pass','miss'], verdict: 'Needs work', weight: '9%'  },
+  { name: 'Launch readiness',         marks: ['miss','miss','miss'], verdict: 'Missing',    weight: '11%' },
+  { name: 'Post-launch ownership',    marks: ['miss','pass','miss'], verdict: 'Needs work', weight: '10%' },
+  { name: 'Trust and governance',     marks: ['pass','pass','pass'], verdict: 'Pass',       weight: '12%' },
+];
+
+// The legend: three small squares per verdict category.
+const legend: { label: string; marks: Verdict[]; copy: string }[] = [
+  { label: 'Pass',       marks: ['pass','pass','pass'], copy: 'Three whites. The lens is well-served. Move on.' },
+  { label: 'Needs work', marks: ['miss','pass','miss'], copy: 'Mixed signals. Strong in places, thin in others. Worth a second pass.' },
+  { label: 'Missing',    marks: ['miss','miss','miss'], copy: "Three reds. The lens isn't addressed yet. Add it before review." },
+];
+
+function verdictClass(v: string) {
+  if (v === 'Pass') return 'pass';
+  if (v === 'Needs work') return 'work';
+  return 'miss';
+}
+---
+<BaseLayout
+  title="The Spotter · The Loadout · Mission Built"
+  description="A second pair of eyes on your product epic, from blank page to final review. Open-source, MIT-licensed, MCP-compatible."
+  active="loadout"
+>
+  <TopNav active="loadout" />
+
+  <main class="page">
+    {/* ---------- BREADCRUMB ---------- */}
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/loadout">The Loadout</a>
+      <span aria-hidden="true"> / </span>
+      <span class="here">The Spotter</span>
+    </nav>
+
+    {/* ---------- HERO ---------- */}
+    <section class="hero">
+      <p class="eyebrow">
+        <span class="dots" aria-hidden="true">▮▮▮</span>
+        <span>A skill from the Loadout</span>
+        <span class="dots" aria-hidden="true">▮▮▮</span>
+      </p>
+
+      <h1 class="display">
+        <span>The Spotter</span><span class="dot">.</span>
+      </h1>
+
+      <div class="live-tag" aria-label="Live">
+        <span class="tag-sq" aria-hidden="true"></span>
+        <span>Live</span>
+      </div>
+
+      <p class="subtitle">A second pair of eyes from blank page to final review.</p>
+    </section>
+
+    {/* ---------- META STRIP ---------- */}
+    <section class="meta-strip" aria-label="Spotter at a glance">
+      {stats.map((s) => (
+        <div class="stat">
+          <div class="stat-key">{s.key}</div>
+          <div class="stat-value">{s.value}</div>
+        </div>
+      ))}
+    </section>
+
+    {/* ---------- WHAT IT DOES ---------- */}
+    <section class="block">
+      <p class="section-label">What it does</p>
+      <h2 class="section-h2">Walks an epic from idea to ready.</h2>
+      <p class="prose">
+        The Spotter is a skill for product epic work. It uses nine product-leadership
+        lenses — customer empathy, competitive landscape, strategic differentiation,
+        solution approach, holistic impact, packaging, launch readiness, post-launch
+        ownership, and trust and governance — and meets you wherever your epic is
+        right now.
+      </p>
+      <p class="prose">
+        Every flag is constructive. Never "you missed this." Always
+        <em>"you could strengthen this by…"</em> You stay in charge. The Spotter just
+        keeps you honest.
+      </p>
+    </section>
+
+    <hr class="dashed" />
+
+    {/* ---------- THREE PHASES ---------- */}
+    <section class="block">
+      <p class="section-label">Three phases</p>
+      <h2 class="section-h2">Three modes. One framework.</h2>
+      <p class="prose">
+        Pick the mode that matches where you are. The lenses stay the same.
+        What the Spotter gives back changes with the phase.
+      </p>
+
+      <div class="phases">
+        {phases.map((p) => (
+          <article class="phase">
+            <div class="phase-num">Phase {p.num}</div>
+            <h3 class="phase-mode">{p.mode}</h3>
+            <p class="phase-when">{p.when}</p>
+            <p class="phase-body">{p.body}</p>
+            <p class="phase-label">You get back</p>
+            <p class="phase-deliverable"><em>{p.deliverable}</em></p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <hr class="dashed" />
+
+    {/* ---------- WHO IT'S FOR ---------- */}
+    <section class="block">
+      <h2 class="section-h2">Who it's for.</h2>
+      <div class="audience">
+        {audience.map((a) => (
+          <article class="audience-cell">
+            <h3>{a.who}</h3>
+            <p>{a.what}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <hr class="dashed" />
+
+    {/* ---------- HOW THE VERDICT WORKS ---------- */}
+    <section class="block">
+      <p class="section-label">How the verdict works</p>
+      <h2 class="section-h2">Three lights, three states.</h2>
+      <p class="prose">
+        Borrowed from powerlifting. After each lift, three judges flash white for
+        a good lift, red for no-lift. In Review mode, the Spotter does the same
+        for each lens — three signals, fast to read, easy to act on. Build and
+        Iterate use the same framework but produce a draft or a focused round
+        of suggestions instead of a verdict.
+      </p>
+
+      <div class="legend">
+        {legend.map((l) => (
+          <article class="legend-cell">
+            <div class="legend-marks" aria-hidden="true">
+              {l.marks.map((m) => <span class:list={['light', m]}></span>)}
+            </div>
+            <h3>{l.label}</h3>
+            <p>{l.copy}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <hr class="dashed" />
+
+    {/* ---------- SAMPLE OUTPUT ---------- */}
+    <section class="block">
+      <p class="section-label">Sample output · Review mode</p>
+      <h2 class="section-h2">A structured read of your epic.</h2>
+      <p class="prose">
+        This is the Review-mode summary on a synthetic epic. A verdict on each
+        lens, a one-line headline, and specific suggestions for where to tighten.
+        The full sample — including Build and Iterate walkthroughs — lives on the
+        preview page.
+      </p>
+
+      <div class="sample">
+        <div class="sample-badge">Sample · Review</div>
+        <p class="sample-epic">Epic · Customer Tier Migration</p>
+        <h3 class="sample-headline">
+          Strong on differentiation. Needs work on launch readiness.
+        </h3>
+        <p class="sample-summary">5 pass · 3 needs work · 1 missing</p>
+
+        <ul class="lens-list">
+          {lenses.map((l) => (
+            <li class="lens-row">
+              <span class="lens-marks" aria-hidden="true">
+                {l.marks.map((m) => <span class:list={['light', m]}></span>)}
+              </span>
+              <span class="lens-name">{l.name}</span>
+              <span class:list={['lens-verdict', verdictClass(l.verdict)]}>
+                {l.verdict}
+              </span>
+              <span class="lens-weight">{l.weight}</span>
+            </li>
+          ))}
+        </ul>
+
+        <div class="sample-cta">
+          <a
+            href="https://spotter-mcp.missionbuilt.io/preview"
+            target="_blank"
+            rel="noopener"
+          >See the full sample, with Build and Iterate walkthroughs →</a>
+        </div>
+      </div>
+    </section>
+
+    <hr class="dashed" />
+
+    {/* ---------- HOW TO USE IT ---------- */}
+    <section class="block">
+      <p class="section-label">How to use it</p>
+      <h2 class="section-h2">Two ways in.</h2>
+
+      <div class="install">
+        <article class="install-cell">
+          <h3>Option 1 — Run it locally.</h3>
+          <p class="install-body">
+            Download the packaged skill, drop it into Claude Code or your agent
+            of choice, and run any of the three modes on a draft. Works offline.
+            Your epic stays on your machine.
+          </p>
+          <pre class="install-code">spotter-0.1.3.plugin</pre>
+          <a
+            class="install-cta"
+            href="https://github.com/missionbuilt/loadout/releases/latest"
+            target="_blank"
+            rel="noopener"
+          >Download the skill →</a>
+        </article>
+
+        <article class="install-cell">
+          <h3>Option 2 — Connect the server.</h3>
+          <p class="install-body">
+            Point your MCP-compatible agent at the hosted server. Sign in with
+            Google. Latest version, no install. Best for trying it out.
+          </p>
+          <pre class="install-code">claude mcp add spotter https://spotter-mcp.missionbuilt.io/sse</pre>
+          <a
+            class="install-cta"
+            href="https://spotter-mcp.missionbuilt.io"
+            target="_blank"
+            rel="noopener"
+          >Connection details →</a>
+        </article>
+      </div>
+    </section>
+
+    {/* ---------- OPEN SOURCE ---------- */}
+    <section class="block">
+      <h2 class="section-h2">Open source.</h2>
+      <p class="prose">
+        The Spotter ships under MIT. Use it commercially, adapt it for your team,
+        embed it in your product. Source for both the skill and the MCP server lives in
+        <a
+          class="inline-link"
+          href="https://github.com/missionbuilt/loadout"
+          target="_blank"
+          rel="noopener"
+        >github.com/missionbuilt/loadout</a>.
+        Attribution to the writers and skills whose thinking informed it is in
+        <code>spotter/ATTRIBUTION.md</code>.
+      </p>
+      <p class="prose">
+        Customize for your team by adding a <code>CLAUDE.md</code> at your project
+        root with your tier names, competitor set, and product taxonomy. The skill
+        stays generic. Your context stays local.
+      </p>
+    </section>
+
+    {/* ---------- CLOSER ---------- */}
+    <section class="closer">
+      <p>
+        A spotter lifts the lifter. <strong>Not the bar.</strong>
+      </p>
+    </section>
+
+    {/* ---------- FOOTER ---------- */}
+    <footer class="foot">
+      <span>Real strength is lifting others</span>
+      <a
+        href="https://github.com/missionbuilt/loadout"
+        target="_blank"
+        rel="noopener"
+      >github.com/missionbuilt/loadout</a>
+    </footer>
+  </main>
+</BaseLayout>
+
+<style>
+  /* ============ BREADCRUMB ============ */
+  .breadcrumb {
+    padding: 18px var(--pad-page-x) 0;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-chalk-faint);
+  }
+  .breadcrumb a {
+    color: var(--color-chalk-dim);
+    transition: color 120ms ease-out;
+  }
+  .breadcrumb a:hover { color: var(--color-chalk); }
+  .breadcrumb .here { color: var(--color-chalk-faint); }
+
+  /* ============ HERO ============ */
+  .hero {
+    padding: 40px var(--pad-page-x) 28px;
+    text-align: center;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    margin: 0 0 18px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    color: var(--color-blood);
+    text-transform: uppercase;
+  }
+  .eyebrow .dots {
+    letter-spacing: 0.04em;
+    opacity: 0.65;
+  }
+
+  .display {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(56px, 11vw, 108px);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    color: var(--color-chalk);
+    text-transform: uppercase;
+  }
+  .display .dot { color: var(--color-blood); }
+
+  .live-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 22px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-army);
+  }
+  .live-tag .tag-sq {
+    width: 8px;
+    height: 8px;
+    background: var(--color-army);
+    display: inline-block;
+  }
+
+  .subtitle {
+    margin: 22px auto 0;
+    max-width: 760px;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(15px, 2.2vw, 22px);
+    color: var(--color-chalk-dim);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  /* ============ META STRIP ============ */
+  .meta-strip {
+    margin: 28px var(--pad-page-x) 0;
+    padding: 14px 0;
+    border-top: var(--border-thin);
+    border-bottom: var(--border-thin);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-align: left;
+  }
+  .stat-key {
+    color: var(--color-chalk-faint);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+  .stat-value {
+    margin-top: 2px;
+    color: var(--color-chalk);
+    font-family: var(--font-display);
+    font-size: 22px;
+    letter-spacing: 0.04em;
+  }
+
+  /* ============ BLOCK ============ */
+  .block {
+    padding: 56px var(--pad-page-x) 0;
+    max-width: 1080px;
+  }
+
+  .section-label {
+    margin: 0 0 14px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    color: var(--color-blood);
+    text-transform: uppercase;
+  }
+
+  .section-h2 {
+    margin: 0 0 18px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 36px;
+    line-height: 1.05;
+    letter-spacing: 0.02em;
+    color: var(--color-chalk);
+    text-transform: uppercase;
+  }
+
+  .prose {
+    margin: 0 0 14px;
+    max-width: 760px;
+    font-family: var(--font-serif);
+    font-size: 17px;
+    line-height: 1.65;
+    color: var(--color-chalk-dim);
+  }
+  .prose strong { color: var(--color-chalk); font-weight: 700; }
+  .prose em { font-style: italic; color: var(--color-chalk); }
+  .prose code,
+  .install-body code {
+    font-family: var(--font-mono);
+    font-size: 0.92em;
+    color: var(--color-chalk);
+    background: var(--color-panel);
+    padding: 1px 6px;
+  }
+  .inline-link {
+    color: var(--color-chalk);
+    border-bottom: 1px dotted var(--color-rule);
+    transition: color 120ms ease-out, border-color 120ms ease-out;
+  }
+  .inline-link:hover {
+    color: var(--color-blood);
+    border-bottom-color: var(--color-blood);
+  }
+
+  /* ============ PHASES GRID ============ */
+  .phases {
+    margin-top: 28px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: var(--border-thin);
+    border-bottom: var(--border-thin);
+  }
+  .phase {
+    padding: 28px 28px 32px;
+    border-right: var(--border-thin);
+  }
+  .phase:last-child { border-right: none; }
+
+  .phase-num {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.28em;
+    color: var(--color-chalk-faint);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .phase-mode {
+    margin: 0 0 6px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 28px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--color-chalk);
+  }
+  .phase-when {
+    margin: 0 0 16px;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-blood);
+  }
+  .phase-body {
+    margin: 0 0 18px;
+    font-family: var(--font-serif);
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--color-chalk-dim);
+  }
+  .phase-label {
+    margin: 18px 0 4px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-chalk-faint);
+  }
+  .phase-deliverable {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--color-chalk);
+  }
+
+  /* ============ AUDIENCE (2x2) ============ */
+  .audience {
+    margin-top: 28px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: var(--border-thin);
+    border-bottom: var(--border-thin);
+  }
+  .audience-cell {
+    padding: 24px 28px;
+    border-right: var(--border-thin);
+    border-bottom: var(--border-thin);
+  }
+  .audience-cell:nth-child(2n) { border-right: none; }
+  .audience-cell:nth-last-child(-n+2) { border-bottom: none; }
+  .audience-cell h3 {
+    margin: 0 0 10px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--color-chalk);
+  }
+  .audience-cell p {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--color-chalk-dim);
+  }
+
+  /* ============ LIGHTS (small squares) ============ */
+  .light {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border: 1px solid var(--color-rule);
+    margin-right: 3px;
+  }
+  .light.pass { background: var(--color-chalk); border-color: var(--color-chalk); }
+  .light.miss { background: var(--color-blood); border-color: var(--color-blood); }
+
+  /* ============ LEGEND (3 cells) ============ */
+  .legend {
+    margin-top: 28px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: var(--border-thin);
+    border-bottom: var(--border-thin);
+  }
+  .legend-cell {
+    padding: 24px 28px;
+    border-right: var(--border-thin);
+  }
+  .legend-cell:last-child { border-right: none; }
+  .legend-marks { margin-bottom: 14px; line-height: 1; }
+  .legend-cell h3 {
+    margin: 0 0 8px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-chalk);
+  }
+  .legend-cell p {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--color-chalk-dim);
+  }
+
+  /* ============ SAMPLE CARD ============ */
+  .sample {
+    position: relative;
+    margin-top: 28px;
+    padding: 36px 32px 28px;
+    background: var(--color-panel);
+    border: var(--border-thin);
+  }
+  .sample-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: var(--color-blood);
+    color: var(--color-chalk);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    padding: 6px 12px;
+  }
+  .sample-epic {
+    margin: 0 0 14px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-chalk-faint);
+  }
+  .sample-headline {
+    margin: 0 0 8px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+    color: var(--color-chalk);
+  }
+  .sample-summary {
+    margin: 0 0 22px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-chalk-dim);
+  }
+
+  .lens-list {
+    list-style: none;
+    margin: 0 0 24px;
+    padding: 0;
+    border-top: var(--border-thin);
+  }
+  .lens-row {
+    display: grid;
+    grid-template-columns: 60px 1fr 140px 50px;
+    gap: 16px;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: var(--border-thin);
+  }
+  .lens-marks { line-height: 1; }
+  .lens-name {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--color-chalk);
+  }
+  .lens-verdict {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+  .lens-verdict.pass { color: var(--color-army); }
+  .lens-verdict.work { color: var(--color-chalk-dim); }
+  .lens-verdict.miss { color: var(--color-blood); }
+  .lens-weight {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--color-chalk-faint);
+    text-align: right;
+  }
+
+  .sample-cta {
+    text-align: center;
+    margin-top: 8px;
+  }
+  .sample-cta a {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-chalk);
+    border-bottom: 1px solid var(--color-blood);
+    padding-bottom: 4px;
+    transition: color 120ms ease-out;
+  }
+  .sample-cta a:hover { color: var(--color-blood); }
+
+  /* ============ INSTALL (2 cells) ============ */
+  .install {
+    margin-top: 28px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: var(--border-thin);
+    border-bottom: var(--border-thin);
+  }
+  .install-cell {
+    padding: 28px 28px 32px;
+    border-right: var(--border-thin);
+  }
+  .install-cell:last-child { border-right: none; }
+  .install-cell h3 {
+    margin: 0 0 12px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--color-chalk);
+  }
+  .install-body {
+    margin: 0 0 16px;
+    font-family: var(--font-serif);
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--color-chalk-dim);
+  }
+  .install-code {
+    margin: 0 0 18px;
+    padding: 12px 14px;
+    background: var(--color-bg);
+    border: var(--border-thin);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--color-chalk);
+    letter-spacing: 0.02em;
+    overflow-x: auto;
+    white-space: pre;
+  }
+  .install-cta {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-chalk);
+    border-bottom: 1px solid var(--color-blood);
+    padding-bottom: 4px;
+    transition: color 120ms ease-out;
+  }
+  .install-cta:hover { color: var(--color-blood); }
+
+  /* ============ DASHED DIVIDER ============ */
+  .dashed {
+    margin: 56px var(--pad-page-x);
+    border: none;
+    border-top: 1px dashed var(--color-rule-soft);
+  }
+
+  /* ============ CLOSER ============ */
+  .closer {
+    margin-top: 56px;
+    padding: 48px var(--pad-page-x);
+    border-top: var(--border-thin);
+    text-align: center;
+  }
+  .closer p {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 22px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-chalk);
+  }
+  .closer p strong {
+    font-weight: 500;
+    color: var(--color-blood);
+  }
+
+  /* ============ FOOTER ============ */
+  .foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    padding: 22px var(--pad-page-x) 40px;
+    border-top: var(--border-thin);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-chalk-faint);
+  }
+  .foot a {
+    color: var(--color-chalk-dim);
+    transition: color 120ms ease-out;
+  }
+  .foot a:hover { color: var(--color-chalk); }
+
+  /* ============ Responsive ============ */
+  @media (max-width: 1099px) {
+    .meta-strip {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+    .phases {
+      grid-template-columns: 1fr;
+    }
+    .phase {
+      border-right: none;
+      border-bottom: var(--border-thin);
+    }
+    .phase:last-child { border-bottom: none; }
+
+    .legend {
+      grid-template-columns: 1fr;
+    }
+    .legend-cell {
+      border-right: none;
+      border-bottom: var(--border-thin);
+    }
+    .legend-cell:last-child { border-bottom: none; }
+  }
+
+  @media (max-width: 720px) {
+    .breadcrumb { padding: 18px var(--pad-page-x-mobile) 0; }
+    .hero { padding: 28px var(--pad-page-x-mobile) 20px; }
+    .meta-strip {
+      margin: 24px var(--pad-page-x-mobile) 0;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+    .block { padding: 40px var(--pad-page-x-mobile) 0; }
+    .section-h2 { font-size: 28px; }
+
+    .audience {
+      grid-template-columns: 1fr;
+    }
+    .audience-cell {
+      border-right: none;
+    }
+    .audience-cell:nth-last-child(-n+2) { border-bottom: var(--border-thin); }
+    .audience-cell:last-child { border-bottom: none; }
+
+    .install {
+      grid-template-columns: 1fr;
+    }
+    .install-cell {
+      border-right: none;
+      border-bottom: var(--border-thin);
+    }
+    .install-cell:last-child { border-bottom: none; }
+
+    .sample { padding: 28px 20px 24px; }
+    .sample-badge { padding: 5px 10px; font-size: 9px; }
+    .lens-row {
+      grid-template-columns: 50px 1fr;
+      gap: 10px;
+    }
+    .lens-verdict, .lens-weight {
+      grid-column: 2;
+      text-align: left;
+    }
+
+    .dashed { margin: 40px var(--pad-page-x-mobile); }
+    .closer { padding: 36px var(--pad-page-x-mobile); }
+    .closer p { font-size: 18px; }
+    .foot {
+      padding: 22px var(--pad-page-x-mobile) 32px;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>

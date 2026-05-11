@@ -1,0 +1,460 @@
+---
+/**
+ * The Loadout — overview page.
+ *
+ * Catalog of the open-source skills shipped from Mission Built. Lists
+ * the three skills (Spotter live, Brief + Warmup planned) as full-width
+ * rule-bordered cards.
+ *
+ * Pattern: TopNav → Hero (eyebrow + h1 + subtitle) → Meta strip →
+ * What this is → Dashed divider → The skills (3 cards) → Closer → Footer.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import TopNav from '../../components/TopNav.astro';
+
+const stats = [
+  { key: 'Skills live', value: '1' },
+  { key: 'Planned',     value: '2' },
+  { key: 'License',     value: 'MIT' },
+  { key: 'Source',      value: 'GitHub' },
+];
+
+type SkillStatus = 'live' | 'planned';
+interface Skill {
+  name: string;
+  status: SkillStatus;
+  blurb: string;
+  href?: string;
+  cta: string;
+}
+
+const skills: Skill[] = [
+  {
+    name: 'The Spotter',
+    status: 'live',
+    blurb:
+      "Get a structured review of your product epic before it goes to stakeholders. The Spotter walks your draft through nine product-leadership lenses and tells you where it's strong, where it needs work, and what's missing. You ship a tighter epic. Your team trusts your work more.",
+    href: '/loadout/spotter',
+    cta: 'Open →',
+  },
+  {
+    name: 'The Brief',
+    status: 'planned',
+    blurb:
+      'A short prep document for your next customer meeting. Pulls recent account activity, open issues, and the topics likely to come up so you walk in informed instead of catching up in the first ten minutes.',
+    cta: 'Soon',
+  },
+  {
+    name: 'The Warmup',
+    status: 'planned',
+    blurb:
+      'A daily briefing of the news, releases, and competitive moves that matter to what you are building. Read it with your first coffee and start the day already in the loop.',
+    cta: 'Soon',
+  },
+];
+---
+<BaseLayout
+  title="The Loadout · Mission Built"
+  description="Open-source skills to help build what matters. Part of the Mission Built ecosystem."
+  active="loadout"
+>
+  <TopNav active="loadout" />
+
+  <main class="page">
+    {/* ---------- HERO ---------- */}
+    <section class="hero">
+      <p class="eyebrow">
+        <span class="dots" aria-hidden="true">▮▮▮</span>
+        <span>Open-source skills from Mission Built</span>
+        <span class="dots" aria-hidden="true">▮▮▮</span>
+      </p>
+
+      <h1 class="display">
+        <span class="line">The</span>
+        <span class="line">Loadout<span class="dot">.</span></span>
+      </h1>
+
+      <p class="subtitle">Open-source skills to help build what matters.</p>
+    </section>
+
+    {/* ---------- META STRIP ---------- */}
+    <section class="meta-strip" aria-label="Loadout at a glance">
+      {stats.map((s) => (
+        <div class="stat">
+          <div class="stat-key">{s.key}</div>
+          <div class="stat-value">{s.value}</div>
+        </div>
+      ))}
+    </section>
+
+    {/* ---------- WHAT THIS IS ---------- */}
+    <section class="block">
+      <p class="section-label">What this is</p>
+      <h2 class="section-h2">A kit for product leaders.</h2>
+      <p class="prose">
+        The Loadout is a set of small, focused skills you can drop into your
+        agent. Each one helps you do a specific piece of the work better —
+        review an epic, prep for a customer meeting, scan the news before
+        your day starts.
+      </p>
+      <p class="prose">
+        The book teaches the principles. The Loadout puts them into operation.
+        <strong>Open-source, MIT-licensed, and built to be forked.</strong>
+      </p>
+    </section>
+
+    <hr class="dashed" />
+
+    {/* ---------- THE SKILLS ---------- */}
+    <section class="block">
+      <header class="block-head">
+        <h2 class="section-h2">The skills.</h2>
+        <span class="block-count">3 total · 1 live</span>
+      </header>
+
+      <div class="skills">
+        {skills.map((s) => (
+          s.href ? (
+            <a
+              href={s.href}
+              class:list={['skill-row', s.status === 'planned' && 'dim']}
+            >
+              <div class="skill-name">
+                <h3>{s.name}</h3>
+                {s.status === 'live' ? (
+                  <span class="tag live"><span class="tag-sq" aria-hidden="true"></span>Live</span>
+                ) : (
+                  <span class="tag planned">In development</span>
+                )}
+              </div>
+              <p class="skill-blurb">{s.blurb}</p>
+              <div class="skill-cta">{s.cta}</div>
+            </a>
+          ) : (
+            <article
+              class:list={['skill-row', s.status === 'planned' && 'dim']}
+            >
+              <div class="skill-name">
+                <h3>{s.name}</h3>
+                {s.status === 'live' ? (
+                  <span class="tag live"><span class="tag-sq" aria-hidden="true"></span>Live</span>
+                ) : (
+                  <span class="tag planned">In development</span>
+                )}
+              </div>
+              <p class="skill-blurb">{s.blurb}</p>
+              <div class="skill-cta">{s.cta}</div>
+            </article>
+          )
+        ))}
+      </div>
+    </section>
+
+    {/* ---------- CLOSER ---------- */}
+    <section class="closer">
+      <p>
+        The book is the plan. <strong>The Loadout is the execution.</strong>
+      </p>
+    </section>
+
+    {/* ---------- FOOTER ---------- */}
+    <footer class="foot">
+      <span>Real strength is lifting others</span>
+      <a
+        href="https://github.com/missionbuilt/loadout"
+        target="_blank"
+        rel="noopener"
+      >github.com/missionbuilt/loadout</a>
+    </footer>
+  </main>
+</BaseLayout>
+
+<style>
+  /* ============ HERO ============ */
+  .hero {
+    padding: 56px var(--pad-page-x) 28px;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    margin: 0 0 18px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    color: var(--color-blood);
+    text-transform: uppercase;
+  }
+  .eyebrow .dots {
+    letter-spacing: 0.04em;
+    opacity: 0.65;
+  }
+
+  .display {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(56px, 11vw, 108px);
+    line-height: 0.88;
+    letter-spacing: -0.02em;
+    color: var(--color-chalk);
+    text-transform: uppercase;
+  }
+  .display .line { display: block; }
+  .display .dot { color: var(--color-blood); }
+
+  .subtitle {
+    margin: 22px 0 0;
+    max-width: 760px;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(15px, 2.2vw, 22px);
+    color: var(--color-chalk-dim);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  /* ============ META STRIP ============ */
+  .meta-strip {
+    margin: 28px var(--pad-page-x) 0;
+    padding: 14px 0;
+    border-top: var(--border-thin);
+    border-bottom: var(--border-thin);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+  }
+  .stat-key {
+    color: var(--color-chalk-faint);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+  .stat-value {
+    margin-top: 2px;
+    color: var(--color-chalk);
+    font-family: var(--font-display);
+    font-size: 22px;
+    letter-spacing: 0.04em;
+  }
+
+  /* ============ BLOCKS ============ */
+  .block {
+    padding: 56px var(--pad-page-x) 0;
+    max-width: 1080px;
+  }
+
+  .section-label {
+    margin: 0 0 14px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    color: var(--color-blood);
+    text-transform: uppercase;
+  }
+
+  .section-h2 {
+    margin: 0 0 18px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 36px;
+    line-height: 1.05;
+    letter-spacing: 0.02em;
+    color: var(--color-chalk);
+    text-transform: uppercase;
+  }
+
+  .prose {
+    margin: 0 0 14px;
+    max-width: 720px;
+    font-family: var(--font-serif);
+    font-size: 17px;
+    line-height: 1.65;
+    color: var(--color-chalk-dim);
+  }
+  .prose strong { color: var(--color-chalk); font-weight: 700; }
+
+  .block-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 22px;
+  }
+  .block-count {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-chalk-faint);
+  }
+
+  /* ============ SKILL CARDS (row form) ============ */
+  .skills {
+    border-top: var(--border-thin);
+  }
+
+  .skill-row {
+    display: grid;
+    grid-template-columns: 200px 1fr 140px;
+    gap: 36px;
+    align-items: center;
+    padding: 22px 0;
+    border-bottom: var(--border-thin);
+    text-decoration: none;
+    transition: background 120ms ease-out;
+  }
+  .skill-row:hover {
+    background: rgba(255, 255, 255, 0.015);
+  }
+  .skill-row.dim { cursor: default; }
+
+  .skill-name { display: flex; flex-direction: column; gap: 8px; }
+  .skill-name h3 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--color-chalk);
+  }
+  .skill-row.dim .skill-name h3 { color: var(--color-chalk-faint); }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+  .tag.live { color: var(--color-army); }
+  .tag.live .tag-sq {
+    width: 6px;
+    height: 6px;
+    background: var(--color-army);
+    display: inline-block;
+  }
+  .tag.planned { color: var(--color-chalk-faint); }
+
+  .skill-blurb {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--color-chalk-dim);
+  }
+  .skill-row.dim .skill-blurb { color: var(--color-chalk-faint); }
+
+  .skill-cta {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-chalk);
+    text-align: right;
+    white-space: nowrap;
+    transition: color 120ms ease-out;
+  }
+  .skill-row.dim .skill-cta { color: var(--color-chalk-faint); }
+  a.skill-row:hover .skill-cta { color: var(--color-blood); }
+
+  /* ============ DASHED DIVIDER ============ */
+  .dashed {
+    margin: 56px var(--pad-page-x);
+    border: none;
+    border-top: 1px dashed var(--color-rule-soft);
+  }
+
+  /* ============ CLOSER ============ */
+  .closer {
+    margin-top: 56px;
+    padding: 48px var(--pad-page-x);
+    border-top: var(--border-thin);
+    text-align: center;
+  }
+  .closer p {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 22px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-chalk);
+  }
+  .closer p strong {
+    font-weight: 500;
+    color: var(--color-blood);
+  }
+
+  /* ============ FOOTER ============ */
+  .foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    padding: 22px var(--pad-page-x) 40px;
+    border-top: var(--border-thin);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-chalk-faint);
+  }
+  .foot a {
+    color: var(--color-chalk-dim);
+    transition: color 120ms ease-out;
+  }
+  .foot a:hover { color: var(--color-chalk); }
+
+  /* ============ Responsive ============ */
+  @media (max-width: 1099px) {
+    .meta-strip {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+    .skill-row {
+      grid-template-columns: 180px 1fr 110px;
+      gap: 24px;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .hero {
+      padding: 36px var(--pad-page-x-mobile) 20px;
+    }
+    .meta-strip {
+      margin: 24px var(--pad-page-x-mobile) 0;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+    .block {
+      padding: 40px var(--pad-page-x-mobile) 0;
+    }
+    .section-h2 { font-size: 28px; }
+    .skill-row {
+      grid-template-columns: 1fr;
+      gap: 14px;
+      padding: 22px 0;
+    }
+    .skill-cta { text-align: left; }
+    .dashed { margin: 40px var(--pad-page-x-mobile); }
+    .closer { padding: 36px var(--pad-page-x-mobile); }
+    .closer p { font-size: 18px; }
+    .foot {
+      padding: 22px var(--pad-page-x-mobile) 32px;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>
