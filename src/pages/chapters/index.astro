@@ -8,7 +8,7 @@
  *
  * Layout:
  *   1. TopNav
- *   2. Hero — Loadout eyebrow + H1 + simple meta line
+ *   2. Hero — H1 + simple meta line
  *   3. Prologue row (transparent, just dashed top/bottom)
  *   4. Three Part blocks: quiet header column + chapter rows
  *   5. Conclusion row (mirror of prologue)
@@ -39,11 +39,6 @@ function sectionPreview(sections: string[]): { head: string; overflow: number } 
   <main class="page">
     {/* ---------- HERO ---------- */}
     <section class="hero" aria-label="Book overview">
-      <p class="loadout-eyebrow">
-        <span class="dot" aria-hidden="true"></span>
-        The Loadout
-      </p>
-
       <h1 class="hero-h1">
         All thirteen chapters.<br />
         <span class="blood">Three parts.</span>
@@ -140,24 +135,6 @@ function sectionPreview(sections: string[]): { head: string; overflow: number } 
     padding: 48px var(--pad-page-x) 28px;
     border-bottom: var(--border-thin);
     max-width: 1100px;
-  }
-
-  .loadout-eyebrow {
-    margin: 0 0 14px;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.24em;
-    color: var(--color-army);
-    text-transform: uppercase;
-  }
-  .loadout-eyebrow .dot {
-    width: 8px;
-    height: 8px;
-    background: var(--color-army);
-    display: inline-block;
   }
 
   .hero-h1 {
