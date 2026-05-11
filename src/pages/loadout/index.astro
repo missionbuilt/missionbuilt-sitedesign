@@ -13,10 +13,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import TopNav from '../../components/TopNav.astro';
 
 const stats = [
-  { key: 'Skills live', value: '1' },
-  { key: 'Planned',     value: '2' },
-  { key: 'License',     value: 'MIT' },
-  { key: 'Source',      value: 'GitHub' },
+  { key: 'Skills live', value: '1',      href: undefined },
+  { key: 'Planned',     value: '2',      href: undefined },
+  { key: 'License',     value: 'MIT',    href: undefined },
+  { key: 'Source',      value: 'GitHub', href: 'https://github.com/missionbuilt/loadout' },
 ];
 
 type SkillStatus = 'live' | 'planned';
@@ -82,7 +82,16 @@ const skills: Skill[] = [
       {stats.map((s) => (
         <div class="stat">
           <div class="stat-key">{s.key}</div>
-          <div class="stat-value">{s.value}</div>
+          {s.href ? (
+            <a
+              class="stat-value linked"
+              href={s.href}
+              target="_blank"
+              rel="noopener"
+            >{s.value}<span class="ext" aria-hidden="true"> ↗</span></a>
+          ) : (
+            <div class="stat-value">{s.value}</div>
+          )}
         </div>
       ))}
     </section>
@@ -240,7 +249,22 @@ const skills: Skill[] = [
     font-family: var(--font-display);
     font-size: 22px;
     letter-spacing: 0.04em;
+    display: inline-block;
   }
+  /* Linked stat values get a subtle underline on hover, same color */
+  .stat-value.linked {
+    border-bottom: 1px solid transparent;
+    transition: border-bottom-color 120ms ease-out, color 120ms ease-out;
+  }
+  .stat-value.linked:hover { border-bottom-color: currentColor; }
+  .stat-value .ext {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-chalk-faint);
+    letter-spacing: 0;
+    transition: color 120ms ease-out;
+  }
+  .stat-value.linked:hover .ext { color: var(--color-chalk); }
 
   /* ============ BLOCKS ============ */
   .block {
