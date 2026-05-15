@@ -21,3 +21,11 @@ pnpm-debug.log*
 # editor
 .vscode/
 .idea/
+
+# Warmup — user-owned config and generated output (never commit these)
+WARMUP.md
+warmup-artifact.html
+
+# Private Cowork/skill tooling — never commit these
+missionbuilt-design.skill
+SKILL-DESIGN.md
