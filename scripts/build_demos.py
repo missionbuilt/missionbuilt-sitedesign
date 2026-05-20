@@ -1025,13 +1025,13 @@ SPOTTER_STEPS = [
 APPROACH_STEPS = [
     {
         "selector": ".head",
-        "title": "The brief masthead",
-        "desc": "Company, contact, seller and SE, call time, brief number — everything in the header before you scroll."
+        "title": "Brief opening",
+        "desc": "Company, contact, seller and SE, call time, brief number — everything set before you scroll."
     },
     {
         "selector": ".toc",
         "title": "Jump to any section",
-        "desc": "Nine sections across two acts. The table of contents gets you to any section in one click."
+        "desc": "Nine sections in one brief. The table of contents gets you to any section in one click."
     },
     {
         "selector": "#snapshot",
@@ -1039,14 +1039,14 @@ APPROACH_STEPS = [
         "desc": "Revenue, headcount, capex, business model — the context the AE needs before the first question."
     },
     {
+        "selector": ".act-divider",
+        "title": "The handoff",
+        "desc": "AE sections above. SE sections below. Both halves travel in one document — both get read before the call."
+    },
+    {
         "selector": "#meddpicc",
         "title": "MEDDPICC scorecard",
         "desc": "Eight deal dimensions, scored from public intel. Confirmed, partial, or unknown — with a next action for each."
-    },
-    {
-        "selector": ".act-divider",
-        "title": "The handoff",
-        "desc": "AE sections above. SE sections below. Both acts travel in one document — both get read before the call."
     },
     {
         "selector": "#stack",
@@ -1057,6 +1057,11 @@ APPROACH_STEPS = [
         "selector": "#opener",
         "title": "Opener & discovery",
         "desc": "A 90-second verbatim opener rooted in a real public signal, plus MEDDPICC-tagged discovery questions."
+    },
+    {
+        "selector": ".tb-export",
+        "title": "Export the brief",
+        "desc": "Export to a self-contained HTML file or print to PDF. The brief travels with you — no login required to read it."
     }
 ]
 
