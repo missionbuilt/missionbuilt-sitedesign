@@ -1064,7 +1064,7 @@ WARMUP_STEPS = [
     {
         "selector": ".masthead",
         "title": "Your morning brief",
-        "desc": "Date, mode, company, and scan time — your brief's vital stats at the top of every run."
+        "desc": "Company, mode, date, and scan time at the top. Covers threat landscape, sector intel, special interests, and social signal."
     },
     {
         "selector": "#section-nav",
@@ -1077,19 +1077,14 @@ WARMUP_STEPS = [
         "desc": "Active KEV entries, exploited vulnerabilities, and campaign signals. The lead item is the most urgent."
     },
     {
-        "selector": "#vertical",
-        "title": "Vertical intel: manufacturing",
-        "desc": "Sector-specific intelligence — OT/IT convergence, supply chain risk, and your industry's threat posture."
-    },
-    {
         "selector": "#interests",
         "title": "Special interests",
         "desc": "Your brief pulls in what you care about outside the office — powerlifting results, new equipment releases."
     },
     {
-        "selector": ".safety-panel",
+        "selector": "#link-safety",
         "title": "Link safety verified",
-        "desc": "Every URL in your brief is checked against CISA allowlists and URLScan.io before it renders. No blind links."
+        "desc": "Every URL is checked against CISA allowlists and URLScan.io before it renders. Clean or excluded — no middle ground."
     },
     {
         "selector": ".tb-export",
@@ -1155,17 +1150,6 @@ def build_warmup():
     data_json     = json.dumps(WARMUP_DATA, ensure_ascii=False)
     overlay_html  = make_overlay(WARMUP_STEPS, 'The Warmup')
 
-    # Stub font cache — a CSS string that passes the shell's cache checks
-    # (length > 100, contains @font-face) so the MCP font bridge is never called.
-    # Google Fonts CDN in <head> provides the real fonts for this public demo.
-    font_stub = (
-        '/* Mission Built demo — fonts loaded via Google Fonts CDN */\\n'
-        '@font-face { font-family: "Oswald"; font-weight: 400 700; src: local("Oswald"); }\\n'
-        '@font-face { font-family: "Merriweather"; font-weight: 400 700; src: local("Merriweather"); }\\n'
-        '@font-face { font-family: "JetBrains Mono"; font-weight: 400 500; src: local("JetBrains Mono"); }\\n'
-        + ' ' * 60  # Pad to ensure length > 100
-    )
-
     html = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1180,20 +1164,39 @@ def build_warmup():
 // Demo mode: data is hardcoded below — no MCP bridge needed.
 window.WARMUP_TOOLS = {{ dataTool: '' }};
 window.WARMUP_DATA  = {data_json};
+// Set a non-empty fontToolName so the shell's line-910 guard passes.
+// Without this, the shell immediately shows an error banner.
+window.WARMUP_DATA.config.fontToolName = 'warmup_get_fonts';
 // Clear any stale data cache so Phase 1 (localStorage fast-paint) doesn't override demo data.
 try {{ localStorage.removeItem('warmup-data-cache-v1'); }} catch(_) {{}}
-// Pre-fill font cache stub: the shell checks length>100 and @font-face presence, then skips MCP call.
-// Real fonts are served by Google Fonts CDN in <head>.
-try {{ localStorage.setItem('warmup-fonts-v2', '{font_stub}'); }} catch(_) {{}}
-// Neutralize the Cowork MCP bridge so the font loader doesn't find callMcpTool and
-// show an error banner. Without callMcpTool, it enters silent 25-attempt polling,
-// times out, and falls back to the Google Fonts CDN already loaded in <head>.
+// Intercept callMcpTool so any font requests return stub CSS immediately.
+// Uses Object.defineProperty so the intercept applies whether window.cowork is
+// already injected by Cowork desktop or injected later.
 (function() {{
-  if (window.cowork && typeof window.cowork.callMcpTool === 'function') {{
-    var patched = Object.assign({{}}, window.cowork);
-    delete patched.callMcpTool;
-    window.cowork = patched;
+  var _STUB = [
+    '/* demo — real fonts via Google Fonts CDN in <head> */',
+    '@font-face {{ font-family: "Oswald"; font-weight: 400 700; src: local("Oswald"); }}',
+    '@font-face {{ font-family: "Merriweather"; font-weight: 400 700; src: local("Merriweather"); }}',
+    '@font-face {{ font-family: "JetBrains Mono"; font-weight: 400 500; src: local("JetBrains Mono"); }}'
+  ].join('\\n');
+  function _reply() {{ return Promise.resolve({{ content: [{{ type: 'text', text: _STUB }}] }}); }}
+  function _patch(c) {{
+    if (!c || c.__demoPatch) return;
+    var orig = c.callMcpTool;
+    c.callMcpTool = function(t, a) {{
+      return t === 'warmup_get_fonts' ? _reply() : (orig ? orig.call(c, t, a) : Promise.reject('demo'));
+    }};
+    c.__demoPatch = true;
   }}
+  _patch(window.cowork);
+  try {{
+    var _ref = window.cowork;
+    Object.defineProperty(window, 'cowork', {{
+      get: function() {{ return _ref; }},
+      set: function(v) {{ _ref = v; _patch(_ref); }},
+      configurable: true, enumerable: true
+    }});
+  }} catch(e) {{}}
 }})();
 </script>
 <body><script>

@@ -75,22 +75,17 @@ const audience: Audience[] = [
   },
 ];
 
-type SafetyVerdict = { label: string; indicator: 'clean' | 'caution' | 'flagged'; copy: string };
+type SafetyVerdict = { label: string; indicator: 'clean' | 'flagged'; copy: string };
 const safetyVerdicts: SafetyVerdict[] = [
   {
     label: 'Clean',
     indicator: 'clean',
-    copy: 'No indicators of compromise, no suspicious redirects, no malformed responses. Item included in the brief.',
-  },
-  {
-    label: 'Caution',
-    indicator: 'caution',
-    copy: 'Something worth noting — an unusual redirect, a certificate anomaly, a domain that recently changed hands. Item included but marked.',
+    copy: 'Domain passed the CISA allowlist check and URLScan.io scan. Item is included in the brief.',
   },
   {
     label: 'Flagged',
     indicator: 'flagged',
-    copy: 'Indicators consistent with phishing, malware delivery, or active compromise. Item excluded from the brief body entirely.',
+    copy: 'Domain did not pass the scan — suspicious verdict, no result, or scan failure. Item is excluded from the brief entirely. There is no "include with a warning" path.',
   },
 ];
 ---
@@ -689,7 +684,6 @@ const safetyVerdicts: SafetyVerdict[] = [
     flex-shrink: 0;
   }
   .safety-indicator.clean   { background: var(--color-army); }
-  .safety-indicator.caution { background: var(--color-chalk-dim); }
   .safety-indicator.flagged { background: var(--color-blood); }
   .safety-label {
     margin: 0;
@@ -700,7 +694,6 @@ const safetyVerdicts: SafetyVerdict[] = [
     text-transform: uppercase;
   }
   .safety-label.clean   { color: var(--color-army); }
-  .safety-label.caution { color: var(--color-chalk); }
   .safety-label.flagged { color: var(--color-blood); }
   .safety-cell p {
     margin: 0;
