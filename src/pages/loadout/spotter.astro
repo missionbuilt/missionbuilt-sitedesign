@@ -18,6 +18,7 @@
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import TopNav from '../../components/TopNav.astro';
+import DemoEmbed from '../../components/DemoEmbed.astro';
 
 const stats = [
   { key: 'Modes',   value: '2',     href: undefined },
@@ -234,16 +235,11 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
         last area closes.
       </p>
 
-      <div class="demo-wrap">
-        <iframe
-          class="demo-frame"
-          src="/demos/spotter.html"
-          title="The Spotter — interactive demo"
-          loading="lazy"
-          scrolling="yes"
-        ></iframe>
-        <p class="demo-caption">Live demo · Comments on Dashboards epic · Use ← → or the overlay to step through</p>
-      </div>
+      <DemoEmbed
+        src="/demos/spotter.html"
+        title="The Spotter — interactive demo"
+        caption="Live demo · Comments on Dashboards epic · Use ← → or the overlay to step through"
+      />
     </section>
 
     <hr class="dashed" />
@@ -709,31 +705,6 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
     font-size: 14px;
     line-height: 1.55;
     color: var(--color-chalk-dim);
-  }
-
-  /* ============ DEMO IFRAME ============ */
-  .demo-wrap {
-    margin-top: 28px;
-    border: var(--border-thin);
-    border-left: 3px solid var(--color-blood);
-  }
-  .demo-frame {
-    display: block;
-    width: 100%;
-    height: 680px;
-    border: none;
-    background: var(--color-panel);
-  }
-  .demo-caption {
-    margin: 0;
-    padding: 10px 16px;
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--color-chalk-faint);
-    background: var(--color-panel);
-    border-top: 1px solid var(--color-rule);
   }
 
   /* ============ INSTALL BLOCK ============ */

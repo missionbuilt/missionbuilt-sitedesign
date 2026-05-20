@@ -841,10 +841,8 @@ def make_overlay(steps, skill_name):
     letter-spacing: 0.03em;
     color: #c8bea7;
     margin: 0;
-    line-height: 1.45;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    line-height: 1.5;
+    white-space: normal;
   }}
   .mb-demo-btn {{
     background: none;
@@ -986,13 +984,18 @@ SPOTTER_STEPS = [
     },
     {
         "selector": ".note-actions",
-        "title": "Accept or iterate",
-        "desc": "Accept Spotter's read, send a note to push the thinking further, or mark it blocked. Your call."
+        "title": "Accept or skip",
+        "desc": "Accept Spotter's read as-is, or skip the area if it's not relevant to this review. Your call drives the final score."
     },
     {
-        "selector": "#export-top",
+        "selector": ".iterate-editor",
+        "title": "Chat to iterate",
+        "desc": "Not satisfied with the read? Type a note and Spotter rewrites the critique — tighter framing, a different angle, or a sharper recommendation."
+    },
+    {
+        "selector": ".export",
         "title": "Export when ready",
-        "desc": "When all areas are settled, the export button activates. One HTML file, ready to share or archive."
+        "desc": "When areas are settled, export to HTML or Markdown. Share with the team or drop it into your epic archive."
     }
 ]
 
