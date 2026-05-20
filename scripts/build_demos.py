@@ -863,12 +863,25 @@ def make_overlay(steps, skill_name):
   .mb-demo-btn.primary {{ border-color: #a8211a; background: #a8211a; }}
   .mb-demo-btn.primary:hover {{ background: #c02a20; border-color: #c02a20; color: #fffaeb; }}
   @keyframes mb-pulse {{
-    0%, 100% {{ box-shadow: 0 0 0 2px #fffaeb, 0 0 0 5px #a8211a; }}
-    50%       {{ box-shadow: 0 0 0 2px #fffaeb, 0 0 0 7px #a8211a; }}
+    0%, 100% {{
+      box-shadow:
+        0 0 0 3px #fffaeb,
+        0 0 0 6px #a8211a,
+        0 0 18px 4px rgba(168,33,26,0.55);
+    }}
+    50% {{
+      box-shadow:
+        0 0 0 3px #fffaeb,
+        0 0 0 8px #a8211a,
+        0 0 28px 8px rgba(168,33,26,0.70);
+    }}
   }}
   .mb-highlight {{
     outline: none !important;
-    box-shadow: 0 0 0 2px #fffaeb, 0 0 0 5px #a8211a !important;
+    box-shadow:
+      0 0 0 3px #fffaeb,
+      0 0 0 6px #a8211a,
+      0 0 18px 4px rgba(168,33,26,0.55) !important;
     animation: mb-pulse 1.6s ease-in-out infinite !important;
     position: relative !important;
     z-index: 1000 !important;
@@ -992,9 +1005,9 @@ SPOTTER_STEPS = [
         "desc": "Accept Spotter's read as-is, or skip the area if it's not relevant to this review. Your call drives the final score."
     },
     {
-        "selector": ".iterate-editor",
+        "selector": "[data-act='refine']",
         "title": "Chat to iterate",
-        "desc": "Not satisfied with the read? Type a note and Spotter rewrites the critique — tighter framing, a different angle, or a sharper recommendation."
+        "desc": "Not satisfied with the read? Hit Refine with Spotter, type a note, and it rewrites the critique — tighter framing, a different angle, a sharper recommendation."
     },
     {
         "selector": ".export",

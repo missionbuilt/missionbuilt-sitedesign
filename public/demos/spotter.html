@@ -1794,12 +1794,25 @@ renderAll();
   .mb-demo-btn.primary { border-color: #a8211a; background: #a8211a; }
   .mb-demo-btn.primary:hover { background: #c02a20; border-color: #c02a20; color: #fffaeb; }
   @keyframes mb-pulse {
-    0%, 100% { box-shadow: 0 0 0 2px #fffaeb, 0 0 0 5px #a8211a; }
-    50%       { box-shadow: 0 0 0 2px #fffaeb, 0 0 0 7px #a8211a; }
+    0%, 100% {
+      box-shadow:
+        0 0 0 3px #fffaeb,
+        0 0 0 6px #a8211a,
+        0 0 18px 4px rgba(168,33,26,0.55);
+    }
+    50% {
+      box-shadow:
+        0 0 0 3px #fffaeb,
+        0 0 0 8px #a8211a,
+        0 0 28px 8px rgba(168,33,26,0.70);
+    }
   }
   .mb-highlight {
     outline: none !important;
-    box-shadow: 0 0 0 2px #fffaeb, 0 0 0 5px #a8211a !important;
+    box-shadow:
+      0 0 0 3px #fffaeb,
+      0 0 0 6px #a8211a,
+      0 0 18px 4px rgba(168,33,26,0.55) !important;
     animation: mb-pulse 1.6s ease-in-out infinite !important;
     position: relative !important;
     z-index: 1000 !important;
@@ -1808,7 +1821,7 @@ renderAll();
 <script>
 (function() {
   'use strict';
-  var STEPS = [{"selector": ".wbar", "title": "The worksheet", "desc": "Epic title, overall verdict, and export — visible as soon as the brief renders."}, {"selector": ".tracker", "title": "Nine areas at a glance", "desc": "Every area has a pip score and opens into a full critique. The grid is your at-a-glance read."}, {"selector": ".area", "title": "Open an area", "desc": "Each area expands to show the epic excerpt, the critique notes, and the action buttons."}, {"selector": ".status", "title": "The verdict", "desc": "Three judges, three pips. White = pass, red = fail. Two white = Good lift. Two red = No-lift."}, {"selector": ".notes-pane", "title": "Critique notes", "desc": "Four note types: Missing (a gap), Suggest (a fix), Recommend (a stronger path), Observation (what's working)."}, {"selector": ".note-actions", "title": "Accept or skip", "desc": "Accept Spotter's read as-is, or skip the area if it's not relevant to this review. Your call drives the final score."}, {"selector": ".iterate-editor", "title": "Chat to iterate", "desc": "Not satisfied with the read? Type a note and Spotter rewrites the critique — tighter framing, a different angle, or a sharper recommendation."}, {"selector": ".export", "title": "Export when ready", "desc": "When areas are settled, export to HTML or Markdown. Share with the team or drop it into your epic archive."}];
+  var STEPS = [{"selector": ".wbar", "title": "The worksheet", "desc": "Epic title, overall verdict, and export — visible as soon as the brief renders."}, {"selector": ".tracker", "title": "Nine areas at a glance", "desc": "Every area has a pip score and opens into a full critique. The grid is your at-a-glance read."}, {"selector": ".area", "title": "Open an area", "desc": "Each area expands to show the epic excerpt, the critique notes, and the action buttons."}, {"selector": ".status", "title": "The verdict", "desc": "Three judges, three pips. White = pass, red = fail. Two white = Good lift. Two red = No-lift."}, {"selector": ".notes-pane", "title": "Critique notes", "desc": "Four note types: Missing (a gap), Suggest (a fix), Recommend (a stronger path), Observation (what's working)."}, {"selector": ".note-actions", "title": "Accept or skip", "desc": "Accept Spotter's read as-is, or skip the area if it's not relevant to this review. Your call drives the final score."}, {"selector": "[data-act='refine']", "title": "Chat to iterate", "desc": "Not satisfied with the read? Hit Refine with Spotter, type a note, and it rewrites the critique — tighter framing, a different angle, a sharper recommendation."}, {"selector": ".export", "title": "Export when ready", "desc": "When areas are settled, export to HTML or Markdown. Share with the team or drop it into your epic archive."}];
   var current = 0;
   var prevHighlight = null;
 
