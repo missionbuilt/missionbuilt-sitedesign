@@ -1,86 +1,101 @@
 ---
 /**
- * The Spotter — standalone page.
+ * The Warmup — standalone page.
  *
- * The live skill from the Loadout. A product epic review tool using
- * nine product-leadership areas. The page walks through:
+ * The live skill from the Loadout. A daily intelligence brief for the first
+ * coffee. The page walks through:
  *  - what it does
- *  - the two modes (Review / Build)
+ *  - three modes (CISO / Product Leader / Custom)
  *  - who it is for
- *  - the verdict signals (pip system, good lift / no-lift)
- *  - a sample worksheet placeholder
+ *  - how link safety works (unique differentiator)
+ *  - a demo placeholder
  *  - install (MCP server, four paths)
+ *  - trigger phrases
+ *  - faq
+ *  - also in the kit
  *  - open source / license
  *
- * Color discipline: oxblood for the hero period, eyebrows, section
- * labels, the closer accent, the "missing" verdict marks, and the
- * sample corner badge. Army green only for the Live tag under the hero.
+ * Color discipline: oxblood for eyebrows, section labels, the closer accent.
+ * Army green for the Live tag and the Clean safety verdict.
+ * Blood for the Flagged verdict.
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import TopNav from '../../components/TopNav.astro';
 
 const stats = [
-  { key: 'Modes',   value: '2',     href: undefined },
-  { key: 'Areas',   value: '9',     href: undefined },
-  { key: 'License', value: 'MIT',   href: undefined },
-  { key: 'Source',  value: 'GitHub', href: 'https://github.com/missionbuilt/loadout/tree/main/spotter' },
+  { key: 'Modes',    value: '3',      href: undefined },
+  { key: 'Sections', value: '5',      href: undefined },
+  { key: 'License',  value: 'MIT',    href: undefined },
+  { key: 'Source',   value: 'GitHub', href: 'https://github.com/missionbuilt/loadout/tree/main/warmup' },
 ];
 
-type Phase = { num: string; mode: string; when: string; body: string; deliverable: string };
-const phases: Phase[] = [
+type Mode = { num: string; name: string; for: string; body: string; sources: string };
+const modes: Mode[] = [
   {
     num: '01',
-    mode: 'Review',
-    when: 'Before stakeholders see it',
-    body:
-      'You have a complete epic and need a final pass before sending it for review. The Spotter walks all nine areas, calls verdicts with the powerlifting pip system, and produces an interactive worksheet to work through.',
-    deliverable: 'A structured worksheet — critique notes per area, an accept and skip loop, an export that unlocks when every area is closed.',
+    name: 'CISO Mode',
+    for: 'Security executives',
+    body: 'Tell the Warmup your sector and it loads a pre-curated source suite: CISA advisories, the Known Exploited Vulnerabilities catalog, MITRE ATT&CK, CrowdStrike, Palo Alto Unit 42, Elastic Security Labs, Google Mandiant, Microsoft MSTIC, Cisco Talos, and more — plus sector-specific feeds for Healthcare, Financial Services, Energy, Government, and Manufacturing/OT.',
+    sources: 'Threat landscape · Emerging threats · Research digest · Industry intel · Social signal',
   },
   {
     num: '02',
-    mode: 'Build',
-    when: 'Starting from blank',
-    body:
-      "You have a new initiative and a blank page. The Spotter asks targeted questions for each area and helps you draft an epic that's already area-aware from the first version.",
-    deliverable: 'A working first draft, structured against all nine areas.',
+    name: 'Product Leader Mode',
+    for: 'PMs, CPOs, product executives',
+    body: 'Tell the Warmup your product area, vertical, and build type and it loads a source suite tuned for competitive and market intelligence: competitor newsrooms, analyst firms, AI model release trackers, funding and M&A feeds, and the voices worth following in your space.',
+    sources: 'Company intel · Competitor moves · AI & tooling · Market & funding · Social signal',
+  },
+  {
+    num: '03',
+    name: 'Custom Mode',
+    for: 'Everyone else',
+    body: 'Describe your morning interests in plain language. Stocks, industry news, competitor blogs, AI model releases, policy changes, local business news — whatever you need to start the day in the loop. The Warmup builds your source suite from scratch and rates every recommended source by trust tier.',
+    sources: 'You define the sections',
   },
 ];
 
 type Audience = { who: string; what: string };
 const audience: Audience[] = [
   {
-    who: 'Product managers',
-    what:
-      'Tightening an epic before sending it for review. Catching gaps before someone senior catches them.',
+    who: 'Security executives',
+    what: 'Threat actors, new CVEs, KEV additions, and sector-specific intelligence — before the first meeting of the day.',
   },
   {
     who: 'Product leaders',
-    what:
-      "Calibrating the team's writing without sitting in every working doc. A consistent bar across the org.",
+    what: 'Competitor moves, funding rounds, AI releases, and analyst signals — synthesized into one document before your inbox opens.',
   },
   {
     who: 'Founders and operators',
-    what:
-      'Building product instincts without a coach. Learning the questions a seasoned PM would ask.',
+    what: 'A custom source suite built from a plain-language description of what you care about. No configuration files required to start.',
   },
   {
-    who: 'Engineers and designers',
-    what:
-      "Reading an epic critically before standup. Spotting what is missing before kickoff.",
+    who: 'Any professional',
+    what: 'Anyone who wants to be informed before the first decision of the day — not catching up an hour in.',
   },
 ];
 
-type Pip = 'w' | 'r';
-
-// The legend: two verdict states.
-const legend: { label: string; pips: Pip[]; copy: string }[] = [
-  { label: 'Good lift', pips: ['w','w','w'], copy: 'The area is well-addressed. Move on.' },
-  { label: 'No-lift',   pips: ['r','r','r'], copy: 'The area needs work. The worksheet keeps it open until you close it.' },
+type SafetyVerdict = { label: string; indicator: 'clean' | 'caution' | 'flagged'; copy: string };
+const safetyVerdicts: SafetyVerdict[] = [
+  {
+    label: 'Clean',
+    indicator: 'clean',
+    copy: 'No indicators of compromise, no suspicious redirects, no malformed responses. Item included in the brief.',
+  },
+  {
+    label: 'Caution',
+    indicator: 'caution',
+    copy: 'Something worth noting — an unusual redirect, a certificate anomaly, a domain that recently changed hands. Item included but marked.',
+  },
+  {
+    label: 'Flagged',
+    indicator: 'flagged',
+    copy: 'Indicators consistent with phishing, malware delivery, or active compromise. Item excluded from the brief body entirely.',
+  },
 ];
 ---
 <BaseLayout
-  title="The Spotter · The Loadout · Mission Built"
-  description="A second pair of eyes on your product epic, from blank page to final review. Open-source, MIT-licensed, MCP-compatible."
+  title="The Warmup · The Loadout · Mission Built"
+  description="A daily intelligence brief for your first coffee. Know what moved before you open your inbox. Open-source, MIT-licensed, MCP-compatible."
   active="loadout"
 >
   <TopNav active="loadout" />
@@ -90,7 +105,7 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
     <nav class="breadcrumb" aria-label="Breadcrumb">
       <a href="/loadout">The Loadout</a>
       <span aria-hidden="true"> / </span>
-      <span class="here">The Spotter</span>
+      <span class="here">The Warmup</span>
     </nav>
 
     {/* ---------- HERO ---------- */}
@@ -102,7 +117,7 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
       </p>
 
       <h1 class="display">
-        <span>The Spotter</span><span class="dot">.</span>
+        <span>The Warmup</span><span class="dot">.</span>
       </h1>
 
       <div class="live-tag" aria-label="Live">
@@ -110,11 +125,11 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
         <span>Live</span>
       </div>
 
-      <p class="subtitle">A structured worksheet for the epic on your desk.</p>
+      <p class="subtitle">Know what moved before you open your inbox.</p>
     </section>
 
     {/* ---------- META STRIP ---------- */}
-    <section class="meta-strip" aria-label="Spotter at a glance">
+    <section class="meta-strip" aria-label="Warmup at a glance">
       {stats.map((s) => (
         <div class="stat">
           <div class="stat-key">{s.key}</div>
@@ -135,43 +150,43 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
     {/* ---------- WHAT IT DOES ---------- */}
     <section class="block">
       <p class="section-label">What it does</p>
-      <h2 class="section-h2">Walks an epic through nine areas.</h2>
+      <h2 class="section-h2">Your briefing. Before the bar.</h2>
       <p class="prose">
-        The Spotter reviews a product epic across nine product-leadership areas —
-        user and problem, competitive landscape, strategic differentiation,
-        solution approach, holistic impact, packaging and pricing, launch readiness,
-        post-launch ownership, and trust, governance, and auditability. It meets you
-        wherever the epic is: blank page, rough draft, or nearly done.
+        You do not go under the bar cold. In the gym, the warmup is the ten minutes
+        that makes the next ninety honest — it tells you what is tight, what needs
+        adjustment, and whether today's plan needs to change before the work begins.
       </p>
       <p class="prose">
-        The output is an interactive worksheet. Each area shows the relevant excerpt
-        from your epic, a pip verdict, and typed critique notes. Accept the ones you
-        have addressed. Skip the ones you are setting aside. When every area is closed,
-        the export unlocks. Every flag is constructive — never "you missed this,"
-        always <em>"you could strengthen this by…"</em>
+        The Warmup does the same thing for your workday. Before the first meeting,
+        before the first decision — you know what threat actors are active, what
+        your competitors shipped, what dropped overnight. The Warmup reads your
+        sources, synthesizes what matters, and delivers it as a single live artifact
+        you pull with your first coffee. Every item is labeled with its source and
+        trust tier. You always know what you are reading and where it came from.
       </p>
     </section>
 
     <hr class="dashed" />
 
-    {/* ---------- TWO MODES ---------- */}
+    {/* ---------- THREE MODES ---------- */}
     <section class="block">
-      <p class="section-label">Two modes</p>
-      <h2 class="section-h2">Two modes. One framework.</h2>
+      <p class="section-label">Three modes</p>
+      <h2 class="section-h2">Three modes. One brief.</h2>
       <p class="prose">
-        Pick the mode that matches where you are. The nine areas stay the same.
-        What the Spotter gives back changes with the mode.
+        Pick the mode that matches your role. Each loads a different source suite
+        and structures the brief differently. The output is always a live HTML
+        artifact — instrument-panel style, no dashboard chrome.
       </p>
 
-      <div class="phases">
-        {phases.map((p) => (
-          <article class="phase">
-            <div class="phase-num">Phase {p.num}</div>
-            <h3 class="phase-mode">{p.mode}</h3>
-            <p class="phase-when">{p.when}</p>
-            <p class="phase-body">{p.body}</p>
-            <p class="phase-label">You get back</p>
-            <p class="phase-deliverable"><em>{p.deliverable}</em></p>
+      <div class="modes">
+        {modes.map((m) => (
+          <article class="mode">
+            <div class="mode-num">Mode {m.num}</div>
+            <h3 class="mode-name">{m.name}</h3>
+            <p class="mode-for">{m.for}</p>
+            <p class="mode-body">{m.body}</p>
+            <p class="mode-label">Sections</p>
+            <p class="mode-sources"><em>{m.sources}</em></p>
           </article>
         ))}
       </div>
@@ -194,26 +209,26 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
 
     <hr class="dashed" />
 
-    {/* ---------- HOW THE VERDICT WORKS ---------- */}
+    {/* ---------- LINK SAFETY ---------- */}
     <section class="block">
-      <p class="section-label">How the verdict works</p>
-      <h2 class="section-h2">Three judges. Two verdicts.</h2>
+      <p class="section-label">How link safety works</p>
+      <h2 class="section-h2">Every URL scanned. Every time.</h2>
       <p class="prose">
-        Borrowed from powerlifting. After each lift, three judges flash white for
-        a good lift, red for no-lift. The Spotter does the same for each of the
-        nine areas — three pip signals per area, one verdict. Good lift means the
-        area is well-addressed. No-lift means the worksheet keeps that area open
-        until you work through it and close it yourself.
+        Every URL cited in the brief is scanned before the artifact renders. The
+        brief includes a Link Safety Verification panel showing the result for
+        each source domain: scan verdict, number of URLs fetched, and whether
+        anything was flagged. Items from flagged sources are excluded from the
+        brief body before you ever see them.
       </p>
 
-      <div class="legend">
-        {legend.map((l) => (
-          <article class="legend-cell">
-            <div class="legend-marks" aria-hidden="true">
-              {l.pips.map((p) => <span class:list={['pip', p === 'w' ? 'pass' : 'miss']}></span>)}
+      <div class="safety-legend">
+        {safetyVerdicts.map((v) => (
+          <article class="safety-cell">
+            <div class="safety-indicator-wrap">
+              <span class:list={['safety-indicator', v.indicator]} aria-hidden="true"></span>
+              <h3 class:list={['safety-label', v.indicator]}>{v.label}</h3>
             </div>
-            <h3>{l.label}</h3>
-            <p>{l.copy}</p>
+            <p>{v.copy}</p>
           </article>
         ))}
       </div>
@@ -224,25 +239,22 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
     {/* ---------- SEE IT IN ACTION ---------- */}
     <section class="block">
       <p class="section-label">See it in action</p>
-      <h2 class="section-h2">The worksheet, area by area.</h2>
+      <h2 class="section-h2">The brief, live.</h2>
       <p class="prose">
-        In Review mode, the Spotter evaluates your epic across all nine areas and
-        builds a live worksheet artifact. Each area shows the relevant excerpt,
-        a three-pip verdict, and typed critique notes. Work through it at your
-        own pace — accept notes you have addressed, skip ones you are setting
-        aside, and close each area when you are done. Export unlocks when the
-        last area closes.
+        The Warmup renders as a live HTML artifact that stays open and refreshes
+        each time you run it. Charcoal background, oxblood accents, instrument-panel
+        typography. It reads like a field document, not a dashboard.
       </p>
 
       <div class="demo-wrap">
         <iframe
           class="demo-frame"
-          src="/demos/spotter.html"
-          title="The Spotter — interactive demo"
+          src="/demos/warmup.html"
+          title="The Warmup — interactive demo"
           loading="lazy"
           scrolling="yes"
         ></iframe>
-        <p class="demo-caption">Live demo · Comments on Dashboards epic · Use ← → or the overlay to step through</p>
+        <p class="demo-caption">Live demo · Rogue Fitness CISO morning brief · Use ← → or the overlay to step through</p>
       </div>
     </section>
 
@@ -253,7 +265,7 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
       <p class="section-label">How to use it</p>
       <h2 class="section-h2">One connection. Every skill.</h2>
       <p class="install-intro">
-        The Spotter is part of the Loadout MCP server. One connection gives you
+        The Warmup is part of the Loadout MCP server. One connection gives you
         every skill in the kit. Any MCP-compatible agent can connect using the
         URL below. Tested and validated in Claude.
       </p>
@@ -292,16 +304,20 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
     <section class="block">
       <p class="section-label">After you connect</p>
       <h2 class="section-h2">Say this to get started.</h2>
-      <p class="prose">Paste your epic into the conversation, then use either phrase. The skill triggers automatically.</p>
+      <p class="prose">The first time, run setup. After that, one phrase pulls your brief.</p>
 
       <div class="triggers">
         <div class="trigger-row">
-          <span class="trigger-mode">Review</span>
-          <code class="trigger-phrase">"run the spotter on this epic"</code>
+          <span class="trigger-mode">First run</span>
+          <code class="trigger-phrase">"warmup setup"</code>
         </div>
         <div class="trigger-row">
-          <span class="trigger-mode">Build</span>
-          <code class="trigger-phrase">"build me an epic for [initiative]"</code>
+          <span class="trigger-mode">Daily brief</span>
+          <code class="trigger-phrase">"run warmup"</code>
+        </div>
+        <div class="trigger-row">
+          <span class="trigger-mode">Sources</span>
+          <code class="trigger-phrase">"show my warmup sources"</code>
         </div>
       </div>
     </section>
@@ -315,16 +331,16 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
 
       <div class="faq">
         <article class="faq-item">
-          <h3>Is my epic stored anywhere?</h3>
-          <p>No. Your content is processed in memory and discarded after the worksheet is built. Nothing is written to a database or logged.</p>
+          <h3>Does my config stay on my machine?</h3>
+          <p>Yes. Your source list and preferences live in a <code>WARMUP.md</code> file at your project root. It is gitignored and never committed. Nothing about your setup leaves your machine.</p>
         </article>
         <article class="faq-item">
           <h3>Do I need to sign in?</h3>
           <p>Yes. The server uses Google OAuth. You authenticate once when you connect — no separate account creation required.</p>
         </article>
         <article class="faq-item">
-          <h3>Does this work with agents other than Claude?</h3>
-          <p>Yes. The Loadout is a standard MCP server and works with any MCP-compatible agent. It has been tested and validated in Claude.</p>
+          <h3>Can I add my own sources?</h3>
+          <p>Yes. Add, remove, or exclude any source at any time using plain-language commands. The config updates automatically and persists to your <code>WARMUP.md</code>.</p>
         </article>
       </div>
     </section>
@@ -337,9 +353,9 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
       <h2 class="section-h2">The full Loadout.</h2>
 
       <div class="related">
-        <a href="/loadout/warmup" class="related-card">
-          <h3>The Warmup</h3>
-          <p>A daily intelligence brief for your first coffee. Curated sources, link safety scanning, live artifact.</p>
+        <a href="/loadout/spotter" class="related-card">
+          <h3>The Spotter</h3>
+          <p>Walk a product epic through nine areas. Get a structured worksheet back — critique notes, accept and skip loop, export that unlocks when every area closes.</p>
           <span class="related-cta">Open →</span>
         </a>
         <a href="/loadout/approach" class="related-card">
@@ -356,7 +372,7 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
     <section class="block">
       <h2 class="section-h2">Open source.</h2>
       <p class="prose">
-        The Spotter ships under MIT. Use it commercially, adapt it for your team,
+        The Warmup ships under MIT. Use it commercially, adapt it for your team,
         embed it in your product. Source for both the skill and the MCP server lives in
         <a
           class="inline-link"
@@ -364,20 +380,17 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
           target="_blank"
           rel="noopener"
         >github.com/missionbuilt/loadout</a>.
-        Attribution to the writers and skills whose thinking informed it is in
-        <code>spotter/ATTRIBUTION.md</code>.
       </p>
       <p class="prose">
-        Customize for your team by adding a <code>CLAUDE.md</code> at your project
-        root with your tier names, competitor set, and product taxonomy. The skill
-        stays generic. Your context stays local.
+        Your config stays generic — the skill reads your <code>WARMUP.md</code> to
+        personalize the brief. Pull skill updates without touching your source list.
       </p>
     </section>
 
     {/* ---------- CLOSER ---------- */}
     <section class="closer">
       <p>
-        A spotter lifts the lifter. <strong>Not the bar.</strong>
+        You do not go under the bar <strong>cold.</strong>
       </p>
     </section>
 
@@ -428,10 +441,7 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
     color: var(--color-blood);
     text-transform: uppercase;
   }
-  .eyebrow .dots {
-    letter-spacing: 0.04em;
-    opacity: 0.65;
-  }
+  .eyebrow .dots { letter-spacing: 0.04em; opacity: 0.65; }
 
   .display {
     margin: 0;
@@ -553,8 +563,7 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
   }
   .prose strong { color: var(--color-chalk); font-weight: 700; }
   .prose em { font-style: italic; color: var(--color-chalk); }
-  .prose code,
-  .install-body code {
+  .prose code {
     font-family: var(--font-mono);
     font-size: 0.92em;
     color: var(--color-chalk);
@@ -571,21 +580,21 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
     border-bottom-color: var(--color-blood);
   }
 
-  /* ============ PHASES GRID ============ */
-  .phases {
+  /* ============ MODES GRID ============ */
+  .modes {
     margin-top: 28px;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     border-top: var(--border-thin);
     border-bottom: var(--border-thin);
   }
-  .phase {
+  .mode {
     padding: 28px 28px 32px;
     border-right: var(--border-thin);
   }
-  .phase:last-child { border-right: none; }
+  .mode:last-child { border-right: none; }
 
-  .phase-num {
+  .mode-num {
     font-family: var(--font-mono);
     font-size: 10px;
     font-weight: 500;
@@ -594,16 +603,16 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
     text-transform: uppercase;
     margin-bottom: 14px;
   }
-  .phase-mode {
+  .mode-name {
     margin: 0 0 6px;
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: 28px;
+    font-size: 24px;
     letter-spacing: 0.02em;
     text-transform: uppercase;
     color: var(--color-chalk);
   }
-  .phase-when {
+  .mode-for {
     margin: 0 0 16px;
     font-family: var(--font-display);
     font-weight: 500;
@@ -612,14 +621,14 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
     text-transform: uppercase;
     color: var(--color-blood);
   }
-  .phase-body {
+  .mode-body {
     margin: 0 0 18px;
     font-family: var(--font-serif);
     font-size: 15px;
     line-height: 1.6;
     color: var(--color-chalk-dim);
   }
-  .phase-label {
+  .mode-label {
     margin: 18px 0 4px;
     font-family: var(--font-mono);
     font-size: 10px;
@@ -628,11 +637,11 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
     text-transform: uppercase;
     color: var(--color-chalk-faint);
   }
-  .phase-deliverable {
+  .mode-sources {
     margin: 0;
     font-family: var(--font-serif);
     font-style: italic;
-    font-size: 15px;
+    font-size: 14px;
     line-height: 1.55;
     color: var(--color-chalk);
   }
@@ -669,41 +678,46 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
     color: var(--color-chalk-dim);
   }
 
-  /* ============ PIPS (small squares) ============ */
-  .pip {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    border: 1px solid var(--color-rule);
-    margin-right: 3px;
-  }
-  .pip.pass { background: var(--color-chalk); border-color: var(--color-chalk); }
-  .pip.miss { background: var(--color-blood); border-color: var(--color-blood); }
-
-  /* ============ LEGEND (2 cells) ============ */
-  .legend {
+  /* ============ LINK SAFETY ============ */
+  .safety-legend {
     margin-top: 28px;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     border-top: var(--border-thin);
     border-bottom: var(--border-thin);
   }
-  .legend-cell {
+  .safety-cell {
     padding: 24px 28px;
     border-right: var(--border-thin);
   }
-  .legend-cell:last-child { border-right: none; }
-  .legend-marks { margin-bottom: 14px; line-height: 1; }
-  .legend-cell h3 {
-    margin: 0 0 8px;
+  .safety-cell:last-child { border-right: none; }
+  .safety-indicator-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .safety-indicator {
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    flex-shrink: 0;
+  }
+  .safety-indicator.clean   { background: var(--color-army); }
+  .safety-indicator.caution { background: var(--color-chalk-dim); }
+  .safety-indicator.flagged { background: var(--color-blood); }
+  .safety-label {
+    margin: 0;
     font-family: var(--font-display);
     font-weight: 700;
     font-size: 18px;
     letter-spacing: 0.04em;
     text-transform: uppercase;
-    color: var(--color-chalk);
   }
-  .legend-cell p {
+  .safety-label.clean   { color: var(--color-army); }
+  .safety-label.caution { color: var(--color-chalk); }
+  .safety-label.flagged { color: var(--color-blood); }
+  .safety-cell p {
     margin: 0;
     font-family: var(--font-serif);
     font-size: 14px;
@@ -865,6 +879,44 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
     letter-spacing: 0.03em;
   }
 
+  /* ============ FAQ ============ */
+  .faq {
+    margin-top: 28px;
+    border-top: var(--border-thin);
+  }
+  .faq-item {
+    padding: 22px 0;
+    border-bottom: var(--border-thin);
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 36px;
+    align-items: start;
+  }
+  .faq-item h3 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 17px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--color-chalk);
+    line-height: 1.3;
+  }
+  .faq-item p {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--color-chalk-dim);
+  }
+  .faq-item p code {
+    font-family: var(--font-mono);
+    font-size: 0.88em;
+    color: var(--color-chalk);
+    background: var(--color-panel);
+    padding: 1px 5px;
+  }
+
   /* ============ RELATED SKILLS ============ */
   .related {
     margin-top: 28px;
@@ -911,37 +963,6 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
     transition: color 120ms ease-out;
   }
   .related-card:hover .related-cta { color: var(--color-blood); }
-
-  /* ============ FAQ ============ */
-  .faq {
-    margin-top: 28px;
-    border-top: var(--border-thin);
-  }
-  .faq-item {
-    padding: 22px 0;
-    border-bottom: var(--border-thin);
-    display: grid;
-    grid-template-columns: 280px 1fr;
-    gap: 36px;
-    align-items: start;
-  }
-  .faq-item h3 {
-    margin: 0;
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 17px;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-    color: var(--color-chalk);
-    line-height: 1.3;
-  }
-  .faq-item p {
-    margin: 0;
-    font-family: var(--font-serif);
-    font-size: 16px;
-    line-height: 1.65;
-    color: var(--color-chalk-dim);
-  }
 
   /* ============ DASHED DIVIDER ============ */
   .dashed {
@@ -997,23 +1018,23 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
       grid-template-columns: repeat(2, 1fr);
       gap: 18px;
     }
-    .phases {
+    .modes {
       grid-template-columns: 1fr;
     }
-    .phase {
+    .mode {
       border-right: none;
       border-bottom: var(--border-thin);
     }
-    .phase:last-child { border-bottom: none; }
+    .mode:last-child { border-bottom: none; }
 
-    .legend {
+    .safety-legend {
       grid-template-columns: 1fr;
     }
-    .legend-cell {
+    .safety-cell {
       border-right: none;
       border-bottom: var(--border-thin);
     }
-    .legend-cell:last-child { border-bottom: none; }
+    .safety-cell:last-child { border-bottom: none; }
 
     .faq-item {
       grid-template-columns: 200px 1fr;
@@ -1031,6 +1052,15 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
     }
     .block { padding: 40px var(--pad-page-x-mobile) 0; }
     .install-block { padding: 40px var(--pad-page-x-mobile) 0; }
+    .section-h2 { font-size: 28px; }
+
+    .audience {
+      grid-template-columns: 1fr;
+    }
+    .audience-cell { border-right: none; }
+    .audience-cell:nth-last-child(-n+2) { border-bottom: var(--border-thin); }
+    .audience-cell:last-child { border-bottom: none; }
+
     .install-url {
       flex-direction: column;
       align-items: flex-start;
@@ -1043,16 +1073,6 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
     }
     .install-opt:nth-last-child(-n+2) { border-bottom: var(--border-thin); }
     .install-opt:last-child { border-bottom: none; }
-    .section-h2 { font-size: 28px; }
-
-    .audience {
-      grid-template-columns: 1fr;
-    }
-    .audience-cell {
-      border-right: none;
-    }
-    .audience-cell:nth-last-child(-n+2) { border-bottom: var(--border-thin); }
-    .audience-cell:last-child { border-bottom: none; }
 
     .trigger-row {
       grid-template-columns: 80px 1fr;
@@ -1060,17 +1080,17 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
     }
     .trigger-phrase { font-size: 12px; }
 
+    .faq-item {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
     .related { grid-template-columns: 1fr; }
     .related-card {
       border-right: none;
       border-bottom: var(--border-thin);
     }
     .related-card:last-child { border-bottom: none; }
-
-    .faq-item {
-      grid-template-columns: 1fr;
-      gap: 12px;
-    }
 
     .dashed { margin: 40px var(--pad-page-x-mobile); }
     .closer { padding: 36px var(--pad-page-x-mobile); }

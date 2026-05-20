@@ -1,86 +1,88 @@
 ---
 /**
- * The Spotter — standalone page.
+ * The Approach — standalone page.
  *
- * The live skill from the Loadout. A product epic review tool using
- * nine product-leadership areas. The page walks through:
+ * The live skill from the Loadout. A pre-call intelligence brief for sellers
+ * and technical sellers. The page walks through:
  *  - what it does
- *  - the two modes (Review / Build)
+ *  - two acts (AE above fold / SE below)
  *  - who it is for
- *  - the verdict signals (pip system, good lift / no-lift)
- *  - a sample worksheet placeholder
+ *  - the MEDDPICC scorecard (unique differentiator)
+ *  - a demo placeholder
  *  - install (MCP server, four paths)
+ *  - trigger phrases
+ *  - faq
+ *  - also in the kit
  *  - open source / license
  *
- * Color discipline: oxblood for the hero period, eyebrows, section
- * labels, the closer accent, the "missing" verdict marks, and the
- * sample corner badge. Army green only for the Live tag under the hero.
+ * Color discipline: oxblood for eyebrows, section labels, the closer accent.
+ * Army green for the Live tag and Confirmed MEDDPICC state.
+ * Blood for Unknown MEDDPICC state.
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import TopNav from '../../components/TopNav.astro';
 
 const stats = [
-  { key: 'Modes',   value: '2',     href: undefined },
-  { key: 'Areas',   value: '9',     href: undefined },
-  { key: 'License', value: 'MIT',   href: undefined },
-  { key: 'Source',  value: 'GitHub', href: 'https://github.com/missionbuilt/loadout/tree/main/spotter' },
+  { key: 'Sections', value: '9',      href: undefined },
+  { key: 'Acts',     value: '2',      href: undefined },
+  { key: 'License',  value: 'MIT',    href: undefined },
+  { key: 'Source',   value: 'GitHub', href: 'https://github.com/missionbuilt/loadout/tree/main/the-approach' },
 ];
 
-type Phase = { num: string; mode: string; when: string; body: string; deliverable: string };
-const phases: Phase[] = [
+type Act = { num: string; name: string; audience: string; sections: string[]; body: string };
+const acts: Act[] = [
   {
     num: '01',
-    mode: 'Review',
-    when: 'Before stakeholders see it',
-    body:
-      'You have a complete epic and need a final pass before sending it for review. The Spotter walks all nine areas, calls verdicts with the powerlifting pip system, and produces an interactive worksheet to work through.',
-    deliverable: 'A structured worksheet — critique notes per area, an accept and skip loop, an export that unlocks when every area is closed.',
+    name: 'The AE Half',
+    audience: 'Account executives',
+    body: 'Business intelligence above the fold. Company snapshot, leadership and the buyer, financial posture, industry context, and recent signal — everything you need to open the call with authority and ask the right questions.',
+    sections: ['Company snapshot', 'Leadership & the buyer', 'Financial posture', 'Industry context', 'Recent signal'],
   },
   {
     num: '02',
-    mode: 'Build',
-    when: 'Starting from blank',
-    body:
-      "You have a new initiative and a blank page. The Spotter asks targeted questions for each area and helps you draft an epic that's already area-aware from the first version.",
-    deliverable: 'A working first draft, structured against all nine areas.',
+    name: 'The SE Half',
+    audience: 'Sales engineers',
+    body: 'Technical depth below the fold. Stack and integrations, public security events, demo prep, and an opener with discovery questions grounded in real public signals — so the SE walks in with a plan, not a script.',
+    sections: ['Stack & integrations', 'Public security events', 'Demo prep', 'Opener & discovery'],
   },
 ];
 
 type Audience = { who: string; what: string };
 const audience: Audience[] = [
   {
-    who: 'Product managers',
-    what:
-      'Tightening an epic before sending it for review. Catching gaps before someone senior catches them.',
+    who: 'Account executives',
+    what: 'Company intel, leadership profiles, financial posture, and competitive context — before the deck, before the discovery script.',
   },
   {
-    who: 'Product leaders',
-    what:
-      "Calibrating the team's writing without sitting in every working doc. A consistent bar across the org.",
+    who: 'Sales engineers',
+    what: 'Tech stack, public security events, and a demo prep section tied to what is already in their environment.',
   },
   {
-    who: 'Founders and operators',
-    what:
-      'Building product instincts without a coach. Learning the questions a seasoned PM would ask.',
+    who: 'Founders doing outbound',
+    what: 'Research and discovery questions without a full sales team. Walk into the first conversation already inside the lift.',
   },
   {
-    who: 'Engineers and designers',
-    what:
-      "Reading an epic critically before standup. Spotting what is missing before kickoff.",
+    who: 'Anyone in an important meeting',
+    what: 'Not just sales. QBRs, executive sponsors, partner calls — any time walking in cold is not an option.',
   },
 ];
 
-type Pip = 'w' | 'r';
-
-// The legend: two verdict states.
-const legend: { label: string; pips: Pip[]; copy: string }[] = [
-  { label: 'Good lift', pips: ['w','w','w'], copy: 'The area is well-addressed. Move on.' },
-  { label: 'No-lift',   pips: ['r','r','r'], copy: 'The area needs work. The worksheet keeps it open until you close it.' },
+type MeddpiccState = 'confirmed' | 'partial' | 'unknown';
+type MeddpiccDimension = { letter: string; name: string; state: MeddpiccState };
+const meddpicc: MeddpiccDimension[] = [
+  { letter: 'M', name: 'Metrics',          state: 'confirmed' },
+  { letter: 'E', name: 'Economic Buyer',   state: 'partial'   },
+  { letter: 'D', name: 'Decision Criteria',state: 'partial'   },
+  { letter: 'D', name: 'Decision Process', state: 'unknown'   },
+  { letter: 'P', name: 'Paper Process',    state: 'unknown'   },
+  { letter: 'I', name: 'Identify Pain',    state: 'confirmed' },
+  { letter: 'C', name: 'Champion',         state: 'partial'   },
+  { letter: 'C', name: 'Competition',      state: 'confirmed' },
 ];
 ---
 <BaseLayout
-  title="The Spotter · The Loadout · Mission Built"
-  description="A second pair of eyes on your product epic, from blank page to final review. Open-source, MIT-licensed, MCP-compatible."
+  title="The Approach · The Loadout · Mission Built"
+  description="A pre-call intelligence brief for sellers and technical sellers. Know the room before you walk in. Open-source, MIT-licensed, MCP-compatible."
   active="loadout"
 >
   <TopNav active="loadout" />
@@ -90,7 +92,7 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
     <nav class="breadcrumb" aria-label="Breadcrumb">
       <a href="/loadout">The Loadout</a>
       <span aria-hidden="true"> / </span>
-      <span class="here">The Spotter</span>
+      <span class="here">The Approach</span>
     </nav>
 
     {/* ---------- HERO ---------- */}
@@ -102,7 +104,7 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
       </p>
 
       <h1 class="display">
-        <span>The Spotter</span><span class="dot">.</span>
+        <span>The Approach</span><span class="dot">.</span>
       </h1>
 
       <div class="live-tag" aria-label="Live">
@@ -110,11 +112,11 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
         <span>Live</span>
       </div>
 
-      <p class="subtitle">A structured worksheet for the epic on your desk.</p>
+      <p class="subtitle">Know the room before you walk in.</p>
     </section>
 
     {/* ---------- META STRIP ---------- */}
-    <section class="meta-strip" aria-label="Spotter at a glance">
+    <section class="meta-strip" aria-label="Approach at a glance">
       {stats.map((s) => (
         <div class="stat">
           <div class="stat-key">{s.key}</div>
@@ -135,43 +137,43 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
     {/* ---------- WHAT IT DOES ---------- */}
     <section class="block">
       <p class="section-label">What it does</p>
-      <h2 class="section-h2">Walks an epic through nine areas.</h2>
+      <h2 class="section-h2">Walk up already inside the lift.</h2>
       <p class="prose">
-        The Spotter reviews a product epic across nine product-leadership areas —
-        user and problem, competitive landscape, strategic differentiation,
-        solution approach, holistic impact, packaging and pricing, launch readiness,
-        post-launch ownership, and trust, governance, and auditability. It meets you
-        wherever the epic is: blank page, rough draft, or nearly done.
+        In the gym, the approach to the bar is not incidental — it is deliberate.
+        You know your opener. You know your second and your third. You have studied
+        the competition. You walk up already inside the lift.
       </p>
       <p class="prose">
-        The output is an interactive worksheet. Each area shows the relevant excerpt
-        from your epic, a pip verdict, and typed critique notes. Accept the ones you
-        have addressed. Skip the ones you are setting aside. When every area is closed,
-        the export unlocks. Every flag is constructive — never "you missed this,"
-        always <em>"you could strengthen this by…"</em>
+        The Approach does the same thing before a sales call. Give it a company
+        name and a line of context. It researches the target across nine concurrent
+        source categories — company snapshot, leadership, financials, industry
+        context, social signal, tech stack, security events, demo prep, and discovery
+        — then renders a structured field brief. Two acts in one document: business
+        intelligence for the AE above the fold, technical depth for the SE below.
       </p>
     </section>
 
     <hr class="dashed" />
 
-    {/* ---------- TWO MODES ---------- */}
+    {/* ---------- TWO ACTS ---------- */}
     <section class="block">
-      <p class="section-label">Two modes</p>
-      <h2 class="section-h2">Two modes. One framework.</h2>
+      <p class="section-label">Brief structure</p>
+      <h2 class="section-h2">Two acts. One document.</h2>
       <p class="prose">
-        Pick the mode that matches where you are. The nine areas stay the same.
-        What the Spotter gives back changes with the mode.
+        Both halves travel together. Both get read before the call.
       </p>
 
-      <div class="phases">
-        {phases.map((p) => (
-          <article class="phase">
-            <div class="phase-num">Phase {p.num}</div>
-            <h3 class="phase-mode">{p.mode}</h3>
-            <p class="phase-when">{p.when}</p>
-            <p class="phase-body">{p.body}</p>
-            <p class="phase-label">You get back</p>
-            <p class="phase-deliverable"><em>{p.deliverable}</em></p>
+      <div class="acts">
+        {acts.map((a) => (
+          <article class="act">
+            <div class="act-num">Act {a.num}</div>
+            <h3 class="act-name">{a.name}</h3>
+            <p class="act-audience">{a.audience}</p>
+            <p class="act-body">{a.body}</p>
+            <p class="act-label">Sections</p>
+            <ul class="act-sections">
+              {a.sections.map((s) => <li>{s}</li>)}
+            </ul>
           </article>
         ))}
       </div>
@@ -194,29 +196,28 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
 
     <hr class="dashed" />
 
-    {/* ---------- HOW THE VERDICT WORKS ---------- */}
+    {/* ---------- MEDDPICC SCORECARD ---------- */}
     <section class="block">
-      <p class="section-label">How the verdict works</p>
-      <h2 class="section-h2">Three judges. Two verdicts.</h2>
+      <p class="section-label">Built from public intel</p>
+      <h2 class="section-h2">MEDDPICC. Before the first call.</h2>
       <p class="prose">
-        Borrowed from powerlifting. After each lift, three judges flash white for
-        a good lift, red for no-lift. The Spotter does the same for each of the
-        nine areas — three pip signals per area, one verdict. Good lift means the
-        area is well-addressed. No-lift means the worksheet keeps that area open
-        until you work through it and close it yourself.
+        Every brief includes a MEDDPICC scorecard built entirely from public signals.
+        Each of the eight qualification dimensions gets a verdict — Confirmed, Partial,
+        or Unknown — with a specific next action attached. You walk in knowing what
+        you know, what you are guessing, and what you still need to find out.
       </p>
 
-      <div class="legend">
-        {legend.map((l) => (
-          <article class="legend-cell">
-            <div class="legend-marks" aria-hidden="true">
-              {l.pips.map((p) => <span class:list={['pip', p === 'w' ? 'pass' : 'miss']}></span>)}
-            </div>
-            <h3>{l.label}</h3>
-            <p>{l.copy}</p>
-          </article>
+      <div class="meddpicc">
+        {meddpicc.map((d) => (
+          <div class="medd-row">
+            <span class="medd-letter" aria-hidden="true">{d.letter}</span>
+            <span class="medd-name">{d.name}</span>
+            <span class:list={['medd-state', d.state]}>{d.state.charAt(0).toUpperCase() + d.state.slice(1)}</span>
+          </div>
         ))}
       </div>
+
+      <p class="medd-note">Sample scorecard. Your actual brief reflects real public intel on the target company.</p>
     </section>
 
     <hr class="dashed" />
@@ -224,25 +225,23 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
     {/* ---------- SEE IT IN ACTION ---------- */}
     <section class="block">
       <p class="section-label">See it in action</p>
-      <h2 class="section-h2">The worksheet, area by area.</h2>
+      <h2 class="section-h2">The brief, before the call.</h2>
       <p class="prose">
-        In Review mode, the Spotter evaluates your epic across all nine areas and
-        builds a live worksheet artifact. Each area shows the relevant excerpt,
-        a three-pip verdict, and typed critique notes. Work through it at your
-        own pace — accept notes you have addressed, skip ones you are setting
-        aside, and close each area when you are done. Export unlocks when the
-        last area closes.
+        The Approach renders as a live HTML artifact in the Mission Built editorial
+        style — cream paper, oxblood accents, Oswald display type, Merriweather
+        body, JetBrains Mono for labels. No rounded corners. No drop shadows.
+        Reads like a field document, not a CRM screen.
       </p>
 
       <div class="demo-wrap">
         <iframe
           class="demo-frame"
-          src="/demos/spotter.html"
-          title="The Spotter — interactive demo"
+          src="/demos/approach.html"
+          title="The Approach — interactive demo"
           loading="lazy"
           scrolling="yes"
         ></iframe>
-        <p class="demo-caption">Live demo · Comments on Dashboards epic · Use ← → or the overlay to step through</p>
+        <p class="demo-caption">Live demo · Rogue Fitness pre-call brief · Use ← → or the overlay to step through</p>
       </div>
     </section>
 
@@ -253,7 +252,7 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
       <p class="section-label">How to use it</p>
       <h2 class="section-h2">One connection. Every skill.</h2>
       <p class="install-intro">
-        The Spotter is part of the Loadout MCP server. One connection gives you
+        The Approach is part of the Loadout MCP server. One connection gives you
         every skill in the kit. Any MCP-compatible agent can connect using the
         URL below. Tested and validated in Claude.
       </p>
@@ -292,16 +291,20 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
     <section class="block">
       <p class="section-label">After you connect</p>
       <h2 class="section-h2">Say this to get started.</h2>
-      <p class="prose">Paste your epic into the conversation, then use either phrase. The skill triggers automatically.</p>
+      <p class="prose">Give it a company name and a line of context. The brief runs automatically.</p>
 
       <div class="triggers">
         <div class="trigger-row">
-          <span class="trigger-mode">Review</span>
-          <code class="trigger-phrase">"run the spotter on this epic"</code>
+          <span class="trigger-mode">Full brief</span>
+          <code class="trigger-phrase">"run the approach on [company]"</code>
         </div>
         <div class="trigger-row">
-          <span class="trigger-mode">Build</span>
-          <code class="trigger-phrase">"build me an epic for [initiative]"</code>
+          <span class="trigger-mode">With context</span>
+          <code class="trigger-phrase">"approach for Acme — AE at Elastic, meeting VP of IT Friday"</code>
+        </div>
+        <div class="trigger-row">
+          <span class="trigger-mode">Quick form</span>
+          <code class="trigger-phrase">"brief me on [company]"</code>
         </div>
       </div>
     </section>
@@ -315,16 +318,16 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
 
       <div class="faq">
         <article class="faq-item">
-          <h3>Is my epic stored anywhere?</h3>
-          <p>No. Your content is processed in memory and discarded after the worksheet is built. Nothing is written to a database or logged.</p>
+          <h3>Is any data stored?</h3>
+          <p>No. Your brief is generated in memory and discarded after the artifact is built. Your seller config in <code>APPROACH.md</code> stays on your machine and is never committed.</p>
+        </article>
+        <article class="faq-item">
+          <h3>What do I need to provide?</h3>
+          <p>Just a company name and a line of context — who you are, who you're meeting, and when. The skill handles the rest across nine concurrent research batches.</p>
         </article>
         <article class="faq-item">
           <h3>Do I need to sign in?</h3>
           <p>Yes. The server uses Google OAuth. You authenticate once when you connect — no separate account creation required.</p>
-        </article>
-        <article class="faq-item">
-          <h3>Does this work with agents other than Claude?</h3>
-          <p>Yes. The Loadout is a standard MCP server and works with any MCP-compatible agent. It has been tested and validated in Claude.</p>
         </article>
       </div>
     </section>
@@ -337,14 +340,14 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
       <h2 class="section-h2">The full Loadout.</h2>
 
       <div class="related">
+        <a href="/loadout/spotter" class="related-card">
+          <h3>The Spotter</h3>
+          <p>Walk a product epic through nine areas. Get a structured worksheet back — critique notes, accept and skip loop, export that unlocks when every area closes.</p>
+          <span class="related-cta">Open →</span>
+        </a>
         <a href="/loadout/warmup" class="related-card">
           <h3>The Warmup</h3>
           <p>A daily intelligence brief for your first coffee. Curated sources, link safety scanning, live artifact.</p>
-          <span class="related-cta">Open →</span>
-        </a>
-        <a href="/loadout/approach" class="related-card">
-          <h3>The Approach</h3>
-          <p>A pre-meeting brief for enterprise calls and QBRs. Decision makers, live signals, discovery questions.</p>
           <span class="related-cta">Open →</span>
         </a>
       </div>
@@ -356,7 +359,7 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
     <section class="block">
       <h2 class="section-h2">Open source.</h2>
       <p class="prose">
-        The Spotter ships under MIT. Use it commercially, adapt it for your team,
+        The Approach ships under MIT. Use it commercially, adapt it for your team,
         embed it in your product. Source for both the skill and the MCP server lives in
         <a
           class="inline-link"
@@ -364,20 +367,18 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
           target="_blank"
           rel="noopener"
         >github.com/missionbuilt/loadout</a>.
-        Attribution to the writers and skills whose thinking informed it is in
-        <code>spotter/ATTRIBUTION.md</code>.
       </p>
       <p class="prose">
-        Customize for your team by adding a <code>CLAUDE.md</code> at your project
-        root with your tier names, competitor set, and product taxonomy. The skill
-        stays generic. Your context stays local.
+        Save your seller context once in <code>APPROACH.md</code> at your project
+        root. The skill reads it on startup and skips those intake questions on
+        every repeat run.
       </p>
     </section>
 
     {/* ---------- CLOSER ---------- */}
     <section class="closer">
       <p>
-        A spotter lifts the lifter. <strong>Not the bar.</strong>
+        Know your opener. <strong>Walk up already inside the lift.</strong>
       </p>
     </section>
 
@@ -428,10 +429,7 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
     color: var(--color-blood);
     text-transform: uppercase;
   }
-  .eyebrow .dots {
-    letter-spacing: 0.04em;
-    opacity: 0.65;
-  }
+  .eyebrow .dots { letter-spacing: 0.04em; opacity: 0.65; }
 
   .display {
     margin: 0;
@@ -553,8 +551,7 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
   }
   .prose strong { color: var(--color-chalk); font-weight: 700; }
   .prose em { font-style: italic; color: var(--color-chalk); }
-  .prose code,
-  .install-body code {
+  .prose code {
     font-family: var(--font-mono);
     font-size: 0.92em;
     color: var(--color-chalk);
@@ -571,21 +568,21 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
     border-bottom-color: var(--color-blood);
   }
 
-  /* ============ PHASES GRID ============ */
-  .phases {
+  /* ============ ACTS GRID ============ */
+  .acts {
     margin-top: 28px;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     border-top: var(--border-thin);
     border-bottom: var(--border-thin);
   }
-  .phase {
+  .act {
     padding: 28px 28px 32px;
     border-right: var(--border-thin);
   }
-  .phase:last-child { border-right: none; }
+  .act:last-child { border-right: none; }
 
-  .phase-num {
+  .act-num {
     font-family: var(--font-mono);
     font-size: 10px;
     font-weight: 500;
@@ -594,7 +591,7 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
     text-transform: uppercase;
     margin-bottom: 14px;
   }
-  .phase-mode {
+  .act-name {
     margin: 0 0 6px;
     font-family: var(--font-display);
     font-weight: 700;
@@ -603,7 +600,7 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
     text-transform: uppercase;
     color: var(--color-chalk);
   }
-  .phase-when {
+  .act-audience {
     margin: 0 0 16px;
     font-family: var(--font-display);
     font-weight: 500;
@@ -612,15 +609,15 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
     text-transform: uppercase;
     color: var(--color-blood);
   }
-  .phase-body {
+  .act-body {
     margin: 0 0 18px;
     font-family: var(--font-serif);
     font-size: 15px;
     line-height: 1.6;
     color: var(--color-chalk-dim);
   }
-  .phase-label {
-    margin: 18px 0 4px;
+  .act-label {
+    margin: 18px 0 8px;
     font-family: var(--font-mono);
     font-size: 10px;
     font-weight: 500;
@@ -628,12 +625,19 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
     text-transform: uppercase;
     color: var(--color-chalk-faint);
   }
-  .phase-deliverable {
+  .act-sections {
     margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .act-sections li {
     font-family: var(--font-serif);
     font-style: italic;
-    font-size: 15px;
-    line-height: 1.55;
+    font-size: 14px;
+    line-height: 1.4;
     color: var(--color-chalk);
   }
 
@@ -669,46 +673,55 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
     color: var(--color-chalk-dim);
   }
 
-  /* ============ PIPS (small squares) ============ */
-  .pip {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    border: 1px solid var(--color-rule);
-    margin-right: 3px;
-  }
-  .pip.pass { background: var(--color-chalk); border-color: var(--color-chalk); }
-  .pip.miss { background: var(--color-blood); border-color: var(--color-blood); }
-
-  /* ============ LEGEND (2 cells) ============ */
-  .legend {
+  /* ============ MEDDPICC SCORECARD ============ */
+  .meddpicc {
     margin-top: 28px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
     border-top: var(--border-thin);
+    max-width: 640px;
+  }
+  .medd-row {
+    display: grid;
+    grid-template-columns: 28px 1fr 120px;
+    gap: 20px;
+    align-items: center;
+    padding: 13px 0;
     border-bottom: var(--border-thin);
   }
-  .legend-cell {
-    padding: 24px 28px;
-    border-right: var(--border-thin);
-  }
-  .legend-cell:last-child { border-right: none; }
-  .legend-marks { margin-bottom: 14px; line-height: 1; }
-  .legend-cell h3 {
-    margin: 0 0 8px;
+  .medd-letter {
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: 18px;
+    font-size: 20px;
+    letter-spacing: 0.04em;
+    color: var(--color-chalk-faint);
+    text-transform: uppercase;
+  }
+  .medd-name {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 15px;
     letter-spacing: 0.04em;
     text-transform: uppercase;
     color: var(--color-chalk);
   }
-  .legend-cell p {
-    margin: 0;
-    font-family: var(--font-serif);
-    font-size: 14px;
-    line-height: 1.55;
-    color: var(--color-chalk-dim);
+  .medd-state {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-align: right;
+  }
+  .medd-state.confirmed { color: var(--color-army); }
+  .medd-state.partial   { color: var(--color-chalk-dim); }
+  .medd-state.unknown   { color: var(--color-blood); }
+
+  .medd-note {
+    margin: 14px 0 0;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-chalk-faint);
   }
 
   /* ============ DEMO IFRAME ============ */
@@ -843,7 +856,7 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
   }
   .trigger-row {
     display: grid;
-    grid-template-columns: 100px 1fr;
+    grid-template-columns: 120px 1fr;
     gap: 24px;
     align-items: center;
     padding: 16px 0;
@@ -860,9 +873,47 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
   }
   .trigger-phrase {
     font-family: var(--font-mono);
-    font-size: 14px;
+    font-size: 13px;
     color: var(--color-chalk);
     letter-spacing: 0.03em;
+  }
+
+  /* ============ FAQ ============ */
+  .faq {
+    margin-top: 28px;
+    border-top: var(--border-thin);
+  }
+  .faq-item {
+    padding: 22px 0;
+    border-bottom: var(--border-thin);
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 36px;
+    align-items: start;
+  }
+  .faq-item h3 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 17px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--color-chalk);
+    line-height: 1.3;
+  }
+  .faq-item p {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--color-chalk-dim);
+  }
+  .faq-item p code {
+    font-family: var(--font-mono);
+    font-size: 0.88em;
+    color: var(--color-chalk);
+    background: var(--color-panel);
+    padding: 1px 5px;
   }
 
   /* ============ RELATED SKILLS ============ */
@@ -911,37 +962,6 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
     transition: color 120ms ease-out;
   }
   .related-card:hover .related-cta { color: var(--color-blood); }
-
-  /* ============ FAQ ============ */
-  .faq {
-    margin-top: 28px;
-    border-top: var(--border-thin);
-  }
-  .faq-item {
-    padding: 22px 0;
-    border-bottom: var(--border-thin);
-    display: grid;
-    grid-template-columns: 280px 1fr;
-    gap: 36px;
-    align-items: start;
-  }
-  .faq-item h3 {
-    margin: 0;
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 17px;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-    color: var(--color-chalk);
-    line-height: 1.3;
-  }
-  .faq-item p {
-    margin: 0;
-    font-family: var(--font-serif);
-    font-size: 16px;
-    line-height: 1.65;
-    color: var(--color-chalk-dim);
-  }
 
   /* ============ DASHED DIVIDER ============ */
   .dashed {
@@ -997,23 +1017,14 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
       grid-template-columns: repeat(2, 1fr);
       gap: 18px;
     }
-    .phases {
+    .acts {
       grid-template-columns: 1fr;
     }
-    .phase {
+    .act {
       border-right: none;
       border-bottom: var(--border-thin);
     }
-    .phase:last-child { border-bottom: none; }
-
-    .legend {
-      grid-template-columns: 1fr;
-    }
-    .legend-cell {
-      border-right: none;
-      border-bottom: var(--border-thin);
-    }
-    .legend-cell:last-child { border-bottom: none; }
+    .act:last-child { border-bottom: none; }
 
     .faq-item {
       grid-template-columns: 200px 1fr;
@@ -1031,6 +1042,20 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
     }
     .block { padding: 40px var(--pad-page-x-mobile) 0; }
     .install-block { padding: 40px var(--pad-page-x-mobile) 0; }
+    .section-h2 { font-size: 28px; }
+
+    .audience {
+      grid-template-columns: 1fr;
+    }
+    .audience-cell { border-right: none; }
+    .audience-cell:nth-last-child(-n+2) { border-bottom: var(--border-thin); }
+    .audience-cell:last-child { border-bottom: none; }
+
+    .medd-row {
+      grid-template-columns: 22px 1fr 90px;
+      gap: 12px;
+    }
+
     .install-url {
       flex-direction: column;
       align-items: flex-start;
@@ -1043,22 +1068,17 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
     }
     .install-opt:nth-last-child(-n+2) { border-bottom: var(--border-thin); }
     .install-opt:last-child { border-bottom: none; }
-    .section-h2 { font-size: 28px; }
-
-    .audience {
-      grid-template-columns: 1fr;
-    }
-    .audience-cell {
-      border-right: none;
-    }
-    .audience-cell:nth-last-child(-n+2) { border-bottom: var(--border-thin); }
-    .audience-cell:last-child { border-bottom: none; }
 
     .trigger-row {
       grid-template-columns: 80px 1fr;
       gap: 14px;
     }
-    .trigger-phrase { font-size: 12px; }
+    .trigger-phrase { font-size: 11px; }
+
+    .faq-item {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
 
     .related { grid-template-columns: 1fr; }
     .related-card {
@@ -1066,11 +1086,6 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
       border-bottom: var(--border-thin);
     }
     .related-card:last-child { border-bottom: none; }
-
-    .faq-item {
-      grid-template-columns: 1fr;
-      gap: 12px;
-    }
 
     .dashed { margin: 40px var(--pad-page-x-mobile); }
     .closer { padding: 36px var(--pad-page-x-mobile); }

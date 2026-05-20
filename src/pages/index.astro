@@ -123,6 +123,34 @@ const stats = [
         ))}
       </aside>
     </section>
+
+    {/* ---------- THE LOADOUT ---------- */}
+    <section class="loadout-section">
+      <div class="loadout-head">
+        <p class="loadout-phrase">
+          The book is the plan.<span class="phrase-accent"> The Loadout is the execution.</span>
+        </p>
+        <a href="/loadout" class="loadout-explore">Explore the Loadout <span aria-hidden="true">→</span></a>
+      </div>
+
+      <div class="loadout-skills">
+        <a href="/loadout/spotter" class="ls-card">
+          <div class="ls-tag"><span class="ls-sq" aria-hidden="true"></span>Live</div>
+          <h3 class="ls-name">The Spotter</h3>
+          <p class="ls-blurb">Walk a product epic through nine areas. Get a structured worksheet back — critique notes, pip verdicts, export when every area closes.</p>
+        </a>
+        <a href="/loadout/warmup" class="ls-card">
+          <div class="ls-tag"><span class="ls-sq" aria-hidden="true"></span>Live</div>
+          <h3 class="ls-name">The Warmup</h3>
+          <p class="ls-blurb">A daily intelligence brief for your first coffee. Curated sources, link safety scanning, live artifact. Know what moved before you open your inbox.</p>
+        </a>
+        <a href="/loadout/approach" class="ls-card">
+          <div class="ls-tag"><span class="ls-sq" aria-hidden="true"></span>Live</div>
+          <h3 class="ls-name">The Approach</h3>
+          <p class="ls-blurb">A pre-call brief for enterprise meetings and QBRs. Decision makers, live signals, MEDDPICC scored from public intel. Know the room before you walk in.</p>
+        </a>
+      </div>
+    </section>
   </main>
 </BaseLayout>
 
@@ -403,6 +431,105 @@ const stats = [
   .c-status.reading { color: var(--color-army); }
   .c-status.next    { color: var(--color-chalk-faint); }
 
+  /* ============ THE LOADOUT SECTION ============ */
+  .loadout-section {
+    border-top: var(--border-thin);
+    padding: 36px var(--pad-page-x) 56px;
+  }
+
+  .loadout-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 24px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+
+  .loadout-phrase {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(17px, 1.8vw, 24px);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--color-chalk);
+    line-height: 1.2;
+  }
+  .phrase-accent { color: var(--color-blood); }
+
+  .loadout-explore {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-chalk-dim);
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: color 120ms ease-out;
+  }
+  .loadout-explore:hover { color: var(--color-chalk); }
+
+  .loadout-skills {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: var(--border-thin);
+    border-bottom: var(--border-thin);
+  }
+
+  .ls-card {
+    padding: 22px 24px;
+    border-right: var(--border-thin);
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: background 120ms ease-out;
+  }
+  .ls-card:last-child { border-right: none; }
+  .ls-card:hover { background: rgba(255,255,255,0.015); }
+
+  .ls-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-army);
+  }
+  .ls-sq {
+    width: 6px;
+    height: 6px;
+    background: var(--color-army);
+    display: inline-block;
+    flex-shrink: 0;
+  }
+
+  .ls-name {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--color-chalk);
+    line-height: 1;
+    transition: color 120ms ease-out;
+  }
+  .ls-card:hover .ls-name { color: var(--color-chalk); }
+
+  .ls-blurb {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--color-chalk-dim);
+  }
+
   /* ============ Responsive ============ */
 
   /* Mid: collapse 4-col meta to 2 columns; allow buttons to wrap */
@@ -453,5 +580,17 @@ const stats = [
       padding-left: 46px;
     }
     .c-title { font-size: 16px; }
+
+    .loadout-section {
+      padding: 28px var(--pad-page-x-mobile) 40px;
+    }
+    .loadout-skills {
+      grid-template-columns: 1fr;
+    }
+    .ls-card {
+      border-right: none;
+      border-bottom: var(--border-thin);
+    }
+    .ls-card:last-child { border-bottom: none; }
   }
 </style>

@@ -13,8 +13,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import TopNav from '../../components/TopNav.astro';
 
 const stats = [
-  { key: 'Skills live', value: '1',      href: undefined },
-  { key: 'Planned',     value: '2',      href: undefined },
+  { key: 'Skills live', value: '3',      href: undefined },
+  { key: 'MCP tools',   value: '23',     href: undefined },
   { key: 'License',     value: 'MIT',    href: undefined },
   { key: 'Source',      value: 'GitHub', href: 'https://github.com/missionbuilt/loadout' },
 ];
@@ -33,23 +33,25 @@ const skills: Skill[] = [
     name: 'The Spotter',
     status: 'live',
     blurb:
-      "Get a structured review of your product epic before it goes to stakeholders. The Spotter walks your draft through nine product-leadership lenses and tells you where it's strong, where it needs work, and what's missing. You ship a tighter epic. Your team trusts your work more.",
+      'Walk your epic through nine product-leadership areas. Get a structured worksheet back — critique notes per area, an accept and skip loop, a verdict on each, and an export that unlocks when you have closed every area.',
     href: '/loadout/spotter',
     cta: 'Open →',
   },
   {
-    name: 'The Brief',
-    status: 'planned',
+    name: 'The Warmup',
+    status: 'live',
     blurb:
-      'A short prep document for your next customer meeting. Pulls recent account activity, open issues, and the topics likely to come up so you walk in informed instead of catching up in the first ten minutes.',
-    cta: 'Soon',
+      'A daily intelligence brief for your first coffee. Three modes — CISO, Product Leader, Custom — each pulling from curated sources, scanning every link for safety, and rendering as a live artifact that refreshes each morning.',
+    href: '/loadout/warmup',
+    cta: 'Open →',
   },
   {
-    name: 'The Warmup',
-    status: 'planned',
+    name: 'The Approach',
+    status: 'live',
     blurb:
-      'A daily briefing of the news, releases, and competitive moves that matter to what you are building. Read it with your first coffee and start the day already in the loop.',
-    cta: 'Soon',
+      'A pre-meeting brief for enterprise calls, QBRs, and executive meetings. Researches the account, maps decision makers, surfaces live signals, and renders a structured field brief before you walk in.',
+    href: '/loadout/approach',
+    cta: 'Open →',
   },
 ];
 ---
@@ -118,7 +120,7 @@ const skills: Skill[] = [
     <section class="block">
       <header class="block-head">
         <h2 class="section-h2">The skills.</h2>
-        <span class="block-count">3 total · 1 live</span>
+        <span class="block-count">3 total · 3 live</span>
       </header>
 
       <div class="skills">
@@ -156,6 +158,45 @@ const skills: Skill[] = [
             </article>
           )
         ))}
+      </div>
+    </section>
+
+    {/* ---------- INSTALL ---------- */}
+    <section class="install-block">
+      <p class="section-label">One connection. All three skills.</p>
+      <h2 class="section-h2">Add to your AI coding tool.</h2>
+      <p class="install-intro">
+        The Loadout is a standard MCP server. Any MCP-compatible agent can connect
+        to it using the URL below. Tested and validated in Claude.
+      </p>
+
+      <div class="install-url">
+        <span class="install-url-label">Server URL</span>
+        <code class="install-url-value">https://mcp.missionbuilt.io/sse</code>
+      </div>
+
+      <div class="install-options">
+        <article class="install-opt">
+          <h3>Claude Code · CLI</h3>
+          <p>If you have Claude Code installed, run this in your terminal:</p>
+          <pre class="install-opt-code">claude mcp add loadout https://mcp.missionbuilt.io/sse</pre>
+        </article>
+
+        <article class="install-opt">
+          <h3>Claude · No CLI</h3>
+          <p>Open Claude, then go to <strong>Settings → Connections → Add MCP Server</strong>. Paste the server URL above and save.</p>
+        </article>
+
+        <article class="install-opt">
+          <h3>Claude Desktop · Config file</h3>
+          <p>Add to <code>claude_desktop_config.json</code> under <code>mcpServers</code>:</p>
+          <pre class="install-opt-code">{`"loadout": { "url": "https://mcp.missionbuilt.io/sse" }`}</pre>
+        </article>
+
+        <article class="install-opt">
+          <h3>Cowork</h3>
+          <p>Install the Mission Built plugin from the Cowork plugin directory. OAuth sign-in with Google included.</p>
+        </article>
       </div>
     </section>
 
@@ -441,6 +482,105 @@ const skills: Skill[] = [
   }
   .foot a:hover { color: var(--color-chalk); }
 
+  /* ============ INSTALL BLOCK ============ */
+  .install-block {
+    padding: 56px var(--pad-page-x) 0;
+    max-width: 1080px;
+  }
+
+  .install-intro {
+    margin: 0 0 28px;
+    max-width: 720px;
+    font-family: var(--font-serif);
+    font-size: 17px;
+    line-height: 1.65;
+    color: var(--color-chalk-dim);
+  }
+
+  .install-url {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 28px;
+    padding: 14px 20px;
+    background: var(--color-panel);
+    border: var(--border-thin);
+    border-left: 3px solid var(--color-blood);
+  }
+
+  .install-url-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-chalk-faint);
+    white-space: nowrap;
+  }
+
+  .install-url-value {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--color-chalk);
+    letter-spacing: 0.04em;
+  }
+
+  .install-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: var(--border-thin);
+    border-bottom: var(--border-thin);
+  }
+
+  .install-opt {
+    padding: 24px 28px;
+    border-right: var(--border-thin);
+    border-bottom: var(--border-thin);
+  }
+  .install-opt:nth-child(2n) { border-right: none; }
+  .install-opt:nth-last-child(-n+2) { border-bottom: none; }
+
+  .install-opt h3 {
+    margin: 0 0 10px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-chalk);
+  }
+
+  .install-opt p {
+    margin: 0 0 12px;
+    font-family: var(--font-serif);
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--color-chalk-dim);
+  }
+  .install-opt p:last-child { margin-bottom: 0; }
+  .install-opt p strong { color: var(--color-chalk); font-weight: 600; }
+
+  .install-opt code {
+    font-family: var(--font-mono);
+    font-size: 0.88em;
+    color: var(--color-chalk);
+    background: var(--color-bg);
+    padding: 1px 5px;
+  }
+
+  .install-opt-code {
+    margin: 0;
+    padding: 10px 14px;
+    background: var(--color-bg);
+    border: var(--border-thin);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-chalk-dim);
+    letter-spacing: 0.03em;
+    overflow-x: auto;
+    white-space: pre;
+  }
+
   /* ============ Responsive ============ */
   @media (max-width: 1099px) {
     .meta-strip {
@@ -454,6 +594,25 @@ const skills: Skill[] = [
   }
 
   @media (max-width: 720px) {
+    .install-block {
+      padding: 40px var(--pad-page-x-mobile) 0;
+    }
+    .install-url {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    .install-options {
+      grid-template-columns: 1fr;
+    }
+    .install-opt {
+      border-right: none;
+      border-bottom: var(--border-thin);
+    }
+    .install-opt:last-child { border-bottom: none; }
+    .install-opt:nth-last-child(-n+2) { border-bottom: var(--border-thin); }
+    .install-opt:last-child { border-bottom: none; }
+
     .hero {
       padding: 36px var(--pad-page-x-mobile) 20px;
     }

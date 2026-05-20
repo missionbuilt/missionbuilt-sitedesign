@@ -19,6 +19,16 @@ const repos = [
     accent: 'blood' as const,
   },
   {
+    kicker: 'The Loadout',
+    title: 'missionbuilt/loadout',
+    blurb:
+      "The skills and MCP server that put the book into operation. The Spotter, " +
+      "The Warmup, and The Approach — MIT-licensed, built to be forked, " +
+      "and available to any MCP-compatible agent.",
+    href: 'https://github.com/missionbuilt/loadout',
+    accent: 'chalk' as const,
+  },
+  {
     kicker: 'This site',
     title: 'missionbuilt-sitedesign',
     blurb:
@@ -31,7 +41,7 @@ const repos = [
 ---
 <BaseLayout
   title="Source · Mission Built"
-  description="MissionBuilt is open in two places: the book content and the site code. Both repos live on GitHub."
+  description="MissionBuilt is open across the ecosystem: the book, the skills, and the site. All three repos live on GitHub."
   active="source"
 >
   <TopNav active="source" />
@@ -41,8 +51,8 @@ const repos = [
       <p class="eyebrow">Source</p>
       <h1 class="hero-h1">Open work.</h1>
       <p class="lede">
-        MissionBuilt is open in two places: the book and the site that hosts it.
-        Both live on GitHub.
+        MissionBuilt is open across the ecosystem: the book, the skills, and the
+        site that hosts them. All three live on GitHub.
       </p>
     </header>
 
@@ -68,11 +78,11 @@ const repos = [
     </section>
 
     <p class="license">
-      Content licensed
+      Book content licensed
       <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener license">CC&nbsp;BY-NC-SA 4.0</a>.
-      Site code licensed
+      Skills and site code licensed
       <a href="https://opensource.org/license/mit" target="_blank" rel="noopener license">MIT</a>.
-      Contributions welcome on either side.
+      Contributions welcome across all three.
     </p>
   </main>
 </BaseLayout>
@@ -147,8 +157,9 @@ const repos = [
     bottom: 0;
     width: 3px;
   }
-  .repo.accent-blood::before { background: var(--color-blood); }
-  .repo.accent-army::before  { background: var(--color-army); }
+  .repo.accent-blood::before  { background: var(--color-blood); }
+  .repo.accent-army::before   { background: var(--color-army); }
+  .repo.accent-chalk::before  { background: var(--color-chalk-dim); }
 
   .repo-kicker {
     margin: 0 0 6px;

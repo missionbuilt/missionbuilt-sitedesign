@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title id="page-title">The Approach · Pre-Call Brief</title>
+<!-- Google Fonts: fallback for non-Cowork contexts (local HTML, exports). Silently blocked by Cowork CSP; MCP font loader takes over inside Cowork. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* ══════════════════════════════════════════════════════════════════════
+     THE APPROACH · BRIEFING  (C1 · clarity-forward · editorial single-column)
+     Data-driven via window.APPROACH_DATA injection.
+     ══════════════════════════════════════════════════════════════════════ */
+  :root {
+    color-scheme: light;
+    --paper:        #f3ecdc;
+    --paper-warm:   #ebe2cf;
+    --paper-card:   #ede5d2;
+    --paper-soft:   #efe8d6;
+    --ink:          #1a1612;
+    --ink-soft:     #3a342d;
+    --ink-dim:      #3d332a;
+    --ink-faint:    #52473a;
+    --rule:         #c8bea7;
+    --rule-soft:    #d8cfb8;
+    --blood:        #8a2017;
+    --blood-bright: #a8281e;
+    --army:         #5f6e26;
+    --army-soft:    #dfe3c4;
+
+    --font-display: 'Oswald', sans-serif;
+    --font-serif:   'Merriweather', Georgia, serif;
+    --font-mono:    'JetBrains Mono', 'Courier New', monospace;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; border-radius: 0; box-shadow: none !important; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-serif);
+    font-size: 17.5px;
+    line-height: 1.78;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+  ::selection { background: rgba(138,32,23,0.18); }
+  a { color: inherit; text-decoration: none; }
+
+  /* ── TOOLBAR ────────────────────────────────────────────────────────── */
+  .toolbar-bar {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 14px 32px 0;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 6px;
+  }
+  .masthead-controls { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+  .tb-btn { font-family: var(--font-mono); font-size: 10px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-dim); background: transparent; border: 1px solid var(--rule); padding: 4px 11px; line-height: 1; cursor: pointer; transition: color 0.1s, border-color 0.1s, background 0.1s; white-space: nowrap; }
+  .tb-btn:hover { color: var(--ink); background: var(--paper-warm); }
+  .tb-btn.save { color: var(--blood); }
+  .tb-btn.save:hover { color: var(--paper); background: var(--blood); border-color: var(--blood); }
+  .tb-export { position: relative; display: flex; align-items: center; }
+  .tb-dropdown { display: none; position: absolute; top: 100%; right: 0; background: var(--paper); border: 1px solid var(--rule); border-top: none; z-index: 300; min-width: 160px; }
+  .tb-dropdown.open { display: block; }
+  .tb-dropdown button { display: block; width: 100%; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-dim); background: transparent; border: none; border-bottom: 1px solid var(--rule); padding: 10px 16px; text-align: left; cursor: pointer; white-space: nowrap; transition: color 0.1s, background 0.1s; }
+  .tb-dropdown button:last-child { border-bottom: none; }
+  .tb-dropdown button:hover { color: var(--ink); background: var(--paper-warm); }
+  .tb-dropdown button.dd-primary { color: var(--blood); }
+  .tb-dropdown button.dd-primary:hover { color: var(--paper); background: var(--blood); }
+  @media print { .toolbar-bar { display: none !important; } }
+
+  /* ── MASTHEAD ───────────────────────────────────────────────────────── */
+  .head {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 48px 32px 36px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .head .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--blood); font-weight: 700;
+    margin-bottom: 24px;
+    display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+  }
+  .head .eyebrow .sep { color: var(--ink-dim); }
+  .head h1 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 72px;
+    letter-spacing: -0.02em;
+    line-height: 0.94;
+    color: var(--ink);
+    margin-bottom: 20px;
+  }
+  .head .deck {
+    font-family: var(--font-serif);
+    font-style: italic; font-weight: 400;
+    font-size: 22px;
+    line-height: 1.5;
+    color: var(--ink);
+    max-width: 60ch;
+    text-wrap: pretty;
+  }
+  .head .meta {
+    margin-top: 32px;
+    padding-top: 20px;
+    border-top: 1px solid var(--rule-soft);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+  }
+  .head .meta .k {
+    font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--ink-soft); font-weight: 700;
+    margin-bottom: 6px; display: block;
+  }
+  .head .meta .v { color: var(--ink); font-weight: 600; }
+
+  /* ── TABLE OF CONTENTS ──────────────────────────────────────────────── */
+  .toc {
+    max-width: 760px; margin: 0 auto;
+    padding: 28px 32px 32px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .toc .label {
+    font-family: var(--font-mono);
+    font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--ink-soft); font-weight: 700;
+    margin-bottom: 18px;
+  }
+  .toc ol { list-style: none; counter-reset: toc; columns: 2; column-gap: 32px; }
+  .toc li {
+    counter-increment: toc;
+    padding: 8px 0;
+    font-family: var(--font-display);
+    font-size: 20px; font-weight: 600;
+    color: var(--ink);
+    display: flex; gap: 14px; align-items: baseline;
+    break-inside: avoid;
+  }
+  .toc li::before {
+    content: counter(toc, decimal-leading-zero);
+    font-family: var(--font-mono); font-size: 11px;
+    color: var(--blood); font-weight: 700;
+    letter-spacing: 0.1em;
+    flex-shrink: 0;
+  }
+  .toc li a { color: inherit; border-bottom: 1px solid transparent; }
+  .toc li a:hover { border-bottom-color: var(--ink); }
+
+  /* ── MEDDPICC SCORECARD ─────────────────────────────────────────────── */
+  .meddpicc {
+    max-width: 760px; margin: 0 auto;
+    padding: 48px 32px 36px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .meddpicc .kicker {
+    font-family: var(--font-mono);
+    font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--blood); font-weight: 700;
+    margin-bottom: 8px; display: block;
+  }
+  .meddpicc h2 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 40px;
+    letter-spacing: -0.02em;
+    line-height: 1.04;
+    color: var(--ink);
+    margin: 6px 0 6px;
+  }
+  .meddpicc .deck {
+    font-family: var(--font-serif);
+    font-style: italic; font-weight: 300;
+    color: var(--ink-soft);
+    font-size: 16px;
+    max-width: 60ch;
+    margin-bottom: 18px;
+  }
+  .meddpicc .ring {
+    display: flex; gap: 22px; flex-wrap: wrap;
+    padding: 12px 0;
+    border-top: 1px solid var(--rule-soft);
+    border-bottom: 1px solid var(--rule-soft);
+    margin-bottom: 22px;
+    align-items: center;
+  }
+  .meddpicc .ring .leg {
+    font-family: var(--font-mono);
+    font-size: 10.5px; letter-spacing: 0.16em;
+    color: var(--ink-soft);
+    font-weight: 600;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .meddpicc .ring .leg .pip {
+    display: inline-block; width: 11px; height: 11px;
+    border: 1.5px solid var(--ink-faint);
+    flex-shrink: 0;
+  }
+  .meddpicc .ring .leg.confirmed .pip { background: var(--army); border-color: var(--army); }
+  .meddpicc .ring .leg.partial .pip {
+    background: linear-gradient(to right, #946011 50%, transparent 50%);
+    border-color: #946011;
+  }
+  .meddpicc .ring .leg.unknown .pip { background: transparent; border-color: var(--ink-faint); }
+  .meddpicc .ring .score {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--ink-dim);
+  }
+  .meddpicc .ring .score b {
+    color: var(--ink); font-weight: 700;
+    font-family: var(--font-display); font-size: 16px;
+    letter-spacing: 0.02em;
+    margin: 0 4px;
+  }
+  .meddpicc-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border-top: 1px solid var(--rule);
+    border-left: 1px solid var(--rule);
+  }
+  .mp {
+    padding: 18px 20px 16px;
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    background: var(--paper-soft);
+    display: grid;
+    grid-template-columns: 36px 1fr auto;
+    gap: 14px;
+    align-items: start;
+  }
+  .mp .letter {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 30px;
+    line-height: 1;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  .mp .body .k {
+    font-family: var(--font-mono);
+    font-size: 9.5px; letter-spacing: 0.24em; text-transform: uppercase;
+    color: var(--ink-soft); font-weight: 700;
+    display: block;
+    margin-bottom: 2px;
+  }
+  .mp .body h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .mp .body .ev {
+    font-family: var(--font-serif);
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--ink-dim);
+    margin-bottom: 6px;
+    text-wrap: pretty;
+  }
+  .mp .body .next {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.02em;
+    color: var(--blood);
+    font-weight: 600;
+    display: block;
+    line-height: 1.4;
+  }
+  .mp .body .next::before { content: '▸ '; }
+  .mp .pip {
+    display: inline-block;
+    width: 14px; height: 14px;
+    border: 1.5px solid var(--ink-faint);
+    margin-top: 5px;
+    flex-shrink: 0;
+  }
+  .mp.confirmed { background: #e6e6d0; }
+  .mp.confirmed .pip { background: var(--army); border-color: var(--army); }
+  .mp.partial .pip {
+    background: linear-gradient(to right, #c8881a 50%, transparent 50%);
+    border-color: #c8881a;
+  }
+  .mp.unknown { background: var(--paper-card); }
+  .mp.unknown .pip { background: transparent; border-color: var(--ink-faint); }
+  .mp.unknown .body h3 { color: var(--ink-dim); }
+
+  /* ── INLINE MEDDPICC CHIP ───────────────────────────────────────────── */
+  .mp-chip {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 9.5px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--blood);
+    border: 1px solid var(--blood);
+    padding: 2px 7px;
+    margin-right: 8px;
+    vertical-align: 2px;
+    font-weight: 600;
+    background: var(--paper-card);
+  }
+  .mp-chip.confirmed { color: var(--army); border-color: var(--army); background: var(--army-soft); }
+  .mp-chip.partial { color: #946011; border-color: #946011; background: #f0dfba; }
+  .mp-chip.unknown { color: var(--ink-dim); border-color: var(--ink-faint); background: var(--paper-soft); }
+
+  /* ── MAIN ───────────────────────────────────────────────────────────── */
+  main {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 32px 80px;
+  }
+
+  /* ── SECTION ────────────────────────────────────────────────────────── */
+  section.sec { padding-top: 64px; }
+  .sec-num {
+    font-family: var(--font-mono);
+    font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--blood); font-weight: 700;
+    margin-bottom: 10px;
+    display: flex; gap: 12px; align-items: baseline;
+  }
+  .sec-num .pipe { color: var(--ink-dim); }
+  .sec-num .for {
+    font-family: var(--font-serif); font-style: italic; font-weight: 400;
+    text-transform: none; letter-spacing: 0.01em;
+    color: var(--ink-soft); font-size: 13px;
+  }
+  .sec-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 40px;
+    letter-spacing: -0.02em;
+    line-height: 1.04;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+  .sec-subtitle {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 1.45;
+    color: var(--ink-soft);
+    margin-bottom: 16px;
+    max-width: 58ch;
+    text-wrap: pretty;
+  }
+  .sec-deck {
+    font-family: var(--font-serif);
+    font-style: italic; font-weight: 400;
+    font-size: 19px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin-bottom: 36px;
+    max-width: 58ch;
+    text-wrap: pretty;
+  }
+
+  /* ── TL;DR CARD ─────────────────────────────────────────────────────── */
+  .tldr {
+    margin: 0 0 40px;
+    padding: 22px 26px;
+    background: var(--paper-card);
+    border-left: 3px solid var(--ink);
+  }
+  .tldr .k {
+    font-family: var(--font-mono);
+    font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--ink); font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .tldr p {
+    font-family: var(--font-serif);
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ink);
+    text-wrap: pretty;
+    max-width: 62ch;
+  }
+  .tldr p + p { margin-top: 8px; }
+
+  /* ── BODY PROSE ─────────────────────────────────────────────────────── */
+  .prose p {
+    font-size: 17.5px;
+    line-height: 1.78;
+    color: var(--ink);
+    margin-bottom: 22px;
+    text-wrap: pretty;
+    max-width: 68ch;
+  }
+  .prose p strong { font-weight: 700; color: var(--ink); }
+  .prose p em { font-style: italic; }
+  .prose .source {
+    font-family: var(--font-mono);
+    font-size: 11px; letter-spacing: 0.04em;
+    color: var(--ink);
+    font-weight: 600;
+    margin: -16px 0 22px;
+    display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+  }
+  .prose .source .dot {
+    width: 7px; height: 7px; display: inline-block;
+    background: var(--army); flex-shrink: 0;
+  }
+  .prose .source .dot.company { background: var(--blood); }
+  .prose .source .dot.press { background: var(--ink); }
+  .prose .source .dot.social { background: var(--ink-faint); }
+  .prose .source .sep { color: var(--rule); }
+
+  /* ── PULL QUOTE ─────────────────────────────────────────────────────── */
+  .pull {
+    margin: 40px 0;
+    padding: 8px 0 8px 28px;
+    border-left: 4px solid var(--blood);
+  }
+  .pull q {
+    quotes: none;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 1.18;
+    letter-spacing: -0.005em;
+    color: var(--ink);
+    display: block;
+    margin-bottom: 12px;
+    text-wrap: balance;
+  }
+  .pull cite {
+    font-family: var(--font-mono);
+    font-size: 11px; letter-spacing: 0.1em;
+    color: var(--ink);
+    font-weight: 600;
+    font-style: normal;
+    display: block;
+  }
+
+  /* ── FACT STRIP ─────────────────────────────────────────────────────── */
+  .facts {
+    margin: 32px 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 20px 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .facts .f { padding-right: 18px; border-right: 1px solid var(--rule-soft); }
+  .facts .f:last-child { border-right: none; }
+  .facts .f .k {
+    font-family: var(--font-mono);
+    font-size: 9.5px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--ink-soft); font-weight: 700;
+    margin-bottom: 6px; display: block;
+  }
+  .facts .f .v {
+    font-family: var(--font-display);
+    font-size: 22px; font-weight: 700;
+    color: var(--ink); line-height: 1.15;
+    display: block; margin-bottom: 4px;
+  }
+  .facts .f .note {
+    font-family: var(--font-serif);
+    font-size: 13.5px; color: var(--ink-soft);
+    font-style: italic; line-height: 1.4;
+  }
+
+  /* ── ACTION FOOTER ──────────────────────────────────────────────────── */
+  .action {
+    margin: 32px 0 0;
+    padding: 18px 22px;
+    background: var(--army-soft);
+    border-left: 3px solid var(--army);
+  }
+  .action .k {
+    font-family: var(--font-mono);
+    font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase;
+    color: var(--army); font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .action p {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--ink);
+    max-width: 64ch;
+  }
+
+  /* ── ACT DIVIDER ────────────────────────────────────────────────────── */
+  .act-divider {
+    margin: 80px 0 0;
+    padding: 28px 0;
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    text-align: center;
+  }
+  .act-divider .k {
+    font-family: var(--font-mono);
+    font-size: 10px; letter-spacing: 0.34em; text-transform: uppercase;
+    color: var(--ink-dim); font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .act-divider h2 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 40px;
+    letter-spacing: -0.005em;
+    line-height: 1;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .act-divider .deck {
+    font-family: var(--font-serif);
+    font-style: italic; font-weight: 300;
+    color: var(--ink-soft); font-size: 16px;
+  }
+
+  /* ── STACK TABLE ────────────────────────────────────────────────────── */
+  .stack-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0 8px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+  }
+  .stack-table th {
+    text-align: left;
+    font-size: 9.5px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--ink-soft); font-weight: 700;
+    padding: 0 16px 10px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .stack-table td {
+    padding: 12px 16px 12px 0;
+    border-bottom: 1px solid var(--rule-soft);
+    vertical-align: top;
+  }
+  .stack-table td.layer { color: var(--ink-soft); width: 18%; font-weight: 600; }
+  .stack-table td.tool { color: var(--ink); font-weight: 600; width: 22%; }
+  .stack-table td.status { width: 14%; font-size: 10px; letter-spacing: 0.16em; color: var(--army); font-weight: 700; }
+  .stack-table td.status.unk { color: var(--ink-dim); font-weight: 600; }
+  .stack-table td.status.gap { color: var(--blood); }
+  .stack-table td.note { font-family: var(--font-serif); font-size: 14.5px; color: var(--ink); line-height: 1.55; }
+
+  /* ── DISCOVERY QUESTIONS ────────────────────────────────────────────── */
+  .questions {
+    margin: 24px 0 0;
+    list-style: none;
+    counter-reset: q;
+  }
+  .questions li {
+    counter-increment: q;
+    padding: 14px 0 14px 52px;
+    position: relative;
+    border-bottom: 1px solid var(--rule-soft);
+    font-family: var(--font-serif);
+    font-size: 16.5px;
+    line-height: 1.55;
+    color: var(--ink);
+    max-width: 64ch;
+  }
+  .questions li::before {
+    content: "Q" counter(q);
+    position: absolute; left: 0; top: 14px;
+    font-family: var(--font-mono);
+    font-size: 10.5px; letter-spacing: 0.16em;
+    color: var(--blood); font-weight: 600;
+  }
+
+  /* ── OPENER SCRIPT ──────────────────────────────────────────────────── */
+  .opener {
+    margin-top: 36px;
+    padding: 28px 32px;
+    background: var(--paper-warm);
+    border: 1px solid var(--rule);
+  }
+  .opener .k {
+    font-family: var(--font-mono);
+    font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--ink-faint); font-weight: 500;
+    margin-bottom: 14px;
+  }
+  .opener q {
+    quotes: none;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 19px;
+    line-height: 1.65;
+    color: var(--ink);
+    display: block;
+    text-wrap: pretty;
+    max-width: 66ch;
+  }
+  .opener .beat {
+    font-family: var(--font-mono);
+    font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--ink-dim);
+    font-weight: 600;
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid var(--rule-soft);
+  }
+
+  /* ── COLOPHON ───────────────────────────────────────────────────────── */
+  .colophon {
+    max-width: 760px;
+    margin: 56px auto 36px;
+    padding: 22px 32px;
+    border-top: 3px double var(--ink);
+    border-bottom: 1px solid var(--rule);
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 600;
+    line-height: 1.8;
+  }
+  .colophon a { color: inherit; text-decoration: none; cursor: pointer; }
+  .colophon a:hover { color: var(--blood); }
+  .colophon .f-sq {
+    display: inline-block;
+    width: 6px; height: 6px;
+    background: var(--blood);
+    margin: 0 6px;
+    vertical-align: 1px;
+  }
+  .colophon .col-sub {
+    margin-top: 6px;
+    color: var(--ink-faint);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+  }
+
+  /* ── RESPONSIVE ─────────────────────────────────────────────────────── */
+  @media (max-width: 680px) {
+    .head h1 { font-size: 48px; }
+    .head .meta { grid-template-columns: 1fr 1fr; }
+    .toc ol { columns: 1; }
+    .facts { grid-template-columns: 1fr; }
+    .facts .f { border-right: none; border-bottom: 1px solid var(--rule-soft); padding-bottom: 12px; }
+    .meddpicc-grid { grid-template-columns: 1fr; }
+    .head, .toc, .meddpicc, main, .colophon { padding-left: 20px; padding-right: 20px; }
+    .toolbar-bar { padding-left: 20px; padding-right: 20px; }
+    .sec-title { font-size: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     DATA INJECTION POINT — replaced at render time by The Approach skill
+     ═══════════════════════════════════════════════════════════════════════ -->
+<script id="approach-data">
+try {
+  window.APPROACH_DATA = {"config": {"fontToolName": ""}, "meta": {"company": "Rogue Fitness", "contact": "Jock Padgett", "contactTitle": "Chief Technology Officer", "seller": "Mike (AE)", "se": "Sarah (SE)", "callTime": "14:30 ET", "callDate": "Wed 20 May 2026", "briefNumber": "001", "deck": "A pre-call brief for the first meeting with Jock Padgett, CTO — selling Elastic Security into the Rogue Fitness stack.", "sourceCount": "12", "generated": "20 May 2026", "readingTime": "~12 min"}, "meddpicc": {"title": "Where we stand on the deal.", "deck": "Eight dimensions, scored from public intel. **Pain** is confirmed — Padgett named it publicly at DefCon 31.", "cells": [{"letter": "M", "label": "Metrics", "status": "partial", "headline": "Breach cost and OT downtime are the right anchors", "evidence": "No named baseline yet. Rogue runs a $700M+ DTC operation — downtime costs are real. Use manufacturing peer breach data to start the conversation.", "next": "Ask: 'What does an hour of line downtime cost you, ballpark?'"}, {"letter": "E", "label": "Economic Buyer", "status": "partial", "headline": "Padgett likely owns the decision — Henniger above a threshold", "evidence": "Bill Henniger is founder-operator. Padgett has broad mandate. Signing threshold unknown.", "next": "Confirm authority in back half of call."}, {"letter": "D", "label": "Decision Criteria", "status": "unknown", "headline": "Not formalized — early enough to shape", "evidence": "No public RFP or vendor scorecard visible. Conference talks emphasize operational visibility over compliance.", "next": "Ask: 'How will you know which platform fits?'"}, {"letter": "D", "label": "Decision Process", "status": "unknown", "headline": "Founder-led, fast — mechanics unknown", "evidence": "Private company, no PE, no board delays. Henniger moves quickly when he decides.", "next": "Ask: 'Walk me through how a decision like this gets made here.'"}, {"letter": "P", "label": "Paper Process", "status": "unknown", "headline": "No procurement data visible", "evidence": "Private company. No SOC 2 mandate visible. Rogue has in-house legal.", "next": "Defer to call 2 unless Padgett raises it."}, {"letter": "I", "label": "Identify Pain", "status": "confirmed", "headline": "Named publicly — OT/IT convergence and MILO fleet visibility", "evidence": "DefCon 31 (Aug 2023): 'Security has to live where the work happens.' OT/IT gap and MILO fleet monitoring cited by name.", "next": "Quote the DefCon phrase. Don't re-discover what he already named."}, {"letter": "C", "label": "Champion", "status": "partial", "headline": "Padgett is likely buyer and champion in one", "evidence": "Military background, public commitment to the problem, broad technical mandate.", "next": "Identify a SecOps ally by call 2."}, {"letter": "C", "label": "Competition", "status": "partial", "headline": "Splunk incumbent inferred from job posts", "evidence": "Three open roles require 'Splunk or equivalent SIEM experience.' No direct confirmation.", "next": "Ask: 'What are you running today for SIEM and endpoint?'"}]}, "sections": [{"id": "snapshot", "number": "01", "for": "the AE", "title": "Company snapshot.", "deck": "What they do, how they make money, and what shape they're in.", "tldr": "Founder-led. Private. **$700M+ revenue**. DTC e-commerce is the spine. **$45M manufacturing expansion** broke ground in West Jefferson, March 2026.", "prose": [{"type": "p", "text": "Founded 2006 by Bill Henniger in Columbus, OH. Approximately 1,400 employees. Rogue Fitness is the dominant US manufacturer of strength equipment — barbells, power racks, and accessories. Revenue is DTC-first via roguefitness.com, with Amazon and limited wholesale as secondary channels.", "source": {"text": "roguefitness.com · About page", "tier": "company"}}, {"type": "pull", "text": "Five more years of demand we already have on the books — that's why we're building.", "cite": "Bill Henniger, Columbus Business First · March 2026"}, {"type": "facts", "items": [{"k": "Founded", "v": "2006", "note": "Columbus, OH"}, {"k": "Revenue", "v": "$700M+", "note": "FY24, triangulated"}, {"k": "Headcount", "v": "~1,400", "note": "Manufacturing + corporate"}, {"k": "Capex", "v": "$45M", "note": "West Jefferson plant, Mar 2026"}, {"k": "Model", "v": "DTC + Amazon", "note": "Shopify Plus storefront"}]}], "action": "Rogue is in expansion mode. _Lead with operational scale_ — the $45M build and 1,400-person headcount mean attack surface is growing faster than the security team. That's the opening."}, {"id": "leadership", "number": "02", "for": "the AE", "title": "Leadership & the buyer.", "deck": "Who's in the room, what they care about, and what they've said in public.", "tldr": "**Jock Padgett, CTO** — prior military, broad mandate, publicly committed to the OT/IT security problem. He is the buyer and the champion.", "prose": [{"type": "p", "text": "Padgett joined Rogue as CTO after a military career. His public profile emphasizes operational technology security and the challenge of securing physical manufacturing environments connected to IP networks.", "source": {"text": "LinkedIn · Jock Padgett", "tier": "social"}}, {"type": "pull", "chip": {"text": "I · Pain", "status": "confirmed"}, "text": "Security has to live where the work happens — not in a dashboard nobody checks until after the incident.", "cite": "Jock Padgett · DefCon 31, August 2023"}, {"type": "p", "text": "Bill Henniger (founder/CEO) is operationally active. He controls capital allocation. Above a threshold — likely $500K-$1M — he will be in the room. The call today is the right level for technical qualification.", "source": {"text": "Columbus Business First · March 2026", "tier": "press"}}], "action": "Reference the DefCon quote by name — _'security where the work happens'_ — early in the call. It shows you did the work and frames the product conversation before he has to re-explain the problem."}, {"id": "financial", "number": "03", "for": "the AE", "title": "Financial posture.", "deck": "Is the money there? Is the timing right?", "tldr": "**Active capital deployment.** $45M in physical plant. Hiring in engineering and IT security. Private — no earnings pressure, decision speed is high.", "prose": [{"type": "p", "text": "Rogue is privately held with no PE or VC overhang. Henniger controls the balance sheet. The $45M West Jefferson expansion signals confidence in demand — this is not a company managing costs, it's a company investing in scale.", "source": {"text": "Columbus Business First · March 2026", "tier": "press"}}, {"type": "facts", "items": [{"k": "Ownership", "v": "Founder-held", "note": "No PE/VC"}, {"k": "Cap spend", "v": "$45M", "note": "Active, March 2026"}, {"k": "Hiring", "v": "IT Security", "note": "3 open roles (LinkedIn)"}, {"k": "Timing", "v": "High", "note": "Expansion = growing attack surface"}]}], "action": "Three open IT security roles are a buying signal. Name it: _'It looks like you're building out the security team — is there a platform play that would make those hires more effective faster?'_"}, {"id": "industry", "number": "04", "for": "the AE", "title": "Industry context.", "deck": "What's happening in manufacturing security right now?", "tldr": "Manufacturing is the **#2 ransomware target** globally. OT/IT convergence is the headline risk — exactly what Padgett named at DefCon.", "prose": [{"type": "p", "text": "Manufacturing surpassed finance as the second most-targeted sector for ransomware in 2024 (IBM X-Force). The attack pattern is consistent: IT network compromise leads to OT lateral movement, triggering line shutdowns. Average recovery cost: $4.7M per incident.", "source": {"text": "IBM X-Force Threat Intelligence Index 2025", "tier": ""}}, {"type": "pull", "text": "The attackers don't distinguish between the office network and the production floor. But most security tools do.", "cite": "Dragos ICS Threat Landscape Report · 2025"}], "action": "The industry context is Padgett's home turf — he knows it. Use it as confirmation, not discovery. _'You called this at DefCon two years ago. The IBM data now backs you up.'_"}, {"id": "signal", "number": "05", "for": "the AE", "title": "Recent signal.", "deck": "What's changed in the last 90 days?", "tldr": "**$45M plant expansion** broke ground March 2026. **Three IT security hires** active on LinkedIn. No public security incidents.", "prose": [{"type": "facts", "items": [{"k": "Mar 2026", "v": "$45M plant broke ground", "note": "West Jefferson, OH"}, {"k": "Apr 2026", "v": "3 IT security roles posted", "note": "LinkedIn — SIEM/endpoint required"}, {"k": "May 2026", "v": "No public incidents", "note": "Clean public record"}]}, {"type": "p", "text": "The job posts are the most actionable signal. All three require 'Splunk or equivalent SIEM experience' — which suggests an incumbent evaluation is already in motion or they're formalizing around an existing deployment.", "source": {"text": "LinkedIn Jobs · Rogue Fitness", "tier": "social"}}], "action": "The SIEM job posts are an opening. _'We saw you're hiring for SIEM experience — are you formalizing a platform or evaluating options?'_ Either answer sets up the demo."}, {"id": "stack", "number": "06", "for": "the SE", "title": "Stack & integrations.", "deck": "What they're running and where Elastic fits.", "tldr": "**Shopify Plus** storefront. **NetSuite** ERP. MILO fleet on the OT side — the visibility gap Padgett named. SIEM: **Splunk inferred**, not confirmed.", "prose": [{"type": "table", "rows": [{"layer": "Storefront", "tool": "Shopify Plus", "status": "Native", "statusClass": "", "note": "DTC core. Standard connector."}, {"layer": "ERP", "tool": "NetSuite", "status": "Native", "statusClass": "", "note": "Manufacturing + finance."}, {"layer": "OT Fleet", "tool": "MILO (proprietary)", "status": "Gap", "statusClass": "gap", "note": "No visibility layer confirmed."}, {"layer": "SIEM", "tool": "Splunk (inferred)", "status": "Confirm", "statusClass": "unk", "note": "Job posts. Confirm on call."}, {"layer": "Endpoint", "tool": "Unknown", "status": "Confirm", "statusClass": "unk", "note": "Ask."}, {"layer": "Cloud", "tool": "AWS (inferred)", "status": "Confirm", "statusClass": "unk", "note": "Shopify Plus + NetSuite point to AWS."}]}, {"type": "p", "text": "The MILO fleet is proprietary Rogue equipment — connected machines used in fulfillment and manufacturing. No commercial monitoring layer is visible. This is the gap Padgett named at DefCon and the highest-value Elastic integration opportunity.", "source": {"text": "DefCon 31 talk abstract · 2023", "tier": "press"}}], "action": "Lead the SE demo with MILO fleet visibility — it's the confirmed pain, it's a gap, and it's where Elastic Security has native OT support. Splunk displacement is the secondary conversation."}, {"id": "security", "number": "07", "for": "the SE", "title": "Public security events.", "deck": "Any incidents, CVEs, or threat activity touching Rogue or their stack?", "tldr": "**No public incidents against Rogue.** Shopify Plus and NetSuite have each had advisories in the last 12 months — prep for questions.", "prose": [{"type": "p", "text": "No ransomware incidents, breach disclosures, or regulatory actions against Rogue Fitness are in the public record. Clean history is common for private manufacturers — it often reflects underreporting, not absence of risk.", "source": {"text": "HaveIBeenPwned · Rogue domain check", "tier": ""}}, {"type": "facts", "items": [{"k": "Rogue direct", "v": "No public incidents", "note": "Clean as of May 2026"}, {"k": "Shopify Plus", "v": "1 advisory (Oct 2025)", "note": "GraphQL rate-limit bypass, patched"}, {"k": "NetSuite", "v": "1 CVE (Dec 2025)", "note": "SSRF in SuiteScript, patched"}]}], "action": "If Padgett asks about their stack's exposure history, be ready on the Shopify and NetSuite advisories. Frame as _'here's how Elastic would have caught this in your environment'_ — not as FUD."}, {"id": "demos", "number": "08", "for": "the SE", "title": "Demo prep.", "deck": "What to show, what to skip, and in what order.", "tldr": "**Lead with OT visibility** (MILO fleet gap). Transition to SIEM comparison if Splunk is confirmed. End with the unified timeline — it's the closer.", "prose": [{"type": "facts", "items": [{"k": "Demo 1", "v": "OT/IT unified view", "note": "MILO fleet as the hook. 5 min."}, {"k": "Demo 2", "v": "Alert triage workflow", "note": "Show speed vs. Splunk. 5 min."}, {"k": "Demo 3", "v": "Unified timeline", "note": "IT + OT in one view. 3 min. Closer."}, {"k": "Skip", "v": "SIEM feature matrix", "note": "Don't lead with feature comparison."}]}], "action": "If Splunk is confirmed, ask: _'When you look at a Splunk alert, how many clicks does it take to see what happened on the endpoint?'_ Then show the Elastic answer in the demo."}, {"id": "opener", "number": "09", "for": "both", "title": "Opener & discovery.", "deck": "What to say in the first 90 seconds, and the questions that follow.", "tldr": "Root the opener in Padgett's DefCon quote. It's the fastest way to signal you did the work and create space for him to talk.", "prose": [{"type": "opener", "script": "Jock, thanks for making time. I want to be upfront — I came into this call having done some homework. You gave a talk at DefCon two years ago about the gap between the office network and the production floor, and you said something I wrote down: 'Security has to live where the work happens.' We've spent the last three years building exactly that. Before I show you anything, I want to understand whether that problem has gotten better or worse since 2023, and what changed with the West Jefferson expansion. That's my first question.", "beats": ["Pause. He will answer. If he says 'it's gotten worse,' that's your buying signal and the rest of the call is qualification.", "If he redirects to Splunk or an existing vendor, note it and pivot: 'What's the gap you're trying to close that you're not closing with what you have?'"]}, {"type": "questions", "items": [{"chip": {"text": "I · Pain", "status": "confirmed"}, "text": "Since the West Jefferson plant broke ground, has the OT/IT gap gotten harder to manage, or has your team solved the visibility problem you named at DefCon?"}, {"chip": {"text": "C · Competition", "status": "partial"}, "text": "What are you running today for SIEM and endpoint? Are you formalizing a platform, or is this an evaluation?"}, {"chip": {"text": "E · Economic Buyer", "status": "partial"}, "text": "If we get to a proof of concept, who else needs to be in that conversation — is this your call, or does Bill weigh in on platform decisions?"}, {"chip": {"text": "D · Criteria", "status": "unknown"}, "text": "How will you know which platform fits? What does the winning vendor need to prove?"}]}], "action": "If the call goes well, close with a PoC ask scoped to the MILO fleet. _'What would it take to run a 30-day proof on the OT side only — no production change, read-only telemetry?'_ Low risk for them, high signal for us."}], "actDivider": {"kicker": "Handoff · For Sarah, the SE", "title": "Technical depth.", "deck": "Stack, security events, demo prep, and the discovery questions Sarah runs in the back half. Read before the call, not during."}, "product": "Elastic Security pre-call brief", "version": "v0.2.4"};
+} catch(e) {
+  window.APPROACH_DATA = null;
+}
+</script>
+
+<script>
+/* ── Font loader — lazy-loads fonts via MCP tool, caches in localStorage ─── *
+ *  Cowork's CSP blocks external font CDNs (Google Fonts, jsDelivr, etc).    *
+ *  Fonts are served by the Loadout MCP server via warmup_get_fonts instead.  *
+ *  Same four font families as The Warmup and The Spotter — shares the same   *
+ *  localStorage cache key so any skill's load covers the others.             *
+ *  fontToolName is written into APPROACH_DATA.config by the agent.           *
+ * ─────────────────────────────────────────────────────────────────────────── */
+(function loadFonts() {
+  var FONT_CACHE_KEY = 'warmup-fonts-v2'; // shared with warmup + spotter
+  var cfg      = (window.APPROACH_DATA && window.APPROACH_DATA.config) || {};
+  var toolName = cfg.fontToolName || '';
+
+  function showFontError(stage, detail) {
+    try {
+      if (document.getElementById('approach-font-err')) return;
+      var b = document.createElement('div');
+      b.id = 'approach-font-err';
+      b.style.cssText = 'position:fixed;bottom:8px;right:8px;z-index:99999;max-width:520px;'
+        + 'background:#fff8f8;color:#900;border:1px solid #c00;'
+        + 'font:11px/1.4 ui-monospace,Menlo,Consolas,monospace;padding:8px 10px;';
+      b.textContent = '[Approach:Fonts] ' + stage + ' — ' + (detail || 'see console');
+      (document.body || document.documentElement).appendChild(b);
+    } catch(_) {}
+  }
+
+  // Fonts already present in DOM — another skill loaded them first, or this is an exported file.
+  if (document.getElementById('warmup-fonts')) return;
+
+  function injectCSS(css) {
+    if (document.getElementById('warmup-fonts')) return;
+    var s = document.createElement('style');
+    s.id          = 'warmup-fonts'; // shared id — consistent across all skills
+    s.textContent = css;
+    document.head.insertBefore(s, document.head.firstChild);
+  }
+
+  // Try localStorage cache first — only trust entries with real @font-face rules.
+  try {
+    var cached = localStorage.getItem(FONT_CACHE_KEY);
+    if (cached && cached.length > 100 && cached.indexOf('@font-face') > -1) { injectCSS(cached); return; }
+    if (cached) { try { localStorage.removeItem(FONT_CACHE_KEY); } catch(e){} }
+  } catch(e) { /* storage unavailable */ }
+
+  var _fontAttempts = 0;
+  function tryFetchFonts() {
+    if (!window.cowork || typeof window.cowork.callMcpTool !== 'function') {
+      if (++_fontAttempts < 25) { setTimeout(tryFetchFonts, 200); return; }
+      // Not inside a Cowork artifact — fall back to system fonts silently.
+      console.warn('[Approach:Fonts] window.cowork not available — falling back to system fonts.');
+      return;
+    }
+    // We are inside Cowork. Now toolName must be set — if not, that is an agent config error.
+    if (!toolName) { showFontError('no fontToolName in APPROACH_DATA.config', 'agent must set config.fontToolName'); return; }
+    // Sanitize toolName before use — defense-in-depth against malformed config values.
+    var safeToolName = toolName.replace(/[^A-Za-z0-9_\-:]/g, '').slice(0, 200);
+    if (!safeToolName) { showFontError('invalid fontToolName', toolName.slice(0, 40)); return; }
+    window.cowork.callMcpTool(safeToolName, { intent: 'Loading approach fonts' })
+      .then(function(raw) {
+        try {
+          var css = null;
+          function tryParseCss(val) {
+            if (!val) return null;
+            if (typeof val === 'string') {
+              if (val.trim().charAt(0) === '{') {
+                try { var p = JSON.parse(val); return (p && p.css) ? p.css : val; } catch(e) {}
+              }
+              return val;
+            }
+            if (val && val.css) return val.css;
+            return null;
+          }
+          if (typeof raw === 'string')                                    { css = tryParseCss(raw); }
+          else if (raw && raw.css)                                        { css = raw.css; }
+          else if (Array.isArray(raw) && raw[0] && raw[0].text)          { css = tryParseCss(raw[0].text); }
+          else if (raw && raw.content && Array.isArray(raw.content))     { var item = raw.content[0]; css = item ? tryParseCss(item.text) : null; }
+          if (!css || css.length < 100 || css.indexOf('@font-face') === -1) {
+            var shape; try { shape = JSON.stringify(raw).slice(0, 200); } catch(_) { shape = String(raw).slice(0, 200); }
+            showFontError('unexpected font response', shape); return;
+          }
+          injectCSS(css);
+          try { localStorage.setItem(FONT_CACHE_KEY, css); } catch(e) { console.warn('[Approach:Fonts] localStorage write failed', e); }
+        } catch(e) {
+          showFontError('parse error', String(e && e.message || e));
+        }
+      })
+      .catch(function(err) {
+        showFontError('MCP call rejected', String(err && err.message || err));
+      });
+  }
+  tryFetchFonts();
+})();
+</script>
+
+<!-- ── TOOLBAR ──────────────────────────────────────────────────────────── -->
+<div class="toolbar-bar">
+  <div class="masthead-controls">
+    <div class="tb-export">
+      <button class="tb-btn save" onclick="toggleExport(event)">Export ▾</button>
+      <div class="tb-dropdown" id="export-dd">
+        <button class="dd-primary" onclick="exportHTML()">Export HTML</button>
+        <button onclick="closeExport();window.print()">Print / PDF</button>
+      </div>
+    </div>
+    <button class="tb-btn" id="fs-btn" onclick="toggleFullscreen()">⛶ Fullscreen</button>
+  </div>
+</div>
+
+<!-- ── MASTHEAD ─────────────────────────────────────────────────────────── -->
+<header class="head">
+  <div class="eyebrow" id="h-eyebrow"></div>
+  <h1 id="h-title"></h1>
+  <p class="deck" id="h-deck"></p>
+  <div class="meta">
+    <div><span class="k">For</span><span class="v" id="h-meta-for">—</span></div>
+    <div><span class="k">Sources</span><span class="v" id="h-meta-sources">—</span></div>
+    <div><span class="k">Generated</span><span class="v" id="h-meta-gen">—</span></div>
+    <div><span class="k">Reading time</span><span class="v" id="h-meta-read">—</span></div>
+  </div>
+</header>
+
+<!-- ── TABLE OF CONTENTS ────────────────────────────────────────────────── -->
+<nav class="toc">
+  <div class="label">In this briefing</div>
+  <ol id="toc-list"></ol>
+</nav>
+
+<!-- ── MAIN CONTENT (filled by renderer) ───────────────────────────────── -->
+<main id="main-content"></main>
+
+<!-- ── MEDDPICC SCORECARD (end of report) ──────────────────────────────── -->
+<section class="meddpicc" id="meddpicc" style="display:none">
+  <span class="kicker">Qualification · MEDDPICC</span>
+  <h2 id="medd-title">Where we stand on the deal.</h2>
+  <p class="deck" id="medd-deck"></p>
+  <div class="ring">
+    <span class="leg confirmed"><span class="pip"></span>Confirmed</span>
+    <span class="leg partial"><span class="pip"></span>Partial · need confirmation</span>
+    <span class="leg unknown"><span class="pip"></span>Unknown · ask today</span>
+    <span class="score" id="medd-score"></span>
+  </div>
+  <div class="meddpicc-grid" id="medd-grid"></div>
+</section>
+
+<!-- ── COLOPHON ─────────────────────────────────────────────────────────── -->
+<footer class="colophon">
+  <div id="col-text"><a href="https://missionbuilt.io" target="_blank" rel="noopener">Mission<span class="f-sq"></span>Built</a> <span class="f-sq"></span> The Approach <span class="f-sq"></span> The Loadout</div>
+  <div class="col-sub" id="col-sub"></div>
+</footer>
+
+<!-- ── RENDERER ─────────────────────────────────────────────────────────── -->
+<script>
+try {
+
+var C = window.APPROACH_DATA || {};
+var M = C.meta || {};
+
+/* ── helpers ── */
+function $(id) { return document.getElementById(id); }
+
+function esc(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function safeUrl(u) {
+  if (!u) return '';
+  var s = String(u).trim();
+  return /^https?:\/\//i.test(s) ? s : '';
+}
+
+/* rich(text) — escapes HTML then applies:
+ *   **text** → <strong>
+ *   _text_   → <em>
+ *   {chip:confirmed|partial|unknown:label} → .mp-chip span
+ */
+function rich(text) {
+  var s = esc(text);
+  s = s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  s = s.replace(/_([^_]+)_/g, '<em>$1</em>');
+  s = s.replace(/\{chip:(confirmed|partial|unknown):([^}]+)\}/g, function(_, status, label) {
+    return '<span class="mp-chip ' + status + '">' + label + '</span>';
+  });
+  return s;
+}
+
+/* ── masthead ── */
+function renderMasthead() {
+  // Eyebrow
+  var parts = ['The Approach'];
+  if (M.briefNumber) parts.push('Pre-call brief ' + esc(M.briefNumber));
+  if (M.callDate)    parts.push(esc(M.callDate));
+  var eyeHtml = parts.map(function(p, i) {
+    return i === 0 ? p : '<span class="sep">·</span>' + p;
+  }).join(' ');
+  $('h-eyebrow').innerHTML = eyeHtml;
+
+  // H1 — company name with trailing red-square period
+  var company = esc(M.company || 'Brief');
+  $('h-title').innerHTML = company + '<span class="f-sq" style="display:inline-block;width:14px;height:14px;background:var(--blood);margin-left:6px;vertical-align:2px;flex-shrink:0;"></span>';
+
+  // Deck
+  $('h-deck').innerHTML = rich(M.deck || '');
+
+  // Meta
+  var cfg = C.config || {};
+  var forParts = [];
+  if (cfg.seller) forParts.push(esc(cfg.seller));
+  if (cfg.se)     forParts.push(esc(cfg.se));
+  $('h-meta-for').innerHTML = forParts.length ? forParts.join('<br>') : '—';
+  $('h-meta-sources').textContent = M.sourceCount || '—';
+  $('h-meta-gen').textContent   = M.generated   || '—';
+  $('h-meta-read').textContent  = M.readingTime || '—';
+
+  // Page title
+  document.title = 'The Approach · ' + (M.company || 'Brief');
+}
+
+/* ── TOC ── */
+function renderTOC() {
+  var sections = C.sections || [];
+  var items = sections.map(function(s) {
+    var label = esc(s.kicker || (s.title || '').replace(/\.$/, ''));
+    return '<li><a href="#' + esc(s.id) + '">' + label + '</a></li>';
+  });
+  if (C.meddpicc) {
+    items.push('<li><a href="#meddpicc">Qualification (MEDDPICC)</a></li>');
+  }
+  $('toc-list').innerHTML = items.join('');
+}
+
+/* ── MEDDPICC scorecard ── */
+function renderMeddpicc() {
+  if (!C.meddpicc) return;
+  var m = C.meddpicc;
+  var cells = Array.isArray(m.cells) ? m.cells : [];
+
+  // Show the section
+  $('meddpicc').style.display = '';
+
+  // Deck
+  if (m.deck) $('medd-deck').innerHTML = rich(m.deck);
+  if (m.title) $('medd-title').textContent = m.title;
+
+  // Score counts
+  var conf = cells.filter(function(c) { return c.status === 'confirmed'; }).length;
+  var part = cells.filter(function(c) { return c.status === 'partial'; }).length;
+  var unk  = cells.filter(function(c) { return c.status === 'unknown'; }).length;
+  $('medd-score').innerHTML = 'Score <b>' + conf + ' / ' + part + ' / ' + unk + '</b> · pre-call';
+
+  // Grid
+  var grid = cells.map(function(cell) {
+    var st = esc(cell.status || 'unknown');
+    return '<div class="mp ' + st + '">'
+      + '<span class="letter">' + esc(cell.letter || '') + '</span>'
+      + '<div class="body">'
+      + '<span class="k">'  + esc(cell.label    || '') + '</span>'
+      + '<h3>'              + esc(cell.headline || '') + '</h3>'
+      + '<p class="ev">'   + esc(cell.evidence || '') + '</p>'
+      + '<span class="next">' + esc(cell.next   || '') + '</span>'
+      + '</div>'
+      + '<span class="pip"></span>'
+      + '</div>';
+  }).join('');
+  $('medd-grid').innerHTML = grid;
+}
+
+/* ── prose item renderer ── */
+function renderProseItem(item) {
+  if (!item || !item.type) return '';
+  switch (item.type) {
+
+    case 'p': {
+      var h = '<p>' + rich(item.text || '') + '</p>';
+      if (item.source) {
+        var tier = esc(item.source.tier || '');
+        var dotCls = 'dot' + (tier ? ' ' + tier : '');
+        h += '<p class="source"><span class="' + dotCls + '"></span>' + esc(item.source.text || '') + '</p>';
+      }
+      return h;
+    }
+
+    case 'pull': {
+      var ph = '<div class="pull">'
+        + '<q>' + rich(item.text || '') + '</q>';
+      if (item.cite) ph += '<cite>' + esc(item.cite) + '</cite>';
+      return ph + '</div>';
+    }
+
+    case 'facts': {
+      var fs = (item.items || []).map(function(f) {
+        return '<div class="f">'
+          + '<span class="k">' + esc(f.k || '') + '</span>'
+          + '<span class="v">' + esc(f.v || '') + '</span>'
+          + '</div>';
+      }).join('');
+      return '<div class="facts">' + fs + '</div>';
+    }
+
+    case 'table': {
+      var rows = (item.rows || []).map(function(r) {
+        var stCls = 'status' + (r.statusClass ? ' ' + esc(r.statusClass) : '');
+        return '<tr>'
+          + '<td class="layer">' + esc(r.layer  || '') + '</td>'
+          + '<td class="tool">'  + esc(r.tool   || '') + '</td>'
+          + '<td class="' + stCls + '">' + esc(r.status || '') + '</td>'
+          + '<td class="note">'  + esc(r.note   || '') + '</td>'
+          + '</tr>';
+      }).join('');
+      return '<table class="stack-table">'
+        + '<thead><tr><th>Layer</th><th>Tool</th><th>Fit</th><th>Notes</th></tr></thead>'
+        + '<tbody>' + rows + '</tbody>'
+        + '</table>';
+    }
+
+    case 'opener': {
+      var beats = (item.beats || []).map(function(b) {
+        return '<div class="beat">' + esc(b) + '</div>';
+      }).join('');
+      return '<div class="opener">'
+        + '<div class="k">Suggested opener · ~90 seconds</div>'
+        + '<q>' + esc(item.script || '') + '</q>'
+        + beats
+        + '</div>';
+    }
+
+    case 'questions': {
+      var qs = (item.items || []).map(function(q) {
+        var chipHtml = (q && q.chip && q.chip.text)
+          ? '<span class="mp-chip ' + esc(q.chip.status || '') + '">' + esc(q.chip.text) + '</span>'
+          : '';
+        return '<li>' + chipHtml + esc(typeof q === 'string' ? q : (q.text || '')) + '</li>';
+      }).join('');
+      var label = item.label ? '<div class="k">' + esc(item.label) + '</div>' : '';
+      return label + '<ol class="questions">' + qs + '</ol>';
+    }
+
+    default:
+      return '';
+  }
+}
+
+/* ── sections ── */
+function renderSections() {
+  var sections = C.sections || [];
+  var ad = C.actDivider;
+  var seenSE = false;
+  var html = '';
+
+  sections.forEach(function(s) {
+    // Insert act divider before the first SE section
+    if (ad && s.for === 'the SE' && !seenSE) {
+      seenSE = true;
+      html += '<div class="act-divider">'
+        + '<div class="k">' + esc(ad.kicker || 'Handoff') + '</div>'
+        + '<h2>' + esc(ad.title || 'Technical posture.') + '</h2>'
+        + '<p class="deck">' + esc(ad.deck || '') + '</p>'
+        + '</div>';
+    }
+
+    // Action kicker label
+    var aLabel = s.for === 'the SE' ? 'For the SE' : 'For the call';
+
+    html += '<section class="sec" id="' + esc(s.id) + '">';
+    html += '<div class="sec-num"><span>' + esc(s.number || '') + '</span>'
+          + '<span class="pipe">·</span>'
+          + '<span class="for">for ' + esc(s.for || 'the AE') + '</span></div>';
+    html += '<h2 class="sec-title">' + esc(s.kicker || s.title || '') + '</h2>';
+    if (s.title) html += '<p class="sec-subtitle">' + esc(s.title) + '</p>';
+    html += '<p class="sec-deck">' + rich(s.deck || '') + '</p>';
+
+    // TL;DR card
+    var tldrItems = Array.isArray(s.tldr) ? s.tldr : (s.tldr ? [s.tldr] : []);
+    var tldrHtml = tldrItems.map(function(t) { return '<p>' + rich(t) + '</p>'; }).join('');
+    html += '<div class="tldr"><div class="k">TL;DR</div>' + tldrHtml + '</div>';
+
+    // Prose items
+    var proseHtml = (s.prose || []).map(renderProseItem).join('');
+    if (proseHtml) html += '<div class="prose">' + proseHtml + '</div>';
+
+    // Action footer
+    if (s.action) {
+      html += '<div class="action"><div class="k">' + aLabel + '</div>'
+            + '<p>' + rich(s.action) + '</p></div>';
+    }
+
+    html += '</section>';
+  });
+
+  $('main-content').innerHTML = html;
+}
+
+/* ── colophon ── */
+function renderColophon() {
+  var sub = [];
+  var cfg = C.config || {};
+  if (cfg.seller)  sub.push(esc(cfg.seller));
+  if (cfg.se)      sub.push(esc(cfg.se));
+  if (C.product)   sub.push(esc(C.product));
+  if (M.generated) sub.push('Generated ' + esc(M.generated));
+  var subEl = $('col-sub');
+  if (subEl && sub.length) subEl.innerHTML = sub.join(' &nbsp;·&nbsp; ');
+}
+
+/* ── boot ── */
+renderMasthead();
+renderTOC();
+renderSections();
+renderMeddpicc();
+renderColophon();
+
+} catch(err) {
+  document.body.insertAdjacentHTML('afterbegin',
+    '<p style="position:fixed;top:0;left:0;right:0;padding:12px 16px;background:#b6271d;color:#fff;font-family:monospace;font-size:13px;z-index:9999">' +
+    'The Approach render error — ' + String(err) + '</p>'
+  );
+}
+
+// ── EXPORT ────────────────────────────────────────────────────────────────────
+function toggleExport(e) { if (e) e.stopPropagation(); var dd = document.getElementById('export-dd'); if (dd) dd.classList.toggle('open'); }
+function closeExport() { var dd = document.getElementById('export-dd'); if (dd) dd.classList.remove('open'); }
+document.addEventListener('click', function(e) { if (!e.target.closest || !e.target.closest('.tb-export')) closeExport(); });
+function exportHTML() {
+  closeExport();
+  var now = new Date();
+  var C2 = window.APPROACH_DATA || {};
+  var co = ((C2.meta && C2.meta.company) || '').replace(/[^a-z0-9]/gi, '').toLowerCase().slice(0, 12);
+  var isoFmt = new Intl.DateTimeFormat('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' });
+  var isoDate = isoFmt.format(now);
+  var filename = 'approach-' + (co || 'brief') + '-' + isoDate + '.html';
+  var html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+  if (window.APPROACH_DATA) {
+    try {
+      var dataStr = JSON.stringify(window.APPROACH_DATA).replace(/<\/script>/gi, '<\\/script>');
+      html = html.replace(/<script id="approach-data">[\s\S]*?<\/script>/, function() {
+        return '<script id="approach-data">\ntry { window.APPROACH_DATA = ' + dataStr + '; } catch(e) { window.APPROACH_DATA = null; }\n<' + '/script>';
+      });
+    } catch(exportErr) { console.warn('[Approach:Export] data injection failed', exportErr); }
+  }
+  var blob = new Blob([html], { type: 'text/html' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a); URL.revokeObjectURL(url);
+}
+
+// ── FULLSCREEN ────────────────────────────────────────────────────────────────
+function toggleFullscreen() {
+  var el = document.documentElement;
+  if (document.fullscreenElement || document.webkitFullscreenElement) {
+    (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+  } else {
+    var req = el.requestFullscreen || el.webkitRequestFullscreen;
+    if (req) req.call(el).catch(function(err) { console.warn('[Approach:Fullscreen] blocked —', err && err.message || err); });
+  }
+}
+document.addEventListener('fullscreenchange', function() {
+  var btn = document.getElementById('fs-btn');
+  if (btn) btn.textContent = document.fullscreenElement ? '← Exit' : '⛶ Fullscreen';
+});
+document.addEventListener('webkitfullscreenchange', function() {
+  var btn = document.getElementById('fs-btn');
+  if (btn) btn.textContent = document.webkitFullscreenElement ? '← Exit' : '⛶ Fullscreen';
+});
+window.toggleExport = toggleExport;
+window.closeExport = closeExport;
+window.exportHTML = exportHTML;
+window.toggleFullscreen = toggleFullscreen;
+</script>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     MISSION BUILT DEMO OVERLAY — THE APPROACH
+     Click-through walkthrough injected by scripts/build_demos.py
+     ═══════════════════════════════════════════════════════════════════════ -->
+<style>
+  #mb-demo-overlay {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 14px 20px 14px 22px;
+    background: #1a1612;
+    border: 1px solid #a8211a;
+    border-left: 3px solid #a8211a;
+    font-family: 'JetBrains Mono', 'Menlo', 'Consolas', monospace;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.35);
+    min-width: 480px;
+    max-width: min(680px, 94vw);
+    color: #fffaeb;
+    pointer-events: auto;
+  }
+  #mb-demo-close {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: #968974;
+    font-family: inherit;
+    font-size: 13px;
+    cursor: pointer;
+    padding: 2px 4px;
+    line-height: 1;
+  }
+  #mb-demo-close:hover { color: #fffaeb; }
+  #mb-demo-counter {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    color: #a8211a;
+    text-transform: uppercase;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  #mb-demo-body {
+    flex: 1;
+    min-width: 0;
+  }
+  #mb-demo-title {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #fffaeb;
+    margin: 0 0 3px;
+  }
+  #mb-demo-desc {
+    font-size: 12px;
+    letter-spacing: 0.03em;
+    color: #c8bea7;
+    margin: 0;
+    line-height: 1.45;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .mb-demo-btn {
+    background: none;
+    border: 1px solid #3a342d;
+    color: #fffaeb;
+    font-family: inherit;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: border-color 120ms, color 120ms;
+  }
+  .mb-demo-btn:hover { border-color: #a8211a; color: #a8211a; }
+  .mb-demo-btn:disabled { opacity: 0.4; cursor: default; }
+  .mb-demo-btn.primary { border-color: #a8211a; background: #a8211a; }
+  .mb-demo-btn.primary:hover { background: #c02a20; border-color: #c02a20; color: #fffaeb; }
+  .mb-highlight {
+    outline: 2px solid #a8211a !important;
+    outline-offset: 4px !important;
+    position: relative !important;
+    z-index: 1000 !important;
+    transition: outline-color 200ms !important;
+  }
+</style>
+<script>
+(function() {
+  'use strict';
+  var STEPS = [{"selector": ".head", "title": "The brief masthead", "desc": "Company, contact, seller and SE, call time, brief number — everything in the header before you scroll."}, {"selector": ".toc", "title": "Jump to any section", "desc": "Nine sections across two acts. The table of contents gets you to any section in one click."}, {"selector": "#snapshot", "title": "AE half: company snapshot", "desc": "Revenue, headcount, capex, business model — the context the AE needs before the first question."}, {"selector": "#meddpicc", "title": "MEDDPICC scorecard", "desc": "Eight deal dimensions, scored from public intel. Confirmed, partial, or unknown — with a next action for each."}, {"selector": ".act-divider", "title": "The handoff", "desc": "AE sections above. SE sections below. Both acts travel in one document — both get read before the call."}, {"selector": "#stack", "title": "SE half: stack & integrations", "desc": "What they're running, where the gaps are, and what to confirm on the call. The SE's pre-call checklist."}, {"selector": "#opener", "title": "Opener & discovery", "desc": "A 90-second verbatim opener rooted in a real public signal, plus MEDDPICC-tagged discovery questions."}];
+  var current = 0;
+  var prevHighlight = null;
+
+  // Build overlay
+  var ov = document.createElement('div');
+  ov.id = 'mb-demo-overlay';
+  ov.innerHTML =
+    '<button id="mb-demo-close" title="Close demo">✕</button>' +
+    '<span id="mb-demo-counter"></span>' +
+    '<div id="mb-demo-body">' +
+      '<p id="mb-demo-title"></p>' +
+      '<p id="mb-demo-desc"></p>' +
+    '</div>' +
+    '<button class="mb-demo-btn" id="mb-demo-prev">← Prev</button>' +
+    '<button class="mb-demo-btn primary" id="mb-demo-next"></button>';
+  document.body.appendChild(ov);
+
+  var $counter = document.getElementById('mb-demo-counter');
+  var $title   = document.getElementById('mb-demo-title');
+  var $desc    = document.getElementById('mb-demo-desc');
+  var $prev    = document.getElementById('mb-demo-prev');
+  var $next    = document.getElementById('mb-demo-next');
+  var $close   = document.getElementById('mb-demo-close');
+
+  function clearHighlight() {
+    if (prevHighlight) {
+      prevHighlight.classList.remove('mb-highlight');
+      prevHighlight = null;
+    }
+  }
+
+  function goTo(n) {
+    if (n < 0 || n >= STEPS.length) return;
+    clearHighlight();
+    current = n;
+    var step = STEPS[current];
+
+    $counter.textContent = (current + 1) + ' of ' + STEPS.length;
+    $title.textContent   = step.title;
+    $desc.textContent    = step.desc;
+    $prev.disabled       = current === 0;
+    $next.textContent    = current === STEPS.length - 1 ? 'Done' : 'Next →';
+
+    if (step.selector) {
+      var el = document.querySelector(step.selector);
+      if (el) {
+        el.classList.add('mb-highlight');
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        prevHighlight = el;
+      }
+    }
+  }
+
+  $prev.addEventListener('click', function() { goTo(current - 1); });
+  $next.addEventListener('click', function() {
+    if (current === STEPS.length - 1) {
+      clearHighlight();
+      ov.style.display = 'none';
+    } else {
+      goTo(current + 1);
+    }
+  });
+  $close.addEventListener('click', function() {
+    clearHighlight();
+    ov.style.display = 'none';
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (ov.style.display === 'none') return;
+    if (e.key === 'ArrowRight') goTo(current + 1);
+    if (e.key === 'ArrowLeft')  goTo(current - 1);
+    if (e.key === 'Escape')     { clearHighlight(); ov.style.display = 'none'; }
+  });
+
+  // Wait for JS rendering to settle before going to step 0
+  setTimeout(function() { goTo(0); }, 600);
+})();
+</script>
+
+</body>
+</html>
