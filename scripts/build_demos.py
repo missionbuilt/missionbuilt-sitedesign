@@ -1079,9 +1079,13 @@ def build_spotter():
     # Inject SPOTTER_DATA — replace the placeholder
     html = html.replace('window.SPOTTER_DATA = __SPOTTER_DATA__;', f'window.SPOTTER_DATA = {data_json};')
 
-    # Inject overlay before </body>
+    # Inject overlay before the real </body> tag.
+    # Use rfind — spotter-template.html has '</body></html>' inside a JS string
+    # literal (the export function), so str.replace hits that first. rfind
+    # always finds the actual closing tag at the end of the file.
     overlay = make_overlay(SPOTTER_STEPS, 'The Spotter')
-    html = html.replace('</body>', overlay + '\n</body>')
+    idx = html.rfind('</body>')
+    html = html[:idx] + overlay + '\n</body>' + html[idx + len('</body>'):]
 
     out_path = os.path.join(OUT_DIR, 'spotter.html')
     with open(out_path, 'w', encoding='utf-8') as f:
@@ -1100,9 +1104,10 @@ def build_approach():
     # Inject APPROACH_DATA — the template wraps it in try/catch
     html = html.replace('window.APPROACH_DATA = __APPROACH_DATA__;', f'window.APPROACH_DATA = {data_json};')
 
-    # Inject overlay before </body>
+    # Inject overlay before the real </body> tag (rfind for safety).
     overlay = make_overlay(APPROACH_STEPS, 'The Approach')
-    html = html.replace('</body>', overlay + '\n</body>')
+    idx = html.rfind('</body>')
+    html = html[:idx] + overlay + '\n</body>' + html[idx + len('</body>'):]
 
     out_path = os.path.join(OUT_DIR, 'approach.html')
     with open(out_path, 'w', encoding='utf-8') as f:
@@ -1149,6 +1154,16 @@ try {{ localStorage.removeItem('warmup-data-cache-v1'); }} catch(_) {{}}
 // Pre-fill font cache stub: the shell checks length>100 and @font-face presence, then skips MCP call.
 // Real fonts are served by Google Fonts CDN in <head>.
 try {{ localStorage.setItem('warmup-fonts-v2', '{font_stub}'); }} catch(_) {{}}
+// Neutralize the Cowork MCP bridge so the font loader doesn't find callMcpTool and
+// show an error banner. Without callMcpTool, it enters silent 25-attempt polling,
+// times out, and falls back to the Google Fonts CDN already loaded in <head>.
+(function() {{
+  if (window.cowork && typeof window.cowork.callMcpTool === 'function') {{
+    var patched = Object.assign({{}}, window.cowork);
+    delete patched.callMcpTool;
+    window.cowork = patched;
+  }}
+}})();
 </script>
 <body><script>
 {shell_js}
