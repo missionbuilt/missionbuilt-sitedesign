@@ -938,7 +938,13 @@ def make_overlay(steps, skill_name):
       var el = document.querySelector(step.selector);
       if (el) {{
         el.classList.add('mb-highlight');
-        el.scrollIntoView({{ behavior: 'smooth', block: 'center' }});
+        // Use window.scrollTo() instead of el.scrollIntoView() — scrollIntoView()
+        // propagates through iframe boundaries in Chrome and jerks the parent page.
+        // window.scrollTo() is scoped to this iframe's document only.
+        var rect = el.getBoundingClientRect();
+        var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        var target = scrollTop + rect.top - (window.innerHeight / 2) + (rect.height / 2);
+        window.scrollTo({{ top: Math.max(0, target), behavior: 'smooth' }});
         prevHighlight = el;
       }}
     }}
@@ -1061,6 +1067,11 @@ WARMUP_STEPS = [
         "desc": "Date, mode, company, and scan time — your brief's vital stats at the top of every run."
     },
     {
+        "selector": "#section-nav",
+        "title": "Jump to any section",
+        "desc": "The nav rail shows every section in today's brief. Click to jump directly; mark sections done as you read."
+    },
+    {
         "selector": "#threat",
         "title": "Threat landscape",
         "desc": "Active KEV entries, exploited vulnerabilities, and campaign signals. The lead item is the most urgent."
@@ -1076,14 +1087,14 @@ WARMUP_STEPS = [
         "desc": "Your brief pulls in what you care about outside the office — powerlifting results, new equipment releases."
     },
     {
-        "selector": ".section-nav",
-        "title": "Jump to any section",
-        "desc": "The nav rail tracks which sections you've reviewed. Click to jump, mark done, and move on."
-    },
-    {
         "selector": ".safety-panel",
         "title": "Link safety verified",
-        "desc": "Every URL in your brief is checked against CISA allowlists and URLScan.io before it renders."
+        "desc": "Every URL in your brief is checked against CISA allowlists and URLScan.io before it renders. No blind links."
+    },
+    {
+        "selector": ".tb-export",
+        "title": "Export your brief",
+        "desc": "Export to a self-contained HTML file or print to PDF. Your brief travels with you — no login required to read it."
     }
 ]
 

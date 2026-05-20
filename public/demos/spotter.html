@@ -1869,7 +1869,13 @@ renderAll();
       var el = document.querySelector(step.selector);
       if (el) {
         el.classList.add('mb-highlight');
-        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        // Use window.scrollTo() instead of el.scrollIntoView() — scrollIntoView()
+        // propagates through iframe boundaries in Chrome and jerks the parent page.
+        // window.scrollTo() is scoped to this iframe's document only.
+        var rect = el.getBoundingClientRect();
+        var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        var target = scrollTop + rect.top - (window.innerHeight / 2) + (rect.height / 2);
+        window.scrollTo({ top: Math.max(0, target), behavior: 'smooth' });
         prevHighlight = el;
       }
     }
