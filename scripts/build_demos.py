@@ -1049,11 +1049,6 @@ APPROACH_STEPS = [
         "desc": "What they're running, where the gaps are, and what to confirm on the call. The SE's pre-call checklist."
     },
     {
-        "selector": "#meddpicc",
-        "title": "MEDDPICC scorecard",
-        "desc": "Eight deal dimensions, scored from public intel. Confirmed, partial, or unknown — with a next action for each."
-    },
-    {
         "selector": "#opener",
         "title": "Opener & discovery",
         "desc": "A 90-second verbatim opener rooted in a real public signal, plus MEDDPICC-tagged discovery questions."
@@ -1062,6 +1057,11 @@ APPROACH_STEPS = [
         "selector": "#demos",
         "title": "Demo ideas",
         "desc": "What to show, what to skip, and in what order. The SE's game plan for the live portion of the call."
+    },
+    {
+        "selector": "#meddpicc",
+        "title": "MEDDPICC scorecard",
+        "desc": "Eight deal dimensions, scored from public intel. Confirmed, partial, or unknown — with a next action for each."
     },
     {
         "selector": ".tb-export",
