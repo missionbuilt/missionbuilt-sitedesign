@@ -249,15 +249,15 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
       <p class="section-label">How to use it</p>
       <h2 class="section-h2">One connection. Every skill.</h2>
       <p class="install-intro">
-        The Spotter is part of the Loadout MCP server. One connection gives you
-        every skill in the kit. Any MCP-compatible agent can connect using the
-        URL below. Tested and validated in Claude.
+        The Spotter is part of the Loadout MCP server. One connection gives you every skill in the kit. Tested on Claude.
       </p>
 
       <div class="install-url">
         <span class="install-url-label">Server URL</span>
         <code class="install-url-value">https://mcp.missionbuilt.io/sse</code>
       </div>
+
+      <p class="install-verified">✓ Verified on Claude</p>
 
       <div class="install-options">
         <article class="install-opt">
@@ -269,17 +269,6 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
         <article class="install-opt">
           <h3>Claude · No CLI</h3>
           <p>Open Claude, then go to <strong>Settings → Connections → Add MCP Server</strong>. Paste the server URL above and save.</p>
-        </article>
-
-        <article class="install-opt">
-          <h3>Claude Desktop · Config file</h3>
-          <p>Add to <code>claude_desktop_config.json</code> under <code>mcpServers</code>:</p>
-          <pre class="install-opt-code">{`"loadout": { "url": "https://mcp.missionbuilt.io/sse" }`}</pre>
-        </article>
-
-        <article class="install-opt">
-          <h3>Cowork</h3>
-          <p>Install the Mission Built plugin from the Cowork plugin directory. OAuth sign-in with Google included.</p>
         </article>
       </div>
     </section>
@@ -748,6 +737,15 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
     font-size: 14px;
     color: var(--color-chalk);
     letter-spacing: 0.04em;
+  }
+
+  .install-verified {
+    margin: 0 0 24px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-army);
   }
 
   .install-options {
