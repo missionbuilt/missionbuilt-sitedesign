@@ -10,32 +10,44 @@ interface Props {
   caption: string;
 }
 const { src, title, caption } = Astro.props;
+
+// Unique ID per instance so multiple embeds on a page don't collide
+const uid = Math.random().toString(36).slice(2, 8);
 ---
 
-<div class="demo-wrap">
-  <iframe
-    class="demo-frame"
-    src={src}
-    title={title}
-    loading="lazy"
-    scrolling="yes"
-  ></iframe>
+<div class="demo-wrap" data-demo-uid={uid}>
+  <div class="demo-iframe-wrap">
+    <iframe
+      class="demo-frame"
+      src={src}
+      title={title}
+      loading="lazy"
+      scrolling="yes"
+    ></iframe>
+    <button
+      class="demo-expand-btn"
+      data-uid={uid}
+      aria-label="Expand demo to full screen"
+    >
+      ⤢ EXPAND
+    </button>
+  </div>
   <div class="demo-bar">
     <p class="demo-caption">{caption}</p>
-    <button class="demo-expand-btn" aria-label="Expand demo">⤢ EXPAND</button>
   </div>
 </div>
 
-<!-- Lightbox -->
-<div class="demo-lightbox" id="demo-lightbox" aria-hidden="true" aria-modal="true" role="dialog">
-  <div class="demo-lb-backdrop"></div>
+<!-- Lightbox — rendered outside demo-wrap so it can cover the full viewport -->
+<div class="demo-lightbox" id={`demo-lb-${uid}`} aria-hidden="true" aria-modal="true" role="dialog">
+  <div class="demo-lb-backdrop" data-uid={uid}></div>
   <div class="demo-lb-inner">
     <div class="demo-lb-header">
       <span class="demo-lb-label">{title}</span>
-      <button class="demo-lb-close" aria-label="Close demo">✕ CLOSE</button>
+      <button class="demo-lb-close" data-uid={uid}>✕ CLOSE</button>
     </div>
     <iframe
       class="demo-lb-frame"
+      id={`demo-lb-frame-${uid}`}
       src=""
       title={title}
       scrolling="yes"
@@ -44,12 +56,20 @@ const { src, title, caption } = Astro.props;
 </div>
 
 <style>
-  /* ── Embedded iframe strip ── */
+  /* ── Demo wrapper ── */
   .demo-wrap {
     margin-top: 28px;
     border: 1px solid var(--color-rule);
     border-left: 3px solid var(--color-blood);
   }
+
+  /* Position context for the expand badge */
+  .demo-iframe-wrap {
+    position: relative;
+    display: block;
+    line-height: 0; /* collapse whitespace under iframe */
+  }
+
   .demo-frame {
     display: block;
     width: 100%;
@@ -57,40 +77,46 @@ const { src, title, caption } = Astro.props;
     border: none;
     background: var(--color-panel);
   }
+
+  /* ── Expand badge — oxblood, top-right corner, always visible ── */
+  .demo-expand-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 10;
+    background: var(--color-blood, #a8211a);
+    color: #fffaeb;
+    border: none;
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 7px 13px;
+    cursor: pointer;
+    opacity: 0.92;
+    transition: opacity 120ms, background 120ms;
+    pointer-events: auto;
+  }
+  .demo-expand-btn:hover {
+    opacity: 1;
+    background: #c02a20;
+  }
+
+  /* ── Caption strip ── */
   .demo-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: var(--color-panel);
+    background: var(--color-panel, #171513);
     border-top: 1px solid var(--color-rule);
-    padding: 0 12px 0 0;
+    padding: 0;
   }
   .demo-caption {
     margin: 0;
     padding: 10px 16px;
-    font-family: var(--font-mono);
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
     font-size: 10px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--color-chalk-faint);
-  }
-  .demo-expand-btn {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--color-chalk-faint);
-    background: none;
-    border: 1px solid var(--color-rule);
-    padding: 5px 10px;
-    cursor: pointer;
-    white-space: nowrap;
-    flex-shrink: 0;
-    transition: color 120ms, border-color 120ms;
-  }
-  .demo-expand-btn:hover {
-    color: var(--color-blood);
-    border-color: var(--color-blood);
   }
 
   /* ── Lightbox ── */
@@ -108,7 +134,7 @@ const { src, title, caption } = Astro.props;
   .demo-lb-backdrop {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.88);
+    background: rgba(0, 0, 0, 0.9);
     cursor: pointer;
   }
   .demo-lb-inner {
@@ -131,27 +157,26 @@ const { src, title, caption } = Astro.props;
     flex-shrink: 0;
   }
   .demo-lb-label {
-    font-family: var(--font-mono);
+    font-family: var(--font-mono, monospace);
     font-size: 10px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--color-chalk-faint);
   }
   .demo-lb-close {
-    font-family: var(--font-mono);
+    font-family: var(--font-mono, monospace);
     font-size: 10px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--color-chalk-faint);
-    background: none;
-    border: 1px solid var(--color-rule);
-    padding: 5px 10px;
+    color: #fffaeb;
+    background: var(--color-blood, #a8211a);
+    border: none;
+    padding: 6px 12px;
     cursor: pointer;
-    transition: color 120ms, border-color 120ms;
+    transition: background 120ms;
   }
   .demo-lb-close:hover {
-    color: var(--color-blood);
-    border-color: var(--color-blood);
+    background: #c02a20;
   }
   .demo-lb-frame {
     flex: 1;
@@ -162,33 +187,35 @@ const { src, title, caption } = Astro.props;
 </style>
 
 <script>
-  const expandBtn  = document.querySelector('.demo-expand-btn') as HTMLButtonElement | null;
-  const lightbox   = document.getElementById('demo-lightbox') as HTMLDivElement | null;
-  const backdrop   = lightbox?.querySelector('.demo-lb-backdrop') as HTMLDivElement | null;
-  const closeBtn   = lightbox?.querySelector('.demo-lb-close') as HTMLButtonElement | null;
-  const lbFrame    = lightbox?.querySelector('.demo-lb-frame') as HTMLIFrameElement | null;
-  const demoFrame  = document.querySelector('.demo-frame') as HTMLIFrameElement | null;
+  // Use data-uid to scope each instance independently
+  document.querySelectorAll<HTMLButtonElement>('.demo-expand-btn[data-uid]').forEach((btn) => {
+    const uid = btn.dataset.uid!;
+    const lightbox  = document.getElementById(`demo-lb-${uid}`) as HTMLElement | null;
+    const lbFrame   = document.getElementById(`demo-lb-frame-${uid}`) as HTMLIFrameElement | null;
+    const backdrop  = lightbox?.querySelector<HTMLElement>('.demo-lb-backdrop');
+    const closeBtn  = lightbox?.querySelector<HTMLButtonElement>('.demo-lb-close');
+    // Find the iframe in the same demo-wrap as this button
+    const demoFrame = btn.closest('.demo-wrap')?.querySelector<HTMLIFrameElement>('.demo-frame');
 
-  function openLightbox() {
-    if (!lightbox || !lbFrame || !demoFrame) return;
-    lbFrame.src = demoFrame.src;
-    lightbox.classList.add('is-open');
-    lightbox.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-  }
+    function open() {
+      if (!lightbox || !lbFrame || !demoFrame) return;
+      lbFrame.src = demoFrame.src;
+      lightbox.classList.add('is-open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
 
-  function closeLightbox() {
-    if (!lightbox || !lbFrame) return;
-    lightbox.classList.remove('is-open');
-    lightbox.setAttribute('aria-hidden', 'true');
-    lbFrame.src = '';
-    document.body.style.overflow = '';
-  }
+    function close() {
+      if (!lightbox || !lbFrame) return;
+      lightbox.classList.remove('is-open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      lbFrame.src = '';
+      document.body.style.overflow = '';
+    }
 
-  expandBtn?.addEventListener('click', openLightbox);
-  backdrop?.addEventListener('click', closeLightbox);
-  closeBtn?.addEventListener('click', closeLightbox);
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeLightbox();
+    btn.addEventListener('click', open);
+    backdrop?.addEventListener('click', close);
+    closeBtn?.addEventListener('click', close);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
   });
 </script>

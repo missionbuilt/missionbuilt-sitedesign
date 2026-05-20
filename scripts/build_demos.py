@@ -862,12 +862,16 @@ def make_overlay(steps, skill_name):
   .mb-demo-btn:disabled {{ opacity: 0.4; cursor: default; }}
   .mb-demo-btn.primary {{ border-color: #a8211a; background: #a8211a; }}
   .mb-demo-btn.primary:hover {{ background: #c02a20; border-color: #c02a20; color: #fffaeb; }}
+  @keyframes mb-pulse {{
+    0%, 100% {{ box-shadow: 0 0 0 2px #fffaeb, 0 0 0 5px #a8211a; }}
+    50%       {{ box-shadow: 0 0 0 2px #fffaeb, 0 0 0 7px #a8211a; }}
+  }}
   .mb-highlight {{
-    outline: 2px solid #a8211a !important;
-    outline-offset: 4px !important;
+    outline: none !important;
+    box-shadow: 0 0 0 2px #fffaeb, 0 0 0 5px #a8211a !important;
+    animation: mb-pulse 1.6s ease-in-out infinite !important;
     position: relative !important;
     z-index: 1000 !important;
-    transition: outline-color 200ms !important;
   }}
 </style>
 <script>
