@@ -983,42 +983,47 @@ SPOTTER_STEPS = [
     {
         "selector": ".wbar",
         "title": "The worksheet",
-        "desc": "Epic title, overall verdict, and export — visible as soon as the brief renders."
+        "desc": "Epic title, progress tracker, and export — all in one persistent toolbar. The progress bar fills as you close areas."
     },
     {
         "selector": ".tracker",
         "title": "Nine areas at a glance",
-        "desc": "Every area has a pip score and opens into a full critique. The grid is your at-a-glance read."
+        "desc": "Each cell shows the area name, pip score, and current state. Click any cell to jump straight to that area."
     },
     {
         "selector": ".area",
         "title": "Open an area",
-        "desc": "Each area expands to show the epic excerpt, the critique notes, and the action buttons."
+        "desc": "Each area shows the relevant excerpt from your epic on the left and Spotter's critique notes on the right."
     },
     {
         "selector": ".status",
         "title": "The verdict",
-        "desc": "Three judges, three pips. All white = Pass. Mixed = Needs work. All red = Missing. The verdict stays open until you close the area."
+        "desc": "Three judges, three pips. All white = Pass. Mixed = Needs work. All red = Missing. The verdict updates automatically when you refine."
     },
     {
         "selector": ".notes-pane",
         "title": "Critique notes",
-        "desc": "Four note types: Missing (a gap), Suggest (a fix), Recommend (a stronger path), Observation (what's working)."
-    },
-    {
-        "selector": ".note-actions",
-        "title": "Accept or skip",
-        "desc": "Accept Spotter's read as-is, or skip the area if it's not relevant to this review. Your call drives the final score."
+        "desc": "Four note types: Missing (a gap), Suggest (a fix), Recommend (a stronger path), Observation (what's working). Accept or skip each note individually."
     },
     {
         "selector": "[data-act='refine']",
-        "title": "Chat to iterate",
-        "desc": "Not satisfied with the read? Hit Refine with Spotter, type a note, and it rewrites the critique and rescores the area automatically — tighter framing, a different angle, a sharper recommendation."
+        "title": "Refine with Spotter",
+        "desc": "Not satisfied with the read? Hit Refine with Spotter to open the iteration editor. Type a note — push back, add context, ask for a sharper angle."
+    },
+    {
+        "selector": ".iterate-editor",
+        "title": "Type and send",
+        "desc": "Send your note and Spotter rewrites the critique. The verdict and pip score update automatically — no separate rescore step. Every revision is tracked in the thread below."
+    },
+    {
+        "selector": ".state-chip",
+        "title": "Area state",
+        "desc": "Each area tracks where you are: Open → Iterating → Revised → Accepted or Skipped. Close every area to unlock export."
     },
     {
         "selector": ".export",
         "title": "Export when ready",
-        "desc": "When areas are settled, export to HTML or Markdown. Share with the team or drop it into your epic archive."
+        "desc": "Choose refined epic only, or epic with Spotter's comments inline. Export to HTML, Markdown, or Print."
     }
 ]
 
