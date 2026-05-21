@@ -1,18 +1,12 @@
 /**
- * Cloudflare Workers config for the missionbuilt static site.
+ * Cloudflare Pages config for the missionbuilt static site.
  *
- * The site is fully static (Astro `output: 'static'`), so this is a
- * Workers Static Assets deployment. No server logic, just edge-served
- * HTML / CSS / JS / images out of `./dist`.
- *
- * If the runtime behavior of the Workers platform ever needs to change,
- * bump `compatibility_date`. For static assets it has effectively no
- * effect, but Cloudflare wants it set.
+ * The site is fully static (Astro `output: 'static'`). `pages_build_output_dir`
+ * tells wrangler where the built assets live so `wrangler pages deploy` works
+ * without a positional argument.
  */
 {
   "name": "missionbuilt",
   "compatibility_date": "2026-05-10",
-  "assets": {
-    "directory": "./dist"
-  }
+  "pages_build_output_dir": "./dist"
 }

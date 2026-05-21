@@ -1118,7 +1118,15 @@ def build_spotter():
     data_json = json.dumps(SPOTTER_DATA, ensure_ascii=False)
 
     # Inject SPOTTER_DATA — replace the placeholder
-    html = html.replace('window.SPOTTER_DATA = __SPOTTER_DATA__;', f'window.SPOTTER_DATA = {data_json};')
+    # Template uses: window.SPOTTER_DATA = null; // ← AGENT: replace this line — see Path B step B-4.
+    html = html.replace(
+        'window.SPOTTER_DATA = null; // ← AGENT: replace this line — see Path B step B-4.',
+        f'window.SPOTTER_DATA = {data_json};'
+    )
+
+    # Stamp the build version so each regeneration produces a different hash,
+    # ensuring Cloudflare always treats it as a changed asset on deploy.
+    html = html.replace('<!DOCTYPE html>', '<!DOCTYPE html>\n<!-- demo-build: v3 -->', 1)
 
     # Inject overlay before the real </body> tag.
     # Use rfind — spotter-template.html has '</body></html>' inside a JS string
@@ -1141,6 +1149,9 @@ def build_approach():
         html = f.read()
 
     data_json = json.dumps(APPROACH_DATA, ensure_ascii=False)
+
+    # Stamp build version (same pattern as spotter/warmup — forces new CF hash on deploy)
+    html = html.replace('<!DOCTYPE html>', '<!DOCTYPE html>\n<!-- demo-build: v3 -->', 1)
 
     # Inject APPROACH_DATA — the template wraps it in try/catch
     html = html.replace('window.APPROACH_DATA = __APPROACH_DATA__;', f'window.APPROACH_DATA = {data_json};')
@@ -1166,6 +1177,7 @@ def build_warmup():
     overlay_html  = make_overlay(WARMUP_STEPS, 'The Warmup')
 
     html = f"""<!DOCTYPE html>
+<!-- demo-build: v3 -->
 <html lang="en">
 <head>
   <meta charset="utf-8">
