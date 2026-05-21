@@ -559,6 +559,12 @@ main { max-width: 880px; margin: 0 auto; padding: 0 32px 56px; }
 .rev-notes-list .rev-note .icon { text-align: center; font-family: var(--font-display); font-size: 13px; font-weight: 600; }
 .rev-notes-list .rev-note .lbl { letter-spacing: 0.16em; text-transform: uppercase; font-weight: 700; font-size: 9.5px; }
 .rev-notes-list .rev-note .txt { color: var(--ink); font-family: var(--font-serif); font-size: 13.5px; line-height: 1.5; }
+.rev-grade { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; margin: 6px 0 2px; color: var(--ink-soft); }
+.rev-grade .gr-before { color: var(--blood); }
+.rev-grade .gr-after  { color: var(--army); }
+.rev-grade .gr-same   { color: var(--ink-dim); }
+.rev.rerun-card { background: var(--paper-soft); border-left: 2px solid var(--ink-faint); padding: 8px 12px; }
+.rev.rerun-card .meta { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-dim); margin-bottom: 4px; }
 
 /* ── ACTIONS ──────────────────────────────────────── */
 .actions {
@@ -860,15 +866,8 @@ main { max-width: 880px; margin: 0 auto; padding: 0 32px 56px; }
   <div class="col-sub" id="col-sub"></div>
 </footer>
 
-<!-- ═══════════════════════════════════════════════════
-     DATA INJECTION — replaced at render time by spotter_get_template
-     ═══════════════════════════════════════════════════ -->
 <script id="spotter-data">
-try {
-  window.SPOTTER_DATA = {"config": {"fontToolName": ""}, "meta": {"epicTitle": "Comments on Dashboards", "epicDeck": "A review of the Comments on Dashboards epic. Nine areas, three judges each.", "author": "Jordan", "date": "20 May 2026"}, "areas": [{"id": "a01", "num": "01", "cat": "Problem space", "title": "User & Problem", "deck": "Does the epic show deep understanding of the user's reality?", "verdict": "good", "verdictLabel": "Good lift", "pips": ["w", "w", "r"], "pipSub": "2 of 3 white", "excerpt": "Data analysts and ops leads lose context every time they need to discuss a specific chart. Today the workflow is: screenshot the chart, paste it into Slack, tag the owner, wait. The chart and the conversation live in different places. We've seen this in 47 support tickets and 3 enterprise interviews this quarter.\n\nWe are building threaded comments anchored directly to dashboard tiles. A comment thread lives on the tile. Mentions notify via the existing notification bell. No screenshot required.", "excerptLabel": "Problem section", "excerptMeta": "94 words · unchanged", "isEmpty": false, "notes": [{"type": "observation", "body": "Real evidence (47 tickets, 3 enterprise interviews) grounds the problem well. The Slack screenshot workflow is vivid and verifiable."}, {"type": "suggest", "body": "Name the assumptions. You're assuming analysts own this workflow — does the screenshot habit also belong to executives? Different user, different solution."}, {"type": "missing", "body": "No alternatives considered. What did you rule out? Linking from Slack back to the tile? Inline annotations? The strongest epics show the option space."}, {"type": "recommend", "body": "Add one sentence on why this problem isn't solved today — is it a product gap, a permissions model constraint, or something else?"}], "chips": ["Name assumptions", "Show option space", "Why not solved already?"]}, {"id": "a02", "num": "02", "cat": "Competitive", "title": "Competitive landscape", "deck": "Who else solves this, and how?", "verdict": "good", "verdictLabel": "Good lift", "pips": ["w", "w", "w"], "pipSub": "3 of 3 white", "excerpt": "Tableau: Comments are available on views and workbooks. Users can tag others; notifications go via email. The thread is on the view, not the tile — you can't anchor a comment to a specific chart element.\n\nPower BI: Comments are in the service (not desktop), anchored to the page, not the visual. Mobile shows badges but no inline read.\n\nLooker: Tile-level discussions are an Enterprise feature. Anchor is tile ID. Mentions route to Slack or email via configured integration. The experience is closer to what we're building — but gated behind the top tier.", "excerptLabel": "Competitive section", "excerptMeta": "111 words · unchanged", "isEmpty": false, "notes": [{"type": "observation", "body": "All three majors named with specific, accurate detail. Workflow distinctions (page vs. tile anchor) are the right level of precision."}, {"type": "observation", "body": "The Looker comparison is sharp — naming it as Enterprise-gated positions the free-tier play clearly."}, {"type": "suggest", "body": "Add one sentence on what we do differently — the competitive section describes what others do but doesn't land the daylight."}], "chips": ["Name the daylight explicitly"]}, {"id": "a03", "num": "03", "cat": "Differentiation", "title": "Strategic differentiation", "deck": "Why does this win from your platform?", "verdict": "no-lift", "verdictLabel": "No-lift", "pips": ["r", "r", "w"], "pipSub": "1 of 3 white · blocker", "excerpt": "Comments on dashboards is a widely-requested feature that will close a gap with Tableau and Power BI. Making it free for all paid tiers positions us well for mid-market.", "excerptLabel": "Differentiation section", "excerptMeta": "34 words · unchanged", "isEmpty": false, "notes": [{"type": "missing", "body": "No moat. The epic names catch-up, not differentiation. That's fine to say — but the epic doesn't say it explicitly."}, {"type": "suggest", "body": "Write the press release sentence: what changes for the analyst on Monday morning? That framing will surface whether the value is sharp enough to commit to."}, {"type": "recommend", "body": "If the bet is on distribution (free tier drives upgrades), name that as the strategy. Catch-up justified by expansion motion is a real answer."}], "chips": ["State the strategy explicitly", "Write the press release sentence"]}, {"id": "a04", "num": "04", "cat": "Solution", "title": "Solution approach", "deck": "How does the team plan to build this?", "verdict": "good", "verdictLabel": "Good lift", "pips": ["w", "w", "r"], "pipSub": "2 of 3 white", "excerpt": "Comments are anchored by tile ID. Thread storage: new comments table, FK to dashboard_id and tile_id. @-mention parsing happens in the input layer. Notification delivery reuses the existing notification service — new event type: comment_mention.\n\nAI decision: AI considered and declined. We explored LLM summarization of long threads; the risk of hallucinated synthesis on data discussions is too high. We'll revisit when confidence calibration improves.", "excerptLabel": "Solution section", "excerptMeta": "82 words · unchanged", "isEmpty": false, "notes": [{"type": "observation", "body": "Tile-ID anchor is the right call — it preserves the comment through dashboard edits, unlike page-level anchors."}, {"type": "observation", "body": "AI decision is explicit and reasoned. The hallucination concern for data discussions is a good specific argument."}, {"type": "missing", "body": "No skills-first consideration. Can comment threads be exposed via API or MCP tool so agents can read and write comments? One sentence on why in-app only is intentional."}], "chips": ["Skills-first consideration"]}, {"id": "a05", "num": "05", "cat": "Holistic", "title": "Holistic impact", "deck": "What else changes when this ships?", "verdict": "good", "verdictLabel": "Good lift", "pips": ["w", "w", "w"], "pipSub": "3 of 3 white", "excerpt": "Notifications team: new comment_mention event type required. Two-sprint dependency; scheduling aligned.\n\nMobile: badge on notification bell only. Inline read and compose deferred to Q3. Users on mobile will see the mention notification but must go to desktop to read the thread. Known gap, intentional sequencing.\n\nSearch: comment content is not indexed in v1. Known gap.\n\nPermissions: comments inherit dashboard permissions. A viewer can read but not post. This closes the ask from enterprise customers who don't want viewers cluttering threads.", "excerptLabel": "Holistic impact section", "excerptMeta": "96 words · unchanged", "isEmpty": false, "notes": [{"type": "observation", "body": "The mobile sequencing decision is well-reasoned and explicitly named. Users on mobile will know what to expect."}, {"type": "observation", "body": "Notification team dependency is flagged and scheduled. The cascade is visible."}, {"type": "suggest", "body": "Add one sentence: when mobile compose ships in Q3, does the notification architecture need to change again, or is it already built for that?"}], "chips": ["Q3 mobile compose dependency check"]}, {"id": "a06", "num": "06", "cat": "Packaging", "title": "Packaging & pricing", "deck": "Which tier, what model, and why?", "verdict": "good", "verdictLabel": "Good lift", "pips": ["w", "w", "r"], "pipSub": "2 of 3 white", "excerpt": "Free for all paid tiers (Starter, Growth, Enterprise). No usage metering in v1.\n\nRationale: comments are a collaboration feature, not a consumption feature. Metering per comment would create friction exactly where we want engagement. Looker gates this at Enterprise — we can position our free-tier availability as a win in competitive deals.\n\nPricing review: not required. This fits the existing model.", "excerptLabel": "Packaging section", "excerptMeta": "73 words · unchanged", "isEmpty": false, "notes": [{"type": "observation", "body": "The rationale is clear — collaboration vs. consumption framing is the right lens."}, {"type": "suggest", "body": "Name the competitive pricing benchmark explicitly. Looker Enterprise is ~$65K/yr minimum. Free-tier availability is a meaningful GTM point."}, {"type": "missing", "body": "What is the upsell hypothesis? If comments drive collaboration, what behavior signals that a Starter customer is ready for Growth?"}], "chips": ["Name competitive benchmark", "Upsell hypothesis"]}, {"id": "a07", "num": "07", "cat": "Launch", "title": "Launch readiness", "deck": "How does this get to customers?", "verdict": "no-lift", "verdictLabel": "No-lift", "pips": ["r", "r", "w"], "pipSub": "1 of 3 white · blocker", "excerpt": "Launch plan TBD. Will coordinate with marketing closer to ship date.", "excerptLabel": "Launch section", "excerptMeta": "13 words · unchanged", "isEmpty": false, "notes": [{"type": "missing", "body": "No documentation plan. Who writes the help article? By when? This is how customers get value without calling support."}, {"type": "missing", "body": "No field enablement. Sales needs a one-liner for competitive deals (Looker = Enterprise tier, you = all paid). That's a specific deliverable."}, {"type": "suggest", "body": "Name the release sequence: quiet rollout behind a flag? Beta group? Marquee announcement? Each has a different content surface requirement."}], "chips": ["Doc plan", "Field enablement", "Release sequence"]}, {"id": "a08", "num": "08", "cat": "Post-launch", "title": "Post-launch ownership", "deck": "Who watches what after it ships?", "verdict": "no-lift", "verdictLabel": "No-lift", "pips": ["r", "r", "r"], "pipSub": "0 of 3 white · blocker", "excerpt": "We'll track adoption in Amplitude.", "excerptLabel": "Post-launch section", "excerptMeta": "7 words · unchanged", "isEmpty": false, "notes": [{"type": "missing", "body": "No telemetry events specified. What events get logged? comment_created, comment_mention_sent, thread_read? The instrumentation plan should be in the epic."}, {"type": "missing", "body": "No success criteria. What does adoption look like in 90 days? A threshold with a number is the difference between 'tracking adoption' and actually knowing if it worked."}, {"type": "missing", "body": "No owner named for post-launch review. Who looks at the dashboard each week?"}, {"type": "recommend", "body": "Propose a 30/60/90-day check-in cadence with a specific metric threshold. If adoption is below X at 60 days, what does the team do?"}], "chips": ["Telemetry events", "Success criteria with numbers", "Named owner"]}, {"id": "a09", "num": "09", "cat": "Governance", "title": "Trust, governance & auditability", "deck": "Safe to ship? Compliant? Transparent?", "verdict": "no-lift", "verdictLabel": "No-lift", "pips": ["w", "r", "r"], "pipSub": "1 of 3 white · blocker", "excerpt": "Comments inherit dashboard permissions. Admins can delete any comment.", "excerptLabel": "Governance section", "excerptMeta": "11 words · unchanged", "isEmpty": false, "notes": [{"type": "missing", "body": "No data retention policy. How long do comments live? What happens when a dashboard is deleted? Enterprise customers will ask."}, {"type": "missing", "body": "No moderation story beyond admin delete. Can workspace owners review flagged content? Can a comment be edited with an audit trail?"}, {"type": "suggest", "body": "Add one sentence on PII handling: @-mentions store user IDs. When a user is deprovisioned, what happens to their threads?"}, {"type": "recommend", "body": "Enterprise customers will ask about export: can comment history be exported for compliance? Even 'not in v1, roadmap item' is better than silence."}], "chips": ["Data retention", "Moderation story", "PII on deprovisioning"]}]};
-} catch(e) {
-  window.SPOTTER_DATA = null;
-}
+window.SPOTTER_DATA = null; // ← AGENT: replace this line — see Path B step B-4.
 </script>
 
 <script>
@@ -936,6 +935,41 @@ function escAttr(s) { return esc(s).replace(/'/g, '&#39;'); }
 function now_hhmm() {
   var d = new Date();
   return String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
+}
+
+/* ── GRADE HELPERS ───────────────────────────────────────────────────────── */
+var VALID_GRADES = { 'pass': 1, 'needs-work': 1, 'missing': 1 };
+function safeGrade(g) { return VALID_GRADES[g] ? g : null; }
+
+function gradeInfo(grade) {
+  if (grade === 'pass')    return { verdict: 'good',    label: 'Pass',       pip: 'w' };
+  if (grade === 'missing') return { verdict: 'no-lift', label: 'Missing',    pip: 'r' };
+  return                          { verdict: 'no-lift', label: 'Needs work', pip: 'r' };
+}
+
+function readAreaGradeLabel(areaEl) {
+  var v = areaEl.querySelector('.status .verdict');
+  return v ? v.textContent.trim() : '';
+}
+
+function applyAreaGrade(areaEl, grade) {
+  var info = gradeInfo(grade);
+  var verdictEl = areaEl.querySelector('.status .verdict');
+  if (verdictEl) { verdictEl.textContent = info.label; verdictEl.className = 'verdict ' + info.verdict; }
+  var pipsEl = areaEl.querySelector('.status .pips');
+  if (pipsEl) { pipsEl.querySelectorAll('.pip').forEach(function(p) { p.className = 'pip ' + info.pip; }); }
+  var tk = document.querySelector('.tk[data-for="' + areaEl.id + '"]');
+  if (tk) tk.setAttribute('data-verdict', info.verdict);
+  var D = window.SPOTTER_DATA;
+  if (D && D.areas) {
+    var areaData = D.areas.find(function(a) { return a.id === areaEl.id; });
+    if (areaData) {
+      areaData.verdict = info.verdict;
+      areaData.verdictLabel = info.label;
+      var n = pipsEl ? pipsEl.querySelectorAll('.pip').length : 3;
+      areaData.judges = Array(n).fill(info.pip);
+    }
+  }
 }
 
 /* ── NOTE HELPERS ────────────────────────────────────────────────────────── */
@@ -1132,9 +1166,12 @@ function syncTracker() {
 }
 
 /* ── REVISION THREAD ─────────────────────────────────────────────────────── */
-function appendRevision(area, userNote, revData) {
+function appendRevision(area, userNote, revData, gradeBefore) {
   var excerpt = (revData && revData.excerpt) || '';
   var newNotes = (revData && revData.notes) || [];
+  var newGrade = revData && safeGrade(revData.grade);
+  /* Apply the new grade to pips, verdict badge, and SPOTTER_DATA */
+  if (newGrade) applyAreaGrade(area, newGrade);
   var thread = area.querySelector('.thread');
   if (!thread) return;
   var list = thread.querySelector('.thread-list');
@@ -1155,9 +1192,21 @@ function appendRevision(area, userNote, revData) {
   }
 
   var hhmm = now_hhmm();
+  var gradeAfterLabel = newGrade ? gradeInfo(newGrade).label : '';
+  var gradeHtml = '';
+  if (gradeBefore || gradeAfterLabel) {
+    var before = gradeBefore || '—';
+    var after  = gradeAfterLabel || '—';
+    if (before === after) {
+      gradeHtml = '<div class="rev-grade">Grade: <span class="gr-same">' + esc(after) + ' (unchanged)</span></div>';
+    } else {
+      gradeHtml = '<div class="rev-grade">Grade: <span class="gr-before">' + esc(before) + '</span> → <span class="gr-after">' + esc(after) + '</span></div>';
+    }
+  }
   var revCard = document.createElement('div');
   revCard.className = 'rev';
   revCard.innerHTML = '<div class="meta"><span class="num">Rev ' + next + '</span> \xB7 Your refinement <span class="time">' + hhmm + '</span></div>'
+    + gradeHtml
     + '<div class="user-note">' + esc(userNote || 'No specific note — Spotter tightened the framing.') + '</div>'
     + '<div class="excerpt"><span class="excerpt-label">New excerpt drafted by Spotter</span>' + esc(excerpt) + '</div>'
     + buildNotesSummary(newNotes);
@@ -1174,7 +1223,7 @@ function appendRevision(area, userNote, revData) {
   thread.setAttribute('data-empty', 'false');
   thread.setAttribute('data-open', 'true');
   var ctEl = thread.querySelector('.thread-head .ct');
-  if (ctEl && list) ctEl.textContent = String(list.querySelectorAll('.rev').length);
+  if (ctEl && list) ctEl.textContent = String(list.querySelectorAll('.rev:not(.rerun-card)').length);
 
   /* Update epic-excerpt block */
   var mainEpic = area.querySelector('.epic-excerpt');
@@ -1222,7 +1271,8 @@ function callSpotterAI(userNote, area) {
     + notesContext + '\n\n'
     + 'Rewrite the excerpt so it directly addresses the user\'s note. Write in the PM\'s voice — concrete, no hedging, 150-300 words.\n\n'
     + 'Respond with ONLY a JSON object (no markdown fences, no commentary):\n'
-    + '{"excerpt":"revised text here","notes":[{"type":"observation|suggest|recommend|missing","body":"1-2 sentence critique"}]}';
+    + '{"grade":"pass|needs-work|missing","excerpt":"revised text here","notes":[{"type":"observation|suggest|recommend|missing","body":"1-2 sentence critique"}]}\n\n'
+    + 'grade: "pass" = area fully meets the bar, "needs-work" = gaps remain, "missing" = critical content absent.';
 
   if (!window.cowork || typeof window.cowork.askClaude !== 'function') {
     return Promise.resolve({
@@ -1233,12 +1283,15 @@ function callSpotterAI(userNote, area) {
 
   return window.cowork.askClaude(prompt, [])
     .then(function(result) {
-      var text = (typeof result === 'string') ? result : JSON.stringify(result);
+      // askClaude returns { text: "..." } — extract the string before processing
+      var text = (typeof result === 'string') ? result
+               : (result && typeof result.text === 'string') ? result.text
+               : JSON.stringify(result);
       // Strip markdown fences if model adds them
       text = text.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '').trim();
       try {
         var parsed = JSON.parse(text);
-        if (parsed && parsed.excerpt && parsed.notes) return parsed;
+        if (parsed && parsed.notes) return parsed;
       } catch(e) {}
       return { excerpt: text || '[No response from Spotter]', notes: [{ type: 'observation', body: 'Spotter drafted a revision. Review the excerpt above.' }] };
     })
@@ -1272,8 +1325,9 @@ function rerunSpotterAI(area) {
     + 'Area question: ' + (areaData.deck || '') + '\n'
     + '\nCurrent excerpt:\n---\n' + currentExcerpt + '\n---\n'
     + notesContext + '\n\n'
-    + 'Return ONLY a JSON object with updated critique notes (no markdown fences):\n'
-    + '{"notes":[{"type":"missing|suggest|recommend|observation","body":"1-2 sentence critique"}]}';
+    + 'Return ONLY a JSON object with your re-evaluation (no markdown fences):\n'
+    + '{"grade":"pass|needs-work|missing","notes":[{"type":"missing|suggest|recommend|observation","body":"1-2 sentence critique"}]}\n\n'
+    + 'grade: "pass" = area fully meets the bar now, "needs-work" = gaps remain, "missing" = critical content absent.';
 
   if (!window.cowork || typeof window.cowork.askClaude !== 'function') {
     return Promise.resolve({ notes: [{ type: 'observation', body: 'AI bridge not available. window.cowork.askClaude is required in Cowork artifacts.' }] });
@@ -1281,7 +1335,10 @@ function rerunSpotterAI(area) {
 
   return window.cowork.askClaude(prompt, [])
     .then(function(result) {
-      var text = (typeof result === 'string') ? result : JSON.stringify(result);
+      // askClaude returns { text: "..." } — extract the string before processing
+      var text = (typeof result === 'string') ? result
+               : (result && typeof result.text === 'string') ? result.text
+               : JSON.stringify(result);
       text = text.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '').trim();
       try {
         var parsed = JSON.parse(text);
@@ -1328,13 +1385,37 @@ function wireArea(areaEl) {
       if (act === 'refine') {
         refineWithSpotter(areaEl);
       } else if (act === 'rerun') {
-        /* Rerun: re-evaluate current excerpt */
+        /* Rerun: re-evaluate current excerpt, update grade */
+        var gradeBefore = readAreaGradeLabel(areaEl);
         btn.disabled = true;
         btn.textContent = '↻ Running…';
         rerunSpotterAI(areaEl).then(function(revData) {
           btn.disabled = false;
           btn.textContent = '↻ Rerun Spotter';
           replaceNotesPane(areaEl, revData.notes || []);
+          var newGrade = revData && safeGrade(revData.grade);
+          var gradeAfterLabel = newGrade ? gradeInfo(newGrade).label : '';
+          if (newGrade) applyAreaGrade(areaEl, newGrade);
+          /* Append a lightweight rerun card to the thread */
+          var thread = areaEl.querySelector('.thread');
+          var list = thread && thread.querySelector('.thread-list');
+          if (list) {
+            var hhmm = now_hhmm();
+            var gradeChange = (gradeBefore && gradeAfterLabel && gradeBefore !== gradeAfterLabel)
+              ? 'Grade: <span class="gr-before">' + esc(gradeBefore) + '</span> → <span class="gr-after">' + esc(gradeAfterLabel) + '</span>'
+              : (gradeAfterLabel ? 'Grade: <span class="gr-same">' + esc(gradeAfterLabel) + ' (unchanged)</span>' : '');
+            var rerunCard = document.createElement('div');
+            rerunCard.className = 'rev rerun-card';
+            rerunCard.innerHTML = '<div class="meta">↻ Rerun · ' + hhmm + '</div>'
+              + (gradeChange ? '<div class="rev-grade">' + gradeChange + '</div>' : '');
+            list.appendChild(rerunCard);
+            if (thread) {
+              thread.setAttribute('data-empty', 'false');
+              thread.setAttribute('data-open', 'true');
+              var ctEl = thread.querySelector('.thread-head .ct');
+              if (ctEl) ctEl.textContent = String(list.querySelectorAll('.rev:not(.rerun-card)').length);
+            }
+          }
           var touched = areaEl.querySelector('[data-touched]');
           if (touched) touched.textContent = 'Spotter re-ran at ' + now_hhmm();
           updateSaveStatus();
@@ -1361,6 +1442,9 @@ function wireArea(areaEl) {
       var ta = areaEl.querySelector('.iterate-editor textarea');
       var userNote = ta ? ta.value.trim() : '';
 
+      /* Snapshot grade before AI rewrites the excerpt */
+      var gradeBefore = readAreaGradeLabel(areaEl);
+
       /* Disable UI, show loading */
       sendBtn.disabled = true;
       sendBtn.textContent = 'Asking Spotter…';
@@ -1369,7 +1453,7 @@ function wireArea(areaEl) {
       if (aiStatus) { aiStatus.textContent = 'Spotter is rewriting…'; aiStatus.classList.add('visible'); }
 
       callSpotterAI(userNote, areaEl).then(function(revData) {
-        appendRevision(areaEl, userNote, revData);
+        appendRevision(areaEl, userNote, revData, gradeBefore);
         setAreaState(areaEl, 'revised');
         if (ta) { ta.value = ''; ta.disabled = false; }
         sendBtn.disabled = false;
@@ -1465,7 +1549,6 @@ function buildAreaHtml(area, idx) {
 
     + '<div class="actions">'
     + '<button class="btn primary" data-act="refine">↗ Refine with Spotter</button>'
-    + '<button class="btn rerun" data-act="rerun">↻ Rerun Spotter</button>'
     + '<button class="btn accept" data-act="accept">✓ Accept</button>'
     + '<button class="btn block" data-act="block">⊘ Skip</button>'
     + '<button class="btn reopen" data-act="reopen">↺ Reopen</button>'
@@ -1821,7 +1904,7 @@ renderAll();
 <script>
 (function() {
   'use strict';
-  var STEPS = [{"selector": ".wbar", "title": "The worksheet", "desc": "Epic title, overall verdict, and export — visible as soon as the brief renders."}, {"selector": ".tracker", "title": "Nine areas at a glance", "desc": "Every area has a pip score and opens into a full critique. The grid is your at-a-glance read."}, {"selector": ".area", "title": "Open an area", "desc": "Each area expands to show the epic excerpt, the critique notes, and the action buttons."}, {"selector": ".status", "title": "The verdict", "desc": "Three judges, three pips. White = pass, red = fail. Two white = Good lift. Two red = No-lift."}, {"selector": ".notes-pane", "title": "Critique notes", "desc": "Four note types: Missing (a gap), Suggest (a fix), Recommend (a stronger path), Observation (what's working)."}, {"selector": ".note-actions", "title": "Accept or skip", "desc": "Accept Spotter's read as-is, or skip the area if it's not relevant to this review. Your call drives the final score."}, {"selector": "[data-act='refine']", "title": "Chat to iterate", "desc": "Not satisfied with the read? Hit Refine with Spotter, type a note, and it rewrites the critique — tighter framing, a different angle, a sharper recommendation."}, {"selector": ".export", "title": "Export when ready", "desc": "When areas are settled, export to HTML or Markdown. Share with the team or drop it into your epic archive."}];
+  var STEPS = [{"selector": ".wbar", "title": "The worksheet", "desc": "Epic title, overall verdict, and export — visible as soon as the brief renders."}, {"selector": ".tracker", "title": "Nine areas at a glance", "desc": "Every area has a pip score and opens into a full critique. The grid is your at-a-glance read."}, {"selector": ".area", "title": "Open an area", "desc": "Each area expands to show the epic excerpt, the critique notes, and the action buttons."}, {"selector": ".status", "title": "The verdict", "desc": "Three judges, three pips. All white = Pass. Mixed = Needs work. All red = Missing. The verdict stays open until you close the area."}, {"selector": ".notes-pane", "title": "Critique notes", "desc": "Four note types: Missing (a gap), Suggest (a fix), Recommend (a stronger path), Observation (what's working)."}, {"selector": ".note-actions", "title": "Accept or skip", "desc": "Accept Spotter's read as-is, or skip the area if it's not relevant to this review. Your call drives the final score."}, {"selector": "[data-act='refine']", "title": "Chat to iterate", "desc": "Not satisfied with the read? Hit Refine with Spotter, type a note, and it rewrites the critique and rescores the area automatically — tighter framing, a different angle, a sharper recommendation."}, {"selector": ".export", "title": "Export when ready", "desc": "When areas are settled, export to HTML or Markdown. Share with the team or drop it into your epic archive."}];
   var current = 0;
   var prevHighlight = null;
 
