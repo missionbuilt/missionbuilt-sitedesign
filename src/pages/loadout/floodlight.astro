@@ -2,15 +2,14 @@
 /**
  * Floodlight — standalone page.
  *
- * In-development skill from the Loadout. Builds an initial security-visibility
+ * Standalone skill from the Loadout. Builds an initial security-visibility
  * posture from three inputs and renders an ATT&CK Tactic Coverage map: where you
  * can see an attacker, where you're blind. Standalone (no MCP) by design — people
  * trust a disconnected skill with their environment data.
  *
  * Color discipline: oxblood for the hero period, eyebrows, section labels, the
  * closer accent, and the "blind" coverage cells (semantic, like the Spotter pips).
- * Army green only for "covered" cells and micro-marks. The in-development tag is
- * chalk-faint, not army — army is reserved for live.
+ * Army green only for "covered" cells, micro-marks, and the Live tag.
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import TopNav from '../../components/TopNav.astro';
@@ -116,7 +115,7 @@ const audience: Audience[] = [
 ---
 <BaseLayout
   title="Floodlight · The Loadout · Mission Built"
-  description="Build your security visibility plan from three inputs. An ATT&CK-mapped coverage report that shows where you can see attackers, and where you're blind. Open-source, in development."
+  description="Build your security visibility plan from three inputs. An ATT&CK-mapped coverage report that shows where you can see attackers, and where you're blind. Open-source and self-contained — runs disconnected."
   active="loadout"
 >
   <TopNav active="loadout" />
@@ -141,9 +140,9 @@ const audience: Audience[] = [
         <span>Floodlight</span><span class="dot">.</span>
       </h1>
 
-      <div class="dev-tag" aria-label="In development">
+      <div class="live-tag" aria-label="Live">
         <span class="tag-sq" aria-hidden="true"></span>
-        <span>In development</span>
+        <span>Live</span>
       </div>
 
       <p class="subtitle">You can't defend what you can't see. Floodlight maps where you can.</p>
@@ -327,15 +326,15 @@ const audience: Audience[] = [
 
     <hr class="dashed" />
 
-    {/* ---------- STATUS / COMING SOON ---------- */}
+    {/* ---------- INSTALL / DOWNLOAD ---------- */}
     <section class="install-block">
-      <p class="section-label">Status</p>
-      <h2 class="section-h2">In development.</h2>
+      <p class="section-label">Run it</p>
+      <h2 class="section-h2">Download the standalone.</h2>
       <p class="install-intro">
-        Floodlight is being built in the open. The threat catalog is already drafted
-        — tactics, choke points, crown-jewel log sources, and the technique-to-field
-        mappings. The report and the research flow are next. It is not installable
-        yet.
+        Floodlight runs fully self-contained — no MCP server, no account, nothing
+        leaving your machine. Drop the folder into any AI tool's skills directory
+        (Cowork, Claude Code, or upload it as a user skill on Claude.ai), then say
+        <em>"run floodlight for [company]."</em>
       </p>
 
       <div class="status-grid">
@@ -350,8 +349,11 @@ const audience: Audience[] = [
       </div>
 
       <div class="status-cta">
-        <a class="status-link" href="https://github.com/missionbuilt/loadout" target="_blank" rel="noopener">
-          Watch the repo for the release <span aria-hidden="true">↗</span>
+        <a class="status-link" href="/downloads/floodlight.zip" download>
+          Download floodlight.zip <span aria-hidden="true">↓</span>
+        </a>
+        <a class="status-link" href="https://github.com/missionbuilt/loadout/tree/main/floodlight" target="_blank" rel="noopener">
+          View the source <span aria-hidden="true">↗</span>
         </a>
       </div>
     </section>
@@ -462,8 +464,8 @@ const audience: Audience[] = [
   }
   .display .dot { color: var(--color-blood); }
 
-  /* In-development tag — chalk-faint, not army (army is reserved for Live). */
-  .dev-tag {
+  /* Live tag — army green, matching the other shipped skill pages. */
+  .live-tag {
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -473,12 +475,12 @@ const audience: Audience[] = [
     font-weight: 500;
     letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: var(--color-chalk-faint);
+    color: var(--color-army);
   }
-  .dev-tag .tag-sq {
+  .live-tag .tag-sq {
     width: 8px;
     height: 8px;
-    border: 1px solid var(--color-chalk-faint);
+    background: var(--color-army);
     display: inline-block;
   }
 
@@ -838,7 +840,7 @@ const audience: Audience[] = [
     color: var(--color-chalk-dim);
   }
 
-  /* ============ STATUS / COMING SOON ============ */
+  /* ============ INSTALL / DOWNLOAD ============ */
   .install-block {
     padding: 56px var(--pad-page-x) 0;
     max-width: 1080px;

@@ -12,7 +12,7 @@ which the Cloudflare Pages CI build does not have). Commit the generated zips in
 public/downloads/ — they are served as static assets.
 
 Usage: cd /path/to/missionbuilt-site && python3 scripts/build_skill_zips.py
-Output: public/downloads/{warmup,the-approach,spotter}.zip
+Output: public/downloads/{warmup,the-approach,spotter,floodlight}.zip
 """
 import os
 import sys
@@ -23,8 +23,8 @@ SITE_ROOT    = os.path.dirname(SCRIPT_DIR)
 LOADOUT_ROOT = os.path.join(os.path.dirname(SITE_ROOT), 'loadout')
 OUT_DIR      = os.path.join(SITE_ROOT, 'public', 'downloads')
 
-# Live, standalone skills only. Floodlight is in development — not shipped.
-SKILLS = ['warmup', 'the-approach', 'spotter']
+# Live, standalone skills.
+SKILLS = ['warmup', 'the-approach', 'spotter', 'floodlight']
 
 # Never include these in a download.
 EXCLUDE_DIRS  = {'.git', 'node_modules', '__pycache__', '.DS_Store'}
