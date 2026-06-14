@@ -270,6 +270,18 @@ const meddpicc: MeddpiccDimension[] = [
           <p>Open Claude, then go to <strong>Settings → Connections → Add MCP Server</strong>. Paste the server URL above and save.</p>
         </article>
       </div>
+
+      <p class="install-or">Or download the standalone</p>
+      <p class="install-intro">
+        Prefer to run it offline, or pin a version? Download the skill folder and drop it into any AI coding tool's skills folder. The hosted server stays the recommended path — always current. The download is a pinned snapshot.
+      </p>
+      <a class="dl-btn" href="/downloads/the-approach.zip" download>
+        <span class="dl-ico" aria-hidden="true">↓</span>
+        <span class="dl-text">
+          <span class="dl-name">Download the-approach.zip</span>
+          <span class="dl-meta">Standalone skill folder · works in any AI coding tool</span>
+        </span>
+      </a>
     </section>
 
     {/* ---------- TRIGGER PHRASES ---------- */}
@@ -285,7 +297,7 @@ const meddpicc: MeddpiccDimension[] = [
         </div>
         <div class="trigger-row">
           <span class="trigger-mode">With context</span>
-          <code class="trigger-phrase">"approach for Acme — AE at Elastic, meeting VP of IT Friday"</code>
+          <code class="trigger-phrase">"approach for Acme — AE at Sightline, meeting VP of IT Friday"</code>
         </div>
         <div class="trigger-row">
           <span class="trigger-mode">Quick form</span>
@@ -760,6 +772,54 @@ const meddpicc: MeddpiccDimension[] = [
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--color-army);
+  }
+
+  /* ============ DOWNLOAD (standalone) ============ */
+  .install-or {
+    margin: 36px 0 14px;
+    padding-top: 28px;
+    border-top: 1px dashed var(--color-rule-soft);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-chalk-faint);
+  }
+  .dl-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 4px;
+    padding: 16px 22px;
+    background: var(--color-panel);
+    border: var(--border-thin);
+    border-left: 3px solid var(--color-blood);
+    text-decoration: none;
+    transition: background 120ms ease-out;
+  }
+  .dl-btn:hover { background: rgba(255,255,255,0.02); }
+  .dl-ico {
+    font-family: var(--font-mono);
+    font-size: 18px;
+    color: var(--color-blood);
+    line-height: 1;
+  }
+  .dl-text { display: flex; flex-direction: column; gap: 4px; }
+  .dl-name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 16px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--color-chalk);
+  }
+  .dl-meta {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-chalk-faint);
   }
 
   .install-options {

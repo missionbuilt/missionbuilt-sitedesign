@@ -149,6 +149,11 @@ const stats = [
           <h3 class="ls-name">The Spotter</h3>
           <p class="ls-blurb">Walk a product epic through nine areas. Get a structured worksheet back — critique notes, pip verdicts, export when every area closes.</p>
         </a>
+        <a href="/loadout/floodlight" class="ls-card">
+          <div class="ls-tag dev"><span class="ls-sq dev" aria-hidden="true"></span>In development</div>
+          <h3 class="ls-name">Floodlight</h3>
+          <p class="ls-blurb">Build your security visibility plan from three inputs. An ATT&CK-mapped coverage map of where you can see attackers, and where you're blind.</p>
+        </a>
       </div>
     </section>
   </main>
@@ -473,9 +478,13 @@ const stats = [
 
   .loadout-skills {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     border-top: var(--border-thin);
     border-bottom: var(--border-thin);
+  }
+  @media (max-width: 1099px) {
+    .loadout-skills { grid-template-columns: repeat(2, 1fr); }
+    .ls-card:nth-child(2n) { border-right: none; }
   }
 
   .ls-card {
@@ -508,6 +517,9 @@ const stats = [
     display: inline-block;
     flex-shrink: 0;
   }
+  /* In-development variant — chalk-faint, hollow square (army is reserved for Live). */
+  .ls-tag.dev { color: var(--color-chalk-faint); }
+  .ls-sq.dev { background: transparent; border: 1px solid var(--color-chalk-faint); }
 
   .ls-name {
     margin: 0;

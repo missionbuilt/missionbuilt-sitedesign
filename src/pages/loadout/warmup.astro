@@ -36,7 +36,7 @@ const modes: Mode[] = [
     num: '01',
     name: 'CISO Mode',
     for: 'Security executives',
-    body: 'Tell the Warmup your sector and it loads a pre-curated source suite: CISA advisories, the Known Exploited Vulnerabilities catalog, MITRE ATT&CK, CrowdStrike, Palo Alto Unit 42, Elastic Security Labs, Google Mandiant, Microsoft MSTIC, Cisco Talos, and more — plus sector-specific feeds for Healthcare, Financial Services, Energy, Government, and Manufacturing/OT.',
+    body: 'Tell the Warmup your sector and it loads a pre-curated source suite: CISA advisories, the Known Exploited Vulnerabilities catalog, MITRE ATT&CK, CrowdStrike, Palo Alto Unit 42, Red Canary, Google Mandiant, Microsoft MSTIC, Cisco Talos, and more — plus sector-specific feeds for Healthcare, Financial Services, Energy, Government, and Manufacturing/OT.',
     sources: 'Threat landscape · Emerging threats · Research digest · Industry intel · Social signal',
   },
   {
@@ -278,6 +278,18 @@ const safetyVerdicts: SafetyVerdict[] = [
           <p>Open Claude, then go to <strong>Settings → Connections → Add MCP Server</strong>. Paste the server URL above and save.</p>
         </article>
       </div>
+
+      <p class="install-or">Or download the standalone</p>
+      <p class="install-intro">
+        Prefer to run it offline, or pin a version? Download the skill folder and drop it into any AI coding tool's skills folder. The hosted server stays the recommended path — always current. The download is a pinned snapshot.
+      </p>
+      <a class="dl-btn" href="/downloads/warmup.zip" download>
+        <span class="dl-ico" aria-hidden="true">↓</span>
+        <span class="dl-text">
+          <span class="dl-name">Download warmup.zip</span>
+          <span class="dl-meta">Standalone skill folder · works in any AI coding tool</span>
+        </span>
+      </a>
     </section>
 
     {/* ---------- TRIGGER PHRASES ---------- */}
@@ -754,6 +766,54 @@ const safetyVerdicts: SafetyVerdict[] = [
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--color-army);
+  }
+
+  /* ============ DOWNLOAD (standalone) ============ */
+  .install-or {
+    margin: 36px 0 14px;
+    padding-top: 28px;
+    border-top: 1px dashed var(--color-rule-soft);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-chalk-faint);
+  }
+  .dl-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 4px;
+    padding: 16px 22px;
+    background: var(--color-panel);
+    border: var(--border-thin);
+    border-left: 3px solid var(--color-blood);
+    text-decoration: none;
+    transition: background 120ms ease-out;
+  }
+  .dl-btn:hover { background: rgba(255,255,255,0.02); }
+  .dl-ico {
+    font-family: var(--font-mono);
+    font-size: 18px;
+    color: var(--color-blood);
+    line-height: 1;
+  }
+  .dl-text { display: flex; flex-direction: column; gap: 4px; }
+  .dl-name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 16px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--color-chalk);
+  }
+  .dl-meta {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-chalk-faint);
   }
 
   .install-options {

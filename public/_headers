@@ -34,6 +34,10 @@
 /demos/*
   Cache-Control: no-cache, must-revalidate
 
+# Downloads (skill zips, book PDF/MD): stable filenames updated in-place — short cache.
+/downloads/*
+  Cache-Control: public, max-age=3600, must-revalidate
+
 /*
   X-Frame-Options: SAMEORIGIN
   X-Content-Type-Options: nosniff

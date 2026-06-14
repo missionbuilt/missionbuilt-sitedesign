@@ -76,3 +76,30 @@ Don't remove the `Object.defineProperty` intercept or set `fontToolName` back to
 ### After any template change in the loadout repo
 
 Rebuild the demos and commit the updated `public/demos/*.html` files alongside any other site changes. The demos don't auto-update when the loadout templates change — they're static files that need to be regenerated.
+
+> **Heads-up:** the Warmup source above (`warmup-shell.rawjs`) was retired in the loadout thin-server v2 work. Before the Warmup demo will rebuild, repoint `build_demos.py`'s Warmup path to `skill-content/warmup/warmup-template.html` and switch its injection to the `__WARMUP_DATA__` / `__WARMUP_SAVED_AT__` placeholders.
+
+---
+
+## build_skill_zips.py
+
+Generates the one-click "download the standalone" zips offered on the Loadout pages.
+
+Each live, standalone skill folder in the `loadout` repo is zipped to `public/downloads/{skill}.zip`, unpacking to a drop-in folder for `~/.claude/skills/`.
+
+### Run it
+
+```bash
+cd ~/Projects/missionbuilt-site
+python3 scripts/build_skill_zips.py
+```
+
+Output:
+
+- `public/downloads/warmup.zip`
+- `public/downloads/the-approach.zip`
+- `public/downloads/spotter.zip`
+
+Commit the zips alongside other site changes — like the demos, they're static and don't auto-update when the loadout repo changes. Re-run after a skill release. Floodlight is excluded until it ships (add it to `SKILLS` in the script when it does).
+
+Same sibling-repo assumption as `build_demos.py`: `loadout` and `missionbuilt-site` live under the same parent directory.

@@ -1,0 +1,1033 @@
+---
+/**
+ * Floodlight — standalone page.
+ *
+ * In-development skill from the Loadout. Builds an initial security-visibility
+ * posture from three inputs and renders an ATT&CK Tactic Coverage map: where you
+ * can see an attacker, where you're blind. Standalone (no MCP) by design — people
+ * trust a disconnected skill with their environment data.
+ *
+ * Color discipline: oxblood for the hero period, eyebrows, section labels, the
+ * closer accent, and the "blind" coverage cells (semantic, like the Spotter pips).
+ * Army green only for "covered" cells and micro-marks. The in-development tag is
+ * chalk-faint, not army — army is reserved for live.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import TopNav from '../../components/TopNav.astro';
+
+const stats = [
+  { key: 'Inputs',     value: '3',      href: undefined },
+  { key: 'Tactics',    value: '12',     href: undefined },
+  { key: 'Techniques', value: '70+',    href: undefined },
+  { key: 'Source',     value: 'GitHub', href: 'https://github.com/missionbuilt/loadout/tree/main/floodlight' },
+];
+
+// The ATT&CK Tactic Coverage strip — illustrative states for the page.
+// covered = you can see it · partial = a source exists but quality/retention
+// is insufficient (blind, not just not-good-enough) · blind = no telemetry.
+type Cover = 'covered' | 'partial' | 'blind';
+type Tactic = { id: string; name: string; cover: Cover; choke?: boolean };
+const tactics: Tactic[] = [
+  { id: 'TA0001', name: 'Initial Access',     cover: 'partial', choke: true },
+  { id: 'TA0002', name: 'Execution',          cover: 'covered' },
+  { id: 'TA0003', name: 'Persistence',        cover: 'partial' },
+  { id: 'TA0004', name: 'Priv. Escalation',   cover: 'blind' },
+  { id: 'TA0005', name: 'Defense Evasion',    cover: 'partial' },
+  { id: 'TA0006', name: 'Credential Access',  cover: 'blind',   choke: true },
+  { id: 'TA0007', name: 'Discovery',          cover: 'covered' },
+  { id: 'TA0008', name: 'Lateral Movement',   cover: 'partial', choke: true },
+  { id: 'TA0009', name: 'Collection',         cover: 'covered' },
+  { id: 'TA0011', name: 'Command & Control',  cover: 'covered', choke: true },
+  { id: 'TA0010', name: 'Exfiltration',       cover: 'partial' },
+  { id: 'TA0040', name: 'Impact',             cover: 'blind' },
+];
+
+const coverLabel: Record<Cover, string> = {
+  covered: 'Covered',
+  partial: 'Partial',
+  blind: 'Blind',
+};
+
+type Input = { num: string; q: string; body: string; sets: string };
+const inputs: Input[] = [
+  {
+    num: '01',
+    q: 'Company name',
+    body: 'One field. Floodlight researches your sector, region, the adversaries that target you, and the regulations that apply — live, and cited.',
+    sets: 'Who comes for you',
+  },
+  {
+    num: '02',
+    q: 'Industry & region',
+    body: 'Pre-filled from your name. One tap to correct. This anchors the threat model and the retention rules you are held to.',
+    sets: 'What you are held to',
+  },
+  {
+    num: '03',
+    q: 'Environment shape',
+    body: 'Cloud-first, hybrid, or on-prem — plus two switches: run OT/ICS (adds ATT&CK for ICS) and build or deploy AI/ML (adds MITRE ATLAS).',
+    sets: 'What you should have',
+  },
+];
+
+type Backbone = { name: string; who: string; what: string };
+const backbones: Backbone[] = [
+  {
+    name: 'DeTT&CT',
+    who: 'Rabobank CDC',
+    what: 'Scores visibility and detection coverage, and grades the data quality behind each — because a log you keep for three days is not the same as one you can hunt across.',
+  },
+  {
+    name: 'CTID Top ATT&CK Techniques',
+    who: 'Center for Threat-Informed Defense',
+    what: 'Ranks techniques by real-world prevalence and flags the choke points — the moves an attacker can rarely avoid. Floodlight weights coverage by what actually gets used.',
+  },
+  {
+    name: 'MITRE ATT&CK v18',
+    who: 'MITRE',
+    what: 'The backbone tactic and technique model. Built on the October 2025 release — Detection Strategies and Log Sources, not the deprecated data-source model.',
+  },
+  {
+    name: 'NIST CSF',
+    who: 'NIST',
+    what: 'Frames the work in language a board already speaks. Identify and Detect first — you cannot respond to what you never saw.',
+  },
+];
+
+type Audience = { who: string; what: string };
+const audience: Audience[] = [
+  {
+    who: 'Teams without a SOC',
+    what: 'No security operations center, no clear first move. Floodlight gives you a ranked starting plan instead of a blank page.',
+  },
+  {
+    who: 'New security leaders',
+    what: 'Walking into a role and a stack you did not build. Get a defensible read on where the blind spots are, with the receipts.',
+  },
+  {
+    who: 'MSPs and consultants',
+    what: 'A fast, citable first-pass posture for a new client. Standalone and offline, so their data never leaves their hands.',
+  },
+  {
+    who: 'Founders and operators',
+    what: 'Regulated, growing, and unsure where the floor is. See the gaps before an auditor or an attacker does.',
+  },
+];
+---
+<BaseLayout
+  title="Floodlight · The Loadout · Mission Built"
+  description="Build your security visibility plan from three inputs. An ATT&CK-mapped coverage report that shows where you can see attackers, and where you're blind. Open-source, in development."
+  active="loadout"
+>
+  <TopNav active="loadout" />
+
+  <main class="page">
+    {/* ---------- BREADCRUMB ---------- */}
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/loadout">The Loadout</a>
+      <span aria-hidden="true"> / </span>
+      <span class="here">Floodlight</span>
+    </nav>
+
+    {/* ---------- HERO ---------- */}
+    <section class="hero">
+      <p class="eyebrow">
+        <span class="dots" aria-hidden="true">▮▮▮</span>
+        <span>A skill from the Loadout</span>
+        <span class="dots" aria-hidden="true">▮▮▮</span>
+      </p>
+
+      <h1 class="display">
+        <span>Floodlight</span><span class="dot">.</span>
+      </h1>
+
+      <div class="dev-tag" aria-label="In development">
+        <span class="tag-sq" aria-hidden="true"></span>
+        <span>In development</span>
+      </div>
+
+      <p class="subtitle">You can't defend what you can't see. Floodlight maps where you can.</p>
+    </section>
+
+    {/* ---------- META STRIP ---------- */}
+    <section class="meta-strip" aria-label="Floodlight at a glance">
+      {stats.map((s) => (
+        <div class="stat">
+          <div class="stat-key">{s.key}</div>
+          {s.href ? (
+            <a
+              class="stat-value linked"
+              href={s.href}
+              target="_blank"
+              rel="noopener"
+            >{s.value}<span class="ext" aria-hidden="true"> ↗</span></a>
+          ) : (
+            <div class="stat-value">{s.value}</div>
+          )}
+        </div>
+      ))}
+    </section>
+
+    {/* ---------- WHAT IT DOES ---------- */}
+    <section class="block">
+      <p class="section-label">What it does</p>
+      <h2 class="section-h2">Builds your visibility plan.</h2>
+      <p class="prose">
+        Floodlight takes three pieces of input and produces an initial
+        security-visibility posture — an <strong>ATT&CK Tactic Coverage</strong> map
+        that reads, tactic by tactic, where you can see an attacker and where you
+        are blind. It is not a CISO in a box, and it does not pretend to be. It is
+        the first honest read for a team that knows it should be doing more and is
+        not sure where to start.
+      </p>
+      <p class="prose">
+        The thesis is simple: <em>the first step to security is visibility.</em>
+        You cannot detect, investigate, or respond to an attacker you have no
+        telemetry on. So before anyone talks tools or budget, Floodlight builds the
+        plan for what you should be able to see — and shows you, in plain language,
+        the gap between that and what you have today.
+      </p>
+    </section>
+
+    <hr class="dashed" />
+
+    {/* ---------- THE COVERAGE STRIP ---------- */}
+    <section class="block">
+      <p class="section-label">The output</p>
+      <h2 class="section-h2">Coverage, tactic by tactic.</h2>
+      <p class="prose">
+        The headline is one strip — the twelve ATT&CK tactics an attacker moves
+        through, from first foothold to impact. Each cell is weighted by how often
+        the techniques inside it actually get used, then colored by whether you can
+        see them. Green where you can. Red where you can't. The middle state is
+        the one most teams miss.
+      </p>
+
+      <div class="strip-wrap" role="img" aria-label="Illustrative ATT&CK tactic coverage strip">
+        <div class="strip">
+          {tactics.map((t) => (
+            <div class:list={['cell', t.cover]}>
+              {t.choke && <span class="choke" title="Choke point" aria-hidden="true">◆</span>}
+              <span class="cell-id">{t.id}</span>
+              <span class="cell-name">{t.name}</span>
+              <span class="cell-state">{coverLabel[t.cover]}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="strip-legend">
+        <span class="leg"><span class="sw covered" aria-hidden="true"></span>Covered — you can see and hunt it</span>
+        <span class="leg"><span class="sw partial" aria-hidden="true"></span>Partial — a source exists, but the quality or retention isn't enough</span>
+        <span class="leg"><span class="sw blind" aria-hidden="true"></span>Blind — no usable telemetry</span>
+        <span class="leg"><span class="sw choke-key" aria-hidden="true">◆</span>Choke point — a move attackers can rarely avoid</span>
+      </div>
+
+      <p class="prose strip-note">
+        <strong>Partial is the trap.</strong> A source that exists but rolls off in
+        three days, or never captured the right field, is blind when you need it —
+        not "almost covered." Floodlight calls that out instead of crediting it. And
+        a cell that is both <em>blind</em> and a <em>choke point</em> is your number
+        one move: the place an attacker can't route around, that you currently can't
+        watch.
+      </p>
+    </section>
+
+    <hr class="dashed" />
+
+    {/* ---------- HOW IT WORKS / INPUTS ---------- */}
+    <section class="block">
+      <p class="section-label">How it works</p>
+      <h2 class="section-h2">Three inputs. Nothing else.</h2>
+      <p class="prose">
+        Every extra question is a reason to abandon the form, so there are only
+        three. The questions set <em>context</em> — what you should have. The
+        toggles inside the report capture <em>current state</em> — what you actually
+        have. Keeping those separate is what makes the gap honest.
+      </p>
+
+      <div class="inputs">
+        {inputs.map((i) => (
+          <article class="input">
+            <div class="input-num">Input {i.num}</div>
+            <h3 class="input-q">{i.q}</h3>
+            <p class="input-body">{i.body}</p>
+            <p class="input-label">Sets</p>
+            <p class="input-sets"><em>{i.sets}</em></p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <hr class="dashed" />
+
+    {/* ---------- WHAT YOU GET ---------- */}
+    <section class="block">
+      <p class="section-label">What you get</p>
+      <h2 class="section-h2">A plan, not a vanity score.</h2>
+      <div class="gets">
+        <article class="get-cell">
+          <h3>A quick-wins roadmap</h3>
+          <p>Ranked by marginal coverage gain — the next source that buys you the most visibility per unit of effort, not an alphabetical checklist.</p>
+        </article>
+        <article class="get-cell">
+          <h3>A threat-weighted KPI</h3>
+          <p>One number that weights coverage by how often techniques are actually used. Not a single percent you can game by logging noise.</p>
+        </article>
+        <article class="get-cell">
+          <h3>Per-source quality flags</h3>
+          <p>Each log source carries its data-quality and retention read — so you know the difference between having a source and being able to use it.</p>
+        </article>
+        <article class="get-cell">
+          <h3>Click into any cell</h3>
+          <p>A tactic opens to its techniques, each mapped to the exact log source, the specific fields, and the retention you need to actually detect it.</p>
+        </article>
+      </div>
+    </section>
+
+    <hr class="dashed" />
+
+    {/* ---------- BUILT ON ---------- */}
+    <section class="block">
+      <p class="section-label">Built on</p>
+      <h2 class="section-h2">Standing on trusted ground.</h2>
+      <p class="prose">
+        Floodlight does not invent a framework. The mapping layer — tactics, choke
+        points, log source to field to retention — is a curated, version-stamped
+        catalog built on published work, so it never hallucinates an event ID. The
+        company-specific layer — your adversaries, verified breaches, the regs that
+        apply — is researched live at runtime and cited. Sources first, always.
+      </p>
+
+      <div class="backbones">
+        {backbones.map((b) => (
+          <article class="backbone">
+            <h3>{b.name}</h3>
+            <p class="backbone-who">{b.who}</p>
+            <p class="backbone-what">{b.what}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <hr class="dashed" />
+
+    {/* ---------- WHO IT'S FOR ---------- */}
+    <section class="block">
+      <h2 class="section-h2">Who it's for.</h2>
+      <div class="audience">
+        {audience.map((a) => (
+          <article class="audience-cell">
+            <h3>{a.who}</h3>
+            <p>{a.what}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <hr class="dashed" />
+
+    {/* ---------- STATUS / COMING SOON ---------- */}
+    <section class="install-block">
+      <p class="section-label">Status</p>
+      <h2 class="section-h2">In development.</h2>
+      <p class="install-intro">
+        Floodlight is being built in the open. The threat catalog is already drafted
+        — tactics, choke points, crown-jewel log sources, and the technique-to-field
+        mappings. The report and the research flow are next. It is not installable
+        yet.
+      </p>
+
+      <div class="status-grid">
+        <article class="status-cell">
+          <h3>Standalone by design</h3>
+          <p>No MCP server, no connection, no data leaving your machine. A security posture is exactly the kind of thing you should be able to run disconnected — so you can.</p>
+        </article>
+        <article class="status-cell">
+          <h3>Built to travel</h3>
+          <p>Exports to a self-contained HTML file and to PDF. The posture goes in the board deck, the audit binder, or the team channel — no login to read it.</p>
+        </article>
+      </div>
+
+      <div class="status-cta">
+        <a class="status-link" href="https://github.com/missionbuilt/loadout" target="_blank" rel="noopener">
+          Watch the repo for the release <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </section>
+
+    <hr class="dashed" />
+
+    {/* ---------- ALSO IN THE KIT ---------- */}
+    <section class="block">
+      <p class="section-label">Also in the kit</p>
+      <h2 class="section-h2">The full Loadout.</h2>
+
+      <div class="related">
+        <a href="/loadout/warmup" class="related-card">
+          <h3>The Warmup</h3>
+          <p>A daily intelligence brief for your first coffee. Curated sources, link safety scanning, live artifact.</p>
+          <span class="related-cta">Open →</span>
+        </a>
+        <a href="/loadout/spotter" class="related-card">
+          <h3>The Spotter</h3>
+          <p>A second pair of eyes on your product epic. Nine areas, a structured worksheet, a verdict on each.</p>
+          <span class="related-cta">Open →</span>
+        </a>
+      </div>
+    </section>
+
+    <hr class="dashed" />
+
+    {/* ---------- OPEN SOURCE ---------- */}
+    <section class="block">
+      <h2 class="section-h2">Open source.</h2>
+      <p class="prose">
+        Floodlight ships under MIT, like the rest of the kit. Use it commercially,
+        adapt it for your clients, embed it in your own tooling. Source lives in
+        <a
+          class="inline-link"
+          href="https://github.com/missionbuilt/loadout"
+          target="_blank"
+          rel="noopener"
+        >github.com/missionbuilt/loadout</a>.
+        The framework catalog is versioned and citable, so you can see exactly what
+        the coverage map is built on.
+      </p>
+    </section>
+
+    {/* ---------- CLOSER ---------- */}
+    <section class="closer">
+      <p>
+        Visibility first. <strong>Everything else follows.</strong>
+      </p>
+    </section>
+
+    {/* ---------- FOOTER ---------- */}
+    <footer class="foot">
+      <span>Real strength is lifting others</span>
+      <a
+        href="https://github.com/missionbuilt/loadout"
+        target="_blank"
+        rel="noopener"
+      >github.com/missionbuilt/loadout</a>
+    </footer>
+  </main>
+</BaseLayout>
+
+<style>
+  /* ============ BREADCRUMB ============ */
+  .breadcrumb {
+    padding: 18px var(--pad-page-x) 0;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-chalk-faint);
+  }
+  .breadcrumb a {
+    color: var(--color-chalk-dim);
+    transition: color 120ms ease-out;
+  }
+  .breadcrumb a:hover { color: var(--color-chalk); }
+  .breadcrumb .here { color: var(--color-chalk-faint); }
+
+  /* ============ HERO ============ */
+  .hero {
+    padding: 40px var(--pad-page-x) 28px;
+    text-align: center;
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    margin: 0 0 18px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    color: var(--color-blood);
+    text-transform: uppercase;
+  }
+  .eyebrow .dots { letter-spacing: 0.04em; opacity: 0.65; }
+  .display {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(56px, 11vw, 108px);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    color: var(--color-chalk);
+    text-transform: uppercase;
+  }
+  .display .dot { color: var(--color-blood); }
+
+  /* In-development tag — chalk-faint, not army (army is reserved for Live). */
+  .dev-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 22px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-chalk-faint);
+  }
+  .dev-tag .tag-sq {
+    width: 8px;
+    height: 8px;
+    border: 1px solid var(--color-chalk-faint);
+    display: inline-block;
+  }
+
+  .subtitle {
+    margin: 22px auto 0;
+    max-width: 760px;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(15px, 2.2vw, 22px);
+    color: var(--color-chalk-dim);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  /* ============ META STRIP ============ */
+  .meta-strip {
+    margin: 28px var(--pad-page-x) 0;
+    padding: 14px 0;
+    border-top: var(--border-thin);
+    border-bottom: var(--border-thin);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-align: left;
+  }
+  .stat-key {
+    color: var(--color-chalk-faint);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+  .stat-value {
+    margin-top: 2px;
+    color: var(--color-chalk);
+    font-family: var(--font-display);
+    font-size: 22px;
+    letter-spacing: 0.04em;
+    display: inline-block;
+  }
+  .stat-value.linked {
+    border-bottom: 1px solid transparent;
+    transition: border-bottom-color 120ms ease-out, color 120ms ease-out;
+  }
+  .stat-value.linked:hover { border-bottom-color: currentColor; }
+  .stat-value .ext {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-chalk-faint);
+    letter-spacing: 0;
+    transition: color 120ms ease-out;
+  }
+  .stat-value.linked:hover .ext { color: var(--color-chalk); }
+
+  /* ============ BLOCK ============ */
+  .block {
+    padding: 56px var(--pad-page-x) 0;
+    max-width: 1080px;
+  }
+  .section-label {
+    margin: 0 0 14px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    color: var(--color-blood);
+    text-transform: uppercase;
+  }
+  .section-h2 {
+    margin: 0 0 18px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 36px;
+    line-height: 1.05;
+    letter-spacing: 0.02em;
+    color: var(--color-chalk);
+    text-transform: uppercase;
+  }
+  .prose {
+    margin: 0 0 14px;
+    max-width: 760px;
+    font-family: var(--font-serif);
+    font-size: 17px;
+    line-height: 1.65;
+    color: var(--color-chalk-dim);
+  }
+  .prose strong { color: var(--color-chalk); font-weight: 700; }
+  .prose em { font-style: italic; color: var(--color-chalk); }
+  .inline-link {
+    color: var(--color-chalk);
+    border-bottom: 1px dotted var(--color-rule);
+    transition: color 120ms ease-out, border-color 120ms ease-out;
+  }
+  .inline-link:hover { color: var(--color-blood); border-bottom-color: var(--color-blood); }
+
+  /* ============ COVERAGE STRIP ============ */
+  .strip-wrap {
+    margin-top: 28px;
+    overflow-x: auto;
+  }
+  .strip {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(72px, 1fr));
+    border-top: var(--border-thin);
+    border-left: var(--border-thin);
+    min-width: 880px;
+  }
+  .cell {
+    position: relative;
+    padding: 14px 10px 12px;
+    border-right: var(--border-thin);
+    border-bottom: var(--border-thin);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-height: 96px;
+  }
+  /* Top band signals coverage state. */
+  .cell::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+  }
+  .cell.covered::before { background: var(--color-army); }
+  .cell.partial::before { background: var(--color-steel); }
+  .cell.blind::before   { background: var(--color-blood); }
+  .cell.blind { background: rgba(168, 33, 26, 0.06); }
+
+  .cell-id {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    color: var(--color-chalk-faint);
+  }
+  .cell-name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 1.15;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    color: var(--color-chalk);
+    flex: 1;
+  }
+  .cell-state {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .cell.covered .cell-state { color: var(--color-army); }
+  .cell.partial .cell-state { color: var(--color-steel); }
+  .cell.blind .cell-state   { color: var(--color-blood); }
+
+  .choke {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 9px;
+    color: var(--color-chalk-dim);
+    line-height: 1;
+  }
+
+  .strip-legend {
+    margin-top: 18px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 24px;
+  }
+  .leg {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    color: var(--color-chalk-dim);
+  }
+  .sw {
+    width: 11px;
+    height: 11px;
+    display: inline-block;
+    flex-shrink: 0;
+  }
+  .sw.covered { background: var(--color-army); }
+  .sw.partial { background: var(--color-steel); }
+  .sw.blind   { background: var(--color-blood); }
+  .sw.choke-key {
+    width: auto;
+    height: auto;
+    color: var(--color-chalk-dim);
+    font-size: 10px;
+  }
+  .strip-note { margin-top: 24px; }
+
+  /* ============ INPUTS GRID ============ */
+  .inputs {
+    margin-top: 28px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: var(--border-thin);
+    border-bottom: var(--border-thin);
+  }
+  .input {
+    padding: 28px 24px 30px;
+    border-right: var(--border-thin);
+  }
+  .input:last-child { border-right: none; }
+  .input-num {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.28em;
+    color: var(--color-chalk-faint);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .input-q {
+    margin: 0 0 12px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--color-chalk);
+  }
+  .input-body {
+    margin: 0 0 18px;
+    font-family: var(--font-serif);
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--color-chalk-dim);
+  }
+  .input-label {
+    margin: 18px 0 4px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-chalk-faint);
+  }
+  .input-sets {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--color-chalk);
+  }
+
+  /* ============ WHAT YOU GET (2x2) ============ */
+  .gets {
+    margin-top: 28px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: var(--border-thin);
+    border-bottom: var(--border-thin);
+  }
+  .get-cell {
+    padding: 24px 28px;
+    border-right: var(--border-thin);
+    border-bottom: var(--border-thin);
+  }
+  .get-cell:nth-child(2n) { border-right: none; }
+  .get-cell:nth-last-child(-n+2) { border-bottom: none; }
+  .get-cell h3 {
+    margin: 0 0 10px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 19px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--color-chalk);
+  }
+  .get-cell p {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--color-chalk-dim);
+  }
+
+  /* ============ BACKBONES (2x2) ============ */
+  .backbones {
+    margin-top: 28px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: var(--border-thin);
+    border-bottom: var(--border-thin);
+  }
+  .backbone {
+    padding: 24px 28px;
+    border-right: var(--border-thin);
+    border-bottom: var(--border-thin);
+  }
+  .backbone:nth-child(2n) { border-right: none; }
+  .backbone:nth-last-child(-n+2) { border-bottom: none; }
+  .backbone h3 {
+    margin: 0 0 4px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 19px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--color-chalk);
+  }
+  .backbone-who {
+    margin: 0 0 12px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-army);
+  }
+  .backbone-what {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--color-chalk-dim);
+  }
+
+  /* ============ AUDIENCE (2x2) ============ */
+  .audience {
+    margin-top: 28px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: var(--border-thin);
+    border-bottom: var(--border-thin);
+  }
+  .audience-cell {
+    padding: 24px 28px;
+    border-right: var(--border-thin);
+    border-bottom: var(--border-thin);
+  }
+  .audience-cell:nth-child(2n) { border-right: none; }
+  .audience-cell:nth-last-child(-n+2) { border-bottom: none; }
+  .audience-cell h3 {
+    margin: 0 0 10px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--color-chalk);
+  }
+  .audience-cell p {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--color-chalk-dim);
+  }
+
+  /* ============ STATUS / COMING SOON ============ */
+  .install-block {
+    padding: 56px var(--pad-page-x) 0;
+    max-width: 1080px;
+  }
+  .install-intro {
+    margin: 0 0 28px;
+    max-width: 760px;
+    font-family: var(--font-serif);
+    font-size: 17px;
+    line-height: 1.65;
+    color: var(--color-chalk-dim);
+  }
+  .status-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: var(--border-thin);
+    border-bottom: var(--border-thin);
+  }
+  .status-cell {
+    padding: 24px 28px;
+    border-right: var(--border-thin);
+  }
+  .status-cell:last-child { border-right: none; }
+  .status-cell h3 {
+    margin: 0 0 10px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-chalk);
+  }
+  .status-cell p {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--color-chalk-dim);
+  }
+  .status-cta { margin-top: 28px; }
+  .status-link {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-chalk);
+    border-bottom: 1px solid var(--color-rule);
+    padding-bottom: 3px;
+    transition: color 120ms ease-out, border-color 120ms ease-out;
+  }
+  .status-link:hover { color: var(--color-blood); border-bottom-color: var(--color-blood); }
+
+  /* ============ RELATED SKILLS ============ */
+  .related {
+    margin-top: 28px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: var(--border-thin);
+    border-bottom: var(--border-thin);
+  }
+  .related-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 28px;
+    border-right: var(--border-thin);
+    text-decoration: none;
+    transition: background 120ms ease-out;
+  }
+  .related-card:last-child { border-right: none; }
+  .related-card:hover { background: rgba(255,255,255,0.015); }
+  .related-card h3 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--color-chalk);
+  }
+  .related-card p {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--color-chalk-dim);
+    flex: 1;
+  }
+  .related-cta {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-chalk-faint);
+    transition: color 120ms ease-out;
+  }
+  .related-card:hover .related-cta { color: var(--color-blood); }
+
+  /* ============ DASHED DIVIDER ============ */
+  .dashed {
+    margin: 56px var(--pad-page-x);
+    border: none;
+    border-top: 1px dashed var(--color-rule-soft);
+  }
+
+  /* ============ CLOSER ============ */
+  .closer {
+    margin-top: 56px;
+    padding: 48px var(--pad-page-x);
+    border-top: var(--border-thin);
+    text-align: center;
+  }
+  .closer p {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 22px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-chalk);
+  }
+  .closer p strong { font-weight: 500; color: var(--color-blood); }
+
+  /* ============ FOOTER ============ */
+  .foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    padding: 22px var(--pad-page-x) 40px;
+    border-top: var(--border-thin);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-chalk-faint);
+  }
+  .foot a { color: var(--color-chalk-dim); transition: color 120ms ease-out; }
+  .foot a:hover { color: var(--color-chalk); }
+
+  /* ============ Responsive ============ */
+  @media (max-width: 1099px) {
+    .meta-strip { grid-template-columns: repeat(2, 1fr); gap: 18px; }
+    .inputs { grid-template-columns: 1fr; }
+    .input { border-right: none; border-bottom: var(--border-thin); }
+    .input:last-child { border-bottom: none; }
+  }
+
+  @media (max-width: 720px) {
+    .breadcrumb { padding: 18px var(--pad-page-x-mobile) 0; }
+    .hero { padding: 28px var(--pad-page-x-mobile) 20px; }
+    .meta-strip {
+      margin: 24px var(--pad-page-x-mobile) 0;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+    .block { padding: 40px var(--pad-page-x-mobile) 0; }
+    .install-block { padding: 40px var(--pad-page-x-mobile) 0; }
+    .section-h2 { font-size: 28px; }
+
+    .gets,
+    .backbones,
+    .audience,
+    .status-grid { grid-template-columns: 1fr; }
+    .get-cell,
+    .backbone,
+    .audience-cell { border-right: none; }
+    .get-cell:nth-last-child(-n+2),
+    .backbone:nth-last-child(-n+2),
+    .audience-cell:nth-last-child(-n+2) { border-bottom: var(--border-thin); }
+    .get-cell:last-child,
+    .backbone:last-child,
+    .audience-cell:last-child { border-bottom: none; }
+    .status-cell { border-right: none; border-bottom: var(--border-thin); }
+    .status-cell:last-child { border-bottom: none; }
+
+    .related { grid-template-columns: 1fr; }
+    .related-card { border-right: none; border-bottom: var(--border-thin); }
+    .related-card:last-child { border-bottom: none; }
+
+    .dashed { margin: 40px var(--pad-page-x-mobile); }
+    .closer { padding: 36px var(--pad-page-x-mobile); }
+    .closer p { font-size: 18px; }
+    .foot {
+      padding: 22px var(--pad-page-x-mobile) 32px;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>

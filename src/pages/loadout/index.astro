@@ -14,7 +14,7 @@ import TopNav from '../../components/TopNav.astro';
 
 const stats = [
   { key: 'Skills live', value: '3',      href: undefined },
-  { key: 'MCP tools',   value: '23',     href: undefined },
+  { key: 'MCP tools',   value: '18',     href: undefined },
   { key: 'License',     value: 'MIT',    href: undefined },
   { key: 'Source',      value: 'GitHub', href: 'https://github.com/missionbuilt/loadout' },
 ];
@@ -52,6 +52,14 @@ const skills: Skill[] = [
       'Walk your epic through nine product-leadership areas. Get a structured worksheet back — critique notes per area, an accept and skip loop, a verdict on each, and an export that unlocks when you have closed every area.',
     href: '/loadout/spotter',
     cta: 'Open →',
+  },
+  {
+    name: 'Floodlight',
+    status: 'planned',
+    blurb:
+      'Build your security visibility plan from three inputs. An ATT&CK-mapped coverage report that shows, tactic by tactic, where you can see an attacker and where you are blind. Standalone and offline by design.',
+    href: '/loadout/floodlight',
+    cta: 'Preview →',
   },
 ];
 ---
@@ -120,7 +128,7 @@ const skills: Skill[] = [
     <section class="block">
       <header class="block-head">
         <h2 class="section-h2">The skills.</h2>
-        <span class="block-count">3 total · 3 live</span>
+        <span class="block-count">4 total · 3 live</span>
       </header>
 
       <div class="skills">
@@ -188,6 +196,19 @@ const skills: Skill[] = [
           <p>Open Claude, then go to <strong>Settings → Connections → Add MCP Server</strong>. Paste the server URL above and save.</p>
         </article>
       </div>
+
+      <p class="install-or">Or download the standalone</p>
+      <p class="install-intro">
+        Every live skill is also a self-contained folder. The hosted server is the recommended path — always current, one connection. A download is pinned and runs offline. Grab one and drop it into any AI coding tool's skills folder:
+      </p>
+      <div class="dl-row">
+        <a class="dl-pill" href="/downloads/warmup.zip" download><span aria-hidden="true">↓</span> warmup.zip</a>
+        <a class="dl-pill" href="/downloads/the-approach.zip" download><span aria-hidden="true">↓</span> the-approach.zip</a>
+        <a class="dl-pill" href="/downloads/spotter.zip" download><span aria-hidden="true">↓</span> spotter.zip</a>
+      </div>
+      <p class="install-git-label">Or via git:</p>
+      <pre class="install-opt-code">git clone https://github.com/missionbuilt/loadout.git
+# then copy a skill folder into your AI coding tool's skills directory</pre>
     </section>
 
     {/* ---------- CLOSER ---------- */}
@@ -522,6 +543,49 @@ const skills: Skill[] = [
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--color-army);
+  }
+
+  .install-or {
+    margin: 40px 0 14px;
+    padding-top: 28px;
+    border-top: 1px dashed var(--color-rule-soft);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-chalk-faint);
+  }
+  .dl-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .dl-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: var(--color-panel);
+    border: var(--border-thin);
+    border-left: 3px solid var(--color-blood);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: var(--color-chalk);
+    text-decoration: none;
+    transition: background 120ms ease-out;
+  }
+  .dl-pill span { color: var(--color-blood); }
+  .dl-pill:hover { background: rgba(255,255,255,0.02); }
+  .install-git-label {
+    margin: 0 0 10px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-chalk-faint);
   }
 
   .install-options {
