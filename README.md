@@ -35,10 +35,10 @@ Node 18+ recommended.
 
 ```
 src/
-├── components/        # Lockup, TopNav, Bar (mini-barbell mark)
+├── components/        # Lockup, TopNav, Bar (mini-barbell mark), DemoEmbed (loadout demo iframe)
 ├── content/
 │   ├── config.ts      # content collection schema
-│   └── chapters/      # 45 .mdx files: prologue, ch.01–13, conclusion
+│   └── chapters/      # 48 .mdx files: prologue, ch.01–13, conclusion
 ├── data/
 │   └── book.ts        # MB metadata: chapter list, parts, helpers
 ├── layouts/
@@ -48,13 +48,23 @@ src/
 │   ├── index.astro                          # Home
 │   ├── about.astro                          # About
 │   ├── source.astro                         # Source (book + site repos)
+│   ├── download.astro                       # Download (book + standalone skills)
+│   ├── loadout/
+│   │   ├── index.astro                      # The Loadout overview
+│   │   ├── warmup.astro                     # The Warmup (demo + download)
+│   │   ├── approach.astro                   # The Approach (demo + download)
+│   │   ├── spotter.astro                    # The Spotter (demo + download)
+│   │   └── floodlight.astro                 # Floodlight (in development)
 │   └── chapters/
 │       ├── index.astro                      # Chapter Index
+│       ├── 01/the-mission-is-the-magnet.astro  # static landing for the opening section
 │       └── [chapter]/[section].astro        # dynamic Reading View
 └── styles/
     ├── tokens.css     # colors, type scale, spacing
     └── global.css     # reset + base typography
 ```
+
+Outside `src/`: `public/` holds static assets, including the generated `public/demos/` (Loadout click-through demos) and `public/downloads/` (the book PDF/Markdown and the standalone skill zips). `scripts/` holds the Python builders that regenerate those — see [`scripts/README.md`](scripts/README.md).
 
 ## Pages
 
@@ -63,6 +73,8 @@ src/
 - `/chapters/{chapter}/{section-slug}` Reading View: chapter rail + prose column.
 - `/about` About: bio, project mission, fine print.
 - `/source` Source: links to the book repo and this repo.
+- `/download` Download: the book (PDF/Markdown) and the standalone Loadout skill zips.
+- `/loadout` The Loadout: overview of the product-leadership skill kit, with a page per skill — `/loadout/warmup`, `/loadout/approach`, `/loadout/spotter` (each embeds a live click-through demo and a download), and `/loadout/floodlight` (in development).
 
 ## Adding or editing content
 

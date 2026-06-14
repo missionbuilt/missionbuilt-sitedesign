@@ -10,6 +10,7 @@ Output: public/demos/{spotter,approach,warmup}.html
 Run from the project root: cd /path/to/missionbuilt-site && python3 scripts/build_demos.py
 """
 
+import datetime
 import json
 import os
 import re
@@ -23,7 +24,7 @@ LOADOUT_ROOT  = os.path.join(os.path.dirname(SITE_ROOT), 'loadout')
 
 SPOTTER_TEMPLATE  = os.path.join(LOADOUT_ROOT, 'missionbuilt-mcp/src/skill-content/spotter/spotter-template.html')
 APPROACH_TEMPLATE = os.path.join(LOADOUT_ROOT, 'missionbuilt-mcp/src/skill-content/the-approach/approach-template.html')
-WARMUP_SHELL      = os.path.join(LOADOUT_ROOT, 'missionbuilt-mcp/src/warmup-shell.rawjs')
+WARMUP_TEMPLATE   = os.path.join(LOADOUT_ROOT, 'missionbuilt-mcp/src/skill-content/warmup/warmup-template.html')
 
 OUT_DIR = os.path.join(SITE_ROOT, 'public', 'demos')
 os.makedirs(OUT_DIR, exist_ok=True)
@@ -1170,68 +1171,28 @@ def build_approach():
 
 def build_warmup():
     print("Building warmup demo...")
-    with open(WARMUP_SHELL, 'r', encoding='utf-8') as f:
-        shell_js = f.read()
+    # As of loadout thin-server v2 the Warmup runtime is the self-contained
+    # warmup-template.html — fonts baked in, data injected via the
+    # __WARMUP_DATA__ / __WARMUP_SAVED_AT__ placeholders. No MCP bridge, no
+    # font tool, no shell wrapper. Same injection model as spotter/approach.
+    with open(WARMUP_TEMPLATE, 'r', encoding='utf-8') as f:
+        html = f.read()
 
-    data_json     = json.dumps(WARMUP_DATA, ensure_ascii=False)
-    overlay_html  = make_overlay(WARMUP_STEPS, 'The Warmup')
+    data_json = json.dumps(WARMUP_DATA, ensure_ascii=False)
+    saved_at  = datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
 
-    html = f"""<!DOCTYPE html>
-<!-- demo-build: v3 -->
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>The Warmup · Morning Edition · Rogue Fitness</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&family=Permanent+Marker&display=swap" rel="stylesheet">
-</head>
-<script id="warmup-tools">
-// Demo mode: data is hardcoded below — no MCP bridge needed.
-window.WARMUP_TOOLS = {{ dataTool: '' }};
-window.WARMUP_DATA  = {data_json};
-// Set a non-empty fontToolName so the shell's line-910 guard passes.
-// Without this, the shell immediately shows an error banner.
-window.WARMUP_DATA.config.fontToolName = 'warmup_get_fonts';
-// Clear any stale data cache so Phase 1 (localStorage fast-paint) doesn't override demo data.
-try {{ localStorage.removeItem('warmup-data-cache-v1'); }} catch(_) {{}}
-// Intercept callMcpTool so any font requests return stub CSS immediately.
-// Uses Object.defineProperty so the intercept applies whether window.cowork is
-// already injected by Cowork desktop or injected later.
-(function() {{
-  var _STUB = [
-    '/* demo — real fonts via Google Fonts CDN in <head> */',
-    '@font-face {{ font-family: "Oswald"; font-weight: 400 700; src: local("Oswald"); }}',
-    '@font-face {{ font-family: "Merriweather"; font-weight: 400 700; src: local("Merriweather"); }}',
-    '@font-face {{ font-family: "JetBrains Mono"; font-weight: 400 500; src: local("JetBrains Mono"); }}'
-  ].join('\\n');
-  function _reply() {{ return Promise.resolve({{ content: [{{ type: 'text', text: _STUB }}] }}); }}
-  function _patch(c) {{
-    if (!c || c.__demoPatch) return;
-    var orig = c.callMcpTool;
-    c.callMcpTool = function(t, a) {{
-      return t === 'warmup_get_fonts' ? _reply() : (orig ? orig.call(c, t, a) : Promise.reject('demo'));
-    }};
-    c.__demoPatch = true;
-  }}
-  _patch(window.cowork);
-  try {{
-    var _ref = window.cowork;
-    Object.defineProperty(window, 'cowork', {{
-      get: function() {{ return _ref; }},
-      set: function(v) {{ _ref = v; _patch(_ref); }},
-      configurable: true, enumerable: true
-    }});
-  }} catch(e) {{}}
-}})();
-</script>
-<body><script>
-{shell_js}
-</script>
-{overlay_html}
-</body>
-</html>"""
+    # Inject sample data + a saved-at stamp into the template placeholders.
+    html = html.replace('window.WARMUP_DATA = __WARMUP_DATA__;', f'window.WARMUP_DATA = {data_json};')
+    html = html.replace('__WARMUP_SAVED_AT__', saved_at)
+
+    # Stamp the build version so each regeneration produces a different hash,
+    # ensuring Cloudflare always treats it as a changed asset on deploy.
+    html = html.replace('<!DOCTYPE html>', '<!DOCTYPE html>\n<!-- demo-build: v4 -->', 1)
+
+    # Inject overlay before the real </body> tag (rfind for safety).
+    overlay = make_overlay(WARMUP_STEPS, 'The Warmup')
+    idx = html.rfind('</body>')
+    html = html[:idx] + overlay + '\n</body>' + html[idx + len('</body>'):]
 
     out_path = os.path.join(OUT_DIR, 'warmup.html')
     with open(out_path, 'w', encoding='utf-8') as f:
@@ -1251,7 +1212,7 @@ if __name__ == '__main__':
     for name, fn, template_path in [
         ('Spotter',  build_spotter,  SPOTTER_TEMPLATE),
         ('Approach', build_approach, APPROACH_TEMPLATE),
-        ('Warmup',   build_warmup,   WARMUP_SHELL),
+        ('Warmup',   build_warmup,   WARMUP_TEMPLATE),
     ]:
         if not os.path.exists(template_path):
             print(f"  ✗ {name}: template not found at {template_path}")

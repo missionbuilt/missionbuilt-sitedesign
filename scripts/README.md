@@ -47,7 +47,7 @@ The overlay adds a keyboard-navigable panel (← → or panel buttons), a pulsin
 |------|----------------|
 | Spotter | `loadout/missionbuilt-mcp/src/skill-content/spotter/spotter-template.html` |
 | Approach | `loadout/missionbuilt-mcp/src/skill-content/the-approach/approach-template.html` |
-| Warmup | `loadout/missionbuilt-mcp/src/warmup-shell.rawjs` (the shell is injected into a minimal HTML wrapper) |
+| Warmup | `loadout/missionbuilt-mcp/src/skill-content/warmup/warmup-template.html` |
 
 These paths assume the `loadout` and `missionbuilt-site` repos are siblings under the same parent directory.
 
@@ -65,19 +65,11 @@ After editing data, rebuild.
 
 ### Warmup: how fonts work in the demo
 
-The Warmup template normally calls the MCP server to load fonts at runtime. In the demo, there's no MCP server — the preamble script handles this:
-
-1. Sets `fontToolName` to a non-empty string so the shell's guard check passes.
-2. Intercepts `window.cowork.callMcpTool` via `Object.defineProperty` and returns stub `@font-face` CSS immediately when the font tool is called — whether Cowork desktop injects `window.cowork` before or after the preamble runs.
-3. Google Fonts CDN in `<head>` loads the real fonts for the browser.
-
-Don't remove the `Object.defineProperty` intercept or set `fontToolName` back to an empty string — both changes will bring back the font error banner.
+As of loadout thin-server v2, `warmup-template.html` is fully self-contained — the fonts are baked into the template as inline `@font-face` data, so there's no MCP font tool and no runtime bridge. The builder just injects sample data into the `__WARMUP_DATA__` / `__WARMUP_SAVED_AT__` placeholders, the same way the spotter and approach demos inject theirs. No font intercept or preamble script is needed.
 
 ### After any template change in the loadout repo
 
 Rebuild the demos and commit the updated `public/demos/*.html` files alongside any other site changes. The demos don't auto-update when the loadout templates change — they're static files that need to be regenerated.
-
-> **Heads-up:** the Warmup source above (`warmup-shell.rawjs`) was retired in the loadout thin-server v2 work. Before the Warmup demo will rebuild, repoint `build_demos.py`'s Warmup path to `skill-content/warmup/warmup-template.html` and switch its injection to the `__WARMUP_DATA__` / `__WARMUP_SAVED_AT__` placeholders.
 
 ---
 
