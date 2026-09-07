@@ -54,7 +54,8 @@ src/
 │   │   ├── warmup.astro                     # The Warmup (demo + download)
 │   │   ├── approach.astro                   # The Approach (demo + download)
 │   │   ├── spotter.astro                    # The Spotter (demo + download)
-│   │   └── floodlight.astro                 # Floodlight (in development)
+│   │   ├── floodlight.astro                 # Floodlight (in development)
+│   │   └── ironstack.astro                  # Ironstack (in testing; app frames are replicas on fictional data)
 │   └── chapters/
 │       ├── index.astro                      # Chapter Index
 │       ├── 01/the-mission-is-the-magnet.astro  # static landing for the opening section
@@ -74,7 +75,7 @@ Outside `src/`: `public/` holds static assets, including the generated `public/d
 - `/about` About: bio, project mission, fine print.
 - `/source` Source: links to the book repo and this repo.
 - `/download` Download: the book (PDF/Markdown) and the standalone Loadout skill zips.
-- `/loadout` The Loadout: overview of the product-leadership skill kit, with a page per skill — `/loadout/warmup`, `/loadout/approach`, `/loadout/spotter` (each embeds a live click-through demo and a download), and `/loadout/floodlight` (in development).
+- `/loadout` The Loadout: overview of the product-leadership skill kit, with a page per skill — `/loadout/warmup`, `/loadout/approach`, `/loadout/spotter` (each embeds a live click-through demo and a download), `/loadout/floodlight` (in development), and `/loadout/ironstack` (in testing: the page is live, the install doors open with v1.0).
 
 ## Adding or editing content
 

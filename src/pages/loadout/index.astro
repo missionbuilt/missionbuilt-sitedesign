@@ -19,7 +19,7 @@ const stats = [
   { key: 'Source',      value: 'GitHub', href: 'https://github.com/missionbuilt/loadout' },
 ];
 
-type SkillStatus = 'live' | 'planned';
+type SkillStatus = 'live' | 'testing' | 'planned';
 interface Skill {
   name: string;
   status: SkillStatus;
@@ -52,6 +52,14 @@ const skills: Skill[] = [
       'Walk your epic through nine product-leadership areas. Get a structured worksheet back — critique notes per area, an accept and skip loop, a verdict on each, and an export that unlocks when you have closed every area.',
     href: '/loadout/spotter',
     cta: 'Open →',
+  },
+  {
+    name: 'Ironstack',
+    status: 'testing',
+    blurb:
+      'Weight is a number. Heavy is a feeling. A training partner with your whole history in its head: two Claude skills, seven Kibana dashboards, and a coach with a ceiling, over an Elasticsearch you own. Nothing phones home.',
+    href: '/loadout/ironstack',
+    cta: 'Preview →',
   },
   {
     name: 'Floodlight',
@@ -128,7 +136,7 @@ const skills: Skill[] = [
     <section class="block">
       <header class="block-head">
         <h2 class="section-h2">The skills.</h2>
-        <span class="block-count">4 total · 3 live</span>
+        <span class="block-count">5 total · 3 live</span>
       </header>
 
       <div class="skills">
@@ -136,12 +144,14 @@ const skills: Skill[] = [
           s.href ? (
             <a
               href={s.href}
-              class:list={['skill-row', s.status === 'planned' && 'dim']}
+              class:list={['skill-row', s.status !== 'live' && 'dim']}
             >
               <div class="skill-name">
                 <h3>{s.name}</h3>
                 {s.status === 'live' ? (
                   <span class="tag live"><span class="tag-sq" aria-hidden="true"></span>Live</span>
+                ) : s.status === 'testing' ? (
+                  <span class="tag testing"><span class="tag-sq" aria-hidden="true"></span>In testing</span>
                 ) : (
                   <span class="tag planned">In development</span>
                 )}
@@ -151,12 +161,14 @@ const skills: Skill[] = [
             </a>
           ) : (
             <article
-              class:list={['skill-row', s.status === 'planned' && 'dim']}
+              class:list={['skill-row', s.status !== 'live' && 'dim']}
             >
               <div class="skill-name">
                 <h3>{s.name}</h3>
                 {s.status === 'live' ? (
                   <span class="tag live"><span class="tag-sq" aria-hidden="true"></span>Live</span>
+                ) : s.status === 'testing' ? (
+                  <span class="tag testing"><span class="tag-sq" aria-hidden="true"></span>In testing</span>
                 ) : (
                   <span class="tag planned">In development</span>
                 )}
@@ -418,6 +430,13 @@ const skills: Skill[] = [
     width: 6px;
     height: 6px;
     background: var(--color-army);
+    display: inline-block;
+  }
+  .tag.testing { color: var(--color-chalk-dim); }
+  .tag.testing .tag-sq {
+    width: 6px;
+    height: 6px;
+    border: 1px solid var(--color-chalk-dim);
     display: inline-block;
   }
   .tag.planned { color: var(--color-chalk-faint); }
