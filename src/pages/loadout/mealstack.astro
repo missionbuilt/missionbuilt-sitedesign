@@ -1,0 +1,726 @@
+---
+/**
+ * MealStack — standalone page.
+ *
+ * The first app on the Loadout, and the first thing on it that is not a skill:
+ * an iPhone app for meal timing built backward from the training session.
+ * GPL-3.0, not MIT. Nothing leaves the phone except what you send Coach, and
+ * Coach is a switch. In testing: invite-only TestFlight by email; the App Store
+ * listing and the source open with 1.0.
+ *
+ * Color discipline: oxblood for the hero period, eyebrows, section labels,
+ * the one marked card (Timing), the Ask-for-a-build button, and the closer
+ * accent. Army green for the license stat only.
+ *
+ * The cascade demo runs the shipped rule on fictional data (sliding meals
+ * chain off the logged time, gaps compress toward a 2-hour floor, the
+ * pre-workout meal is pinned 90 minutes before the session). The three phone
+ * frames are HTML replicas on fictional data; they use the system UI font on
+ * purpose, because they depict the app, not the site.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import TopNav from '../../components/TopNav.astro';
+
+const MAILTO =
+  'mailto:mike@missionbuilt.io?subject=MealStack%20TestFlight&body=I%27d%20like%20a%20TestFlight%20build.%20Apple%20ID%20email%3A%20';
+
+const stats = [
+  { key: 'Runs on',     value: 'iPhone',     sub: 'iOS 18 and up',        army: false },
+  { key: 'Account',     value: 'None',       sub: undefined,              army: false },
+  { key: 'Phones home', value: 'Coach only', sub: 'and only switched on', army: false },
+  { key: 'License',     value: 'GPL-3.0',    sub: undefined,              army: true  },
+];
+
+type Diff = { k: string; v: string; body: string };
+const diffs: Diff[] = [
+  { k: 'What you install', v: 'An app on your phone, not a skill in your agent.', body: 'Nothing to clone, nothing to add to Claude. It arrives through TestFlight today and the App Store later. If you came here for MCP tools, the other rows are those.' },
+  { k: 'What leaves your phone', v: 'The plan, the log and the day: nothing. Coach: what you send it.', body: 'MealStack keeps everything in files on your phone and writes macros to Apple Health if you let it. Coach is a switch, off by default. When it is on, what you type or photograph goes to a server Mission Built runs, and it is metered. It is also the reason the price is not settled; see the fine print below.' },
+  { k: 'The license', v: 'GPL-3.0, not MIT.', body: 'The rest of the Loadout is MIT: take it, close it, ship it. MealStack is copyleft: fork it, improve it, keep it open. The name and the marks stay with Mission Built.' },
+];
+
+type Card = { label: string; verdict: string; evidence: string; them: string; mark?: boolean };
+const cards: Card[] = [
+  { mark: true, label: 'Timing', verdict: 'The day is anchored to the session, not the clock.', evidence: 'Pre, intra, post and dinner are pinned to the session. Everything before them slides off the real logged time. A late morning compresses the gaps and flags what moved; it never pushes the pre-workout meal into the bar.', them: 'Alarms every N hours, or routines that roll lateness forward into the session.' },
+  { label: 'Macros', verdict: 'Weighed from the plate, or typed. Never both.', evidence: 'A meal is a list of ingredient quantities from a pantry, so the numbers come from the food and editing a portion moves them. A daily target lives apart from the plan, so the editor can say "this plate puts the day 40 g of carbs over" while you are still building it.', them: 'A food database and a total. No plan to measure the plate against.' },
+  { label: 'Logging', verdict: 'Log at the time you ate, not the time you remembered.', evidence: 'The log sheet opens at now with 15, 30 and 60 minutes ago one tap away, and shows what every remaining meal does at that time before you commit. Move today\'s session on the Today screen and the locked block follows it.', them: '"Done" means now, so the day keys off the wrong number.' },
+  { label: 'Travel', verdict: 'A day runs in the zone it started in.', evidence: 'Cross three time zones and the spacing holds. The app says so, and offers one tap to switch when local time becomes the truth. Skip a meal and it stays a decision, not a miss. History compares home days to travel days.', them: 'Alarms slide with the phone clock. Breakfast at 9, lunch at 10.' },
+  { label: 'Surfaces', verdict: 'You should rarely have to open it.', evidence: 'Notifications carry the plate and two actions: "Ate it now" and "Not yet, ask in 20." Home and Lock Screen widgets with a live countdown. A Live Activity from an hour before to thirty after, with Log on the Lock Screen and in the Dynamic Island.', them: 'A badge, and a screen you unlock to answer it.' },
+  { label: 'Coach', verdict: 'An AI that proposes. You decide.', evidence: 'Ask for targets and a fixed formula does the arithmetic, not the model. Ask for meal ideas, or hand it a menu photo, a link or a restaurant name, and it fits options to this meal\'s numbers. Nothing changes until you tap a card. Not a doctor, and it says so every time.', them: 'A chatbot that talks, or a coach that edits your plan without asking.' },
+];
+
+type Versus = { k: string; them: string; us: string; honest?: boolean };
+const versus: Versus[] = [
+  { k: 'Anchor', them: 'The clock.', us: 'Your session.' },
+  { k: 'A late meal', them: 'The next alarm fires anyway.', us: 'The rest of the day re-flows. The pre-workout meal holds.' },
+  { k: 'Macros', them: 'Typed in, or scanned, then summed.', us: 'Weighed from the plate, measured against a target you set.' },
+  { k: 'Logging time', them: 'Now.', us: 'When you actually ate, with the consequence shown first.' },
+  { k: 'Time zones', them: 'Alarms drift with the phone.', us: 'Spacing holds. You choose when to switch.' },
+  { k: 'Eating out', them: 'Search the database, guess the portion.', us: 'Coach reads the menu against this meal\'s numbers.' },
+  { k: 'Your data', them: 'Their servers, your account.', us: 'Your phone. Coach is the one exception, and it is a switch.' },
+  { k: 'Best at', them: 'A database of a million foods and a barcode scanner.', us: 'Timing. Keep the other app for the barcode if you like.', honest: true },
+];
+---
+<BaseLayout
+  title="MealStack · The Loadout · Mission Built"
+  description="Your session doesn't move. Your meals do. An iPhone app for meal timing built backward from the bar, with macros, travel, widgets and a coach that proposes. GPL-3.0. In testing."
+  active="loadout"
+>
+  <TopNav active="loadout" />
+
+  <main class="page">
+    {/* ---------- BREADCRUMB ---------- */}
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/loadout">The Loadout</a>
+      <span aria-hidden="true"> / </span>
+      <span class="here">MealStack</span>
+    </nav>
+
+    {/* ---------- HERO ---------- */}
+    <section class="hero">
+      <p class="eyebrow">
+        <span class="dots" aria-hidden="true">▮▮▮</span>
+        <span>An iPhone app from the Loadout</span>
+        <span class="dots" aria-hidden="true">▮▮▮</span>
+      </p>
+
+      <h1 class="display">
+        <span>MealStack</span><span class="dot">.</span>
+      </h1>
+
+      <div class="testing-tag" aria-label="In testing">
+        <span class="tag-sq" aria-hidden="true"></span>
+        <span>In testing</span>
+      </div>
+
+      <p class="subtitle">
+        <span class="line1">Your session doesn't move. Your meals do.</span>
+        <span class="line2">Other apps count macros. MealStack counts down to the bar.</span>
+      </p>
+    </section>
+
+    {/* ---------- META STRIP ---------- */}
+    <section class="meta-strip" aria-label="MealStack at a glance">
+      {stats.map((s) => (
+        <div class="stat">
+          <div class="stat-key">{s.key}</div>
+          <div class:list={['stat-value', s.army && 'army']}>{s.value}{s.sub && <span class="stat-sub">{s.sub}</span>}</div>
+        </div>
+      ))}
+    </section>
+
+    {/* ---------- READ THIS FIRST ---------- */}
+    <section class="block">
+      <p class="section-label">Read this first</p>
+      <h2 class="section-h2">Not a skill. The first app on the Loadout, and it plays by different rules.</h2>
+      <div class="diff">
+        {diffs.map((d) => (
+          <div class="diff-cell">
+            <p class="k">{d.k}</p>
+            <p class="v">{d.v}</p>
+            <p class="body">{d.body}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <hr class="dashed" />
+
+    {/* ---------- WHY ---------- */}
+    <section class="block">
+      <p class="section-label">Why it exists</p>
+      <h2 class="section-h2">I needed one rule no app had.</h2>
+      <div class="story">
+        <p>My eating plan has one rule that matters more than the rest: the pre-workout meal sits ninety minutes before the bar. Everything else in the day is built backward from that.</p>
+        <p>I went looking for an app that understood the rule. The meal-timer apps are alarm clocks: every three hours, no plate, no idea what happens when breakfast is late. The routine apps chain steps forward, so a late morning pushes the pre-workout meal into the session. The macro trackers know what I ate to the gram and have no opinion about when.</p>
+        <p>So I built the one I needed. It counts down to the next plate, re-flows the day from the time I actually ate, holds the meal that matters, and knows what is on the plate. Then it grew a pantry, a history, a travel mode, and a coach with a ceiling.</p>
+        <p class="byline">Mike Nichols · built during a meet prep, 2026</p>
+      </div>
+    </section>
+
+    <hr class="dashed" />
+
+    {/* ---------- THE RULE: live demo ---------- */}
+    <section class="block">
+      <p class="section-label">The rule</p>
+      <h2 class="section-h2">Breakfast was late. Your pre-workout meal shouldn't be.</h2>
+      <p class="prose">
+        Two kinds of meal. Sliding meals chain forward from the time you actually ate.
+        Locked meals are pinned to the session. Drag breakfast late and watch which one holds.
+      </p>
+
+      <div class="demo" id="cascade">
+        <div class="demo-top">
+          <span><span class="k">Logged breakfast at</span><br /><span class="val" id="d-m1">7:00 AM</span></span>
+          <span><span class="k">Session</span><br /><span class="val">6:00 PM</span></span>
+        </div>
+        <input type="range" id="d-slider" min="420" max="720" step="15" value="420" aria-label="Breakfast time" />
+        <div class="demo-rows" id="d-rows"></div>
+        <p class="demo-foot" id="d-foot"></p>
+      </div>
+      <p class="note">Gaps compress evenly toward a two-hour floor, rounded to five minutes. The pre-workout meal never moves. Move the session itself and the locked block follows it.</p>
+    </section>
+
+    <hr class="dashed" />
+
+    {/* ---------- WHAT I NEEDED ---------- */}
+    <section class="block">
+      <p class="section-label">What I needed</p>
+      <h2 class="section-h2">Six things the market didn't have in one place.</h2>
+
+      <div class="cards">
+        {cards.map((c) => (
+          <article class:list={['card', c.mark && 'mark']}>
+            <p class="label">{c.label}</p>
+            <p class="verdict">{c.verdict}</p>
+            <p class="evidence">{c.evidence}</p>
+            <p class="them"><b>Other apps:</b> {c.them}</p>
+          </article>
+        ))}
+      </div>
+
+      <h3 class="sub-h3">And the rest</h3>
+      <p class="prose">
+        A quick start that builds a working plan from four answers and no AI. A pantry of
+        about a hundred foods plus your own, entered per 100 g like the label. Apple Health
+        gets the macros at the real eat time, write-only. Light and dark. History that scores
+        against the target you set. Your plan is a JSON file on your phone. No account, no
+        sign-in, nothing to sync.
+      </p>
+    </section>
+
+    <hr class="dashed" />
+
+    {/* ---------- ON THE PHONE: replicas on fictional data ---------- */}
+    <section class="block">
+      <p class="section-label">On the phone</p>
+      <h2 class="section-h2">Three screens, one job each.</h2>
+      <p class="prose">
+        Redrawn with invented numbers. The real ones look like this with your plan behind them.
+      </p>
+
+      <div class="frames">
+        <figure class="frame-wrap">
+          <div class="phone" aria-label="Today screen: next meal countdown, totals, and the day's list">
+            <div class="status"><span>1:12</span><span>▮▮▮ ◉</span></div>
+            <div class="body">
+              <div class="topline"><span>Sat, Sep 12 · Training</span><span>Session <u>6:00 PM</u></span></div>
+              <div>
+                <div class="eb over">Overdue · 12 min</div>
+                <div class="clock">1:00</div>
+                <div class="title">Lunch</div>
+                <div class="plate">Chicken, jasmine rice, broccoli, olive oil</div>
+                <div class="macros">45P · 62C · 11F · 530 kcal</div>
+                <span class="btn">Log</span>
+                <div class="quiet">Not yet</div>
+              </div>
+              <div class="hr"></div>
+              <div class="bars">
+                <div class="bar"><div class="l">Protein</div><div class="t"><i style="width:42%"></i></div><div class="u">84 / 200 · 116 left</div></div>
+                <div class="bar"><div class="l">Carbs</div><div class="t"><i style="width:46%"></i></div><div class="u">96 / 210 · 114 left</div></div>
+                <div class="bar"><div class="l">Fat</div><div class="t"><i style="width:44%"></i></div><div class="u">31 / 70 · 39 left</div></div>
+              </div>
+              <div class="kcal">999 of 2270 kcal</div>
+              <div class="list">
+                <div class="li done"><span class="box on"></span><span>Breakfast</span><span class="tm">7:20 AM</span></div>
+                <div class="li done"><span class="box on"></span><span>Mid-morning</span><span class="tm">10:10 AM</span></div>
+                <div class="li"><span class="box"></span><span>Lunch</span><span class="tm">1:00 PM</span></div>
+                <div class="li"><span class="box"></span><span>Pre-workout<small>locked</small></span><span class="tm">4:30 PM</span></div>
+              </div>
+            </div>
+            <div class="tabs"><span><b>Today</b></span><span>History</span><span>Plan</span><span>Coach</span></div>
+          </div>
+          <figcaption class="cap"><span class="k">Today</span>The clock is the biggest thing on the screen. The word "overdue" lives in the eyebrow; the number never turns red.</figcaption>
+        </figure>
+
+        <figure class="frame-wrap">
+          <div class="phone" aria-label="Log sheet: pick the time you ate and preview the cascade">
+            <div class="status"><span>1:12</span><span>▮▮▮ ◉</span></div>
+            <div class="body">
+              <div class="sheet-head"><span class="dimtext">Cancel</span><b>Log Lunch</b><span>&nbsp;</span></div>
+              <div class="eb">When did you eat?</div>
+              <div class="chips"><span class="chip on">Now</span><span class="chip">15 ago</span><span class="chip">30 ago</span><span class="chip">1 hr ago</span><span class="chip">Other time…</span></div>
+              <div class="eb">What moves</div>
+              <div class="prev">
+                <div class="pr"><span>Lunch</span><span class="tm">1:12 PM</span></div>
+                <div class="pr"><span>Pre-workout<small class="lock">Locked · 90 min before</small></span><span class="tm hold">4:30 PM</span></div>
+                <div class="pr"><span>Post-workout<small class="lock">Locked · after</small></span><span class="tm">7:30 PM</span></div>
+                <div class="pr"><span>Dinner<small class="lock">Locked · after</small></span><span class="tm">8:30 PM</span></div>
+              </div>
+              <div class="eb gap">Gap to pre-workout: 3 h 18 m</div>
+              <span class="btn push">Log at 1:12 PM</span>
+              <div class="legal">The day keys off the time you pick, not the time you tap.</div>
+            </div>
+          </div>
+          <figcaption class="cap"><span class="k">Log</span>The common case is one tap. The consequence shows before you commit.</figcaption>
+        </figure>
+
+        <figure class="frame-wrap">
+          <div class="phone" aria-label="Coach: a target proposal card you can accept or ignore">
+            <div class="status"><span>1:12</span><span>▮▮▮ ◉</span></div>
+            <div class="body">
+              <div class="sheet-head"><b>Coach</b><span class="meter">Metered · 27 left today</span></div>
+              <div class="msg me">Powerlifting, four days, about 90 minutes a session. Desk job, I walk a bit. Holding weight.</div>
+              <div class="msg">Here is a target from those inputs. The numbers come from a fixed formula, not from me, and your phone checks them again.</div>
+              <div class="ccard">
+                <div class="eb">Proposed daily target</div>
+                <div class="big">Training day <span>200P · 210C · 70F · 2270 kcal</span><br />Rest day <span>200P · 115C · 70F · 1890 kcal</span></div>
+                <div class="why">A session costs about 470 kcal. That is the gap between the two days. Maintenance about 2650.</div>
+                <span class="btn">Use these targets</span>
+              </div>
+              <div class="msg dimtext small">Nothing changes in your plan until you tap the card.</div>
+              <div class="compose"><b>Ask Coach…</b><span>▲</span></div>
+              <div class="legal">Coach is an AI, not a doctor or dietitian. Its numbers are estimates.</div>
+            </div>
+          </div>
+          <figcaption class="cap"><span class="k">Coach</span>It gathers inputs and proposes a card. The plan changes only when you tap.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <hr class="dashed" />
+
+    {/* ---------- SIDE BY SIDE ---------- */}
+    <section class="block">
+      <p class="section-label">Side by side</p>
+      <h2 class="section-h2">What other apps do, and what this one does instead.</h2>
+
+      <div class="versus" aria-label="MealStack compared with other apps">
+        <div class="vh"><span></span><span>Other apps</span><span>MealStack</span></div>
+        {versus.map((v) => (
+          <div class:list={['vr', v.honest && 'honest']}><span class="vk">{v.k}</span><span>{v.them}</span><span>{v.us}</span></div>
+        ))}
+      </div>
+    </section>
+
+    <hr class="dashed" />
+
+    {/* ---------- FINE PRINT ---------- */}
+    <section class="block">
+      <p class="section-label">The fine print, in plain words</p>
+      <h2 class="section-h2">Open source, copyleft, and a price I have not picked.</h2>
+      <div class="lic">
+        <div class="lic-cell">
+          <p class="k">GPL-3.0</p>
+          <p class="v">Fork it. Keep it open.</p>
+          <p class="body">You can read, change and ship MealStack, and anything built from it has to carry the same freedom. A closed clone with a new icon is the one thing the license rules out. The Loadout's skills are MIT because a skill is meant to be lifted; an app is meant to be kept honest.</p>
+        </div>
+        <div class="lic-cell">
+          <p class="k">Price</p>
+          <p class="v">Not settled yet. Here is why.</p>
+          <p class="body">Every Coach question runs on a server I pay for. I want Coach in the app, and I am not willing to lose money keeping it there, so the launch price is an open question: free with Coach on an allowance, a one-time price, or Coach as the paid part of a free app. What is settled: timing, the log, the plan and the widgets cost nothing to run and will not be what you pay for, and the answer lands on this page before it lands in the store.</p>
+        </div>
+      </div>
+      <div class="fine">
+        <p class="k">Not a doctor</p>
+        <p>Coach is an AI, not a doctor or a dietitian. Its targets are estimates from a formula you can read. It declines questions about medical conditions, medication, pregnancy and supplement doses and points you to a professional instead. Nothing it proposes changes your plan until you tap.</p>
+      </div>
+    </section>
+
+    <hr class="dashed" />
+
+    {/* ---------- STATUS / GET IT ---------- */}
+    <section class="install-block" id="get">
+      <p class="section-label">Status</p>
+      <h2 class="section-h2">In testing, on a real prep.</h2>
+
+      <div class="status-panel">
+        <div class="status-copy">
+          <h3>Running through a meet prep, October 2026</h3>
+          <p>MealStack is on one phone every day right now: five meals, an evening session, a pre-workout meal that does not move. The source and the App Store listing open with 1.0, after the meet.</p>
+          <p>If you want it before then, ask. You will get a TestFlight build, the quick start, and a short list of things to break.</p>
+          <a class="cta" href={MAILTO}>Ask for a build →</a>
+          <p class="cta-note">mike@missionbuilt.io · include the email on your Apple ID</p>
+        </div>
+        <div class="doors">
+          <div class="door open"><div><div class="n">TestFlight</div><p class="d">Invite only. Builds expire every 90 days; you will get the next one.</p></div><span class="s">By request</span></div>
+          <div class="door dim"><div><div class="n">App Store</div><p class="d">The public door.</p></div><span class="s">With 1.0</span></div>
+          <div class="door dim"><div><div class="n">Source</div><p class="d">github.com/missionbuilt/mealstack, GPL-3.0.</p></div><span class="s">With 1.0</span></div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="dashed" />
+
+    {/* ---------- ALSO IN THE KIT ---------- */}
+    <section class="block">
+      <p class="section-label">Also in the kit</p>
+      <h2 class="section-h2">The full Loadout.</h2>
+
+      <div class="related">
+        <a href="/loadout/ironstack" class="related-card">
+          <h3>Ironstack</h3>
+          <p>Weight is a number. Heavy is a feeling. A training partner with your whole history in its head. The other half of the barbell.</p>
+          <span class="related-cta">Open →</span>
+        </a>
+        <a href="/loadout/warmup" class="related-card">
+          <h3>The Warmup</h3>
+          <p>A daily intelligence brief for your first coffee. Curated sources, link safety scanning, live artifact.</p>
+          <span class="related-cta">Open →</span>
+        </a>
+      </div>
+    </section>
+
+    {/* ---------- CLOSER ---------- */}
+    <section class="closer">
+      <p>
+        Eat on time. <strong>Train on time.</strong>
+      </p>
+    </section>
+
+    {/* ---------- FOOTER ---------- */}
+    <footer class="foot">
+      <span>Real strength is lifting others</span>
+      <a href="mailto:mike@missionbuilt.io">mike@missionbuilt.io</a>
+    </footer>
+  </main>
+</BaseLayout>
+
+<script>
+  // The cascade rule on fictional data. Sliding meals chain off the logged
+  // breakfast time; gaps compress evenly toward a 2-hour floor (rounded to
+  // 5 minutes); the pre-workout meal is pinned 90 minutes before the session.
+  const SESSION = 18 * 60;
+  const PRE = SESSION - 90;
+  const FLOOR = 120;
+  const GAP = 180;
+  const slider = document.getElementById('d-slider') as HTMLInputElement | null;
+  const rows = document.getElementById('d-rows');
+  const foot = document.getElementById('d-foot');
+  const m1lab = document.getElementById('d-m1');
+  const names = [
+    { code: 'M1', name: 'Breakfast', sub: 'slides' },
+    { code: 'M2', name: 'Mid-morning', sub: 'slides' },
+    { code: 'M3', name: 'Lunch', sub: 'slides' },
+    { code: 'M4', name: 'Pre-workout', sub: 'locked · 90 min before the bar' },
+  ];
+  const planned = [420, 600, 780, PRE];
+
+  function fmt(m: number): string {
+    let h = Math.floor(m / 60);
+    const mm = m % 60;
+    const ap = h >= 12 ? 'PM' : 'AM';
+    h = h % 12;
+    if (h === 0) h = 12;
+    return h + ':' + (mm < 10 ? '0' : '') + mm + ' ' + ap;
+  }
+  function r5(x: number): number { return Math.round(x / 5) * 5; }
+
+  function build(m1: number): void {
+    if (!rows || !foot || !m1lab) return;
+    const avail = PRE - m1;
+    const gap = Math.max(FLOOR, Math.min(GAP, r5((avail - FLOOR) / 2)));
+    const t = [m1, m1 + gap, m1 + 2 * gap, PRE];
+    let html = '';
+    for (let i = 0; i < 4; i++) {
+      const locked = i === 3;
+      const shifted = !locked && i > 0 && t[i] !== planned[i];
+      html += '<div class="drow' + (locked ? ' locked' : '') + '">'
+        + '<span class="code">' + names[i].code + '</span>'
+        + '<span class="name">' + names[i].name + '<small>' + (shifted ? 'moved · gap ' + gap + ' min' : names[i].sub) + '</small></span>'
+        + '<span class="time">' + (shifted ? '<s>' + fmt(planned[i]) + '</s>' : '') + fmt(t[i]) + '</span>'
+        + '</div>';
+    }
+    rows.innerHTML = html;
+    m1lab.textContent = fmt(m1);
+    const lastGap = PRE - t[2];
+    if (m1 === 420) {
+      foot.innerHTML = 'Nothing late. Three-hour gaps as planned. <b>Pre-workout at ' + fmt(PRE) + '.</b>';
+    } else if (gap > FLOOR) {
+      const late = m1 - 420;
+      const lh = Math.floor(late / 60);
+      const lm = late % 60;
+      foot.innerHTML = 'Breakfast ' + (lh ? lh + ' h ' : '') + (lm ? lm + ' min ' : '') + 'late. Remaining gaps compress evenly to ' + gap + ' min. <b>Pre-workout holds at ' + fmt(PRE) + '.</b>';
+    } else {
+      foot.innerHTML = 'At the two-hour floor. Lunch is now ' + lastGap + ' min before the pre-workout meal, and flagged. <b>Pre-workout still holds at ' + fmt(PRE) + '. The session is what we protect.</b>';
+    }
+  }
+
+  if (slider) {
+    slider.addEventListener('input', () => build(parseInt(slider.value, 10)));
+    build(420);
+  }
+</script>
+
+<style>
+  /* ============ BREADCRUMB ============ */
+  .breadcrumb {
+    padding: 18px var(--pad-page-x) 0;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-chalk-faint);
+  }
+  .breadcrumb a { color: var(--color-chalk-dim); transition: color 120ms ease-out; }
+  .breadcrumb a:hover { color: var(--color-chalk); }
+  .breadcrumb .here { color: var(--color-chalk-faint); }
+
+  /* ============ HERO ============ */
+  .hero { padding: 40px var(--pad-page-x) 28px; text-align: center; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 14px; margin: 0 0 18px;
+    font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.24em;
+    color: var(--color-blood); text-transform: uppercase;
+  }
+  .eyebrow .dots { letter-spacing: 0.04em; opacity: 0.65; }
+  .display {
+    margin: 0; font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(56px, 11vw, 108px); line-height: 0.95; letter-spacing: -0.02em;
+    color: var(--color-chalk); text-transform: uppercase;
+  }
+  .display .dot { color: var(--color-blood); }
+
+  .testing-tag {
+    display: inline-flex; align-items: center; gap: 8px; margin-top: 22px;
+    font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--color-chalk-dim);
+  }
+  .testing-tag .tag-sq { width: 8px; height: 8px; border: 1px solid var(--color-chalk-dim); display: inline-block; }
+
+  .subtitle {
+    margin: 22px auto 0; max-width: 820px; display: grid; gap: 8px;
+    font-family: var(--font-display); font-weight: 400; letter-spacing: 0.04em; text-transform: uppercase;
+  }
+  .subtitle .line1 { font-size: clamp(16px, 2.4vw, 24px); font-weight: 500; color: var(--color-chalk); }
+  .subtitle .line2 { font-size: clamp(13px, 1.9vw, 19px); color: var(--color-chalk-dim); }
+
+  /* ============ META STRIP ============ */
+  .meta-strip {
+    margin: 28px var(--pad-page-x) 0; padding: 14px 0;
+    border-top: var(--border-thin); border-bottom: var(--border-thin);
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+    font-family: var(--font-mono); font-size: 11px; text-align: left;
+  }
+  .stat-key { color: var(--color-chalk-faint); font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; }
+  .stat-value { margin-top: 2px; color: var(--color-chalk); font-family: var(--font-display); font-size: 22px; letter-spacing: 0.04em; display: inline-block; }
+  .stat-value.army { color: var(--color-army); }
+  .stat-sub { font-size: 12px; color: var(--color-chalk-dim); letter-spacing: 0.06em; margin-left: 8px; }
+
+  /* ============ BLOCK ============ */
+  .block { padding: 56px var(--pad-page-x) 0; max-width: 1180px; }
+  .section-label {
+    margin: 0 0 14px; font-family: var(--font-mono); font-size: 11px; font-weight: 500;
+    letter-spacing: 0.24em; color: var(--color-blood); text-transform: uppercase;
+  }
+  .section-h2 {
+    margin: 0 0 18px; max-width: 28ch; font-family: var(--font-display); font-weight: 600; font-size: 36px;
+    line-height: 1.05; letter-spacing: 0.02em; color: var(--color-chalk); text-transform: uppercase;
+  }
+  .sub-h3 { margin: 36px 0 8px; font-family: var(--font-display); font-weight: 500; font-size: 20px; letter-spacing: 0.03em; text-transform: uppercase; color: var(--color-chalk); }
+  .prose { margin: 0 0 14px; max-width: 760px; font-family: var(--font-serif); font-size: 17px; line-height: 1.65; color: var(--color-chalk-dim); }
+  .note { margin: 14px 0 0; max-width: 78ch; font-family: var(--font-mono); font-size: 12px; line-height: 1.6; letter-spacing: 0.02em; color: var(--color-chalk-faint); }
+  .k { font-family: var(--font-mono); font-size: 10px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); margin: 0; }
+
+  /* ============ READ THIS FIRST ============ */
+  .diff { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 28px; border: var(--border-thin); background: var(--color-panel); }
+  .diff-cell { padding: 20px 22px 18px; border-right: var(--border-thin); }
+  .diff-cell:last-child { border-right: 0; }
+  .diff-cell .k { margin-bottom: 10px; }
+  .diff-cell .v { margin: 0 0 10px; font-family: var(--font-display); font-weight: 500; font-size: 21px; line-height: 1.1; text-transform: uppercase; letter-spacing: 0.01em; color: var(--color-chalk); }
+  .diff-cell .body { margin: 0; font-family: var(--font-serif); font-size: 14px; line-height: 1.55; color: var(--color-chalk-dim); }
+
+  /* ============ WHY: first person ============ */
+  .story { margin-top: 8px; max-width: 66ch; }
+  .story p { margin: 0 0 16px; font-family: var(--font-serif); font-weight: 300; font-size: 17px; line-height: 1.65; color: var(--color-chalk); }
+  .story p:first-child::first-letter { font-family: var(--font-display); font-weight: 600; }
+  .story .byline { margin: 6px 0 0; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-faint); }
+
+  /* ============ DEMO ============ */
+  .demo { margin-top: 18px; max-width: 760px; border: var(--border-thin); background: var(--color-panel); padding: 22px 22px 18px; }
+  .demo-top { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: 14px; }
+  .demo .val { font-family: var(--font-display); font-size: 22px; font-weight: 500; color: var(--color-chalk); font-variant-numeric: tabular-nums; }
+  .demo input[type=range] { width: 100%; accent-color: var(--color-blood); margin: 4px 0 16px; cursor: pointer; }
+  .demo-rows { border-top: var(--border-thin); }
+  .demo :global(.drow) { display: grid; grid-template-columns: 52px 1fr auto; gap: 14px; align-items: baseline; padding: 11px 0; border-bottom: 1px solid var(--color-rule-soft); }
+  .demo :global(.drow .code) { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; color: var(--color-chalk-faint); }
+  .demo :global(.drow .name) { font-family: var(--font-serif); color: var(--color-chalk); font-size: 15px; }
+  .demo :global(.drow .name small) { display: block; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.08em; color: var(--color-chalk-faint); margin-top: 2px; }
+  .demo :global(.drow .time) { font-family: var(--font-display); font-size: 22px; font-weight: 500; color: var(--color-chalk); font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+  .demo :global(.drow .time s) { color: var(--color-chalk-faint); font-weight: 400; font-size: 15px; margin-right: 8px; }
+  .demo :global(.drow.locked .time), .demo :global(.drow.locked .code) { color: #e85e56; }
+  .demo-foot { margin: 12px 0 0; font-family: var(--font-mono); font-size: 11px; line-height: 1.6; letter-spacing: 0.04em; color: var(--color-chalk-faint); }
+  .demo-foot :global(b) { color: var(--color-chalk-dim); font-weight: 500; }
+
+  /* ============ CARDS ============ */
+  .cards {
+    display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 32px;
+    border-top: var(--border-thin); border-left: var(--border-thin);
+  }
+  .card {
+    border-right: var(--border-thin); border-bottom: var(--border-thin); padding: 24px 24px 22px;
+    display: grid; grid-template-rows: auto auto 1fr auto; gap: 10px; min-height: 230px;
+  }
+  .card.mark { background: var(--color-panel); }
+  .card .label { margin: 0; font-family: var(--font-mono); font-size: 10px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); }
+  .card .verdict { margin: 0; font-family: var(--font-display); font-weight: 500; font-size: 22px; line-height: 1.1; text-transform: uppercase; color: var(--color-chalk); }
+  .card.mark .verdict::before { content: ''; display: inline-block; width: 8px; height: 8px; background: var(--color-blood); margin-right: 10px; vertical-align: 2px; }
+  .card .evidence { margin: 0; font-family: var(--font-serif); font-size: 14px; line-height: 1.55; color: var(--color-chalk-dim); }
+  .card .them { margin: 0; font-family: var(--font-mono); font-size: 11px; line-height: 1.5; color: var(--color-chalk-faint); border-top: 1px dashed var(--color-rule); padding-top: 10px; }
+  .card .them b { color: var(--color-chalk-dim); font-weight: 500; }
+
+  /* ============ FRAMES ============ */
+  .frames { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 32px; align-items: start; }
+  .frame-wrap { margin: 0; display: flex; flex-direction: column; gap: 12px; align-items: center; }
+  .frame-wrap .cap { max-width: 300px; font-family: var(--font-serif); font-size: 13px; line-height: 1.5; color: var(--color-chalk-dim); text-align: center; }
+  .frame-wrap .cap .k { display: block; margin-bottom: 6px; letter-spacing: 0.18em; }
+
+  /* Phone replicas: the app's own skin (charcoal, chalk, one oxblood), system UI face on purpose. */
+  .phone {
+    width: 300px; height: 620px; border: var(--border-thin); background: #141210; color: #ebe5d8;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px; line-height: 1.35; overflow: hidden; position: relative; display: flex; flex-direction: column;
+  }
+  .phone .status { display: flex; justify-content: space-between; padding: 10px 18px 0; font-size: 11px; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .phone .body { padding: 14px 18px 0; flex: 1; display: flex; flex-direction: column; gap: 12px; }
+  .phone .topline { font-size: 11.5px; color: #a8a094; display: flex; justify-content: space-between; }
+  .phone .topline u { text-decoration: none; color: #ebe5d8; border-bottom: 1px solid #5a564f; }
+  .phone .eb { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.16em; text-transform: uppercase; color: #a8a094; }
+  .phone .eb.over { color: #e85e56; }
+  .phone .eb.gap { margin-top: 6px; }
+  .phone .clock { font-family: var(--font-display); font-size: 64px; font-weight: 600; line-height: 0.95; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; margin: 6px 0 4px; }
+  .phone .title { font-size: 19px; font-weight: 600; }
+  .phone .plate { font-size: 12.5px; color: #a8a094; }
+  .phone .macros { font-family: var(--font-mono); font-size: 11px; color: #a8a094; font-variant-numeric: tabular-nums; }
+  .phone .btn { display: block; text-align: center; padding: 11px 0; background: #a8211a; color: #ebe5d8; font-weight: 600; font-size: 14px; margin-top: 8px; }
+  .phone .btn.push { margin-top: auto; }
+  .phone .quiet { text-align: center; font-size: 12.5px; color: #a8a094; margin-top: 6px; }
+  .phone .hr { height: 1px; background: #2a2622; }
+  .phone .bars { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; align-items: end; }
+  .phone .bar .l { font-size: 10.5px; color: #a8a094; margin-bottom: 4px; }
+  .phone .bar .t { height: 3px; background: #2a2622; position: relative; }
+  .phone .bar .t i { position: absolute; left: 0; top: 0; bottom: 0; background: #a8a094; }
+  .phone .bar .u { font-size: 9px; color: #5a564f; margin-top: 4px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .phone .kcal { font-family: var(--font-mono); font-size: 10.5px; color: #5a564f; white-space: nowrap; margin-top: -6px; }
+  .phone .list { display: flex; flex-direction: column; }
+  .phone .li { display: grid; grid-template-columns: 18px 1fr auto; gap: 10px; align-items: center; padding: 9px 0; border-bottom: 1px solid #221f1c; font-size: 13px; }
+  .phone .li .box { width: 11px; height: 11px; border: 1px solid #5a564f; }
+  .phone .li .box.on { background: #a8a094; border-color: #a8a094; }
+  .phone .li.done { color: #5a564f; }
+  .phone .li .tm { font-variant-numeric: tabular-nums; color: #a8a094; font-size: 12.5px; }
+  .phone .li.done .tm { color: #5a564f; }
+  .phone .li small { display: block; font-size: 10px; color: #5a564f; }
+  .phone .tabs { margin-top: auto; display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid #2a2622; padding: 9px 0 12px; font-size: 9.5px; color: #5a564f; text-align: center; }
+  .phone .tabs b { color: #e85e56; font-weight: 600; }
+  .phone .tabs span::before { content: ''; display: block; width: 14px; height: 14px; border: 1px solid currentColor; margin: 0 auto 4px; }
+  .phone .sheet-head { display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
+  .phone .sheet-head b { font-weight: 600; font-size: 15px; }
+  .phone .dimtext { color: #a8a094; }
+  .phone .meter { color: #5a564f; font-size: 11px; }
+  .phone .chips { display: flex; gap: 6px; flex-wrap: wrap; }
+  .phone .chip { font-size: 11.5px; padding: 7px 9px; border: 1px solid #2a2622; color: #a8a094; }
+  .phone .chip.on { border-color: #ebe5d8; color: #ebe5d8; }
+  .phone .prev { display: flex; flex-direction: column; }
+  .phone .pr { display: grid; grid-template-columns: 1fr auto; gap: 8px; padding: 8px 0; border-bottom: 1px solid #221f1c; font-size: 12.5px; align-items: baseline; }
+  .phone .pr small { display: block; font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase; color: #5a564f; }
+  .phone .pr .tm { font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+  .phone .pr .tm.hold { color: #e85e56; }
+  .phone .msg { font-size: 12.5px; color: #ebe5d8; max-width: 92%; }
+  .phone .msg.me { align-self: flex-end; color: #a8a094; text-align: right; }
+  .phone .msg.small { font-size: 11.5px; }
+  .phone .ccard { border: 1px solid #2a2622; background: #1f1c19; padding: 12px; }
+  .phone .ccard .eb { margin-bottom: 6px; }
+  .phone .ccard .big { font-family: var(--font-mono); font-size: 12px; font-variant-numeric: tabular-nums; line-height: 1.7; }
+  .phone .ccard .big span { color: #a8a094; }
+  .phone .ccard .why { font-size: 11.5px; color: #a8a094; margin: 8px 0 2px; }
+  .phone .ccard .btn { margin-top: 10px; padding: 9px 0; font-size: 13px; }
+  .phone .compose { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center; border: 1px solid #2a2622; padding: 8px 10px; font-size: 12px; color: #5a564f; margin-top: auto; }
+  .phone .compose b { color: #a8a094; font-weight: 500; }
+  .phone .legal { font-size: 9.5px; color: #5a564f; text-align: center; margin: 6px 0 4px; }
+
+  /* ============ VERSUS ============ */
+  .versus { margin-top: 28px; border-top: var(--border-thin); }
+  .vh, .vr { display: grid; grid-template-columns: 150px 1fr 1.3fr; gap: 24px; padding: 14px 0; border-bottom: var(--border-thin); align-items: baseline; }
+  .vh span { font-family: var(--font-mono); font-size: 10px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); }
+  .vh span:last-child { color: var(--color-chalk); }
+  .vr .vk { font-family: var(--font-mono); font-size: 11px; line-height: 1.5; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-chalk-faint); }
+  .vr span { font-family: var(--font-serif); font-size: 14px; line-height: 1.55; color: var(--color-chalk-dim); }
+  .vr span:last-child { color: var(--color-chalk); }
+  .vr.honest span:last-child { color: var(--color-chalk-dim); font-style: italic; }
+
+  /* ============ FINE PRINT ============ */
+  .lic { display: grid; grid-template-columns: 1fr 1fr; margin-top: 28px; border: var(--border-thin); }
+  .lic-cell { padding: 20px 22px; border-right: var(--border-thin); }
+  .lic-cell:last-child { border-right: 0; }
+  .lic-cell .k { margin-bottom: 10px; }
+  .lic-cell .v { margin: 0 0 10px; font-family: var(--font-display); font-weight: 500; font-size: 21px; line-height: 1.1; text-transform: uppercase; color: var(--color-chalk); }
+  .lic-cell .body { margin: 0; font-family: var(--font-serif); font-size: 14px; line-height: 1.55; color: var(--color-chalk-dim); }
+  .fine { margin-top: 18px; background: var(--color-panel); border: var(--border-thin); padding: 22px 26px; }
+  .fine .k { margin-bottom: 10px; }
+  .fine p:not(.k) { margin: 0; max-width: 70ch; font-family: var(--font-serif); font-size: 14px; line-height: 1.6; color: var(--color-chalk-dim); }
+
+  /* ============ STATUS / GET IT ============ */
+  .install-block { padding: 56px var(--pad-page-x) 0; max-width: 1180px; }
+  .status-panel { margin-top: 28px; border: var(--border-thin); background: var(--color-panel); padding: 26px 26px 22px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 32px; }
+  .status-copy h3 { margin: 0 0 10px; font-family: var(--font-display); font-weight: 500; font-size: 22px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--color-chalk); }
+  .status-copy p { margin: 0 0 10px; max-width: 60ch; font-family: var(--font-serif); font-size: 14.5px; line-height: 1.55; color: var(--color-chalk-dim); }
+  .cta {
+    display: inline-block; margin: 8px 0 4px; padding: 12px 22px; background: var(--color-blood); color: var(--color-chalk);
+    font-family: var(--font-display); font-weight: 600; font-size: 16px; letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none;
+    transition: background 120ms ease-out;
+  }
+  .cta:hover { background: #8f1c16; }
+  .cta-note { margin: 8px 0 0; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; color: var(--color-chalk-faint); }
+  .doors { display: flex; flex-direction: column; gap: 10px; }
+  .door { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; padding: 14px 16px; border: var(--border-thin); }
+  .door.open { border-color: var(--color-chalk-dim); }
+  .door .n { font-family: var(--font-display); font-size: 18px; font-weight: 500; letter-spacing: 0.02em; text-transform: uppercase; color: var(--color-chalk); }
+  .door .d { margin: 2px 0 0; font-family: var(--font-serif); font-size: 13px; line-height: 1.5; color: var(--color-chalk-dim); }
+  .door .s { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-faint); white-space: nowrap; }
+  .door.dim .n, .door.dim .d { color: var(--color-chalk-faint); }
+
+  /* ============ RELATED ============ */
+  .related { margin-top: 28px; display: grid; grid-template-columns: 1fr 1fr; border-top: var(--border-thin); border-bottom: var(--border-thin); }
+  .related-card { display: flex; flex-direction: column; gap: 10px; padding: 28px; border-right: var(--border-thin); text-decoration: none; transition: background 120ms ease-out; }
+  .related-card:last-child { border-right: none; }
+  .related-card:hover { background: rgba(255,255,255,0.015); }
+  .related-card h3 { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 22px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--color-chalk); }
+  .related-card p { margin: 0; font-family: var(--font-serif); font-size: 15px; line-height: 1.6; color: var(--color-chalk-dim); flex: 1; }
+  .related-cta { font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-faint); transition: color 120ms ease-out; }
+  .related-card:hover .related-cta { color: var(--color-blood); }
+
+  /* ============ DIVIDER / CLOSER / FOOTER ============ */
+  .dashed { margin: 56px var(--pad-page-x); border: none; border-top: 1px dashed var(--color-rule-soft); }
+  .closer { margin-top: 56px; padding: 48px var(--pad-page-x); border-top: var(--border-thin); text-align: center; }
+  .closer p { margin: 0; font-family: var(--font-display); font-weight: 500; font-size: 22px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-chalk); }
+  .closer p strong { font-weight: 500; color: var(--color-blood); }
+  .foot {
+    display: flex; justify-content: space-between; align-items: center; gap: 14px;
+    padding: 22px var(--pad-page-x) 40px; border-top: var(--border-thin);
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-faint);
+  }
+  .foot a { color: var(--color-chalk-dim); transition: color 120ms ease-out; text-transform: none; }
+  .foot a:hover { color: var(--color-chalk); }
+
+  /* ============ Responsive ============ */
+  @media (max-width: 1099px) {
+    .meta-strip { grid-template-columns: repeat(2, 1fr); gap: 18px; }
+    .diff { grid-template-columns: 1fr; }
+    .diff-cell { border-right: 0; border-bottom: var(--border-thin); }
+    .diff-cell:last-child { border-bottom: 0; }
+    .cards { grid-template-columns: repeat(2, 1fr); }
+    .frames { grid-template-columns: 1fr; justify-items: center; }
+    .status-panel { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 720px) {
+    .breadcrumb { padding: 18px var(--pad-page-x-mobile) 0; }
+    .hero { padding: 28px var(--pad-page-x-mobile) 20px; }
+    .meta-strip { margin: 24px var(--pad-page-x-mobile) 0; grid-template-columns: 1fr; gap: 14px; }
+    .block, .install-block { padding: 40px var(--pad-page-x-mobile) 0; }
+    .section-h2 { font-size: 28px; }
+    .cards { grid-template-columns: 1fr; }
+    .lic { grid-template-columns: 1fr; }
+    .lic-cell { border-right: 0; border-bottom: var(--border-thin); }
+    .lic-cell:last-child { border-bottom: 0; }
+    .vh { display: none; }
+    .vr { grid-template-columns: 1fr; gap: 6px; }
+    .vr span:nth-child(2)::before { content: 'Other apps · '; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-chalk-faint); }
+    .vr span:last-child::before { content: 'MealStack · '; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-chalk-faint); }
+    .related { grid-template-columns: 1fr; }
+    .related-card { border-right: none; border-bottom: var(--border-thin); }
+    .related-card:last-child { border-bottom: none; }
+    .dashed { margin: 40px var(--pad-page-x-mobile); }
+    .closer { padding: 36px var(--pad-page-x-mobile); }
+    .closer p { font-size: 18px; }
+    .foot { padding: 22px var(--pad-page-x-mobile) 32px; flex-direction: column; align-items: flex-start; }
+  }
+</style>

@@ -2,9 +2,10 @@
 /**
  * The Loadout — overview page.
  *
- * Catalog of the open-source skills shipped from Mission Built. Lists
- * the three skills (Spotter live, Brief + Warmup planned) as full-width
- * rule-bordered cards.
+ * Catalog of the open-source skills and tools shipped from Mission Built,
+ * as full-width rule-bordered rows. Three skills live (Warmup, Approach,
+ * Spotter), Ironstack in testing, and MealStack: the first app on the list,
+ * GPL-3.0 rather than MIT, so the License stat reads both.
  *
  * Pattern: TopNav → Hero (eyebrow + h1 + subtitle) → Meta strip →
  * What this is → Dashed divider → The skills (3 cards) → Closer → Footer.
@@ -15,7 +16,7 @@ import TopNav from '../../components/TopNav.astro';
 const stats = [
   { key: 'Skills live', value: '3',      href: undefined },
   { key: 'MCP tools',   value: '18',     href: undefined },
-  { key: 'License',     value: 'MIT',    href: undefined },
+  { key: 'License',     value: 'MIT · GPL-3.0', href: undefined },
   { key: 'Source',      value: 'GitHub', href: 'https://github.com/missionbuilt/loadout' },
 ];
 
@@ -26,6 +27,8 @@ interface Skill {
   blurb: string;
   href?: string;
   cta: string;
+  /** A second tag for a row that is not a skill, e.g. an app. */
+  kind?: string;
 }
 
 const skills: Skill[] = [
@@ -61,11 +64,20 @@ const skills: Skill[] = [
     href: '/loadout/ironstack',
     cta: 'Preview →',
   },
+  {
+    name: 'MealStack',
+    status: 'testing',
+    kind: 'iPhone app',
+    blurb:
+      'Your session doesn\'t move. Your meals do. An iPhone app for meal timing built backward from the bar, with macros weighed from the plate, travel that holds your spacing, widgets and a Live Activity, and a coach that proposes. GPL-3.0.',
+    href: '/loadout/mealstack',
+    cta: 'Preview →',
+  },
 ];
 ---
 <BaseLayout
   title="The Loadout · Mission Built"
-  description="Open-source skills to help build what matters. Part of the Mission Built ecosystem."
+  description="Open-source skills and tools to help build what matters. Part of the Mission Built ecosystem."
   active="loadout"
 >
   <TopNav active="loadout" />
@@ -75,7 +87,7 @@ const skills: Skill[] = [
     <section class="hero">
       <p class="eyebrow">
         <span class="dots" aria-hidden="true">▮▮▮</span>
-        <span>Open-source skills from Mission Built</span>
+        <span>Open-source skills and tools from Mission Built</span>
         <span class="dots" aria-hidden="true">▮▮▮</span>
       </p>
 
@@ -84,7 +96,7 @@ const skills: Skill[] = [
         <span class="line">Loadout<span class="dot">.</span></span>
       </h1>
 
-      <p class="subtitle">Open-source skills to help build what matters.</p>
+      <p class="subtitle">Open-source skills and tools to help build what matters.</p>
     </section>
 
     {/* ---------- META STRIP ---------- */}
@@ -114,11 +126,13 @@ const skills: Skill[] = [
         The Loadout is a set of small, focused skills you can drop into your
         agent. Each one helps you do a specific piece of the work better —
         review an epic, prep for a customer meeting, scan the news before
-        your day starts.
+        your day starts. And, from the other half of the book, two tools for
+        the barbell: a training partner with your history in its head, and an
+        app that times your meals to the session.
       </p>
       <p class="prose">
         The book teaches the principles. The Loadout puts them into operation.
-        <strong>Open-source, MIT-licensed, and built to be forked.</strong>
+        <strong>Open source and built to be forked.</strong> The skills are MIT. MealStack, the app, is GPL-3.0; its page says why.
       </p>
     </section>
 
@@ -127,8 +141,8 @@ const skills: Skill[] = [
     {/* ---------- THE SKILLS ---------- */}
     <section class="block">
       <header class="block-head">
-        <h2 class="section-h2">The skills.</h2>
-        <span class="block-count">4 total · 3 live</span>
+        <h2 class="section-h2">The kit.</h2>
+        <span class="block-count">5 total · 3 live</span>
       </header>
 
       <div class="skills">
@@ -147,6 +161,7 @@ const skills: Skill[] = [
                 ) : (
                   <span class="tag planned">In development</span>
                 )}
+                {s.kind && <span class="tag kind">{s.kind}</span>}
               </div>
               <p class="skill-blurb">{s.blurb}</p>
               <div class="skill-cta">{s.cta}</div>
@@ -164,6 +179,7 @@ const skills: Skill[] = [
                 ) : (
                   <span class="tag planned">In development</span>
                 )}
+                {s.kind && <span class="tag kind">{s.kind}</span>}
               </div>
               <p class="skill-blurb">{s.blurb}</p>
               <div class="skill-cta">{s.cta}</div>
@@ -432,6 +448,7 @@ const skills: Skill[] = [
     display: inline-block;
   }
   .tag.planned { color: var(--color-chalk-faint); }
+  .tag.kind { color: var(--color-chalk-faint); border: 1px solid var(--color-rule); padding: 3px 7px; align-self: flex-start; }
 
   .skill-blurb {
     margin: 0;
