@@ -38,10 +38,10 @@ type Keep = { what: string; how: string };
 const keeps: Keep[] = [
   { what: 'Your plan, logs, foods, meals, Coach conversation, Coach profile', how: 'On your phone until you delete them, or delete the app. Included in your iPhone backup like any other app data.' },
   { what: 'What you send Coach', how: 'Not stored by Mission Built. Gone from the server when the answer is sent. Anthropic\'s handling is governed by its Data Processing Addendum.' },
-  { what: 'The install record (public key, receipt, timestamps)', how: 'Kept while the install exists. Removed on request, and never used again after you delete your data in the app.' },
+  { what: 'The install record (public key, receipt, timestamps)', how: 'Kept while the install exists. Removed the moment you delete your data in the app, or on request.' },
   { what: 'Coach allowance counters', how: 'Wiped at the start of each month.' },
   { what: 'Accounting record of Coach use (Cloudflare)', how: 'About ninety days, then gone.' },
-  { what: 'Usage data (PostHog)', how: 'Until you ask for the hashed record to be removed.' },
+  { what: 'Usage data (PostHog)', how: 'Until you delete your data in the app, which removes the hashed person and its events, or ask.' },
 ];
 ---
 <BaseLayout
@@ -186,11 +186,13 @@ const keeps: Keep[] = [
 
     {/* ---------- DELETE ---------- */}
     <section class="block">
-      <p class="section-label">Deleting your data</p>
-      <h2 class="section-h2">One button on the phone. One email for the rest.</h2>
+      <p class="section-label">Seeing and deleting your data</p>
+      <h2 class="section-h2">Two buttons on the phone. No email needed.</h2>
       <div class="prose-block">
-        <p><strong>Settings → Delete all MealStack data</strong> removes every file on the phone, the entries this app wrote to Health, your answer to the usage question, and the install's key. The server stops using that key's record and its counters expire within the month. Deleting the app does the same for everything on the phone. Turning off Send usage data in Settings withdraws that consent from then on; turning off Coach in Settings stops Coach from sending anything.</p>
-        <p>If you shared usage data and want the hashed record removed from PostHog, or want the server's install record removed rather than left to expire, email <a href="mailto:mike@missionbuilt.io?subject=MealStack%20data%20request">mike@missionbuilt.io</a> from the phone with the app installed. Mission Built will confirm within ten days and finish within thirty. Because nothing on the server is tied to your name, the app on your phone is how the record is matched to you.</p>
+        <p><strong>Settings → Privacy → What the server holds about this install</strong> asks the server, live, for everything it keeps for your install and shows it to you, with a share button. The request is signed by your phone's key, so the server can only ever answer for the install that asked.</p>
+        <p><strong>Settings → Delete all MealStack data</strong> does the whole job in one tap: it tells the server to delete the install's record, its allowance counters and the hashed analytics person, then removes every file on the phone, the entries this app wrote to Health, your answer to the usage question, and the install's key. If the phone is offline at that moment, the phone is still wiped, the key is never used again, and the server's counters expire within the month. Turning off Send usage data in Settings withdraws that consent from then on; turning off Coach in Settings stops Coach from sending anything.</p>
+        <p>The one case a button cannot cover is an app that was deleted before asking: with the key gone, nothing on the server can be matched to you, which also means nothing on the server can identify you. If you want to ask anyway, or ask anything else about your data, email <a href="mailto:mike@missionbuilt.io?subject=MealStack%20data%20request">mike@missionbuilt.io</a>. Mission Built will confirm within ten days and finish within thirty.</p>
+        <p class="note">The routes behind those two buttons are tested for isolation on every change to the server (an install can never read or delete another's) and probed every hour in production by two synthetic installs; if a probe ever fails, both routes close until a person has looked.</p>
       </div>
     </section>
 
