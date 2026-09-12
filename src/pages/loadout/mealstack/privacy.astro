@@ -1,0 +1,357 @@
+---
+/**
+ * MealStack — privacy.
+ *
+ * The page App Store Connect points at and the app's About screen links to. Written
+ * from the code, not from a template: what stays on the phone, what leaves it, who
+ * touches it, how long it lasts, how to make it go away. Apple's App Review
+ * Guidelines 5.1.1(i) want three things said plainly (what is collected and every
+ * use; that third parties protect it at least as well; retention, deletion and how
+ * consent is withdrawn), 5.1.2(i) wants third-party AI disclosed with permission
+ * asked first, and 5.1.3 wants the specific health data named and never marketed.
+ * All of that is here, in the order a person would ask.
+ *
+ * Color discipline: oxblood for the hero period, section labels and the one
+ * emphasised word. No army green on this page.
+ */
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import TopNav from '../../../components/TopNav.astro';
+
+const EFFECTIVE = 'September 12, 2026';
+
+const stats = [
+  { key: 'Account',            value: 'None' },
+  { key: 'Your plan and log',  value: 'On your phone' },
+  { key: 'Leaves the phone',   value: 'Coach. Usage data if you say yes.' },
+  { key: 'Sold or advertised', value: 'Never' },
+];
+
+type Party = { who: string; role: string; what: string; where: string };
+const parties: Party[] = [
+  { who: 'Cloudflare', role: 'Runs the Coach server', what: 'Sees each Coach request in transit and keeps the allowance counters and the ninety-day accounting record. Discards your IP address.', where: 'Global edge, US account' },
+  { who: 'Anthropic', role: 'Runs the Claude model behind Coach', what: 'Receives what you send Coach, produces the answer. Does not train models on it. Handles it under its Data Processing Addendum.', where: 'United States' },
+  { who: 'PostHog', role: 'Product analytics', what: 'Receives the usage events described below, and only while your usage-data switch is on. Keyed to a hash, no IP.', where: 'United States' },
+  { who: 'Apple', role: 'Health, TestFlight, the App Store', what: 'Health receives the macros of meals you log if you allow it. Apple\'s own privacy terms cover TestFlight and the App Store.', where: 'Per Apple' },
+];
+
+type Keep = { what: string; how: string };
+const keeps: Keep[] = [
+  { what: 'Your plan, logs, foods, meals, Coach conversation, Coach profile', how: 'On your phone until you delete them, or delete the app. Included in your iPhone backup like any other app data.' },
+  { what: 'What you send Coach', how: 'Not stored by Mission Built. Gone from the server when the answer is sent. Anthropic\'s handling is governed by its Data Processing Addendum.' },
+  { what: 'The install record (public key, receipt, timestamps)', how: 'Kept while the install exists. Removed on request, and never used again after you delete your data in the app.' },
+  { what: 'Coach allowance counters', how: 'Wiped at the start of each month.' },
+  { what: 'Accounting record of Coach use (Cloudflare)', how: 'About ninety days, then gone.' },
+  { what: 'Usage data (PostHog)', how: 'Until you ask for the hashed record to be removed.' },
+];
+---
+<BaseLayout
+  title="Privacy · MealStack · Mission Built"
+  description="What MealStack keeps on your phone, what leaves it, who touches it, how long it lasts, and how to make it all go away."
+  active="loadout"
+>
+  <TopNav active="loadout" />
+
+  <main class="page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/loadout">The Loadout</a>
+      <span aria-hidden="true"> / </span>
+      <a href="/loadout/mealstack">MealStack</a>
+      <span aria-hidden="true"> / </span>
+      <span class="here">Privacy</span>
+    </nav>
+
+    <section class="hero">
+      <p class="eyebrow">
+        <span class="dots" aria-hidden="true">▮▮▮</span>
+        <span>MealStack</span>
+        <span class="dots" aria-hidden="true">▮▮▮</span>
+      </p>
+      <h1 class="display"><span>Privacy</span><span class="dot">.</span></h1>
+      <p class="subtitle">
+        <span class="line1">What the app keeps, what leaves your phone, and how to make it all go away.</span>
+        <span class="line2">Short, because there is not much to tell.</span>
+      </p>
+      <p class="effective">Effective {EFFECTIVE} · Mission Built · Mike Nichols · Pittsburgh, PA</p>
+    </section>
+
+    <section class="meta-strip" aria-label="MealStack privacy at a glance">
+      {stats.map((s) => (
+        <div class="stat">
+          <div class="stat-key">{s.key}</div>
+          <div class="stat-value">{s.value}</div>
+        </div>
+      ))}
+    </section>
+
+    {/* ---------- WHO ---------- */}
+    <section class="block">
+      <p class="section-label">Who this is</p>
+      <h2 class="section-h2">Mission Built makes MealStack. This page is the whole policy.</h2>
+      <div class="prose-block">
+        <p>MealStack is made by Mission Built, which is Mike Nichols, in Pittsburgh, Pennsylvania. For the purposes of privacy law, Mission Built is the controller of whatever this page says leaves your phone. There is no parent company, no subsidiary and no partner with access to your data. The source of the app is published under GPL-3.0 once it launches, so the code that does what this page describes can be read.</p>
+      </div>
+    </section>
+
+    <hr class="dashed" />
+
+    {/* ---------- NO ACCOUNT ---------- */}
+    <section class="block">
+      <p class="section-label">No account</p>
+      <h2 class="section-h2">The app never asks who you are.</h2>
+      <div class="prose-block">
+        <p>MealStack has no sign-up, no login and no password. Nothing you do in the app is tied to your name, email address or phone number, because the app never asks for them. The only identity the server ever sees is a key your phone creates in its secure hardware, which proves a request came from a real copy of MealStack and nothing more.</p>
+      </div>
+    </section>
+
+    <hr class="dashed" />
+
+    {/* ---------- ON YOUR PHONE ---------- */}
+    <section class="block">
+      <p class="section-label">On your phone</p>
+      <h2 class="section-h2">Everything you put in stays in files on the phone.</h2>
+      <div class="prose-block">
+        <p>Your plan, every day's log, the foods you add, the meals you save, your Coach conversation, and the details you give Coach for a target: bodyweight, height, age, sex if you chose to say, how you train, and your goal. All of it lives in files inside the app's own container on your iPhone, written under the phone's encryption and protected until the first unlock after a restart. Those files are included in your iCloud or computer backup the way any app's data is; Mission Built has no access to your backups.</p>
+        <p>If you turn on the Health connection, the app writes four numbers for each meal you log into Apple Health, at the time you ate: protein, carbohydrates, fat and calories. Correct or un-log the meal and the app takes those entries back out. MealStack never reads anything from Health. Nothing from Health is used for marketing, advertising or anything but the entries themselves, and nothing from Health is stored anywhere but Health.</p>
+        <p class="note">This section also serves as the consumer health data notice some states require. The health data involved: the four nutrition figures the app writes to Health with your permission, and the body measurements you type in for Coach. Source: you. Purpose: the log and the target. Shared with: nobody, except that the measurements go to Coach when you ask Coach for a target, as described next.</p>
+      </div>
+    </section>
+
+    <hr class="dashed" />
+
+    {/* ---------- WHAT LEAVES ---------- */}
+    <section class="block">
+      <p class="section-label">What leaves your phone</p>
+      <h2 class="section-h2">Two things, and both are switches.</h2>
+
+      <div class="two">
+        <div class="cell">
+          <p class="k">Coach</p>
+          <p class="v">What you send it, to get the answer.</p>
+          <p class="body">Coach is the one part of the app that talks to a server, and it is off until you read and accept its terms inside the app. That acceptance is the permission this section describes.</p>
+          <p class="body">When you send Coach a message, the app sends what you typed, any menu photo or link you attached, your plan and today's totals, your pantry, and the details you gave for a target to Mission Built's server at coach.missionbuilt.io, which runs on Cloudflare. The server passes that to Anthropic's Claude model, checks every suggestion the model makes, and sends the answer back. Mission Built does not store your messages, photos or plan on the server; they are gone when the answer is sent. Anthropic processes them to produce the answer, under its Data Processing Addendum, and does not use them to train its models.</p>
+          <p class="body">To run Coach without accounts, the server keeps one small record per install: the public half of the key your phone created, the receipt Apple issued for it, when it registered and was last seen, and a count of how many Coach requests that install has made today and this month and roughly what they cost. That is how the Coach allowance works. It identifies the install, not you, and a reinstall creates a new one.</p>
+        </div>
+        <div class="cell">
+          <p class="k">Usage data</p>
+          <p class="v">Counts and timings, only if you say yes.</p>
+          <p class="body">After the quick start the app asks once whether you want to send usage data. Say no and nothing is sent. Say yes and the app sends Mission Built counts and timings: which tabs get used and for how long, when meals get logged against the plan and how, whether foods or meals get added, how Coach gets used and what it cost, and the app and iOS version. It never sends food names, anything from Health, your location or your IP address; the server discards the address and never looks it up. Your time zone name is included so the days line up.</p>
+          <p class="body">The data is keyed to a hash of the same install key and goes to PostHog, a product analytics service in the United States, where Mission Built uses it for one thing: deciding what to build next. Turn the switch off in Settings and nothing more is sent. Mission Built keeps its own copy of the same events on Cloudflare for about ninety days to account for the Coach allowance, whether or not the switch is on; that copy never goes to PostHog.</p>
+        </div>
+      </div>
+
+      <div class="fine">
+        <p class="k">Nothing else</p>
+        <p>No advertising identifiers, no third-party software kits on the phone, no tracking in Apple's sense of the word, no selling, no sharing for anyone else's marketing. The App Store privacy label says the same, and the app's About screen lists every kind of event it can send.</p>
+      </div>
+    </section>
+
+    <hr class="dashed" />
+
+    {/* ---------- WHO TOUCHES IT ---------- */}
+    <section class="block">
+      <p class="section-label">Who touches it</p>
+      <h2 class="section-h2">Four companies, each for one job.</h2>
+      <p class="prose">Each of them is bound by its own terms and, where it processes data for Mission Built, by a data processing agreement, to protect your data at least as well as this page promises. None of them may use it for their own marketing.</p>
+      <div class="parties">
+        <div class="ph"><span>Who</span><span>Job</span><span>What they see</span><span>Where</span></div>
+        {parties.map((p) => (
+          <div class="pr">
+            <span class="pk">{p.who}</span>
+            <span class="role">{p.role}</span>
+            <span>{p.what}</span>
+            <span class="where">{p.where}</span>
+          </div>
+        ))}
+      </div>
+      <p class="note">Menu links: if you give Coach a link to a restaurant menu, Mission Built's server fetches that page (your phone never does), reduces it to text, and keeps the text for one day so the same link is not fetched twice. The restaurant sees a request from Cloudflare, not from you.</p>
+    </section>
+
+    <hr class="dashed" />
+
+    {/* ---------- HOW LONG ---------- */}
+    <section class="block">
+      <p class="section-label">How long</p>
+      <h2 class="section-h2">What is kept, and for how long.</h2>
+      <div class="keeps">
+        {keeps.map((k) => (
+          <div class="kr">
+            <span class="kk">{k.what}</span>
+            <span>{k.how}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <hr class="dashed" />
+
+    {/* ---------- DELETE ---------- */}
+    <section class="block">
+      <p class="section-label">Deleting your data</p>
+      <h2 class="section-h2">One button on the phone. One email for the rest.</h2>
+      <div class="prose-block">
+        <p><strong>Settings → Delete all MealStack data</strong> removes every file on the phone, the entries this app wrote to Health, your answer to the usage question, and the install's key. The server stops using that key's record and its counters expire within the month. Deleting the app does the same for everything on the phone. Turning off Send usage data in Settings withdraws that consent from then on; turning off Coach in Settings stops Coach from sending anything.</p>
+        <p>If you shared usage data and want the hashed record removed from PostHog, or want the server's install record removed rather than left to expire, email <a href="mailto:mike@missionbuilt.io?subject=MealStack%20data%20request">mike@missionbuilt.io</a> from the phone with the app installed. Mission Built will confirm within ten days and finish within thirty. Because nothing on the server is tied to your name, the app on your phone is how the record is matched to you.</p>
+      </div>
+    </section>
+
+    <hr class="dashed" />
+
+    {/* ---------- RIGHTS ---------- */}
+    <section class="block">
+      <p class="section-label">Your rights</p>
+      <h2 class="section-h2">Wherever you are, the same answer.</h2>
+      <div class="prose-block">
+        <p>You can ask what Mission Built holds that relates to your install, ask for it to be corrected or deleted, ask for a copy, object to or restrict its use, and withdraw any consent you gave, all at the address above, and you will not be treated differently for asking. Under the GDPR, the legal bases are your consent (Coach terms, the usage-data question) and Mission Built's legitimate interest in running the Coach allowance and keeping the service from being abused. If you are in the EU, the EEA or the UK you may also complain to your supervisory authority. Under California law, Mission Built does not sell or share personal information and has not done so in the past twelve months.</p>
+        <p>Mission Built operates from the United States and the companies above process data there, so anything that leaves your phone leaves your country if you are outside the US. Cloudflare, Anthropic and PostHog each rely on recognised transfer mechanisms such as standard contractual clauses or the EU–US Data Privacy Framework for that.</p>
+      </div>
+    </section>
+
+    <hr class="dashed" />
+
+    {/* ---------- COACH, CHILDREN ---------- */}
+    <section class="block">
+      <div class="two">
+        <div class="cell">
+          <p class="k">Coach is not a clinician</p>
+          <p class="body">Coach gives general nutrition information for healthy adults and its numbers are estimates. It is not a doctor or a dietitian, it declines medical questions, and it will not set targets for anyone under 18. Check with your physician before making decisions about your health, and treat what Coach says as a starting point, not an instruction.</p>
+        </div>
+        <div class="cell">
+          <p class="k">Children</p>
+          <p class="body">MealStack is not directed at children under 13 and does not knowingly collect anything from them. Coach does not work for anyone under 18. If you believe a child has used Coach, email the address above and the install record will be removed.</p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="dashed" />
+
+    {/* ---------- CHANGES ---------- */}
+    <section class="block">
+      <p class="section-label">Changes</p>
+      <h2 class="section-h2">This page changes when the app does.</h2>
+      <div class="prose-block">
+        <p>If what the app collects or shares changes, this page changes first, with a new effective date at the top, and the app's About screen points here. A change that widens what leaves your phone will be asked about in the app before it applies to you. Effective {EFFECTIVE}.</p>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <span>Questions: <a href="mailto:mike@missionbuilt.io">mike@missionbuilt.io</a></span>
+      <a href="/loadout/mealstack">Back to MealStack →</a>
+    </footer>
+  </main>
+</BaseLayout>
+
+<style>
+  .page { max-width: 1280px; margin: 0 auto; }
+
+  .breadcrumb {
+    padding: 18px var(--pad-page-x) 0;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--color-chalk-faint);
+  }
+  .breadcrumb a { color: var(--color-chalk-dim); transition: color 120ms ease-out; }
+  .breadcrumb a:hover { color: var(--color-chalk); }
+  .breadcrumb .here { color: var(--color-chalk-faint); }
+
+  .hero { padding: 40px var(--pad-page-x) 28px; text-align: center; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 14px; margin: 0 0 18px;
+    font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.24em;
+    color: var(--color-blood); text-transform: uppercase;
+  }
+  .eyebrow .dots { letter-spacing: 0.04em; opacity: 0.65; }
+  .display {
+    margin: 0; font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(56px, 11vw, 108px); line-height: 0.95; letter-spacing: -0.02em;
+    color: var(--color-chalk); text-transform: uppercase;
+  }
+  .display .dot { color: var(--color-blood); }
+  .subtitle {
+    margin: 22px auto 0; max-width: 820px; display: grid; gap: 8px;
+    font-family: var(--font-display); font-weight: 400; letter-spacing: 0.04em; text-transform: uppercase;
+  }
+  .subtitle .line1 { font-size: clamp(16px, 2.4vw, 24px); font-weight: 500; color: var(--color-chalk); }
+  .subtitle .line2 { font-size: clamp(13px, 1.9vw, 19px); color: var(--color-chalk-dim); }
+  .effective {
+    margin: 22px 0 0; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--color-chalk-faint);
+  }
+
+  .meta-strip {
+    margin: 28px var(--pad-page-x) 0; padding: 14px 0;
+    border-top: var(--border-thin); border-bottom: var(--border-thin);
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+    font-family: var(--font-mono); font-size: 11px; text-align: left;
+  }
+  .stat-key { font-size: 10px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); margin-bottom: 8px; }
+  .stat-value { font-family: var(--font-display); font-weight: 500; font-size: 20px; line-height: 1.1; letter-spacing: 0.02em; text-transform: uppercase; color: var(--color-chalk); }
+
+  .block { padding: 56px var(--pad-page-x) 0; max-width: 1180px; }
+  .section-label {
+    margin: 0 0 14px; font-family: var(--font-mono); font-size: 11px; font-weight: 500;
+    letter-spacing: 0.24em; color: var(--color-blood); text-transform: uppercase;
+  }
+  .section-h2 {
+    margin: 0 0 18px; max-width: 30ch; font-family: var(--font-display); font-weight: 600; font-size: 36px;
+    line-height: 1.05; letter-spacing: 0.02em; color: var(--color-chalk); text-transform: uppercase;
+  }
+  .prose, .prose-block p { margin: 0 0 16px; max-width: 70ch; font-family: var(--font-serif); font-weight: 300; font-size: 17px; line-height: 1.65; color: var(--color-chalk); }
+  .prose { color: var(--color-chalk-dim); }
+  .prose-block p strong { font-weight: 700; color: var(--color-chalk); }
+  .prose-block a, .note a, .foot a { color: var(--color-chalk); border-bottom: 1px solid var(--color-chalk-faint); text-decoration: none; }
+  .prose-block a:hover, .foot a:hover { border-bottom-color: var(--color-blood); }
+  .note { margin: 14px 0 0; max-width: 78ch; font-family: var(--font-mono); font-size: 12px; line-height: 1.6; letter-spacing: 0.02em; color: var(--color-chalk-faint); }
+  .k { font-family: var(--font-mono); font-size: 10px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); margin: 0; }
+
+  .two { display: grid; grid-template-columns: 1fr 1fr; margin-top: 28px; border: var(--border-thin); background: var(--color-panel); }
+  .cell { padding: 22px 24px 20px; border-right: var(--border-thin); }
+  .cell:last-child { border-right: 0; }
+  .cell .k { margin-bottom: 10px; }
+  .cell .v { margin: 0 0 12px; font-family: var(--font-display); font-weight: 500; font-size: 21px; line-height: 1.1; text-transform: uppercase; letter-spacing: 0.01em; color: var(--color-chalk); }
+  .cell .body { margin: 0 0 12px; font-family: var(--font-serif); font-size: 14.5px; line-height: 1.6; color: var(--color-chalk-dim); }
+  .cell .body:last-child { margin-bottom: 0; }
+
+  .fine { margin-top: 18px; background: var(--color-panel); border: var(--border-thin); padding: 22px 26px; }
+  .fine .k { margin-bottom: 10px; }
+  .fine p:not(.k) { margin: 0; max-width: 70ch; font-family: var(--font-serif); font-size: 14px; line-height: 1.6; color: var(--color-chalk-dim); }
+
+  .parties { margin-top: 24px; border-top: var(--border-thin); }
+  .ph, .pr { display: grid; grid-template-columns: 120px 200px 1fr 140px; gap: 24px; padding: 14px 0; border-bottom: var(--border-thin); align-items: baseline; }
+  .ph span { font-family: var(--font-mono); font-size: 10px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); }
+  .pr .pk { font-family: var(--font-display); font-weight: 500; font-size: 18px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--color-chalk); }
+  .pr .role { font-family: var(--font-mono); font-size: 11px; line-height: 1.5; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-chalk-dim); }
+  .pr span { font-family: var(--font-serif); font-size: 14px; line-height: 1.55; color: var(--color-chalk-dim); }
+  .pr .where { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; color: var(--color-chalk-faint); }
+
+  .keeps { margin-top: 24px; border-top: var(--border-thin); }
+  .kr { display: grid; grid-template-columns: 1fr 1.4fr; gap: 24px; padding: 14px 0; border-bottom: var(--border-thin); align-items: baseline; }
+  .kr .kk { font-family: var(--font-mono); font-size: 11px; line-height: 1.5; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-chalk); }
+  .kr span:last-child { font-family: var(--font-serif); font-size: 14px; line-height: 1.55; color: var(--color-chalk-dim); }
+
+  .dashed { margin: 56px var(--pad-page-x); border: none; border-top: 1px dashed var(--color-rule-soft); }
+  .foot {
+    margin-top: 56px; display: flex; justify-content: space-between; align-items: center; gap: 14px;
+    padding: 22px var(--pad-page-x) 40px; border-top: var(--border-thin);
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-faint);
+  }
+  .foot a { border-bottom: 0; color: var(--color-chalk-dim); }
+  .foot a:hover { color: var(--color-chalk); }
+
+  @media (max-width: 1099px) {
+    .meta-strip { grid-template-columns: repeat(2, 1fr); gap: 18px; }
+    .ph { display: none; }
+    .pr { grid-template-columns: 1fr; gap: 6px; }
+    .two { grid-template-columns: 1fr; }
+    .cell { border-right: 0; border-bottom: var(--border-thin); }
+    .cell:last-child { border-bottom: 0; }
+  }
+  @media (max-width: 720px) {
+    .breadcrumb { padding: 18px var(--pad-page-x-mobile) 0; }
+    .hero { padding: 28px var(--pad-page-x-mobile) 20px; }
+    .meta-strip { margin: 24px var(--pad-page-x-mobile) 0; grid-template-columns: 1fr; gap: 14px; }
+    .block { padding: 40px var(--pad-page-x-mobile) 0; }
+    .section-h2 { font-size: 28px; }
+    .kr { grid-template-columns: 1fr; gap: 6px; }
+    .dashed { margin: 40px var(--pad-page-x-mobile); }
+    .foot { padding: 22px var(--pad-page-x-mobile) 32px; flex-direction: column; align-items: flex-start; }
+  }
+</style>

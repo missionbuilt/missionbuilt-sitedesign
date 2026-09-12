@@ -370,7 +370,10 @@ const versus: Versus[] = [
     {/* ---------- FOOTER ---------- */}
     <footer class="foot">
       <span>Real strength is lifting others</span>
-      <a href="mailto:mike@missionbuilt.io">mike@missionbuilt.io</a>
+      <span class="foot-links">
+        <a href="/loadout/mealstack/privacy">Privacy</a>
+        <a href="mailto:mike@missionbuilt.io">mike@missionbuilt.io</a>
+      </span>
     </footer>
   </main>
 </BaseLayout>
@@ -688,6 +691,7 @@ const versus: Versus[] = [
     padding: 22px var(--pad-page-x) 40px; border-top: var(--border-thin);
     font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-faint);
   }
+  .foot .foot-links { display: inline-flex; gap: 22px; }
   .foot a { color: var(--color-chalk-dim); transition: color 120ms ease-out; text-transform: none; }
   .foot a:hover { color: var(--color-chalk); }
 
