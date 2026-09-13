@@ -1,51 +1,50 @@
 ---
 /**
- * MealStack — standalone page.
+ * MealStack — product page on the Rack.
  *
- * The first app on the Loadout, and the first thing on it that is not a skill:
- * an iPhone app for meal timing built backward from the training session.
- * GPL-3.0, not MIT. Nothing leaves the phone except what you send Coach, and
- * Coach is a switch. In testing: invite-only TestFlight by email; the App Store
- * listing and the source open with 1.0.
+ * An iPhone app for meal timing built backward from the training session.
+ * GPL-3.0. Private beta (TestFlight, added by hand from the form below); the
+ * App Store listing and the source open with 1.0.
+ *
+ * The page has one job: someone who has never heard of the app learns why it
+ * exists, what it does differently, how you use it, and how to get it. In
+ * order: hero → try it (the click-through demo, /demos/mealstack.html) →
+ * why → the rule (live cascade) → what it does differently → how you use it
+ * → side by side → fine print → join the beta (form → /api/beta) → FAQ →
+ * tester quotes (rendered only when there are real ones) → related.
  *
  * Color discipline: oxblood for the hero period, eyebrows, section labels,
- * the one marked card (Timing), the Ask-for-a-build button, and the closer
- * accent. Army green for the license stat only.
- *
- * The cascade demo runs the shipped rule on fictional data (sliding meals
- * chain off the logged time, gaps compress toward a 2-hour floor, the
- * pre-workout meal is pinned 90 minutes before the session). The three phone
- * frames are HTML replicas on fictional data; they use the system UI font on
- * purpose, because they depict the app, not the site.
+ * the one marked card (Timing), the two Join buttons, and the closer accent.
+ * Army green for the license stat only. No em-dashes in UI strings.
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import TopNav from '../../components/TopNav.astro';
+import DemoEmbed from '../../components/DemoEmbed.astro';
 
-const MAILTO =
-  'mailto:mike@missionbuilt.io?subject=MealStack%20TestFlight&body=I%27d%20like%20a%20TestFlight%20build.%20Apple%20ID%20email%3A%20';
+const MAILTO = 'mailto:mike@missionbuilt.io?subject=MealStack%20beta&body=Apple%20ID%20email%3A%20';
 
 const stats = [
-  { key: 'Runs on',     value: 'iPhone',     sub: 'iOS 18 and up',        army: false },
-  { key: 'Account',     value: 'None',       sub: undefined,              army: false },
-  { key: 'Phones home', value: 'Coach only', sub: 'and only switched on', army: false },
-  { key: 'License',     value: 'GPL-3.0',    sub: undefined,              army: true  },
-];
-
-type Diff = { k: string; v: string; body: string };
-const diffs: Diff[] = [
-  { k: 'What you install', v: 'An app on your phone, not a skill in your agent.', body: 'Nothing to clone, nothing to add to Claude. It arrives through TestFlight today and the App Store later. If you came here for MCP tools, the other rows are those.' },
-  { k: 'What leaves your phone', v: 'The plan, the log and the day: nothing. Coach: what you send it.', body: 'MealStack keeps everything in files on your phone and writes macros to Apple Health if you let it. Coach is a switch, off by default. When it is on, what you type or photograph goes to a server Mission Built runs, and it is metered. It is also the reason the price is not settled; see the fine print below.' },
-  { k: 'The license', v: 'GPL-3.0, not MIT.', body: 'The rest of the Loadout is MIT: take it, close it, ship it. MealStack is copyleft: fork it, improve it, keep it open. The name and the marks stay with Mission Built.' },
+  { key: 'Runs on',            value: 'iPhone',     sub: 'iOS 26 and up',            army: false },
+  { key: 'Account',            value: 'None',       sub: undefined,                  army: false },
+  { key: 'Leaves your phone',  value: 'Nothing',    sub: 'unless you switch it on',  army: false },
+  { key: 'License',            value: 'GPL-3.0',    sub: undefined,                  army: true  },
 ];
 
 type Card = { label: string; verdict: string; evidence: string; them: string; mark?: boolean };
 const cards: Card[] = [
-  { mark: true, label: 'Timing', verdict: 'The day is anchored to the session, not the clock.', evidence: 'Pre, intra, post and dinner are pinned to the session. Everything before them slides off the real logged time. A late morning compresses the gaps and flags what moved; it never pushes the pre-workout meal into the bar.', them: 'Alarms every N hours, or routines that roll lateness forward into the session.' },
-  { label: 'Macros', verdict: 'Weighed from the plate, or typed. Never both.', evidence: 'A meal is a list of ingredient quantities from a pantry, so the numbers come from the food and editing a portion moves them. A daily target lives apart from the plan, so the editor can say "this plate puts the day 40 g of carbs over" while you are still building it.', them: 'A food database and a total. No plan to measure the plate against.' },
-  { label: 'Logging', verdict: 'Log at the time you ate, not the time you remembered.', evidence: 'The log sheet opens at now with 15, 30 and 60 minutes ago one tap away, and shows what every remaining meal does at that time before you commit. Move today\'s session on the Today screen and the locked block follows it.', them: '"Done" means now, so the day keys off the wrong number.' },
-  { label: 'Travel', verdict: 'A day runs in the zone it started in.', evidence: 'Cross three time zones and the spacing holds. The app says so, and offers one tap to switch when local time becomes the truth. Skip a meal and it stays a decision, not a miss. History compares home days to travel days.', them: 'Alarms slide with the phone clock. Breakfast at 9, lunch at 10.' },
+  { mark: true, label: 'Timing', verdict: 'The day is anchored to the session, not the clock.', evidence: 'Pre-workout, post-workout and dinner are pinned to the session. Everything before them slides off the time you actually ate. A late morning tightens the gaps and says what moved; it never pushes the pre-workout meal into the bar.', them: 'Alarms every N hours, or routines that roll lateness forward into the session.' },
+  { label: 'Macros', verdict: 'Weighed from the plate, or typed. Never both.', evidence: 'A meal is a list of foods and quantities from your kitchen, so the numbers come from the food and editing a portion moves them. The daily target lives apart from the plan, so the editor can say "this plate puts the day 40 g of carbs over" while you are still building it.', them: 'A food database and a total. No plan to measure the plate against.' },
+  { label: 'Logging', verdict: 'Log at the time you ate, not the time you remembered.', evidence: 'The sheet opens on now with 15, 30 and 60 minutes ago one tap away, and shows what every remaining meal does at that time before you commit. Move today\'s session from the Today screen and the pinned block follows it.', them: '"Done" means now, so the day keys off the wrong number.' },
+  { label: 'Travel', verdict: 'A day runs in the zone it started in.', evidence: 'Cross three time zones and the spacing holds. The app says so and offers one tap to switch when local time becomes the truth. Skip a meal and it stays a decision, not a miss. History compares home days to travel days.', them: 'Alarms drift with the phone clock. Breakfast at 9, lunch at 10.' },
   { label: 'Surfaces', verdict: 'You should rarely have to open it.', evidence: 'Notifications carry the plate and two actions: "Ate it now" and "Not yet, ask in 20." Home and Lock Screen widgets with a live countdown. A Live Activity from an hour before to thirty after, with Log on the Lock Screen and in the Dynamic Island.', them: 'A badge, and a screen you unlock to answer it.' },
-  { label: 'Coach', verdict: 'An AI that proposes. You decide.', evidence: 'Ask for targets and a fixed formula does the arithmetic, not the model. Ask for meal ideas, or hand it a menu photo, a link or a restaurant name, and it fits options to this meal\'s numbers. Nothing changes until you tap a card. Not a doctor, and it says so every time.', them: 'A chatbot that talks, or a coach that edits your plan without asking.' },
+  { label: 'Coach', verdict: 'An AI that proposes. You decide.', evidence: 'Ask for targets and a fixed formula does the arithmetic, not the model. Ask for meal ideas, or hand it a menu photo, a link or a restaurant name, and it fits options to this meal\'s numbers. Nothing changes until you tap a card. Not a doctor, and it says so before you ask.', them: 'A chatbot that talks, or a coach that edits your plan without asking.' },
+];
+
+type Step = { n: string; title: string; body: string };
+const steps: Step[] = [
+  { n: '01', title: 'Answer two questions.', body: 'When is your first meal, and when do you train. Quick start builds a working day from that, no AI and no account: the morning chains forward, the pre-workout meal and everything after are pinned to the session. Put food on the plates when you are ready, or let Coach fill them.' },
+  { n: '02', title: 'Log when you actually ate.', body: 'One tap for now, one for thirty minutes ago. The sheet shows what every remaining meal does before you commit, and the notification can log it without opening the app. The pre-workout meal holds. The rest of the day bends around you.' },
+  { n: '03', title: 'Ask when the plan breaks.', body: 'Client lunch, airport, empty fridge. Send Coach the menu, a link or what is in the kitchen and it fits an order to this meal\'s numbers. Nothing changes until you tap. History keeps score, so you can see what the road does to you.' },
 ];
 
 type Versus = { k: string; them: string; us: string; honest?: boolean };
@@ -56,21 +55,64 @@ const versus: Versus[] = [
   { k: 'Logging time', them: 'Now.', us: 'When you actually ate, with the consequence shown first.' },
   { k: 'Time zones', them: 'Alarms drift with the phone.', us: 'Spacing holds. You choose when to switch.' },
   { k: 'Eating out', them: 'Search the database, guess the portion.', us: 'Coach reads the menu against this meal\'s numbers.' },
-  { k: 'Your data', them: 'Their servers, your account.', us: 'Your phone. Coach is the one exception, and it is a switch.' },
+  { k: 'Your data', them: 'Their servers, your account.', us: 'Your phone. Coach and usage data are switches, off until you say.' },
   { k: 'Best at', them: 'A database of a million foods and a barcode scanner.', us: 'Timing. Keep the other app for the barcode if you like.', honest: true },
 ];
+
+type Faq = { q: string; a: string };
+const faqs: Faq[] = [
+  { q: 'Is it free?', a: 'During the beta, yes, Coach included, on an allowance. The launch price is not settled. The fine print above says why, and the answer lands on this page before it lands in the store.' },
+  { q: 'Does it need an account?', a: 'No. There is nothing to sign up for. Your plan, your log and your history are files on your phone. One button in Settings wipes them, and the little the server holds for Coach along with them.' },
+  { q: 'What leaves my phone?', a: 'Nothing, unless you switch it on. Coach sends what you type or photograph to a server I run, and only while Coach is on. Usage data goes to an analytics service only if you say yes when the app asks. The privacy page says exactly what, where and for how long.' },
+  { q: 'Is Coach a doctor?', a: 'No. Coach is an AI. Its targets come from a formula you can read, its meal ideas are estimates, and it declines questions about medical conditions, medication, pregnancy and supplement doses. Nothing it proposes changes your plan until you tap.' },
+  { q: 'Can I keep my macro tracker?', a: 'Yes, and if you lean on a barcode scanner you should. MealStack is the timing layer. It knows the plate, weighs macros from it, and writes them to Apple Health at the time you ate, so the two live side by side.' },
+  { q: 'Android, iPad, watch?', a: 'iPhone only, iOS 26 and up. No Android, no iPad layout, no watch app, and none planned for 1.0. The Lock Screen, the widgets and the Dynamic Island are where the app lives when it is not open.' },
+  { q: 'Why GPL-3.0?', a: 'So a fork stays open. You can read, change and ship MealStack, and anything built from it has to carry the same freedom. The name and the marks stay with Mission Built. The source opens with 1.0.' },
+  { q: 'When is 1.0?', a: 'After the meet it is being tested through, in October 2026, once a fresh install has been proven on phones that are not mine.' },
+];
+
+/** Tester quotes. Empty until there are real ones; the section does not render while empty. */
+type Quote = { text: string; who: string };
+const quotes: Quote[] = [];
+
+const title = 'MealStack: meal timing built around your training session · Mission Built';
+const description = 'An iPhone app for people who train. Tell it when your session is and it builds the day\'s meals backward from that, re-flows them when you eat late, and holds the pre-workout meal. Macros from the plate, a coach that proposes, your data on your phone. Private beta.';
+
+const ld = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'SoftwareApplication',
+      name: 'MealStack',
+      url: 'https://missionbuilt.io/rack/mealstack',
+      applicationCategory: 'HealthApplication',
+      operatingSystem: 'iOS 26',
+      description,
+      license: 'https://www.gnu.org/licenses/gpl-3.0.html',
+      author: { '@type': 'Person', name: 'Mike Nichols', url: 'https://missionbuilt.io/about' },
+      publisher: { '@type': 'Organization', name: 'Mission Built', url: 'https://missionbuilt.io' },
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', availability: 'https://schema.org/PreOrder', description: 'Free during the private beta. Launch price not yet set.' },
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+    },
+  ],
+};
 ---
 <BaseLayout
-  title="MealStack · The Loadout · Mission Built"
-  description="Your session doesn't move. Your meals do. An iPhone app for meal timing built backward from the bar, with macros, travel, widgets and a coach that proposes. GPL-3.0. In testing."
-  active="loadout"
+  title={title}
+  description={description}
+  ogImageAlt="MealStack. Your session doesn't move. Your meals do. An iPhone app for meal timing built backward from the training session, by Mission Built."
+  active="rack"
 >
-  <TopNav active="loadout" />
+  <script is:inline slot="head" type="application/ld+json" set:html={JSON.stringify(ld)} />
+  <TopNav active="rack" />
 
   <main class="page">
     {/* ---------- BREADCRUMB ---------- */}
     <nav class="breadcrumb" aria-label="Breadcrumb">
-      <a href="/loadout">The Loadout</a>
+      <a href="/rack">The Rack</a>
       <span aria-hidden="true"> / </span>
       <span class="here">MealStack</span>
     </nav>
@@ -79,7 +121,7 @@ const versus: Versus[] = [
     <section class="hero">
       <p class="eyebrow">
         <span class="dots" aria-hidden="true">▮▮▮</span>
-        <span>An iPhone app from the Loadout</span>
+        <span>An iPhone app from the Rack</span>
         <span class="dots" aria-hidden="true">▮▮▮</span>
       </p>
 
@@ -87,15 +129,20 @@ const versus: Versus[] = [
         <span>MealStack</span><span class="dot">.</span>
       </h1>
 
-      <div class="testing-tag" aria-label="In testing">
+      <div class="testing-tag" aria-label="Private beta">
         <span class="tag-sq" aria-hidden="true"></span>
-        <span>In testing</span>
+        <span>Private beta</span>
       </div>
 
       <p class="subtitle">
         <span class="line1">Your session doesn't move. Your meals do.</span>
-        <span class="line2">Other apps count macros. MealStack counts down to the bar.</span>
+        <span class="line2">Meal timing for people who train. The day is built backward from the session.</span>
       </p>
+
+      <div class="hero-ctas">
+        <a class="cta" href="#beta">Join the beta →</a>
+        <a class="cta-soft" href="#demo">See how it works ↓</a>
+      </div>
     </section>
 
     {/* ---------- META STRIP ---------- */}
@@ -108,44 +155,47 @@ const versus: Versus[] = [
       ))}
     </section>
 
-    {/* ---------- READ THIS FIRST ---------- */}
-    <section class="block">
-      <p class="section-label">Read this first</p>
-      <h2 class="section-h2">Not a skill. The first app on the Loadout, and it plays by different rules.</h2>
-      <div class="diff">
-        {diffs.map((d) => (
-          <div class="diff-cell">
-            <p class="k">{d.k}</p>
-            <p class="v">{d.v}</p>
-            <p class="body">{d.body}</p>
-          </div>
-        ))}
-      </div>
+    {/* ---------- TRY IT: click-through demo ---------- */}
+    <section class="block" id="demo">
+      <p class="section-label">Try it</p>
+      <h2 class="section-h2">Click through a training day.</h2>
+      <p class="prose">
+        A hand-drawn copy of the app on invented numbers, not a video. Twelve steps: a late
+        morning, a logged meal, the afternoon re-flowing around the session, the Lock Screen,
+        Coach, and History. Tap where it tells you, or let it drive.
+      </p>
+      <DemoEmbed
+        src="/demos/mealstack.html"
+        title="MealStack click-through demo"
+        caption="Click-through demo · drawn by hand on fictional data · the tabs work"
+        mobileHeight={900}
+      />
     </section>
 
     <hr class="dashed" />
 
     {/* ---------- WHY ---------- */}
-    <section class="block">
+    <section class="block" id="why">
       <p class="section-label">Why it exists</p>
       <h2 class="section-h2">I needed one rule no app had.</h2>
       <div class="story">
-        <p>My eating plan has one rule that matters more than the rest: the pre-workout meal sits ninety minutes before the bar. Everything else in the day is built backward from that.</p>
-        <p>I went looking for an app that understood the rule. The meal-timer apps are alarm clocks: every three hours, no plate, no idea what happens when breakfast is late. The routine apps chain steps forward, so a late morning pushes the pre-workout meal into the session. The macro trackers know what I ate to the gram and have no opinion about when.</p>
-        <p>So I built the one I needed. It counts down to the next plate, re-flows the day from the time I actually ate, holds the meal that matters, and knows what is on the plate. Then it grew a pantry, a history, a travel mode, and a coach with a ceiling.</p>
+        <p>My eating plan has one rule that matters more than the rest: the pre-workout meal goes in ninety minutes before the bar. Everything else in the day is built backward from that. Breakfast can slip. That meal cannot.</p>
+        <p>I went looking for an app that understood the rule, and there are three kinds to try. The meal-timer apps are alarm clocks: every three hours, no plate, no idea what to do when breakfast is late. The routine apps chain steps forward, so a late morning pushes the pre-workout meal into the session, which is the one thing I was trying to prevent. The macro trackers know what I ate to the gram and have no opinion about when. Not one of them asks what time you train.</p>
+        <p>So I built the one I needed, during a meet prep, on the phone I had with me at the rack. It counts down to the next plate, re-flows the day from the time I actually ate, holds the meal that matters, and knows what is on the plate. Then it grew a kitchen, a history, a travel mode and a coach with a ceiling.</p>
+        <p>Let's be honest about what it is not. It is not a food database with a barcode scanner, and it will not try to become one. It is the timing layer those apps do not have.</p>
         <p class="byline">Mike Nichols · built during a meet prep, 2026</p>
       </div>
     </section>
 
     <hr class="dashed" />
 
-    {/* ---------- THE RULE: live demo ---------- */}
-    <section class="block">
+    {/* ---------- THE RULE: live cascade ---------- */}
+    <section class="block" id="rule">
       <p class="section-label">The rule</p>
       <h2 class="section-h2">Breakfast was late. Your pre-workout meal shouldn't be.</h2>
       <p class="prose">
         Two kinds of meal. Sliding meals chain forward from the time you actually ate.
-        Locked meals are pinned to the session. Drag breakfast late and watch which one holds.
+        Pinned meals hold to the session. Drag breakfast late and watch which one moves.
       </p>
 
       <div class="demo" id="cascade">
@@ -157,14 +207,14 @@ const versus: Versus[] = [
         <div class="demo-rows" id="d-rows"></div>
         <p class="demo-foot" id="d-foot"></p>
       </div>
-      <p class="note">Gaps compress evenly toward a two-hour floor, rounded to five minutes. The pre-workout meal never moves. Move the session itself and the locked block follows it.</p>
+      <p class="note">Gaps compress evenly toward a two-hour floor, rounded to five minutes. The pre-workout meal never moves for a late morning. Move the session itself and the pinned block follows it.</p>
     </section>
 
     <hr class="dashed" />
 
-    {/* ---------- WHAT I NEEDED ---------- */}
-    <section class="block">
-      <p class="section-label">What I needed</p>
+    {/* ---------- WHAT IT DOES DIFFERENTLY ---------- */}
+    <section class="block" id="different">
+      <p class="section-label">What it does differently</p>
       <h2 class="section-h2">Six things the market didn't have in one place.</h2>
 
       <div class="cards">
@@ -177,110 +227,40 @@ const versus: Versus[] = [
           </article>
         ))}
       </div>
-
-      <h3 class="sub-h3">And the rest</h3>
-      <p class="prose">
-        A quick start that builds a working plan from four answers and no AI. A pantry of
-        about a hundred foods plus your own, entered per 100 g like the label. Apple Health
-        gets the macros at the real eat time, write-only. Light and dark. History that scores
-        against the target you set. Your plan is a JSON file on your phone. No account, no
-        sign-in, nothing to sync.
-      </p>
     </section>
 
     <hr class="dashed" />
 
-    {/* ---------- ON THE PHONE: replicas on fictional data ---------- */}
-    <section class="block">
-      <p class="section-label">On the phone</p>
-      <h2 class="section-h2">Three screens, one job each.</h2>
+    {/* ---------- HOW YOU USE IT ---------- */}
+    <section class="block" id="how">
+      <p class="section-label">How you use it</p>
+      <h2 class="section-h2">Two questions, then get on with your day.</h2>
+
+      <ol class="steps">
+        {steps.map((s) => (
+          <li class="step">
+            <span class="step-n">{s.n}</span>
+            <div>
+              <h3>{s.title}</h3>
+              <p>{s.body}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+
+      <h3 class="sub-h3">And the rest</h3>
       <p class="prose">
-        Redrawn with invented numbers. The real ones look like this with your plan behind them.
+        A kitchen of about a hundred foods plus your own, entered per 100 g like the label,
+        and saved meals you can drop onto any plate. Apple Health gets the macros at the real
+        eat time, write-only. Light and dark. History that scores against the target you set.
+        Your plan is a file on your phone. No account, no sign-in, nothing to sync.
       </p>
-
-      <div class="frames">
-        <figure class="frame-wrap">
-          <div class="phone" aria-label="Today screen: next meal countdown, totals, and the day's list">
-            <div class="status"><span>1:12</span><span>▮▮▮ ◉</span></div>
-            <div class="body">
-              <div class="topline"><span>Sat, Sep 12 · Training</span><span>Session <u>6:00 PM</u></span></div>
-              <div>
-                <div class="eb over">Overdue · 12 min</div>
-                <div class="clock">1:00</div>
-                <div class="title">Lunch</div>
-                <div class="plate">Chicken, jasmine rice, broccoli, olive oil</div>
-                <div class="macros">45P · 62C · 11F · 530 kcal</div>
-                <span class="btn">Log</span>
-                <div class="quiet">Not yet</div>
-              </div>
-              <div class="hr"></div>
-              <div class="bars">
-                <div class="bar"><div class="l">Protein</div><div class="t"><i style="width:42%"></i></div><div class="u">84 / 200 · 116 left</div></div>
-                <div class="bar"><div class="l">Carbs</div><div class="t"><i style="width:46%"></i></div><div class="u">96 / 210 · 114 left</div></div>
-                <div class="bar"><div class="l">Fat</div><div class="t"><i style="width:44%"></i></div><div class="u">31 / 70 · 39 left</div></div>
-              </div>
-              <div class="kcal">999 of 2270 kcal</div>
-              <div class="list">
-                <div class="li done"><span class="box on"></span><span>Breakfast</span><span class="tm">7:20 AM</span></div>
-                <div class="li done"><span class="box on"></span><span>Mid-morning</span><span class="tm">10:10 AM</span></div>
-                <div class="li"><span class="box"></span><span>Lunch</span><span class="tm">1:00 PM</span></div>
-                <div class="li"><span class="box"></span><span>Pre-workout<small>locked</small></span><span class="tm">4:30 PM</span></div>
-              </div>
-            </div>
-            <div class="tabs"><span><b>Today</b></span><span>History</span><span>Plan</span><span>Coach</span></div>
-          </div>
-          <figcaption class="cap"><span class="k">Today</span>The clock is the biggest thing on the screen. The word "overdue" lives in the eyebrow; the number never turns red.</figcaption>
-        </figure>
-
-        <figure class="frame-wrap">
-          <div class="phone" aria-label="Log sheet: pick the time you ate and preview the cascade">
-            <div class="status"><span>1:12</span><span>▮▮▮ ◉</span></div>
-            <div class="body">
-              <div class="sheet-head"><span class="dimtext">Cancel</span><b>Log Lunch</b><span>&nbsp;</span></div>
-              <div class="eb">When did you eat?</div>
-              <div class="chips"><span class="chip on">Now</span><span class="chip">15 ago</span><span class="chip">30 ago</span><span class="chip">1 hr ago</span><span class="chip">Other time…</span></div>
-              <div class="eb">What moves</div>
-              <div class="prev">
-                <div class="pr"><span>Lunch</span><span class="tm">1:12 PM</span></div>
-                <div class="pr"><span>Pre-workout<small class="lock">Locked · 90 min before</small></span><span class="tm hold">4:30 PM</span></div>
-                <div class="pr"><span>Post-workout<small class="lock">Locked · after</small></span><span class="tm">7:30 PM</span></div>
-                <div class="pr"><span>Dinner<small class="lock">Locked · after</small></span><span class="tm">8:30 PM</span></div>
-              </div>
-              <div class="eb gap">Gap to pre-workout: 3 h 18 m</div>
-              <span class="btn push">Log at 1:12 PM</span>
-              <div class="legal">The day keys off the time you pick, not the time you tap.</div>
-            </div>
-          </div>
-          <figcaption class="cap"><span class="k">Log</span>The common case is one tap. The consequence shows before you commit.</figcaption>
-        </figure>
-
-        <figure class="frame-wrap">
-          <div class="phone" aria-label="Coach: a target proposal card you can accept or ignore">
-            <div class="status"><span>1:12</span><span>▮▮▮ ◉</span></div>
-            <div class="body">
-              <div class="sheet-head"><b>Coach</b><span class="meter">Metered · 27 left today</span></div>
-              <div class="msg me">Powerlifting, four days, about 90 minutes a session. Desk job, I walk a bit. Holding weight.</div>
-              <div class="msg">Here is a target from those inputs. The numbers come from a fixed formula, not from me, and your phone checks them again.</div>
-              <div class="ccard">
-                <div class="eb">Proposed daily target</div>
-                <div class="big">Training day <span>200P · 210C · 70F · 2270 kcal</span><br />Rest day <span>200P · 115C · 70F · 1890 kcal</span></div>
-                <div class="why">A session costs about 470 kcal. That is the gap between the two days. Maintenance about 2650.</div>
-                <span class="btn">Use these targets</span>
-              </div>
-              <div class="msg dimtext small">Nothing changes in your plan until you tap the card.</div>
-              <div class="compose"><b>Ask Coach…</b><span>▲</span></div>
-              <div class="legal">Coach is an AI, not a doctor or dietitian. Its numbers are estimates.</div>
-            </div>
-          </div>
-          <figcaption class="cap"><span class="k">Coach</span>It gathers inputs and proposes a card. The plan changes only when you tap.</figcaption>
-        </figure>
-      </div>
     </section>
 
     <hr class="dashed" />
 
     {/* ---------- SIDE BY SIDE ---------- */}
-    <section class="block">
+    <section class="block" id="compare">
       <p class="section-label">Side by side</p>
       <h2 class="section-h2">What other apps do, and what this one does instead.</h2>
 
@@ -295,19 +275,24 @@ const versus: Versus[] = [
     <hr class="dashed" />
 
     {/* ---------- FINE PRINT ---------- */}
-    <section class="block">
+    <section class="block" id="fine-print">
       <p class="section-label">The fine print, in plain words</p>
-      <h2 class="section-h2">Open source, copyleft, and a price I have not picked.</h2>
-      <div class="lic">
+      <h2 class="section-h2">Open source, copyleft, your data, and a price I have not picked.</h2>
+      <div class="lic three">
         <div class="lic-cell">
           <p class="k">GPL-3.0</p>
           <p class="v">Fork it. Keep it open.</p>
-          <p class="body">You can read, change and ship MealStack, and anything built from it has to carry the same freedom. A closed clone with a new icon is the one thing the license rules out. The Loadout's skills are MIT because a skill is meant to be lifted; an app is meant to be kept honest.</p>
+          <p class="body">You can read, change and ship MealStack, and anything built from it has to carry the same freedom. A closed clone with a new icon is the one thing the license rules out. The Loadout skills and Ironstack are MIT because a skill is meant to be lifted; an app is meant to be kept honest.</p>
         </div>
         <div class="lic-cell">
           <p class="k">Price</p>
           <p class="v">Not settled yet. Here is why.</p>
-          <p class="body">Every Coach question runs on a server I pay for. I want Coach in the app, and I am not willing to lose money keeping it there, so the launch price is an open question: free with Coach on an allowance, a one-time price, or Coach as the paid part of a free app. What is settled: timing, the log, the plan and the widgets cost nothing to run and will not be what you pay for, and the answer lands on this page before it lands in the store.</p>
+          <p class="body">Every Coach question runs on a server I pay for. I want Coach in the app, and I am not willing to lose money keeping it there, so the launch price is an open question: free with Coach on an allowance, a one-time price, or Coach as the paid part of a free app. What is settled: timing, the log, the plan and the widgets cost nothing to run and will not be what you pay for, and the answer lands here before it lands in the store.</p>
+        </div>
+        <div class="lic-cell">
+          <p class="k">Your data</p>
+          <p class="v">On your phone. Two switches.</p>
+          <p class="body">The plan, the log and the day never leave the phone. Coach is a switch, off by default; when it is on, what you send it goes to a server Mission Built runs, and it is metered. Usage data is a second switch the app asks about once. <a class="inline-link" href="/rack/mealstack/privacy">The privacy page</a> says exactly what, where, and for how long.</p>
         </div>
       </div>
       <div class="fine">
@@ -318,21 +303,38 @@ const versus: Versus[] = [
 
     <hr class="dashed" />
 
-    {/* ---------- STATUS / GET IT ---------- */}
-    <section class="install-block" id="get">
-      <p class="section-label">Status</p>
-      <h2 class="section-h2">In testing, on a real prep.</h2>
+    {/* ---------- JOIN THE BETA ---------- */}
+    <section class="install-block" id="beta">
+      <p class="section-label">Join the beta</p>
+      <h2 class="section-h2">Private beta, on iPhone, right now.</h2>
 
       <div class="status-panel">
         <div class="status-copy">
           <h3>Running through a meet prep, October 2026</h3>
-          <p>MealStack is on one phone every day right now: five meals, an evening session, a pre-workout meal that does not move. The source and the App Store listing open with 1.0, after the meet.</p>
-          <p>If you want it before then, ask. You will get a TestFlight build, the quick start, and a short list of things to break.</p>
-          <a class="cta" href={MAILTO}>Ask for a build →</a>
-          <p class="cta-note">mike@missionbuilt.io · include the email on your Apple ID</p>
+          <p>MealStack is on one phone every day right now: six meals, an evening session, a pre-workout meal that does not move. I add testers by hand, in small batches, from the email on your Apple ID. You get an invite from Apple, a link to install, the quick start, and a short list of things I would like you to break.</p>
+          <p>Builds expire every ninety days and you get the next one. The address is used for the invite and nothing else; you can leave from the invite email at any time.</p>
+
+          <form class="beta-form" id="beta-form" method="post" action="/api/beta" novalidate>
+            <label class="field">
+              <span class="field-k">Apple ID email</span>
+              <input type="email" name="email" id="beta-email" required autocomplete="email" inputmode="email" placeholder="the address on your Apple ID" maxlength="254" />
+            </label>
+            <label class="field">
+              <span class="field-k">What do you train for? <em>optional</em></span>
+              <input type="text" name="note" id="beta-note" autocomplete="off" placeholder="powerlifting, a marathon, a wedding, getting off the couch" maxlength="200" />
+            </label>
+            <div class="hp" aria-hidden="true"><label>Website<input type="text" name="website" tabindex="-1" autocomplete="off" /></label></div>
+            <input type="hidden" name="t" id="beta-t" value="" />
+            <input type="hidden" name="page" value="/rack/mealstack" />
+            <div class="form-row">
+              <button class="cta" type="submit" id="beta-submit">Join the beta →</button>
+              <p class="cta-note" id="beta-status" role="status" aria-live="polite">iPhone only · iOS 26 and up · no account</p>
+            </div>
+          </form>
+          <p class="cta-note" id="beta-fallback" hidden>The form is not taking names right now. Email <a href={MAILTO}>mike@missionbuilt.io</a> with the address on your Apple ID and I will add you by hand.</p>
         </div>
         <div class="doors">
-          <div class="door open"><div><div class="n">TestFlight</div><p class="d">Invite only. Builds expire every 90 days; you will get the next one.</p></div><span class="s">By request</span></div>
+          <div class="door open"><div><div class="n">Beta</div><p class="d">By invite, from the form. Small batches, added by hand.</p></div><span class="s">Now</span></div>
           <div class="door dim"><div><div class="n">App Store</div><p class="d">The public door.</p></div><span class="s">With 1.0</span></div>
           <div class="door dim"><div><div class="n">Source</div><p class="d">github.com/missionbuilt/mealstack, GPL-3.0.</p></div><span class="s">With 1.0</span></div>
         </div>
@@ -341,20 +343,51 @@ const versus: Versus[] = [
 
     <hr class="dashed" />
 
-    {/* ---------- ALSO IN THE KIT ---------- */}
+    {/* ---------- FAQ ---------- */}
+    <section class="block" id="faq">
+      <p class="section-label">Questions</p>
+      <h2 class="section-h2">The ones I get asked.</h2>
+      <dl class="faq">
+        {faqs.map((f) => (
+          <div class="faq-item">
+            <dt>{f.q}</dt>
+            <dd>{f.a}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+
+    {quotes.length > 0 && (
+      <>
+        <hr class="dashed" />
+        <section class="block" id="testers">
+          <p class="section-label">From the beta</p>
+          <h2 class="section-h2">What testers say.</h2>
+          <div class="quotes">
+            {quotes.map((q) => (
+              <blockquote class="quote"><p>{q.text}</p><footer>{q.who}</footer></blockquote>
+            ))}
+          </div>
+        </section>
+      </>
+    )}
+
+    <hr class="dashed" />
+
+    {/* ---------- ALSO ON THE RACK ---------- */}
     <section class="block">
-      <p class="section-label">Also in the kit</p>
-      <h2 class="section-h2">The full Loadout.</h2>
+      <p class="section-label">Also on the Rack</p>
+      <h2 class="section-h2">The other tool, and the other half.</h2>
 
       <div class="related">
-        <a href="/loadout/ironstack" class="related-card">
+        <a href="/rack/ironstack" class="related-card">
           <h3>Ironstack</h3>
-          <p>Weight is a number. Heavy is a feeling. A training partner with your whole history in its head. The other half of the barbell.</p>
-          <span class="related-cta">Open →</span>
+          <p>Weight is a number. Heavy is a feeling. A training partner with your whole history in its head. Nothing phones home.</p>
+          <span class="related-cta">Preview →</span>
         </a>
-        <a href="/loadout/warmup" class="related-card">
-          <h3>The Warmup</h3>
-          <p>A daily intelligence brief for your first coffee. Curated sources, link safety scanning, live artifact.</p>
+        <a href="/loadout" class="related-card">
+          <h3>The Loadout</h3>
+          <p>The boardroom half: open-source skills for product leaders. The Warmup, the Approach, the Spotter.</p>
           <span class="related-cta">Open →</span>
         </a>
       </div>
@@ -371,7 +404,7 @@ const versus: Versus[] = [
     <footer class="foot">
       <span>Real strength is lifting others</span>
       <span class="foot-links">
-        <a href="/loadout/mealstack/privacy">Privacy</a>
+        <a href="/rack/mealstack/privacy">Privacy</a>
         <a href="mailto:mike@missionbuilt.io">mike@missionbuilt.io</a>
       </span>
     </footer>
@@ -379,9 +412,10 @@ const versus: Versus[] = [
 </BaseLayout>
 
 <script>
-  // The cascade rule on fictional data. Sliding meals chain off the logged
-  // breakfast time; gaps compress evenly toward a 2-hour floor (rounded to
-  // 5 minutes); the pre-workout meal is pinned 90 minutes before the session.
+  // ── The cascade rule on fictional data ──
+  // Sliding meals chain off the logged breakfast time; gaps compress evenly
+  // toward a 2-hour floor (rounded to 5 minutes); the pre-workout meal is
+  // pinned 90 minutes before the session.
   const SESSION = 18 * 60;
   const PRE = SESSION - 90;
   const FLOOR = 120;
@@ -394,7 +428,7 @@ const versus: Versus[] = [
     { code: 'M1', name: 'Breakfast', sub: 'slides' },
     { code: 'M2', name: 'Mid-morning', sub: 'slides' },
     { code: 'M3', name: 'Lunch', sub: 'slides' },
-    { code: 'M4', name: 'Pre-workout', sub: 'locked · 90 min before the bar' },
+    { code: 'M4', name: 'Pre-workout', sub: 'pinned · 90 min before the bar' },
   ];
   const planned = [420, 600, 780, PRE];
 
@@ -441,6 +475,61 @@ const versus: Versus[] = [
   if (slider) {
     slider.addEventListener('input', () => build(parseInt(slider.value, 10)));
     build(420);
+  }
+
+  // ── Join the beta ──
+  // Posts to the Pages Function at /api/beta. Without JS the form still posts
+  // and the function answers with a redirect back to this page.
+  const form = document.getElementById('beta-form') as HTMLFormElement | null;
+  const status = document.getElementById('beta-status');
+  const fallback = document.getElementById('beta-fallback');
+  const tField = document.getElementById('beta-t') as HTMLInputElement | null;
+  const submit = document.getElementById('beta-submit') as HTMLButtonElement | null;
+  if (tField) tField.value = String(Date.now());
+
+  function say(msg: string, tone: 'ok' | 'err' | ''): void {
+    if (!status) return;
+    status.textContent = msg;
+    status.className = 'cta-note' + (tone ? ' ' + tone : '');
+  }
+
+  const params = new URLSearchParams(location.search);
+  if (params.get('beta') === 'ok') say('You are on the list. Watch for an email from Apple; it can take a few days.', 'ok');
+  if (params.get('beta') === 'err') say('That did not go through. Check the address and try again.', 'err');
+
+  if (form && submit) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = (document.getElementById('beta-email') as HTMLInputElement).value.trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { say('That does not look like an email address.', 'err'); return; }
+      submit.disabled = true;
+      say('Adding you…', '');
+      try {
+        const res = await fetch('/api/beta', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify(Object.fromEntries(new FormData(form).entries())),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (res.ok && data.ok) {
+          say('You are on the list. Watch for an email from Apple; it can take a few days.', 'ok');
+          form.reset();
+          if (tField) tField.value = String(Date.now());
+        } else if (res.status === 503 || res.status === 404 || data.fallback) {
+          if (fallback) fallback.hidden = false;
+          say('', '');
+        } else if (res.status === 429) {
+          say('Too many tries from here. Give it an hour.', 'err');
+        } else {
+          say(data.error || 'That did not go through. Check the address and try again.', 'err');
+        }
+      } catch {
+        if (fallback) fallback.hidden = false;
+        say('', '');
+      } finally {
+        submit.disabled = false;
+      }
+    });
   }
 </script>
 
@@ -561,74 +650,52 @@ const versus: Versus[] = [
   .card .them { margin: 0; font-family: var(--font-mono); font-size: 11px; line-height: 1.5; color: var(--color-chalk-faint); border-top: 1px dashed var(--color-rule); padding-top: 10px; }
   .card .them b { color: var(--color-chalk-dim); font-weight: 500; }
 
-  /* ============ FRAMES ============ */
-  .frames { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 32px; align-items: start; }
-  .frame-wrap { margin: 0; display: flex; flex-direction: column; gap: 12px; align-items: center; }
-  .frame-wrap .cap { max-width: 300px; font-family: var(--font-serif); font-size: 13px; line-height: 1.5; color: var(--color-chalk-dim); text-align: center; }
-  .frame-wrap .cap .k { display: block; margin-bottom: 6px; letter-spacing: 0.18em; }
 
-  /* Phone replicas: the app's own skin (charcoal, chalk, one oxblood), system UI face on purpose. */
-  .phone {
-    width: 300px; height: 620px; border: var(--border-thin); background: #141210; color: #ebe5d8;
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 13px; line-height: 1.35; overflow: hidden; position: relative; display: flex; flex-direction: column;
-  }
-  .phone .status { display: flex; justify-content: space-between; padding: 10px 18px 0; font-size: 11px; font-weight: 600; font-variant-numeric: tabular-nums; }
-  .phone .body { padding: 14px 18px 0; flex: 1; display: flex; flex-direction: column; gap: 12px; }
-  .phone .topline { font-size: 11.5px; color: #a8a094; display: flex; justify-content: space-between; }
-  .phone .topline u { text-decoration: none; color: #ebe5d8; border-bottom: 1px solid #5a564f; }
-  .phone .eb { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.16em; text-transform: uppercase; color: #a8a094; }
-  .phone .eb.over { color: #e85e56; }
-  .phone .eb.gap { margin-top: 6px; }
-  .phone .clock { font-family: var(--font-display); font-size: 64px; font-weight: 600; line-height: 0.95; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; margin: 6px 0 4px; }
-  .phone .title { font-size: 19px; font-weight: 600; }
-  .phone .plate { font-size: 12.5px; color: #a8a094; }
-  .phone .macros { font-family: var(--font-mono); font-size: 11px; color: #a8a094; font-variant-numeric: tabular-nums; }
-  .phone .btn { display: block; text-align: center; padding: 11px 0; background: #a8211a; color: #ebe5d8; font-weight: 600; font-size: 14px; margin-top: 8px; }
-  .phone .btn.push { margin-top: auto; }
-  .phone .quiet { text-align: center; font-size: 12.5px; color: #a8a094; margin-top: 6px; }
-  .phone .hr { height: 1px; background: #2a2622; }
-  .phone .bars { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; align-items: end; }
-  .phone .bar .l { font-size: 10.5px; color: #a8a094; margin-bottom: 4px; }
-  .phone .bar .t { height: 3px; background: #2a2622; position: relative; }
-  .phone .bar .t i { position: absolute; left: 0; top: 0; bottom: 0; background: #a8a094; }
-  .phone .bar .u { font-size: 9px; color: #5a564f; margin-top: 4px; white-space: nowrap; font-variant-numeric: tabular-nums; }
-  .phone .kcal { font-family: var(--font-mono); font-size: 10.5px; color: #5a564f; white-space: nowrap; margin-top: -6px; }
-  .phone .list { display: flex; flex-direction: column; }
-  .phone .li { display: grid; grid-template-columns: 18px 1fr auto; gap: 10px; align-items: center; padding: 9px 0; border-bottom: 1px solid #221f1c; font-size: 13px; }
-  .phone .li .box { width: 11px; height: 11px; border: 1px solid #5a564f; }
-  .phone .li .box.on { background: #a8a094; border-color: #a8a094; }
-  .phone .li.done { color: #5a564f; }
-  .phone .li .tm { font-variant-numeric: tabular-nums; color: #a8a094; font-size: 12.5px; }
-  .phone .li.done .tm { color: #5a564f; }
-  .phone .li small { display: block; font-size: 10px; color: #5a564f; }
-  .phone .tabs { margin-top: auto; display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid #2a2622; padding: 9px 0 12px; font-size: 9.5px; color: #5a564f; text-align: center; }
-  .phone .tabs b { color: #e85e56; font-weight: 600; }
-  .phone .tabs span::before { content: ''; display: block; width: 14px; height: 14px; border: 1px solid currentColor; margin: 0 auto 4px; }
-  .phone .sheet-head { display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
-  .phone .sheet-head b { font-weight: 600; font-size: 15px; }
-  .phone .dimtext { color: #a8a094; }
-  .phone .meter { color: #5a564f; font-size: 11px; }
-  .phone .chips { display: flex; gap: 6px; flex-wrap: wrap; }
-  .phone .chip { font-size: 11.5px; padding: 7px 9px; border: 1px solid #2a2622; color: #a8a094; }
-  .phone .chip.on { border-color: #ebe5d8; color: #ebe5d8; }
-  .phone .prev { display: flex; flex-direction: column; }
-  .phone .pr { display: grid; grid-template-columns: 1fr auto; gap: 8px; padding: 8px 0; border-bottom: 1px solid #221f1c; font-size: 12.5px; align-items: baseline; }
-  .phone .pr small { display: block; font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase; color: #5a564f; }
-  .phone .pr .tm { font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
-  .phone .pr .tm.hold { color: #e85e56; }
-  .phone .msg { font-size: 12.5px; color: #ebe5d8; max-width: 92%; }
-  .phone .msg.me { align-self: flex-end; color: #a8a094; text-align: right; }
-  .phone .msg.small { font-size: 11.5px; }
-  .phone .ccard { border: 1px solid #2a2622; background: #1f1c19; padding: 12px; }
-  .phone .ccard .eb { margin-bottom: 6px; }
-  .phone .ccard .big { font-family: var(--font-mono); font-size: 12px; font-variant-numeric: tabular-nums; line-height: 1.7; }
-  .phone .ccard .big span { color: #a8a094; }
-  .phone .ccard .why { font-size: 11.5px; color: #a8a094; margin: 8px 0 2px; }
-  .phone .ccard .btn { margin-top: 10px; padding: 9px 0; font-size: 13px; }
-  .phone .compose { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center; border: 1px solid #2a2622; padding: 8px 10px; font-size: 12px; color: #5a564f; margin-top: auto; }
-  .phone .compose b { color: #a8a094; font-weight: 500; }
-  .phone .legal { font-size: 9.5px; color: #5a564f; text-align: center; margin: 6px 0 4px; }
+  /* ============ HERO CTAS ============ */
+  .hero-ctas { margin-top: 26px; display: inline-flex; align-items: center; gap: 22px; flex-wrap: wrap; justify-content: center; }
+  .cta-soft { font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-dim); transition: color 120ms ease-out; }
+  .cta-soft:hover { color: var(--color-chalk); }
+  .inline-link { color: var(--color-chalk); border-bottom: 1px solid var(--color-chalk-faint); transition: border-color 120ms ease-out; }
+  .inline-link:hover { border-bottom-color: var(--color-chalk); }
+
+  /* ============ STEPS ============ */
+  .steps { list-style: none; margin: 28px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); border-top: var(--border-thin); border-left: var(--border-thin); }
+  .step { display: grid; grid-template-columns: 44px 1fr; gap: 14px; padding: 24px 24px 22px; border-right: var(--border-thin); border-bottom: var(--border-thin); }
+  .step-n { font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.16em; color: var(--color-blood); padding-top: 6px; }
+  .step h3 { margin: 0 0 10px; font-family: var(--font-display); font-weight: 500; font-size: 22px; line-height: 1.1; text-transform: uppercase; letter-spacing: 0.01em; color: var(--color-chalk); }
+  .step p { margin: 0; font-family: var(--font-serif); font-size: 14.5px; line-height: 1.55; color: var(--color-chalk-dim); }
+
+  /* ============ FINE PRINT, THREE UP ============ */
+  .lic.three { grid-template-columns: repeat(3, 1fr); }
+  .lic-cell .body a { color: var(--color-chalk); }
+
+  /* ============ BETA FORM ============ */
+  .beta-form { margin-top: 18px; display: grid; gap: 14px; max-width: 520px; }
+  .field { display: grid; gap: 6px; }
+  .field-k { font-family: var(--font-mono); font-size: 10px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); }
+  .field-k em { font-style: normal; letter-spacing: 0.1em; text-transform: none; color: var(--color-chalk-faint); margin-left: 6px; }
+  .field input { width: 100%; padding: 12px 14px; background: var(--color-bg); border: var(--border-thin); color: var(--color-chalk); font-family: var(--font-serif); font-size: 15px; transition: border-color 120ms ease-out; }
+  .field input::placeholder { color: var(--color-chalk-faint); }
+  .field input:focus { border-color: var(--color-chalk-dim); outline: none; box-shadow: 0 0 0 2px var(--color-blood); }
+  .hp { position: absolute; left: -9999px; top: -9999px; height: 0; overflow: hidden; }
+  .form-row { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+  .form-row .cta { margin: 0; border: none; cursor: pointer; }
+  .form-row .cta:disabled { opacity: 0.6; cursor: default; }
+  .cta-note.ok { color: var(--color-army); }
+  .cta-note.err { color: #e85e56; }
+  #beta-fallback a { color: var(--color-chalk); }
+
+  /* ============ FAQ ============ */
+  .faq { margin: 28px 0 0; max-width: 900px; border-top: var(--border-thin); }
+  .faq-item { display: grid; grid-template-columns: minmax(200px, 1fr) 2fr; gap: 24px; padding: 20px 0; border-bottom: var(--border-thin); }
+  .faq dt { margin: 0; font-family: var(--font-display); font-weight: 500; font-size: 19px; line-height: 1.15; letter-spacing: 0.01em; text-transform: uppercase; color: var(--color-chalk); }
+  .faq dd { margin: 0; font-family: var(--font-serif); font-size: 15px; line-height: 1.6; color: var(--color-chalk-dim); }
+
+  /* ============ QUOTES ============ */
+  .quotes { margin-top: 28px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; border-top: var(--border-thin); border-left: var(--border-thin); }
+  .quote { margin: 0; padding: 24px; border-right: var(--border-thin); border-bottom: var(--border-thin); }
+  .quote p { margin: 0 0 12px; font-family: var(--font-serif); font-size: 16px; line-height: 1.6; color: var(--color-chalk); }
+  .quote footer { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-chalk-faint); }
 
   /* ============ VERSUS ============ */
   .versus { margin-top: 28px; border-top: var(--border-thin); }
@@ -702,8 +769,10 @@ const versus: Versus[] = [
     .diff-cell { border-right: 0; border-bottom: var(--border-thin); }
     .diff-cell:last-child { border-bottom: 0; }
     .cards { grid-template-columns: repeat(2, 1fr); }
-    .frames { grid-template-columns: 1fr; justify-items: center; }
     .status-panel { grid-template-columns: 1fr; }
+    .steps { grid-template-columns: 1fr; }
+    .lic.three { grid-template-columns: 1fr; }
+    .quotes { grid-template-columns: 1fr; }
   }
   @media (max-width: 720px) {
     .breadcrumb { padding: 18px var(--pad-page-x-mobile) 0; }
@@ -713,6 +782,8 @@ const versus: Versus[] = [
     .section-h2 { font-size: 28px; }
     .cards { grid-template-columns: 1fr; }
     .lic { grid-template-columns: 1fr; }
+    .faq-item { grid-template-columns: 1fr; gap: 8px; }
+    .hero-ctas { gap: 14px; }
     .lic-cell { border-right: 0; border-bottom: var(--border-thin); }
     .lic-cell:last-child { border-bottom: 0; }
     .vh { display: none; }

@@ -1,0 +1,17 @@
+# Cloudflare Pages redirects.
+#
+# Ironstack and MealStack moved from the Loadout to the Rack on Sept 13, 2026.
+# Permanent: the MealStack app links to the old privacy URL in builds already
+# installed. The splat rules cover trailing slashes.
+#
+# While MealStack 0.8.0 is in App Review, /loadout/mealstack/privacy is served
+# by a shim page (src/pages/loadout/mealstack/privacy.astro), not redirected:
+# Cloudflare evaluates these rules before static files, so the rules below
+# name /loadout/mealstack and /loadout/mealstack/ explicitly instead of using
+# a splat. After approval, delete the shim and replace the two MealStack rules
+# with:  /loadout/mealstack/*   /rack/mealstack/:splat  301
+
+/loadout/ironstack     /rack/ironstack         301
+/loadout/ironstack/*   /rack/ironstack/:splat  301
+/loadout/mealstack     /rack/mealstack         301
+/loadout/mealstack/    /rack/mealstack         301

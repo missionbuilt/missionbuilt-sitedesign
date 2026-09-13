@@ -6,6 +6,7 @@
  * seven Kibana dashboards, and a Kibana Agent Builder coach over a private
  * Elasticsearch you own. No MCP server, nothing phones home. In testing:
  * the code is public in the Loadout repo; the install doors open with v1.0.
+ * Lives on the Rack (the barbell half of the site) since Sept 13, 2026.
  *
  * Color discipline: oxblood for the hero period, eyebrows, section labels,
  * the one marked verdict card, and the closer accent. Army green for the
@@ -84,11 +85,11 @@ const dashboards = [
 ];
 ---
 <BaseLayout
-  title="Ironstack · The Loadout · Mission Built"
+  title="Ironstack · The Rack · Mission Built"
   description="Weight is a number. Heavy is a feeling. A training partner with your whole history in its head: two Claude skills, seven Kibana dashboards, and a coach with a ceiling, over an Elasticsearch you own. Open source, nothing phones home. In testing."
-  active="loadout"
+  active="rack"
 >
-  <TopNav active="loadout" />
+  <TopNav active="rack" />
 
   {/* Inter is for the Kibana replicas only. The site's three faces are loaded by BaseLayout. */}
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" />
@@ -96,7 +97,7 @@ const dashboards = [
   <main class="page">
     {/* ---------- BREADCRUMB ---------- */}
     <nav class="breadcrumb" aria-label="Breadcrumb">
-      <a href="/loadout">The Loadout</a>
+      <a href="/rack">The Rack</a>
       <span aria-hidden="true"> / </span>
       <span class="here">Ironstack</span>
     </nav>
@@ -105,7 +106,7 @@ const dashboards = [
     <section class="hero">
       <p class="eyebrow">
         <span class="dots" aria-hidden="true">▮▮▮</span>
-        <span>A skill from the Loadout</span>
+        <span>A training partner from the Rack</span>
         <span class="dots" aria-hidden="true">▮▮▮</span>
       </p>
 
@@ -392,26 +393,26 @@ workout-recall.zip
       <div class="fine">
         <p class="k">Fine print</p>
         <p>Ironstack is a training partner, not a programmer and not a doctor. It will give you a starting weight under a ceiling it can show you, a cue for the set in front of you, or an alternative when the plan calls for a lift you cannot do today. It will not write your program. Any question about pain or injury gets a pointer to reputable material and a qualified person, and nothing else.</p>
-        <p>Your logs stay in your repo and your Elastic project. The Loadout has no server in the loop, collects nothing, and cannot see your data.</p>
+        <p>Your logs stay in your repo and your Elastic project. Mission Built has no server in the loop, collects nothing, and cannot see your data.</p>
       </div>
     </section>
 
     <hr class="dashed" />
 
-    {/* ---------- ALSO IN THE KIT ---------- */}
+    {/* ---------- ALSO ON THE RACK ---------- */}
     <section class="block">
-      <p class="section-label">Also in the kit</p>
-      <h2 class="section-h2">The full Loadout.</h2>
+      <p class="section-label">Also on the Rack</p>
+      <h2 class="section-h2">The other tool, and the other half.</h2>
 
       <div class="related">
-        <a href="/loadout/warmup" class="related-card">
-          <h3>The Warmup</h3>
-          <p>A daily intelligence brief for your first coffee. Curated sources, link safety scanning, live artifact.</p>
-          <span class="related-cta">Open →</span>
+        <a href="/rack/mealstack" class="related-card">
+          <h3>MealStack</h3>
+          <p>Your session doesn't move. Your meals do. An iPhone app for meal timing built backward from the bar.</p>
+          <span class="related-cta">Preview →</span>
         </a>
-        <a href="/loadout/floodlight" class="related-card">
-          <h3>Floodlight</h3>
-          <p>Build your security visibility plan from three inputs. Standalone and offline, like this one.</p>
+        <a href="/loadout" class="related-card">
+          <h3>The Loadout</h3>
+          <p>The boardroom half: open-source skills for product leaders. The Warmup, the Approach, the Spotter.</p>
           <span class="related-cta">Open →</span>
         </a>
       </div>
@@ -423,7 +424,7 @@ workout-recall.zip
     <section class="block">
       <h2 class="section-h2">Open source.</h2>
       <p class="prose">
-        Ironstack ships under MIT, like the rest of the kit. The skills, the starter,
+        Ironstack ships under MIT, like the Loadout skills. The skills, the starter,
         the dashboards, and the coach's prompt and tools live in
         <a class="inline-link" href={SOURCE} target="_blank" rel="noopener">github.com/missionbuilt/loadout</a>.
         Your data never does.

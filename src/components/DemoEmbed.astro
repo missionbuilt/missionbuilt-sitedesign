@@ -8,14 +8,18 @@ interface Props {
   src: string;
   title: string;
   caption: string;
+  /** Frame height in px (default 680). */
+  height?: number;
+  /** Frame height at phone widths (≤720px); defaults to `height`. */
+  mobileHeight?: number;
 }
-const { src, title, caption } = Astro.props;
+const { src, title, caption, height = 680, mobileHeight = height } = Astro.props;
 
 // Unique ID per instance so multiple embeds on a page don't collide
 const uid = Math.random().toString(36).slice(2, 8);
 ---
 
-<div class="demo-wrap" data-demo-uid={uid}>
+<div class="demo-wrap" data-demo-uid={uid} style={`--demo-h:${height}px;--demo-h-mobile:${mobileHeight}px;`}>
   <div class="demo-iframe-wrap">
     <iframe
       class="demo-frame"
@@ -73,9 +77,12 @@ const uid = Math.random().toString(36).slice(2, 8);
   .demo-frame {
     display: block;
     width: 100%;
-    height: 680px;
+    height: var(--demo-h, 680px);
     border: none;
     background: var(--color-panel);
+  }
+  @media (max-width: 720px) {
+    .demo-frame { height: var(--demo-h-mobile, var(--demo-h, 680px)); }
   }
 
   /* ── Expand badge — oxblood, top-right corner, always visible ── */

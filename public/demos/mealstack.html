@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex" />
+<title>MealStack · click-through demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+/* ═══════════════════════════════════════════════════════════════════════
+   MEALSTACK CLICK-THROUGH DEMO
+   A hand-drawn HTML replica of the app on fictional data, with the same
+   guided-step panel the Loadout demos use. Nothing here is a screenshot.
+   The phone is drawn in the app's own dark palette (Ink.*); the guide
+   panel is Iron Log (charcoal, mono, oxblood).
+   ═══════════════════════════════════════════════════════════════════════ */
+:root {
+  /* Site */
+  --bg: #171513; --panel: #1f1c19; --rule: #2a2622; --chalk: #ebe5d8; --chalk-dim: #a8a094; --chalk-faint: #5a564f; --blood: #a8211a; --army: #7a8b3a;
+  /* App (Ink, dark) */
+  --i-bg: #171513; --i-surface: #211e1b; --i-rule: #36312c; --i-ink: #ebe5d8; --i-dim: #a8a094; --i-accent: #a8211a; --i-accent-text: #e85e56; --i-on: #ebe5d8; --i-landed: #8a9a48;
+  --mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+  --ui: -apple-system, 'SF Pro Text', Inter, system-ui, sans-serif;
+  --oswald: 'Oswald', 'Archivo Narrow', 'Helvetica Neue', Arial, sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: var(--bg); color: var(--chalk); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+button { font: inherit; }
+
+/* ── Stage ── */
+.stage { height: 100%; display: flex; align-items: stretch; gap: 0; overflow: hidden; }
+.phone-col { flex: 0 0 auto; display: flex; align-items: center; justify-content: center; padding: 18px 8px 18px 22px; }
+.guide { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; justify-content: center; padding: 24px 28px 24px 22px; border-left: 1px solid var(--rule); }
+
+/* ── Phone ── */
+.phone-scale { transform-origin: top left; }
+.phone {
+  width: 390px; height: 844px; border-radius: 48px; background: #000; padding: 10px; position: relative;
+  box-shadow: 0 0 0 1px #3a3530;
+}
+.screen { width: 100%; height: 100%; border-radius: 40px; background: var(--i-bg); overflow: hidden; position: relative; color: var(--i-ink); }
+.island { position: absolute; top: 11px; left: 50%; transform: translateX(-50%); width: 120px; height: 34px; border-radius: 20px; background: #000; z-index: 5; }
+.statusbar { display: flex; justify-content: space-between; align-items: center; padding: 18px 28px 0 30px; font-size: 15px; font-weight: 600; height: 54px; }
+.statusbar .glyphs { font-family: var(--mono); font-size: 11px; letter-spacing: 0.05em; color: var(--i-ink); }
+.view { position: absolute; inset: 0; display: none; flex-direction: column; }
+.view.on { display: flex; }
+.scroll { position: relative; flex: 1 1 auto; overflow-y: auto; overflow-x: hidden; padding: 0 20px 24px; scrollbar-width: none; }
+.scroll::-webkit-scrollbar { display: none; }
+
+/* Type */
+.eb { font-family: var(--mono); font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--i-dim); }
+.eb.over { color: var(--i-accent-text); }
+.mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.dim { color: var(--i-dim); }
+.acc { color: var(--i-accent-text); }
+.landed { color: var(--i-landed); }
+.rule { height: 1px; background: var(--i-rule); }
+
+/* Tabs */
+.tabs { flex: 0 0 auto; display: flex; align-items: flex-end; justify-content: space-between; padding: 8px 18px 24px; border-top: 1px solid var(--i-rule); background: rgba(23,21,19,.94); backdrop-filter: blur(12px); }
+.tab { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 10px; font-weight: 500; color: var(--i-dim); background: none; border: none; padding: 6px 10px; cursor: pointer; }
+.tab svg { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.tab.on { color: var(--i-accent-text); }
+.tab.coach { margin-left: 8px; padding: 8px 14px; border-radius: 22px; background: var(--i-surface); border: 1px solid var(--i-rule); }
+
+/* ── Today ── */
+.topline { display: flex; justify-content: space-between; align-items: center; padding-top: 6px; font-size: 14px; color: var(--i-dim); white-space: nowrap; }
+.topline .day { display: flex; align-items: center; gap: 6px; }
+.topline .sess { display: flex; align-items: baseline; gap: 6px; }
+.topline .sess b { font-family: var(--mono); font-weight: 600; border-bottom: 1px solid var(--i-rule); padding-bottom: 1px; }
+.topline .gear { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 1.6; margin-left: 10px; flex: 0 0 auto; }
+.daybar { display: flex; align-items: center; gap: 2px; height: 20px; margin: 14px 0 4px; position: relative; padding: 0 2px; }
+.daybar::before { content: ''; position: absolute; left: 0; right: 0; top: 9px; height: 2px; background: var(--i-rule); }
+.daybar .plate { position: relative; width: 12px; height: 12px; background: var(--i-bg); border: 1px solid var(--i-dim); flex: 0 0 auto; }
+.daybar .sp { flex: 1 1 auto; }
+.daybar .plate.eaten { background: var(--i-ink); border-color: var(--i-ink); }
+.daybar .plate.next { background: var(--i-accent); border-color: var(--i-accent); }
+.hero { padding: 26px 4px 6px; margin: 0 -4px; }
+.hero .clock { font-family: var(--oswald); font-weight: 700; font-size: 64px; line-height: 1; letter-spacing: 0; margin-top: 4px; font-variant-numeric: tabular-nums; }
+.hero .name { font-size: 22px; font-weight: 600; margin-top: 4px; }
+.hero .plate { font-size: 16px; color: var(--i-dim); margin-top: 6px; line-height: 1.3; }
+.hero .macros { font-family: var(--mono); font-size: 15px; color: var(--i-dim); margin-top: 6px; }
+.btn-primary { display: block; width: 100%; margin-top: 20px; padding: 15px; border-radius: 14px; background: var(--i-accent); color: var(--i-on); font-size: 17px; font-weight: 600; text-align: center; border: none; cursor: pointer; }
+.btn-secondary { display: block; width: 100%; min-height: 44px; background: none; border: none; color: var(--i-dim); font-size: 17px; cursor: pointer; }
+.footnote { font-size: 13px; color: var(--i-dim); line-height: 1.35; margin-top: 4px; }
+.totals { margin-top: 30px; border-top: 1px solid var(--i-rule); padding-top: 24px; }
+.totals-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 74px; gap: 12px; margin-top: 12px; align-items: end; }
+.mbar .l { font-size: 12px; color: var(--i-dim); }
+.mbar .v { font-family: var(--mono); font-size: 12px; font-weight: 600; margin-top: 2px; }
+.mbar .t { height: 3px; border-radius: 2px; background: var(--i-rule); margin: 6px 0 4px; overflow: hidden; }
+.mbar .t i { display: block; height: 100%; background: var(--i-ink); }
+.mbar .s { font-family: var(--mono); font-size: 11px; color: var(--i-dim); }
+.kcal { text-align: right; }
+.kcal .n { font-family: var(--mono); font-size: 20px; font-weight: 600; }
+.kcal .of { font-size: 12px; color: var(--i-dim); }
+.totals .left { font-size: 13px; color: var(--i-dim); margin-top: 10px; line-height: 1.35; }
+.daylist { margin-top: 26px; border-top: 1px solid var(--i-rule); padding-top: 18px; }
+.row { display: flex; align-items: center; gap: 12px; padding: 12px 0; }
+.row + .row { border-top: 1px solid var(--i-rule); margin-left: 44px; padding-left: 0; }
+.row + .row .box { margin-left: -44px; }
+.box { width: 20px; height: 20px; border-radius: 6px; border: 1.5px solid var(--i-dim); flex: 0 0 auto; margin: 0 12px 0 0; display: flex; align-items: center; justify-content: center; }
+.box.on { background: var(--i-accent); border-color: var(--i-accent); }
+.box.on::after { content: ''; width: 10px; height: 6px; border-left: 2px solid #fff; border-bottom: 2px solid #fff; transform: translateY(-1px) rotate(-45deg); }
+.row .nm { flex: 1 1 auto; font-size: 17px; font-weight: 500; line-height: 1.2; }
+.row.done .nm { color: var(--i-dim); font-weight: 400; }
+.row .st { display: block; font-size: 12px; font-weight: 400; color: var(--i-dim); margin-top: 2px; }
+.row .st.acc { color: var(--i-accent-text); }
+.row .tm { font-family: var(--mono); font-size: 16px; font-weight: 500; }
+.nowline, .sessline { display: flex; align-items: center; gap: 10px; padding: 7px 0; }
+.nowline span { font-family: var(--mono); font-size: 11px; font-weight: 600; color: var(--i-accent-text); white-space: nowrap; }
+.nowline i { flex: 1; height: 1px; background: var(--i-accent-text); }
+.sessline::before { content: ''; width: 7px; height: 7px; background: var(--i-accent); flex: 0 0 auto; }
+.sessline span { font-family: var(--mono); font-size: 12px; font-weight: 600; white-space: nowrap; }
+.sessline i { flex: 1; height: 2px; background: var(--i-ink); }
+
+/* ── Sheet ── */
+.sheet { position: absolute; inset: 0; z-index: 20; display: none; flex-direction: column; background: var(--i-surface); border-radius: 40px 40px 0 0; transform: translateY(100%); transition: transform 260ms cubic-bezier(.2,.8,.2,1); }
+.sheet.on { display: flex; }
+.sheet.show { transform: translateY(0); }
+.sheet-head { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px 0; }
+.sheet-head .cancel { color: var(--i-accent-text); background: none; border: none; font-size: 17px; cursor: pointer; padding: 6px 0; }
+.sheet-head .ttl { font-size: 17px; font-weight: 600; }
+.sheet-head .sp { width: 52px; }
+.sheet .scroll { padding-top: 10px; }
+.sheet .mname { font-size: 28px; font-weight: 700; margin-top: 10px; }
+.sheet .planned { font-size: 15px; color: var(--i-dim); margin-top: 2px; }
+.sheet .macros { font-family: var(--mono); font-size: 15px; color: var(--i-dim); margin-top: 4px; }
+.chips { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px; }
+.chip { min-height: 44px; border-radius: 22px; border: 1px solid var(--i-dim); background: none; color: var(--i-ink); font-size: 14px; cursor: pointer; padding: 6px 4px; white-space: nowrap; }
+.chip.on { background: var(--i-ink); color: var(--i-bg); border-color: var(--i-ink); font-weight: 600; }
+.chip.wide { grid-column: span 2; }
+.delta { font-size: 13px; color: var(--i-dim); margin-top: 10px; min-height: 18px; }
+.prev { margin-top: 22px; }
+.prow { display: flex; align-items: center; gap: 8px; padding: 9px 0; border-bottom: 1px solid var(--i-rule); }
+.prow .nm { font-size: 16px; color: var(--i-dim); }
+.prow .mv { font-size: 12px; color: var(--i-accent-text); }
+.prow .sp { flex: 1; }
+.prow s { font-family: var(--mono); font-size: 13px; color: var(--i-dim); }
+.prow .tm { font-family: var(--mono); font-size: 16px; font-weight: 500; color: var(--i-dim); }
+.prow .tm.acc { color: var(--i-accent-text); }
+.sheet-bar { flex: 0 0 auto; padding: 12px 20px 30px; border-top: 1px solid var(--i-rule); background: var(--i-surface); }
+.sheet-bar .btn-primary { margin-top: 0; }
+
+/* ── Lock screen ── */
+.lock { background: radial-gradient(900px 600px at 80% 110%, rgba(168,33,26,.18), transparent 60%), #0e0d0c; align-items: center; }
+.lock .time { font-family: var(--oswald); font-weight: 700; font-size: 92px; line-height: 1; margin-top: 46px; letter-spacing: 0.01em; }
+.lock .date { font-size: 18px; font-weight: 500; color: var(--i-dim); margin-top: 4px; }
+.la { width: 350px; margin-top: 46px; background: var(--i-bg); border: 1px solid var(--i-rule); border-radius: 24px; padding: 16px 18px; display: flex; gap: 14px; align-items: center; }
+.la .l { flex: 1; min-width: 0; }
+.la .eb { display: flex; align-items: center; gap: 6px; font-size: 11px; }
+.la .eb::before { content: ''; width: 6px; height: 6px; background: var(--i-accent); }
+.la .t { font-family: var(--oswald); font-weight: 700; font-size: 34px; line-height: 1.05; margin-top: 4px; }
+.la .n { font-size: 17px; font-weight: 600; margin-top: 2px; }
+.la .p { font-size: 13px; color: var(--i-dim); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.la .log { width: 66px; height: 66px; border-radius: 14px; background: var(--i-accent); color: var(--i-on); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-size: 13px; font-weight: 600; flex: 0 0 auto; border: none; cursor: pointer; }
+.la .log::before { content: ''; width: 12px; height: 7px; border-left: 2.5px solid #fff; border-bottom: 2.5px solid #fff; transform: rotate(-45deg); margin-bottom: 4px; }
+.notif { width: 350px; margin-top: 12px; background: rgba(33,30,27,.92); border: 1px solid var(--i-rule); border-radius: 22px; padding: 14px 16px; }
+.notif .h { display: flex; justify-content: space-between; font-size: 12px; color: var(--i-dim); }
+.notif .t { font-size: 15px; font-weight: 600; margin-top: 6px; }
+.notif .b { font-size: 14px; color: var(--i-dim); margin-top: 2px; line-height: 1.3; }
+.notif .acts { display: flex; gap: 8px; margin-top: 12px; }
+.notif .acts span { flex: 1; text-align: center; font-size: 13px; padding: 9px 6px; border-radius: 12px; background: rgba(235,229,216,.08); }
+.lock .hint { margin-top: auto; margin-bottom: 26px; font-size: 13px; color: var(--i-dim); }
+
+/* ── Coach ── */
+.divider { display: flex; align-items: center; gap: 10px; margin: 16px 0 14px; font-family: var(--mono); font-size: 11px; color: var(--i-dim); }
+.divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--i-rule); }
+.msg.me { margin-left: 44px; background: var(--i-surface); border: 1px solid var(--i-rule); border-radius: 14px; padding: 12px 14px; font-size: 16px; line-height: 1.35; }
+.msg.me .ph { margin-top: 10px; height: 92px; border-radius: 8px; background: linear-gradient(135deg, #3a3129, #26221f); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 11px; color: var(--i-dim); letter-spacing: 0.08em; }
+.msg.coach { margin-top: 18px; }
+.msg.coach .eb { color: var(--i-accent-text); }
+.msg.coach .body { font-size: 16px; line-height: 1.4; margin-top: 8px; }
+.card { margin-top: 12px; background: var(--i-surface); border: 1px solid var(--i-rule); border-radius: 14px; padding: 14px; }
+.card .hd { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.card .hd b { font-size: 17px; font-weight: 600; }
+.pill { font-family: var(--mono); font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: 12px; border: 1px solid; opacity: .9; white-space: nowrap; }
+.pill.dim { color: var(--i-dim); border-color: rgba(168,160,148,.5); }
+.pill.landed { color: var(--i-landed); border-color: rgba(138,154,72,.5); }
+.card .desc { font-size: 14px; color: var(--i-dim); margin-top: 6px; line-height: 1.35; }
+.card ul { list-style: none; margin: 10px 0 0; padding: 0; }
+.card li { display: flex; justify-content: space-between; gap: 10px; font-size: 14px; padding: 5px 0; }
+.card li span:last-child { font-family: var(--mono); font-size: 12px; color: var(--i-dim); white-space: nowrap; }
+.card li::before { content: ''; }
+.card .about { font-family: var(--mono); font-size: 12px; color: var(--i-dim); margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--i-rule); }
+.card .verdict { font-size: 13px; margin-top: 6px; }
+.card .btn-primary { margin-top: 12px; padding: 12px; font-size: 16px; }
+.thumbs { display: flex; gap: 18px; margin-top: 10px; color: var(--i-dim); font-size: 13px; }
+.compose { flex: 0 0 auto; display: flex; align-items: center; gap: 10px; padding: 10px 16px 12px; border-top: 1px solid var(--i-rule); }
+.compose .ic { width: 22px; height: 22px; stroke: var(--i-dim); fill: none; stroke-width: 1.6; }
+.compose .field { flex: 1; min-height: 40px; border-radius: 14px; background: var(--i-surface); border: 1px solid var(--i-rule); padding: 10px 12px; font-size: 15px; color: var(--i-dim); }
+.compose .send { width: 36px; height: 36px; border-radius: 18px; background: var(--i-accent); display: flex; align-items: center; justify-content: center; }
+.compose .send::after { content: ''; width: 8px; height: 8px; border-left: 2px solid #fff; border-top: 2px solid #fff; transform: translateY(2px) rotate(45deg); }
+.focuspill { display: inline-block; margin: 8px 0 0 20px; }
+
+/* ── History ── */
+.pagehead { padding-top: 6px; }
+.pagehead h1 { font-size: 34px; font-weight: 700; margin: 4px 0 0; }
+.pagehead .sub { font-size: 15px; color: var(--i-dim); margin-top: 4px; }
+.section { border-top: 1px solid var(--i-rule); margin-top: 18px; padding-top: 18px; }
+.stats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-top: 12px; }
+.stat .n { font-size: 22px; font-weight: 700; }
+.stat .n small { font-size: 12px; font-weight: 400; color: var(--i-dim); margin-left: 2px; }
+.stat .k { font-size: 11px; color: var(--i-dim); margin-top: 2px; }
+.dayrow { padding: 12px 0; border-bottom: 1px solid var(--i-rule); }
+.dayrow .h { display: flex; align-items: center; gap: 8px; }
+.dayrow .h b { font-size: 17px; font-weight: 600; flex: 1; }
+.dayrow .pill { font-size: 11px; }
+.pill.acc { color: var(--i-accent-text); border-color: rgba(232,94,86,.5); }
+.dayrow .daybar { margin: 10px 0 8px; height: 14px; }
+.dayrow .daybar::before { top: 6px; }
+.dayrow .plate { width: 8px; height: 8px; }
+.dayrow .plate.late { background: var(--i-dim); border-color: var(--i-dim); }
+.dayrow .sent { font-size: 13px; line-height: 1.3; }
+.dayrow .ml { font-family: var(--mono); font-size: 12px; color: var(--i-dim); margin-top: 4px; }
+.weekrow { display: flex; align-items: center; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--i-rule); }
+.weekrow .l { flex: 1; }
+.weekrow .r { font-size: 17px; font-weight: 600; }
+.weekrow .c { font-size: 13px; color: var(--i-dim); margin-top: 2px; }
+.weekrow .ml { font-family: var(--mono); font-size: 12px; color: var(--i-dim); margin-top: 4px; }
+.weekrow .chev { color: var(--i-dim); font-size: 18px; }
+
+/* ── Plan ── */
+.seg { display: flex; margin-top: 14px; background: var(--i-surface); border: 1px solid var(--i-rule); border-radius: 10px; padding: 2px; }
+.seg span { flex: 1; text-align: center; font-size: 14px; font-weight: 500; padding: 7px; border-radius: 8px; color: var(--i-dim); }
+.seg span.on { background: var(--i-rule); color: var(--i-ink); }
+.cells { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 12px; }
+.cell .n { font-size: 22px; font-weight: 700; }
+.cell .s { font-family: var(--mono); font-size: 11px; margin-top: 2px; }
+.prow2 { display: flex; align-items: center; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--i-rule); }
+.prow2 .l { flex: 1; min-width: 0; }
+.prow2 .n { font-size: 16px; font-weight: 500; display: flex; align-items: center; gap: 6px; }
+.prow2 .n svg { width: 13px; height: 13px; stroke: var(--i-dim); fill: none; stroke-width: 1.8; }
+.prow2 .p { font-size: 13px; color: var(--i-dim); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.prow2 .m { font-family: var(--mono); font-size: 12px; color: var(--i-dim); margin-top: 2px; }
+.prow2 .chev { color: var(--i-dim); }
+.plan-foot { font-size: 13px; color: var(--i-dim); line-height: 1.35; margin-top: 14px; }
+
+/* ── Highlight ring (same as the Loadout demos) ── */
+@keyframes mb-pulse {
+  0%, 100% { box-shadow: 0 0 0 3px #fffaeb, 0 0 0 6px #a8211a, 0 0 18px 4px rgba(168,33,26,0.55); }
+  50%      { box-shadow: 0 0 0 3px #fffaeb, 0 0 0 8px #a8211a, 0 0 28px 8px rgba(168,33,26,0.70); }
+}
+.mb-highlight { animation: mb-pulse 1.6s ease-in-out infinite; position: relative; z-index: 30; border-radius: 6px; }
+
+/* ── Guide panel ── */
+.g-counter { font-family: var(--mono); font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--blood); }
+.g-title { font-family: var(--mono); font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #fffaeb; margin: 10px 0 0; }
+.g-desc { font-family: 'Merriweather', Georgia, serif; font-size: 15px; line-height: 1.6; color: #c8bea7; margin: 12px 0 0; max-width: 46ch; }
+.g-do { margin: 18px 0 0; font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--chalk); display: flex; align-items: center; gap: 10px; min-height: 18px; }
+.g-do::before { content: ''; width: 7px; height: 7px; background: var(--blood); flex: 0 0 auto; }
+.g-do:empty { display: none; }
+.g-nav { display: flex; align-items: center; gap: 10px; margin-top: 22px; }
+.g-btn { background: none; border: 1px solid #3a342d; color: #fffaeb; font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; padding: 8px 16px; cursor: pointer; transition: border-color 120ms, color 120ms; }
+.g-btn:hover { border-color: var(--blood); color: var(--blood); }
+.g-btn:disabled { opacity: .4; cursor: default; }
+.g-btn.primary { border-color: var(--blood); background: var(--blood); }
+.g-btn.primary:hover { background: #c02a20; border-color: #c02a20; color: #fffaeb; }
+.g-skip { margin-left: auto; background: none; border: none; color: var(--chalk-faint); font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; cursor: pointer; }
+.g-skip:hover { color: var(--chalk); }
+.g-fine { margin-top: 26px; font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; color: var(--chalk-faint); line-height: 1.6; }
+
+@media (max-width: 720px) {
+  .stage { flex-direction: column; overflow-y: auto; }
+  .phone-col { order: 2; padding: 10px 0 14px; }
+  .guide { order: 1; border-left: none; border-bottom: 1px solid var(--rule); padding: 14px 18px 16px; justify-content: flex-start; }
+  .g-desc { font-size: 13px; line-height: 1.5; margin-top: 8px; }
+  .g-title { margin-top: 6px; }
+  .g-nav { margin-top: 12px; }
+  .g-fine { display: none; }
+  .g-counter { padding-right: 110px; }
+}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="phone-col">
+    <div class="phone-scale" id="scale">
+      <div class="phone">
+        <div class="screen" id="screen">
+          <div class="island"></div>
+
+          <!-- ═══════════ TODAY ═══════════ -->
+          <div class="view on" id="v-today">
+            <div class="statusbar"><span id="clock-now">12:10</span><span class="glyphs">●●●● ▲ ▮▮▮</span></div>
+            <div class="scroll" id="today-scroll">
+              <div class="topline">
+                <span class="day">Sat, Sep 13 · Training <span style="font-size:11px">⌄</span></span>
+                <span class="sess">Session <b>6:00 PM</b>
+                  <svg class="gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+                </span>
+              </div>
+
+              <div class="daybar" id="daybar" aria-label="2 of 6 meals eaten, Mid-morning is next">
+                <span class="plate eaten"></span><span class="sp"></span>
+                <span class="plate next" id="pl-2"></span><span class="sp"></span>
+                <span class="plate" id="pl-3"></span><span class="sp"></span>
+                <span class="plate"></span><span class="sp"></span>
+                <span class="plate"></span><span class="sp"></span>
+                <span class="plate"></span>
+              </div>
+
+              <div class="hero" id="hero">
+                <div class="eb over" id="h-eb">Overdue · 2 h 10 m</div>
+                <div class="clock" id="h-clock">10:00 AM</div>
+                <div class="name" id="h-name">Mid-morning</div>
+                <div class="plate" id="h-plate">Greek yogurt · Blueberries · Almonds · Honey</div>
+                <div class="macros" id="h-macros">32P · 41C · 14F · 420 kcal</div>
+              </div>
+              <button class="btn-primary" id="btn-log">Log</button>
+              <button class="btn-secondary">Not yet</button>
+              <div class="footnote" id="h-foot" hidden>Running late. The gaps tightened so the carb surge still lands before your session.</div>
+
+              <div class="totals" id="totals">
+                <div class="eb">Today's totals</div>
+                <div class="totals-grid">
+                  <div class="mbar"><div class="l">Protein</div><div class="v" id="t-p">38 g</div><div class="t"><i id="b-p" style="width:19%"></i></div><div class="s" id="s-p">162 left</div></div>
+                  <div class="mbar"><div class="l">Carbs</div><div class="v" id="t-c">55 g</div><div class="t"><i id="b-c" style="width:26%"></i></div><div class="s" id="s-c">155 left</div></div>
+                  <div class="mbar"><div class="l">Fat</div><div class="v" id="t-f">12 g</div><div class="t"><i id="b-f" style="width:17%"></i></div><div class="s" id="s-f">58 left</div></div>
+                  <div class="kcal"><div class="n" id="t-k">480</div><div class="of">of 2270 kcal</div></div>
+                </div>
+                <div class="left" id="t-left">162P · 155C · 58F left for the day, 5 meals to come.</div>
+              </div>
+
+              <div class="daylist" id="daylist">
+                <div class="eb">Today</div>
+                <div class="row done"><span class="box on"></span><span class="nm">Breakfast</span><span class="tm">7:00 AM</span></div>
+                <div class="row" id="r-mid"><span class="box" id="bx-mid"></span><span class="nm">Mid-morning</span><span class="tm" id="tm-mid">10:00 AM</span></div>
+                <div class="nowline" id="nowline"><span>now · 12:10 PM</span><i></i></div>
+                <div class="row" id="r-lunch" style="margin-left:0;border-top:none"><span class="box"></span><span class="nm">Lunch<span class="st acc" id="st-lunch" hidden>moved up</span></span><span class="tm" id="tm-lunch">1:00 PM</span></div>
+                <div class="row" id="r-pre"><span class="box"></span><span class="nm">Pre-workout</span><span class="tm">4:30 PM</span></div>
+                <div class="sessline"><span>session · 6:00 PM</span><i></i></div>
+                <div class="row" style="margin-left:0;border-top:none"><span class="box"></span><span class="nm">Post-workout shake</span><span class="tm">7:00 PM</span></div>
+                <div class="row"><span class="box"></span><span class="nm">Dinner</span><span class="tm">8:30 PM</span></div>
+              </div>
+            </div>
+            <div class="tabs" id="tabs">
+              <button class="tab on" data-tab="today"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Today</button>
+              <button class="tab" data-tab="plan"><svg viewBox="0 0 24 24"><path d="M7 3v7a3 3 0 0 0 6 0V3M10 13v8M17 3c-2 2-2 6-2 9h3v9"/></svg>Plan</button>
+              <button class="tab" data-tab="history"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg>History</button>
+              <button class="tab coach" data-tab="coach"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg>Coach</button>
+            </div>
+
+            <!-- ═══════════ LOG SHEET ═══════════ -->
+            <div class="sheet" id="sheet">
+              <div class="sheet-head"><button class="cancel" id="sheet-cancel">Cancel</button><span class="ttl">Log it</span><span class="sp"></span></div>
+              <div class="scroll" id="sheet-scroll">
+                <div class="mname">Mid-morning</div>
+                <div class="planned">Planned 10:00 AM</div>
+                <div class="macros">32P · 41C · 14F · 420 kcal</div>
+                <div class="eb" style="margin-top:22px">When did you eat it</div>
+                <div class="chips" id="chips">
+                  <button class="chip on" data-min="730">Now</button>
+                  <button class="chip" data-min="715">15 min ago</button>
+                  <button class="chip" data-min="700" id="chip-30">30 min ago</button>
+                  <button class="chip" data-min="670">1 hr ago</button>
+                  <button class="chip wide" data-min="600">Planned 10:00 AM</button>
+                  <button class="chip" data-min="">Other time…</button>
+                </div>
+                <div class="delta" id="delta">130 min later than planned (10:00 AM).</div>
+                <div class="prev" id="preview">
+                  <div class="eb">What happens next</div>
+                  <div id="prev-rows"></div>
+                </div>
+              </div>
+              <div class="sheet-bar"><button class="btn-primary" id="btn-commit">Log at 12:10 PM</button></div>
+            </div>
+          </div>
+
+          <!-- ═══════════ LOCK SCREEN ═══════════ -->
+          <div class="view lock" id="v-lock">
+            <div class="statusbar" style="width:100%"><span></span><span class="glyphs">●●●● ▲ ▮▮▮</span></div>
+            <div class="time">2:05</div>
+            <div class="date">Saturday, September 13</div>
+            <div class="la" id="la">
+              <div class="l">
+                <div class="eb">Next · 25 m</div>
+                <div class="t">2:30 PM</div>
+                <div class="n">Lunch</div>
+                <div class="p">Chicken breast · Jasmine rice · Broccoli · Olive oil</div>
+              </div>
+              <button class="log" id="la-log">Log</button>
+            </div>
+            <div class="notif" id="notif">
+              <div class="h"><span>MealStack</span><span>9:58 AM</span></div>
+              <div class="t">M2 · Mid-morning</div>
+              <div class="b">P32 C41 F14 · 420 kcal<br/>Greek yogurt · Blueberries · Almonds · Honey</div>
+              <div class="acts"><span>Ate it now</span><span>Not yet, ask in 20</span></div>
+            </div>
+            <div class="hint">Swipe up to open</div>
+          </div>
+
+          <!-- ═══════════ COACH ═══════════ -->
+          <div class="view" id="v-coach">
+            <div class="statusbar"><span>1:48</span><span class="glyphs">●●●● ▲ ▮▮▮</span></div>
+            <div class="scroll" id="coach-scroll">
+              <div class="divider">This conversation</div>
+              <div class="msg me">Can't eat Lunch as planned. Client took us to a taco place. Here's the menu.
+                <div class="ph">MENU PHOTO</div>
+              </div>
+              <div class="msg coach" id="coach-reply">
+                <div class="eb">Coach</div>
+                <div class="body">Three things on that menu land near Lunch's numbers. The bowl is the closest, and the easiest to order right.</div>
+                <div class="card" id="idea-card">
+                  <div class="hd"><b>Chicken bowl, no cheese, double chicken</b><span class="pill dim">medium</span></div>
+                  <div class="desc">Rice for the carbs, double chicken for the protein, pico instead of cheese and sour cream so the fat stays where the plan wants it.</div>
+                  <ul>
+                    <li><span>Grilled chicken, double</span><span>P44 · C0 · F6</span></li>
+                    <li><span>Cilantro-lime rice, regular</span><span>P4 · C58 · F2</span></li>
+                    <li><span>Black beans, half scoop</span><span>P4 · C12 · F1</span></li>
+                    <li><span>Pico de gallo, lettuce</span><span>P1 · C4 · F0</span></li>
+                  </ul>
+                  <div class="about">About P53 · C74 · F9 · 590 kcal · from the menu</div>
+                  <div class="verdict landed">Lands on the plan.</div>
+                  <button class="btn-primary" id="btn-use">Use it today</button>
+                </div>
+                <div class="footnote" style="margin-top:8px">Log it from Today once you've eaten, the same as any other meal.</div>
+                <div class="thumbs"><span>👍</span><span>👎</span></div>
+              </div>
+            </div>
+            <div class="focuspill"><span class="pill acc">Can't eat Lunch</span></div>
+            <div class="compose">
+              <svg class="ic" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l5-5 4 4 3-3 6 6"/></svg>
+              <svg class="ic" viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>
+              <div class="field">Answer Coach, or add detail…</div>
+              <div class="send"></div>
+            </div>
+            <div class="tabs">
+              <button class="tab" data-tab="today"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Today</button>
+              <button class="tab" data-tab="plan"><svg viewBox="0 0 24 24"><path d="M7 3v7a3 3 0 0 0 6 0V3M10 13v8M17 3c-2 2-2 6-2 9h3v9"/></svg>Plan</button>
+              <button class="tab" data-tab="history"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg>History</button>
+              <button class="tab coach on" data-tab="coach"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg>Coach</button>
+            </div>
+          </div>
+
+          <!-- ═══════════ HISTORY ═══════════ -->
+          <div class="view" id="v-history">
+            <div class="statusbar"><span>1:48</span><span class="glyphs">●●●● ▲ ▮▮▮</span></div>
+            <div class="scroll">
+              <div class="pagehead"><div class="eb">Every day so far</div><h1>History</h1></div>
+              <div class="section">
+                <div class="eb">Last 7 days, average</div>
+                <div class="stats">
+                  <div class="stat"><div class="n">196<small>g</small></div><div class="k">Protein</div></div>
+                  <div class="stat"><div class="n">178<small>g</small></div><div class="k">Carbs</div></div>
+                  <div class="stat"><div class="n">67<small>g</small></div><div class="k">Fat</div></div>
+                  <div class="stat"><div class="n">2125</div><div class="k">kcal</div></div>
+                  <div class="stat"><div class="n">91<small>%</small></div><div class="k">On time</div></div>
+                </div>
+              </div>
+              <div class="section" id="thisweek">
+                <div class="eb">This week</div>
+                <div class="dayrow" id="dr-fri">
+                  <div class="h"><b>Fri, Sep 12</b><span class="pill acc">Training</span></div>
+                  <div class="daybar"><span class="plate eaten"></span><span class="sp"></span><span class="plate eaten"></span><span class="sp"></span><span class="plate eaten"></span><span class="sp"></span><span class="plate eaten"></span><span class="sp"></span><span class="plate eaten"></span><span class="sp"></span><span class="plate eaten"></span></div>
+                  <div class="sent landed">Every meal on time · pre-workout 88 min before</div>
+                  <div class="ml">P198 · C212 · F68 · 2250 kcal of 2270 · 12 hr window</div>
+                </div>
+                <div class="dayrow">
+                  <div class="h"><b>Thu, Sep 11</b><span class="pill dim">Rest</span></div>
+                  <div class="daybar"><span class="plate eaten"></span><span class="sp"></span><span class="plate eaten"></span><span class="sp"></span><span class="plate eaten"></span><span class="sp"></span><span class="plate eaten"></span><span class="sp"></span><span class="plate eaten"></span></div>
+                  <div class="sent landed">Every meal on time</div>
+                  <div class="ml">P202 · C118 · F71 · 1900 kcal of 1890 · 11.5 hr window</div>
+                </div>
+                <div class="dayrow">
+                  <div class="h"><b>Wed, Sep 10</b><span class="pill acc">Travel</span><span class="pill acc">Training</span></div>
+                  <div class="daybar"><span class="plate eaten"></span><span class="sp"></span><span class="plate eaten"></span><span class="sp"></span><span class="plate late"></span><span class="sp"></span><span class="plate eaten"></span><span class="sp"></span><span class="plate eaten"></span><span class="sp"></span><span class="plate eaten"></span></div>
+                  <div class="sent acc">Lunch 40 min late · pre-workout 92 min before</div>
+                  <div class="ml">P188 · C204 · F72 · 2210 kcal of 2270 · 13 hr window</div>
+                </div>
+              </div>
+              <div class="section">
+                <div class="eb">Earlier</div>
+                <div class="weekrow" id="wk">
+                  <div class="l"><div class="r">Sep 1–7</div><div class="c">4 train · 3 rest · 31 of 35 on time · 3 of 4 pre-workouts landed</div><div class="ml">185P · 190C · 66F · 2140 kcal a day · 96% logged</div></div>
+                  <span class="chev">›</span>
+                </div>
+                <div class="weekrow">
+                  <div class="l"><div class="r">Aug 25–31</div><div class="c">4 train · 3 rest · 33 of 35 on time · 4 of 4 pre-workouts landed</div><div class="ml">190P · 196C · 64F · 2170 kcal a day · 100% logged</div></div>
+                  <span class="chev">›</span>
+                </div>
+              </div>
+            </div>
+            <div class="tabs">
+              <button class="tab" data-tab="today"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Today</button>
+              <button class="tab" data-tab="plan"><svg viewBox="0 0 24 24"><path d="M7 3v7a3 3 0 0 0 6 0V3M10 13v8M17 3c-2 2-2 6-2 9h3v9"/></svg>Plan</button>
+              <button class="tab on" data-tab="history"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg>History</button>
+              <button class="tab coach" data-tab="coach"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg>Coach</button>
+            </div>
+          </div>
+
+          <!-- ═══════════ PLAN ═══════════ -->
+          <div class="view" id="v-plan">
+            <div class="statusbar"><span>1:48</span><span class="glyphs">●●●● ▲ ▮▮▮</span></div>
+            <div class="scroll">
+              <div class="pagehead"><div class="eb">Prep block · week 3</div><h1>Plan</h1><div class="sub">Six meals on a training day, five on a rest day. Evening session.</div></div>
+              <div class="seg"><span class="on">Training</span><span>Rest</span></div>
+              <div class="section">
+                <div class="eb">Training day totals</div>
+                <div class="cells">
+                  <div class="cell"><div class="eb">Protein</div><div class="n">200</div><div class="s landed">on target</div></div>
+                  <div class="cell"><div class="eb">Carbs</div><div class="n">210</div><div class="s landed">on target</div></div>
+                  <div class="cell"><div class="eb">Fat</div><div class="n">70</div><div class="s landed">on target</div></div>
+                  <div class="cell"><div class="eb">kcal</div><div class="n">2270</div><div class="s dim">planned</div></div>
+                </div>
+              </div>
+              <div class="section">
+                <div class="prow2"><div class="l"><div class="n">Daily target</div><div class="m">P200  C210  F70  ·  2270 kcal</div><div class="p landed">The meals below land on it.</div></div><span class="chev">›</span></div>
+                <div class="prow2"><div class="l"><div class="n">Kitchen</div><div class="p">14 saved meals · 62 foods</div></div><span class="chev">›</span></div>
+              </div>
+              <div class="section">
+                <div class="eb">Meals</div>
+                <div class="prow2"><div class="l"><div class="n">Breakfast</div><div class="p">Eggs · Oats · Banana · Whey</div><div class="m">P38 · C55 · F12</div></div><span class="chev">›</span></div>
+                <div class="prow2"><div class="l"><div class="n">Mid-morning</div><div class="p">Greek yogurt · Blueberries · Almonds · Honey</div><div class="m">P32 · C41 · F14</div></div><span class="chev">›</span></div>
+                <div class="prow2"><div class="l"><div class="n">Lunch</div><div class="p">Chicken breast · Jasmine rice · Broccoli · Olive oil</div><div class="m">P45 · C62 · F11</div></div><span class="chev">›</span></div>
+                <div class="prow2"><div class="l"><div class="n">Pre-workout <svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="1"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div><div class="p">Rice cakes · Turkey · Apple</div><div class="m">P30 · C40 · F4</div></div><span class="chev">›</span></div>
+                <div class="prow2"><div class="l"><div class="n">Post-workout shake <svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="1"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div><div class="p">Whey · Dextrose · Banana</div><div class="m">P30 · C50 · F2</div></div><span class="chev">›</span></div>
+                <div class="prow2"><div class="l"><div class="n">Dinner <svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="1"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div><div class="p">Salmon · Potatoes · Green beans · Butter</div><div class="m">P45 · C42 · F27</div></div><span class="chev">›</span></div>
+                <div class="plan-foot">Tap a meal to change what's on the plate, or use one from the Kitchen. Macros come from the quantities, so the totals above move with your edits.</div>
+              </div>
+            </div>
+            <div class="tabs">
+              <button class="tab" data-tab="today"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Today</button>
+              <button class="tab on" data-tab="plan"><svg viewBox="0 0 24 24"><path d="M7 3v7a3 3 0 0 0 6 0V3M10 13v8M17 3c-2 2-2 6-2 9h3v9"/></svg>Plan</button>
+              <button class="tab" data-tab="history"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg>History</button>
+              <button class="tab coach" data-tab="coach"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg>Coach</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="guide" id="guide">
+    <div class="g-counter" id="g-counter"></div>
+    <p class="g-title" id="g-title"></p>
+    <p class="g-desc" id="g-desc"></p>
+    <p class="g-do" id="g-do"></p>
+    <div class="g-nav">
+      <button class="g-btn" id="g-prev">← Prev</button>
+      <button class="g-btn primary" id="g-next">Next →</button>
+      <button class="g-skip" id="g-skip">Skip the tour</button>
+    </div>
+    <p class="g-fine">Drawn by hand on invented numbers. The tabs work; the tour can be restarted at any time. ← → on the keyboard also step.</p>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ── Fictional day ──
+     Training day, session 6:00 PM. Breakfast eaten 7:00. Mid-morning planned 10:00,
+     not logged; the clock says 12:10. Lunch planned 1:00. Pre-workout locked at
+     4:30 (90 min before), Post-workout shake 7:00, Dinner 8:30 (locked after).
+     Cascade: forward gaps are 180 min; the ceiling for the last forward meal is
+     the pre-workout minus a 120-min minimum gap (2:30 PM); gaps scale and round
+     to 5 min; the locked block never moves. */
+  var NOW = 12 * 60 + 10;
+  var PRE = 16 * 60 + 30;
+  var MIN_GAP = 120;
+  var NATURAL = 180;
+  var LUNCH_PLANNED = 13 * 60;
+
+  function fmt(m) {
+    var h = Math.floor(m / 60), mm = m % 60, ap = h >= 12 ? 'PM' : 'AM';
+    h = h % 12; if (h === 0) h = 12;
+    return h + ':' + (mm < 10 ? '0' : '') + mm + ' ' + ap;
+  }
+  function span(m) { var h = Math.floor(m / 60), mm = m % 60; return (h ? h + ' h ' : '') + mm + ' m'; }
+  function r5(x) { return Math.round(x / 5) * 5; }
+
+  function lunchFor(eatenAt) {
+    var ceiling = PRE - MIN_GAP;
+    var natural = eatenAt + NATURAL;
+    if (natural <= ceiling) return { t: natural, compressed: false };
+    var gap = Math.max(MIN_GAP, r5(ceiling - eatenAt));
+    return { t: eatenAt + gap, compressed: true };
+  }
+
+  var $ = function (id) { return document.getElementById(id); };
+  var state = { eatenAt: NOW, logged: false, view: 'today' };
+
+  /* ── Views ── */
+  function showView(name) {
+    ['today', 'lock', 'coach', 'history', 'plan'].forEach(function (v) {
+      $('v-' + v).classList.toggle('on', v === name);
+    });
+    document.querySelectorAll('.tab').forEach(function (t) { t.classList.toggle('on', t.dataset.tab === name); });
+    state.view = name;
+  }
+  document.querySelectorAll('.tab').forEach(function (t) {
+    t.addEventListener('click', function () {
+      showView(t.dataset.tab);
+      if (steps[cur] && steps[cur].awaits === 'tab:' + t.dataset.tab) goTo(cur + 1);
+    });
+  });
+
+  /* ── Sheet ── */
+  function openSheet() {
+    var s = $('sheet');
+    s.classList.add('on');
+    requestAnimationFrame(function () { requestAnimationFrame(function () { s.classList.add('show'); }); });
+    setChip(NOW);
+  }
+  function closeSheet() {
+    var s = $('sheet');
+    s.classList.remove('show');
+    setTimeout(function () { s.classList.remove('on'); }, 280);
+  }
+  function setChip(min) {
+    state.eatenAt = min;
+    document.querySelectorAll('#chips .chip').forEach(function (c) {
+      c.classList.toggle('on', c.dataset.min !== '' && parseInt(c.dataset.min, 10) === min);
+    });
+    var d = min - 600;
+    $('delta').textContent = d > 5 ? d + ' min later than planned (10:00 AM).' : (d < -5 ? (-d) + ' min earlier than planned (10:00 AM).' : '');
+    var L = lunchFor(min);
+    var moved = L.t !== LUNCH_PLANNED;
+    $('prev-rows').innerHTML =
+      row('Lunch', moved, fmt(LUNCH_PLANNED), fmt(L.t)) +
+      row('Pre-workout', false, '', '4:30 PM') +
+      row('Post-workout shake', false, '', '7:00 PM') +
+      row('Dinner', false, '', '8:30 PM');
+    $('btn-commit').textContent = 'Log at ' + fmt(min);
+  }
+  function row(name, moved, oldT, newT) {
+    return '<div class="prow"><span class="nm">' + name + '</span>' + (moved ? '<span class="mv">moves</span>' : '') +
+      '<span class="sp"></span>' + (moved ? '<s>' + oldT + '</s>' : '') +
+      '<span class="tm' + (moved ? ' acc' : '') + '">' + newT + '</span></div>';
+  }
+  document.querySelectorAll('#chips .chip').forEach(function (c) {
+    c.addEventListener('click', function () {
+      if (c.dataset.min === '') return;
+      setChip(parseInt(c.dataset.min, 10));
+      if (steps[cur] && steps[cur].awaits === 'chip') goTo(cur + 1);
+    });
+  });
+  $('sheet-cancel').addEventListener('click', closeSheet);
+  $('btn-log').addEventListener('click', function () {
+    if (state.logged) return;
+    openSheet();
+    if (steps[cur] && steps[cur].awaits === 'log') goTo(cur + 1);
+  });
+  $('btn-commit').addEventListener('click', function () {
+    commit();
+    if (steps[cur] && steps[cur].awaits === 'commit') goTo(cur + 1);
+  });
+
+  function commit() {
+    var at = state.eatenAt;
+    var L = lunchFor(at);
+    state.logged = true;
+    closeSheet();
+    // bar
+    $('pl-2').className = 'plate eaten';
+    $('pl-3').className = 'plate next';
+    $('daybar').setAttribute('aria-label', '3 of 6 meals eaten, Lunch is next');
+    // hero
+    var eb = $('h-eb'); eb.textContent = 'Next · in ' + span(L.t - NOW); eb.classList.remove('over');
+    $('h-clock').textContent = fmt(L.t);
+    $('h-name').textContent = 'Lunch';
+    $('h-plate').textContent = 'Chicken breast · Jasmine rice · Broccoli · Olive oil';
+    $('h-macros').textContent = '45P · 62C · 11F · 530 kcal';
+    $('h-foot').hidden = !L.compressed;
+    // totals
+    $('t-p').textContent = '70 g'; $('b-p').style.width = '35%'; $('s-p').textContent = '130 left';
+    $('t-c').textContent = '96 g'; $('b-c').style.width = '46%'; $('s-c').textContent = '114 left';
+    $('t-f').textContent = '26 g'; $('b-f').style.width = '37%'; $('s-f').textContent = '44 left';
+    $('t-k').textContent = '900';
+    $('t-left').textContent = '130P · 114C · 44F left for the day, 4 meals to come.';
+    // list
+    $('r-mid').classList.add('done'); $('bx-mid').classList.add('on'); $('tm-mid').textContent = fmt(at);
+    $('tm-lunch').textContent = fmt(L.t);
+    $('st-lunch').hidden = !L.compressed;
+  }
+
+  /* ── Tour ── */
+  var steps = [
+    { sel: '#hero', title: 'Today',
+      desc: 'The next plate is the biggest thing on the screen. The clock is the time you planned to eat it; the plate and its macros sit under it. A meeting ran long, so the mid-morning meal is two hours overdue. The word lives in the eyebrow. Nothing turns red.' },
+    { sel: '#daybar', title: 'The loaded bar',
+      desc: 'Six plates on a rod, one per meal. Solid means eaten, oxblood is next, hollow is still to come. Tap a plate on the real thing and that meal opens.' },
+    { sel: '#daylist', title: 'Two kinds of meal', scroll: '#daylist',
+      desc: 'The list is the model. The now line is where you are in the day. The session line is what the day is built around: meals above it chain forward from whatever you actually ate last; the pre-workout and everything after are pinned to 6:00 PM and do not move for a late morning.' },
+    { sel: '#btn-log', title: 'Log it', scroll: '#hero', awaits: 'log', doText: 'Tap Log on the phone',
+      desc: 'You ate the mid-morning meal at your desk half an hour ago and forgot to log it. That happens. Tap Log.' },
+    { sel: '#chip-30', title: 'When you ate, not when you tapped', awaits: 'chip', doText: 'Tap "30 min ago"',
+      desc: 'The sheet opens on now, with the common cases one tap away. The day keys off the time you pick, so pick the true one: 30 min ago.' },
+    { sel: '#preview', title: 'What happens next',
+      desc: 'Before you commit, the sheet shows what every remaining meal does. Lunch would naturally land three hours after 11:40, at 2:40. That leaves less than two hours before the pre-workout meal, so the gap tightens to 2:30 and Lunch is flagged. The pre-workout holds at 4:30. The session is what the app protects.' },
+    { sel: '#btn-commit', title: 'Commit', awaits: 'commit', doText: 'Tap "Log at 11:40 AM"',
+      desc: 'The button says the time it will record. Apple Health gets the macros at that time too, if you let it.' },
+    { sel: '#r-lunch', title: 'Back on Today', scroll: '#daylist',
+      desc: 'Lunch moved and says so, in words, under its name. The pre-workout did not. The totals now count the mid-morning meal, and the next plate is counting down again.' },
+    { sel: '#la', title: 'You should rarely have to open it', view: 'lock',
+      desc: 'An hour before a meal, a Live Activity appears on the Lock Screen and in the Dynamic Island with the plate and a Log button. The notification underneath it is the morning one you missed: two actions, "Ate it now" and "Not yet, ask in 20." Home and Lock Screen widgets carry the same countdown.' },
+    { sel: '#idea-card', title: 'Coach proposes. You decide.', view: 'coach', pad: 150,
+      desc: 'Later that day, lunch is at a taco place instead. Send Coach the menu and it fits an order to this meal\'s numbers, shows its arithmetic, and says whether it lands on the plan. Nothing changes until you tap the card. Coach is off by default, metered, and not a doctor; it says so before you ask it anything.' },
+    { sel: '#dr-fri', title: 'History keeps score', view: 'history',
+      desc: 'Every day gets a bar and a sentence. On time means within fifteen minutes of the plan; a pre-workout "landed" if it went in at least thirty minutes before the session. Older weeks fold to two numbers. Travel days are marked, so you can see what the road does to you.' },
+    { sel: null, title: 'That is the app', view: 'today',
+      desc: 'Timing that bends around your day and protects your session. Macros from the plate. A coach that asks first. Your data on your phone. It is in private beta on iPhone; the form under this demo gets you a build.' }
+  ];
+  var cur = -1;
+  var hl = null;
+
+  function clearHl() { if (hl) { hl.classList.remove('mb-highlight'); hl = null; } }
+  function scrollTo(container, el, pad) {
+    if (!container || !el) return;
+    var top = el.offsetTop, bottom = top + el.offsetHeight;
+    var vTop = container.scrollTop, vBottom = vTop + container.clientHeight;
+    if (top - 12 >= vTop && bottom + 12 <= vBottom) return; // already in view
+    container.scrollTo({ top: Math.max(0, top - (pad || 60)), behavior: 'smooth' });
+  }
+  function goTo(n) {
+    if (n < 0 || n >= steps.length) return;
+    clearHl();
+    cur = n;
+    var s = steps[n];
+    if (s.view) showView(s.view);
+    $('g-counter').textContent = (n + 1) + ' of ' + steps.length;
+    $('g-title').textContent = s.title;
+    $('g-desc').textContent = s.desc;
+    $('g-do').textContent = s.doText || '';
+    $('g-prev').disabled = n === 0;
+    if (window.innerWidth <= 720) fit();
+    $('g-next').textContent = n === steps.length - 1 ? 'Start over' : (s.awaits ? 'Do it for me →' : 'Next →');
+    if (s.scroll) scrollTo($('today-scroll'), document.querySelector(s.scroll), 40);
+    if (s.sel) {
+      var el = document.querySelector(s.sel);
+      if (el) {
+        el.classList.add('mb-highlight'); hl = el;
+        var sc = el.closest('.scroll');
+        if (sc && !s.scroll) scrollTo(sc, el, s.pad);
+      }
+    } else {
+      $('today-scroll').scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
+  function next() {
+    var s = steps[cur];
+    if (!s) return;
+    if (cur === steps.length - 1) { reset(); return; }
+    if (s.awaits === 'log') { openSheet(); goTo(cur + 1); return; }
+    if (s.awaits === 'chip') { setChip(NOW - 30); goTo(cur + 1); return; }
+    if (s.awaits === 'commit') { commit(); goTo(cur + 1); return; }
+    goTo(cur + 1);
+  }
+  function reset() { location.reload(); }
+
+  $('g-prev').addEventListener('click', function () { goTo(cur - 1); });
+  $('g-next').addEventListener('click', next);
+  $('g-skip').addEventListener('click', function () {
+    clearHl(); cur = steps.length - 1;
+    $('g-counter').textContent = 'Free run';
+    $('g-title').textContent = 'Have a look around';
+    $('g-desc').textContent = 'The tabs work, and Log on Today walks the cascade. Everything is fictional.';
+    $('g-do').textContent = '';
+    $('g-prev').disabled = true; $('g-next').textContent = 'Start the tour';
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight') next();
+    if (e.key === 'ArrowLeft') goTo(cur - 1);
+  });
+
+  /* ── Fit the phone to the frame ── */
+  function fit() {
+    var col = document.querySelector('.phone-col');
+    var narrow = window.innerWidth <= 720;
+    var guideH = narrow ? document.getElementById('guide').offsetHeight : 0;
+    var availH = narrow ? Math.max(360, window.innerHeight - guideH - 28) : window.innerHeight - 36;
+    var availW = narrow ? window.innerWidth - 24 : Math.min(window.innerWidth * 0.48, 420) - 30;
+    var s = Math.min(availH / 844, availW / 390, 1);
+    var sc = $('scale');
+    sc.style.transform = 'scale(' + s + ')';
+    sc.style.width = (390 * s) + 'px';
+    sc.style.height = (844 * s) + 'px';
+    col.style.flexBasis = narrow ? 'auto' : (390 * s + 30) + 'px';
+  }
+  window.addEventListener('resize', fit);
+  fit();
+  setChip(NOW);
+  setTimeout(function () { goTo(0); }, 500);
+})();
+</script>
+</body>
+</html>

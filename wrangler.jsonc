@@ -9,4 +9,16 @@
   "name": "missionbuilt",
   "compatibility_date": "2026-05-10",
   "pages_build_output_dir": "./dist"
+
+  // MealStack beta sign-ups (functions/api/beta.js) need a KV namespace bound as
+  // BETA_KV and a BETA_ADMIN_KEY secret for the listing endpoint. Until both exist
+  // the function answers 503 and the page shows the email fallback, so the site
+  // deploys either way. To wire it up, once:
+  //   npx wrangler kv namespace create BETA_KV          → copy the id it prints
+  //   npx wrangler pages secret put BETA_ADMIN_KEY --project-name missionbuilt
+  // then uncomment and fill in:
+  // ,"kv_namespaces": [
+  //   { "binding": "BETA_KV", "id": "PASTE_THE_NAMESPACE_ID_HERE" }
+  // ]
+  // Read the list at https://missionbuilt.io/api/beta?key=<BETA_ADMIN_KEY>
 }

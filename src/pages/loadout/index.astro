@@ -2,10 +2,10 @@
 /**
  * The Loadout — overview page.
  *
- * Catalog of the open-source skills and tools shipped from Mission Built,
- * as full-width rule-bordered rows. Three skills live (Warmup, Approach,
- * Spotter), Ironstack in testing, and MealStack: the first app on the list,
- * GPL-3.0 rather than MIT, so the License stat reads both.
+ * Catalog of the open-source skills shipped from Mission Built, as
+ * full-width rule-bordered rows. Three skills live (Warmup, Approach,
+ * Spotter), all MIT. The barbell tools (Ironstack, MealStack) moved to
+ * The Rack (/rack) on Sept 13, 2026; this page is the boardroom kit only.
  *
  * Pattern: TopNav → Hero (eyebrow + h1 + subtitle) → Meta strip →
  * What this is → Dashed divider → The skills (3 cards) → Closer → Footer.
@@ -16,7 +16,7 @@ import TopNav from '../../components/TopNav.astro';
 const stats = [
   { key: 'Skills live', value: '3',      href: undefined },
   { key: 'MCP tools',   value: '18',     href: undefined },
-  { key: 'License',     value: 'MIT · GPL-3.0', href: undefined },
+  { key: 'License',     value: 'MIT',    href: undefined },
   { key: 'Source',      value: 'GitHub', href: 'https://github.com/missionbuilt/loadout' },
 ];
 
@@ -27,8 +27,6 @@ interface Skill {
   blurb: string;
   href?: string;
   cta: string;
-  /** A second tag for a row that is not a skill, e.g. an app. */
-  kind?: string;
 }
 
 const skills: Skill[] = [
@@ -56,28 +54,11 @@ const skills: Skill[] = [
     href: '/loadout/spotter',
     cta: 'Open →',
   },
-  {
-    name: 'Ironstack',
-    status: 'testing',
-    blurb:
-      'Weight is a number. Heavy is a feeling. A training partner with your whole history in its head: two Claude skills, seven Kibana dashboards, and a coach with a ceiling, over an Elasticsearch you own. Nothing phones home.',
-    href: '/loadout/ironstack',
-    cta: 'Preview →',
-  },
-  {
-    name: 'MealStack',
-    status: 'testing',
-    kind: 'iPhone app',
-    blurb:
-      'Your session doesn\'t move. Your meals do. An iPhone app for meal timing built backward from the bar, with macros weighed from the plate, travel that holds your spacing, widgets and a Live Activity, and a coach that proposes. GPL-3.0.',
-    href: '/loadout/mealstack',
-    cta: 'Preview →',
-  },
 ];
 ---
 <BaseLayout
   title="The Loadout · Mission Built"
-  description="Open-source skills and tools to help build what matters. Part of the Mission Built ecosystem."
+  description="Open-source skills to help build what matters. Part of the Mission Built ecosystem."
   active="loadout"
 >
   <TopNav active="loadout" />
@@ -87,7 +68,7 @@ const skills: Skill[] = [
     <section class="hero">
       <p class="eyebrow">
         <span class="dots" aria-hidden="true">▮▮▮</span>
-        <span>Open-source skills and tools from Mission Built</span>
+        <span>Open-source skills from Mission Built</span>
         <span class="dots" aria-hidden="true">▮▮▮</span>
       </p>
 
@@ -96,7 +77,7 @@ const skills: Skill[] = [
         <span class="line">Loadout<span class="dot">.</span></span>
       </h1>
 
-      <p class="subtitle">Open-source skills and tools to help build what matters.</p>
+      <p class="subtitle">Open-source skills to help build what matters.</p>
     </section>
 
     {/* ---------- META STRIP ---------- */}
@@ -126,13 +107,13 @@ const skills: Skill[] = [
         The Loadout is a set of small, focused skills you can drop into your
         agent. Each one helps you do a specific piece of the work better —
         review an epic, prep for a customer meeting, scan the news before
-        your day starts. And, from the other half of the book, two tools for
-        the barbell: a training partner with your history in its head, and an
-        app that times your meals to the session.
+        your day starts.
       </p>
       <p class="prose">
         The book teaches the principles. The Loadout puts them into operation.
-        <strong>Open source and built to be forked.</strong> The skills are MIT. MealStack, the app, is GPL-3.0; its page says why.
+        <strong>Open source and built to be forked.</strong> Every skill is MIT.
+        The barbell half of the book, a training partner and a meal-timing app,
+        lives on <a class="inline-link" href="/rack">the Rack</a>.
       </p>
     </section>
 
@@ -142,7 +123,7 @@ const skills: Skill[] = [
     <section class="block">
       <header class="block-head">
         <h2 class="section-h2">The kit.</h2>
-        <span class="block-count">5 total · 3 live</span>
+        <span class="block-count">3 skills · 3 live</span>
       </header>
 
       <div class="skills">
@@ -161,7 +142,6 @@ const skills: Skill[] = [
                 ) : (
                   <span class="tag planned">In development</span>
                 )}
-                {s.kind && <span class="tag kind">{s.kind}</span>}
               </div>
               <p class="skill-blurb">{s.blurb}</p>
               <div class="skill-cta">{s.cta}</div>
@@ -179,7 +159,6 @@ const skills: Skill[] = [
                 ) : (
                   <span class="tag planned">In development</span>
                 )}
-                {s.kind && <span class="tag kind">{s.kind}</span>}
               </div>
               <p class="skill-blurb">{s.blurb}</p>
               <div class="skill-cta">{s.cta}</div>
@@ -374,6 +353,12 @@ const skills: Skill[] = [
     color: var(--color-chalk-dim);
   }
   .prose strong { color: var(--color-chalk); font-weight: 700; }
+  .inline-link {
+    color: var(--color-chalk);
+    border-bottom: 1px solid var(--color-chalk-faint);
+    transition: border-color 120ms ease-out;
+  }
+  .inline-link:hover { border-bottom-color: var(--color-chalk); }
 
   .block-head {
     display: flex;
@@ -448,7 +433,6 @@ const skills: Skill[] = [
     display: inline-block;
   }
   .tag.planned { color: var(--color-chalk-faint); }
-  .tag.kind { color: var(--color-chalk-faint); border: 1px solid var(--color-rule); padding: 3px 7px; align-self: flex-start; }
 
   .skill-blurb {
     margin: 0;

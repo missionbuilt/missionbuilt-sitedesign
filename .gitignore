@@ -29,3 +29,6 @@ warmup-artifact.html
 # Private Cowork/skill tooling — never commit these
 missionbuilt-design.skill
 SKILL-DESIGN.md
+
+# Cowork file delivery drops previews here — never commit
+Claude outputs/

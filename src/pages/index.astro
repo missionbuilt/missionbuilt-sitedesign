@@ -156,6 +156,29 @@ const stats = [
         </a>
       </div>
     </section>
+
+    {/* ---------- THE RACK ---------- */}
+    <section class="loadout-section rack-section">
+      <div class="loadout-head">
+        <p class="loadout-phrase">
+          The book is the plan.<span class="phrase-accent"> The Rack is the work.</span>
+        </p>
+        <a href="/rack" class="loadout-explore">Explore the Rack <span aria-hidden="true">→</span></a>
+      </div>
+
+      <div class="loadout-skills rack-tools">
+        <a href="/rack/mealstack" class="ls-card">
+          <div class="ls-tag beta"><span class="ls-sq beta" aria-hidden="true"></span>Private beta</div>
+          <h3 class="ls-name">MealStack</h3>
+          <p class="ls-blurb">Your session doesn't move. Your meals do. An iPhone app for meal timing built backward from the session, with macros weighed from the plate and a coach that proposes.</p>
+        </a>
+        <a href="/rack/ironstack" class="ls-card">
+          <div class="ls-tag testing"><span class="ls-sq testing" aria-hidden="true"></span>In testing</div>
+          <h3 class="ls-name">Ironstack</h3>
+          <p class="ls-blurb">Weight is a number. Heavy is a feeling. A training partner with your whole history in its head: two Claude skills, seven Kibana dashboards, and a coach with a ceiling, over an Elasticsearch you own.</p>
+        </a>
+      </div>
+    </section>
   </main>
 </BaseLayout>
 
@@ -520,6 +543,15 @@ const stats = [
   /* In-development variant — chalk-faint, hollow square (army is reserved for Live). */
   .ls-tag.dev { color: var(--color-chalk-faint); }
   .ls-sq.dev { background: transparent; border: 1px solid var(--color-chalk-faint); }
+  /* In-testing variant — chalk-dim, hollow square, as on the Rack and Loadout indexes. */
+  .ls-tag.testing { color: var(--color-chalk-dim); }
+  .ls-tag.beta { color: var(--color-chalk); }
+  .ls-sq.beta { background: transparent; border: 1px solid var(--color-chalk); }
+  .ls-sq.testing { background: transparent; border: 1px solid var(--color-chalk-dim); }
+
+  /* The Rack: same section grammar, two tools wide. */
+  .rack-section { padding-top: 0; border-top: none; }
+  .rack-tools { grid-template-columns: repeat(2, 1fr); }
 
   .ls-name {
     margin: 0;
