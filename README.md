@@ -13,7 +13,7 @@ This is the **site code**. The book content lives in a separate repo: [missionbu
 - **[Astro 4](https://astro.build)** with the static export adapter. Every page is pre-rendered HTML; no runtime server needed.
 - **MDX** for chapter content. Each section is a single `.mdx` file under `src/content/chapters/`, validated by an Astro content collection schema.
 - **No CSS framework.** Design tokens live in `src/styles/tokens.css`; component styles use scoped `<style>` blocks inside Astro components.
-- **No client JS framework.** Pages are static HTML. A small amount of vanilla JS is reserved for future scroll-driven progress and highlight features.
+- **No client JS framework.** Pages are static HTML. The vanilla JS that ships is deliberate and small: the demo lightbox in `DemoEmbed.astro`, the meal-timing slider on the MealStack page, and the beta signup form.
 
 Three font families do all the typographic work:
 - **Oswald** for display, headlines, all-caps labels.
@@ -29,7 +29,7 @@ npm run build    # static output to ./dist
 npm run preview  # serve ./dist locally
 ```
 
-Node 18+ recommended.
+Node 20+ required (`engines` in `package.json`, and `.nvmrc` pins 20).
 
 ## Project layout
 
@@ -69,7 +69,7 @@ src/
     └── global.css     # reset + base typography
 ```
 
-Outside `src/`: `public/` holds static assets, including the generated `public/demos/` (Loadout click-through demos) and `public/downloads/` (the book PDF/Markdown and the standalone skill zips). `scripts/` holds the Python builders that regenerate those — see [`scripts/README.md`](scripts/README.md).
+Outside `src/`: `public/` holds static assets, including the generated `public/demos/` (Loadout and Rack click-through demos) and `public/downloads/` (the book PDF/Markdown and the standalone skill zips). `scripts/` holds the Python builders that regenerate those — see [`scripts/README.md`](scripts/README.md).
 
 ## Pages
 
@@ -117,13 +117,14 @@ No border-radius anywhere. The 90° corners are intentional.
 
 ## Deploy
 
-The build output in `./dist` is fully static. Drop it on any static host. Built and tested against:
+The build output in `./dist` is static, but the site is not purely static any more: `functions/api/beta.js` is a Cloudflare Pages Function handling the MealStack beta signup form. That ties the deploy to Cloudflare Pages — Netlify uses a different functions convention and GitHub Pages cannot run server code at all, so on either one the signup form degrades to its 503 fallback.
 
-- Cloudflare Pages
-- Netlify
-- GitHub Pages
+Cloudflare Pages needs two things set before the beta endpoint works:
 
-There are no environment variables and no runtime requirements.
+- `BETA_KV` — KV namespace binding (see `wrangler.jsonc`)
+- `BETA_ADMIN_KEY` — secret gating the `GET /api/beta?key=...` signup dump
+
+The rest of the site has no environment variables and no runtime requirements, so the static pages alone will serve from any host.
 
 ## License
 

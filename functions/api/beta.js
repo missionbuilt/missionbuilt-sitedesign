@@ -33,8 +33,19 @@ function wantsJson(request) {
   return accept.includes('application/json') || ctype.includes('application/json');
 }
 
+// Pages we will redirect back to after a signup POST. `page` arrives from the
+// form body, so it is matched against this list rather than pattern-checked:
+// a bare startsWith('/') test lets "//evil.example" through as a scheme-relative
+// URL, turning this endpoint into an open redirect off missionbuilt.io.
+const RETURN_PAGES = new Set([
+  '/rack/mealstack',
+  '/rack/ironstack',
+  '/rack',
+]);
+
 function back(request, page, result) {
-  const url = new URL(page && page.startsWith('/') ? page : '/rack/mealstack', request.url);
+  const dest = RETURN_PAGES.has(page) ? page : '/rack/mealstack';
+  const url = new URL(dest, request.url);
   url.searchParams.set('beta', result);
   url.hash = 'beta';
   return Response.redirect(url.toString(), 303);
@@ -99,10 +110,26 @@ export async function onRequestPost({ request, env }) {
   return asJson ? json({ ok: true }) : back(request, page, 'ok');
 }
 
+// Length-independent, content-constant-time comparison. HMACing both sides
+// with a per-request random key means the compare below runs over fixed-size
+// digests, so response timing carries nothing about the real key.
+async function safeEqual(a, b) {
+  const enc = new TextEncoder();
+  const salt = crypto.getRandomValues(new Uint8Array(32));
+  const mac = async (v) => {
+    const k = await crypto.subtle.importKey('raw', salt, { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+    return new Uint8Array(await crypto.subtle.sign('HMAC', k, enc.encode(v)));
+  };
+  const [x, y] = await Promise.all([mac(a), mac(b)]);
+  let diff = 0;
+  for (let i = 0; i < x.length; i++) diff |= x[i] ^ y[i];
+  return diff === 0;
+}
+
 export async function onRequestGet({ request, env }) {
   const url = new URL(request.url);
   const key = url.searchParams.get('key') || '';
-  if (!env.BETA_KV || !env.BETA_ADMIN_KEY || !key || key !== env.BETA_ADMIN_KEY) {
+  if (!env.BETA_KV || !env.BETA_ADMIN_KEY || !key || !(await safeEqual(key, env.BETA_ADMIN_KEY))) {
     return new Response('Not found', { status: 404 });
   }
   const lines = ['when\temail\tnote\tcountry\tinvited'];
