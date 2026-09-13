@@ -6,7 +6,7 @@
  * product leaders, installed over MCP, MIT. The Rack holds the tools Mike
  * trains with: Ironstack (two Claude skills, seven Kibana dashboards and a
  * coach over an Elasticsearch you own, MIT) and MealStack (an iPhone app,
- * GPL-3.0). Both in testing as of Sept 2026. Ironstack and MealStack moved
+ * open source with 1.0, license not yet settled). Both in testing as of Sept 2026. Ironstack and MealStack moved
  * here from /loadout on Sept 13, 2026; public/_redirects carries the 301s.
  *
  * Same skeleton as the Loadout index, minus the install section: each tool
@@ -18,10 +18,13 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import TopNav from '../../components/TopNav.astro';
 
+/** A phone outline for the iPhone rows. Our own drawing: Apple's logo and the App Store badge are not ours to use until the app is on the store. */
+const PHONE = '<svg class="ph-glyph" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M10 18.5h4"/></svg>';
+
 const stats = [
   { key: 'Tools',   value: '2',             href: undefined },
   { key: 'Status',  value: 'Pre-release',   href: undefined },
-  { key: 'License', value: 'MIT · GPL-3.0', href: undefined },
+  { key: 'License', value: 'Open source', href: undefined },
   { key: 'Source',  value: 'GitHub',        href: 'https://github.com/missionbuilt/loadout' },
 ];
 
@@ -42,7 +45,7 @@ const tools: Tool[] = [
     status: 'beta',
     kind: 'iPhone app',
     blurb:
-      'Your session doesn\'t move. Your meals do. An iPhone app for meal timing built backward from the session, with macros weighed from the plate, travel that holds your spacing, widgets and a Live Activity, and a coach that proposes. GPL-3.0.',
+      'Your session doesn\'t move. Your meals do. An iPhone app for meal timing built backward from the session, with macros weighed from the plate, travel that holds your spacing, widgets and a Lock Screen card, and a coach that proposes. Open source with 1.0.',
     href: '/rack/mealstack',
     cta: 'Join the beta →',
   },
@@ -113,8 +116,8 @@ const tools: Tool[] = [
       </p>
       <p class="prose">
         <strong>Open source, and your data stays yours.</strong> Ironstack is MIT and
-        never phones home. MealStack is GPL-3.0 and sends nothing you have not switched
-        on. Each one installs its own way, and its page says how. For the boardroom,
+        never phones home. MealStack will be open source too, the license settled with 1.0, and it sends nothing you
+        have not switched on. Each one installs its own way, and its page says how. For the boardroom,
         see <a class="inline-link" href="/loadout">the Loadout</a>.
       </p>
     </section>
@@ -145,7 +148,7 @@ const tools: Tool[] = [
               ) : (
                 <span class="tag planned">In development</span>
               )}
-              <span class="tag kind">{t.kind}</span>
+              <span class="tag kind">{t.kind === 'iPhone app' && <Fragment set:html={PHONE} />}{t.kind}</span>
             </div>
             <p class="skill-blurb">{t.blurb}</p>
             <div class="skill-cta">{t.cta}</div>
@@ -380,7 +383,8 @@ const tools: Tool[] = [
     display: inline-block;
   }
   .tag.planned { color: var(--color-chalk-faint); }
-  .tag.kind { color: var(--color-chalk-faint); border: 1px solid var(--color-rule); padding: 3px 7px; align-self: flex-start; }
+  .tag.kind { color: var(--color-chalk-faint); border: 1px solid var(--color-rule); padding: 3px 7px; align-self: flex-start; display: inline-flex; align-items: center; gap: 6px; }
+  .tag.kind :global(.ph-glyph) { width: 11px; height: 11px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
 
   .skill-blurb {
     margin: 0;

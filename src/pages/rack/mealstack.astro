@@ -3,8 +3,9 @@
  * MealStack — product page on the Rack.
  *
  * An iPhone app for meal timing built backward from the training session.
- * GPL-3.0. Private beta (TestFlight, added by hand from the form below); the
- * App Store listing and the source open with 1.0.
+ * Open source with 1.0; the license itself is not settled (MIT or copyleft),
+ * and the copy must not commit to one. Private beta (TestFlight, added by hand
+ * from the form below); the App Store listing and the source open with 1.0.
  *
  * The page has one job: someone who has never heard of the app learns why it
  * exists, what it does differently, how you use it, and how to get it. In
@@ -27,7 +28,7 @@ const stats = [
   { key: 'Runs on',            value: 'iPhone',     sub: 'iOS 26 and up',            army: false },
   { key: 'Account',            value: 'None',       sub: undefined,                  army: false },
   { key: 'Leaves your phone',  value: 'Nothing',    sub: 'unless you switch it on',  army: false },
-  { key: 'License',            value: 'GPL-3.0',    sub: undefined,                  army: true  },
+  { key: 'License',            value: 'Open source', sub: 'settled with 1.0',         army: true  },
 ];
 
 type Card = { label: string; verdict: string; evidence: string; them: string; mark?: boolean };
@@ -67,7 +68,7 @@ const faqs: Faq[] = [
   { q: 'Is Coach a doctor?', a: 'No. Coach is an AI. Its targets come from a formula you can read, its meal ideas are estimates, and it declines questions about medical conditions, medication, pregnancy and supplement doses. Nothing it proposes changes your plan until you tap.' },
   { q: 'Can I keep my macro tracker?', a: 'Yes, and if you lean on a barcode scanner you should. MealStack is the timing layer. It knows the plate, weighs macros from it, and writes them to Apple Health at the time you ate, so the two live side by side.' },
   { q: 'Android, iPad, watch?', a: 'iPhone only, iOS 26 and up. No Android, no iPad layout, no watch app, and none planned for 1.0. The Lock Screen, the widgets and the notifications are where the app lives when it is not open.' },
-  { q: 'Why GPL-3.0?', a: 'So a fork stays open. You can read, change and ship MealStack, and anything built from it has to carry the same freedom. The name and the marks stay with Mission Built. The source opens with 1.0.' },
+  { q: 'Which license?', a: 'Not decided. It will be open source, and the source opens with 1.0; whether it is MIT like the rest of the kit or a copyleft license that keeps forks open is the part I have not settled. The name and the marks stay with Mission Built either way.' },
   { q: 'When is 1.0?', a: 'After the meet it is being tested through, in October 2026, once a fresh install has been proven on phones that are not mine.' },
 ];
 
@@ -88,7 +89,6 @@ const ld = {
       applicationCategory: 'HealthApplication',
       operatingSystem: 'iOS 26',
       description,
-      license: 'https://www.gnu.org/licenses/gpl-3.0.html',
       author: { '@type': 'Person', name: 'Mike Nichols', url: 'https://missionbuilt.io/about' },
       publisher: { '@type': 'Organization', name: 'Mission Built', url: 'https://missionbuilt.io' },
       offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', availability: 'https://schema.org/PreOrder', description: 'Free during the private beta. Launch price not yet set.' },
@@ -129,9 +129,12 @@ const ld = {
         <span>MealStack</span><span class="dot">.</span>
       </h1>
 
-      <div class="testing-tag" aria-label="Private beta">
+      <div class="testing-tag" aria-label="Private beta, for iPhone">
         <span class="tag-sq" aria-hidden="true"></span>
         <span>Private beta</span>
+        <span class="tag-sep" aria-hidden="true">·</span>
+        <svg class="ph-glyph" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M10 18.5h4"/></svg>
+        <span>iPhone</span>
       </div>
 
       <p class="subtitle">
@@ -278,12 +281,12 @@ const ld = {
     {/* ---------- FINE PRINT ---------- */}
     <section class="block" id="fine-print">
       <p class="section-label">The fine print, in plain words</p>
-      <h2 class="section-h2">Open source, your data, and a price I have not picked.</h2>
+      <h2 class="section-h2">Open source, your data, and two things I have not picked.</h2>
       <div class="lic three">
         <div class="lic-cell">
-          <p class="k">GPL-3.0</p>
-          <p class="v">Fork it. Keep it open.</p>
-          <p class="body">The source will be public under a license that keeps it that way: you can read, change and ship MealStack, and anything built from it has to carry the same freedom. A closed clone with a new icon is the one thing the license rules out. The Loadout skills and Ironstack are MIT because a skill is meant to be lifted; an app is meant to be kept honest.</p>
+          <p class="k">License</p>
+          <p class="v">Open source. Which license, not yet.</p>
+          <p class="body">The source goes public with 1.0; that part is settled. The license is not. The Loadout skills and Ironstack are MIT, take them and do what you like. For an app the question is whether a fork has to stay open, which is what a copyleft license like the GPL does and MIT does not. I have gone back and forth. The answer lands here with 1.0, and either way you will be able to read, change and ship it.</p>
         </div>
         <div class="lic-cell">
           <p class="k">Price</p>
@@ -337,7 +340,7 @@ const ld = {
         <div class="doors">
           <div class="door open"><div><div class="n">Beta</div><p class="d">By invite, from the form. Small batches, added by hand.</p></div><span class="s">Now</span></div>
           <div class="door dim"><div><div class="n">App Store</div><p class="d">The public door.</p></div><span class="s">With 1.0</span></div>
-          <div class="door dim"><div><div class="n">Source</div><p class="d">github.com/missionbuilt/mealstack, GPL-3.0.</p></div><span class="s">With 1.0</span></div>
+          <div class="door dim"><div><div class="n">Source</div><p class="d">github.com/missionbuilt/mealstack, open source.</p></div><span class="s">With 1.0</span></div>
         </div>
       </div>
     </section>
@@ -569,6 +572,8 @@ const ld = {
     text-transform: uppercase; color: var(--color-chalk-dim);
   }
   .testing-tag .tag-sq { width: 8px; height: 8px; border: 1px solid var(--color-chalk-dim); display: inline-block; }
+  .testing-tag .tag-sep { color: var(--color-chalk-faint); }
+  .ph-glyph { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; flex: 0 0 auto; }
 
   .subtitle {
     margin: 22px auto 0; max-width: 820px; display: grid; gap: 8px;

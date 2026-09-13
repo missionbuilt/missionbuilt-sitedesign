@@ -58,7 +58,7 @@ src/
 │   ├── rack/
 │   │   ├── index.astro                      # The Rack overview (the barbell half)
 │   │   ├── ironstack.astro                  # Ironstack (in testing; app frames are replicas on fictional data)
-│   │   ├── mealstack.astro                  # MealStack (iPhone app, GPL-3.0, in testing; live cascade demo, phone frames on fictional data)
+│   │   ├── mealstack.astro                  # MealStack (iPhone app, open source with 1.0, private beta; product page with the click-through demo)
 │   │   └── mealstack/privacy.astro          # MealStack privacy policy (the App Store privacy URL)
 │   └── chapters/
 │       ├── index.astro                      # Chapter Index
@@ -80,7 +80,7 @@ Outside `src/`: `public/` holds static assets, including the generated `public/d
 - `/source` Source: links to the book repo and this repo.
 - `/download` Download: the book (PDF/Markdown) and the standalone Loadout skill zips.
 - `/loadout` The Loadout: overview of the product-leadership skill kit (the boardroom half), with a page per skill — `/loadout/warmup`, `/loadout/approach`, `/loadout/spotter` (each embeds a live click-through demo and a download) and `/loadout/floodlight` (in development).
-- `/rack` The Rack: the barbell half — `/rack/mealstack` (the iPhone app, GPL-3.0, private beta: a product page with a hand-drawn click-through demo at `public/demos/mealstack.html` and a Join-the-beta form posting to the Pages Function `functions/api/beta.js`, which needs the `BETA_KV` binding described in `wrangler.jsonc`), `/rack/ironstack` (in testing: the page is live, the install doors open with v1.0) and `/rack/mealstack/privacy` (the privacy policy the app and the App Store listing link to). Both tools lived under `/loadout` until Sept 13, 2026; `public/_redirects` carries permanent 301s from the old paths, and must keep them, because installed MealStack builds link to the old privacy URL.
+- `/rack` The Rack: the barbell half — `/rack/mealstack` (the iPhone app, open source with 1.0 and the license not yet settled, private beta: a product page with a hand-drawn click-through demo at `public/demos/mealstack.html` and a Join-the-beta form posting to the Pages Function `functions/api/beta.js`, which needs the `BETA_KV` binding described in `wrangler.jsonc`), `/rack/ironstack` (in testing: the page is live, the install doors open with v1.0) and `/rack/mealstack/privacy` (the privacy policy the app and the App Store listing link to). Both tools lived under `/loadout` until Sept 13, 2026; `public/_redirects` carries permanent 301s from the old paths, and must keep them, because installed MealStack builds link to the old privacy URL.
 
 ## Adding or editing content
 
