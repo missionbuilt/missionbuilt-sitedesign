@@ -29,6 +29,16 @@ const repos = [
     accent: 'chalk' as const,
   },
   {
+    kicker: 'The Rack',
+    title: 'missionbuilt/ironstack',
+    blurb:
+      "The barbell half. Ironstack: two Claude skills, seven Kibana dashboards and a " +
+      "coach over an Elasticsearch you own, MIT. MealStack, the iPhone app, opens its " +
+      "source with 1.0.",
+    href: 'https://github.com/missionbuilt/ironstack',
+    accent: 'chalk' as const,
+  },
+  {
     kicker: 'This site',
     title: 'missionbuilt-sitedesign',
     blurb:
@@ -41,7 +51,7 @@ const repos = [
 ---
 <BaseLayout
   title="Source · Mission Built"
-  description="MissionBuilt is open across the ecosystem: the book, the skills, and the site. All three repos live on GitHub."
+  description="MissionBuilt is open across the ecosystem: the book, the skills, the barbell tools, and the site. The repos live on GitHub."
   active="source"
 >
   <TopNav active="source" />
@@ -51,8 +61,8 @@ const repos = [
       <p class="eyebrow">Source</p>
       <h1 class="hero-h1">Open work.</h1>
       <p class="lede">
-        MissionBuilt is open across the ecosystem: the book, the skills, and the
-        site that hosts them. All three live on GitHub.
+        MissionBuilt is open across the ecosystem: the book, the skills, the barbell
+        tools, and the site that hosts them. All of it lives on GitHub.
       </p>
     </header>
 
@@ -80,9 +90,9 @@ const repos = [
     <p class="license">
       Book content licensed
       <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener license">CC&nbsp;BY-NC-SA 4.0</a>.
-      Skills and site code licensed
+      Skills, Ironstack and site code licensed
       <a href="https://opensource.org/license/mit" target="_blank" rel="noopener license">MIT</a>.
-      Contributions welcome across all three.
+      Contributions welcome across all of them.
     </p>
   </main>
 </BaseLayout>

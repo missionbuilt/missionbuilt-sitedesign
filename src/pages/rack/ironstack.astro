@@ -5,7 +5,7 @@
  * A training partner with your whole history in its head. Two Claude skills,
  * seven Kibana dashboards, and a Kibana Agent Builder coach over a private
  * Elasticsearch you own. No MCP server, nothing phones home. In testing:
- * the code is public in the Loadout repo; the install doors open with v1.0.
+ * the code is public at github.com/missionbuilt/ironstack; the install doors open with v1.0.
  * Lives on the Rack (the barbell half of the site) since Sept 13, 2026.
  *
  * Color discipline: oxblood for the hero period, eyebrows, section labels,
@@ -21,7 +21,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import TopNav from '../../components/TopNav.astro';
 
-const SOURCE = 'https://github.com/missionbuilt/loadout/tree/main/ironstack';
+const SOURCE = 'https://github.com/missionbuilt/ironstack';
 
 const stats = [
   { key: 'Dashboards', value: '7',          sub: undefined,       href: undefined },
@@ -346,7 +346,7 @@ const dashboards = [
 
       <div class="status" role="status">
         <span class="pill">In testing</span>
-        <p><strong>Ironstack is in daily use by its author before v1.</strong> The code is public in the Loadout repo today and you are welcome to read it. The doors below open with the v1.0 release, once a fresh install has been proven on a machine that is not mine.</p>
+        <p><strong>Ironstack is in daily use by its author before v1.</strong> The code is public on GitHub today and you are welcome to read it. The doors below open with the v1.0 release, once a fresh install has been proven on a machine that is not mine.</p>
         <a class="status-link" href={SOURCE} target="_blank" rel="noopener">Watch the repo <span aria-hidden="true">↗</span></a>
       </div>
 
@@ -356,8 +356,8 @@ const dashboards = [
           <h3>Let Claude install it</h3>
           <p>Add the Ironstack skills to Claude Code and say <em>set up Ironstack</em>. The setup skill creates your private repo from the starter, asks for your Elastic endpoint and key once, indexes the example session, imports the dashboards, and walks you through the coach. It stops at every step that touches your account.</p>
           <pre class="code"><span class="c"># skills only, no server, nothing phones home</span>
-git clone https://github.com/missionbuilt/loadout
-cp -r loadout/ironstack/skills/* ~/.claude/skills/
+git clone https://github.com/missionbuilt/ironstack
+cp -r ironstack/skills/* ~/.claude/skills/
 <span class="c"># then, in Claude Code:</span>
 &gt; set up Ironstack</pre>
           <p class="foot-line">Rungs 1 to 4 · opens with v1.0</p>
@@ -426,7 +426,7 @@ workout-recall.zip
       <p class="prose">
         Ironstack ships under MIT, like the Loadout skills. The skills, the starter,
         the dashboards, and the coach's prompt and tools live in
-        <a class="inline-link" href={SOURCE} target="_blank" rel="noopener">github.com/missionbuilt/loadout</a>.
+        <a class="inline-link" href={SOURCE} target="_blank" rel="noopener">github.com/missionbuilt/ironstack</a>.
         Your data never does.
       </p>
     </section>
@@ -441,7 +441,7 @@ workout-recall.zip
     {/* ---------- FOOTER ---------- */}
     <footer class="foot">
       <span>Real strength is lifting others</span>
-      <a href="https://github.com/missionbuilt/loadout" target="_blank" rel="noopener">github.com/missionbuilt/loadout</a>
+      <a href="https://github.com/missionbuilt/ironstack" target="_blank" rel="noopener">github.com/missionbuilt/ironstack</a>
     </footer>
   </main>
 </BaseLayout>
