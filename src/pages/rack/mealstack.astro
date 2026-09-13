@@ -32,17 +32,17 @@ const stats = [
 
 type Card = { label: string; verdict: string; evidence: string; them: string; mark?: boolean };
 const cards: Card[] = [
-  { mark: true, label: 'Timing', verdict: 'The day is anchored to the session, not the clock.', evidence: 'Pre-workout, post-workout and dinner are pinned to the session. Everything before them slides off the time you actually ate. A late morning tightens the gaps and says what moved; it never pushes the pre-workout meal into the bar.', them: 'Alarms every N hours, or routines that roll lateness forward into the session.' },
+  { mark: true, label: 'Timing', verdict: 'The day is anchored to the session, not the clock.', evidence: 'Pre-workout, post-workout and dinner are tied to the session. Everything before them is worked out from the time you actually ate. A late morning tightens the gaps and says what moved; it never pushes the pre-workout meal into the bar.', them: 'Alarms every N hours, or routines that roll lateness forward into the session.' },
   { label: 'Macros', verdict: 'Weighed from the plate, or typed. Never both.', evidence: 'A meal is a list of foods and quantities from your kitchen, so the numbers come from the food and editing a portion moves them. The daily target lives apart from the plan, so the editor can say "this plate puts the day 40 g of carbs over" while you are still building it.', them: 'A food database and a total. No plan to measure the plate against.' },
-  { label: 'Logging', verdict: 'Log at the time you ate, not the time you remembered.', evidence: 'The sheet opens on now with 15, 30 and 60 minutes ago one tap away, and shows what every remaining meal does at that time before you commit. Move today\'s session from the Today screen and the pinned block follows it.', them: '"Done" means now, so the day keys off the wrong number.' },
+  { label: 'Logging', verdict: 'Log at the time you ate, not the time you remembered.', evidence: 'The sheet opens on now with 15, 30 and 60 minutes ago one tap away, and shows what every remaining meal does at that time before you commit. Move today\'s session from the Today screen and the meals tied to it move with it.', them: '"Done" means now, so the day keys off the wrong number.' },
   { label: 'Travel', verdict: 'A day runs in the zone it started in.', evidence: 'Cross three time zones and the spacing holds. The app says so and offers one tap to switch when local time becomes the truth. Skip a meal and it stays a decision, not a miss. History compares home days to travel days.', them: 'Alarms drift with the phone clock. Breakfast at 9, lunch at 10.' },
-  { label: 'Surfaces', verdict: 'You should rarely have to open it.', evidence: 'Notifications carry the plate and two actions: "Ate it now" and "Not yet, ask in 20." Home and Lock Screen widgets with a live countdown. A Live Activity from an hour before to thirty after, with Log on the Lock Screen and in the Dynamic Island.', them: 'A badge, and a screen you unlock to answer it.' },
+  { label: 'Surfaces', verdict: 'You should rarely have to open it.', evidence: 'Notifications carry the plate and two actions: "Ate it now" and "Not yet, ask in 20." Home and Lock Screen widgets with a live countdown. A card on the Lock Screen from an hour before each meal to thirty minutes after, with a Log button on it and at the top of the screen.', them: 'A badge, and a screen you unlock to answer it.' },
   { label: 'Coach', verdict: 'An AI that proposes. You decide.', evidence: 'Ask for targets and a fixed formula does the arithmetic, not the model. Ask for meal ideas, or hand it a menu photo, a link or a restaurant name, and it fits options to this meal\'s numbers. Nothing changes until you tap a card. Not a doctor, and it says so before you ask.', them: 'A chatbot that talks, or a coach that edits your plan without asking.' },
 ];
 
 type Step = { n: string; title: string; body: string };
 const steps: Step[] = [
-  { n: '01', title: 'Answer two questions.', body: 'When is your first meal, and when do you train. Quick start builds a working day from that, no AI and no account: the morning chains forward, the pre-workout meal and everything after are pinned to the session. Put food on the plates when you are ready, or let Coach fill them.' },
+  { n: '01', title: 'Answer two questions.', body: 'When is your first meal, and when do you train. Quick start builds a working day from that, no AI and no account: the morning meals follow one another from your first meal, the pre-workout meal and everything after are tied to the session. Put food on the plates when you are ready, or let Coach fill them.' },
   { n: '02', title: 'Log when you actually ate.', body: 'One tap for now, one for thirty minutes ago. The sheet shows what every remaining meal does before you commit, and the notification can log it without opening the app. The pre-workout meal holds. The rest of the day bends around you.' },
   { n: '03', title: 'Ask when the plan breaks.', body: 'Client lunch, airport, empty fridge. Send Coach the menu, a link or what is in the kitchen and it fits an order to this meal\'s numbers. Nothing changes until you tap. History keeps score, so you can see what the road does to you.' },
 ];
@@ -66,7 +66,7 @@ const faqs: Faq[] = [
   { q: 'What leaves my phone?', a: 'Nothing, unless you switch it on. Coach sends what you type or photograph to a server I run, and only while Coach is on. Usage data goes to an analytics service only if you say yes when the app asks. The privacy page says exactly what, where and for how long.' },
   { q: 'Is Coach a doctor?', a: 'No. Coach is an AI. Its targets come from a formula you can read, its meal ideas are estimates, and it declines questions about medical conditions, medication, pregnancy and supplement doses. Nothing it proposes changes your plan until you tap.' },
   { q: 'Can I keep my macro tracker?', a: 'Yes, and if you lean on a barcode scanner you should. MealStack is the timing layer. It knows the plate, weighs macros from it, and writes them to Apple Health at the time you ate, so the two live side by side.' },
-  { q: 'Android, iPad, watch?', a: 'iPhone only, iOS 26 and up. No Android, no iPad layout, no watch app, and none planned for 1.0. The Lock Screen, the widgets and the Dynamic Island are where the app lives when it is not open.' },
+  { q: 'Android, iPad, watch?', a: 'iPhone only, iOS 26 and up. No Android, no iPad layout, no watch app, and none planned for 1.0. The Lock Screen, the widgets and the notifications are where the app lives when it is not open.' },
   { q: 'Why GPL-3.0?', a: 'So a fork stays open. You can read, change and ship MealStack, and anything built from it has to carry the same freedom. The name and the marks stay with Mission Built. The source opens with 1.0.' },
   { q: 'When is 1.0?', a: 'After the meet it is being tested through, in October 2026, once a fresh install has been proven on phones that are not mine.' },
 ];
@@ -160,14 +160,15 @@ const ld = {
       <p class="section-label">Try it</p>
       <h2 class="section-h2">Click through a training day.</h2>
       <p class="prose">
-        A hand-drawn copy of the app on invented numbers, not a video. Twelve steps: a late
-        morning, a logged meal, the afternoon re-flowing around the session, the Lock Screen,
-        Coach, and History. Tap where it tells you, or let it drive.
+        A hand-drawn copy of the app on invented numbers, not a video. Four short parts: setting
+        up from a blank app and having Coach fill the plates, a late morning and what it does to
+        the afternoon, swapping lunch for a restaurant order with Coach, then the Lock Screen and
+        History. Tap where it tells you, or let it drive.
       </p>
       <DemoEmbed
         src="/demos/mealstack.html"
         title="MealStack click-through demo"
-        caption="Click-through demo · drawn by hand on fictional data · the tabs work"
+        caption="Click-through demo · drawn by hand on invented numbers · the tabs work"
         mobileHeight={900}
       />
     </section>
@@ -180,7 +181,7 @@ const ld = {
       <h2 class="section-h2">I needed one rule no app had.</h2>
       <div class="story">
         <p>My eating plan has one rule that matters more than the rest: the pre-workout meal goes in ninety minutes before the bar. Everything else in the day is built backward from that. Breakfast can slip. That meal cannot.</p>
-        <p>I went looking for an app that understood the rule, and there are three kinds to try. The meal-timer apps are alarm clocks: every three hours, no plate, no idea what to do when breakfast is late. The routine apps chain steps forward, so a late morning pushes the pre-workout meal into the session, which is the one thing I was trying to prevent. The macro trackers know what I ate to the gram and have no opinion about when. Not one of them asks what time you train.</p>
+        <p>I went looking for an app that understood the rule, and there are three kinds to try. The meal-timer apps are alarm clocks: every three hours, no plate, no idea what to do when breakfast is late. The routine apps run one step after another, so a late morning pushes the pre-workout meal into the session, which is the one thing I was trying to prevent. The macro trackers know what I ate to the gram and have no opinion about when. Not one of them asks what time you train.</p>
         <p>So I built the one I needed, during a meet prep, on the phone I had with me at the rack. It counts down to the next plate, re-flows the day from the time I actually ate, holds the meal that matters, and knows what is on the plate. Then it grew a kitchen, a history, a travel mode and a coach with a ceiling.</p>
         <p>Let's be honest about what it is not. It is not a food database with a barcode scanner, and it will not try to become one. It is the timing layer those apps do not have.</p>
         <p class="byline">Mike Nichols · built during a meet prep, 2026</p>
@@ -194,8 +195,8 @@ const ld = {
       <p class="section-label">The rule</p>
       <h2 class="section-h2">Breakfast was late. Your pre-workout meal shouldn't be.</h2>
       <p class="prose">
-        Two kinds of meal. Sliding meals chain forward from the time you actually ate.
-        Pinned meals hold to the session. Drag breakfast late and watch which one moves.
+        Two kinds of meal. The morning meals follow on from the time you actually ate.
+        The meals around your session stay where they are. Drag breakfast late and watch which ones move.
       </p>
 
       <div class="demo" id="cascade">
@@ -207,7 +208,7 @@ const ld = {
         <div class="demo-rows" id="d-rows"></div>
         <p class="demo-foot" id="d-foot"></p>
       </div>
-      <p class="note">Gaps compress evenly toward a two-hour floor, rounded to five minutes. The pre-workout meal never moves for a late morning. Move the session itself and the pinned block follows it.</p>
+      <p class="note">Gaps compress evenly toward a two-hour floor, rounded to five minutes. The pre-workout meal never moves for a late morning. Move the session itself and every meal tied to it moves with it.</p>
     </section>
 
     <hr class="dashed" />
@@ -252,7 +253,7 @@ const ld = {
       <p class="prose">
         A kitchen of about a hundred foods plus your own, entered per 100 g like the label,
         and saved meals you can drop onto any plate. Apple Health gets the macros at the real
-        eat time, write-only. Light and dark. History that scores against the target you set.
+        eat time, and never reads anything back. Light and dark. History that scores against the target you set.
         Your plan is a file on your phone. No account, no sign-in, nothing to sync.
       </p>
     </section>
@@ -277,12 +278,12 @@ const ld = {
     {/* ---------- FINE PRINT ---------- */}
     <section class="block" id="fine-print">
       <p class="section-label">The fine print, in plain words</p>
-      <h2 class="section-h2">Open source, copyleft, your data, and a price I have not picked.</h2>
+      <h2 class="section-h2">Open source, your data, and a price I have not picked.</h2>
       <div class="lic three">
         <div class="lic-cell">
           <p class="k">GPL-3.0</p>
           <p class="v">Fork it. Keep it open.</p>
-          <p class="body">You can read, change and ship MealStack, and anything built from it has to carry the same freedom. A closed clone with a new icon is the one thing the license rules out. The Loadout skills and Ironstack are MIT because a skill is meant to be lifted; an app is meant to be kept honest.</p>
+          <p class="body">The source will be public under a license that keeps it that way: you can read, change and ship MealStack, and anything built from it has to carry the same freedom. A closed clone with a new icon is the one thing the license rules out. The Loadout skills and Ironstack are MIT because a skill is meant to be lifted; an app is meant to be kept honest.</p>
         </div>
         <div class="lic-cell">
           <p class="k">Price</p>
@@ -425,10 +426,10 @@ const ld = {
   const foot = document.getElementById('d-foot');
   const m1lab = document.getElementById('d-m1');
   const names = [
-    { code: 'M1', name: 'Breakfast', sub: 'slides' },
-    { code: 'M2', name: 'Mid-morning', sub: 'slides' },
-    { code: 'M3', name: 'Lunch', sub: 'slides' },
-    { code: 'M4', name: 'Pre-workout', sub: 'pinned · 90 min before the bar' },
+    { code: 'M1', name: 'Breakfast', sub: 'moves with you' },
+    { code: 'M2', name: 'Mid-morning', sub: 'moves with you' },
+    { code: 'M3', name: 'Lunch', sub: 'moves with you' },
+    { code: 'M4', name: 'Pre-workout', sub: 'stays put · 90 min before the bar' },
   ];
   const planned = [420, 600, 780, PRE];
 
@@ -515,7 +516,7 @@ const ld = {
           say('You are on the list. Watch for an email from Apple; it can take a few days.', 'ok');
           form.reset();
           if (tField) tField.value = String(Date.now());
-        } else if (res.status === 503 || res.status === 404 || data.fallback) {
+        } else if (res.status === 503 || data.fallback) {
           if (fallback) fallback.hidden = false;
           say('', '');
         } else if (res.status === 429) {
