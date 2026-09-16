@@ -10,9 +10,16 @@
  * The page has one job: someone who has never heard of the app learns why it
  * exists, what it does differently, how you use it, and how to get it. In
  * order: hero → try it (the click-through demo, /demos/mealstack.html) →
- * why → the rule (live cascade) → what it does differently → how you use it
- * → side by side → fine print → join the beta (form → /api/beta) → FAQ →
- * tester quotes (rendered only when there are real ones) → related.
+ * why (the four pillars, linking to the Log) → the rule (live cascade)
+ * → what it does differently → how you use it → side by side → fine print →
+ * join the beta (form → /api/beta) → FAQ → tester quotes (rendered only when
+ * there are real ones) → related.
+ *
+ * How we talk about it: the Log "Fueling is training"
+ * (src/content/logs/fueling-is-training.mdx) is the source of truth. Four
+ * pillars: protect the protein, the session, the day, the record. Meals are
+ * plates; fuel is what you drink around the session; the meal count is a
+ * default, never a fixed number. Not a nutrition app.
  *
  * Color discipline: oxblood for the hero period, eyebrows, section labels,
  * the one marked card (Timing), the two Join buttons, and the closer accent.
@@ -21,6 +28,14 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import TopNav from '../../components/TopNav.astro';
 import DemoEmbed from '../../components/DemoEmbed.astro';
+import { getCollection } from 'astro:content';
+import { byNewest, logUrl } from '../../data/logs';
+
+/** Logs about MealStack, newest first. The first is the story the Why section links to. */
+const logs = (await getCollection('logs', ({ data }) => data.tool === 'mealstack' && !data.draft)).sort(byNewest);
+const story = logs[0];
+const storyHref = story ? logUrl(story) : '/logs';
+const storyTitle = story ? story.data.title : 'Logs';
 
 const MAILTO = 'mailto:mike@missionbuilt.io?subject=MealStack%20beta&body=Apple%20ID%20email%3A%20';
 
@@ -31,19 +46,19 @@ const stats = [
   { key: 'License',            value: 'Open source', sub: 'settled with 1.0',         army: true  },
 ];
 
-type Card = { label: string; verdict: string; evidence: string; them: string; mark?: boolean };
+type Card = { label: string; pillar: string; verdict: string; evidence: string; them: string; mark?: boolean };
 const cards: Card[] = [
-  { mark: true, label: 'Timing', verdict: 'The day is anchored to the session, not the clock.', evidence: 'Pre-workout, post-workout and dinner are tied to the session. Everything before them is worked out from the time you actually ate. A late morning tightens the gaps and says what moved; it never pushes the pre-workout meal into the bar.', them: 'Alarms every N hours, or routines that roll lateness forward into the session.' },
-  { label: 'Macros', verdict: 'Weighed from the plate, or typed. Never both.', evidence: 'A meal is a list of foods and quantities from your kitchen, so the numbers come from the food and editing a portion moves them. The daily target lives apart from the plan, so the editor can say "this plate puts the day 40 g of carbs over" while you are still building it.', them: 'A food database and a total. No plan to measure the plate against.' },
-  { label: 'Logging', verdict: 'Log at the time you ate, not the time you remembered.', evidence: 'The sheet opens on now with 15, 30 and 60 minutes ago one tap away, and shows what every remaining meal does at that time before you commit. Move today\'s session from the Today screen and the meals tied to it move with it.', them: '"Done" means now, so the day keys off the wrong number.' },
-  { label: 'Travel', verdict: 'A day runs in the zone it started in.', evidence: 'Cross three time zones and the spacing holds. The app says so and offers one tap to switch when local time becomes the truth. Skip a meal and it stays a decision, not a miss. History compares home days to travel days.', them: 'Alarms drift with the phone clock. Breakfast at 9, lunch at 10.' },
-  { label: 'Surfaces', verdict: 'You should rarely have to open it.', evidence: 'Notifications carry the plate and two actions: "Ate it now" and "Not yet, ask in 20." Home and Lock Screen widgets with a live countdown. A card on the Lock Screen from an hour before each meal to thirty minutes after, with a Log button on it and at the top of the screen.', them: 'A badge, and a screen you unlock to answer it.' },
-  { label: 'Coach', verdict: 'An AI that proposes. You decide.', evidence: 'Ask for targets and a fixed formula does the arithmetic, not the model. Ask for meal ideas, or hand it a menu photo, a link or a restaurant name, and it fits options to this meal\'s numbers. Nothing changes until you tap a card. Not a doctor, and it says so before you ask.', them: 'A chatbot that talks, or a coach that edits your plan without asking.' },
+  { mark: true, label: 'Timing', pillar: 'Protect the session', verdict: 'The day is anchored to the session, not the clock.', evidence: 'Pre-workout, post-workout and dinner are tied to the session. Everything before them is worked out from the time you actually ate. A late morning tightens the gaps and says what moved; it never pushes the pre-workout meal into the bar.', them: 'Alarms every N hours, or routines that roll lateness forward into the session.' },
+  { label: 'Macros', pillar: 'Protect the protein', verdict: 'Weighed from the plate, or typed. Never both.', evidence: 'A meal is a list of foods and quantities from your kitchen, so the numbers come from the food and editing a portion moves them. The daily target lives apart from the plan, so the editor can say "this plate puts the day 40 g of carbs over" while you are still building it.', them: 'A food database and a total. No plan to measure the plate against.' },
+  { label: 'Logging', pillar: 'Protect the record', verdict: 'Log when you eat, not when it was due.', evidence: 'The sheet opens on now with 15, 30 and 60 minutes ago one tap away, and shows what every remaining meal does at that time before you commit. Move today\'s session from the Today screen and the meals tied to it move with it.', them: '"Done" means now, so the day keys off the wrong number.' },
+  { label: 'Travel', pillar: 'Protect the day', verdict: 'A day runs in the zone it started in.', evidence: 'Cross three time zones and the spacing holds. The app says so and offers one tap to switch when local time becomes the truth. Skip a meal and it stays a decision, not a miss. History compares home days to travel days.', them: 'Alarms drift with the phone clock. Breakfast at 9, lunch at 10.' },
+  { label: 'Surfaces', pillar: 'Protect the protein', verdict: 'You should rarely have to open it.', evidence: 'Notifications carry the plate and two actions: "Ate it now" and "Not yet, ask in 20." Home and Lock Screen widgets with a live countdown. A card on the Lock Screen from an hour before each meal to thirty minutes after, with a Log button on it and at the top of the screen.', them: 'A badge, and a screen you unlock to answer it.' },
+  { label: 'Coach', pillar: 'Protect the day', verdict: 'An AI that proposes. You decide.', evidence: 'Ask for targets and a fixed formula does the arithmetic, not the model. Ask for meal ideas, or hand it a menu photo, a link or a restaurant name, and it fits options to this meal\'s numbers. Nothing changes until you tap a card. Not a doctor, and it says so before you ask.', them: 'A chatbot that talks, or a coach that edits your plan without asking.' },
 ];
 
 type Step = { n: string; title: string; body: string };
 const steps: Step[] = [
-  { n: '01', title: 'Answer two questions.', body: 'When is your first meal, and when do you train. Quick start builds a working day from that, no AI and no account: the morning meals follow one another from your first meal, the pre-workout meal and everything after are tied to the session. Put food on the plates when you are ready, or let Coach fill them.' },
+  { n: '01', title: 'Answer two questions.', body: 'When is your first meal, and when do you train. Quick start builds a working day from that, no AI and no account: the morning meals follow one another from your first meal, the pre-workout meal and everything after are tied to the session. Five meals by default; change the number in Settings. Put food on the plates when you are ready, or let Coach fill them.' },
   { n: '02', title: 'Log when you actually ate.', body: 'One tap for now, one for thirty minutes ago. The sheet shows what every remaining meal does before you commit, and the notification can log it without opening the app. The pre-workout meal holds. The rest of the day bends around you.' },
   { n: '03', title: 'Ask when the plan breaks.', body: 'Client lunch, airport, empty fridge. Send Coach the menu, a link or what is in the kitchen and it fits an order to this meal\'s numbers. Nothing changes until you tap. History keeps score, so you can see what the road does to you.' },
 ];
@@ -67,6 +82,7 @@ const faqs: Faq[] = [
   { q: 'What leaves my phone?', a: 'Nothing, unless you switch it on. Coach sends what you type or photograph to a server I run, and only while Coach is on. Usage data goes to an analytics service only if you say yes when the app asks. The privacy page says exactly what, where and for how long.' },
   { q: 'Is Coach a doctor?', a: 'No. Coach is an AI. Its targets come from a formula you can read, its meal ideas are estimates, and it declines questions about medical conditions, medication, pregnancy and supplement doses. Nothing it proposes changes your plan until you tap.' },
   { q: 'Can I keep my macro tracker?', a: 'Yes, and if you lean on a barcode scanner you should. MealStack is the timing layer. It knows the plate, weighs macros from it, and writes them to Apple Health at the time you ate, so the two live side by side.' },
+  { q: 'Does it have streaks?', a: 'No. A streak rewards you for tapping the button, and the easiest way to keep one alive is to lie a little. The log is the input for tomorrow, so it has to be true. History scores the week on what actually landed, and that is the only score.' },
   { q: 'Android, iPad, watch?', a: 'iPhone only, iOS 26 and up. No Android, no iPad layout, no watch app, and none planned for 1.0. The Lock Screen, the widgets and the notifications are where the app lives when it is not open.' },
   { q: 'Which license?', a: 'Not decided. It will be open source, and the source opens with 1.0; whether it is MIT like the rest of the kit or a copyleft license that keeps forks open is the part I have not settled. The name and the marks stay with Mission Built either way.' },
   { q: 'When is 1.0?', a: 'After the meet it is being tested through, in October 2026, once a fresh install has been proven on phones that are not mine.' },
@@ -77,7 +93,7 @@ type Quote = { text: string; who: string };
 const quotes: Quote[] = [];
 
 const title = 'MealStack: meal timing built around your training session · Mission Built';
-const description = 'An iPhone app for people who train. Tell it when your session is and it builds the day\'s meals backward from that, re-flows them when you eat late, and holds the pre-workout meal. Macros from the plate, a coach that proposes, your data on your phone. Private beta.';
+const description = 'Fueling is training. MealStack is a meal timing tracker for people who train: protein stacked across the day, a pre-workout meal that holds its time, a day you can change on the road, and a log of when you actually ate. Not a nutrition app. iPhone, no account, open source with 1.0. Private beta.';
 
 const ld = {
   '@context': 'https://schema.org',
@@ -103,7 +119,7 @@ const ld = {
 <BaseLayout
   title={title}
   description={description}
-  ogImageAlt="MealStack. Your session doesn't move. Your meals do. An iPhone app for meal timing built backward from the training session, by Mission Built."
+  ogImageAlt="MealStack. Fueling is training. A meal timing tracker for people who train, on iPhone, by Mission Built."
   active="rack"
 >
   <script is:inline slot="head" type="application/ld+json" set:html={JSON.stringify(ld)} />
@@ -138,8 +154,8 @@ const ld = {
       </div>
 
       <p class="subtitle">
-        <span class="line1">Your session doesn't move. Your meals do.</span>
-        <span class="line2">Meal timing for people who train. The day is built backward from the session.</span>
+        <span class="line1">Fueling is training.</span>
+        <span class="line2">A meal timing tracker for people who train. Your session doesn't move. Your meals do.</span>
       </p>
 
       <div class="hero-ctas">
@@ -181,14 +197,34 @@ const ld = {
     {/* ---------- WHY ---------- */}
     <section class="block" id="why">
       <p class="section-label">Why it exists</p>
-      <h2 class="section-h2">I needed one rule no app had.</h2>
+      <h2 class="section-h2">Fueling is training.</h2>
       <div class="story">
-        <p>My eating plan has one rule that matters more than the rest: the pre-workout meal goes in ninety minutes before the bar. Everything else in the day is built backward from that. Breakfast can slip. That meal cannot.</p>
-        <p>I went looking for an app that understood the rule, and there are three kinds to try. The meal-timer apps are alarm clocks: every three hours, no plate, no idea what to do when breakfast is late. The routine apps run one step after another, so a late morning pushes the pre-workout meal into the session, which is the one thing I was trying to prevent. The macro trackers know what I ate to the gram and have no opinion about when. Not one of them asks what time you train.</p>
-        <p>So I built the one I needed, during a meet prep, on the phone I had with me at the rack. It counts down to the next plate, re-flows the day from the time I actually ate, holds the meal that matters, and knows what is on the plate. Then it grew a kitchen, a history, a travel mode and a coach with a ceiling.</p>
-        <p>Let's be honest about what it is not. It is not a food database with a barcode scanner, and it will not try to become one. It is the timing layer those apps do not have.</p>
-        <p class="byline">Mike Nichols · built during a meet prep, 2026</p>
+        <p>I sat in a nutrition seminar at the Shaw Strength Summit and heard Nathan Payton say it plainly: if you are not eating properly, you are failing your training. Eating is part of your training.</p>
+        <p>That sent me home to rebuild how I eat, and then looking for an app that understood it. The meal-timer apps are alarm clocks. The routine apps roll a late morning into the session. The macro trackers know what I ate to the gram and have no opinion about when. Not one of them asks what time you train. So I built the one I needed. Four ideas hold up everything it does.</p>
       </div>
+
+      <ol class="pillars" aria-label="The four pillars">
+        <li><span class="num">01</span><span class="label">Protect the protein</span><span class="say">Protein has no storage tank. Stack it across the day, and never send it out alone.</span></li>
+        <li><span class="num">02</span><span class="label">Protect the session</span><span class="say">Your pre-workout meal is equipment, not a snack. It anchors backward from when you train and holds its time.</span></li>
+        <li><span class="num">03</span><span class="label">Protect the day</span><span class="say">Flights, time zones, a session that moved to 8pm. Change the day to rest, move the session, swap the plate, keep going.</span></li>
+        <li><span class="num">04</span><span class="label">Protect the record</span><span class="say">Log when you eat, not when it was due. Today shows what actually landed, so tomorrow is built on the real day.</span></li>
+      </ol>
+
+      <p class="story-link">
+        <a href={storyHref}>Read the whole story: {storyTitle} →</a>
+        <span class="story-meta">Where the four came from, and what I got wrong first.</span>
+      </p>
+
+      {logs.length > 1 && (
+        <div class="from-logs">
+          <p class="k">From the logs</p>
+          <ul>
+            {logs.map((n) => (
+              <li><a href={logUrl(n)}>{n.data.title}</a><span class="desc">{n.data.description}</span></li>
+            ))}
+          </ul>
+        </div>
+      )}
     </section>
 
     <hr class="dashed" />
@@ -224,7 +260,7 @@ const ld = {
       <div class="cards">
         {cards.map((c) => (
           <article class:list={['card', c.mark && 'mark']}>
-            <p class="label">{c.label}</p>
+            <p class="label">{c.label}<span class="pillar"> · {c.pillar}</span></p>
             <p class="verdict">{c.verdict}</p>
             <p class="evidence">{c.evidence}</p>
             <p class="them"><b>Other apps:</b> {c.them}</p>
@@ -254,6 +290,8 @@ const ld = {
 
       <h3 class="sub-h3">And the rest</h3>
       <p class="prose">
+        Meals are plates. Fuel is what you drink around the session, the pre-workout and the
+        intra-session drinks, and the app counts it separately so a shake never stands in for a meal.
         A kitchen of about a hundred foods plus your own, entered per 100 g like the label,
         and saved meals you can drop onto any plate. Apple Health gets the macros at the real
         eat time, and never reads anything back. Light and dark. History that scores against the target you set.
@@ -300,8 +338,8 @@ const ld = {
         </div>
       </div>
       <div class="fine">
-        <p class="k">Not a doctor</p>
-        <p>Coach is an AI, not a doctor or a dietitian. Its targets are estimates from a formula you can read. It declines questions about medical conditions, medication, pregnancy and supplement doses and points you to a professional instead. Nothing it proposes changes your plan until you tap.</p>
+        <p class="k">Not a doctor. Neither is Coach.</p>
+        <p>I am not a doctor or a dietitian, and nothing on this page or in the app is advice about how you should eat. It is how I manage my own diet. Coach is an AI and is not one either: its targets are estimates from a formula you can read, it declines questions about medical conditions, medication, pregnancy and supplement doses, and it points you to a professional instead. Nothing it proposes changes your plan until you tap.</p>
       </div>
     </section>
 
@@ -315,7 +353,7 @@ const ld = {
       <div class="status-panel">
         <div class="status-copy">
           <h3>Running through a meet prep, October 2026</h3>
-          <p>MealStack is on one phone every day right now: six meals, an evening session, a pre-workout meal that does not move. I add testers by hand, in small batches, from the email on your Apple ID. You get an invite from Apple, a link to install, the quick start, and a short list of things I would like you to break.</p>
+          <p>MealStack is on one phone every day right now: five meals and the fuel around the session, an evening session, a pre-workout meal that does not move. I add testers by hand, in small batches, from the email on your Apple ID. You get an invite from Apple, a link to install, the quick start, and a short list of things I would like you to break.</p>
           <p>Builds expire every ninety days and you get the next one. The address is used for the invite and nothing else; you can leave from the invite email at any time.</p>
 
           <form class="beta-form" id="beta-form" method="post" action="/api/beta" novalidate>
@@ -399,8 +437,9 @@ const ld = {
 
     {/* ---------- CLOSER ---------- */}
     <section class="closer">
+      <p class="four">Protein · Session · Day · Record</p>
       <p>
-        Eat on time. <strong>Train on time.</strong>
+        Fueling is <strong>training.</strong>
       </p>
     </section>
 
@@ -623,6 +662,25 @@ const ld = {
   .story p:first-child::first-letter { font-family: var(--font-display); font-weight: 600; }
   .story .byline { margin: 6px 0 0; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-faint); }
 
+  /* The four pillars: rule-bounded grid, oxblood numbers, no panels. */
+  .pillars { list-style: none; margin: 28px 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); border-top: var(--border-thin); border-bottom: var(--border-thin); }
+  .pillars li { display: flex; flex-direction: column; gap: 8px; padding: 22px 20px 22px 0; margin-right: 20px; border-right: 1px dashed var(--color-rule); }
+  .pillars li:last-child { border-right: none; margin-right: 0; }
+  .pillars .num { font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: 0.1em; color: var(--color-blood); }
+  .pillars .label { font-family: var(--font-display); font-weight: 600; font-size: 17px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-chalk); }
+  .pillars .say { font-family: var(--font-serif); font-size: 14px; line-height: 1.55; color: var(--color-chalk-dim); }
+  .story-link { margin: 24px 0 0; display: flex; flex-direction: column; gap: 6px; }
+  .story-link a { align-self: flex-start; font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk); border-bottom: 1px solid var(--color-blood-dim); padding-bottom: 2px; transition: border-color 120ms ease-out; }
+  .story-link a:hover { border-bottom-color: var(--color-blood); }
+  .story-meta { font-family: var(--font-serif); font-size: 14px; color: var(--color-chalk-faint); }
+  .from-logs { margin-top: 28px; max-width: 66ch; }
+  .from-logs .k { margin: 0 0 10px; font-family: var(--font-mono); font-size: 10px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); }
+  .from-logs ul { list-style: none; margin: 0; padding: 0; border-top: var(--border-thin); }
+  .from-logs li { display: flex; flex-direction: column; gap: 4px; padding: 12px 0; border-bottom: var(--border-thin); }
+  .from-logs li a { font-family: var(--font-display); font-weight: 500; font-size: 17px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--color-chalk); }
+  .from-logs li a:hover { color: var(--color-blood); }
+  .from-logs .desc { font-family: var(--font-serif); font-size: 14px; color: var(--color-chalk-dim); }
+
   /* ============ DEMO ============ */
   .demo { margin-top: 18px; max-width: 760px; border: var(--border-thin); background: var(--color-panel); padding: 22px 22px 18px; }
   .demo-top { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: 14px; }
@@ -650,6 +708,7 @@ const ld = {
   }
   .card.mark { background: var(--color-panel); }
   .card .label { margin: 0; font-family: var(--font-mono); font-size: 10px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); }
+  .card .label .pillar { color: var(--color-chalk-dim); letter-spacing: 0.14em; }
   .card .verdict { margin: 0; font-family: var(--font-display); font-weight: 500; font-size: 22px; line-height: 1.1; text-transform: uppercase; color: var(--color-chalk); }
   .card.mark .verdict::before { content: ''; display: inline-block; width: 8px; height: 8px; background: var(--color-blood); margin-right: 10px; vertical-align: 2px; }
   .card .evidence { margin: 0; font-family: var(--font-serif); font-size: 14px; line-height: 1.55; color: var(--color-chalk-dim); }
@@ -759,6 +818,7 @@ const ld = {
   .closer { margin-top: 56px; padding: 48px var(--pad-page-x); border-top: var(--border-thin); text-align: center; }
   .closer p { margin: 0; font-family: var(--font-display); font-weight: 500; font-size: 22px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-chalk); }
   .closer p strong { font-weight: 500; color: var(--color-blood); }
+  .closer .four { margin: 0 0 14px; font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: 0.26em; text-transform: uppercase; color: var(--color-chalk-faint); }
   .foot {
     display: flex; justify-content: space-between; align-items: center; gap: 14px;
     padding: 22px var(--pad-page-x) 40px; border-top: var(--border-thin);
@@ -787,6 +847,10 @@ const ld = {
     .block, .install-block { padding: 40px var(--pad-page-x-mobile) 0; }
     .section-h2 { font-size: 28px; }
     .cards { grid-template-columns: 1fr; }
+    .pillars { grid-template-columns: 1fr 1fr; }
+    .pillars li { padding: 18px 16px 18px 0; margin-right: 16px; }
+    .pillars li:nth-child(2n) { border-right: none; margin-right: 0; }
+    .pillars li:nth-child(-n+2) { border-bottom: 1px dashed var(--color-rule); }
     .lic { grid-template-columns: 1fr; }
     .faq-item { grid-template-columns: 1fr; gap: 8px; }
     .hero-ctas { gap: 14px; }

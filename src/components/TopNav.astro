@@ -1,6 +1,6 @@
 ---
 /**
- * TopNav — full-width strip used on Home, Chapter Index, About, Notes.
+ * TopNav — full-width strip used on Home, Chapter Index, About, Logs.
  *
  * Layout: lockup left, nav links right. Border-bottom 1px rule.
  * On <=720px, links collapse to a hamburger placeholder (CSS-only details/summary).
@@ -8,7 +8,7 @@
 import Lockup from './Lockup.astro';
 
 interface Props {
-  active?: 'book' | 'chapters' | 'loadout' | 'rack' | 'about' | 'source' | undefined;
+  active?: 'book' | 'chapters' | 'loadout' | 'rack' | 'logs' | 'about' | 'source' | undefined;
 }
 const { active } = Astro.props;
 
@@ -17,6 +17,7 @@ const links = [
   { key: 'chapters', label: 'Chapters',     href: '/chapters' },
   { key: 'loadout',  label: 'The Loadout',  href: '/loadout' },
   { key: 'rack',     label: 'The Rack',     href: '/rack' },
+  { key: 'logs',    label: 'Logs',        href: '/logs' },
   { key: 'about',    label: 'About',        href: '/about' },
   { key: 'source',   label: 'Source',       href: '/source' },
 ] as const;
@@ -133,6 +134,9 @@ const links = [
   }
 
   /* ------- Responsive ------- */
+  @media (max-width: 1000px) {
+    .nav-links ul { gap: 18px; }
+  }
   @media (max-width: 720px) {
     .top-nav {
       padding: 14px 24px;

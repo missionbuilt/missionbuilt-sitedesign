@@ -1,0 +1,225 @@
+---
+/**
+ * A Log — /logs/{slug}. One column, 680px, the essay measure.
+ *
+ * Header: mono eyebrow → display h1 (one word in oxblood via `accent`) →
+ * Oswald standfirst → ruled mono byline with the date. Then the MDX body,
+ * styled below through :global on direct children only, so the logs/*
+ * components keep their own styling. Foot: the tool the note belongs to (from `tool`), then back to
+ * all logs.
+ *
+ * Color discipline: oxblood for the eyebrow, the accent word, list dashes,
+ * pull-quote rule and link underlines. Army green only inside the note
+ * components (kicker, aside tag, status rail, figure caption).
+ */
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import TopNav from '../../components/TopNav.astro';
+import { TOOLS, byNewest, logUrl, longDate, monthYear, isoDay, type Log } from '../../data/logs';
+
+export async function getStaticPaths() {
+  const logs = (await getCollection('logs', ({ data }) => !data.draft)).sort(byNewest);
+  return logs.map((entry) => ({ params: { slug: entry.slug }, props: { entry } }));
+}
+
+const { entry } = Astro.props as { entry: Log };
+const { Content } = await entry.render();
+const d = entry.data;
+
+// Title with one word in oxblood.
+const i = d.accent ? d.title.indexOf(d.accent) : -1;
+const tBefore = i >= 0 ? d.title.slice(0, i) : d.title;
+const tAfter = i >= 0 ? d.title.slice(i + (d.accent?.length ?? 0)) : '';
+
+const tool = d.tool ? TOOLS[d.tool] : null;
+const pageTitle = `${d.title} · Logs · Mission Built`;
+const canonical = `https://missionbuilt.io${logUrl(entry)}`;
+
+const ld = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: d.title,
+  description: d.description,
+  datePublished: isoDay(d.date),
+  ...(d.updated ? { dateModified: isoDay(d.updated) } : {}),
+  author: { '@type': 'Person', name: 'Mike Nichols', url: 'https://missionbuilt.io/about' },
+  publisher: { '@type': 'Organization', name: 'Mission Built', url: 'https://missionbuilt.io' },
+  mainEntityOfPage: canonical,
+  ...(d.ogImage ? { image: `https://missionbuilt.io${d.ogImage}` } : {}),
+};
+---
+<BaseLayout
+  title={pageTitle}
+  description={d.description}
+  ogType="article"
+  ogImage={d.ogImage}
+  ogImageAlt={d.ogImageAlt ?? `${d.title}. A log from Mission Built.`}
+  active="logs"
+>
+  <script is:inline slot="head" type="application/ld+json" set:html={JSON.stringify(ld)} />
+  <link slot="head" rel="alternate" type="application/rss+xml" title="Logs · Mission Built" href="/logs/rss.xml" />
+  <TopNav active="logs" />
+
+  <main class="page">
+    {/* ---------- BREADCRUMB ---------- */}
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/logs">Logs</a>
+      <span aria-hidden="true"> / </span>
+      <span class="here">{d.title}</span>
+    </nav>
+
+    <article class="note">
+      {/* ---------- HEADER ---------- */}
+      <header class="head">
+        {d.eyebrow && (
+          <p class="eyebrow"><span class="dots" aria-hidden="true">▮▮▮</span><span>{d.eyebrow}</span></p>
+        )}
+        <h1>{tBefore}{i >= 0 && <span class="accent">{d.accent}</span>}{tAfter}</h1>
+        <p class="standfirst">{d.standfirst}</p>
+        <p class="byline">
+          Mike Nichols · Mission Built · <time datetime={isoDay(d.date)}>{monthYear(d.date)}</time>
+          {d.updated && <span class="updated"> · updated {longDate(d.updated)}</span>}
+        </p>
+      </header>
+
+      {/* ---------- BODY ---------- */}
+      <div class="body">
+        <Content />
+      </div>
+
+      {/* ---------- FOOT ---------- */}
+      <footer class="note-foot">
+        {tool && (
+          <a href={tool.href} class="tool-card">
+            <span class="k">Built into</span>
+            <span class="name">{tool.name}</span>
+            <span class="line">{tool.line}</span>
+            <span class="cta">{tool.cta}</span>
+          </a>
+        )}
+        <a href="/logs" class="back">← All logs</a>
+      </footer>
+    </article>
+
+    <footer class="foot">
+      <span>Real strength is lifting others</span>
+      <span class="foot-links">
+        <a href="/logs/rss.xml">RSS</a>
+        <a href="mailto:mike@missionbuilt.io">mike@missionbuilt.io</a>
+      </span>
+    </footer>
+  </main>
+</BaseLayout>
+
+<style>
+  /* ============ BREADCRUMB ============ */
+  .breadcrumb {
+    padding: 18px var(--pad-page-x) 0;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--color-chalk-faint);
+  }
+  .breadcrumb a { color: var(--color-chalk-dim); transition: color 120ms ease-out; }
+  .breadcrumb a:hover { color: var(--color-chalk); }
+  .breadcrumb .here { color: var(--color-chalk-faint); }
+
+  /* ============ COLUMN ============ */
+  .note { max-width: 680px; margin: 0 auto; padding: 36px var(--pad-page-x-mobile) 0; }
+
+  /* ============ HEADER ============ */
+  .eyebrow {
+    display: flex; align-items: center; gap: 10px; margin: 0 0 18px;
+    font-family: var(--font-mono); font-size: 10px; font-weight: 500; letter-spacing: 0.24em; text-transform: uppercase;
+    color: var(--color-blood);
+  }
+  .eyebrow .dots { color: var(--color-blood-dim); letter-spacing: 0.1em; }
+  h1 {
+    margin: 0; font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(38px, 9vw, 60px); line-height: 0.98; letter-spacing: -0.02em; text-transform: uppercase;
+    color: var(--color-chalk);
+  }
+  h1 .accent { color: var(--color-blood); }
+  .standfirst {
+    margin: 18px 0 0; font-family: var(--font-display); font-weight: 400; font-size: 19px; line-height: 1.4; letter-spacing: 0.01em;
+    color: var(--color-chalk-dim);
+  }
+  .byline {
+    margin: 20px 0 0; padding-top: 14px; border-top: var(--border-thin);
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-faint);
+  }
+
+  /* ============ BODY (markdown via :global) ============ */
+  .body { margin-top: 8px; font-family: var(--font-serif); font-size: 17px; line-height: 1.62; color: var(--color-chalk-dim); }
+  .body > :global(h2) {
+    margin: 46px 0 6px; padding-top: 18px; border-top: var(--border-thin);
+    font-family: var(--font-display); font-weight: 600; font-size: 25px; line-height: 1.15; letter-spacing: 0.02em; text-transform: uppercase;
+    color: var(--color-chalk);
+  }
+  .body > :global(h2 + p) { margin-top: 12px; }
+  .body > :global(h3) {
+    margin: 28px 0 8px; font-family: var(--font-display); font-weight: 500; font-size: 18px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--color-chalk);
+  }
+  .body > :global(p) { margin: 0 0 18px; }
+  .body > :global(p.lede) { margin-top: 12px; font-size: 18px; color: var(--color-chalk); }
+  .body :global(strong) { color: var(--color-chalk); font-weight: 700; }
+  .body :global(em) { font-style: italic; }
+  .body :global(a) {
+    color: var(--color-chalk); border-bottom: 1px solid var(--color-blood); padding-bottom: 1px;
+    transition: color 120ms ease-out;
+  }
+  .body :global(a:hover) { color: var(--color-blood); }
+
+  .body > :global(ul) { list-style: none; margin: 0 0 22px; padding: 0; }
+  .body > :global(ol) { margin: 0 0 22px; padding-left: 22px; }
+  .body > :global(ul) > :global(li), .body > :global(ol) > :global(li) { position: relative; padding-left: 20px; margin-bottom: 12px; font-size: 16.5px; }
+  .body > :global(ol) > :global(li) { padding-left: 4px; }
+  .body > :global(ul) > :global(li::before) {
+    content: ""; position: absolute; left: 0; top: 11px; width: 9px; height: 2px; background: var(--color-blood);
+  }
+
+  /* Markdown blockquote is the pull quote. */
+  .body > :global(blockquote) { margin: 30px 0; padding: 4px 0 4px 18px; border-left: 3px solid var(--color-blood); }
+  .body > :global(blockquote) > :global(p) {
+    margin: 0; font-family: var(--font-display); font-weight: 500; font-size: 22px; line-height: 1.28; letter-spacing: 0.01em; color: var(--color-chalk);
+  }
+  .body > :global(hr) { margin: 36px 0; border: 0; height: 1px; background: var(--color-rule); }
+  .body :global(img) { max-width: 100%; height: auto; }
+  .body :global(code) { font-family: var(--font-mono); font-size: 0.9em; color: var(--color-chalk); }
+
+  /* ============ FOOT ============ */
+  .note-foot { margin-top: 44px; display: flex; flex-direction: column; gap: 22px; }
+  .tool-card {
+    display: grid; grid-template-columns: auto 1fr auto; grid-template-areas: "k name cta" "k line cta"; column-gap: 18px; row-gap: 4px; align-items: center;
+    padding: 18px 20px; border: var(--border-thin); text-decoration: none; transition: background 120ms ease-out;
+  }
+  .tool-card:hover { background: rgba(255,255,255,0.015); }
+  .tool-card .k { grid-area: k; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); }
+  .tool-card .name { grid-area: name; font-family: var(--font-display); font-weight: 700; font-size: 20px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--color-chalk); }
+  .tool-card .line { grid-area: line; font-family: var(--font-serif); font-size: 14px; line-height: 1.5; color: var(--color-chalk-dim); }
+  .tool-card .cta { grid-area: cta; font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-faint); transition: color 120ms ease-out; white-space: nowrap; }
+  .tool-card:hover .cta { color: var(--color-blood); }
+  .back { align-self: flex-start; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-dim); transition: color 120ms ease-out; }
+  .back:hover { color: var(--color-chalk); }
+
+  /* ============ FOOTER ============ */
+  .foot {
+    display: flex; justify-content: space-between; align-items: center; gap: 14px;
+    margin-top: 64px; padding: 22px var(--pad-page-x) 40px; border-top: var(--border-thin);
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-faint);
+  }
+  .foot .foot-links { display: inline-flex; gap: 22px; }
+  .foot a { color: var(--color-chalk-dim); transition: color 120ms ease-out; text-transform: none; }
+  .foot a:hover { color: var(--color-chalk); }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 1099px) {
+    .breadcrumb { padding: 18px var(--pad-page-x-mid) 0; }
+    .foot { padding: 22px var(--pad-page-x-mid) 40px; }
+  }
+  @media (max-width: 720px) {
+    .breadcrumb { padding: 18px var(--pad-page-x-mobile) 0; }
+    .note { padding-top: 28px; }
+    .body { font-size: 16.5px; }
+    .tool-card { grid-template-columns: 1fr; grid-template-areas: "k" "name" "line" "cta"; row-gap: 6px; }
+    .foot { padding: 22px var(--pad-page-x-mobile) 32px; flex-direction: column; align-items: flex-start; }
+  }
+</style>

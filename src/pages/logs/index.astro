@@ -1,0 +1,169 @@
+---
+/**
+ * Logs — the essays. Third home on the site after the book and the tools.
+ *
+ * The book is the plan, the Loadout and the Rack are the work, and the logs
+ * are what happened doing it. A training log records what happened, not
+ * what was planned; the name is the same idea for writing. Newest first. Adding a note is one MDX file in
+ * src/content/logs/; it shows up here, at /logs/{slug}, in /logs/rss.xml,
+ * and (when `tool` is set) on that tool's page.
+ *
+ * Pattern: TopNav → Hero (eyebrow + h1 + subtitle + meta line) → Rows → Footer.
+ * Calm: rule lines between rows, no panels. Oxblood for the hero period and
+ * the row hover. Army green for the tool pill only.
+ */
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import TopNav from '../../components/TopNav.astro';
+import { TOOLS, byNewest, logUrl, longDate, isoDay } from '../../data/logs';
+
+const logs = (await getCollection('logs', ({ data }) => !data.draft)).sort(byNewest);
+const count = logs.length;
+---
+<BaseLayout
+  title="Logs · Mission Built"
+  description="What happened, written down. Logs from the barbell and the boardroom, by Mike Nichols. Newest first."
+  active="logs"
+>
+  <link slot="head" rel="alternate" type="application/rss+xml" title="Logs · Mission Built" href="/logs/rss.xml" />
+  <TopNav active="logs" />
+
+  <main class="page">
+    {/* ---------- HERO ---------- */}
+    <section class="hero">
+      <p class="eyebrow">
+        <span class="dots" aria-hidden="true">▮▮▮</span>
+        <span>Logs from the barbell and the boardroom</span>
+        <span class="dots" aria-hidden="true">▮▮▮</span>
+      </p>
+
+      <h1 class="display">
+        <span>Logs</span><span class="dot">.</span>
+      </h1>
+
+      <p class="subtitle">
+        <span class="line1">What happened, written down.</span>
+        <span class="line2">The book is the plan. The tools are the work. The logs are what happened. Newest first.</span>
+      </p>
+
+      <ul class="meta" aria-label="At a glance">
+        <li><span class="k">Logs</span><span class="v">{count}</span></li>
+        <li><span class="k">By</span><span class="v">Mike Nichols</span></li>
+        <li><span class="k">Feed</span><a class="v linked" href="/logs/rss.xml">RSS</a></li>
+      </ul>
+    </section>
+
+    {/* ---------- THE LOGS ---------- */}
+    <section class="block" aria-label="All logs">
+      <ol class="rows">
+        {logs.map((n) => (
+          <li>
+            <a href={logUrl(n)} class="row">
+              <time class="date" datetime={isoDay(n.data.date)}>{longDate(n.data.date)}</time>
+              <div class="body">
+                <h2 class="title">{n.data.title}<span class="dot">.</span></h2>
+                <p class="desc">{n.data.description}</p>
+                <span class="line">
+                  {n.data.tool && <span class="pill">{TOOLS[n.data.tool].name}</span>}
+                  <span class="cta">Read →</span>
+                </span>
+              </div>
+            </a>
+          </li>
+        ))}
+      </ol>
+      {count === 0 && <p class="empty">Nothing here yet.</p>}
+    </section>
+
+    {/* ---------- FOOTER ---------- */}
+    <footer class="foot">
+      <span>Real strength is lifting others</span>
+      <span class="foot-links">
+        <a href="/logs/rss.xml">RSS</a>
+        <a href="mailto:mike@missionbuilt.io">mike@missionbuilt.io</a>
+      </span>
+    </footer>
+  </main>
+</BaseLayout>
+
+<style>
+  /* ============ HERO ============ */
+  .hero { padding: 40px var(--pad-page-x) 8px; text-align: center; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 14px; margin: 0 0 18px;
+    font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.24em;
+    color: var(--color-blood); text-transform: uppercase;
+  }
+  .eyebrow .dots { letter-spacing: 0.04em; opacity: 0.65; }
+  .display {
+    margin: 0; font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(48px, 9vw, 96px); line-height: 0.95; letter-spacing: -0.02em;
+    text-transform: uppercase; color: var(--color-chalk);
+  }
+  .display .dot { color: var(--color-blood); }
+  .subtitle {
+    margin: 18px auto 0; max-width: 62ch; display: flex; flex-direction: column; gap: 6px;
+    font-family: var(--font-display); letter-spacing: 0.01em;
+  }
+  .subtitle .line1 { font-size: clamp(16px, 2.4vw, 24px); font-weight: 500; color: var(--color-chalk); }
+  .subtitle .line2 { font-size: clamp(13px, 1.9vw, 19px); color: var(--color-chalk-dim); }
+
+  .meta {
+    list-style: none; margin: 28px auto 0; padding: 14px 0; max-width: 560px;
+    display: flex; justify-content: center; gap: 36px; flex-wrap: wrap;
+    border-top: var(--border-thin); border-bottom: var(--border-thin);
+  }
+  .meta li { display: inline-flex; align-items: baseline; gap: 10px; }
+  .meta .k { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); }
+  .meta .v { font-family: var(--font-display); font-size: 16px; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-chalk); }
+  .meta .linked { border-bottom: 1px solid var(--color-blood-dim); transition: border-color 120ms ease-out; }
+  .meta .linked:hover { border-bottom-color: var(--color-blood); }
+
+  /* ============ ROWS ============ */
+  .block { padding: 36px var(--pad-page-x) 0; max-width: 980px; margin: 0 auto; }
+  .rows { list-style: none; margin: 0; padding: 0; border-top: var(--border-thin); }
+  .rows li { border-bottom: var(--border-thin); }
+  .row {
+    display: grid; grid-template-columns: 180px 1fr; gap: 28px; align-items: start;
+    padding: 28px 8px; text-decoration: none; transition: background 120ms ease-out;
+  }
+  .row:hover { background: rgba(255,255,255,0.015); }
+  .date { padding-top: 6px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-chalk-faint); }
+  .body { display: flex; flex-direction: column; gap: 10px; }
+  .title { margin: 0; font-family: var(--font-display); font-weight: 600; font-size: 26px; line-height: 1.1; letter-spacing: 0.01em; text-transform: uppercase; color: var(--color-chalk); }
+  .title .dot { color: var(--color-blood); }
+  .desc { margin: 0; max-width: 62ch; font-family: var(--font-serif); font-size: 15px; line-height: 1.6; color: var(--color-chalk-dim); }
+  .line { display: inline-flex; align-items: center; gap: 16px; margin-top: 4px; }
+  .pill {
+    font-family: var(--font-mono); font-size: 10px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--color-army); border: 1px solid var(--color-army-dim); padding: 3px 8px;
+  }
+  .cta { font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-faint); transition: color 120ms ease-out; }
+  .row:hover .cta { color: var(--color-blood); }
+  .empty { margin: 28px 0 0; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-faint); }
+
+  /* ============ FOOTER ============ */
+  .foot {
+    display: flex; justify-content: space-between; align-items: center; gap: 14px;
+    margin-top: 72px; padding: 22px var(--pad-page-x) 40px; border-top: var(--border-thin);
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-faint);
+  }
+  .foot .foot-links { display: inline-flex; gap: 22px; }
+  .foot a { color: var(--color-chalk-dim); transition: color 120ms ease-out; text-transform: none; }
+  .foot a:hover { color: var(--color-chalk); }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 1099px) {
+    .hero { padding: 36px var(--pad-page-x-mid) 8px; }
+    .block { padding: 32px var(--pad-page-x-mid) 0; }
+    .foot { padding: 22px var(--pad-page-x-mid) 40px; }
+  }
+  @media (max-width: 720px) {
+    .hero { padding: 28px var(--pad-page-x-mobile) 4px; }
+    .block { padding: 24px var(--pad-page-x-mobile) 0; }
+    .meta { gap: 20px; }
+    .row { grid-template-columns: 1fr; gap: 10px; padding: 22px 0; }
+    .title { font-size: 22px; }
+    .foot { padding: 22px var(--pad-page-x-mobile) 32px; flex-direction: column; align-items: flex-start; }
+  }
+</style>

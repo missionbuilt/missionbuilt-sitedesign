@@ -1,0 +1,47 @@
+---
+/**
+ * Signoff — a mono line, the mark with one word in oxblood, and the mini barbell.
+ * `mark` is the sentence; `accent` is the part of it to set in oxblood.
+ */
+interface Props { line?: string; mark: string; accent?: string }
+const { line, mark, accent } = Astro.props;
+const i = accent ? mark.indexOf(accent) : -1;
+const before = i >= 0 ? mark.slice(0, i) : mark;
+const after = i >= 0 ? mark.slice(i + accent!.length) : '';
+---
+<div class="signoff">
+  {line && <p class="line">{line}</p>}
+  <p class="mark">{before}{i >= 0 && <span>{accent}</span>}{after}</p>
+  <div class="barbell" aria-hidden="true"><i></i><b></b><i></i></div>
+</div>
+
+<style>
+  .signoff {
+    margin-top: 40px;
+    padding-top: 22px;
+    border-top: var(--border-thin);
+    text-align: center;
+  }
+  .line {
+    margin: 0 0 14px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--color-chalk-faint);
+  }
+  .mark {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 27px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--color-chalk);
+  }
+  .mark span { color: var(--color-blood); }
+  .barbell { display: flex; align-items: center; justify-content: center; gap: 3px; margin: 18px 0 4px; }
+  .barbell i { display: block; width: 8px; height: 8px; border: 1px solid var(--color-army); }
+  .barbell b { display: block; width: 16px; height: 2px; background: var(--color-chalk-faint); }
+</style>

@@ -37,4 +37,37 @@ const chapters = defineCollection({
   }),
 });
 
-export const collections = { chapters };
+/**
+ * Logs collection — Logs, the essays.
+ *
+ * Layout: src/content/logs/{slug}.mdx  →  /logs/{slug}
+ * Newest first on /logs and in /logs/rss.xml. A log can point at a tool
+ * (`tool`), which draws the "Built into …" block at its foot and lets the
+ * tool's page list it under "From the logs".
+ */
+const logs = defineCollection({
+  type: 'content',
+  schema: z.object({
+    /** Display title. Sentence case; the layout uppercases it. */
+    title: z.string(),
+    /** One word (or phrase) of the title to set in oxblood. Must appear in `title`. */
+    accent: z.string().optional(),
+    /** Mono eyebrow above the title, e.g. "Why MealStack exists". */
+    eyebrow: z.string().optional(),
+    /** One or two sentences under the title, Oswald. */
+    standfirst: z.string(),
+    /** Listing, meta description and RSS. Plain text, no markup. */
+    description: z.string(),
+    date: z.coerce.date(),
+    updated: z.coerce.date().optional(),
+    /** Which tool the note belongs to, if any. Drives cross-links both ways. */
+    tool: z.enum(['mealstack', 'ironstack', 'loadout']).optional(),
+    /** 1200x630 share image under /public. Defaults to the site card. */
+    ogImage: z.string().optional(),
+    ogImageAlt: z.string().optional(),
+    /** Hidden from listings, the feed and routing while true. */
+    draft: z.boolean().default(false),
+  }),
+});
+
+export const collections = { chapters, logs };

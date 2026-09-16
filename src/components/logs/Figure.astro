@@ -1,0 +1,25 @@
+---
+/** A photo with a mono caption on an army left rule. `src` is a path under /public. */
+interface Props { src: string; alt: string; caption?: string; width?: number; height?: number }
+const { src, alt, caption, width, height } = Astro.props;
+---
+<figure class="fig">
+  <img src={src} alt={alt} width={width} height={height} loading="lazy" decoding="async" />
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+  .fig { margin: 36px 0; }
+  .fig img { width: 100%; height: auto; display: block; border: var(--border-thin); }
+  figcaption {
+    margin-top: 10px;
+    padding-left: 10px;
+    border-left: 2px solid var(--color-army);
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    line-height: 1.6;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-chalk-faint);
+  }
+</style>

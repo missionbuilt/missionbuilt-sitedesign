@@ -1,0 +1,49 @@
+---
+/** One principle inside a <Doctrine>: number, label, and a line of what it says. */
+interface Props { n: string; label: string }
+const { n, label } = Astro.props;
+---
+<div class="pillar">
+  <div class="num">{n}</div>
+  <div>
+    <span class="label">{label}</span>
+    <div class="say"><slot /></div>
+  </div>
+</div>
+
+<style>
+  .pillar {
+    display: flex;
+    gap: 14px;
+    padding-bottom: 18px;
+    margin-bottom: 18px;
+    border-bottom: 1px dashed var(--color-rule);
+  }
+  .pillar:last-child { border-bottom: 0; margin-bottom: 0; padding-bottom: 12px; }
+  .num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--color-blood);
+    padding-top: 4px;
+    min-width: 18px;
+  }
+  .label {
+    display: block;
+    margin-bottom: 4px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 17px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-chalk);
+  }
+  .say, .say :global(p) {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: 15.5px;
+    line-height: 1.5;
+    color: var(--color-chalk-dim);
+  }
+</style>

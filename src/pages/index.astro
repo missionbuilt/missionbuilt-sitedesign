@@ -21,7 +21,7 @@ const featured = MB.chapters.slice(0, 3);
 
 const stats = [
   { key: 'The book',  value: `${TOTAL_CHAPTERS} chapters`,   accent: 'chalk' as const, href: undefined },
-  { key: 'Sections',  value: `${TOTAL_SECTIONS} logs`,       accent: 'chalk' as const, href: undefined },
+  { key: 'Sections',  value: `${TOTAL_SECTIONS}`,            accent: 'chalk' as const, href: undefined },
   { key: 'Read time', value: totalReadTime(),                accent: 'chalk' as const, href: undefined },
   { key: 'License',   value: MB.license.replace(' 4.0',''),  accent: 'army'  as const,
     href: 'https://creativecommons.org/licenses/by-nc-sa/4.0/' },
@@ -170,7 +170,7 @@ const stats = [
         <a href="/rack/mealstack" class="ls-card">
           <div class="ls-tag beta"><span class="ls-sq beta" aria-hidden="true"></span>Private beta<span class="ls-sep" aria-hidden="true">·</span><svg class="ph-glyph" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M10 18.5h4"/></svg>iPhone</div>
           <h3 class="ls-name">MealStack</h3>
-          <p class="ls-blurb">Your session doesn't move. Your meals do. An iPhone app for meal timing built backward from the session, with macros weighed from the plate and a coach that proposes.</p>
+          <p class="ls-blurb">Fueling is training. A meal timing tracker for people who train. Protect the protein, the session, the day, and the record. Not a nutrition app.</p>
         </a>
         <a href="/rack/ironstack" class="ls-card">
           <div class="ls-tag testing"><span class="ls-sq testing" aria-hidden="true"></span>In testing</div>

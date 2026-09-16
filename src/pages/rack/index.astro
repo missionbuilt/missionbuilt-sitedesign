@@ -6,7 +6,10 @@
  * product leaders, installed over MCP, MIT. The Rack holds the tools Mike
  * trains with: Ironstack (two Claude skills, seven Kibana dashboards and a
  * coach over an Elasticsearch you own, MIT) and MealStack (an iPhone app,
- * open source with 1.0, license not yet settled). Both in testing as of Sept 2026. Ironstack and MealStack moved
+ * open source with 1.0, license not yet settled). Both in testing as of Sept 2026.
+ * Each card opens on the tool's own line ("Fueling is training." / "Weight is a
+ * number. Heavy is a feeling."); MealStack's wording follows the Log
+ * "Fueling is training" (src/content/logs/fueling-is-training.mdx). Ironstack and MealStack moved
  * here from /loadout on Sept 13, 2026; public/_redirects carries the 301s.
  *
  * Same skeleton as the Loadout index, minus the install section: each tool
@@ -45,7 +48,7 @@ const tools: Tool[] = [
     status: 'beta',
     kind: 'iPhone app',
     blurb:
-      'Your session doesn\'t move. Your meals do. An iPhone app for meal timing built backward from the session, with macros weighed from the plate, travel that holds your spacing, widgets and a Lock Screen card, and a coach that proposes. Open source with 1.0.',
+      'Fueling is training. A meal timing tracker for people who train: protein stacked across the day, a pre-workout meal that holds its time, a day you can change on the road, and a log of when you actually ate. Not a nutrition app. Open source with 1.0.',
     href: '/rack/mealstack',
     cta: 'Join the beta →',
   },
@@ -62,7 +65,7 @@ const tools: Tool[] = [
 ---
 <BaseLayout
   title="The Rack · Mission Built"
-  description="Open-source tools for the barbell: a training partner with your whole history in its head, and an iPhone app that times your meals to the session. The other half of Mission Built."
+  description="Open-source tools for the barbell: a training partner with your whole history in its head, and a meal timing tracker for people who train. The other half of Mission Built."
   active="rack"
 >
   <TopNav active="rack" />

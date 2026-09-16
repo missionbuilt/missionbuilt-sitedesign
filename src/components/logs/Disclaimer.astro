@@ -1,0 +1,30 @@
+---
+/** End-matter in a quieter voice: ruled top, faint chalk, a small display heading. */
+interface Props { title: string }
+const { title } = Astro.props;
+---
+<div class="disclaimer">
+  <h2>{title}</h2>
+  <slot />
+</div>
+
+<style>
+  .disclaimer {
+    margin-top: 46px;
+    padding-top: 22px;
+    border-top: var(--border-thin);
+  }
+  h2 {
+    margin: 0 0 12px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 19px;
+    line-height: 1.15;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--color-chalk-dim);
+  }
+  .disclaimer :global(p) { font-size: 15.5px; color: var(--color-chalk-faint); }
+  .disclaimer :global(strong) { color: var(--color-chalk-dim); }
+  .disclaimer :global(a) { color: var(--color-chalk-dim); }
+</style>
