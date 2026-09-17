@@ -1,0 +1,122 @@
+---
+/**
+ * SiteFooter — the one footer every page shares.
+ *
+ * Row 1 (optional): links for the page you're on (a repo, release notes).
+ * Row 2: the tagline left, site links right. Source and Download live here
+ * so the TopNav can stay at five links.
+ *
+ * Place it after </main> so it reads as the page's contentinfo landmark.
+ */
+interface FootLink {
+  label: string;
+  href: string;
+  /** Opens in a new tab (repos, outside sites). */
+  external?: boolean;
+}
+
+interface Props {
+  links?: FootLink[];
+}
+
+const { links = [] } = Astro.props;
+
+const site: FootLink[] = [
+  { label: 'Chapters', href: '/chapters' },
+  { label: 'Download', href: '/download' },
+  { label: 'Source',   href: '/source' },
+  { label: 'RSS',      href: '/logs/rss.xml' },
+];
+---
+<footer class="site-foot">
+  {links.length > 0 && (
+    <nav class="sf-row sf-page" aria-label="More on this page">
+      {links.map((l) => (
+        <a
+          href={l.href}
+          target={l.external ? '_blank' : undefined}
+          rel={l.external ? 'noopener' : undefined}
+        >{l.label}{l.external && <span class="ext" aria-hidden="true"> ↗</span>}</a>
+      ))}
+    </nav>
+  )}
+
+  <div class="sf-row sf-main">
+    <p class="sf-tag">Real strength is lifting others</p>
+    <nav class="sf-site" aria-label="Site">
+      {site.map((l) => <a href={l.href}>{l.label}</a>)}
+      <a href="mailto:mike@missionbuilt.io" class="sf-mail">mike@missionbuilt.io</a>
+    </nav>
+  </div>
+
+  <p class="sf-fine">
+    Mission Built by Mike Nichols. The book is
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener license">CC BY-NC-SA 4.0</a>.
+  </p>
+</footer>
+
+<style>
+  .site-foot {
+    margin-top: 56px;
+    padding: 24px var(--pad-page-x) 40px;
+    border-top: var(--border-thin);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-chalk-faint);
+    position: relative;
+    z-index: 1;
+  }
+
+  .sf-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 28px;
+  }
+  .sf-page {
+    justify-content: flex-start;
+    padding-bottom: 18px;
+    margin-bottom: 18px;
+    border-bottom: var(--border-dashed);
+  }
+
+  .sf-tag { margin: 0; }
+
+  .sf-site {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 24px;
+  }
+
+  a {
+    color: var(--color-chalk-dim);
+    transition: color 120ms ease-out;
+  }
+  a:hover { color: var(--color-chalk); }
+  .sf-mail { text-transform: none; letter-spacing: 0.06em; }
+  .ext { color: var(--color-chalk-faint); }
+
+  .sf-fine {
+    margin: 18px 0 0;
+    font-family: var(--font-serif);
+    font-size: 13px;
+    letter-spacing: 0.01em;
+    text-transform: none;
+    color: var(--color-chalk-faint);
+  }
+  .sf-fine a {
+    color: var(--color-chalk-dim);
+    border-bottom: 1px solid var(--color-chalk-ghost);
+  }
+
+  @media (max-width: 1099px) {
+    .site-foot { padding: 22px var(--pad-page-x-mid) 36px; }
+  }
+  @media (max-width: 720px) {
+    .site-foot { padding: 22px var(--pad-page-x-mobile) 32px; margin-top: 40px; }
+    .sf-main { flex-direction: column; align-items: flex-start; }
+  }
+</style>

@@ -6,6 +6,7 @@
  * clicks "Source" lands somewhere honest about which repo is which.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteFooter from '../components/SiteFooter.astro';
 import TopNav from '../components/TopNav.astro';
 
 const repos = [
@@ -23,7 +24,7 @@ const repos = [
     title: 'missionbuilt/loadout',
     blurb:
       "The skills and MCP server that put the book into operation. The Spotter, " +
-      "The Warmup, and The Approach — MIT-licensed, built to be forked, " +
+      "The Warmup, and The Approach. MIT-licensed, built to be forked, " +
       "and available to any MCP-compatible agent.",
     href: 'https://github.com/missionbuilt/loadout',
     accent: 'chalk' as const,
@@ -56,7 +57,7 @@ const repos = [
 >
   <TopNav active="source" />
 
-  <main class="page">
+  <main id="main" class="page">
     <header class="hero">
       <p class="eyebrow">Source</p>
       <h1 class="hero-h1">Open work.</h1>
@@ -96,6 +97,7 @@ const repos = [
       Contributions welcome across all of them.
     </p>
   </main>
+  <SiteFooter />
 </BaseLayout>
 
 <style>
@@ -109,9 +111,9 @@ const repos = [
   .eyebrow {
     margin: 0 0 14px;
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     letter-spacing: 0.24em;
-    color: var(--color-blood);
+    color: var(--color-chalk-dim);
     text-transform: uppercase;
   }
 
@@ -175,7 +177,7 @@ const repos = [
   .repo-kicker {
     margin: 0 0 6px;
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     letter-spacing: 0.22em;
     color: var(--color-chalk-faint);
     text-transform: uppercase;
@@ -207,7 +209,7 @@ const repos = [
   }
   .repo-label {
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--color-chalk-dim);
@@ -228,7 +230,7 @@ const repos = [
     margin: 32px auto 80px;
     padding: 0 var(--pad-page-x);
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     letter-spacing: 0.06em;
     color: var(--color-chalk-faint);
     line-height: 1.5;

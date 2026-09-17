@@ -15,6 +15,7 @@
  * emphasised word. No army green on this page.
  */
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import SiteFooter from '../../../components/SiteFooter.astro';
 import TopNav from '../../../components/TopNav.astro';
 
 const EFFECTIVE = 'September 12, 2026';
@@ -51,7 +52,7 @@ const keeps: Keep[] = [
 >
   <TopNav active="rack" />
 
-  <main class="page">
+  <main id="main" class="page">
     <nav class="breadcrumb" aria-label="Breadcrumb">
       <a href="/rack">The Rack</a>
       <span aria-hidden="true"> / </span>
@@ -235,11 +236,8 @@ const keeps: Keep[] = [
       </div>
     </section>
 
-    <footer class="foot">
-      <span>Questions: <a href="mailto:mike@missionbuilt.io">mike@missionbuilt.io</a></span>
-      <a href="/rack/mealstack">Back to MealStack →</a>
-    </footer>
   </main>
+  <SiteFooter links={[{ label: 'Back to MealStack', href: '/rack/mealstack' }]} />
 </BaseLayout>
 
 <style>
@@ -247,7 +245,7 @@ const keeps: Keep[] = [
 
   .breadcrumb {
     padding: 18px var(--pad-page-x) 0;
-    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;
     color: var(--color-chalk-faint);
   }
   .breadcrumb a { color: var(--color-chalk-dim); transition: color 120ms ease-out; }
@@ -257,16 +255,16 @@ const keeps: Keep[] = [
   .hero { padding: 40px var(--pad-page-x) 28px; text-align: center; }
   .eyebrow {
     display: inline-flex; align-items: center; gap: 14px; margin: 0 0 18px;
-    font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.24em;
-    color: var(--color-blood); text-transform: uppercase;
+    font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.24em;
+    color: var(--color-chalk-dim); text-transform: uppercase;
   }
-  .eyebrow .dots { letter-spacing: 0.04em; opacity: 0.65; }
+  .eyebrow .dots { letter-spacing: 0.04em; color: var(--color-blood-bright); }
   .display {
     margin: 0; font-family: var(--font-display); font-weight: 700;
     font-size: clamp(56px, 11vw, 108px); line-height: 0.95; letter-spacing: -0.02em;
     color: var(--color-chalk); text-transform: uppercase;
   }
-  .display .dot { color: var(--color-blood); }
+  .display .dot { color: var(--color-blood-bright); }
   .subtitle {
     margin: 22px auto 0; max-width: 820px; display: grid; gap: 8px;
     font-family: var(--font-display); font-weight: 400; letter-spacing: 0.04em; text-transform: uppercase;
@@ -274,7 +272,7 @@ const keeps: Keep[] = [
   .subtitle .line1 { font-size: clamp(16px, 2.4vw, 24px); font-weight: 500; color: var(--color-chalk); }
   .subtitle .line2 { font-size: clamp(13px, 1.9vw, 19px); color: var(--color-chalk-dim); }
   .effective {
-    margin: 22px 0 0; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em;
+    margin: 22px 0 0; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em;
     text-transform: uppercase; color: var(--color-chalk-faint);
   }
 
@@ -282,15 +280,15 @@ const keeps: Keep[] = [
     margin: 28px var(--pad-page-x) 0; padding: 14px 0;
     border-top: var(--border-thin); border-bottom: var(--border-thin);
     display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
-    font-family: var(--font-mono); font-size: 11px; text-align: left;
+    font-family: var(--font-mono); font-size: 12px; text-align: left;
   }
-  .stat-key { font-size: 10px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); margin-bottom: 8px; }
+  .stat-key { font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); margin-bottom: 8px; }
   .stat-value { font-family: var(--font-display); font-weight: 500; font-size: 20px; line-height: 1.1; letter-spacing: 0.02em; text-transform: uppercase; color: var(--color-chalk); }
 
   .block { padding: 56px var(--pad-page-x) 0; max-width: 1180px; }
   .section-label {
-    margin: 0 0 14px; font-family: var(--font-mono); font-size: 11px; font-weight: 500;
-    letter-spacing: 0.24em; color: var(--color-blood); text-transform: uppercase;
+    margin: 0 0 14px; font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+    letter-spacing: 0.24em; color: var(--color-blood-text); text-transform: uppercase;
   }
   .section-h2 {
     margin: 0 0 18px; max-width: 30ch; font-family: var(--font-display); font-weight: 600; font-size: 36px;
@@ -299,10 +297,10 @@ const keeps: Keep[] = [
   .prose, .prose-block p { margin: 0 0 16px; max-width: 70ch; font-family: var(--font-serif); font-weight: 300; font-size: 17px; line-height: 1.65; color: var(--color-chalk); }
   .prose { color: var(--color-chalk-dim); }
   .prose-block p strong { font-weight: 700; color: var(--color-chalk); }
-  .prose-block a, .note a, .foot a { color: var(--color-chalk); border-bottom: 1px solid var(--color-chalk-faint); text-decoration: none; }
-  .prose-block a:hover, .foot a:hover { border-bottom-color: var(--color-blood); }
+  .prose-block a, .note a { color: var(--color-chalk); border-bottom: 1px solid var(--color-chalk-ghost); text-decoration: none; }
+  .prose-block a:hover { border-bottom-color: var(--color-blood); }
   .note { margin: 14px 0 0; max-width: 78ch; font-family: var(--font-mono); font-size: 12px; line-height: 1.6; letter-spacing: 0.02em; color: var(--color-chalk-faint); }
-  .k { font-family: var(--font-mono); font-size: 10px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); margin: 0; }
+  .k { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); margin: 0; }
 
   .two { display: grid; grid-template-columns: 1fr 1fr; margin-top: 28px; border: var(--border-thin); background: var(--color-panel); }
   .cell { padding: 22px 24px 20px; border-right: var(--border-thin); }
@@ -318,25 +316,18 @@ const keeps: Keep[] = [
 
   .parties { margin-top: 24px; border-top: var(--border-thin); }
   .ph, .pr { display: grid; grid-template-columns: 120px 200px 1fr 140px; gap: 24px; padding: 14px 0; border-bottom: var(--border-thin); align-items: baseline; }
-  .ph span { font-family: var(--font-mono); font-size: 10px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); }
+  .ph span { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); }
   .pr .pk { font-family: var(--font-display); font-weight: 500; font-size: 18px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--color-chalk); }
-  .pr .role { font-family: var(--font-mono); font-size: 11px; line-height: 1.5; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-chalk-dim); }
+  .pr .role { font-family: var(--font-mono); font-size: 12px; line-height: 1.5; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-chalk-dim); }
   .pr span { font-family: var(--font-serif); font-size: 14px; line-height: 1.55; color: var(--color-chalk-dim); }
-  .pr .where { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; color: var(--color-chalk-faint); }
+  .pr .where { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; color: var(--color-chalk-faint); }
 
   .keeps { margin-top: 24px; border-top: var(--border-thin); }
   .kr { display: grid; grid-template-columns: 1fr 1.4fr; gap: 24px; padding: 14px 0; border-bottom: var(--border-thin); align-items: baseline; }
-  .kr .kk { font-family: var(--font-mono); font-size: 11px; line-height: 1.5; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-chalk); }
+  .kr .kk { font-family: var(--font-mono); font-size: 12px; line-height: 1.5; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-chalk); }
   .kr span:last-child { font-family: var(--font-serif); font-size: 14px; line-height: 1.55; color: var(--color-chalk-dim); }
 
-  .dashed { margin: 56px var(--pad-page-x); border: none; border-top: 1px dashed var(--color-rule-soft); }
-  .foot {
-    margin-top: 56px; display: flex; justify-content: space-between; align-items: center; gap: 14px;
-    padding: 22px var(--pad-page-x) 40px; border-top: var(--border-thin);
-    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-faint);
-  }
-  .foot a { border-bottom: 0; color: var(--color-chalk-dim); }
-  .foot a:hover { color: var(--color-chalk); }
+  .dashed { margin: 48px var(--pad-page-x) 0; border: none; border-top: 1px dashed var(--color-rule-soft); }
 
   @media (max-width: 1099px) {
     .meta-strip { grid-template-columns: repeat(2, 1fr); gap: 18px; }
@@ -353,7 +344,6 @@ const keeps: Keep[] = [
     .block { padding: 40px var(--pad-page-x-mobile) 0; }
     .section-h2 { font-size: 28px; }
     .kr { grid-template-columns: 1fr; gap: 6px; }
-    .dashed { margin: 40px var(--pad-page-x-mobile); }
-    .foot { padding: 22px var(--pad-page-x-mobile) 32px; flex-direction: column; align-items: flex-start; }
+    .dashed { margin: 36px var(--pad-page-x-mobile) 0; }
   }
 </style>

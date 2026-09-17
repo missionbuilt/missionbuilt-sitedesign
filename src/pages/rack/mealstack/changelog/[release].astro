@@ -55,6 +55,7 @@ const standfirst = `${when(d)} ${plural(d.changes, 'change')}${titled.length > 1
   </Fragment>
 
   <div class="notes">
+    <h2 class="sr-only">What changed</h2>
     <Content />
   </div>
 
@@ -69,7 +70,7 @@ const standfirst = `${when(d)} ${plural(d.changes, 'change')}${titled.length > 1
   .contents ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
   .contents a {
     display: inline-flex; align-items: baseline; gap: 10px; padding: 8px 12px; border: var(--border-thin); text-decoration: none;
-    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
     color: var(--color-chalk); transition: background 120ms ease-out;
   }
   .contents a:hover { background: rgba(255,255,255,0.015); }
@@ -92,7 +93,7 @@ const standfirst = `${when(d)} ${plural(d.changes, 'change')}${titled.length > 1
   .s { display: flex; flex-direction: column; gap: 4px; padding: 14px 16px; border: var(--border-thin); text-decoration: none; transition: background 120ms ease-out; }
   .s:hover { background: rgba(255,255,255,0.015); }
   .s.older { text-align: right; }
-  .s .k, .s .w { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-faint); }
+  .s .k, .s .w { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-faint); }
   .s .v { font-family: var(--font-display); font-weight: 600; font-size: 22px; color: var(--color-chalk); }
-  .s:hover .k { color: var(--color-blood); }
+  .s:hover .k { color: var(--color-blood-text); }
 </style>

@@ -12,8 +12,12 @@
  *   3. Prologue row (transparent, just dashed top/bottom)
  *   4. Three Part blocks: quiet header column + chapter rows
  *   5. Conclusion row (mirror of prologue)
+ *
+ * No reading state: nothing tracks a reader's progress yet, so the index
+ * doesn't pretend to. Each Part shows its read time instead.
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
 import TopNav from '../../components/TopNav.astro';
 import Bar from '../../components/Bar.astro';
 import {
@@ -25,8 +29,6 @@ import {
   sectionUrl,
 } from '../../data/book.ts';
 
-const READING_CH = MB.reading.chapterN;
-
 function sectionPreview(sections: string[]): { head: string; overflow: number } {
   const head = sections.slice(0, 2).join(' · ');
   const overflow = Math.max(0, sections.length - 2);
@@ -36,13 +38,17 @@ function sectionPreview(sections: string[]): { head: string; overflow: number } 
 <BaseLayout title="Chapters · Mission Built" active="chapters">
   <TopNav active="chapters" />
 
-  <main class="page">
+  <main id="main" class="page">
     {/* ---------- HERO ---------- */}
     <section class="hero" aria-label="Book overview">
       <h1 class="hero-h1">
         All thirteen chapters.<br />
         <span class="blood">Three parts.</span>
       </h1>
+      <p class="hero-lede">
+        Start with the prologue, or jump to the chapter you need. Every section
+        stands on its own.
+      </p>
 
       <ul class="hero-meta" aria-label="At a glance">
         <li><span class="k">Chapters</span><span class="v">{TOTAL_CHAPTERS}</span></li>
@@ -71,6 +77,7 @@ function sectionPreview(sections: string[]): { head: string; overflow: number } 
     <div class="parts">
       {MB.parts.map((p) => {
         const part = MB.chapters.slice(p.range[0], p.range[1]);
+        const partMins = part.reduce((sum, c) => sum + c.mins, 0);
         return (
           <section class="part" aria-label={`${p.label}: ${p.title}`}>
             <header class="part-header">
@@ -82,23 +89,21 @@ function sectionPreview(sections: string[]): { head: string; overflow: number } 
                 <p class="part-blurb">{p.blurb}</p>
               </div>
               <div class="part-progress">
-                <Bar on={p.done > 0} />
-                <span class="part-progress-label">{p.done} / {part.length} done</span>
+                <Bar on={false} />
+                <span class="part-progress-label">{partMins} min</span>
               </div>
             </header>
 
             <ol class="rows">
               {part.map((c, ci) => {
-                const isReading = c.n === READING_CH;
                 const { head, overflow } = sectionPreview(c.sections);
                 return (
                   <li>
                     <a
                       href={firstSectionUrl(c)}
-                      class:list={["row", ci > 0 && "divided", isReading && "reading"]}
-                      aria-current={isReading ? 'true' : undefined}
+                      class:list={["row", ci > 0 && "divided"]}
                     >
-                      <span class:list={["c-num", isReading && "blood"]}>{c.n}</span>
+                      <span class="c-num">{c.n}</span>
                       <span class="c-body">
                         <span class="c-title">{c.title}</span>
                         <span class="c-sections">
@@ -107,8 +112,7 @@ function sectionPreview(sections: string[]): { head: string; overflow: number } 
                         </span>
                       </span>
                       <span class="c-aside">
-                        <span class="c-mins">{c.sections.length} · {c.mins} min</span>
-                        {isReading && <span class="c-status">Reading</span>}
+                        <span class="c-mins">{c.sections.length} sections · {c.mins} min</span>
                       </span>
                     </a>
                   </li>
@@ -127,15 +131,35 @@ function sectionPreview(sections: string[]): { head: string; overflow: number } 
       <span class="be-mins">{MB.conclusion.mins} min</span>
     </a>
   </main>
+  <SiteFooter />
 </BaseLayout>
 
 <style>
   /* ============ HERO ============ */
+  /* Headline left, lede + meta right on wide screens; the rule runs the
+     full width like every other rule on the page. */
   .hero {
     padding: 48px var(--pad-page-x) 28px;
     border-bottom: var(--border-thin);
-    max-width: 1100px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas:
+      "h1   lede"
+      "h1   meta";
+    column-gap: 56px;
+    align-items: end;
   }
+  .hero-h1 { grid-area: h1; }
+  .hero-lede {
+    grid-area: lede;
+    margin: 0;
+    max-width: 46ch;
+    font-family: var(--font-serif);
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--color-chalk-dim);
+  }
+  .hero-meta { grid-area: meta; }
 
   .hero-h1 {
     margin: 0;
@@ -149,11 +173,11 @@ function sectionPreview(sections: string[]): { head: string; overflow: number } 
     color: var(--color-chalk);
     max-width: 16ch;
   }
-  .hero-h1 .blood { color: var(--color-blood); }
+  .hero-h1 .blood { color: var(--color-blood-bright); }
 
   /* Inline meta — replaces the boxed 2x2 stat grid */
   .hero-meta {
-    margin: 28px 0 0;
+    margin: 22px 0 0;
     padding: 0;
     list-style: none;
     display: flex;
@@ -167,7 +191,7 @@ function sectionPreview(sections: string[]): { head: string; overflow: number } 
   }
   .hero-meta .k {
     font-family: var(--font-mono);
-    font-size: 10px;
+    font-size: 12px;
     letter-spacing: 0.22em;
     color: var(--color-chalk-faint);
     text-transform: uppercase;
@@ -184,7 +208,7 @@ function sectionPreview(sections: string[]): { head: string; overflow: number } 
   .hero-meta .v.army { color: var(--color-army); }
   /* Linked stat — subtle underline on hover, color stays the same */
   .hero-meta .v.linked {
-    border-bottom: 1px solid transparent;
+    border-bottom: 1px solid var(--color-army-dim);
     transition: border-bottom-color 120ms ease-out;
   }
   .hero-meta .v.linked:hover { border-bottom-color: currentColor; }
@@ -204,7 +228,7 @@ function sectionPreview(sections: string[]): { head: string; overflow: number } 
 
   .be-kicker {
     font-family: var(--font-mono);
-    font-size: 10px;
+    font-size: 12px;
     letter-spacing: 0.22em;
     color: var(--color-chalk-faint);
     text-transform: uppercase;
@@ -219,7 +243,7 @@ function sectionPreview(sections: string[]): { head: string; overflow: number } 
   }
   .be-mins {
     font-family: var(--font-mono);
-    font-size: 10px;
+    font-size: 12px;
     letter-spacing: 0.18em;
     color: var(--color-chalk-faint);
     text-transform: uppercase;
@@ -231,7 +255,7 @@ function sectionPreview(sections: string[]): { head: string; overflow: number } 
 
   .part {
     display: grid;
-    grid-template-columns: 200px 1fr;
+    grid-template-columns: 236px 1fr;
     gap: 28px;
     padding: 36px 0;
     border-bottom: var(--border-thin);
@@ -249,9 +273,9 @@ function sectionPreview(sections: string[]): { head: string; overflow: number } 
 
   .part-eyebrow {
     font-family: var(--font-mono);
-    font-size: 10px;
+    font-size: 12px;
     color: var(--color-army);
-    letter-spacing: 0.26em;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     margin-bottom: 8px;
   }
@@ -270,7 +294,7 @@ function sectionPreview(sections: string[]): { head: string; overflow: number } 
   .part-blurb {
     margin: 10px 0 0;
     font-family: var(--font-serif);
-    font-size: 13px;
+    font-size: 14px;
     color: var(--color-chalk-dim);
     line-height: 1.55;
   }
@@ -282,8 +306,8 @@ function sectionPreview(sections: string[]): { head: string; overflow: number } 
   }
   .part-progress-label {
     font-family: var(--font-mono);
-    font-size: 10px;
-    color: var(--color-army);
+    font-size: 12px;
+    color: var(--color-chalk-faint);
     letter-spacing: 0.18em;
     text-transform: uppercase;
   }
@@ -310,17 +334,6 @@ function sectionPreview(sections: string[]): { head: string; overflow: number } 
   .row.divided { border-top: 1px dashed var(--color-rule-soft); }
   .row:hover { background: rgba(255, 255, 255, 0.02); }
 
-  .row.reading { background: var(--color-panel); }
-  .row.reading::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    background: var(--color-blood);
-  }
-  .row.reading:hover { background: #232020; }
 
   .c-num {
     font-family: var(--font-display);
@@ -330,7 +343,6 @@ function sectionPreview(sections: string[]): { head: string; overflow: number } 
     letter-spacing: -0.01em;
     color: var(--color-chalk-faint);
   }
-  .c-num.blood { color: var(--color-blood); }
 
   .c-body {
     display: flex;
@@ -352,7 +364,7 @@ function sectionPreview(sections: string[]): { head: string; overflow: number } 
 
   .c-sections {
     font-family: var(--font-serif);
-    font-size: 13px;
+    font-size: 14px;
     color: var(--color-chalk-dim);
     line-height: 1.5;
     overflow: hidden;
@@ -371,25 +383,26 @@ function sectionPreview(sections: string[]): { head: string; overflow: number } 
   }
   .c-mins {
     font-family: var(--font-mono);
-    font-size: 10px;
+    font-size: 12px;
     color: var(--color-chalk-faint);
-    letter-spacing: 0.16em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     white-space: nowrap;
-  }
-  .c-status {
-    font-family: var(--font-mono);
-    font-size: 9px;
-    color: var(--color-chalk-dim);
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
   }
 
   /* ============ Responsive ============ */
   @media (max-width: 1099px) {
+    .hero {
+      grid-template-columns: 1fr;
+      grid-template-areas: "h1" "lede" "meta";
+      padding: 44px var(--pad-page-x-mid) 28px;
+    }
+    .hero-lede { margin-top: 18px; }
+    .bookend { padding: 18px var(--pad-page-x-mid); }
+    .parts { padding: 0 var(--pad-page-x-mid); }
     .part {
       gap: 20px;
-      grid-template-columns: 180px 1fr;
+      grid-template-columns: 200px 1fr;
     }
     .row {
       gap: 14px;

@@ -15,10 +15,15 @@
   /* Foregrounds */
   --color-chalk:         #ebe5d8; /* Primary foreground (off-white, warm) */
   --color-chalk-dim:     #a8a094; /* Secondary foreground / body copy */
-  --color-chalk-faint:   #5a564f; /* Tertiary / metadata */
+  --color-chalk-faint:   #8a847a; /* Tertiary / metadata text. 4.9:1 on bg, 4.6:1 on panel */
+  --color-chalk-ghost:   #5a564f; /* Decoration only (hairlines, hollow marks). Never text: 2.5:1 */
 
   /* Primary accent — oxblood */
-  --color-blood:         #a8211a;
+  /* Three jobs, three values. The base oxblood is 2.5:1 on charcoal, too dark
+     to read as text, so text uses the brighter steps below.                  */
+  --color-blood:         #a8211a; /* Fills and marks: buttons, brand square, rules */
+  --color-blood-bright:  #cb281f; /* Red display text 24px and up (3.4:1)          */
+  --color-blood-text:    #e4564e; /* Red text under 24px, links, focus ring (5.0:1) */
   --color-blood-dim:     #5e1e1c;
 
   /* Secondary accent — army green */
@@ -39,6 +44,7 @@
 
   /* ---- Type scale ------------------------------------------ */
   /* role: size / line-height / weight / tracking / case        */
+  /* Floor: no text below 12px. Mono labels at 12px, wide tracking. */
   --fs-hero:           132px;
   --fs-page-h1:        60px;
   --fs-section-h1:     56px;
@@ -50,10 +56,10 @@
   --fs-body:           16px;
   --fs-blurb:          15px;
   --fs-margin-note:    13px;
-  --fs-kicker:         11px;
-  --fs-stat-key:       10px;
-  --fs-pill:           10px;
-  --fs-section-num:    10px;
+  --fs-kicker:         12px;
+  --fs-stat-key:       12px;
+  --fs-pill:           12px;
+  --fs-section-num:    12px;
 
   /* ---- Spacing — loose 8px grid ---------------------------- */
   --space-1:  4px;

@@ -42,9 +42,10 @@ p { margin: 0 0 1em; }
 
 img, svg, video, canvas { display: block; max-width: 100%; }
 
-/* Focus: 2px oxblood outline, 2px offset, on all interactive elements */
+/* Focus: 2px oxblood outline, 2px offset, on all interactive elements.
+   Uses the text-safe oxblood so the ring clears 3:1 against charcoal. */
 :focus-visible {
-  outline: 2px solid var(--color-blood);
+  outline: 2px solid var(--color-blood-text);
   outline-offset: 2px;
 }
 
@@ -66,3 +67,43 @@ img, svg, video, canvas { display: block; max-width: 100%; }
   white-space: nowrap;
   border: 0;
 }
+
+/* Skip link: first focusable element on every page, visible only on focus */
+.skip-link {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 100;
+  padding: 10px 14px;
+  background: var(--color-chalk);
+  color: var(--color-bg);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transform: translateY(-200%);
+}
+.skip-link:focus-visible { transform: none; }
+
+/* Motion: honor the reader's system setting */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Breadcrumb links: underlined so they don't rely on color alone */
+.breadcrumb a,
+.crumbs a {
+  border-bottom: 1px solid var(--color-chalk-ghost);
+}
+.breadcrumb a:hover,
+.crumbs a:hover {
+  border-bottom-color: var(--color-chalk-dim);
+}
+
+/* A page that ends on a centered closer already has its rule and space */
+main:has(> .closer:last-child) + .site-foot { margin-top: 0; }

@@ -121,14 +121,14 @@ const describe = (e: (typeof skill.examples)[number]) =>
     text-decoration: none; transition: background 120ms ease-out;
   }
   .dl-btn:hover { background: rgba(255,255,255,0.02); }
-  .dl-ico { font-family: var(--font-mono); font-size: 18px; color: var(--color-blood); line-height: 1; }
+  .dl-ico { font-family: var(--font-mono); font-size: 18px; color: var(--color-blood-text); line-height: 1; }
   .dl-text { display: flex; flex-direction: column; gap: 4px; }
   .dl-name { font-family: var(--font-display); font-weight: 600; font-size: 16px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--color-chalk); }
-  .dl-meta { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-chalk-faint); }
+  .dl-meta { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-chalk-faint); }
 
   .caveat { margin: 34px 0 0; padding: 18px 20px; border: var(--border-thin); }
   .caveat .k {
-    margin: 0 0 10px; font-family: var(--font-mono); font-size: 10px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
+    margin: 0 0 10px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
     color: var(--color-chalk);
   }
   .caveat p:not(.k) { font-size: 15px; line-height: 1.6; }
@@ -137,7 +137,7 @@ const describe = (e: (typeof skill.examples)[number]) =>
 
   .steps { list-style: none; margin: 0 0 22px; padding: 0; border-top: var(--border-thin); }
   .steps li { display: grid; grid-template-columns: 44px 1fr; gap: 8px; padding: 14px 0; border-bottom: var(--border-thin); font-size: 16px; }
-  .steps .n { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; color: var(--color-chalk-faint); padding-top: 5px; }
+  .steps .n { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.16em; color: var(--color-chalk-faint); padding-top: 5px; }
 
   .asks { list-style: none; margin: 0 0 22px; padding: 0; display: flex; flex-direction: column; gap: 8px; }
   .asks li {
@@ -151,8 +151,8 @@ const describe = (e: (typeof skill.examples)[number]) =>
   .example:hover { background: rgba(255,255,255,0.015); }
   .ex-name { font-family: var(--font-display); font-weight: 600; font-size: 18px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--color-chalk); }
   .ex-meta { font-family: var(--font-serif); font-size: 14px; color: var(--color-chalk-dim); }
-  .ex-cta { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-faint); transition: color 120ms ease-out; }
-  .example:hover .ex-cta { color: var(--color-blood); }
+  .ex-cta { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-faint); transition: color 120ms ease-out; }
+  .example:hover .ex-cta { color: var(--color-blood-text); }
 
   @media (max-width: 720px) {
     .dl-btn { display: flex; }

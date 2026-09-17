@@ -12,6 +12,7 @@
  * (passed to BaseLayout). Section styles for things a page adds live on the page.
  */
 import BaseLayout from './BaseLayout.astro';
+import SiteFooter from '../components/SiteFooter.astro';
 import TopNav from '../components/TopNav.astro';
 import { TOOLS, type ToolKey } from '../data/logs';
 
@@ -41,7 +42,7 @@ const tool = TOOLS[toolKey];
   <slot name="head" slot="head" />
   <TopNav active="rack" />
 
-  <main class="page">
+  <main id="main" class="page">
     <nav class="breadcrumb" aria-label="Breadcrumb">
       <a href="/rack">The Rack</a>
       {crumbs.map((c) => (
@@ -77,20 +78,14 @@ const tool = TOOLS[toolKey];
       </footer>
     </article>
 
-    <footer class="foot">
-      <span>Real strength is lifting others</span>
-      <span class="foot-links">
-        {footLinks.map((l) => <a href={l.href}>{l.label}</a>)}
-        <a href="mailto:mike@missionbuilt.io">mike@missionbuilt.io</a>
-      </span>
-    </footer>
   </main>
+  <SiteFooter links={footLinks} />
 </BaseLayout>
 
 <style>
   .breadcrumb {
     padding: 18px var(--pad-page-x) 0;
-    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;
     color: var(--color-chalk-faint);
   }
   .breadcrumb a { color: var(--color-chalk-dim); transition: color 120ms ease-out; }
@@ -101,23 +96,23 @@ const tool = TOOLS[toolKey];
 
   .eyebrow {
     display: flex; align-items: center; gap: 10px; margin: 0 0 18px;
-    font-family: var(--font-mono); font-size: 10px; font-weight: 500; letter-spacing: 0.24em; text-transform: uppercase;
-    color: var(--color-blood);
+    font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.24em; text-transform: uppercase;
+    color: var(--color-chalk-dim);
   }
-  .eyebrow .dots { color: var(--color-blood-dim); letter-spacing: 0.1em; }
+  .eyebrow .dots { letter-spacing: 0.1em; color: var(--color-blood-bright); }
   h1 {
     margin: 0; font-family: var(--font-display); font-weight: 700;
     font-size: clamp(38px, 9vw, 60px); line-height: 0.98; letter-spacing: -0.02em; text-transform: uppercase;
     color: var(--color-chalk);
   }
-  h1 .accent { color: var(--color-blood); }
+  h1 .accent { color: var(--color-blood-bright); }
   .standfirst {
     margin: 18px 0 0; font-family: var(--font-display); font-weight: 400; font-size: 19px; line-height: 1.4; letter-spacing: 0.01em;
     color: var(--color-chalk-dim);
   }
   .byline {
     margin: 20px 0 0; padding-top: 14px; border-top: var(--border-thin);
-    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-faint);
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-faint);
   }
 
   .body { margin-top: 8px; font-family: var(--font-serif); font-size: 17px; line-height: 1.62; color: var(--color-chalk-dim); }
@@ -133,13 +128,13 @@ const tool = TOOLS[toolKey];
     color: var(--color-chalk); border-bottom: 1px solid var(--color-blood); padding-bottom: 1px;
     transition: color 120ms ease-out;
   }
-  .body :global(a:not([class]):hover) { color: var(--color-blood); }
+  .body :global(a:not([class]):hover) { color: var(--color-blood-text); }
   .body :global(ul.dash) { list-style: none; margin: 0 0 22px; padding: 0; }
   .body :global(ul.dash > li) { position: relative; padding-left: 20px; margin-bottom: 14px; font-size: 16.5px; }
   .body :global(ul.dash > li::before) {
     content: ""; position: absolute; left: 0; top: 11px; width: 9px; height: 2px; background: var(--color-blood);
   }
-  .body :global(code) { font-family: var(--font-mono); font-size: 0.86em; color: var(--color-chalk); }
+  .body :global(code) { font-family: var(--font-mono); font-size: max(12px, 0.86em); color: var(--color-chalk); }
 
   .note-foot { margin-top: 44px; display: flex; flex-direction: column; gap: 22px; }
   .tool-card {
@@ -147,32 +142,22 @@ const tool = TOOLS[toolKey];
     padding: 18px 20px; border: var(--border-thin); text-decoration: none; transition: background 120ms ease-out;
   }
   .tool-card:hover { background: rgba(255,255,255,0.015); }
-  .tool-card .k { grid-area: k; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); }
+  .tool-card .k { grid-area: k; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); }
   .tool-card .name { grid-area: name; font-family: var(--font-display); font-weight: 700; font-size: 20px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--color-chalk); }
   .tool-card .line { grid-area: line; font-family: var(--font-serif); font-size: 14px; line-height: 1.5; color: var(--color-chalk-dim); }
-  .tool-card .cta { grid-area: cta; font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-faint); transition: color 120ms ease-out; white-space: nowrap; }
-  .tool-card:hover .cta { color: var(--color-blood); }
-  .back { align-self: flex-start; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-dim); transition: color 120ms ease-out; }
+  .tool-card .cta { grid-area: cta; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-faint); transition: color 120ms ease-out; white-space: nowrap; }
+  .tool-card:hover .cta { color: var(--color-blood-text); }
+  .back { align-self: flex-start; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-dim); transition: color 120ms ease-out; }
   .back:hover { color: var(--color-chalk); }
 
-  .foot {
-    display: flex; justify-content: space-between; align-items: center; gap: 14px;
-    margin-top: 64px; padding: 22px var(--pad-page-x) 40px; border-top: var(--border-thin);
-    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-faint);
-  }
-  .foot .foot-links { display: inline-flex; gap: 22px; flex-wrap: wrap; }
-  .foot a { color: var(--color-chalk-dim); transition: color 120ms ease-out; text-transform: none; }
-  .foot a:hover { color: var(--color-chalk); }
 
   @media (max-width: 1099px) {
     .breadcrumb { padding: 18px var(--pad-page-x-mid) 0; }
-    .foot { padding: 22px var(--pad-page-x-mid) 40px; }
   }
   @media (max-width: 720px) {
     .breadcrumb { padding: 18px var(--pad-page-x-mobile) 0; }
     .note { padding-top: 28px; }
     .body { font-size: 16.5px; }
     .tool-card { grid-template-columns: 1fr; grid-template-areas: "k" "name" "line" "cta"; row-gap: 6px; }
-    .foot { padding: 22px var(--pad-page-x-mobile) 32px; flex-direction: column; align-items: flex-start; }
   }
 </style>

@@ -20,6 +20,7 @@
  * Blood for the Flagged verdict.
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
 import TopNav from '../../components/TopNav.astro';
 import DemoEmbed from '../../components/DemoEmbed.astro';
 
@@ -36,7 +37,7 @@ const modes: Mode[] = [
     num: '01',
     name: 'CISO Mode',
     for: 'Security executives',
-    body: 'Tell the Warmup your sector and it loads a pre-curated source suite: CISA advisories, the Known Exploited Vulnerabilities catalog, MITRE ATT&CK, CrowdStrike, Palo Alto Unit 42, Red Canary, Google Mandiant, Microsoft MSTIC, Cisco Talos, and more — plus sector-specific feeds for Healthcare, Financial Services, Energy, Government, and Manufacturing/OT.',
+    body: 'Tell the Warmup your sector and it loads a pre-curated source suite: CISA advisories, the Known Exploited Vulnerabilities catalog, MITRE ATT&CK, CrowdStrike, Palo Alto Unit 42, Red Canary, Google Mandiant, Microsoft MSTIC, Cisco Talos, and more, plus sector-specific feeds for Healthcare, Financial Services, Energy, Government, and Manufacturing/OT.',
     sources: 'Threat landscape · Emerging threats · Research digest · Industry intel · Social signal',
   },
   {
@@ -50,7 +51,7 @@ const modes: Mode[] = [
     num: '03',
     name: 'Custom Mode',
     for: 'Everyone else',
-    body: 'Describe your morning interests in plain language. Stocks, industry news, competitor blogs, AI model releases, policy changes, local business news — whatever you need to start the day in the loop. The Warmup builds your source suite from scratch and rates every recommended source by trust tier.',
+    body: 'Describe your morning interests in plain language. Stocks, industry news, competitor blogs, AI model releases, policy changes, local business news: whatever you need to start the day in the loop. The Warmup builds your source suite from scratch and rates every recommended source by trust tier.',
     sources: 'You define the sections',
   },
 ];
@@ -59,11 +60,11 @@ type Audience = { who: string; what: string };
 const audience: Audience[] = [
   {
     who: 'Security executives',
-    what: 'Threat actors, new CVEs, KEV additions, and sector-specific intelligence — before the first meeting of the day.',
+    what: 'Threat actors, new CVEs, KEV additions, and sector-specific intelligence, before the first meeting of the day.',
   },
   {
     who: 'Product leaders',
-    what: 'Competitor moves, funding rounds, AI releases, and analyst signals — synthesized into one document before your inbox opens.',
+    what: 'Competitor moves, funding rounds, AI releases, and analyst signals, synthesized into one document before your inbox opens.',
   },
   {
     who: 'Founders and operators',
@@ -71,7 +72,7 @@ const audience: Audience[] = [
   },
   {
     who: 'Any professional',
-    what: 'Anyone who wants to be informed before the first decision of the day — not catching up an hour in.',
+    what: 'Anyone who wants to be informed before the first decision of the day, not catching up an hour in.',
   },
 ];
 
@@ -85,7 +86,7 @@ const safetyVerdicts: SafetyVerdict[] = [
   {
     label: 'Flagged',
     indicator: 'flagged',
-    copy: 'Domain did not pass the scan — suspicious verdict, no result, or scan failure. Item is excluded from the brief entirely. There is no "include with a warning" path.',
+    copy: 'Domain did not pass the scan: suspicious verdict, no result, or scan failure. Item is excluded from the brief entirely. There is no "include with a warning" path.',
   },
 ];
 ---
@@ -96,7 +97,7 @@ const safetyVerdicts: SafetyVerdict[] = [
 >
   <TopNav active="loadout" />
 
-  <main class="page">
+  <main id="main" class="page">
     {/* ---------- BREADCRUMB ---------- */}
     <nav class="breadcrumb" aria-label="Breadcrumb">
       <a href="/loadout">The Loadout</a>
@@ -149,12 +150,12 @@ const safetyVerdicts: SafetyVerdict[] = [
       <h2 class="section-h2">Your briefing. Before the bar.</h2>
       <p class="prose">
         You do not go under the bar cold. In the gym, the warmup is the ten minutes
-        that makes the next ninety honest — it tells you what is tight, what needs
+        that makes the next ninety honest. It tells you what is tight, what needs
         adjustment, and whether today's plan needs to change before the work begins.
       </p>
       <p class="prose">
         The Warmup does the same thing for your workday. Before the first meeting,
-        before the first decision — you know what threat actors are active, what
+        before the first decision, you know what threat actors are active, what
         your competitors shipped, what dropped overnight. The Warmup reads your
         sources, synthesizes what matters, and delivers it as a single live artifact
         you pull with your first coffee. Every item is labeled with its source and
@@ -171,7 +172,7 @@ const safetyVerdicts: SafetyVerdict[] = [
       <p class="prose">
         Pick the mode that matches your role. Each loads a different source suite
         and structures the brief differently. The output is always a live HTML
-        artifact — instrument-panel style, no dashboard chrome.
+        artifact: instrument-panel style, no dashboard chrome.
       </p>
 
       <div class="modes">
@@ -244,7 +245,7 @@ const safetyVerdicts: SafetyVerdict[] = [
 
       <DemoEmbed
         src="/demos/warmup.html"
-        title="The Warmup — interactive demo"
+        title="The Warmup: interactive demo"
         caption="Live demo · Example brief · Use ← → or the panel to step through"
       />
     </section>
@@ -270,7 +271,7 @@ const safetyVerdicts: SafetyVerdict[] = [
         <article class="install-opt">
           <h3>Claude Code · CLI</h3>
           <p>If you have Claude Code installed, run this in your terminal:</p>
-          <pre class="install-opt-code">claude mcp add loadout https://mcp.missionbuilt.io/sse</pre>
+          <pre class="install-opt-code" tabindex="0">claude mcp add loadout https://mcp.missionbuilt.io/sse</pre>
         </article>
 
         <article class="install-opt">
@@ -281,7 +282,7 @@ const safetyVerdicts: SafetyVerdict[] = [
 
       <p class="install-or">Or download the standalone</p>
       <p class="install-intro">
-        Prefer to run it offline, or pin a version? Download the skill folder and drop it into any AI coding tool's skills folder. The hosted server stays the recommended path — always current. The download is a pinned snapshot.
+        Prefer to run it offline, or pin a version? Download the skill folder and drop it into any AI coding tool's skills folder. The hosted server stays the recommended path: always current. The download is a pinned snapshot.
       </p>
       <a class="dl-btn" href="/downloads/warmup.zip" download>
         <span class="dl-ico" aria-hidden="true">↓</span>
@@ -328,7 +329,7 @@ const safetyVerdicts: SafetyVerdict[] = [
         </article>
         <article class="faq-item">
           <h3>Do I need to sign in?</h3>
-          <p>Yes. The server uses Google OAuth. You authenticate once when you connect — no separate account creation required.</p>
+          <p>Yes. The server uses Google OAuth. You authenticate once when you connect. No separate account creation required.</p>
         </article>
         <article class="faq-item">
           <h3>Can I add my own sources?</h3>
@@ -347,7 +348,7 @@ const safetyVerdicts: SafetyVerdict[] = [
       <div class="related">
         <a href="/loadout/spotter" class="related-card">
           <h3>The Spotter</h3>
-          <p>Walk a product epic through nine areas. Get a structured worksheet back — critique notes, accept and skip loop, export that unlocks when every area closes.</p>
+          <p>Walk a product epic through nine areas. Get a structured worksheet back: critique notes, an accept and skip loop, and an export that unlocks when every area closes.</p>
           <span class="related-cta">Open →</span>
         </a>
         <a href="/loadout/approach" class="related-card">
@@ -374,7 +375,7 @@ const safetyVerdicts: SafetyVerdict[] = [
         >github.com/missionbuilt/loadout</a>.
       </p>
       <p class="prose">
-        Your config stays generic — the skill reads your <code>WARMUP.md</code> to
+        Your config stays generic. The skill reads your <code>WARMUP.md</code> to
         personalize the brief. Pull skill updates without touching your source list.
       </p>
     </section>
@@ -386,16 +387,8 @@ const safetyVerdicts: SafetyVerdict[] = [
       </p>
     </section>
 
-    {/* ---------- FOOTER ---------- */}
-    <footer class="foot">
-      <span>Real strength is lifting others</span>
-      <a
-        href="https://github.com/missionbuilt/loadout"
-        target="_blank"
-        rel="noopener"
-      >github.com/missionbuilt/loadout</a>
-    </footer>
   </main>
+  <SiteFooter links={[{ label: 'github.com/missionbuilt/loadout', href: 'https://github.com/missionbuilt/loadout', external: true }]} />
 </BaseLayout>
 
 <style>
@@ -403,7 +396,7 @@ const safetyVerdicts: SafetyVerdict[] = [
   .breadcrumb {
     padding: 18px var(--pad-page-x) 0;
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--color-chalk-faint);
@@ -427,13 +420,13 @@ const safetyVerdicts: SafetyVerdict[] = [
     gap: 14px;
     margin: 0 0 18px;
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.24em;
-    color: var(--color-blood);
+    color: var(--color-chalk-dim);
     text-transform: uppercase;
   }
-  .eyebrow .dots { letter-spacing: 0.04em; opacity: 0.65; }
+  .eyebrow .dots { letter-spacing: 0.04em; color: var(--color-blood-bright); }
 
   .display {
     margin: 0;
@@ -445,7 +438,7 @@ const safetyVerdicts: SafetyVerdict[] = [
     color: var(--color-chalk);
     text-transform: uppercase;
   }
-  .display .dot { color: var(--color-blood); }
+  .display .dot { color: var(--color-blood-bright); }
 
   .live-tag {
     display: inline-flex;
@@ -453,7 +446,7 @@ const safetyVerdicts: SafetyVerdict[] = [
     gap: 8px;
     margin-top: 22px;
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.22em;
     text-transform: uppercase;
@@ -487,12 +480,12 @@ const safetyVerdicts: SafetyVerdict[] = [
     grid-template-columns: repeat(4, 1fr);
     gap: 24px;
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     text-align: left;
   }
   .stat-key {
     color: var(--color-chalk-faint);
-    font-size: 10px;
+    font-size: 12px;
     letter-spacing: 0.22em;
     text-transform: uppercase;
   }
@@ -511,7 +504,7 @@ const safetyVerdicts: SafetyVerdict[] = [
   .stat-value.linked:hover { border-bottom-color: currentColor; }
   .stat-value .ext {
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     color: var(--color-chalk-faint);
     letter-spacing: 0;
     transition: color 120ms ease-out;
@@ -521,16 +514,15 @@ const safetyVerdicts: SafetyVerdict[] = [
   /* ============ BLOCK ============ */
   .block {
     padding: 56px var(--pad-page-x) 0;
-    max-width: 1080px;
   }
 
   .section-label {
     margin: 0 0 14px;
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.24em;
-    color: var(--color-blood);
+    color: var(--color-blood-text);
     text-transform: uppercase;
   }
 
@@ -568,7 +560,7 @@ const safetyVerdicts: SafetyVerdict[] = [
     transition: color 120ms ease-out, border-color 120ms ease-out;
   }
   .inline-link:hover {
-    color: var(--color-blood);
+    color: var(--color-blood-text);
     border-bottom-color: var(--color-blood);
   }
 
@@ -588,7 +580,7 @@ const safetyVerdicts: SafetyVerdict[] = [
 
   .mode-num {
     font-family: var(--font-mono);
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.28em;
     color: var(--color-chalk-faint);
@@ -611,7 +603,7 @@ const safetyVerdicts: SafetyVerdict[] = [
     font-size: 13px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--color-blood);
+    color: var(--color-blood-text);
   }
   .mode-body {
     margin: 0 0 18px;
@@ -623,7 +615,7 @@ const safetyVerdicts: SafetyVerdict[] = [
   .mode-label {
     margin: 18px 0 4px;
     font-family: var(--font-mono);
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.22em;
     text-transform: uppercase;
@@ -706,7 +698,7 @@ const safetyVerdicts: SafetyVerdict[] = [
     text-transform: uppercase;
   }
   .safety-label.clean   { color: var(--color-army); }
-  .safety-label.flagged { color: var(--color-blood); }
+  .safety-label.flagged { color: var(--color-blood-text); }
   .safety-cell p {
     margin: 0;
     font-family: var(--font-serif);
@@ -719,7 +711,6 @@ const safetyVerdicts: SafetyVerdict[] = [
   /* ============ INSTALL BLOCK ============ */
   .install-block {
     padding: 56px var(--pad-page-x) 0;
-    max-width: 1080px;
   }
 
   .install-intro {
@@ -744,7 +735,7 @@ const safetyVerdicts: SafetyVerdict[] = [
 
   .install-url-label {
     font-family: var(--font-mono);
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.22em;
     text-transform: uppercase;
@@ -762,7 +753,7 @@ const safetyVerdicts: SafetyVerdict[] = [
   .install-verified {
     margin: 0 0 24px;
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--color-army);
@@ -774,7 +765,7 @@ const safetyVerdicts: SafetyVerdict[] = [
     padding-top: 28px;
     border-top: 1px dashed var(--color-rule-soft);
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.22em;
     text-transform: uppercase;
@@ -796,7 +787,7 @@ const safetyVerdicts: SafetyVerdict[] = [
   .dl-ico {
     font-family: var(--font-mono);
     font-size: 18px;
-    color: var(--color-blood);
+    color: var(--color-blood-text);
     line-height: 1;
   }
   .dl-text { display: flex; flex-direction: column; gap: 4px; }
@@ -810,7 +801,7 @@ const safetyVerdicts: SafetyVerdict[] = [
   }
   .dl-meta {
     font-family: var(--font-mono);
-    font-size: 10px;
+    font-size: 12px;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--color-chalk-faint);
@@ -818,12 +809,13 @@ const safetyVerdicts: SafetyVerdict[] = [
 
   .install-options {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     border-top: var(--border-thin);
     border-bottom: var(--border-thin);
   }
 
   .install-opt {
+    min-width: 0;
     padding: 24px 28px;
     border-right: var(--border-thin);
     border-bottom: var(--border-thin);
@@ -834,7 +826,7 @@ const safetyVerdicts: SafetyVerdict[] = [
   .install-opt h3 {
     margin: 0 0 10px;
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 600;
     letter-spacing: 0.22em;
     text-transform: uppercase;
@@ -865,7 +857,7 @@ const safetyVerdicts: SafetyVerdict[] = [
     background: var(--color-bg);
     border: var(--border-thin);
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     color: var(--color-chalk-dim);
     letter-spacing: 0.03em;
     overflow-x: auto;
@@ -889,7 +881,7 @@ const safetyVerdicts: SafetyVerdict[] = [
   .trigger-row:last-child { border-bottom: none; }
   .trigger-mode {
     font-family: var(--font-mono);
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 600;
     letter-spacing: 0.22em;
     text-transform: uppercase;
@@ -926,6 +918,7 @@ const safetyVerdicts: SafetyVerdict[] = [
     line-height: 1.3;
   }
   .faq-item p {
+    max-width: 68ch;
     margin: 0;
     font-family: var(--font-serif);
     font-size: 16px;
@@ -978,18 +971,18 @@ const safetyVerdicts: SafetyVerdict[] = [
   }
   .related-cta {
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--color-chalk-faint);
     transition: color 120ms ease-out;
   }
-  .related-card:hover .related-cta { color: var(--color-blood); }
+  .related-card:hover .related-cta { color: var(--color-blood-text); }
 
   /* ============ DASHED DIVIDER ============ */
   .dashed {
-    margin: 56px var(--pad-page-x);
+    margin: 48px var(--pad-page-x) 0;
     border: none;
     border-top: 1px dashed var(--color-rule-soft);
   }
@@ -1012,28 +1005,10 @@ const safetyVerdicts: SafetyVerdict[] = [
   }
   .closer p strong {
     font-weight: 500;
-    color: var(--color-blood);
+    color: var(--color-blood-text);
   }
 
   /* ============ FOOTER ============ */
-  .foot {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 14px;
-    padding: 22px var(--pad-page-x) 40px;
-    border-top: var(--border-thin);
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--color-chalk-faint);
-  }
-  .foot a {
-    color: var(--color-chalk-dim);
-    transition: color 120ms ease-out;
-  }
-  .foot a:hover { color: var(--color-chalk); }
 
   /* ============ Responsive ============ */
   @media (max-width: 1099px) {
@@ -1115,13 +1090,8 @@ const safetyVerdicts: SafetyVerdict[] = [
     }
     .related-card:last-child { border-bottom: none; }
 
-    .dashed { margin: 40px var(--pad-page-x-mobile); }
+    .dashed { margin: 36px var(--pad-page-x-mobile) 0; }
     .closer { padding: 36px var(--pad-page-x-mobile); }
     .closer p { font-size: 18px; }
-    .foot {
-      padding: 22px var(--pad-page-x-mobile) 32px;
-      flex-direction: column;
-      align-items: flex-start;
-    }
   }
 </style>

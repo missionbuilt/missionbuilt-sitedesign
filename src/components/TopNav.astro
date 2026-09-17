@@ -4,22 +4,25 @@
  *
  * Layout: lockup left, nav links right. Border-bottom 1px rule.
  * On <=720px, links collapse to a hamburger placeholder (CSS-only details/summary).
+ *
+ * Five links. The lockup is the way home. "The Book" goes to the chapter
+ * index and stays lit on Home, the index, and every reading page. Source
+ * and Download live in the site footer.
  */
 import Lockup from './Lockup.astro';
 
 interface Props {
   active?: 'book' | 'chapters' | 'loadout' | 'rack' | 'logs' | 'about' | 'source' | undefined;
 }
-const { active } = Astro.props;
+const { active: rawActive } = Astro.props;
+const active = rawActive === 'chapters' ? 'book' : rawActive;
 
 const links = [
-  { key: 'book',     label: 'The Book',     href: '/' },
-  { key: 'chapters', label: 'Chapters',     href: '/chapters' },
+  { key: 'book',     label: 'The Book',     href: '/chapters' },
   { key: 'loadout',  label: 'The Loadout',  href: '/loadout' },
   { key: 'rack',     label: 'The Rack',     href: '/rack' },
-  { key: 'logs',    label: 'Logs',        href: '/logs' },
+  { key: 'logs',     label: 'Logs',         href: '/logs' },
   { key: 'about',    label: 'About',        href: '/about' },
-  { key: 'source',   label: 'Source',       href: '/source' },
 ] as const;
 ---
 <header class="top-nav">
@@ -44,7 +47,7 @@ const links = [
   </nav>
 
   <details class="mobile-menu">
-    <summary aria-label="Open menu">
+    <summary aria-label="Menu">
       <span class="bars" aria-hidden="true">
         <span></span><span></span><span></span>
       </span>
@@ -91,7 +94,7 @@ const links = [
   .nav-link {
     font-family: var(--font-mono);
     font-weight: 400;
-    font-size: 11px;
+    font-size: 12px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--color-chalk-dim);
@@ -99,8 +102,21 @@ const links = [
     white-space: nowrap;
   }
   .nav-link:hover { color: var(--color-chalk); }
-  .nav-link.active { color: var(--color-chalk); }
-  .nav-link.source { color: var(--color-chalk); }
+  /* Active: chalk plus a small oxblood square, so the state isn't carried
+     by a brightness shift alone. */
+  .nav-link.active {
+    color: var(--color-chalk);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .nav-link.active::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--color-blood);
+    flex-shrink: 0;
+  }
 
   /* ------- Mobile menu ------- */
   .mobile-menu { display: none; }

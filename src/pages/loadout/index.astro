@@ -11,6 +11,7 @@
  * What this is → Dashed divider → The skills (3 cards) → Closer → Footer.
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
 import TopNav from '../../components/TopNav.astro';
 
 const stats = [
@@ -34,7 +35,7 @@ const skills: Skill[] = [
     name: 'The Warmup',
     status: 'live',
     blurb:
-      'A daily intelligence brief for your first coffee. Three modes — CISO, Product Leader, Custom — each pulling from curated sources, scanning every link for safety, and rendering as a live artifact that refreshes each morning.',
+      'A daily intelligence brief for your first coffee. Three modes (CISO, Product Leader, Custom), each pulling from curated sources, scanning every link for safety, and rendering as a live artifact that refreshes each morning.',
     href: '/loadout/warmup',
     cta: 'Open →',
   },
@@ -50,7 +51,7 @@ const skills: Skill[] = [
     name: 'The Spotter',
     status: 'live',
     blurb:
-      'Walk your epic through nine product-leadership areas. Get a structured worksheet back — critique notes per area, an accept and skip loop, a verdict on each, and an export that unlocks when you have closed every area.',
+      'Walk your epic through nine product-leadership areas. Get a structured worksheet back: critique notes per area, an accept and skip loop, a verdict on each, and an export that unlocks when you have closed every area.',
     href: '/loadout/spotter',
     cta: 'Open →',
   },
@@ -63,7 +64,7 @@ const skills: Skill[] = [
 >
   <TopNav active="loadout" />
 
-  <main class="page">
+  <main id="main" class="page">
     {/* ---------- HERO ---------- */}
     <section class="hero">
       <p class="eyebrow">
@@ -105,7 +106,7 @@ const skills: Skill[] = [
       <h2 class="section-h2">A kit for product leaders.</h2>
       <p class="prose">
         The Loadout is a set of small, focused skills you can drop into your
-        agent. Each one helps you do a specific piece of the work better —
+        agent. Each one helps you do a specific piece of the work better:
         review an epic, prep for a customer meeting, scan the news before
         your day starts.
       </p>
@@ -187,7 +188,7 @@ const skills: Skill[] = [
         <article class="install-opt">
           <h3>Claude Code · CLI</h3>
           <p>If you have Claude Code installed, run this in your terminal:</p>
-          <pre class="install-opt-code">claude mcp add loadout https://mcp.missionbuilt.io/sse</pre>
+          <pre class="install-opt-code" tabindex="0">claude mcp add loadout https://mcp.missionbuilt.io/sse</pre>
         </article>
 
         <article class="install-opt">
@@ -198,7 +199,7 @@ const skills: Skill[] = [
 
       <p class="install-or">Or download the standalone</p>
       <p class="install-intro">
-        Every live skill is also a self-contained folder. The hosted server is the recommended path — always current, one connection. A download is pinned and runs offline. Grab one and drop it into any AI coding tool's skills folder:
+        Every live skill is also a self-contained folder. The hosted server is the recommended path: always current, one connection. A download is pinned and runs offline. Grab one and drop it into any AI coding tool's skills folder:
       </p>
       <div class="dl-row">
         <a class="dl-pill" href="/downloads/warmup.zip" download><span aria-hidden="true">↓</span> warmup.zip</a>
@@ -206,7 +207,7 @@ const skills: Skill[] = [
         <a class="dl-pill" href="/downloads/spotter.zip" download><span aria-hidden="true">↓</span> spotter.zip</a>
       </div>
       <p class="install-git-label">Or via git:</p>
-      <pre class="install-opt-code">git clone https://github.com/missionbuilt/loadout.git
+      <pre class="install-opt-code" tabindex="0">git clone https://github.com/missionbuilt/loadout.git
 # then copy a skill folder into your AI coding tool's skills directory</pre>
     </section>
 
@@ -217,16 +218,8 @@ const skills: Skill[] = [
       </p>
     </section>
 
-    {/* ---------- FOOTER ---------- */}
-    <footer class="foot">
-      <span>Real strength is lifting others</span>
-      <a
-        href="https://github.com/missionbuilt/loadout"
-        target="_blank"
-        rel="noopener"
-      >github.com/missionbuilt/loadout</a>
-    </footer>
   </main>
+  <SiteFooter links={[{ label: 'github.com/missionbuilt/loadout', href: 'https://github.com/missionbuilt/loadout', external: true }]} />
 </BaseLayout>
 
 <style>
@@ -241,15 +234,15 @@ const skills: Skill[] = [
     gap: 14px;
     margin: 0 0 18px;
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.24em;
-    color: var(--color-blood);
+    color: var(--color-chalk-dim);
     text-transform: uppercase;
   }
   .eyebrow .dots {
     letter-spacing: 0.04em;
-    opacity: 0.65;
+    color: var(--color-blood-bright);
   }
 
   .display {
@@ -263,7 +256,7 @@ const skills: Skill[] = [
     text-transform: uppercase;
   }
   .display .line { display: block; }
-  .display .dot { color: var(--color-blood); }
+  .display .dot { color: var(--color-blood-bright); }
 
   .subtitle {
     margin: 22px 0 0;
@@ -286,11 +279,11 @@ const skills: Skill[] = [
     grid-template-columns: repeat(4, 1fr);
     gap: 24px;
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
   }
   .stat-key {
     color: var(--color-chalk-faint);
-    font-size: 10px;
+    font-size: 12px;
     letter-spacing: 0.22em;
     text-transform: uppercase;
   }
@@ -310,7 +303,7 @@ const skills: Skill[] = [
   .stat-value.linked:hover { border-bottom-color: currentColor; }
   .stat-value .ext {
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     color: var(--color-chalk-faint);
     letter-spacing: 0;
     transition: color 120ms ease-out;
@@ -320,16 +313,15 @@ const skills: Skill[] = [
   /* ============ BLOCKS ============ */
   .block {
     padding: 56px var(--pad-page-x) 0;
-    max-width: 1080px;
   }
 
   .section-label {
     margin: 0 0 14px;
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.24em;
-    color: var(--color-blood);
+    color: var(--color-blood-text);
     text-transform: uppercase;
   }
 
@@ -355,7 +347,7 @@ const skills: Skill[] = [
   .prose strong { color: var(--color-chalk); font-weight: 700; }
   .inline-link {
     color: var(--color-chalk);
-    border-bottom: 1px solid var(--color-chalk-faint);
+    border-bottom: 1px solid var(--color-chalk-ghost);
     transition: border-color 120ms ease-out;
   }
   .inline-link:hover { border-bottom-color: var(--color-chalk); }
@@ -370,7 +362,7 @@ const skills: Skill[] = [
   }
   .block-count {
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--color-chalk-faint);
@@ -413,7 +405,7 @@ const skills: Skill[] = [
     align-items: center;
     gap: 6px;
     font-family: var(--font-mono);
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.22em;
     text-transform: uppercase;
@@ -436,6 +428,7 @@ const skills: Skill[] = [
 
   .skill-blurb {
     margin: 0;
+    max-width: 68ch;
     font-family: var(--font-serif);
     font-size: 15px;
     line-height: 1.6;
@@ -445,7 +438,7 @@ const skills: Skill[] = [
 
   .skill-cta {
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -455,11 +448,11 @@ const skills: Skill[] = [
     transition: color 120ms ease-out;
   }
   .skill-row.dim .skill-cta { color: var(--color-chalk-faint); }
-  a.skill-row:hover .skill-cta { color: var(--color-blood); }
+  a.skill-row:hover .skill-cta { color: var(--color-blood-text); }
 
   /* ============ DASHED DIVIDER ============ */
   .dashed {
-    margin: 56px var(--pad-page-x);
+    margin: 48px var(--pad-page-x) 0;
     border: none;
     border-top: 1px dashed var(--color-rule-soft);
   }
@@ -482,33 +475,14 @@ const skills: Skill[] = [
   }
   .closer p strong {
     font-weight: 500;
-    color: var(--color-blood);
+    color: var(--color-blood-text);
   }
 
   /* ============ FOOTER ============ */
-  .foot {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 14px;
-    padding: 22px var(--pad-page-x) 40px;
-    border-top: var(--border-thin);
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--color-chalk-faint);
-  }
-  .foot a {
-    color: var(--color-chalk-dim);
-    transition: color 120ms ease-out;
-  }
-  .foot a:hover { color: var(--color-chalk); }
 
   /* ============ INSTALL BLOCK ============ */
   .install-block {
     padding: 56px var(--pad-page-x) 0;
-    max-width: 1080px;
   }
 
   .install-intro {
@@ -533,7 +507,7 @@ const skills: Skill[] = [
 
   .install-url-label {
     font-family: var(--font-mono);
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.22em;
     text-transform: uppercase;
@@ -551,7 +525,7 @@ const skills: Skill[] = [
   .install-verified {
     margin: 0 0 24px;
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--color-army);
@@ -562,7 +536,7 @@ const skills: Skill[] = [
     padding-top: 28px;
     border-top: 1px dashed var(--color-rule-soft);
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.22em;
     text-transform: uppercase;
@@ -589,12 +563,12 @@ const skills: Skill[] = [
     text-decoration: none;
     transition: background 120ms ease-out;
   }
-  .dl-pill span { color: var(--color-blood); }
+  .dl-pill span { color: var(--color-blood-text); }
   .dl-pill:hover { background: rgba(255,255,255,0.02); }
   .install-git-label {
     margin: 0 0 10px;
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--color-chalk-faint);
@@ -602,12 +576,13 @@ const skills: Skill[] = [
 
   .install-options {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     border-top: var(--border-thin);
     border-bottom: var(--border-thin);
   }
 
   .install-opt {
+    min-width: 0;
     padding: 24px 28px;
     border-right: var(--border-thin);
     border-bottom: var(--border-thin);
@@ -618,7 +593,7 @@ const skills: Skill[] = [
   .install-opt h3 {
     margin: 0 0 10px;
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 600;
     letter-spacing: 0.22em;
     text-transform: uppercase;
@@ -649,7 +624,7 @@ const skills: Skill[] = [
     background: var(--color-bg);
     border: var(--border-thin);
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     color: var(--color-chalk-dim);
     letter-spacing: 0.03em;
     overflow-x: auto;
@@ -678,7 +653,7 @@ const skills: Skill[] = [
       gap: 8px;
     }
     .install-options {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
     }
     .install-opt {
       border-right: none;
@@ -706,13 +681,8 @@ const skills: Skill[] = [
       padding: 22px 0;
     }
     .skill-cta { text-align: left; }
-    .dashed { margin: 40px var(--pad-page-x-mobile); }
+    .dashed { margin: 36px var(--pad-page-x-mobile) 0; }
     .closer { padding: 36px var(--pad-page-x-mobile); }
     .closer p { font-size: 18px; }
-    .foot {
-      padding: 22px var(--pad-page-x-mobile) 32px;
-      flex-direction: column;
-      align-items: flex-start;
-    }
   }
 </style>

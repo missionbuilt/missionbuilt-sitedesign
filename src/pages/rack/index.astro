@@ -19,6 +19,7 @@
  * What this is → Dashed divider → The tools (2 rows) → Closer → Footer.
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
 import TopNav from '../../components/TopNav.astro';
 
 /** A phone outline for the iPhone rows. Our own drawing: Apple's logo and the App Store badge are not ours to use until the app is on the store. */
@@ -70,7 +71,7 @@ const tools: Tool[] = [
 >
   <TopNav active="rack" />
 
-  <main class="page">
+  <main id="main" class="page">
     {/* ---------- HERO ---------- */}
     <section class="hero">
       <p class="eyebrow">
@@ -167,16 +168,8 @@ const tools: Tool[] = [
       </p>
     </section>
 
-    {/* ---------- FOOTER ---------- */}
-    <footer class="foot">
-      <span>Real strength is lifting others</span>
-      <a
-        href="https://github.com/missionbuilt/ironstack"
-        target="_blank"
-        rel="noopener"
-      >github.com/missionbuilt/ironstack</a>
-    </footer>
   </main>
+  <SiteFooter links={[{ label: 'github.com/missionbuilt/ironstack', href: 'https://github.com/missionbuilt/ironstack', external: true }]} />
 </BaseLayout>
 
 <style>
@@ -191,15 +184,15 @@ const tools: Tool[] = [
     gap: 14px;
     margin: 0 0 18px;
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.24em;
-    color: var(--color-blood);
+    color: var(--color-chalk-dim);
     text-transform: uppercase;
   }
   .eyebrow .dots {
     letter-spacing: 0.04em;
-    opacity: 0.65;
+    color: var(--color-blood-bright);
   }
 
   .display {
@@ -213,7 +206,7 @@ const tools: Tool[] = [
     text-transform: uppercase;
   }
   .display .line { display: block; }
-  .display .dot { color: var(--color-blood); }
+  .display .dot { color: var(--color-blood-bright); }
 
   .subtitle {
     margin: 22px 0 0;
@@ -236,11 +229,11 @@ const tools: Tool[] = [
     grid-template-columns: repeat(4, 1fr);
     gap: 24px;
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
   }
   .stat-key {
     color: var(--color-chalk-faint);
-    font-size: 10px;
+    font-size: 12px;
     letter-spacing: 0.22em;
     text-transform: uppercase;
   }
@@ -260,7 +253,7 @@ const tools: Tool[] = [
   .stat-value.linked:hover { border-bottom-color: currentColor; }
   .stat-value .ext {
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     color: var(--color-chalk-faint);
     letter-spacing: 0;
     transition: color 120ms ease-out;
@@ -270,16 +263,15 @@ const tools: Tool[] = [
   /* ============ BLOCKS ============ */
   .block {
     padding: 56px var(--pad-page-x) 0;
-    max-width: 1080px;
   }
 
   .section-label {
     margin: 0 0 14px;
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.24em;
-    color: var(--color-blood);
+    color: var(--color-blood-text);
     text-transform: uppercase;
   }
 
@@ -306,7 +298,7 @@ const tools: Tool[] = [
   .prose em { color: var(--color-chalk); font-style: italic; }
   .inline-link {
     color: var(--color-chalk);
-    border-bottom: 1px solid var(--color-chalk-faint);
+    border-bottom: 1px solid var(--color-chalk-ghost);
     transition: border-color 120ms ease-out;
   }
   .inline-link:hover { border-bottom-color: var(--color-chalk); }
@@ -321,7 +313,7 @@ const tools: Tool[] = [
   }
   .block-count {
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--color-chalk-faint);
@@ -364,7 +356,7 @@ const tools: Tool[] = [
     align-items: center;
     gap: 6px;
     font-family: var(--font-mono);
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.22em;
     text-transform: uppercase;
@@ -391,6 +383,7 @@ const tools: Tool[] = [
 
   .skill-blurb {
     margin: 0;
+    max-width: 68ch;
     font-family: var(--font-serif);
     font-size: 15px;
     line-height: 1.6;
@@ -400,7 +393,7 @@ const tools: Tool[] = [
 
   .skill-cta {
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -410,11 +403,11 @@ const tools: Tool[] = [
     transition: color 120ms ease-out;
   }
   .skill-row.dim .skill-cta { color: var(--color-chalk-faint); }
-  a.skill-row:hover .skill-cta { color: var(--color-blood); }
+  a.skill-row:hover .skill-cta { color: var(--color-blood-text); }
 
   /* ============ DASHED DIVIDER ============ */
   .dashed {
-    margin: 56px var(--pad-page-x);
+    margin: 48px var(--pad-page-x) 0;
     border: none;
     border-top: 1px dashed var(--color-rule-soft);
   }
@@ -437,28 +430,10 @@ const tools: Tool[] = [
   }
   .closer p strong {
     font-weight: 500;
-    color: var(--color-blood);
+    color: var(--color-blood-text);
   }
 
   /* ============ FOOTER ============ */
-  .foot {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 14px;
-    padding: 22px var(--pad-page-x) 40px;
-    border-top: var(--border-thin);
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--color-chalk-faint);
-  }
-  .foot a {
-    color: var(--color-chalk-dim);
-    transition: color 120ms ease-out;
-  }
-  .foot a:hover { color: var(--color-chalk); }
 
   /* ============ Responsive ============ */
   @media (max-width: 1099px) {
@@ -491,13 +466,8 @@ const tools: Tool[] = [
       padding: 22px 0;
     }
     .skill-cta { text-align: left; }
-    .dashed { margin: 40px var(--pad-page-x-mobile); }
+    .dashed { margin: 36px var(--pad-page-x-mobile) 0; }
     .closer { padding: 36px var(--pad-page-x-mobile); }
     .closer p { font-size: 18px; }
-    .foot {
-      padding: 22px var(--pad-page-x-mobile) 32px;
-      flex-direction: column;
-      align-items: flex-start;
-    }
   }
 </style>

@@ -11,6 +11,7 @@
  */
 import { getCollection, type CollectionEntry } from 'astro:content';
 import ReadingLayout from '../../../layouts/ReadingLayout.astro';
+import ProseH2 from '../../../components/ProseH2.astro';
 import { MB, sectionUrl } from '../../../data/book.ts';
 
 type Entry = CollectionEntry<'chapters'>;
@@ -86,5 +87,5 @@ const activeIndex = entry.data.order - 1;
   draft={entry.data.draft}
   kicker={entry.data.kicker}
 >
-  <Content />
+  <Content components={{ h3: ProseH2 }} />
 </ReadingLayout>

@@ -2,9 +2,8 @@
  * Mission Built — book metadata and structure.
  *
  * Ported from the design handoff's `mockups/shared.jsx` (`MB` object).
- * This file is the source of truth for chapter list, section names, and
- * sample reading content. Real chapter prose lives in `src/content/chapters/`
- * as MDX once migrated.
+ * This file is the source of truth for the chapter list and section names.
+ * Chapter prose lives in `src/content/chapters/` as MDX.
  */
 
 export interface Chapter {
@@ -35,19 +34,6 @@ export interface Part {
   blurb: string;
   /** Slice range into MB.chapters — [startInclusive, endExclusive] */
   range: [number, number];
-  /** Number of chapters within the Part the reader has finished */
-  done: number;
-}
-
-export interface ReadingFixture {
-  chapterN: string;
-  chapterTitle: string;
-  sectionN: string;
-  sectionTitle: string;
-  body: string[];
-  pull: string;
-  prev: { n: string; title: string };
-  next: { n: string; title: string; section: string };
 }
 
 export interface BookMeta {
@@ -63,7 +49,6 @@ export interface BookMeta {
   conclusion: Bookend;
   parts: Part[];
   chapters: Chapter[];
-  reading: ReadingFixture;
 }
 
 export const MB: BookMeta = {
@@ -83,13 +68,13 @@ export const MB: BookMeta = {
   parts: [
     { roman: 'I',   label: 'Part One',   title: 'The Foundation',
       blurb: 'Mission, identity, the long game.',
-      range: [0, 4], done: 0 },
+      range: [0, 4] },
     { roman: 'II',  label: 'Part Two',   title: 'The Reps',
       blurb: 'Practice, recovery, the work that compounds.',
-      range: [4, 8], done: 0 },
+      range: [4, 8] },
     { roman: 'III', label: 'Part Three', title: 'The Lift',
       blurb: 'Decisions under load, shipping, the team, and the chapter the book has been reading toward.',
-      range: [8, 13], done: 0 },
+      range: [8, 13] },
   ],
 
   chapters: [
@@ -134,20 +119,6 @@ export const MB: BookMeta = {
       mins: 18 },
   ],
 
-  reading: {
-    chapterN: '01',
-    chapterTitle: 'Mission Before Metrics',
-    sectionN: '1.1',
-    sectionTitle: 'The Mission Is the Magnet',
-    body: [
-      "Before I ever built products, I served in the U.S. Army as an Airborne intelligence sergeant. That experience shaped everything that came after: working in service of something larger than myself, making decisions under pressure with lives on the line. I learned early that mission comes first. Not ego. Not recognition. Mission.",
-      "That mindset followed me from the military to cybersecurity, and into leadership roles where the stakes changed but the values stayed the same. Whether it was securing critical systems, helping build Elastic Security, or coaching in the gym, the goal has always been the same: real strength is lifting others.",
-      "One of the proudest chapters of my product career was building Endgame. We entered a brutally competitive market, going head-to-head with massive players like McAfee and CrowdStrike, and carved out real ground. Not because we had more money or brand recognition, but because we had something harder to copy: a clear mission. Protect high-value targets from nation-state level attacks. That focus, and the small, fierce team who rallied behind it, made all the difference.",
-    ],
-    pull: '"Real strength is lifting others."',
-    prev: { n: '00', title: 'Built for More' },
-    next: { n: '01', title: 'The Drift', section: '1.2' },
-  },
 };
 
 /** Total sections across all 12 chapters. */

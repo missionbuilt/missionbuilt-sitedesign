@@ -91,7 +91,6 @@ Output:
 - `public/downloads/warmup.zip`
 - `public/downloads/the-approach.zip`
 - `public/downloads/spotter.zip`
-- `public/downloads/floodlight.zip`
 
 Commit the zips alongside other site changes — like the demos, they're static and don't auto-update when the loadout repo changes. Re-run after a skill release. To add a new standalone skill, append its folder name to `SKILLS` in the script.
 

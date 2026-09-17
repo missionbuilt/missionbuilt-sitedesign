@@ -17,6 +17,7 @@
  * sample corner badge. Army green only for the Live tag under the hero.
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
 import TopNav from '../../components/TopNav.astro';
 import DemoEmbed from '../../components/DemoEmbed.astro';
 
@@ -35,7 +36,7 @@ const phases: Phase[] = [
     when: 'Before stakeholders see it',
     body:
       'You have a complete epic and need a final pass before sending it for review. The Spotter walks all nine areas, calls verdicts with the powerlifting pip system, and produces an interactive worksheet to work through.',
-    deliverable: 'A structured worksheet — critique notes per area, an accept and skip loop, an export that unlocks when every area is closed.',
+    deliverable: 'A structured worksheet: critique notes per area, an accept and skip loop, an export that unlocks when every area is closed.',
   },
   {
     num: '02',
@@ -86,7 +87,7 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
 >
   <TopNav active="loadout" />
 
-  <main class="page">
+  <main id="main" class="page">
     {/* ---------- BREADCRUMB ---------- */}
     <nav class="breadcrumb" aria-label="Breadcrumb">
       <a href="/loadout">The Loadout</a>
@@ -138,7 +139,7 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
       <p class="section-label">What it does</p>
       <h2 class="section-h2">Walks an epic through nine areas.</h2>
       <p class="prose">
-        The Spotter reviews a product epic across nine product-leadership areas —
+        The Spotter reviews a product epic across nine product-leadership areas:
         user and problem, competitive landscape, strategic differentiation,
         solution approach, holistic impact, packaging and pricing, launch readiness,
         post-launch ownership, and trust, governance, and auditability. It meets you
@@ -148,7 +149,7 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
         The output is an interactive worksheet. Each area shows the relevant excerpt
         from your epic, a pip verdict, and typed critique notes. Accept the ones you
         have addressed. Skip the ones you are setting aside. When every area is closed,
-        the export unlocks. Every flag is constructive — never "you missed this,"
+        the export unlocks. Every flag is constructive. Never "you missed this,"
         always <em>"you could strengthen this by…"</em>
       </p>
     </section>
@@ -202,7 +203,7 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
       <p class="prose">
         Borrowed from powerlifting. After each lift, three judges flash white for
         a good lift, red for no-lift. The Spotter does the same for each of the
-        nine areas — three pip signals per area, one verdict. Good lift means the
+        nine areas: three pip signals per area, one verdict. Good lift means the
         area is well-addressed. No-lift means the worksheet keeps that area open
         until you work through it and close it yourself.
       </p>
@@ -230,14 +231,14 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
         In Review mode, the Spotter evaluates your epic across all nine areas and
         builds a live worksheet artifact. Each area shows the relevant excerpt,
         a three-pip verdict, and typed critique notes. Work through it at your
-        own pace — accept notes you have addressed, skip ones you are setting
+        own pace. Accept notes you have addressed, skip ones you are setting
         aside, and close each area when you are done. Export unlocks when the
         last area closes.
       </p>
 
       <DemoEmbed
         src="/demos/spotter.html"
-        title="The Spotter — interactive demo"
+        title="The Spotter: interactive demo"
         caption="Live demo · Example epic · Use ← → or the panel to step through"
       />
     </section>
@@ -263,7 +264,7 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
         <article class="install-opt">
           <h3>Claude Code · CLI</h3>
           <p>If you have Claude Code installed, run this in your terminal:</p>
-          <pre class="install-opt-code">claude mcp add loadout https://mcp.missionbuilt.io/sse</pre>
+          <pre class="install-opt-code" tabindex="0">claude mcp add loadout https://mcp.missionbuilt.io/sse</pre>
         </article>
 
         <article class="install-opt">
@@ -274,7 +275,7 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
 
       <p class="install-or">Or download the standalone</p>
       <p class="install-intro">
-        Prefer to run it offline, or pin a version? Download the skill folder and drop it into any AI coding tool's skills folder. The hosted server stays the recommended path — always current. The download is a pinned snapshot.
+        Prefer to run it offline, or pin a version? Download the skill folder and drop it into any AI coding tool's skills folder. The hosted server stays the recommended path: always current. The download is a pinned snapshot.
       </p>
       <a class="dl-btn" href="/downloads/spotter.zip" download>
         <span class="dl-ico" aria-hidden="true">↓</span>
@@ -317,7 +318,7 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
         </article>
         <article class="faq-item">
           <h3>Do I need to sign in?</h3>
-          <p>Yes. The server uses Google OAuth. You authenticate once when you connect — no separate account creation required.</p>
+          <p>Yes. The server uses Google OAuth. You authenticate once when you connect. No separate account creation required.</p>
         </article>
         <article class="faq-item">
           <h3>Does this work with agents other than Claude?</h3>
@@ -378,16 +379,8 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
       </p>
     </section>
 
-    {/* ---------- FOOTER ---------- */}
-    <footer class="foot">
-      <span>Real strength is lifting others</span>
-      <a
-        href="https://github.com/missionbuilt/loadout"
-        target="_blank"
-        rel="noopener"
-      >github.com/missionbuilt/loadout</a>
-    </footer>
   </main>
+  <SiteFooter links={[{ label: 'github.com/missionbuilt/loadout', href: 'https://github.com/missionbuilt/loadout', external: true }]} />
 </BaseLayout>
 
 <style>
@@ -395,7 +388,7 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
   .breadcrumb {
     padding: 18px var(--pad-page-x) 0;
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--color-chalk-faint);
@@ -419,15 +412,15 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
     gap: 14px;
     margin: 0 0 18px;
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.24em;
-    color: var(--color-blood);
+    color: var(--color-chalk-dim);
     text-transform: uppercase;
   }
   .eyebrow .dots {
     letter-spacing: 0.04em;
-    opacity: 0.65;
+    color: var(--color-blood-bright);
   }
 
   .display {
@@ -440,7 +433,7 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
     color: var(--color-chalk);
     text-transform: uppercase;
   }
-  .display .dot { color: var(--color-blood); }
+  .display .dot { color: var(--color-blood-bright); }
 
   .live-tag {
     display: inline-flex;
@@ -448,7 +441,7 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
     gap: 8px;
     margin-top: 22px;
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.22em;
     text-transform: uppercase;
@@ -482,12 +475,12 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
     grid-template-columns: repeat(4, 1fr);
     gap: 24px;
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     text-align: left;
   }
   .stat-key {
     color: var(--color-chalk-faint);
-    font-size: 10px;
+    font-size: 12px;
     letter-spacing: 0.22em;
     text-transform: uppercase;
   }
@@ -506,7 +499,7 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
   .stat-value.linked:hover { border-bottom-color: currentColor; }
   .stat-value .ext {
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     color: var(--color-chalk-faint);
     letter-spacing: 0;
     transition: color 120ms ease-out;
@@ -516,16 +509,15 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
   /* ============ BLOCK ============ */
   .block {
     padding: 56px var(--pad-page-x) 0;
-    max-width: 1080px;
   }
 
   .section-label {
     margin: 0 0 14px;
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.24em;
-    color: var(--color-blood);
+    color: var(--color-blood-text);
     text-transform: uppercase;
   }
 
@@ -564,7 +556,7 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
     transition: color 120ms ease-out, border-color 120ms ease-out;
   }
   .inline-link:hover {
-    color: var(--color-blood);
+    color: var(--color-blood-text);
     border-bottom-color: var(--color-blood);
   }
 
@@ -584,7 +576,7 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
 
   .phase-num {
     font-family: var(--font-mono);
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.28em;
     color: var(--color-chalk-faint);
@@ -607,7 +599,7 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
     font-size: 13px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--color-blood);
+    color: var(--color-blood-text);
   }
   .phase-body {
     margin: 0 0 18px;
@@ -619,7 +611,7 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
   .phase-label {
     margin: 18px 0 4px;
     font-family: var(--font-mono);
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.22em;
     text-transform: uppercase;
@@ -711,7 +703,6 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
   /* ============ INSTALL BLOCK ============ */
   .install-block {
     padding: 56px var(--pad-page-x) 0;
-    max-width: 1080px;
   }
 
   .install-intro {
@@ -736,7 +727,7 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
 
   .install-url-label {
     font-family: var(--font-mono);
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.22em;
     text-transform: uppercase;
@@ -754,7 +745,7 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
   .install-verified {
     margin: 0 0 24px;
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--color-army);
@@ -766,7 +757,7 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
     padding-top: 28px;
     border-top: 1px dashed var(--color-rule-soft);
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.22em;
     text-transform: uppercase;
@@ -788,7 +779,7 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
   .dl-ico {
     font-family: var(--font-mono);
     font-size: 18px;
-    color: var(--color-blood);
+    color: var(--color-blood-text);
     line-height: 1;
   }
   .dl-text { display: flex; flex-direction: column; gap: 4px; }
@@ -802,7 +793,7 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
   }
   .dl-meta {
     font-family: var(--font-mono);
-    font-size: 10px;
+    font-size: 12px;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--color-chalk-faint);
@@ -810,12 +801,13 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
 
   .install-options {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     border-top: var(--border-thin);
     border-bottom: var(--border-thin);
   }
 
   .install-opt {
+    min-width: 0;
     padding: 24px 28px;
     border-right: var(--border-thin);
     border-bottom: var(--border-thin);
@@ -826,7 +818,7 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
   .install-opt h3 {
     margin: 0 0 10px;
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 600;
     letter-spacing: 0.22em;
     text-transform: uppercase;
@@ -857,7 +849,7 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
     background: var(--color-bg);
     border: var(--border-thin);
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     color: var(--color-chalk-dim);
     letter-spacing: 0.03em;
     overflow-x: auto;
@@ -881,7 +873,7 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
   .trigger-row:last-child { border-bottom: none; }
   .trigger-mode {
     font-family: var(--font-mono);
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 600;
     letter-spacing: 0.22em;
     text-transform: uppercase;
@@ -932,14 +924,14 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
   }
   .related-cta {
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--color-chalk-faint);
     transition: color 120ms ease-out;
   }
-  .related-card:hover .related-cta { color: var(--color-blood); }
+  .related-card:hover .related-cta { color: var(--color-blood-text); }
 
   /* ============ FAQ ============ */
   .faq {
@@ -965,6 +957,7 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
     line-height: 1.3;
   }
   .faq-item p {
+    max-width: 68ch;
     margin: 0;
     font-family: var(--font-serif);
     font-size: 16px;
@@ -974,7 +967,7 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
 
   /* ============ DASHED DIVIDER ============ */
   .dashed {
-    margin: 56px var(--pad-page-x);
+    margin: 48px var(--pad-page-x) 0;
     border: none;
     border-top: 1px dashed var(--color-rule-soft);
   }
@@ -997,28 +990,10 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
   }
   .closer p strong {
     font-weight: 500;
-    color: var(--color-blood);
+    color: var(--color-blood-text);
   }
 
   /* ============ FOOTER ============ */
-  .foot {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 14px;
-    padding: 22px var(--pad-page-x) 40px;
-    border-top: var(--border-thin);
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--color-chalk-faint);
-  }
-  .foot a {
-    color: var(--color-chalk-dim);
-    transition: color 120ms ease-out;
-  }
-  .foot a:hover { color: var(--color-chalk); }
 
   /* ============ Responsive ============ */
   @media (max-width: 1099px) {
@@ -1101,13 +1076,8 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
       gap: 12px;
     }
 
-    .dashed { margin: 40px var(--pad-page-x-mobile); }
+    .dashed { margin: 36px var(--pad-page-x-mobile) 0; }
     .closer { padding: 36px var(--pad-page-x-mobile); }
     .closer p { font-size: 18px; }
-    .foot {
-      padding: 22px var(--pad-page-x-mobile) 32px;
-      flex-direction: column;
-      align-items: flex-start;
-    }
   }
 </style>

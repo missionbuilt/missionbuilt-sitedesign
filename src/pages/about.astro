@@ -9,6 +9,7 @@
  * reflect his current GM role at Elastic Security (Nov 2025).
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteFooter from '../components/SiteFooter.astro';
 import TopNav from '../components/TopNav.astro';
 ---
 <BaseLayout
@@ -18,22 +19,20 @@ import TopNav from '../components/TopNav.astro';
 >
   <TopNav active="about" />
 
-  <main class="page">
+  <main id="main" class="page">
     {/* ---------- HEADER ---------- */}
     <header class="hero">
       <p class="eyebrow">About</p>
-      <h1 class="hero-h1">
-        Hi, I'm <span class="hero-name-wrap"><a
-          class="hero-link"
-          href="https://www.linkedin.com/in/hmikenichols"
-          target="_blank"
-          rel="noopener"
-          aria-label="Mike Nichols on LinkedIn"
-        >Mike<span class="ext" aria-hidden="true"> ↗</span></a>.</span>
-      </h1>
+      <h1 class="hero-h1">Hi, I'm Mike.</h1>
       <p class="lede">
         Product leader by trade. Powerlifter by obsession. Father before all else.
       </p>
+      <a
+        class="hero-link"
+        href="https://www.linkedin.com/in/hmikenichols"
+        target="_blank"
+        rel="noopener"
+      >Find me on LinkedIn<span class="ext" aria-hidden="true"> ↗</span></a>
     </header>
 
     <article class="prose">
@@ -252,6 +251,7 @@ import TopNav from '../components/TopNav.astro';
       </footer>
     </article>
   </main>
+  <SiteFooter />
 </BaseLayout>
 
 <style>
@@ -265,9 +265,9 @@ import TopNav from '../components/TopNav.astro';
   .eyebrow {
     margin: 0 0 14px;
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     letter-spacing: 0.24em;
-    color: var(--color-blood);
+    color: var(--color-chalk-dim);
     text-transform: uppercase;
   }
 
@@ -281,35 +281,21 @@ import TopNav from '../components/TopNav.astro';
     text-transform: uppercase;
     color: var(--color-chalk);
   }
-  /* "Mike" in the headline links to LinkedIn — subtle underline that
-     lifts to oxblood on hover, mirroring the home page author block.
-     The wrap span prevents the trailing period from breaking to a new
-     line on its own (the arrow's vertical-align makes the link behave
-     like inline-block, which orphans the period without this). */
-  .hero-name-wrap {
-    white-space: nowrap;
-  }
+  /* LinkedIn sits under the lede as a quiet mono link, so the headline
+     stays clean. */
   .hero-link {
-    color: inherit;
-    border-bottom: 1px solid var(--color-rule);
+    display: inline-block;
+    margin-top: 18px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-chalk-dim);
+    border-bottom: 1px solid var(--color-chalk-ghost);
     transition: color 120ms ease-out, border-bottom-color 120ms ease-out;
   }
-  .hero-link:hover {
-    color: var(--color-blood);
-    border-bottom-color: var(--color-blood);
-  }
-  .hero-link .ext {
-    display: inline-block;
-    margin-left: 4px;
-    font-family: var(--font-mono);
-    font-size: 0.42em;
-    color: var(--color-chalk-faint);
-    letter-spacing: 0;
-    text-transform: none;
-    vertical-align: 0.35em;
-    transition: color 120ms ease-out;
-  }
-  .hero-link:hover .ext { color: var(--color-blood); }
+  .hero-link:hover { color: var(--color-chalk); border-bottom-color: var(--color-chalk-dim); }
+  .hero-link .ext { color: var(--color-chalk-faint); }
 
   .lede {
     margin: 0;
@@ -349,7 +335,7 @@ import TopNav from '../components/TopNav.astro';
   .prose .kicker {
     margin: 0 0 6px;
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     letter-spacing: 0.22em;
     color: var(--color-army);
     text-transform: uppercase;
@@ -448,7 +434,7 @@ import TopNav from '../components/TopNav.astro';
   .fine-print .fp-kicker {
     margin: 0 0 6px;
     font-family: var(--font-mono);
-    font-size: 10px;
+    font-size: 12px;
     letter-spacing: 0.22em;
     color: var(--color-chalk-faint);
     text-transform: uppercase;
@@ -472,7 +458,7 @@ import TopNav from '../components/TopNav.astro';
   .closer-tag {
     margin: 0 0 8px;
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     letter-spacing: 0.24em;
     color: var(--color-chalk-faint);
     text-transform: uppercase;
@@ -484,7 +470,7 @@ import TopNav from '../components/TopNav.astro';
     font-size: 24px;
     letter-spacing: 0.02em;
     text-transform: uppercase;
-    color: var(--color-blood);
+    color: var(--color-blood-bright);
   }
 
   /* ============ Responsive ============ */

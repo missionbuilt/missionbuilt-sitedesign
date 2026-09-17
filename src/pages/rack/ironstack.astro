@@ -19,6 +19,7 @@
  * the foot of the page.
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
 import TopNav from '../../components/TopNav.astro';
 
 const SOURCE = 'https://github.com/missionbuilt/ironstack';
@@ -94,7 +95,7 @@ const dashboards = [
   {/* Inter is for the Kibana replicas only. The site's three faces are loaded by BaseLayout. */}
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" />
 
-  <main class="page">
+  <main id="main" class="page">
     {/* ---------- BREADCRUMB ---------- */}
     <nav class="breadcrumb" aria-label="Breadcrumb">
       <a href="/rack">The Rack</a>
@@ -263,7 +264,7 @@ const dashboards = [
               <div class="sess">
                 <div>
                   <p class="k">Session</p>
-                  <h4>Strength <span class="sq"></span> Week 6 <span class="sq"></span> Day 2 of 4</h4>
+                  <p class="sess-title">Strength <span class="sq"></span> Week 6 <span class="sq"></span> Day 2 of 4</p>
                   <p class="mono">Friday, Sep 5, 2026 · Home gym<br />prev 2026-09-03 &nbsp; next none &nbsp; the table on the right walks to either</p>
                 </div>
                 <div>
@@ -355,7 +356,7 @@ const dashboards = [
           <p class="k">Door 1 · recommended</p>
           <h3>Let Claude install it</h3>
           <p>Add the Ironstack skills to Claude Code and say <em>set up Ironstack</em>. The setup skill creates your private repo from the starter, asks for your Elastic endpoint and key once, indexes the example session, imports the dashboards, and walks you through the coach. It stops at every step that touches your account.</p>
-          <pre class="code"><span class="c"># skills only, no server, nothing phones home</span>
+          <pre class="code" tabindex="0"><span class="c"># skills only, no server, nothing phones home</span>
 git clone https://github.com/missionbuilt/ironstack
 cp -r ironstack/skills/* ~/.claude/skills/
 <span class="c"># then, in Claude Code:</span>
@@ -366,7 +367,7 @@ cp -r ironstack/skills/* ~/.claude/skills/
           <p class="k">Door 2</p>
           <h3>Do it yourself</h3>
           <p>Use the template repo for your private instance, add two secrets, run the setup script, and import the dashboards from the latest release in Stack Management. The coach README takes it from there.</p>
-          <pre class="code">github.com/missionbuilt/ironstack-template
+          <pre class="code" tabindex="0">github.com/missionbuilt/ironstack-template
 <span class="c">  → Use this template → private</span>
 Secrets: ES_ENDPOINT, ES_API_KEY
 python ingest/setup_indices.py
@@ -378,7 +379,7 @@ python ingest/index_workouts.py
           <p class="k">Door 3</p>
           <h3>Just the skill</h3>
           <p>Download the workout-partner skill as a folder and start logging today. No Elastic, no dashboards. Your journal is markdown in a folder you choose. Add the stack whenever you want the verdicts.</p>
-          <pre class="code">workout-partner.zip
+          <pre class="code" tabindex="0">workout-partner.zip
 workout-recall.zip
 <span class="c"># drop into ~/.claude/skills/</span></pre>
           <p class="foot-line">Rung 1 · opens with v1.0</p>
@@ -438,12 +439,8 @@ workout-recall.zip
       </p>
     </section>
 
-    {/* ---------- FOOTER ---------- */}
-    <footer class="foot">
-      <span>Real strength is lifting others</span>
-      <a href="https://github.com/missionbuilt/ironstack" target="_blank" rel="noopener">github.com/missionbuilt/ironstack</a>
-    </footer>
   </main>
+  <SiteFooter links={[{ label: 'github.com/missionbuilt/ironstack', href: 'https://github.com/missionbuilt/ironstack', external: true }]} />
 </BaseLayout>
 
 <script>
@@ -468,7 +465,7 @@ workout-recall.zip
   .breadcrumb {
     padding: 18px var(--pad-page-x) 0;
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--color-chalk-faint);
@@ -481,21 +478,21 @@ workout-recall.zip
   .hero { padding: 40px var(--pad-page-x) 28px; text-align: center; }
   .eyebrow {
     display: inline-flex; align-items: center; gap: 14px; margin: 0 0 18px;
-    font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.24em;
-    color: var(--color-blood); text-transform: uppercase;
+    font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.24em;
+    color: var(--color-chalk-dim); text-transform: uppercase;
   }
-  .eyebrow .dots { letter-spacing: 0.04em; opacity: 0.65; }
+  .eyebrow .dots { letter-spacing: 0.04em; color: var(--color-blood-bright); }
   .display {
     margin: 0; font-family: var(--font-display); font-weight: 700;
     font-size: clamp(56px, 11vw, 108px); line-height: 0.95; letter-spacing: -0.02em;
     color: var(--color-chalk); text-transform: uppercase;
   }
-  .display .dot { color: var(--color-blood); }
+  .display .dot { color: var(--color-blood-bright); }
 
   /* In-testing tag: chalk-dim with a hollow square, between "Live" (army) and "planned" (faint). */
   .testing-tag {
     display: inline-flex; align-items: center; gap: 8px; margin-top: 22px;
-    font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.22em;
+    font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.22em;
     text-transform: uppercase; color: var(--color-chalk-dim);
   }
   .testing-tag .tag-sq { width: 8px; height: 8px; border: 1px solid var(--color-chalk-dim); display: inline-block; }
@@ -512,21 +509,21 @@ workout-recall.zip
     margin: 28px var(--pad-page-x) 0; padding: 14px 0;
     border-top: var(--border-thin); border-bottom: var(--border-thin);
     display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
-    font-family: var(--font-mono); font-size: 11px; text-align: left;
+    font-family: var(--font-mono); font-size: 12px; text-align: left;
   }
-  .stat-key { color: var(--color-chalk-faint); font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; }
+  .stat-key { color: var(--color-chalk-faint); font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; }
   .stat-value { margin-top: 2px; color: var(--color-chalk); font-family: var(--font-display); font-size: 22px; letter-spacing: 0.04em; display: inline-block; }
   .stat-sub { font-size: 12px; color: var(--color-chalk-dim); letter-spacing: 0.06em; margin-left: 8px; }
   .stat-value.linked { border-bottom: 1px solid transparent; transition: border-bottom-color 120ms ease-out, color 120ms ease-out; }
   .stat-value.linked:hover { border-bottom-color: currentColor; }
-  .stat-value .ext { font-family: var(--font-mono); font-size: 11px; color: var(--color-chalk-faint); letter-spacing: 0; transition: color 120ms ease-out; }
+  .stat-value .ext { font-family: var(--font-mono); font-size: 12px; color: var(--color-chalk-faint); letter-spacing: 0; transition: color 120ms ease-out; }
   .stat-value.linked:hover .ext { color: var(--color-chalk); }
 
   /* ============ BLOCK ============ */
   .block { padding: 56px var(--pad-page-x) 0; max-width: 1180px; }
   .section-label {
-    margin: 0 0 14px; font-family: var(--font-mono); font-size: 11px; font-weight: 500;
-    letter-spacing: 0.24em; color: var(--color-blood); text-transform: uppercase;
+    margin: 0 0 14px; font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+    letter-spacing: 0.24em; color: var(--color-blood-text); text-transform: uppercase;
   }
   .section-h2 {
     margin: 0 0 18px; max-width: 24ch; font-family: var(--font-display); font-weight: 600; font-size: 36px;
@@ -536,8 +533,8 @@ workout-recall.zip
   .prose strong { color: var(--color-chalk); font-weight: 700; }
   .prose em { font-style: italic; color: var(--color-chalk); }
   .inline-link { color: var(--color-chalk); border-bottom: 1px dotted var(--color-rule); transition: color 120ms ease-out, border-color 120ms ease-out; }
-  .inline-link:hover { color: var(--color-blood); border-bottom-color: var(--color-blood); }
-  .k { font-family: var(--font-mono); font-size: 10px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); margin: 0; }
+  .inline-link:hover { color: var(--color-blood-text); border-bottom-color: var(--color-blood); }
+  .k { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); margin: 0; }
 
   /* ============ TWO MOMENTS ============ */
   .moments {
@@ -564,18 +561,18 @@ workout-recall.zip
     border-right: var(--border-thin); border-bottom: var(--border-thin); padding: 24px 24px 26px;
     display: grid; grid-template-rows: auto auto 1fr auto; gap: 10px; min-height: 230px;
   }
-  .card .label { margin: 0; font-family: var(--font-mono); font-size: 10px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); }
+  .card .label { margin: 0; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); }
   .card .verdict { margin: 0; font-family: var(--font-display); font-weight: 500; font-size: 24px; line-height: 1.05; text-transform: uppercase; color: var(--color-chalk); }
   .card .evidence { margin: 0; font-family: var(--font-serif); font-size: 14px; line-height: 1.55; color: var(--color-chalk-dim); }
-  .card .scope { margin: 0; font-family: var(--font-mono); font-size: 10px; line-height: 1.5; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-chalk-faint); border-top: 1px dashed var(--color-rule); padding-top: 10px; }
+  .card .scope { margin: 0; font-family: var(--font-mono); font-size: 12px; line-height: 1.5; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-chalk-faint); border-top: 1px dashed var(--color-rule); padding-top: 10px; }
   .card.mark .verdict::before { content: ''; display: inline-block; width: 8px; height: 8px; background: var(--color-blood); margin-right: 10px; vertical-align: 2px; }
 
   /* ============ VERSUS ============ */
   .versus { margin-top: 44px; border-top: var(--border-thin); }
   .vh, .vr { display: grid; grid-template-columns: 150px 1fr 1.3fr; gap: 24px; padding: 14px 0; border-bottom: var(--border-thin); align-items: baseline; }
-  .vh span { font-family: var(--font-mono); font-size: 10px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); }
+  .vh span { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); }
   .vh span:last-child { color: var(--color-chalk); }
-  .vr .vk { font-family: var(--font-mono); font-size: 11px; line-height: 1.5; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-chalk-faint); }
+  .vr .vk { font-family: var(--font-mono); font-size: 12px; line-height: 1.5; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-chalk-faint); }
   .vr span { font-family: var(--font-serif); font-size: 14px; line-height: 1.55; color: var(--color-chalk-dim); }
   .vr span:last-child { color: var(--color-chalk); }
 
@@ -589,16 +586,16 @@ workout-recall.zip
 
   /* App replicas: fixed design width, scaled by the script. Kibana ground, product card grammar. */
   .app { position: relative; transform-origin: 0 0; background: #0d1627; color: var(--color-chalk); font-family: var(--font-serif); }
-  .app .k { font-family: var(--font-mono); font-size: 10px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); margin: 0; }
+  .app .k { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); margin: 0; }
   .app .mono { margin: 0; font-family: var(--font-mono); font-size: 12px; line-height: 1.7; color: var(--color-chalk-faint); }
   .app .mono b { font-weight: 600; color: var(--color-chalk-dim); }
   .app .sans { font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif; }
   .app .brand { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px 0; }
   .app .brand .lock { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-mono); font-weight: 500; font-size: 20px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--color-chalk); }
   .app .brand .lock .sq { width: 8px; height: 8px; background: var(--color-blood); }
-  .app .brand .lock .pg { margin-left: 22px; padding-left: 22px; border-left: 1px solid #2b3140; font-size: 11px; letter-spacing: 0.24em; color: var(--color-chalk-faint); }
+  .app .brand .lock .pg { margin-left: 22px; padding-left: 22px; border-left: 1px solid #2b3140; font-size: 12px; letter-spacing: 0.24em; color: var(--color-chalk-faint); }
   .app .brand .right { display: flex; align-items: center; gap: 34px; }
-  .app .brand .a-tag { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--color-chalk-faint); }
+  .app .brand .a-tag { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--color-chalk-faint); }
   .app .brand .coach { font-family: var(--font-display); font-weight: 500; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-chalk); }
   .app .a-nav { display: flex; gap: 16px; padding: 34px 24px 0; font-size: 15px; color: #c9d0dd; }
   .app .a-nav span.on { color: #7fb6f0; border-bottom: 2px solid #7fb6f0; padding-bottom: 6px; }
@@ -606,7 +603,7 @@ workout-recall.zip
   .app .a-card { padding-right: 44px; }
   .app .a-card + .a-card { padding-left: 20px; }
   .app .a-card .k { display: flex; align-items: center; gap: 10px; }
-  .app .a-card .pill { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em; text-transform: none; color: var(--color-chalk-dim); border: 1px solid #2b3140; padding: 4px 6px; }
+  .app .a-card .pill { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em; text-transform: none; color: var(--color-chalk-dim); border: 1px solid #2b3140; padding: 4px 6px; }
   .app .a-verdict { margin: 12px 0 8px; font-family: var(--font-display); font-weight: 600; font-size: 26px; line-height: 1.1; color: var(--color-chalk); }
   .app .a-verdict .sq { display: inline-block; width: 8px; height: 8px; background: var(--color-blood); margin-left: 12px; vertical-align: 4px; }
   .app .ev { margin: 0; font-size: 15px; line-height: 1.5; color: var(--color-chalk-dim); }
@@ -620,14 +617,14 @@ workout-recall.zip
   .app .ptr { margin: 0; font-family: var(--font-mono); font-size: 12px; line-height: 1.8; color: var(--color-chalk-faint); }
 
   .app .sess { display: grid; grid-template-columns: 1fr 340px; gap: 40px; padding: 30px 24px 0; }
-  .app .sess h4 { margin: 10px 0 8px; font-family: var(--font-display); font-weight: 700; font-size: 30px; line-height: 1; letter-spacing: 0.02em; text-transform: uppercase; color: var(--color-chalk); display: flex; align-items: center; gap: 12px; }
-  .app .sess h4 .sq { width: 7px; height: 7px; background: var(--color-blood); }
+  .app .sess .sess-title { margin: 10px 0 8px; font-family: var(--font-display); font-weight: 700; font-size: 30px; line-height: 1; letter-spacing: 0.02em; text-transform: uppercase; color: var(--color-chalk); display: flex; align-items: center; gap: 12px; }
+  .app .sess .sess-title .sq { width: 7px; height: 7px; background: var(--color-blood); }
   .app .th-label { margin: 0 0 8px; font-size: 14px; font-weight: 600; color: #e8ecf3; }
   .app .table { border: 1px solid #2b3140; font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif; font-size: 13px; }
   .app .table .th, .app .table .td { display: grid; grid-template-columns: 1.1fr 1fr 1fr; padding: 10px 12px; }
   .app .table .th { background: #131c2e; color: #e8ecf3; font-weight: 600; }
   .app .table .td { font-family: var(--font-mono); font-size: 12px; color: var(--color-chalk-dim); }
-  .app .table .td .null { color: #6c7386; }
+  .app .table .td .null { color: #7d8498; }
   .app .top { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr 1fr; gap: 24px; padding: 40px 24px 26px; align-items: end; }
   .app .top .big { margin: 8px 0 0; font-family: var(--font-display); font-weight: 600; font-size: 44px; line-height: 1; color: var(--color-chalk); }
   .app .top .big small { font-size: 16px; color: var(--color-chalk-dim); font-weight: 400; margin-left: 4px; }
@@ -639,9 +636,9 @@ workout-recall.zip
 
   .app.chat { font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif; color: #dfe5ef; padding: 18px 40px 0 236px; font-size: 15px; line-height: 1.5; }
   .app.chat .who { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 13px; }
-  .app.chat .who .av { width: 22px; height: 22px; background: #2a3a5c; color: #cfe0ff; font-size: 9px; font-weight: 700; display: grid; place-content: center; }
+  .app.chat .who .av { width: 22px; height: 22px; background: #2a3a5c; color: #cfe0ff; font-size: 12px; font-weight: 700; display: grid; place-content: center; }
   .app.chat .who .name { font-weight: 600; color: #f1f4f9; }
-  .app.chat .who .agent { font-size: 11px; color: #d8c8ff; background: #3b2f66; padding: 3px 8px; }
+  .app.chat .who .agent { font-size: 12px; color: #d8c8ff; background: #3b2f66; padding: 3px 8px; }
   .app.chat .who .t { color: #8b93a6; }
   .app.chat .tools { margin: 0 0 10px; color: #7d8aa8; font-size: 13px; }
   .app.chat p { margin: 0 0 10px; }
@@ -660,15 +657,15 @@ workout-recall.zip
   .rung .col p:not(.k) { margin: 0; font-family: var(--font-serif); font-size: 14px; line-height: 1.55; color: var(--color-chalk-dim); }
 
   .dash { display: flex; flex-wrap: wrap; margin-top: 28px; border: var(--border-thin); }
-  .dash span { flex: 1 1 120px; padding: 12px 14px; border-right: var(--border-thin); font-family: var(--font-mono); font-size: 11px; font-weight: 500; line-height: 1.4; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-chalk-dim); }
+  .dash span { flex: 1 1 120px; padding: 12px 14px; border-right: var(--border-thin); font-family: var(--font-mono); font-size: 12px; font-weight: 500; line-height: 1.4; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-chalk-dim); }
   .dash span:last-child { border-right: 0; }
-  .dash span small { display: block; font-weight: 400; letter-spacing: 0.06em; text-transform: none; color: var(--color-chalk-faint); margin-top: 3px; }
+  .dash span small { display: block; font-size: 12px; font-weight: 400; letter-spacing: 0.06em; text-transform: none; color: var(--color-chalk-faint); margin-top: 3px; }
 
   /* ============ GET IT ============ */
   .install-block { padding: 56px var(--pad-page-x) 0; max-width: 1180px; }
   .install-intro { margin: 0 0 28px; max-width: 760px; font-family: var(--font-serif); font-size: 17px; line-height: 1.65; color: var(--color-chalk-dim); }
   .status { border: var(--border-thin); background: var(--color-panel); padding: 22px 26px; display: grid; grid-template-columns: auto 1fr auto; gap: 24px; align-items: center; }
-  .status .pill { font-family: var(--font-mono); font-size: 10px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk); border: 1px solid var(--color-chalk-dim); padding: 8px 10px; white-space: nowrap; }
+  .status .pill { font-family: var(--font-mono); font-size: 12px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk); border: 1px solid var(--color-chalk-dim); padding: 8px 10px; white-space: nowrap; }
   .status p { margin: 0; max-width: 62ch; font-family: var(--font-serif); font-size: 14px; line-height: 1.55; color: var(--color-chalk-dim); }
   .status p strong { color: var(--color-chalk); font-weight: 400; }
   .status-link {
@@ -676,7 +673,7 @@ workout-recall.zip
     color: var(--color-chalk); border-bottom: 1px solid var(--color-rule); padding-bottom: 3px; white-space: nowrap;
     transition: color 120ms ease-out, border-color 120ms ease-out;
   }
-  .status-link:hover { color: var(--color-blood); border-bottom-color: var(--color-blood); }
+  .status-link:hover { color: var(--color-blood-text); border-bottom-color: var(--color-blood); }
 
   .doors { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 28px; border-top: var(--border-thin); border-left: var(--border-thin); }
   .door { border-right: var(--border-thin); border-bottom: var(--border-thin); padding: 24px; display: grid; grid-template-rows: auto auto 1fr auto auto; gap: 12px; }
@@ -684,7 +681,7 @@ workout-recall.zip
   .door p { margin: 0; font-family: var(--font-serif); font-size: 14px; line-height: 1.55; color: var(--color-chalk-dim); }
   .door .code { margin: 0; background: var(--color-bg); border: var(--border-thin); padding: 12px 14px; font-family: var(--font-mono); font-size: 12px; line-height: 1.6; color: var(--color-chalk); overflow-x: auto; }
   .door .code .c { color: var(--color-chalk-faint); }
-  .door .foot-line { font-family: var(--font-mono); font-size: 10px; line-height: 1.5; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-chalk-faint); }
+  .door .foot-line { font-family: var(--font-mono); font-size: 12px; line-height: 1.5; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-chalk-faint); }
   /* Closed doors: visible, not open. */
   .doors.closed .door h3, .doors.closed .door p, .doors.closed .door .code { color: var(--color-chalk-faint); }
   .doors.closed .door .code { border-color: var(--color-rule-soft); }
@@ -703,21 +700,14 @@ workout-recall.zip
   .related-card:hover { background: rgba(255,255,255,0.015); }
   .related-card h3 { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 22px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--color-chalk); }
   .related-card p { margin: 0; font-family: var(--font-serif); font-size: 15px; line-height: 1.6; color: var(--color-chalk-dim); flex: 1; }
-  .related-cta { font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-faint); transition: color 120ms ease-out; }
-  .related-card:hover .related-cta { color: var(--color-blood); }
+  .related-cta { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-faint); transition: color 120ms ease-out; }
+  .related-card:hover .related-cta { color: var(--color-blood-text); }
 
   /* ============ DIVIDER / CLOSER / FOOTER ============ */
-  .dashed { margin: 56px var(--pad-page-x); border: none; border-top: 1px dashed var(--color-rule-soft); }
+  .dashed { margin: 48px var(--pad-page-x) 0; border: none; border-top: 1px dashed var(--color-rule-soft); }
   .closer { margin-top: 56px; padding: 48px var(--pad-page-x); border-top: var(--border-thin); text-align: center; }
   .closer p { margin: 0; font-family: var(--font-display); font-weight: 500; font-size: 22px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-chalk); }
-  .closer p strong { font-weight: 500; color: var(--color-blood); }
-  .foot {
-    display: flex; justify-content: space-between; align-items: center; gap: 14px;
-    padding: 22px var(--pad-page-x) 40px; border-top: var(--border-thin);
-    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-faint);
-  }
-  .foot a { color: var(--color-chalk-dim); transition: color 120ms ease-out; }
-  .foot a:hover { color: var(--color-chalk); }
+  .closer p strong { font-weight: 500; color: var(--color-blood-text); }
 
   /* ============ Responsive ============ */
   @media (max-width: 1099px) {
@@ -741,14 +731,13 @@ workout-recall.zip
     .shots { grid-template-columns: 1fr; }
     .vh { display: none; }
     .vr { grid-template-columns: 1fr; gap: 6px; }
-    .vr span:nth-child(2)::before { content: 'Other apps · '; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-chalk-faint); }
-    .vr span:last-child::before { content: 'Ironstack · '; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-chalk-faint); }
+    .vr span:nth-child(2)::before { content: 'Other apps · '; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-chalk-faint); }
+    .vr span:last-child::before { content: 'Ironstack · '; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-chalk-faint); }
     .related { grid-template-columns: 1fr; }
     .related-card { border-right: none; border-bottom: var(--border-thin); }
     .related-card:last-child { border-bottom: none; }
-    .dashed { margin: 40px var(--pad-page-x-mobile); }
+    .dashed { margin: 36px var(--pad-page-x-mobile) 0; }
     .closer { padding: 36px var(--pad-page-x-mobile); }
     .closer p { font-size: 18px; }
-    .foot { padding: 22px var(--pad-page-x-mobile) 32px; flex-direction: column; align-items: flex-start; }
   }
 </style>

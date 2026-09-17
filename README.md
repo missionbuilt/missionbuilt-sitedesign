@@ -13,7 +13,7 @@ This is the **site code**. The book content lives in a separate repo: [missionbu
 - **[Astro 4](https://astro.build)** with the static export adapter. Every page is pre-rendered HTML; no runtime server needed.
 - **MDX** for chapter content. Each section is a single `.mdx` file under `src/content/chapters/`, validated by an Astro content collection schema.
 - **No CSS framework.** Design tokens live in `src/styles/tokens.css`; component styles use scoped `<style>` blocks inside Astro components.
-- **No client JS framework.** Pages are static HTML. The vanilla JS that ships is deliberate and small: the demo lightbox in `DemoEmbed.astro`, the meal-timing slider on the MealStack page, and the beta signup form.
+- **No client JS framework.** Pages are static HTML. The vanilla JS that ships is deliberate and small: the demo lightbox in `DemoEmbed.astro`, the meal-timing slider on the MealStack page, the beta signup form, and the reading-progress bar in `ReadingLayout.astro`.
 
 Three font families do all the typographic work:
 - **Oswald** for display, headlines, all-caps labels.
@@ -35,7 +35,7 @@ Node 20+ required (`engines` in `package.json`, and `.nvmrc` pins 20).
 
 ```
 src/
-├── components/        # Lockup, TopNav, Bar (mini-barbell mark), DemoEmbed (loadout demo iframe)
+├── components/        # Lockup, TopNav, SiteFooter (shared footer), Bar (mini-barbell mark), DemoEmbed (loadout demo iframe), ProseH2 (MDX ### as h2)
 ├── content/
 │   ├── config.ts      # content collection schema
 │   └── chapters/      # 48 .mdx files: prologue, ch.01–13, conclusion
@@ -53,8 +53,7 @@ src/
 │   │   ├── index.astro                      # The Loadout overview
 │   │   ├── warmup.astro                     # The Warmup (demo + download)
 │   │   ├── approach.astro                   # The Approach (demo + download)
-│   │   ├── spotter.astro                    # The Spotter (demo + download)
-│   │   └── floodlight.astro                 # Floodlight (in development)
+│   │   └── spotter.astro                    # The Spotter (demo + download)
 │   ├── rack/
 │   │   ├── index.astro                      # The Rack overview (the barbell half)
 │   │   ├── ironstack.astro                  # Ironstack (in testing; app frames are replicas on fictional data)
@@ -79,7 +78,7 @@ Outside `src/`: `public/` holds static assets, including the generated `public/d
 - `/about` About: bio, project mission, fine print.
 - `/source` Source: links to the book repo and this repo.
 - `/download` Download: the book (PDF/Markdown) and the standalone Loadout skill zips.
-- `/loadout` The Loadout: overview of the product-leadership skill kit (the boardroom half), with a page per skill — `/loadout/warmup`, `/loadout/approach`, `/loadout/spotter` (each embeds a live click-through demo and a download) and `/loadout/floodlight` (in development).
+- `/loadout` The Loadout: overview of the product-leadership skill kit (the boardroom half), with a page per skill — `/loadout/warmup`, `/loadout/approach`, `/loadout/spotter` (each embeds a live click-through demo and a download). Floodlight was removed from the site on Sept 17, 2026; `/loadout/floodlight` redirects to `/loadout`.
 - `/rack` The Rack: the barbell half — `/rack/mealstack` (the iPhone app, open source with 1.0 and the license not yet settled, private beta: a product page with a click-through demo of real Simulator screens at `public/demos/mealstack.html` (images in `public/demos/mealstack/`, made by `scripts/build_mealstack_demo_images.py`) and a Join-the-beta form posting to the Pages Function `functions/api/beta.js`, which needs the `BETA_KV` binding described in `wrangler.jsonc`), `/rack/ironstack` (in testing: the page is live, the install doors open with v1.0) and `/rack/mealstack/privacy` (the privacy policy the app and the App Store listing link to). Both tools lived under `/loadout` until Sept 13, 2026; `public/_redirects` carries permanent 301s from the old paths, and must keep them, because installed MealStack builds link to the old privacy URL.
 
 ## Adding or editing content

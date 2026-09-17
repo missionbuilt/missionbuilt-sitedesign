@@ -68,7 +68,7 @@ const plural = (n: number, one: string) => `${n} ${one}${n === 1 ? '' : 's'}`;
 <style>
   .pre {
     margin: 22px 0 0; padding-left: 12px; border-left: 2px solid var(--color-army);
-    font-family: var(--font-mono); font-size: 11px; line-height: 1.6; letter-spacing: 0.06em; color: var(--color-chalk-dim);
+    font-family: var(--font-mono); font-size: 12px; line-height: 1.6; letter-spacing: 0.06em; color: var(--color-chalk-dim);
   }
   .get { margin-top: 20px; }
   .dl-btn {
@@ -77,18 +77,18 @@ const plural = (n: number, one: string) => `${n} ${one}${n === 1 ? '' : 's'}`;
     text-decoration: none; transition: background 120ms ease-out;
   }
   .dl-btn:hover { background: rgba(255,255,255,0.02); }
-  .dl-ico { font-family: var(--font-mono); font-size: 18px; color: var(--color-blood); line-height: 1; }
+  .dl-ico { font-family: var(--font-mono); font-size: 18px; color: var(--color-blood-text); line-height: 1; }
   .dl-text { display: flex; flex-direction: column; gap: 4px; }
   .dl-name { font-family: var(--font-display); font-weight: 600; font-size: 16px; letter-spacing: 0.02em; color: var(--color-chalk); }
-  .dl-meta { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-chalk-faint); }
+  .dl-meta { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-chalk-faint); }
 
   .sets { list-style: none; margin: 14px 0 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; border-top: var(--border-thin); border-left: var(--border-thin); }
   .sets li { border-right: var(--border-thin); border-bottom: var(--border-thin); }
   .set { display: flex; flex-direction: column; gap: 5px; height: 100%; padding: 14px 16px; text-decoration: none; transition: background 120ms ease-out; }
   .set:hover { background: rgba(255,255,255,0.015); }
   .set .t { font-family: var(--font-display); font-weight: 600; font-size: 18px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--color-chalk); }
-  .set:hover .t { color: var(--color-blood); }
-  .set .k { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.08em; color: var(--color-chalk-faint); }
+  .set:hover .t { color: var(--color-blood-text); }
+  .set .k { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; color: var(--color-chalk-faint); }
   .set .d { font-family: var(--font-serif); font-size: 14px; line-height: 1.5; color: var(--color-chalk-dim); }
 
   .readme :global(h2) {
@@ -107,7 +107,7 @@ const plural = (n: number, one: string) => `${n} ${one}${n === 1 ? '' : 's'}`;
   }
   .readme :global(th) {
     text-align: left; padding: 8px 10px; border-bottom: var(--border-thin);
-    font-family: var(--font-mono); font-size: 10px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-chalk-faint);
+    font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-chalk-faint);
   }
   .readme :global(td) { vertical-align: top; padding: 10px; border-bottom: var(--border-thin); min-width: 160px; }
   .readme :global(td:first-child) { min-width: 120px; color: var(--color-chalk); }

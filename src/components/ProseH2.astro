@@ -1,0 +1,9 @@
+---
+/**
+ * ProseH2 — chapter MDX writes its sub-headings as `###`. The section title
+ * is the page's h1, so those sub-headings render as h2 to keep the outline
+ * in order for screen readers. Mapped in through <Content components>.
+ */
+const props = Astro.props;
+---
+<h2 {...props}><slot /></h2>

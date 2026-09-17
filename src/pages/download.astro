@@ -8,6 +8,7 @@
  * and the link below picks it up automatically.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteFooter from '../components/SiteFooter.astro';
 import TopNav from '../components/TopNav.astro';
 
 const formats = [
@@ -39,7 +40,7 @@ const formats = [
 >
   <TopNav />
 
-  <main class="page">
+  <main id="main" class="page">
     <header class="hero">
       <p class="eyebrow">Download</p>
       <h1 class="hero-h1">Take it offline.</h1>
@@ -75,6 +76,7 @@ const formats = [
       Share, remix, attribute. Commercial use prohibited.
     </p>
   </main>
+  <SiteFooter />
 </BaseLayout>
 
 <style>
@@ -86,9 +88,9 @@ const formats = [
   .eyebrow {
     margin: 0 0 14px;
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     letter-spacing: 0.24em;
-    color: var(--color-blood);
+    color: var(--color-chalk-dim);
     text-transform: uppercase;
   }
   .hero-h1 {
@@ -147,7 +149,7 @@ const formats = [
   .format-kicker {
     margin: 0 0 6px;
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     letter-spacing: 0.22em;
     color: var(--color-chalk-faint);
     text-transform: uppercase;
@@ -177,7 +179,7 @@ const formats = [
   }
   .format-label {
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--color-chalk-dim);
@@ -197,7 +199,7 @@ const formats = [
     margin: 32px auto 80px;
     padding: 0 var(--pad-page-x);
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     letter-spacing: 0.06em;
     color: var(--color-chalk-faint);
     line-height: 1.5;

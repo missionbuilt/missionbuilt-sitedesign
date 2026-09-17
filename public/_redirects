@@ -15,3 +15,8 @@
 /loadout/ironstack/*   /rack/ironstack/:splat  301
 /loadout/mealstack     /rack/mealstack         301
 /loadout/mealstack/    /rack/mealstack         301
+
+# Floodlight was removed from the site on Sept 17, 2026.
+/loadout/floodlight    /loadout                301
+/loadout/floodlight/*  /loadout                301
+/downloads/floodlight.zip  /loadout            301

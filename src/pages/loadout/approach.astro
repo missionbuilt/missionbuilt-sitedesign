@@ -20,6 +20,7 @@
  * Blood for Unknown MEDDPICC state.
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
 import TopNav from '../../components/TopNav.astro';
 import DemoEmbed from '../../components/DemoEmbed.astro';
 
@@ -36,14 +37,14 @@ const acts: Act[] = [
     num: '01',
     name: 'The AE Half',
     audience: 'Account executives',
-    body: 'Business intelligence above the fold. Company snapshot, leadership and the buyer, financial posture, industry context, and recent signal — everything you need to open the call with authority and ask the right questions.',
+    body: 'Business intelligence above the fold. Company snapshot, leadership and the buyer, financial posture, industry context, and recent signal: everything you need to open the call with authority and ask the right questions.',
     sections: ['Company snapshot', 'Leadership & the buyer', 'Financial posture', 'Industry context', 'Recent signal'],
   },
   {
     num: '02',
     name: 'The SE Half',
     audience: 'Sales engineers',
-    body: 'Technical depth below the fold. Stack and integrations, public security events, demo prep, and an opener with discovery questions grounded in real public signals — so the SE walks in with a plan, not a script.',
+    body: 'Technical depth below the fold. Stack and integrations, public security events, demo prep, and an opener with discovery questions grounded in real public signals, so the SE walks in with a plan, not a script.',
     sections: ['Stack & integrations', 'Public security events', 'Demo prep', 'Opener & discovery'],
   },
 ];
@@ -52,7 +53,7 @@ type Audience = { who: string; what: string };
 const audience: Audience[] = [
   {
     who: 'Account executives',
-    what: 'Company intel, leadership profiles, financial posture, and competitive context — before the deck, before the discovery script.',
+    what: 'Company intel, leadership profiles, financial posture, and competitive context, before the deck and before the discovery script.',
   },
   {
     who: 'Sales engineers',
@@ -64,7 +65,7 @@ const audience: Audience[] = [
   },
   {
     who: 'Anyone in an important meeting',
-    what: 'Not just sales. QBRs, executive sponsors, partner calls — any time walking in cold is not an option.',
+    what: 'Not just sales. QBRs, executive sponsors, partner calls: any time walking in cold is not an option.',
   },
 ];
 
@@ -88,7 +89,7 @@ const meddpicc: MeddpiccDimension[] = [
 >
   <TopNav active="loadout" />
 
-  <main class="page">
+  <main id="main" class="page">
     {/* ---------- BREADCRUMB ---------- */}
     <nav class="breadcrumb" aria-label="Breadcrumb">
       <a href="/loadout">The Loadout</a>
@@ -140,16 +141,16 @@ const meddpicc: MeddpiccDimension[] = [
       <p class="section-label">What it does</p>
       <h2 class="section-h2">Walk up already inside the lift.</h2>
       <p class="prose">
-        In the gym, the approach to the bar is not incidental — it is deliberate.
+        In the gym, the approach to the bar is not incidental. It is deliberate.
         You know your opener. You know your second and your third. You have studied
         the competition. You walk up already inside the lift.
       </p>
       <p class="prose">
         The Approach does the same thing before a sales call. Give it a company
         name and a line of context. It researches the target across nine concurrent
-        source categories — company snapshot, leadership, financials, industry
-        context, social signal, tech stack, security events, demo prep, and discovery
-        — then renders a structured field brief. Two acts in one document: business
+        source categories (company snapshot, leadership, financials, industry
+        context, social signal, tech stack, security events, demo prep, and discovery)
+        and then renders a structured field brief. Two acts in one document: business
         intelligence for the AE above the fold, technical depth for the SE below.
       </p>
     </section>
@@ -203,8 +204,8 @@ const meddpicc: MeddpiccDimension[] = [
       <h2 class="section-h2">MEDDPICC. Before the first call.</h2>
       <p class="prose">
         Every brief includes a MEDDPICC scorecard built entirely from public signals.
-        Each of the eight qualification dimensions gets a verdict — Confirmed, Partial,
-        or Unknown — with a specific next action attached. You walk in knowing what
+        Each of the eight qualification dimensions gets a verdict (Confirmed, Partial,
+        or Unknown) with a specific next action attached. You walk in knowing what
         you know, what you are guessing, and what you still need to find out.
       </p>
 
@@ -229,14 +230,14 @@ const meddpicc: MeddpiccDimension[] = [
       <h2 class="section-h2">The brief, before the call.</h2>
       <p class="prose">
         The Approach renders as a live HTML artifact in the Mission Built editorial
-        style — cream paper, oxblood accents, Oswald display type, Merriweather
+        style: cream paper, oxblood accents, Oswald display type, Merriweather
         body, JetBrains Mono for labels. No rounded corners. No drop shadows.
         Reads like a field document, not a CRM screen.
       </p>
 
       <DemoEmbed
         src="/demos/approach.html"
-        title="The Approach — interactive demo"
+        title="The Approach: interactive demo"
         caption="Live demo · Example brief · Use ← → or the panel to step through"
       />
     </section>
@@ -262,7 +263,7 @@ const meddpicc: MeddpiccDimension[] = [
         <article class="install-opt">
           <h3>Claude Code · CLI</h3>
           <p>If you have Claude Code installed, run this in your terminal:</p>
-          <pre class="install-opt-code">claude mcp add loadout https://mcp.missionbuilt.io/sse</pre>
+          <pre class="install-opt-code" tabindex="0">claude mcp add loadout https://mcp.missionbuilt.io/sse</pre>
         </article>
 
         <article class="install-opt">
@@ -273,7 +274,7 @@ const meddpicc: MeddpiccDimension[] = [
 
       <p class="install-or">Or download the standalone</p>
       <p class="install-intro">
-        Prefer to run it offline, or pin a version? Download the skill folder and drop it into any AI coding tool's skills folder. The hosted server stays the recommended path — always current. The download is a pinned snapshot.
+        Prefer to run it offline, or pin a version? Download the skill folder and drop it into any AI coding tool's skills folder. The hosted server stays the recommended path: always current. The download is a pinned snapshot.
       </p>
       <a class="dl-btn" href="/downloads/the-approach.zip" download>
         <span class="dl-ico" aria-hidden="true">↓</span>
@@ -297,7 +298,7 @@ const meddpicc: MeddpiccDimension[] = [
         </div>
         <div class="trigger-row">
           <span class="trigger-mode">With context</span>
-          <code class="trigger-phrase">"approach for Acme — AE at Sightline, meeting VP of IT Friday"</code>
+          <code class="trigger-phrase">"approach for Acme, AE at Sightline, meeting VP of IT Friday"</code>
         </div>
         <div class="trigger-row">
           <span class="trigger-mode">Quick form</span>
@@ -320,11 +321,11 @@ const meddpicc: MeddpiccDimension[] = [
         </article>
         <article class="faq-item">
           <h3>What do I need to provide?</h3>
-          <p>Just a company name and a line of context — who you are, who you're meeting, and when. The skill handles the rest across nine concurrent research batches.</p>
+          <p>Just a company name and a line of context: who you are, who you're meeting, and when. The skill handles the rest across nine concurrent research batches.</p>
         </article>
         <article class="faq-item">
           <h3>Do I need to sign in?</h3>
-          <p>Yes. The server uses Google OAuth. You authenticate once when you connect — no separate account creation required.</p>
+          <p>Yes. The server uses Google OAuth. You authenticate once when you connect. No separate account creation required.</p>
         </article>
       </div>
     </section>
@@ -339,7 +340,7 @@ const meddpicc: MeddpiccDimension[] = [
       <div class="related">
         <a href="/loadout/spotter" class="related-card">
           <h3>The Spotter</h3>
-          <p>Walk a product epic through nine areas. Get a structured worksheet back — critique notes, accept and skip loop, export that unlocks when every area closes.</p>
+          <p>Walk a product epic through nine areas. Get a structured worksheet back: critique notes, an accept and skip loop, and an export that unlocks when every area closes.</p>
           <span class="related-cta">Open →</span>
         </a>
         <a href="/loadout/warmup" class="related-card">
@@ -379,16 +380,8 @@ const meddpicc: MeddpiccDimension[] = [
       </p>
     </section>
 
-    {/* ---------- FOOTER ---------- */}
-    <footer class="foot">
-      <span>Real strength is lifting others</span>
-      <a
-        href="https://github.com/missionbuilt/loadout"
-        target="_blank"
-        rel="noopener"
-      >github.com/missionbuilt/loadout</a>
-    </footer>
   </main>
+  <SiteFooter links={[{ label: 'github.com/missionbuilt/loadout', href: 'https://github.com/missionbuilt/loadout', external: true }]} />
 </BaseLayout>
 
 <style>
@@ -396,7 +389,7 @@ const meddpicc: MeddpiccDimension[] = [
   .breadcrumb {
     padding: 18px var(--pad-page-x) 0;
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--color-chalk-faint);
@@ -420,13 +413,13 @@ const meddpicc: MeddpiccDimension[] = [
     gap: 14px;
     margin: 0 0 18px;
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.24em;
-    color: var(--color-blood);
+    color: var(--color-chalk-dim);
     text-transform: uppercase;
   }
-  .eyebrow .dots { letter-spacing: 0.04em; opacity: 0.65; }
+  .eyebrow .dots { letter-spacing: 0.04em; color: var(--color-blood-bright); }
 
   .display {
     margin: 0;
@@ -438,7 +431,7 @@ const meddpicc: MeddpiccDimension[] = [
     color: var(--color-chalk);
     text-transform: uppercase;
   }
-  .display .dot { color: var(--color-blood); }
+  .display .dot { color: var(--color-blood-bright); }
 
   .live-tag {
     display: inline-flex;
@@ -446,7 +439,7 @@ const meddpicc: MeddpiccDimension[] = [
     gap: 8px;
     margin-top: 22px;
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.22em;
     text-transform: uppercase;
@@ -480,12 +473,12 @@ const meddpicc: MeddpiccDimension[] = [
     grid-template-columns: repeat(4, 1fr);
     gap: 24px;
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     text-align: left;
   }
   .stat-key {
     color: var(--color-chalk-faint);
-    font-size: 10px;
+    font-size: 12px;
     letter-spacing: 0.22em;
     text-transform: uppercase;
   }
@@ -504,7 +497,7 @@ const meddpicc: MeddpiccDimension[] = [
   .stat-value.linked:hover { border-bottom-color: currentColor; }
   .stat-value .ext {
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     color: var(--color-chalk-faint);
     letter-spacing: 0;
     transition: color 120ms ease-out;
@@ -514,16 +507,15 @@ const meddpicc: MeddpiccDimension[] = [
   /* ============ BLOCK ============ */
   .block {
     padding: 56px var(--pad-page-x) 0;
-    max-width: 1080px;
   }
 
   .section-label {
     margin: 0 0 14px;
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.24em;
-    color: var(--color-blood);
+    color: var(--color-blood-text);
     text-transform: uppercase;
   }
 
@@ -561,7 +553,7 @@ const meddpicc: MeddpiccDimension[] = [
     transition: color 120ms ease-out, border-color 120ms ease-out;
   }
   .inline-link:hover {
-    color: var(--color-blood);
+    color: var(--color-blood-text);
     border-bottom-color: var(--color-blood);
   }
 
@@ -581,7 +573,7 @@ const meddpicc: MeddpiccDimension[] = [
 
   .act-num {
     font-family: var(--font-mono);
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.28em;
     color: var(--color-chalk-faint);
@@ -604,7 +596,7 @@ const meddpicc: MeddpiccDimension[] = [
     font-size: 13px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--color-blood);
+    color: var(--color-blood-text);
   }
   .act-body {
     margin: 0 0 18px;
@@ -616,7 +608,7 @@ const meddpicc: MeddpiccDimension[] = [
   .act-label {
     margin: 18px 0 8px;
     font-family: var(--font-mono);
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.22em;
     text-transform: uppercase;
@@ -702,7 +694,7 @@ const meddpicc: MeddpiccDimension[] = [
   }
   .medd-state {
     font-family: var(--font-mono);
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 600;
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -710,12 +702,12 @@ const meddpicc: MeddpiccDimension[] = [
   }
   .medd-state.confirmed { color: var(--color-army); }
   .medd-state.partial   { color: var(--color-chalk-dim); }
-  .medd-state.unknown   { color: var(--color-blood); }
+  .medd-state.unknown   { color: var(--color-blood-text); }
 
   .medd-note {
     margin: 14px 0 0;
     font-family: var(--font-mono);
-    font-size: 10px;
+    font-size: 12px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--color-chalk-faint);
@@ -725,7 +717,6 @@ const meddpicc: MeddpiccDimension[] = [
   /* ============ INSTALL BLOCK ============ */
   .install-block {
     padding: 56px var(--pad-page-x) 0;
-    max-width: 1080px;
   }
 
   .install-intro {
@@ -750,7 +741,7 @@ const meddpicc: MeddpiccDimension[] = [
 
   .install-url-label {
     font-family: var(--font-mono);
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.22em;
     text-transform: uppercase;
@@ -768,7 +759,7 @@ const meddpicc: MeddpiccDimension[] = [
   .install-verified {
     margin: 0 0 24px;
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--color-army);
@@ -780,7 +771,7 @@ const meddpicc: MeddpiccDimension[] = [
     padding-top: 28px;
     border-top: 1px dashed var(--color-rule-soft);
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.22em;
     text-transform: uppercase;
@@ -802,7 +793,7 @@ const meddpicc: MeddpiccDimension[] = [
   .dl-ico {
     font-family: var(--font-mono);
     font-size: 18px;
-    color: var(--color-blood);
+    color: var(--color-blood-text);
     line-height: 1;
   }
   .dl-text { display: flex; flex-direction: column; gap: 4px; }
@@ -816,7 +807,7 @@ const meddpicc: MeddpiccDimension[] = [
   }
   .dl-meta {
     font-family: var(--font-mono);
-    font-size: 10px;
+    font-size: 12px;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--color-chalk-faint);
@@ -824,12 +815,13 @@ const meddpicc: MeddpiccDimension[] = [
 
   .install-options {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     border-top: var(--border-thin);
     border-bottom: var(--border-thin);
   }
 
   .install-opt {
+    min-width: 0;
     padding: 24px 28px;
     border-right: var(--border-thin);
     border-bottom: var(--border-thin);
@@ -840,7 +832,7 @@ const meddpicc: MeddpiccDimension[] = [
   .install-opt h3 {
     margin: 0 0 10px;
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 600;
     letter-spacing: 0.22em;
     text-transform: uppercase;
@@ -871,7 +863,7 @@ const meddpicc: MeddpiccDimension[] = [
     background: var(--color-bg);
     border: var(--border-thin);
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     color: var(--color-chalk-dim);
     letter-spacing: 0.03em;
     overflow-x: auto;
@@ -895,7 +887,7 @@ const meddpicc: MeddpiccDimension[] = [
   .trigger-row:last-child { border-bottom: none; }
   .trigger-mode {
     font-family: var(--font-mono);
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 600;
     letter-spacing: 0.22em;
     text-transform: uppercase;
@@ -932,6 +924,7 @@ const meddpicc: MeddpiccDimension[] = [
     line-height: 1.3;
   }
   .faq-item p {
+    max-width: 68ch;
     margin: 0;
     font-family: var(--font-serif);
     font-size: 16px;
@@ -984,18 +977,18 @@ const meddpicc: MeddpiccDimension[] = [
   }
   .related-cta {
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--color-chalk-faint);
     transition: color 120ms ease-out;
   }
-  .related-card:hover .related-cta { color: var(--color-blood); }
+  .related-card:hover .related-cta { color: var(--color-blood-text); }
 
   /* ============ DASHED DIVIDER ============ */
   .dashed {
-    margin: 56px var(--pad-page-x);
+    margin: 48px var(--pad-page-x) 0;
     border: none;
     border-top: 1px dashed var(--color-rule-soft);
   }
@@ -1018,28 +1011,10 @@ const meddpicc: MeddpiccDimension[] = [
   }
   .closer p strong {
     font-weight: 500;
-    color: var(--color-blood);
+    color: var(--color-blood-text);
   }
 
   /* ============ FOOTER ============ */
-  .foot {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 14px;
-    padding: 22px var(--pad-page-x) 40px;
-    border-top: var(--border-thin);
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--color-chalk-faint);
-  }
-  .foot a {
-    color: var(--color-chalk-dim);
-    transition: color 120ms ease-out;
-  }
-  .foot a:hover { color: var(--color-chalk); }
 
   /* ============ Responsive ============ */
   @media (max-width: 1099px) {
@@ -1103,7 +1078,7 @@ const meddpicc: MeddpiccDimension[] = [
       grid-template-columns: 80px 1fr;
       gap: 14px;
     }
-    .trigger-phrase { font-size: 11px; }
+    .trigger-phrase { font-size: 12px; }
 
     .faq-item {
       grid-template-columns: 1fr;
@@ -1117,13 +1092,8 @@ const meddpicc: MeddpiccDimension[] = [
     }
     .related-card:last-child { border-bottom: none; }
 
-    .dashed { margin: 40px var(--pad-page-x-mobile); }
+    .dashed { margin: 36px var(--pad-page-x-mobile) 0; }
     .closer { padding: 36px var(--pad-page-x-mobile); }
     .closer p { font-size: 18px; }
-    .foot {
-      padding: 22px var(--pad-page-x-mobile) 32px;
-      flex-direction: column;
-      align-items: flex-start;
-    }
   }
 </style>

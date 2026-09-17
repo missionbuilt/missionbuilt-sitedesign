@@ -6,7 +6,10 @@
  *   1. TopNav
  *   2. Hero (eyebrow + display headline + subtitle)
  *   3. Meta strip (4 stat cells)
- *   4. Two-column section (blurb + buttons + author block | Start Here panel)
+ *      On wide screens the blurb, buttons and author sit beside the headline.
+ *   4. Start here: prologue + first two chapters, one row of cards
+ *   5. The Loadout, the Rack, and the latest log, one row of cards each
+ *   6. SiteFooter
  *
  * Ambient: a fixed radial gradient overlay sits above the page bg
  * (chalk-dust glow top-left, faint oxblood vignette bottom-right).
@@ -14,10 +17,24 @@
  * Recreated from `design_handoff_missionbuilt/` Variant A "Iron Log".
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteFooter from '../components/SiteFooter.astro';
 import TopNav from '../components/TopNav.astro';
+import { getCollection } from 'astro:content';
 import { MB, TOTAL_CHAPTERS, TOTAL_SECTIONS, totalReadTime, firstSectionUrl, sectionUrl } from '../data/book.ts';
+import { byNewest, logUrl, longDate } from '../data/logs';
 
-const featured = MB.chapters.slice(0, 3);
+// Read order starts at the prologue. No reading state is shown: nothing
+// tracks a reader's progress yet, so the cards only say where to begin.
+const startHere = [
+  { n: MB.prologue.n, kicker: MB.prologue.kicker, title: MB.prologue.title,
+    meta: `${MB.prologue.mins} min`, href: sectionUrl(MB.prologue.n, MB.prologue.title) },
+  ...MB.chapters.slice(0, 2).map((c) => ({
+    n: c.n, kicker: 'Chapter', title: c.title,
+    meta: `${c.sections.length} sections · ${c.mins} min`, href: firstSectionUrl(c),
+  })),
+];
+
+const latestLog = (await getCollection('logs', ({ data }) => !data.draft)).sort(byNewest)[0];
 
 const stats = [
   { key: 'The book',  value: `${TOTAL_CHAPTERS} chapters`,   accent: 'chalk' as const, href: undefined },
@@ -32,23 +49,53 @@ const stats = [
 
   <TopNav active="book" />
 
-  <main class="page">
+  <main id="main" class="page">
     {/* ---------- HERO ---------- */}
     <section class="hero">
-      <p class="eyebrow">
-        <span class="dots" aria-hidden="true">▮▮▮</span>
-        <span>An open-source book by Mike Nichols</span>
-        <span class="dots" aria-hidden="true">▮▮▮</span>
-      </p>
+      <div class="hero-head">
+        <p class="eyebrow">
+          <span class="dots" aria-hidden="true">▮▮▮</span>
+          <span>An open-source book by Mike Nichols</span>
+          <span class="dots" aria-hidden="true">▮▮▮</span>
+        </p>
 
-      <h1 class="display">
-        <span class="line">Mission</span>
-        <span class="line built">Built.</span>
-      </h1>
+        <h1 class="display">
+          <span class="line">Mission</span>
+          <span class="line built">Built.</span>
+        </h1>
 
-      <p class="subtitle">
-        A field guide for building things that matter.
-      </p>
+        <p class="subtitle">
+          A field guide for building things that matter.
+        </p>
+      </div>
+
+      <div class="hero-side">
+        <p class="blurb">{MB.blurbLong}</p>
+
+        <div class="buttons">
+          <a href={sectionUrl(MB.prologue.n, MB.prologue.title)} class="btn primary">
+            Start reading <span aria-hidden="true">→</span>
+          </a>
+          <a href={firstSectionUrl(MB.chapters[0])} class="btn ghost">Jump to Chapter 1</a>
+          <a href="/download" class="btn ghost dim">
+            <span aria-hidden="true">↓</span> Download
+          </a>
+        </div>
+
+        <div class="author">
+          <div class="avatar" aria-hidden="true">MN</div>
+          <div class="author-meta">
+            <a
+              href="https://www.linkedin.com/in/hmikenichols"
+              class="author-name"
+              target="_blank"
+              rel="noopener"
+              aria-label={`${MB.author} on LinkedIn`}
+            >{MB.author}<span class="ext" aria-hidden="true"> ↗</span></a>
+            <div class="author-tag">{MB.authorTagline}</div>
+          </div>
+        </div>
+      </div>
     </section>
 
     {/* ---------- META STRIP ---------- */}
@@ -70,116 +117,93 @@ const stats = [
       ))}
     </section>
 
-    {/* ---------- TWO COLUMNS ---------- */}
-    <section class="two-col">
-      <div class="col-left">
-        <p class="blurb">
-          <span class="blurb-lead">{MB.blurbLong}</span>
-        </p>
-
-        <div class="buttons">
-          <a href={firstSectionUrl(MB.chapters[0])} class="btn primary">
-            Get to work <span aria-hidden="true">→</span>
-          </a>
-          <a href={sectionUrl(MB.prologue.n, MB.prologue.title)} class="btn ghost">Read the prologue</a>
-          <a href="/download" class="btn ghost dim">
-            <span aria-hidden="true">↓</span> Download
-          </a>
-        </div>
-
-        <div class="author">
-          <div class="avatar" aria-hidden="true">MN</div>
-          <div class="author-meta">
-            <a
-              href="https://www.linkedin.com/in/hmikenichols"
-              class="author-name"
-              target="_blank"
-              rel="noopener"
-              aria-label={`${MB.author} on LinkedIn`}
-            >{MB.author}<span class="ext" aria-hidden="true"> ↗</span></a>
-            <div class="author-tag">{MB.authorTagline}</div>
-          </div>
-        </div>
+    {/* ---------- START HERE ---------- */}
+    <section class="band start-band" aria-labelledby="start-here">
+      <div class="band-head">
+        <h2 id="start-here" class="band-title">Start here. <span class="band-sub">The first three stops in the book.</span></h2>
+        <a href="/chapters" class="band-link">All {TOTAL_CHAPTERS} chapters <span aria-hidden="true">→</span></a>
       </div>
 
-      {/* ---------- START HERE PANEL ---------- */}
-      <aside class="start-here panel" aria-label="Start here">
-        <div class="panel-header">
-          <span>Start here</span>
-          <span>Ch.01–03</span>
-        </div>
-
-        {featured.map((c, i) => (
-          <a href={firstSectionUrl(c)} class:list={["chapter-row", i === 0 && "first"]}>
-            <div class:list={["c-num", i === 0 ? "blood" : "faint"]}>{c.n}</div>
-            <div class="c-body">
-              <div class="c-title">{c.title}</div>
-              <div class="c-meta">{c.sections.length} sections · {c.mins} min</div>
+      <div class="cards cards-3">
+        {startHere.map((c) => (
+          <a href={c.href} class="card">
+            <div class="card-top">
+              <span class="c-num">{c.n}</span>
+              <span class="card-kicker">{c.kicker}</span>
             </div>
-            <div class:list={["c-status", i === 0 ? "reading" : "next"]}>
-              {i === 0 ? '◐ Reading' : 'Up next'}
-            </div>
+            <h3 class="card-name">{c.title}</h3>
+            <p class="card-meta">{c.meta}</p>
           </a>
         ))}
-      </aside>
+      </div>
     </section>
 
     {/* ---------- THE LOADOUT ---------- */}
-    <section class="loadout-section">
-      <div class="loadout-head">
-        <p class="loadout-phrase">
-          The book is the plan.<span class="phrase-accent"> The Loadout is the execution.</span>
-        </p>
-        <a href="/loadout" class="loadout-explore">Explore the Loadout <span aria-hidden="true">→</span></a>
+    <section class="band" aria-labelledby="the-loadout">
+      <div class="band-head">
+        <h2 id="the-loadout" class="band-title">The Loadout. <span class="band-sub">Skills for the boardroom.</span></h2>
+        <a href="/loadout" class="band-link">Explore the Loadout <span aria-hidden="true">→</span></a>
       </div>
 
-      <div class="loadout-skills">
-        <a href="/loadout/warmup" class="ls-card">
-          <div class="ls-tag"><span class="ls-sq" aria-hidden="true"></span>Live</div>
-          <h3 class="ls-name">The Warmup</h3>
-          <p class="ls-blurb">A daily intelligence brief for your first coffee. Curated sources, link safety scanning, live artifact. Know what moved before you open your inbox.</p>
+      <div class="cards cards-3">
+        <a href="/loadout/warmup" class="card">
+          <div class="tag"><span class="sq" aria-hidden="true"></span>Live</div>
+          <h3 class="card-name">The Warmup</h3>
+          <p class="card-blurb">A daily intelligence brief for your first coffee. Curated sources, link safety scanning, live artifact. Know what moved before you open your inbox.</p>
         </a>
-        <a href="/loadout/approach" class="ls-card">
-          <div class="ls-tag"><span class="ls-sq" aria-hidden="true"></span>Live</div>
-          <h3 class="ls-name">The Approach</h3>
-          <p class="ls-blurb">A pre-call brief for enterprise meetings and QBRs. Decision makers, live signals, MEDDPICC scored from public intel. Know the room before you walk in.</p>
+        <a href="/loadout/approach" class="card">
+          <div class="tag"><span class="sq" aria-hidden="true"></span>Live</div>
+          <h3 class="card-name">The Approach</h3>
+          <p class="card-blurb">A pre-call brief for enterprise meetings and QBRs. Decision makers, live signals, MEDDPICC scored from public intel. Know the room before you walk in.</p>
         </a>
-        <a href="/loadout/spotter" class="ls-card">
-          <div class="ls-tag"><span class="ls-sq" aria-hidden="true"></span>Live</div>
-          <h3 class="ls-name">The Spotter</h3>
-          <p class="ls-blurb">Walk a product epic through nine areas. Get a structured worksheet back — critique notes, pip verdicts, export when every area closes.</p>
-        </a>
-        <a href="/loadout/floodlight" class="ls-card">
-          <div class="ls-tag dev"><span class="ls-sq dev" aria-hidden="true"></span>In development</div>
-          <h3 class="ls-name">Floodlight</h3>
-          <p class="ls-blurb">Build your security visibility plan from three inputs. An ATT&CK-mapped coverage map of where you can see attackers, and where you're blind.</p>
+        <a href="/loadout/spotter" class="card">
+          <div class="tag"><span class="sq" aria-hidden="true"></span>Live</div>
+          <h3 class="card-name">The Spotter</h3>
+          <p class="card-blurb">Walk a product epic through nine areas. Get a structured worksheet back: critique notes, pip verdicts, and an export when every area closes.</p>
         </a>
       </div>
     </section>
 
     {/* ---------- THE RACK ---------- */}
-    <section class="loadout-section rack-section">
-      <div class="loadout-head">
-        <p class="loadout-phrase">
-          The book is the plan.<span class="phrase-accent"> The Rack is the work.</span>
-        </p>
-        <a href="/rack" class="loadout-explore">Explore the Rack <span aria-hidden="true">→</span></a>
+    <section class="band" aria-labelledby="the-rack">
+      <div class="band-head">
+        <h2 id="the-rack" class="band-title">The Rack. <span class="band-sub">Tools for the barbell.</span></h2>
+        <a href="/rack" class="band-link">Explore the Rack <span aria-hidden="true">→</span></a>
       </div>
 
-      <div class="loadout-skills rack-tools">
-        <a href="/rack/mealstack" class="ls-card">
-          <div class="ls-tag beta"><span class="ls-sq beta" aria-hidden="true"></span>Private beta<span class="ls-sep" aria-hidden="true">·</span><svg class="ph-glyph" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M10 18.5h4"/></svg>iPhone</div>
-          <h3 class="ls-name">MealStack</h3>
-          <p class="ls-blurb">Fueling is training. A meal timing tracker for people who train. Protect the protein, the session, the day, and the record. Not a nutrition app.</p>
+      <div class="cards cards-2">
+        <a href="/rack/mealstack" class="card">
+          <div class="tag beta"><span class="sq hollow" aria-hidden="true"></span>Private beta<span class="sep" aria-hidden="true">·</span><svg class="ph-glyph" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M10 18.5h4"/></svg>iPhone</div>
+          <h3 class="card-name">MealStack</h3>
+          <p class="card-blurb">Fueling is training. A meal timing tracker for people who train. Protect the protein, the session, the day, and the record. Not a nutrition app.</p>
         </a>
-        <a href="/rack/ironstack" class="ls-card">
-          <div class="ls-tag testing"><span class="ls-sq testing" aria-hidden="true"></span>In testing</div>
-          <h3 class="ls-name">Ironstack</h3>
-          <p class="ls-blurb">Weight is a number. Heavy is a feeling. A training partner with your whole history in its head: two Claude skills, seven Kibana dashboards, and a coach with a ceiling, over an Elasticsearch you own.</p>
+        <a href="/rack/ironstack" class="card">
+          <div class="tag testing"><span class="sq hollow" aria-hidden="true"></span>In testing</div>
+          <h3 class="card-name">Ironstack</h3>
+          <p class="card-blurb">Weight is a number. Heavy is a feeling. A training partner with your whole history in its head: two Claude skills, seven Kibana dashboards, and a coach with a ceiling, over an Elasticsearch you own.</p>
         </a>
       </div>
     </section>
+
+    {/* ---------- LATEST LOG ---------- */}
+    {latestLog && (
+      <section class="band" aria-labelledby="the-logs">
+        <div class="band-head">
+          <h2 id="the-logs" class="band-title">Logs. <span class="band-sub">What happened, written down.</span></h2>
+          <a href="/logs" class="band-link">All logs <span aria-hidden="true">→</span></a>
+        </div>
+
+        <div class="cards cards-1">
+          <a href={logUrl(latestLog)} class="card card-wide">
+            <div class="tag plain">Latest · <time datetime={latestLog.data.date.toISOString()}>{longDate(latestLog.data.date)}</time></div>
+            <h3 class="card-name">{latestLog.data.title}</h3>
+            {latestLog.data.description && <p class="card-blurb">{latestLog.data.description}</p>}
+          </a>
+        </div>
+      </section>
+    )}
   </main>
+  <SiteFooter />
 </BaseLayout>
 
 <style>
@@ -197,8 +221,14 @@ const stats = [
   .page { position: relative; z-index: 1; }
 
   /* ============ HERO ============ */
+  /* Wide screens: headline left, blurb + buttons right, bottoms aligned,
+     so the right half of the first screen does work instead of sitting empty. */
   .hero {
-    padding: 52px var(--pad-page-x) 28px;
+    padding: 52px var(--pad-page-x) 36px;
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    gap: 56px;
+    align-items: end;
   }
 
   .eyebrow {
@@ -207,25 +237,21 @@ const stats = [
     gap: 14px;
     margin: 0 0 18px;
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 500;
-    letter-spacing: 0.24em;
-    /* Full oxblood for legibility against charcoal — muted bloodDim
-       was too dark on a real screen. */
-    color: var(--color-blood);
+    letter-spacing: 0.22em;
+    color: var(--color-chalk-dim);
     text-transform: uppercase;
   }
   .eyebrow .dots {
     letter-spacing: 0.04em;
-    color: var(--color-blood);
-    opacity: 0.65;
+    color: var(--color-blood-bright);
   }
 
   .display {
     margin: 0;
     font-family: var(--font-display);
     font-weight: 700;
-    /* Hero clamps from 40px (mobile) → 132px (desktop), ~14vw */
     font-size: clamp(56px, 14vw, 132px);
     line-height: 0.86;
     letter-spacing: -0.02em;
@@ -233,80 +259,31 @@ const stats = [
     text-transform: uppercase;
   }
   .display .line { display: block; }
-  .display .built { color: var(--color-blood); }
+  /* The one oxblood word on the page. */
+  .display .built { color: var(--color-blood-bright); }
 
   .subtitle {
     margin: 22px 0 0;
     max-width: 900px;
     font-family: var(--font-display);
     font-weight: 400;
-    font-size: clamp(15px, 2.4vw, 22px);
+    font-size: clamp(16px, 2.4vw, 22px);
     color: var(--color-chalk-dim);
     letter-spacing: 0.04em;
     text-transform: uppercase;
   }
-  .subtitle .dot { margin: 0 0.4em; }
 
-  /* ============ META STRIP ============ */
-  .meta-strip {
-    margin: 0 var(--pad-page-x);
-    padding: 14px 0;
-    border-top: var(--border-thin);
-    border-bottom: var(--border-thin);
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--color-chalk-dim);
-    text-transform: uppercase;
-    letter-spacing: 0.16em;
-  }
-  .stat-key {
-    color: var(--color-chalk-faint);
-    font-size: 11px;
-    letter-spacing: 0.22em;
-  }
-  .stat-value {
-    margin-top: 2px;
-    color: var(--color-chalk);
-    font-family: var(--font-display);
-    font-size: 22px;
-    letter-spacing: 0.04em;
-    display: inline-block;
-  }
-  .stat-value.army { color: var(--color-army); }
-  /* Linked stat values get a subtle underline on hover, same color */
-  .stat-value.linked {
-    border-bottom: 1px solid transparent;
-    transition: border-bottom-color 120ms ease-out;
-  }
-  .stat-value.linked:hover { border-bottom-color: currentColor; }
-
-  /* ============ TWO COLUMNS ============ */
-  .two-col {
-    padding: 30px var(--pad-page-x) 56px;
-    display: grid;
-    grid-template-columns: 1.1fr 1fr;
-    gap: 56px;
-  }
-
-  /* Home blurb — was set in serif, but on this page that font appears
-     only here, which made it stand out from the surrounding Oswald +
-     mono. Keep the blurb in the page's voice (Oswald 400, untransformed)
-     so the home reads as one cohesive system. Serif lives in the book
-     itself (Chapter Index + Reading View). */
+  /* Home blurb stays in Oswald so the page keeps one display voice. */
   .blurb {
     margin: 0;
     max-width: 560px;
     font-family: var(--font-display);
     font-weight: 400;
-    font-size: 18px;
+    font-size: 19px;
     line-height: 1.5;
     letter-spacing: 0.015em;
-    color: var(--color-chalk-dim);
+    color: var(--color-chalk);
   }
-  .blurb-lead { color: var(--color-chalk); }
 
   /* ---- Buttons ---- */
   .buttons {
@@ -315,7 +292,6 @@ const stats = [
     gap: 10px;
     margin-top: 24px;
   }
-
   .btn {
     display: inline-block;
     font-family: var(--font-display);
@@ -334,7 +310,7 @@ const stats = [
     color: var(--color-chalk);
     border-color: var(--color-blood);
   }
-  .btn.primary:hover { filter: brightness(1.06); }
+  .btn.primary:hover { filter: brightness(1.12); }
   .btn.ghost {
     background: transparent;
     color: var(--color-chalk);
@@ -345,8 +321,8 @@ const stats = [
 
   /* ---- Author block ---- */
   .author {
-    margin-top: 28px;
-    padding-top: 20px;
+    margin-top: 24px;
+    padding-top: 18px;
     border-top: var(--border-dashed);
     display: flex;
     gap: 14px;
@@ -371,191 +347,158 @@ const stats = [
     align-items: baseline;
     gap: 6px;
     font-family: var(--font-display);
-    font-size: 14px;
+    font-size: 15px;
     color: var(--color-chalk);
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    text-decoration: none;
     transition: color 120ms ease-out;
   }
-  .author-name:hover { color: var(--color-blood); }
+  .author-name:hover { color: var(--color-blood-text); }
   .author-name .ext {
     font-family: var(--font-mono);
-    font-size: 10px;
+    font-size: 12px;
     color: var(--color-chalk-faint);
     letter-spacing: 0;
-    transition: color 120ms ease-out;
   }
-  .author-name:hover .ext { color: var(--color-blood); }
   .author-tag {
     margin-top: 2px;
     font-family: var(--font-serif);
-    font-size: 11px;
+    font-size: 13px;
     color: var(--color-chalk-faint);
-    letter-spacing: 0.06em;
-  }
-
-  /* ============ START HERE PANEL ============ */
-  .start-here {
-    padding: 18px 22px;
-    background: var(--color-panel);
-    border: var(--border-thin);
-    align-self: start;
-  }
-  .panel-header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 14px;
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 0.22em;
-    color: var(--color-chalk-faint);
-    text-transform: uppercase;
-  }
-
-  .chapter-row {
-    display: grid;
-    grid-template-columns: 42px 1fr 80px;
-    gap: 12px;
-    align-items: center;
-    padding: 12px 0;
-    border-top: var(--border-dashed);
-    transition: background 120ms ease-out;
-  }
-  .chapter-row.first { border-top: none; }
-  .chapter-row:hover { background: rgba(255,255,255,0.02); }
-
-  .c-num {
-    font-family: var(--font-display);
-    font-size: 24px;
-    line-height: 1;
-  }
-  .c-num.blood  { color: var(--color-blood); }
-  .c-num.faint  { color: var(--color-chalk-faint); }
-
-  .c-title {
-    font-family: var(--font-display);
-    font-size: 17px;
-    color: var(--color-chalk);
-    text-transform: uppercase;
     letter-spacing: 0.04em;
-    line-height: 1.05;
-  }
-  .c-meta {
-    margin-top: 4px;
-    font-family: var(--font-mono);
-    font-size: 10px;
-    color: var(--color-chalk-faint);
-    letter-spacing: 0.06em;
   }
 
-  .c-status {
-    font-family: var(--font-mono);
-    font-size: 9px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    text-align: right;
-  }
-  .c-status.reading { color: var(--color-army); }
-  .c-status.next    { color: var(--color-chalk-faint); }
-
-  /* ============ THE LOADOUT SECTION ============ */
-  .loadout-section {
+  /* ============ META STRIP ============ */
+  .meta-strip {
+    margin: 0 var(--pad-page-x);
+    padding: 14px 0;
     border-top: var(--border-thin);
-    padding: 36px var(--pad-page-x) 56px;
+    border-bottom: var(--border-thin);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
   }
+  .stat-key {
+    color: var(--color-chalk-faint);
+    font-size: 12px;
+    letter-spacing: 0.2em;
+  }
+  .stat-value {
+    margin-top: 2px;
+    color: var(--color-chalk);
+    font-family: var(--font-display);
+    font-size: 22px;
+    letter-spacing: 0.04em;
+    display: inline-block;
+  }
+  .stat-value.army { color: var(--color-army); }
+  .stat-value.linked {
+    border-bottom: 1px solid var(--color-army-dim);
+    transition: border-bottom-color 120ms ease-out;
+  }
+  .stat-value.linked:hover { border-bottom-color: currentColor; }
 
-  .loadout-head {
+  /* ============ BANDS (start here, Loadout, Rack, Logs) ============ */
+  .band { padding: 48px var(--pad-page-x) 0; }
+
+  .band-head {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    gap: 24px;
-    margin-bottom: 24px;
+    gap: 12px 24px;
+    margin-bottom: 20px;
     flex-wrap: wrap;
   }
-
-  .loadout-phrase {
+  .band-title {
     margin: 0;
     font-family: var(--font-display);
     font-weight: 500;
-    font-size: clamp(17px, 1.8vw, 24px);
+    font-size: clamp(19px, 1.8vw, 24px);
     letter-spacing: 0.02em;
     text-transform: uppercase;
     color: var(--color-chalk);
     line-height: 1.2;
   }
-  .phrase-accent { color: var(--color-blood); }
+  .band-sub { color: var(--color-chalk-dim); }
 
-  .loadout-explore {
+  .band-link {
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 500;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
     color: var(--color-chalk-dim);
     white-space: nowrap;
-    flex-shrink: 0;
-    transition: color 120ms ease-out;
+    border-bottom: 1px solid var(--color-chalk-ghost);
+    transition: color 120ms ease-out, border-color 120ms ease-out;
   }
-  .loadout-explore:hover { color: var(--color-chalk); }
+  .band-link:hover { color: var(--color-chalk); border-bottom-color: var(--color-chalk-dim); }
 
-  .loadout-skills {
+  .cards {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
     border-top: var(--border-thin);
     border-bottom: var(--border-thin);
   }
-  @media (max-width: 1099px) {
-    .loadout-skills { grid-template-columns: repeat(2, 1fr); }
-    .ls-card:nth-child(2n) { border-right: none; }
-  }
+  .cards-3 { grid-template-columns: repeat(3, 1fr); }
+  .cards-2 { grid-template-columns: repeat(2, 1fr); }
+  .cards-1 { grid-template-columns: 1fr; }
 
-  .ls-card {
+  .card {
     padding: 22px 24px;
     border-right: var(--border-thin);
-    text-decoration: none;
     display: flex;
     flex-direction: column;
     gap: 8px;
     transition: background 120ms ease-out;
   }
-  .ls-card:last-child { border-right: none; }
-  .ls-card:hover { background: rgba(255,255,255,0.015); }
+  .card:last-child { border-right: none; }
+  .card:hover { background: rgba(255,255,255,0.02); }
+  .card-wide .card-blurb { max-width: 72ch; }
 
-  .ls-tag {
+  .card-top {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+  .c-num {
+    font-family: var(--font-display);
+    font-size: 26px;
+    line-height: 1;
+    color: var(--color-chalk-faint);
+  }
+  .card-kicker, .card-meta, .tag {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-chalk-faint);
+  }
+  .card-meta { margin: 0; letter-spacing: 0.08em; }
+
+  .tag {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    font-family: var(--font-mono);
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
+    gap: 7px;
     color: var(--color-army);
   }
-  .ls-sq {
+  .tag.beta { color: var(--color-chalk); }
+  .tag.testing { color: var(--color-chalk-dim); }
+  .tag.plain { color: var(--color-chalk-faint); }
+  .sq {
     width: 6px;
     height: 6px;
     background: var(--color-army);
     display: inline-block;
     flex-shrink: 0;
   }
-  /* In-development variant — chalk-faint, hollow square (army is reserved for Live). */
-  .ls-tag.dev { color: var(--color-chalk-faint); }
-  .ls-sq.dev { background: transparent; border: 1px solid var(--color-chalk-faint); }
-  /* In-testing variant — chalk-dim, hollow square, as on the Rack and Loadout indexes. */
-  .ls-tag.testing { color: var(--color-chalk-dim); }
-  .ls-tag.beta { color: var(--color-chalk); }
-  .ls-sep { color: var(--color-chalk-faint); margin: 0 2px; }
-  .ph-glyph { width: 11px; height: 11px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
-  .ls-sq.beta { background: transparent; border: 1px solid var(--color-chalk); }
-  .ls-sq.testing { background: transparent; border: 1px solid var(--color-chalk-dim); }
+  .sq.hollow { background: transparent; border: 1px solid currentColor; }
+  .sep { color: var(--color-chalk-faint); margin: 0 2px; }
+  .ph-glyph { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
 
-  /* The Rack: same section grammar, two tools wide. */
-  .rack-section { padding-top: 0; border-top: none; }
-  .rack-tools { grid-template-columns: repeat(2, 1fr); }
-
-  .ls-name {
+  .card-name {
     margin: 0;
     font-family: var(--font-display);
     font-weight: 700;
@@ -563,40 +506,30 @@ const stats = [
     letter-spacing: 0.02em;
     text-transform: uppercase;
     color: var(--color-chalk);
-    line-height: 1;
-    transition: color 120ms ease-out;
+    line-height: 1.05;
   }
-  .ls-card:hover .ls-name { color: var(--color-chalk); }
-
-  .ls-blurb {
+  .card-blurb {
     margin: 0;
     font-family: var(--font-serif);
-    font-size: 14px;
-    line-height: 1.55;
+    font-size: 15px;
+    line-height: 1.6;
     color: var(--color-chalk-dim);
   }
 
   /* ============ Responsive ============ */
-
-  /* Mid: collapse 4-col meta to 2 columns; allow buttons to wrap */
   @media (max-width: 1099px) {
-    .two-col {
-      grid-template-columns: 1fr;
-      gap: 40px;
-    }
-    .start-here { max-width: 540px; }
+    .hero { grid-template-columns: 1fr; gap: 36px; padding: 44px var(--pad-page-x-mid) 32px; }
+    .meta-strip { margin: 0 var(--pad-page-x-mid); }
+    .band { padding: 40px var(--pad-page-x-mid) 0; }
+    .cards-3 { grid-template-columns: 1fr; }
+    .cards-3 .card, .cards-2 .card { border-right: none; border-bottom: var(--border-thin); }
+    .cards-3 .card:last-child, .cards-2 .card:last-child { border-bottom: none; }
+    .cards-2 { grid-template-columns: 1fr; }
   }
 
   @media (max-width: 720px) {
-    :root { /* override the page padding for mobile */ }
-    .hero {
-      padding: 36px var(--pad-page-x-mobile) 20px;
-    }
-    .eyebrow {
-      gap: 8px;
-      flex-wrap: wrap;
-      font-size: 10px;
-    }
+    .hero { padding: 36px var(--pad-page-x-mobile) 24px; gap: 28px; }
+    .eyebrow { gap: 8px; flex-wrap: wrap; }
     .eyebrow .dots { display: none; }
 
     .meta-strip {
@@ -607,36 +540,12 @@ const stats = [
     }
     .stat-value { font-size: 20px; }
 
-    .two-col {
-      padding: 24px var(--pad-page-x-mobile) 40px;
-      gap: 32px;
-    }
-
+    .blurb { font-size: 18px; }
     .buttons { gap: 8px; }
-    .btn { padding: 12px 18px; font-size: 13px; flex: 1 1 auto; min-width: 0; text-align: center; }
+    .btn { padding: 13px 16px; font-size: 13px; flex: 1 1 auto; min-width: 0; text-align: center; }
     .btn.ghost.dim { flex-basis: 100%; }
 
-    .chapter-row {
-      grid-template-columns: 36px 1fr;
-      gap: 10px;
-    }
-    .c-status {
-      grid-column: 1 / -1;
-      text-align: left;
-      padding-left: 46px;
-    }
-    .c-title { font-size: 16px; }
-
-    .loadout-section {
-      padding: 28px var(--pad-page-x-mobile) 40px;
-    }
-    .loadout-skills {
-      grid-template-columns: 1fr;
-    }
-    .ls-card {
-      border-right: none;
-      border-bottom: var(--border-thin);
-    }
-    .ls-card:last-child { border-bottom: none; }
+    .band { padding: 36px var(--pad-page-x-mobile) 0; }
+    .card { padding: 20px 4px; }
   }
 </style>
