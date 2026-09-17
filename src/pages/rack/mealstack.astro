@@ -19,8 +19,10 @@
  * How we talk about it: the Log "Fueling is training"
  * (src/content/logs/fueling-is-training.mdx) is the source of truth. Four
  * pillars: protect the protein, the session, the day, the record. Meals are
- * plates; fuel is what you drink around the session; the meal count is a
- * default, never a fixed number. Not a nutrition app.
+ * plates; fuel is what you take for the session rather than as a meal (it can
+ * carry macros, which count, but it is never a meal); the meal before the
+ * session is the carb surge; the meal count is a default, never a fixed number.
+ * Not a nutrition app.
  *
  * Color discipline: oxblood for the hero period, eyebrows, section labels,
  * the one marked card (Timing), the two Join buttons, and the closer accent.
@@ -49,7 +51,7 @@ const stats = [
 
 type Card = { label: string; pillar: string; verdict: string; evidence: string; them: string; mark?: boolean };
 const cards: Card[] = [
-  { mark: true, label: 'Timing', pillar: 'Protect the session', verdict: 'The day is anchored to the session, not the clock.', evidence: 'Pre-workout, post-workout and dinner are tied to the session. Everything before them is worked out from the time you actually ate. A late morning tightens the gaps and says what moved; it never pushes the pre-workout meal into the bar.', them: 'Alarms every N hours, or routines that roll lateness forward into the session.' },
+  { mark: true, label: 'Timing', pillar: 'Protect the session', verdict: 'The day is anchored to the session, not the clock.', evidence: 'The carb surge, the fuel around the session and the meals after it are tied to the session. Everything before them is worked out from the time you actually ate. A late morning tightens the gaps and says what moved; it never pushes the carb surge past the start of the session.', them: 'Alarms every N hours, or routines that roll lateness forward into the session.' },
   { label: 'Macros', pillar: 'Protect the protein', verdict: 'Weighed from the plate, or typed. Never both.', evidence: 'A meal is a list of ingredients and quantities, so the numbers come from the ingredients and editing a portion moves them. The daily target lives apart from the plan, so the editor can say "this plate puts the day 40 g of carbs over" while you are still building it.', them: 'A food database and a total. No plan to measure the plate against.' },
   { label: 'Logging', pillar: 'Protect the record', verdict: 'Log when you eat, not when it was due.', evidence: 'The sheet opens on now with 15, 30 and 60 minutes ago one tap away, and shows what every remaining meal does at that time before you commit. Move today\'s session from the Today screen and the meals tied to it move with it.', them: '"Done" means now, so the day keys off the wrong number.' },
   { label: 'Travel', pillar: 'Protect the day', verdict: 'A day runs in the zone it started in.', evidence: 'Cross three time zones and the spacing holds. The app says so and offers one tap to switch when local time becomes the truth. Skip a meal and it stays a decision, not a miss. History compares home days to travel days.', them: 'Alarms drift with the phone clock. Breakfast at 9, lunch at 10.' },
@@ -59,15 +61,15 @@ const cards: Card[] = [
 
 type Step = { n: string; title: string; body: string };
 const steps: Step[] = [
-  { n: '01', title: 'Answer two questions.', body: 'When is your first meal, and when do you train. Quick start builds a working day from that, no AI and no account: the morning meals follow one another from your first meal, the pre-workout meal and everything after are tied to the session. Five meals by default; change the number in Settings. Put food on the plates when you are ready, or let Coach fill them.' },
-  { n: '02', title: 'Log when you actually ate.', body: 'One tap for now, one for thirty minutes ago. The sheet shows what every remaining meal does before you commit, and the notification can log it without opening the app. The pre-workout meal holds. The rest of the day bends around you.' },
+  { n: '01', title: 'Answer two questions.', body: 'When is your first meal, and when do you train. Quick start builds a working day from that, no AI and no account: the morning meals follow one another from your first meal, the carb surge before the session and everything after it are tied to the session. Five meals by default; change the number in Settings. Put food on the plates when you are ready, or let Coach fill them.' },
+  { n: '02', title: 'Log when you actually ate.', body: 'One tap for now, one for thirty minutes ago. The sheet shows what every remaining meal does before you commit, and the notification can log it without opening the app. The carb surge holds. The rest of the day bends around you.' },
   { n: '03', title: 'Ask when the plan breaks.', body: 'Client lunch, airport, empty fridge. Send Coach the menu, a link or what is in the kitchen and it fits an order to this meal\'s numbers. Nothing changes until you tap. History keeps score, so you can see what the road does to you.' },
 ];
 
 type Versus = { k: string; them: string; us: string; honest?: boolean };
 const versus: Versus[] = [
   { k: 'Anchor', them: 'The clock.', us: 'Your session.' },
-  { k: 'A late meal', them: 'The next alarm fires anyway.', us: 'The rest of the day re-flows. The pre-workout meal holds.' },
+  { k: 'A late meal', them: 'The next alarm fires anyway.', us: 'The rest of the day re-flows. The carb surge holds.' },
   { k: 'Macros', them: 'Typed in, or scanned, then summed.', us: 'Weighed from the plate, measured against a target you set.' },
   { k: 'Logging time', them: 'Now.', us: 'When you actually ate, with the consequence shown first.' },
   { k: 'Time zones', them: 'Alarms drift with the phone.', us: 'Spacing holds. You choose when to switch.' },
@@ -232,10 +234,11 @@ const ld = {
     {/* ---------- THE RULE: live cascade ---------- */}
     <section class="block" id="rule">
       <p class="section-label">The rule</p>
-      <h2 class="section-h2">Breakfast was late. Your pre-workout meal shouldn't be.</h2>
+      <h2 class="section-h2">Breakfast was late. Your carb surge shouldn't be.</h2>
       <p class="prose">
         Two kinds of meal. The morning meals follow on from the time you actually ate.
-        The meals around your session stay where they are. Drag breakfast late and watch which ones move.
+        The carb surge, your pre-workout meal, stays where the session puts it, and so does everything
+        after it. Drag breakfast late and watch which ones move.
       </p>
 
       <div class="demo" id="cascade">
@@ -247,7 +250,7 @@ const ld = {
         <div class="demo-rows" id="d-rows"></div>
         <p class="demo-foot" id="d-foot"></p>
       </div>
-      <p class="note">Gaps compress evenly toward a two-hour floor, rounded to five minutes. The pre-workout meal never moves for a late morning. Move the session itself and every meal tied to it moves with it.</p>
+      <p class="note">The morning is meant to finish two hours before the carb surge. When a late breakfast won't allow that, the gaps tighten evenly, rounded to five minutes, and never below two hours; past that point lunch simply lands closer to the carb surge. The carb surge never moves for a late morning, and never past the start of the session: still not eaten when you start training, it's marked "Session started without it" and waits for you to log it or skip it. Move the session itself and everything tied to it moves with it.</p>
     </section>
 
     <hr class="dashed" />
@@ -290,9 +293,11 @@ const ld = {
 
       <h3 class="sub-h3">And the rest</h3>
       <p class="prose">
-        Meals are plates. Fuel is what you take for training that is not a meal: pre-workout, creatine,
-        the intra bottle, hydration. It gets its own alert and its own line on the record, and it never
-        counts against your meals.
+        Meals are plates. Fuel is what you take for the session rather than as a meal: pre-workout, the jug
+        you sip through the session, the shake after it, electrolytes, creatine, water. It can carry protein,
+        carbs and fat, and those count toward the day's totals. Fuel is never a meal: it isn't in the meal
+        count, doesn't move the meals around it, and isn't scored for timing. It gets its own alert and its
+        own line on the record.
         Three shelves on the Plan tab: stacks, meals, and ingredients (about two hundred built in, plus
         your own, entered like the label). Drop a saved meal onto any plate. Apple Health gets the macros at the real
         eat time, and never reads anything back. Light and dark. History that scores against the target you set.
@@ -354,7 +359,7 @@ const ld = {
       <div class="status-panel">
         <div class="status-copy">
           <h3>Running through a meet prep, October 2026</h3>
-          <p>MealStack is on one phone every day right now: five meals and the fuel around the session, an evening session, a pre-workout meal that does not move. I add testers by hand, in small batches, from the email on your Apple ID. You get an invite from Apple, a link to install, the quick start, and a short list of things I would like you to break.</p>
+          <p>MealStack is on one phone every day right now: five meals and the fuel around the session, an evening session, a carb surge that does not move. I add testers by hand, in small batches, from the email on your Apple ID. You get an invite from Apple, a link to install, the quick start, and a short list of things I would like you to break.</p>
           <p>Builds expire every ninety days and you get the next one. The address is used for the invite and nothing else; you can leave from the invite email at any time.</p>
 
           <form class="beta-form" id="beta-form" method="post" action="/api/beta" novalidate>
@@ -491,11 +496,13 @@ const ld = {
 
 <script>
   // ── The cascade rule on fictional data ──
-  // Sliding meals chain off the logged breakfast time; gaps compress evenly
-  // toward a 2-hour floor (rounded to 5 minutes); the pre-workout meal is
-  // pinned 90 minutes before the session.
+  // The app's rule (Scheduler.swift), on one training day: the meals before the
+  // carb surge chain off the logged breakfast in three-hour gaps and must finish
+  // two hours before the carb surge; when they can't, the gaps shrink evenly
+  // (rounded to 5 minutes) and never below two hours. The carb surge is pinned
+  // 90 minutes before the session.
   const SESSION = 18 * 60;
-  const PRE = SESSION - 90;
+  const SURGE = SESSION - 90;
   const FLOOR = 120;
   const GAP = 180;
   const slider = document.getElementById('d-slider') as HTMLInputElement | null;
@@ -503,12 +510,12 @@ const ld = {
   const foot = document.getElementById('d-foot');
   const m1lab = document.getElementById('d-m1');
   const names = [
-    { code: 'M1', name: 'Breakfast', sub: 'moves with you' },
+    { code: 'M1', name: 'Breakfast', sub: 'logged' },
     { code: 'M2', name: 'Mid-morning', sub: 'moves with you' },
     { code: 'M3', name: 'Lunch', sub: 'moves with you' },
-    { code: 'M4', name: 'Pre-workout', sub: 'stays put · 90 min before the bar' },
+    { code: 'M4', name: 'Carb surge', sub: 'stays put · 90 min before the session' },
   ];
-  const planned = [420, 600, 780, PRE];
+  const planned = [420, 600, 780, SURGE];
 
   function fmt(m: number): string {
     let h = Math.floor(m / 60);
@@ -518,35 +525,43 @@ const ld = {
     if (h === 0) h = 12;
     return h + ':' + (mm < 10 ? '0' : '') + mm + ' ' + ap;
   }
+  // Spans the way the app writes them: "1 hr 30 min", "45 min", "3 hr".
+  function span(m: number): string {
+    const h = Math.floor(m / 60);
+    const mm = m % 60;
+    return [h ? h + ' hr' : '', mm ? mm + ' min' : ''].filter(Boolean).join(' ') || '0 min';
+  }
   function r5(x: number): number { return Math.round(x / 5) * 5; }
 
   function build(m1: number): void {
     if (!rows || !foot || !m1lab) return;
-    const avail = PRE - m1;
-    const gap = Math.max(FLOOR, Math.min(GAP, r5((avail - FLOOR) / 2)));
-    const t = [m1, m1 + gap, m1 + 2 * gap, PRE];
+    const ceiling = SURGE - FLOOR;
+    const gap = Math.max(FLOOR, Math.min(GAP, r5((ceiling - m1) / 2)));
+    const t = [m1, m1 + gap, m1 + 2 * gap, SURGE];
     let html = '';
     for (let i = 0; i < 4; i++) {
       const locked = i === 3;
       const shifted = !locked && i > 0 && t[i] !== planned[i];
+      const sub = i === 0 ? (m1 === planned[0] ? 'logged on time' : 'logged ' + span(m1 - planned[0]) + ' late')
+        : shifted ? 'moves · ' + span(gap) + ' gap' : names[i].sub;
       html += '<div class="drow' + (locked ? ' locked' : '') + '">'
         + '<span class="code">' + names[i].code + '</span>'
-        + '<span class="name">' + names[i].name + '<small>' + (shifted ? 'moved · gap ' + gap + ' min' : names[i].sub) + '</small></span>'
+        + '<span class="name">' + names[i].name + '<small>' + sub + '</small></span>'
         + '<span class="time">' + (shifted ? '<s>' + fmt(planned[i]) + '</s>' : '') + fmt(t[i]) + '</span>'
         + '</div>';
     }
     rows.innerHTML = html;
     m1lab.textContent = fmt(m1);
-    const lastGap = PRE - t[2];
-    if (m1 === 420) {
-      foot.innerHTML = 'Nothing late. Three-hour gaps as planned. <b>Pre-workout at ' + fmt(PRE) + '.</b>';
+    const late = m1 - planned[0];
+    const running = ' Today says: "Running late. The gaps tightened so the carb surge still lands before your session."';
+    if (late === 0) {
+      foot.innerHTML = 'Nothing late. Three-hour gaps as planned. <b>Carb surge at ' + fmt(SURGE) + '.</b>';
+    } else if (gap === GAP) {
+      foot.innerHTML = 'Breakfast ' + span(late) + ' late. The morning moves with it and still fits. <b>The carb surge holds at ' + fmt(SURGE) + '.</b>';
     } else if (gap > FLOOR) {
-      const late = m1 - 420;
-      const lh = Math.floor(late / 60);
-      const lm = late % 60;
-      foot.innerHTML = 'Breakfast ' + (lh ? lh + ' h ' : '') + (lm ? lm + ' min ' : '') + 'late. Remaining gaps compress evenly to ' + gap + ' min. <b>Pre-workout holds at ' + fmt(PRE) + '.</b>';
+      foot.innerHTML = 'Breakfast ' + span(late) + ' late. The gaps tighten evenly to ' + span(gap) + '.' + running + ' <b>The carb surge holds at ' + fmt(SURGE) + '.</b>';
     } else {
-      foot.innerHTML = 'At the two-hour floor. Lunch is now ' + lastGap + ' min before the pre-workout meal, and flagged. <b>Pre-workout still holds at ' + fmt(PRE) + '. The session is what we protect.</b>';
+      foot.innerHTML = 'At the two-hour floor: lunch is now ' + span(SURGE - t[2]) + ' before the carb surge.' + running + ' <b>The carb surge still holds at ' + fmt(SURGE) + '. The session is what we protect.</b>';
     }
   }
 
