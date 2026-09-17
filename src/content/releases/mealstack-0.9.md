@@ -1,0 +1,130 @@
+---
+app: mealstack
+version: "0.9"
+order: 9000
+status: in-review
+---
+
+- The top of Today is three menus: the kind of day (Training or Rest), the session
+  time, and the stack. Move the session an hour or half an hour either way, or pick
+  a time, and the meals pinned to it move with it. Pick another stack and it runs for
+  the rest of the week, with the rotation carrying on from it; what you'd eaten stays
+  logged. After any change one line says what moved ("Session 6:30 PM. Carb surge
+  5:00 · Shake 7:30") with Undo, and there are no "are you sure" questions. Meals
+  today and travel moved under the date.
+- A day type you pick on Today is for today. Tomorrow follows your week again (before,
+  Rest stayed picked until you changed it back). Once the session is logged the day
+  stays a training day, and switching from Rest to Training after your usual session
+  time asks when you're training.
+- "Eating out? Send Coach the menu" sits under the next meal. It opens Coach with that
+  meal in focus, ready for a photo of the menu or a link, and what Coach suggests
+  stands in for that meal today only.
+
+- Fuel is its own thing. A meal carries a plate and counts toward the day; fuel is
+  what you take for training that isn't protein, carbs or fat (water, electrolytes,
+  pre-workout, creatine, a supplement). Mark a slot as fuel in the meal editor and it
+  keeps its time and its alert, you log it, and it never counts as a meal or adds to
+  the totals. Creatine an hour after breakfast no longer moves lunch.
+- The pantry now matches The Rotation, the four-week plan the app was built around.
+  Liquid egg whites by weight were added; oat milk is the 45 kcal unsweetened cup
+  (it had been the 120 kcal "original" figure under an unsweetened name), and the
+  Ghost, PBfit, English muffin, cream of rice, Rice Krispies treat, teriyaki, olive
+  and frozen vegetable figures were corrected to the label. Plates pick up the new
+  figures; days you already logged keep what you ate.
+- About opens with why the app exists (a link to the post) and the four pillars:
+  protect the protein, the session, the day, the record.
+- Training is picked by name: powerlifting, strongman, Olympic weightlifting,
+  bodybuilding and physique, CrossFit and mixed, team or combat sport, fitness,
+  endurance. "General" is gone. What you picked before reads as the nearest of
+  these until you change it.
+- A meal is logged now or earlier, never ahead of time: the planned chip only shows
+  once that time has passed, the wheel stops at the current minute, and the Log
+  button refuses a future time.
+- The Rotation's four stacks (The Base, Rice Bowls, Tex-Mex, Mediterranean) are on
+  the Stacks shelf to start from, with the carb surge and the post-workout shake as
+  meals and the pre-workout scoop and the jug as fuel.
+- History says which stack of the rotation a day ran on.
+- The Plan tab is three shelves and one search: Stacks, Meals, Ingredients. A stack
+  is a training day and a rest day of meals under a name (ingredients make meals,
+  meals make stacks); the rotation runs one stack per week. "Week" now only ever
+  means the calendar week. Stacks lists the rotation in order with This week and
+  Next marked, then any stacks you keep without running; Meals is everything you can
+  put on a plate; Ingredients is the pantry. Search any shelf. Open a stack and one
+  button runs it from today (what you'd already logged stays logged); open a meal
+  and "Use this meal" puts it on a slot; open an ingredient and "Add to a meal" puts
+  it on one. The + on each shelf builds one by hand, asks Coach, or brings in a plan
+  file, and a plan file now lands on all three shelves at once. Hold a stack to
+  reorder the rotation or take it out. The first stack keeps its name (it used to
+  come back as "Week 1"), and Today's date line names the stack.
+- The daily target and meals a day moved to Settings, under Plan. They belong to the
+  plan, not to any one week.
+- What's new left the app. About links to the changelog on missionbuilt.io instead
+  of carrying a copy of it.
+- A plan file can carry meals on their own (`meals`, a plate with no time) and foods
+  on their own; stacks are no longer required, and the key is `stacks` (`weeks` still
+  reads). The MealStack skill writes "three
+  lunches" or "add my whey" as readily as a week, and the checker checks them.
+- Plans can come in from outside. A MealStack plan file (from the MealStack skill, a
+  coach, or a friend) imports whole or not at all, with its foods added to your pantry
+  and its schedule and targets offered, never applied silently. Any kept stack
+  exports as the same kind of file. The
+  format is documented in the repo (docs/plan-format.md).
+- Tex-Mex's rest-day dinner, the blackened salmon, was missing from the meals shelf
+  and is there now.
+- How many meals a day is yours to set. Five by default; the Plan tab has a "Meals a
+  day" row with a number for training days and one for rest days, anywhere from 2 to
+  8. Before you apply a number the sheet says what it costs: how far apart the meals
+  land, where they fall around the session, what each has to carry in protein (flagged
+  under 25 g or over 60 g a meal), and which plates would have no slot. Only the kind
+  of day whose count changed is rebuilt: plates follow their meals, fuel stays where
+  it is, pre- and post-workout keep their offsets, plates with no slot go to the
+  Kitchen, and what you've logged today comes along.
+- Fuel carried through a rebuild lands back in its place in the order of the day,
+  not at the end of the list.
+- Today can run on a different number of meals without touching the plan. Today's
+  day line has "Meals today"; pick a number, read what it does, apply. Tomorrow runs
+  on the plan again, and History says the day ran on four, not the plan's five.
+  "Keep this every day" writes it to the plan instead.
+- Fuel can be added outright. "Add fuel" at the bottom of the Plan tab's meal list
+  takes a name and when it lands: after a meal (and it follows that meal if the
+  morning runs late), or before, at or after the session on training days. It goes
+  into the day where it lands on the clock, so Today's order is the order of the day.
+  Fuel opens in the editor like anything else and has "Remove from the plan"; fuel
+  rows on the Plan tab carry a drop.
+- The widget and the Live Activity know fuel too: when the jug is next the eyebrow
+  reads "Fuel", and the day bar counts plates, not fuel.
+- A plan file opens into the app. Plan files are `.mealstack` (JSON inside); tap one
+  in Mail, Messages, AirDrop or Files and MealStack opens with the import sheet and
+  the preview up. Exported weeks use the same extension.
+- The carb surge is named and guaranteed. The meal pinned before the session is
+  called "Carb surge" wherever the app builds a plan (the quick start, the meal
+  count, a rebuild), carries a note saying what it is, and a training day can't be
+  built, resized, carried or imported without one: a plan file whose training day
+  has no meal pinned before the session is refused. Plans you already have keep
+  their own names.
+- Bringing a plan in has a front door. The welcome's fourth door, "Bring a plan",
+  opens a .mealstack file straight into the app as the plan, no quick start; the
+  Plan tab has "Bring in a plan" under the Kitchen; the import sheet says where a
+  file comes from (a coach, a friend, or Claude with the MealStack skill) with a link
+  to the skill; About links it too.
+- Importing asks where it goes: the Kitchen, or make it my plan. The Kitchen puts
+  the stacks on the Stacks shelf and leaves your plan alone. Make it my plan runs
+  the first stack this week and the rest as the rotation, brings the plan's clock
+  and target (each can be switched off), keeps the plan you were running on the
+  Stacks shelf and its plates on the Meals shelf, and carries today's log across. On
+  a fresh install a tapped plan file simply becomes the plan.
+- The MealStack plan skill (skills/mealstack-plan) lets a model outside the app
+  write a plan the app imports: the format, the built-in pantry with what one unit
+  is worth, a checker that refuses what the app refuses and prints each day against
+  its targets, and a worked example. Give it to Claude, ask for a week of meals,
+  tap the file on your phone.
+- The target formula's body question is asked as what it is. It has a male curve and
+  a female curve for resting energy, so the picker (Settings, About you, and Coach
+  when it asks) now offers Male, Female, Non-binary or in between, and Rather not
+  say, and says it is picking the curve closer to your body, not who you are.
+  Non-binary and Rather not say both run on the middle of the two curves.
+- Coach knows what fuel is. The plan it sees marks fuel, it never proposes a plate
+  for it (the proxy turns one down), it counts meals without it, and it can say what
+  a different meal count does from the same pillars the app uses. Before this, a
+  plan with fuel on it could never finish Coach's plan setup: the proxy took the
+  fuel's empty plate for a meal still waiting to be filled.

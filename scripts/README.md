@@ -96,3 +96,21 @@ Output:
 Commit the zips alongside other site changes — like the demos, they're static and don't auto-update when the loadout repo changes. Re-run after a skill release. To add a new standalone skill, append its folder name to `SKILLS` in the script.
 
 Same sibling-repo assumption as `build_demos.py`: `loadout` and `missionbuilt-site` live under the same parent directory.
+
+## sync_mealstack_changelog.py
+
+Copies MealStack's release notes onto the site. The app repo's `CHANGELOG.md` is the source of truth; the script splits it on its `## <version> (...)` headings into `src/content/releases/mealstack-<version>.md`, which [/rack/mealstack/changelog](https://missionbuilt.io/rack/mealstack/changelog) renders newest first. The app's About screen links to that page.
+
+### Run it
+
+From the project root, whenever the app's changelog changes:
+
+```bash
+cd ~/Projects/missionbuilt-site
+python3 scripts/sync_mealstack_changelog.py
+```
+
+It reads `~/Projects/mealstack/MealStack/CHANGELOG.md` by default (pass another path as the first argument), rewrites the release files, and removes any for versions no longer in the changelog. A heading `(in progress)` shows as the next build; `(in review)` as submitted and waiting on Apple; `(September 16, 2026)` as shipped that day; `(36)` as shipped as build 36.
+
+Commit the generated files and push. Cloudflare builds without the app repo, so the copies have to be in this one.
+

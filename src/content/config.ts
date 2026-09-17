@@ -70,4 +70,27 @@ const logs = defineCollection({
   }),
 });
 
-export const collections = { chapters, logs };
+/**
+ * Releases collection — release notes for the tools.
+ *
+ * Layout: src/content/releases/{app}-{version}.md. Generated, not hand-written:
+ * scripts/sync_mealstack_changelog.py splits the app repo's CHANGELOG.md into one
+ * file per release. /rack/mealstack/changelog renders them, newest first by `order`.
+ */
+const releases = defineCollection({
+  type: 'content',
+  schema: z.object({
+    app: z.enum(['mealstack']),
+    /** "0.9", "0.8.1". */
+    version: z.string(),
+    /** Sort key: major * 1e6 + minor * 1e3 + patch. */
+    order: z.number(),
+    /** in-progress: still being built. in-review: submitted, waiting on Apple. */
+    status: z.enum(['in-progress', 'in-review', 'shipped']),
+    date: z.coerce.date().optional(),
+    /** TestFlight build number, when that is all the heading carries. */
+    build: z.string().optional(),
+  }),
+});
+
+export const collections = { chapters, logs, releases };
