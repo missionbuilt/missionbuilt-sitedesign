@@ -62,11 +62,20 @@ def lead_of(text: str) -> str:
     """The bullet's first sentence, the line the index shows."""
     lead = first_sentence(text) or text
     if len(lead) > LEAD_MAX:
-        cut = max(lead.rfind(":", 0, LEAD_MAX), lead.rfind(";", 0, LEAD_MAX))
+        # A colon or semicolon that ends a clause (a space after it), never the one
+        # inside a clock time: "7:30 AM" once cut to "Breakfast · 7."
+        cuts = [m.start() for m in re.finditer(r"[:;](?= )", lead[:LEAD_MAX])]
+        cut = cuts[-1] if cuts else -1
         if cut > 30:
             lead = lead[:cut] + "."
         else:
-            lead = lead[:LEAD_MAX].rsplit(" ", 1)[0].rstrip(",;:") + "..."
+            short = lead[:LEAD_MAX].rsplit(" ", 1)[0]
+            # Never leave a quote or a bracket open: stop before the one that opened.
+            if short.count('"') % 2:
+                short = short[: short.rfind('"')]
+            if short.count("(") > short.count(")"):
+                short = short[: short.rfind("(")]
+            lead = short.rstrip(",;: ") + "..."
     return lead
 
 
