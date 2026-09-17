@@ -1,8 +1,8 @@
 {
   "name": "mealstack-plan",
   "zip": "/downloads/mealstack-plan.zip",
-  "zipBytes": 29048,
-  "sha256": "462f8951bcbcce88f3348839f27a582d7188049bd7f8fecb988fb6c6e28f0cf3",
+  "zipBytes": 30471,
+  "sha256": "465c9cea7bf920d23d1b9b1f13af913f6676a611f358f3834fed5b0c08aa4ac5",
   "files": 7,
   "builtInIngredients": 208,
   "builtInVersion": 4,

@@ -16,6 +16,7 @@ Needs PyYAML (the app repo's build_schema.py needs it too):
 Run from the site root:
     python3 scripts/sync_mealstack_schema.py [path/to/docs/schema]
 """
+from __future__ import annotations  # the Mac's system Python is 3.9
 import json
 import re
 import shutil

@@ -19,7 +19,7 @@ Two rules are MealStack's own and shape everything:
 
 ## Versioning
 
-The schema has a semantic version, kept in `docs/schema/VERSION` and written into every document as `mealstack.version`. It tracks the app's version while both are under 1.0; the rules below apply from 1.0 on, and until then any release may rename. 0.9.2 renamed the `food` field set to `ingredient` (so `portion.food` is `portion.ingredient` and `plan.foods` is `plan.ingredients`), the `source` value `pantry` to `built_in`, and `pantry_version` to `built_in_version`.
+The schema has a semantic version, kept in `docs/schema/VERSION` and written into every document as `mealstack.version`. It tracks the app's version while both are under 1.0; the rules below apply from 1.0 on, and until then any release may rename. 0.9.2 renamed the `food` field set to `ingredient` (so `portion.food` is `portion.ingredient` and `plan.foods` is `plan.ingredients`), the `source` value `pantry` to `built_in`, and `pantry_version` to `built_in_version`. 0.9.3 redefined fuel (`meal.kind: fuel`): fuel may carry macros, which count in the day's totals; it never counts in `day.meal_count` or `plan.meals_per_day`; and an `at_session` anchor makes an item fuel.
 
 - A **patch** changes descriptions and examples only.
 - A **minor** adds fields, field sets or expected values. A reader built for 1.0 reads a 1.3 document and ignores what it does not know.

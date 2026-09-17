@@ -1,7 +1,7 @@
 {
  "mealstack": 1,
  "name": "Chicken and rice week",
- "notes": "One week that repeats. Five meals a day, carbs stacked around the session, creatine and a jug on training days. General nutrition information for healthy adults, not medical advice. Written by an AI from your answers; check with a physician or registered dietitian before changing how you eat.",
+ "notes": "One week that repeats. Five meals a day, carbs stacked around the session; on training days creatine, a jug and a shake after the session are fuel on top of the five. General nutrition information for healthy adults, not medical advice. Written by an AI from your answers; check with a physician or registered dietitian before changing how you eat.",
  "schedule": {
   "wake": "07:00",
   "session": "18:00",
@@ -149,7 +149,8 @@
      "note": "A litre of water with an electrolyte packet, through the session."
     },
     {
-     "name": "Post-workout shake",
+     "name": "After-session shake",
+     "kind": "fuel",
      "anchor": "afterSession",
      "offsetMinutes": 30,
      "items": [

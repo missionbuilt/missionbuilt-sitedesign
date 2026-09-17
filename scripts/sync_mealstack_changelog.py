@@ -17,6 +17,7 @@ Heading forms it reads:
 Run from the site root:
     python3 scripts/sync_mealstack_changelog.py [path/to/CHANGELOG.md]
 """
+from __future__ import annotations  # the Mac's system Python is 3.9
 import json
 import re
 import sys

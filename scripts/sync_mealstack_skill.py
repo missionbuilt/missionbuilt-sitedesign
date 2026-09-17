@@ -11,6 +11,7 @@ entries), so running it again with nothing changed changes nothing.
 Run from the site root:
     python3 scripts/sync_mealstack_skill.py [path/to/skills/mealstack-plan]
 """
+from __future__ import annotations  # the Mac's system Python is 3.9
 import hashlib
 import io
 import json

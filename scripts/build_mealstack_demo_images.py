@@ -11,6 +11,7 @@ shot was taken, so this script paints it out; the page draws the demo time there
 Writes public/demos/mealstack/<name>.webp (603 x 1311, 1.5x of the 402 pt screen).
 Needs Pillow (pip install pillow).
 """
+from __future__ import annotations  # the Mac's system Python is 3.9
 import sys
 from pathlib import Path
 from PIL import Image
