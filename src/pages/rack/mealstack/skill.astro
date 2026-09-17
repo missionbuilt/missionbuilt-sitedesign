@@ -38,10 +38,10 @@ const describe = (e: (typeof skill.examples)[number]) =>
   standfirst="A skill that teaches Claude to write a MealStack plan file. Ask for a week of meals, tap the file on your phone, and it lands on your shelves."
   tool="mealstack"
   back={{ label: 'MealStack', href: '/rack/mealstack' }}
-  footLinks={[{ label: 'Release notes', href: '/rack/mealstack/changelog' }, { label: 'Privacy', href: '/rack/mealstack/privacy' }]}
+  footLinks={[{ label: 'Release notes', href: '/rack/mealstack/changelog' }, { label: 'Schema', href: '/rack/mealstack/schema' }, { label: 'Privacy', href: '/rack/mealstack/privacy' }]}
 >
   <Fragment slot="byline">
-    Skill · {skill.name} · {skill.pantryFoods} pantry foods · {skill.files} files
+    Skill · {skill.name} · {skill.builtInIngredients} built-in ingredients · {skill.files} files
   </Fragment>
 
   <Fragment slot="lead">
@@ -64,11 +64,11 @@ const describe = (e: (typeof skill.examples)[number]) =>
   </aside>
 
   <h2 class="rule">What it writes</h2>
-  <p>One file, named for the plan, ending in <code>.mealstack</code>. JSON inside, in the format the app reads. It can carry any mix of the three things MealStack keeps:</p>
+  <p>One file, named for the plan, ending in <code>.mealstack</code>. JSON inside, in the format the app reads. It can carry any mix of the three things MealStack keeps, each landing on its own shelf of the Plan tab:</p>
   <ul class="dash">
     <li><strong>Stacks.</strong> A training day and a rest day of meals under a name. One stack is a week that repeats; several are a rotation, one per week.</li>
     <li><strong>Meals on their own.</strong> Plates with no time on them, for the Meals shelf. "Three lunches I can rotate."</li>
-    <li><strong>Foods.</strong> Anything the app's pantry doesn't have, with what one unit is worth. "Add my protein powder."</li>
+    <li><strong>Ingredients.</strong> Anything the app doesn't have built in, with what one unit is worth. "Add my protein powder."</li>
   </ul>
   <p>It lays out the day the way the app does: morning meals chained from the first one, the carb surge pinned before the session, fuel as its own entry, nothing past your last meal. It sizes each day to your targets within 5%, then runs a checker that refuses what the app refuses. Where Claude can't run code, it checks by hand and tells you so.</p>
 
@@ -86,8 +86,8 @@ const describe = (e: (typeof skill.examples)[number]) =>
   </ul>
   <p>Then get the file onto your phone and tap it:</p>
   <ul class="dash">
-    <li><strong>AirDrop it, mail it to yourself, or save it to Files.</strong> Tap it and MealStack opens with a preview: the stacks and their macros, the meals, the foods it adds.</li>
-    <li><strong>Pick where it goes.</strong> <em>Make it my plan</em> runs the first stack this week and the rest as the rotation, and keeps the plan you had on the Stacks shelf. <em>Kitchen only</em> puts everything on the shelves and leaves your plan alone. Nothing changes until you choose.</li>
+    <li><strong>AirDrop it, mail it to yourself, or save it to Files.</strong> Tap it and MealStack opens with a preview: the stacks and their macros, the meals, the ingredients it adds.</li>
+    <li><strong>Pick where it goes.</strong> <em>Make it my plan</em> runs the first stack this week and the rest as the rotation, and keeps the plan you had on the Stacks shelf. <em>Shelves only</em> puts everything on the shelves and leaves your plan alone. Nothing changes until you choose.</li>
     <li><strong>Or from inside the app.</strong> The Plan tab, the + on any shelf, Bring in a plan file.</li>
   </ul>
 
@@ -105,7 +105,7 @@ const describe = (e: (typeof skill.examples)[number]) =>
 
   <h2 class="rule">What stays where</h2>
   <p>The skill runs in your Claude, under your account. Nothing it writes passes through Mission Built, and the file goes from Claude to your phone the way any file does. The app refuses a file it can't read, so the worst a bad file does is show a message. What the app itself keeps and sends is on <a href="/rack/mealstack/privacy">the privacy page</a>.</p>
-  <p>The format is documented inside the skill (<code>references/plan-format.md</code>), along with the {skill.pantryFoods} built-in foods and what one unit of each is worth. MealStack is a Mission Built mark.</p>
+  <p>The format is documented inside the skill (<code>references/plan-format.md</code>), along with the {skill.builtInIngredients} built-in ingredients and what one unit of each is worth. MealStack is a Mission Built mark.</p>
 
   <Disclaimer title="The disclaimer, in full">
     <p><strong>I am not a doctor. I am not a dietitian.</strong> I am not qualified to tell you how to eat, and nothing this skill writes is advice.</p>

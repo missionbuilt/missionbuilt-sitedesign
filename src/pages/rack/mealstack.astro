@@ -13,7 +13,7 @@
  * why (the four pillars, linking to the Log) → the rule (live cascade)
  * → what it does differently → how you use it → side by side → fine print →
  * join the beta (form → /api/beta) → the kit (plan skill, release notes,
- * privacy) → FAQ → tester quotes (rendered only when there are real ones) →
+ * schema, privacy) → FAQ → tester quotes (rendered only when there are real ones) →
  * related.
  *
  * How we talk about it: the Log "Fueling is training"
@@ -50,7 +50,7 @@ const stats = [
 type Card = { label: string; pillar: string; verdict: string; evidence: string; them: string; mark?: boolean };
 const cards: Card[] = [
   { mark: true, label: 'Timing', pillar: 'Protect the session', verdict: 'The day is anchored to the session, not the clock.', evidence: 'Pre-workout, post-workout and dinner are tied to the session. Everything before them is worked out from the time you actually ate. A late morning tightens the gaps and says what moved; it never pushes the pre-workout meal into the bar.', them: 'Alarms every N hours, or routines that roll lateness forward into the session.' },
-  { label: 'Macros', pillar: 'Protect the protein', verdict: 'Weighed from the plate, or typed. Never both.', evidence: 'A meal is a list of foods and quantities from your kitchen, so the numbers come from the food and editing a portion moves them. The daily target lives apart from the plan, so the editor can say "this plate puts the day 40 g of carbs over" while you are still building it.', them: 'A food database and a total. No plan to measure the plate against.' },
+  { label: 'Macros', pillar: 'Protect the protein', verdict: 'Weighed from the plate, or typed. Never both.', evidence: 'A meal is a list of ingredients and quantities, so the numbers come from the ingredients and editing a portion moves them. The daily target lives apart from the plan, so the editor can say "this plate puts the day 40 g of carbs over" while you are still building it.', them: 'A food database and a total. No plan to measure the plate against.' },
   { label: 'Logging', pillar: 'Protect the record', verdict: 'Log when you eat, not when it was due.', evidence: 'The sheet opens on now with 15, 30 and 60 minutes ago one tap away, and shows what every remaining meal does at that time before you commit. Move today\'s session from the Today screen and the meals tied to it move with it.', them: '"Done" means now, so the day keys off the wrong number.' },
   { label: 'Travel', pillar: 'Protect the day', verdict: 'A day runs in the zone it started in.', evidence: 'Cross three time zones and the spacing holds. The app says so and offers one tap to switch when local time becomes the truth. Skip a meal and it stays a decision, not a miss. History compares home days to travel days.', them: 'Alarms drift with the phone clock. Breakfast at 9, lunch at 10.' },
   { label: 'Surfaces', pillar: 'Protect the protein', verdict: 'You should rarely have to open it.', evidence: 'Notifications carry the plate and two actions: "Ate it now" and "Not yet, ask in 20." Home and Lock Screen widgets with a live countdown. A card on the Lock Screen from an hour before each meal to thirty minutes after, with a Log button on it and at the top of the screen.', them: 'A badge, and a screen you unlock to answer it.' },
@@ -294,8 +294,8 @@ const ld = {
         Meals are plates. Fuel is what you take for training that is not a meal: pre-workout, creatine,
         the intra bottle, hydration. It gets its own alert and its own line on the record, and it never
         counts against your meals.
-        A kitchen of about a hundred foods plus your own, entered per 100 g like the label,
-        and saved meals you can drop onto any plate. Apple Health gets the macros at the real
+        Three shelves on the Plan tab: stacks, meals, and ingredients (about two hundred built in, plus
+        your own, entered like the label). Drop a saved meal onto any plate. Apple Health gets the macros at the real
         eat time, and never reads anything back. Light and dark. History that scores against the target you set.
         Your plan is a file on your phone. No account, no sign-in, nothing to sync.
       </p>
@@ -392,7 +392,7 @@ const ld = {
       <p class="section-label">For testers</p>
       <h2 class="section-h2">Build a plan, see what changed, read the fine print.</h2>
 
-      <div class="related three">
+      <div class="related four">
         <a href="/rack/mealstack/skill" class="related-card">
           <h3>Plan skill</h3>
           <p>Teach Claude to write a MealStack plan file. Ask for a week of meals, tap the file on your phone, and it lands on your shelves.</p>
@@ -401,6 +401,11 @@ const ld = {
         <a href="/rack/mealstack/changelog" class="related-card">
           <h3>Release notes</h3>
           <p>What changed in each build, in plain words, newest first. The app's About links here.</p>
+          <span class="related-cta">Read →</span>
+        </a>
+        <a href="/rack/mealstack/schema" class="related-card">
+          <h3>Schema</h3>
+          <p>One set of names for ingredients, meals, stacks, plans and days, in the app, the plan file, the skill and Coach. Every field, with a download for tools.</p>
           <span class="related-cta">Read →</span>
         </a>
         <a href="/rack/mealstack/privacy" class="related-card">
@@ -477,6 +482,7 @@ const ld = {
       <span class="foot-links">
         <a href="/rack/mealstack/skill">Plan skill</a>
         <a href="/rack/mealstack/changelog">Release notes</a>
+        <a href="/rack/mealstack/schema">Schema</a>
         <a href="/rack/mealstack/privacy">Privacy</a>
         <a href="mailto:mike@missionbuilt.io">mike@missionbuilt.io</a>
       </span>
@@ -835,7 +841,8 @@ const ld = {
 
   /* ============ RELATED ============ */
   .related { margin-top: 28px; display: grid; grid-template-columns: 1fr 1fr; border-top: var(--border-thin); border-bottom: var(--border-thin); }
-  .related.three { grid-template-columns: repeat(3, 1fr); }
+  .related.four .related-card:nth-child(2n) { border-right: none; }
+  .related.four .related-card:nth-child(-n+2) { border-bottom: var(--border-thin); }
   .related-card { display: flex; flex-direction: column; gap: 10px; padding: 28px; border-right: var(--border-thin); text-decoration: none; transition: background 120ms ease-out; }
   .related-card:last-child { border-right: none; }
   .related-card:hover { background: rgba(255,255,255,0.015); }
@@ -891,7 +898,7 @@ const ld = {
     .vr { grid-template-columns: 1fr; gap: 6px; }
     .vr span:nth-child(2)::before { content: 'Other apps · '; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-chalk-faint); }
     .vr span:last-child::before { content: 'MealStack · '; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-chalk-faint); }
-    .related, .related.three { grid-template-columns: 1fr; }
+    .related { grid-template-columns: 1fr; }
     .related-card { border-right: none; border-bottom: var(--border-thin); }
     .related-card:last-child { border-bottom: none; }
     .dashed { margin: 40px var(--pad-page-x-mobile); }

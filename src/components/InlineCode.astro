@@ -1,0 +1,6 @@
+---
+/** Text with `backticks` rendered as <code>. For schema descriptions from YAML. */
+interface Props { text: string }
+const parts = Astro.props.text.split('`');
+---
+{parts.map((p, i) => (i % 2 === 1 ? <code>{p}</code> : p))}

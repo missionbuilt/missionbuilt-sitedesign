@@ -507,12 +507,12 @@ button { font: inherit; }
               </div>
               <div class="section">
                 <div class="prow2"><div class="l"><div class="n">Daily target</div><div class="m">P200  C300  F70  ·  2650 kcal</div><div class="p landed">The meals below land on it.</div></div><span class="chev">›</span></div>
-                <div class="prow2"><div class="l"><div class="n">Kitchen</div><div class="p">6 saved meals · 62 foods</div></div><span class="chev">›</span></div>
+                <div class="prow2"><div class="l"><div class="n">Shelves</div><div class="p">6 meals · 62 ingredients</div></div><span class="chev">›</span></div>
               </div>
               <div class="section">
                 <div class="eb">Meals</div>
                 <div id="plan-rows"></div>
-                <div class="plan-foot">Tap a meal to change what's on the plate, or use one from the Kitchen. Macros come from the quantities, so the totals above move with your edits.</div>
+                <div class="plan-foot">Tap a meal to change what's on the plate, or use a saved meal from the Meals shelf. Macros come from the quantities, so the totals above move with your edits.</div>
               </div>
             </div>
             <div class="tabs">
@@ -686,7 +686,7 @@ button { font: inherit; }
         starter('Build my plan from scratch', 'A schedule, a target and every plate, from a few questions.', '') +
         starter('Fill the empty plates', 'Keep my times. Propose food and numbers for every meal.', 'st-fill') +
         starter('What should my macros be?', 'Bodyweight, how you train, goal. The app does the arithmetic.', '') +
-        starter('Ideas for Breakfast', 'Something new for this plate, from what is in the Kitchen.', '') +
+        starter('Ideas for Breakfast', 'Something new for this plate, from your ingredients.', '') +
         starter('I can\'t eat Breakfast as planned', 'Snap the menu, paste a link, or say what\'s around.', '');
     } else if (mode === 'plan') {
       h += '<div class="divider">This conversation</div>' +
@@ -695,7 +695,7 @@ button { font: inherit; }
         '<div class="body">Your target is 200P · 300C · 70F, 2650 kcal on a training day. Here is a plate for every meal that lands on it, with the carbs leaning toward the session.</div>' +
         '<div class="card" id="plan-card"><div class="hd"><b>Every plate</b><span class="pill dim">proposal</span></div><ul>';
       MEALS.forEach(function (m) { h += '<li><span>' + m.name + '<br/><small class="dim">' + m.plate + '</small></span><span>P' + m.p + ' · C' + m.c + ' · F' + m.f + '</span></li>'; });
-      h += '</ul><div class="about">Adds up to P200 · C300 · F70 · 2650 kcal · from the Kitchen</div><div class="verdict landed">Lands on the plan.</div>' +
+      h += '</ul><div class="about">Adds up to P200 · C300 · F70 · 2650 kcal · from your ingredients</div><div class="verdict landed">Lands on the plan.</div>' +
         '<button class="btn-primary" id="btn-fill">Put it all on the plates</button></div>' +
         '<div class="footnote" style="margin-top:8px">Nothing changes in your plan until you tap.</div>' +
         '<div class="thumbs"><span>👍</span><span>👎</span></div></div>';
@@ -783,13 +783,13 @@ button { font: inherit; }
     { part: 'Getting started', sel: '#qs-preview', awaits: 'build', doText: 'Tap "Build my plan"', title: 'The day it builds',
       desc: 'Morning meals every three hours from your first meal. The pre-workout meal ninety minutes before the session, then the post-workout shake and dinner after it. The lock means that meal is tied to the session and does not move when the morning runs late. Build it.' },
     { part: 'Getting started', sel: '#hero', view: 'today', title: 'A working day, empty plates',
-      desc: 'The next meal is the biggest thing on the screen, counting down. There is no food on the plates yet. You can fill them yourself from the Kitchen, or ask Coach to do it.' },
+      desc: 'The next meal is the biggest thing on the screen, counting down. There is no food on the plates yet. You can fill them yourself from your shelves, or ask Coach to do it.' },
     { part: 'Getting started', sel: '.tab.coach', awaits: 'tab:coach', doText: 'Tap Coach', title: 'Ask Coach',
       desc: 'Coach is an assistant that proposes and never decides. It is off by default; the first time you open it, the app tells you what it is, what it sends, and that it is not a doctor. Open it.' },
     { part: 'Getting started', sel: '#st-fill', awaits: 'starter', doText: 'Tap "Fill the empty plates"', title: 'Fill the plates',
       desc: 'A few ready-made questions. This one keeps your times and asks for food and numbers for every meal.' },
     { part: 'Getting started', sel: '#plan-card', awaits: 'fill', doText: 'Tap "Put it all on the plates"', title: 'Coach proposes. You decide.',
-      desc: 'Coach reads your target and your Kitchen and proposes a plate for each of the six meals, with the numbers next to it and whether the day adds up. Nothing is on your plan until you tap the button.' },
+      desc: 'Coach reads your target and your ingredients and proposes a plate for each of the six meals, with the numbers next to it and whether the day adds up. Nothing is on your plan until you tap the button.' },
     { part: 'Getting started', sel: '#totals', title: 'Ready',
       desc: 'Every plate has food and numbers now, and the totals know what the day is worth. Change any plate later from Plan and the numbers follow. That was the setup. Now a real day.' },
     { part: 'A late morning', sel: '#hero', jump: 'late', title: 'Later that morning',

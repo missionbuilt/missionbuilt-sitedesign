@@ -84,8 +84,8 @@ def main() -> int:
         "zipBytes": ZIP_OUT.stat().st_size,
         "sha256": hashlib.sha256(ZIP_OUT.read_bytes()).hexdigest(),
         "files": len(listing),
-        "pantryFoods": len(pantry.get("foods", [])),
-        "pantryVersion": pantry.get("pantryVersion"),
+        "builtInIngredients": len(pantry.get("foods", [])),
+        "builtInVersion": pantry.get("pantryVersion"),
         "examples": examples,
     }
     DATA_OUT.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")

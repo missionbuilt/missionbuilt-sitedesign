@@ -1,0 +1,122 @@
+---
+/**
+ * One field set of the MealStack Schema. /rack/mealstack/schema/{name}
+ *
+ * The set's description, where it is reused, and its fields as a list (not a wide
+ * table, so it reads on a phone): full name, level and type, what it is, allowed
+ * values or pattern, an example. Fields have anchors (#meal-anchor) to link to.
+ */
+import ToolNoteLayout from '../../../../layouts/ToolNoteLayout.astro';
+import InlineCode from '../../../../components/InlineCode.astro';
+import schema from '../../../../data/mealstack-schema.json';
+import { SCHEMA, setUrl } from '../../../../data/schema';
+
+type Set = (typeof schema.sets)[number];
+
+export function getStaticPaths() {
+  return schema.sets.map((s, i) => ({
+    params: { set: s.name },
+    props: { set: s, prev: schema.sets[i - 1] ?? null, next: schema.sets[i + 1] ?? null },
+  }));
+}
+
+const { set, prev, next } = Astro.props as { set: Set; prev: Set | null; next: Set | null };
+const anchor = (name: string) => name.replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '').toLowerCase();
+const [firstPara, ...moreParas] = set.paragraphs;
+---
+<ToolNoteLayout
+  title={`${set.title} · The MealStack Schema ${schema.version} · Mission Built`}
+  description={`${set.title}: ${set.short} A field set of the MealStack Schema ${schema.version}.`}
+  crumbs={[{ label: 'MealStack', href: '/rack/mealstack' }, { label: 'Schema', href: SCHEMA }, { label: set.title }]}
+  eyebrow={`The MealStack Schema ${schema.version} · Field set`}
+  heading={set.title}
+  standfirst={set.short}
+  tool="mealstack"
+  back={{ label: 'All field sets', href: `${SCHEMA}#field-sets` }}
+  footLinks={[{ label: 'Plan skill', href: '/rack/mealstack/skill' }, { label: 'Release notes', href: '/rack/mealstack/changelog' }]}
+>
+  <Fragment slot="byline">
+    {set.root ? 'At the root of every document' : `${set.name}.*`} · {set.fields.length} fields · {set.fields.filter((f) => f.level === 'core').length} core
+  </Fragment>
+
+  {firstPara && <p class="first"><InlineCode text={firstPara} /></p>}
+  {moreParas.map((p) => <p><InlineCode text={p} /></p>)}
+  {set.root && <p>These fields sit at the root of the document, with no prefix.</p>}
+
+  {set.reusedAs.length > 0 && (
+    <section class="reuse" aria-label="Reused as">
+      <p class="k">Reused as</p>
+      <ul>
+        {set.reusedAs.map((r) => (
+          <li><code>{r.path}</code>{r.array && <span class="flag">array</span>}{r.note && <span class="note">{r.note}</span>}</li>
+        ))}
+      </ul>
+      {set.nestedOnly && <p class="nested"><code>{set.name}.*</code> never appears at the top level; only nested.</p>}
+    </section>
+  )}
+
+  <h2 class="rule">Fields</h2>
+  <ol class="fields">
+    {set.fields.map((f) => (
+      <li id={anchor(f.name)}>
+        <div class="fh">
+          <a class="fname plain-code" href={`#${anchor(f.name)}`}><code>{f.name}</code></a>
+          <span class="tags">
+            <span class:list={['tag', f.level === 'core' && 'core']}>{f.level}</span>
+            <span class="tag">{f.type}{f.array && '[]'}</span>
+            {f.required && <span class="tag req">required</span>}
+          </span>
+        </div>
+        {f.paragraphs.map((p) => <p><InlineCode text={p} /></p>)}
+        {f.values.length > 0 && (
+          <p class="vals"><span class="lab">Values</span>{f.values.map((v) => <code>{v}</code>)}</p>
+        )}
+        {f.pattern && <p class="vals"><span class="lab">Pattern</span><code>{f.pattern}</code></p>}
+        {f.example !== null && <p class="vals"><span class="lab">Example</span><code>{f.example}</code></p>}
+      </li>
+    ))}
+  </ol>
+
+  <nav class="sib" aria-label="Other field sets">
+    {prev ? <a href={setUrl(prev.name)} class="s"><span class="k">Previous</span><span class="v">{prev.title}</span></a> : <span />}
+    {next ? <a href={setUrl(next.name)} class="s nxt"><span class="k">Next</span><span class="v">{next.title}</span></a> : <span />}
+  </nav>
+</ToolNoteLayout>
+
+<style>
+  .first { margin-top: 30px !important; }
+
+  .reuse { margin: 26px 0 0; padding: 16px 18px; border: var(--border-thin); }
+  .reuse .k { margin: 0 0 10px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); }
+  .reuse ul { list-style: none; margin: 0; padding: 0; }
+  .reuse li { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; padding: 6px 0; border-top: 1px dashed var(--color-rule); font-size: 14.5px; }
+  .reuse li:first-child { border-top: none; }
+  .reuse .note { flex-basis: 100%; color: var(--color-chalk-dim); }
+  .reuse .nested { margin: 10px 0 0; font-size: 14px; }
+  .flag { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-chalk-faint); }
+
+  .fields { list-style: none; margin: 14px 0 0; padding: 0; }
+  .fields > li { scroll-margin-top: 24px; padding: 16px 0 6px; border-bottom: var(--border-thin); }
+  .fields > li:first-child { padding-top: 4px; }
+  .fields > li:target { background: rgba(255,255,255,0.02); }
+  .fh { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 12px; margin-bottom: 8px; }
+  .fname { text-decoration: none; }
+  .fname code { font-size: 15px; color: var(--color-chalk); }
+  .fname:hover code { color: var(--color-blood); }
+  .tags { display: inline-flex; flex-wrap: wrap; gap: 6px; }
+  .tag { padding: 2px 6px; border: var(--border-thin); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-chalk-faint); }
+  .tag.core { color: var(--color-chalk-dim); }
+  .tag.req { color: var(--color-chalk); border-color: var(--color-chalk-faint); }
+  .fields p { font-size: 15.5px; line-height: 1.6; margin: 0 0 10px !important; }
+  .vals { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 10px; }
+  .vals .lab { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-chalk-faint); min-width: 64px; }
+  .vals code { overflow-wrap: anywhere; }
+
+  .sib { margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .s { display: flex; flex-direction: column; gap: 4px; padding: 14px 16px; border: var(--border-thin); text-decoration: none; transition: background 120ms ease-out; }
+  .s:hover { background: rgba(255,255,255,0.015); }
+  .s.nxt { text-align: right; }
+  .s .k { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-faint); }
+  .s .v { font-family: var(--font-display); font-weight: 600; font-size: 20px; text-transform: uppercase; color: var(--color-chalk); }
+  .s:hover .k { color: var(--color-blood); }
+</style>

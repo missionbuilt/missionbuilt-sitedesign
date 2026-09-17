@@ -75,7 +75,8 @@ const logs = defineCollection({
  *
  * Layout: src/content/releases/{app}-{version}.md. Generated, not hand-written:
  * scripts/sync_mealstack_changelog.py splits the app repo's CHANGELOG.md into one
- * file per release. /rack/mealstack/changelog renders them, newest first by `order`.
+ * file per release. /rack/mealstack/changelog lists them newest first by `order`;
+ * /rack/mealstack/changelog/{version with dashes} is one release.
  */
 const releases = defineCollection({
   type: 'content',
@@ -90,6 +91,10 @@ const releases = defineCollection({
     date: z.coerce.date().optional(),
     /** TestFlight build number, when that is all the heading carries. */
     build: z.string().optional(),
+    /** How many lines the release has. */
+    changes: z.number(),
+    /** The release's `###` groups, in order, with each line's first sentence. */
+    groups: z.array(z.object({ title: z.string(), slug: z.string(), leads: z.array(z.string()) })),
   }),
 });
 

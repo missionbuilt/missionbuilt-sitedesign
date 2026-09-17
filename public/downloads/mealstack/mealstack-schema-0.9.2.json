@@ -1,0 +1,776 @@
+{
+  "schema": "MealStack Schema",
+  "version": "0.9.2",
+  "fields": {
+    "@timestamp": {
+      "level": "core",
+      "type": "date",
+      "required": true,
+      "short": "When the document's event happened, or the record was written.",
+      "description": "The moment the document describes, as an RFC 3339 date-time with offset. For a day record it is the day's start in the day's zone; for an event it is when the event happened; for a plan file it is when the file was written. Required on records and events; a plan file that omits it is read as \"now\".\n",
+      "example": "2026-09-16T07:00:00-04:00",
+      "field_set": "base"
+    },
+    "labels": {
+      "level": "extended",
+      "type": "object",
+      "short": "Custom key/value pairs.",
+      "description": "Custom key/value pairs that travel with the document and mean nothing to the app. Keys are lower case with underscores; values are strings. For anything the schema does not name: a coach's client id, a spreadsheet row, a note to self.\n",
+      "example": "{\"coach_client\": \"mn-042\"}",
+      "field_set": "base"
+    },
+    "tags": {
+      "level": "extended",
+      "type": "keyword",
+      "normalize": [
+        "array"
+      ],
+      "short": "Free-form tags.",
+      "description": "A list of short keywords for filtering (\"cut\", \"meet-prep\", \"travel\").",
+      "example": "[\"meet-prep\", \"8-weeks-out\"]",
+      "field_set": "base"
+    },
+    "mealstack.version": {
+      "level": "core",
+      "type": "keyword",
+      "required": true,
+      "short": "The MealStack Schema version the document follows.",
+      "description": "The version of the MealStack Schema the document is written against, as a semantic version string. A reader refuses a major version it does not know and reads any minor or patch version at or below the one it was built for. The `.mealstack` plan file format 1 carries `\"mealstack\": 1` instead and predates this field; format 2 carries `mealstack.version`.\n",
+      "example": "1.0.0",
+      "field_set": "mealstack"
+    },
+    "mealstack.kind": {
+      "level": "core",
+      "type": "keyword",
+      "required": true,
+      "short": "What the document is.",
+      "description": "What the document is, which says which field sets are present. A `plan` carries `plan.*` and its stacks, meals and ingredients; a `shelf` carries meals or ingredients on their own with no plan; a `day` is one day's record; an `event` is one telemetry event; a `proposal` is something Coach offered that the person has not accepted.\n",
+      "expected_values": [
+        "plan",
+        "shelf",
+        "day",
+        "event",
+        "proposal"
+      ],
+      "example": "plan",
+      "field_set": "mealstack"
+    },
+    "mealstack.author": {
+      "level": "extended",
+      "type": "keyword",
+      "short": "What wrote the document.",
+      "description": "What wrote the document: the app itself, the MealStack skill running in a model, Coach, or a person by hand. Used to say where a stack or a meal came from and to decide how much to trust a stated figure.\n",
+      "expected_values": [
+        "app",
+        "skill",
+        "coach",
+        "person"
+      ],
+      "example": "skill",
+      "field_set": "mealstack"
+    },
+    "mealstack.author.version": {
+      "level": "extended",
+      "type": "keyword",
+      "short": "The version of what wrote it.",
+      "description": "The version of the app, skill or Coach model that wrote the document.",
+      "example": "0.9",
+      "field_set": "mealstack"
+    },
+    "macros.protein": {
+      "level": "core",
+      "type": "float",
+      "required": true,
+      "short": "Grams of protein.",
+      "description": "Grams of protein. Never negative.",
+      "example": 55,
+      "field_set": "macros"
+    },
+    "macros.carbs": {
+      "level": "core",
+      "type": "float",
+      "required": true,
+      "short": "Grams of carbohydrate.",
+      "description": "Grams of carbohydrate. Never negative.",
+      "example": 73,
+      "field_set": "macros"
+    },
+    "macros.fat": {
+      "level": "core",
+      "type": "float",
+      "required": true,
+      "short": "Grams of fat.",
+      "description": "Grams of fat. Never negative.",
+      "example": 20,
+      "field_set": "macros"
+    },
+    "macros.kcal": {
+      "level": "core",
+      "type": "float",
+      "short": "Kilocalories, derived.",
+      "description": "Kilocalories, always 4 × protein + 4 × carbs + 9 × fat. Derived, never independent: a writer may include it for readers that cannot multiply, and a reader recomputes it and ignores the stored value.\n",
+      "example": 692,
+      "field_set": "macros"
+    },
+    "ingredient.id": {
+      "level": "core",
+      "type": "keyword",
+      "required": true,
+      "short": "The ingredient's identifier.",
+      "description": "A stable identifier: starts with a letter, then letters, digits, `.`, `_` and `-`. Built-in ids are short and unprefixed (`chicken_raw`, `rice_cooked`). An ingredient declared in a file is prefixed `import.` on import so it can never collide with a built-in one; a person's own is prefixed `custom.`.\n",
+      "pattern": "^[A-Za-z][A-Za-z0-9._-]*$",
+      "example": "chicken_raw",
+      "field_set": "ingredient"
+    },
+    "ingredient.name": {
+      "level": "core",
+      "type": "keyword",
+      "required": true,
+      "short": "As it appears on a plate.",
+      "description": "The ingredient's name as it appears on a plate and in search.",
+      "example": "chicken breast",
+      "field_set": "ingredient"
+    },
+    "ingredient.unit": {
+      "level": "core",
+      "type": "keyword",
+      "required": true,
+      "short": "The unit `per` is worth.",
+      "description": "The unit the figures are for. Quantities of this ingredient are always in this unit: grams for a gram ingredient, cups for a cup ingredient, scoops for a scoop ingredient. A cup is 240 ml.\n",
+      "expected_values": [
+        "gram",
+        "ounce",
+        "each",
+        "cup",
+        "tbsp",
+        "tsp",
+        "scoop",
+        "packet",
+        "bottle"
+      ],
+      "example": "ounce",
+      "field_set": "ingredient"
+    },
+    "ingredient.per": {
+      "level": "core",
+      "type": "object",
+      "required": true,
+      "short": "The macros in exactly one unit (a `macros`).",
+      "description": "The macros in exactly one unit of the ingredient. Per gram for a gram ingredient, per ounce for an ounce ingredient, per piece, cup, spoon, scoop, packet or bottle otherwise. Ceilings above which a figure is refused as being for the wrong unit: 9.1 kcal per gram, 260 per ounce, 50 per tsp, 140 per tbsp, 1,000 per cup or each, 400 per scoop or packet, 800 per bottle.\n",
+      "example": "{\"protein\": 6.5, \"carbs\": 0, \"fat\": 1}",
+      "field_set": "ingredient"
+    },
+    "ingredient.qualifier": {
+      "level": "extended",
+      "type": "keyword",
+      "short": "What the figure is for.",
+      "description": "What the figure is for, so two figures for one ingredient tell apart: \"raw weight\", \"cooked weight\", \"from the label\", \"1 cup = 240 ml\".\n",
+      "example": "raw weight",
+      "field_set": "ingredient"
+    },
+    "ingredient.source": {
+      "level": "extended",
+      "type": "keyword",
+      "short": "Where the ingredient came from.",
+      "description": "Built into the app, the person's own, or an import.",
+      "expected_values": [
+        "built_in",
+        "custom",
+        "imported"
+      ],
+      "example": "built_in",
+      "field_set": "ingredient"
+    },
+    "ingredient.built_in_version": {
+      "level": "extended",
+      "type": "integer",
+      "short": "The release of the built-in ingredients the figure is from.",
+      "description": "For a built-in ingredient, which release of the built-in ingredients the figures are from, so a plate priced against an older release can be re-priced when a figure is corrected.\n",
+      "example": 4,
+      "field_set": "ingredient"
+    },
+    "portion.id": {
+      "level": "extended",
+      "type": "keyword",
+      "short": "The line's own identifier.",
+      "description": "A UUID for the line, so an edit can address one of two identical lines.",
+      "example": "5b2c0e5a-3b2f-4f3e-9c1a-1e2b3c4d5e6f",
+      "field_set": "portion"
+    },
+    "portion.quantity": {
+      "level": "core",
+      "type": "float",
+      "required": true,
+      "short": "How much, in the ingredient's unit.",
+      "description": "How much of the ingredient, in its own unit. Positive. Caps per unit above which a line is refused as not a plate: 2,000 g, 64 oz, 24 each, 8 cups, 16 tbsp, 24 tsp, 6 scoops, 6 packets, 6 bottles. A line over 1,500 kcal is refused whatever the unit.\n",
+      "example": 7.05,
+      "field_set": "portion"
+    },
+    "portion.macros": {
+      "level": "core",
+      "type": "object",
+      "short": "What the line comes to, derived (a `macros`).",
+      "description": "The ingredient's `per` times the quantity. Derived; a reader recomputes it.",
+      "field_set": "portion"
+    },
+    "meal.id": {
+      "level": "core",
+      "type": "keyword",
+      "short": "The slot's identifier within a plan.",
+      "description": "The slot's identifier within a plan: `train.m1`, `train.f2`, `rest.m3`. The same slot ids run through every stack of a rotation (only the plates change), which is how a day's log stays whole when the stack changes. A meal on its own has no slot and reads `shelf.m1`.\n",
+      "example": "train.m3",
+      "field_set": "meal"
+    },
+    "meal.code": {
+      "level": "extended",
+      "type": "keyword",
+      "short": "The short code, never shown to a person.",
+      "description": "A short code for telemetry and Coach: `M1`, `M2`, `PRE`, `POST`, `F1`. Never shown to a person; a screen that names a meal uses `meal.name`.\n",
+      "example": "PRE",
+      "field_set": "meal"
+    },
+    "meal.name": {
+      "level": "core",
+      "type": "keyword",
+      "required": true,
+      "short": "What the meal is called.",
+      "description": "What the meal is called, as it appears on Today and in History.",
+      "example": "Paprika chicken box",
+      "field_set": "meal"
+    },
+    "meal.kind": {
+      "level": "core",
+      "type": "keyword",
+      "short": "A meal or fuel.",
+      "description": "`meal` (the default) or `fuel`. Fuel has no portions and no stated macros, keeps its anchor, offset and alert, is logged, and never counts as a meal or adds to a total.\n",
+      "expected_values": [
+        "meal",
+        "fuel"
+      ],
+      "example": "meal",
+      "field_set": "meal"
+    },
+    "meal.anchor": {
+      "level": "core",
+      "type": "keyword",
+      "short": "What the meal's time hangs from.",
+      "description": "What the meal's time hangs from. `forward` chains off the meal before it (the first forward meal of the day sits on wake time); `before_session`, `at_session` and `after_session` are pinned to the session and do not move when the morning runs late. Rest days have no session, so every rest meal is `forward`. Every training day has one meal (not fuel) anchored `before_session`: the carb surge. Required inside a stack; absent on a meal on its own.\n",
+      "expected_values": [
+        "forward",
+        "before_session",
+        "at_session",
+        "after_session"
+      ],
+      "example": "before_session",
+      "field_set": "meal"
+    },
+    "meal.offset_minutes": {
+      "level": "core",
+      "type": "integer",
+      "short": "Minutes from the anchor.",
+      "description": "For `forward`, minutes after the previous forward meal (0 for the first). For `before_session` and `after_session`, minutes before or after the session. For `at_session`, 0. Never negative. Required inside a stack; absent on a meal on its own.\n",
+      "example": 90,
+      "field_set": "meal"
+    },
+    "meal.prep_lead_minutes": {
+      "level": "extended",
+      "type": "integer",
+      "short": "How long before the meal the start-cooking alert fires.",
+      "description": "How many minutes before the meal's time the start-cooking alert fires; 0 for none.",
+      "example": 8,
+      "field_set": "meal"
+    },
+    "meal.portions": {
+      "level": "core",
+      "type": "object",
+      "normalize": [
+        "array"
+      ],
+      "short": "What is on the plate (an array of `portion`).",
+      "description": "What is on the plate, in order. One of `portions` or `stated` is required on a meal; fuel has neither.\n",
+      "field_set": "meal"
+    },
+    "meal.stated": {
+      "level": "core",
+      "type": "object",
+      "short": "Typed figures for a plate that was never weighed (a `macros`).",
+      "description": "Grams of protein, carbs and fat typed in for a plate the person knows the numbers of but does not weigh. Read only when `portions` is empty.\n",
+      "field_set": "meal"
+    },
+    "meal.macros": {
+      "level": "core",
+      "type": "object",
+      "short": "What the plate comes to, derived (a `macros`).",
+      "description": "The sum of the portions, or `stated` when there are none. Derived; never written by a plan file.",
+      "field_set": "meal"
+    },
+    "meal.note": {
+      "level": "extended",
+      "type": "text",
+      "short": "One line under the name.",
+      "description": "One line under the name, on Today and on the shelf.",
+      "example": "Blue box. Microwave 2½ min, stir, 1½ min.",
+      "field_set": "meal"
+    },
+    "meal.steps": {
+      "level": "extended",
+      "type": "text",
+      "normalize": [
+        "array"
+      ],
+      "short": "How it is made.",
+      "description": "How it is made, one step per entry.",
+      "example": "[\"Reheat lid off.\", \"Sesame oil after.\"]",
+      "field_set": "meal"
+    },
+    "meal.source": {
+      "level": "extended",
+      "type": "keyword",
+      "short": "Where the meal came from.",
+      "description": "The example plan, Coach, the person's own hands, or an import.",
+      "expected_values": [
+        "example",
+        "coach",
+        "custom",
+        "imported"
+      ],
+      "example": "imported",
+      "field_set": "meal"
+    },
+    "stack.id": {
+      "level": "extended",
+      "type": "keyword",
+      "short": "The stack's identifier on the shelf.",
+      "description": "A UUID for a kept stack. A stack inside a plan file has none; its position and name identify it.",
+      "example": "8f14e45f-ceea-467a-9575-6d3f1f4b2c11",
+      "field_set": "stack"
+    },
+    "stack.name": {
+      "level": "core",
+      "type": "keyword",
+      "required": true,
+      "short": "What the stack is called.",
+      "description": "What the stack is called (\"The Base\", \"Rice Bowls\", \"Meet week\"). The first stack of a plan has one too.",
+      "example": "Rice Bowls",
+      "field_set": "stack"
+    },
+    "stack.note": {
+      "level": "extended",
+      "type": "text",
+      "short": "One line under the name.",
+      "description": "One line under the name. An imported stack's note carries the plan's name and notes.",
+      "example": "Teriyaki chicken at lunch, crispy tofu after training.",
+      "field_set": "stack"
+    },
+    "stack.training": {
+      "level": "core",
+      "type": "object",
+      "normalize": [
+        "array"
+      ],
+      "short": "The training day's meals (an array of `meal`).",
+      "description": "The training day's meals, in the order eaten. Either day may be empty only if the other is not.",
+      "field_set": "stack"
+    },
+    "stack.rest": {
+      "level": "core",
+      "type": "object",
+      "normalize": [
+        "array"
+      ],
+      "short": "The rest day's meals (an array of `meal`).",
+      "description": "The rest day's meals, in the order eaten, all anchored `forward`.",
+      "field_set": "stack"
+    },
+    "stack.source": {
+      "level": "extended",
+      "type": "keyword",
+      "short": "Where the stack came from.",
+      "description": "The example rotation, Coach, the person's own hands, or an import.",
+      "expected_values": [
+        "example",
+        "coach",
+        "custom",
+        "imported"
+      ],
+      "example": "custom",
+      "field_set": "stack"
+    },
+    "stack.origin": {
+      "level": "extended",
+      "type": "keyword",
+      "short": "The plan the stack came in with.",
+      "description": "For an imported stack, the name of the plan file it came in with, so a four-stack import reads as one thing.",
+      "example": "The Rotation",
+      "field_set": "stack"
+    },
+    "plan.name": {
+      "level": "core",
+      "type": "keyword",
+      "required": true,
+      "short": "What the plan is called.",
+      "description": "What the plan is called. A single stack imports under its own name.",
+      "example": "The Rotation",
+      "field_set": "plan"
+    },
+    "plan.notes": {
+      "level": "extended",
+      "type": "text",
+      "short": "A sentence or two about the plan.",
+      "description": "A sentence or two about the plan. A plan written by a model carries the caveat here (\"General nutrition information for healthy adults, not medical advice…\"), so it shows on the import preview and under each stack.\n",
+      "example": "A four-week meal-prep loop. When Week 4 ends, start Week 1 again.",
+      "field_set": "plan"
+    },
+    "plan.stacks": {
+      "level": "core",
+      "type": "object",
+      "normalize": [
+        "array"
+      ],
+      "short": "The stacks, in rotation order (an array of `stack`).",
+      "description": "The stacks, in rotation order, one per calendar week. The first runs first; when the last ends the first runs again. In plan file format 1 the key `weeks` is the older spelling and reads as the same thing.",
+      "field_set": "plan"
+    },
+    "plan.meals": {
+      "level": "core",
+      "type": "object",
+      "normalize": [
+        "array"
+      ],
+      "short": "Meals on their own (an array of `meal` with no anchor).",
+      "description": "Meals for the Meals shelf, with no place in a day. A file may carry only these.",
+      "field_set": "plan"
+    },
+    "plan.ingredients": {
+      "level": "core",
+      "type": "object",
+      "normalize": [
+        "array"
+      ],
+      "short": "Ingredients the app doesn't have built in (an array of `ingredient`).",
+      "description": "Ingredients the app doesn't have built in, declared once and referenced by id from portions. A file may carry only these. In plan file format 1 the app reads the key `ingredients` from 0.9.1 and `foods` (the spelling 0.9 reads, and the one writers still write until 0.9.1 is the oldest build in use) as the same thing; a file with both is read by `ingredients`.",
+      "field_set": "plan"
+    },
+    "plan.week_anchor": {
+      "level": "extended",
+      "type": "date",
+      "short": "The calendar week the first stack ran.",
+      "description": "The start of the calendar week that counts as the first stack's, from which the rotation is counted. Set by the app; \"run Rice Bowls this week\" moves it. Absent on a single-stack plan and in a plan file.\n",
+      "example": "2026-09-14",
+      "field_set": "plan"
+    },
+    "plan.meals_per_day.training": {
+      "level": "extended",
+      "type": "integer",
+      "short": "How many meals a training day holds.",
+      "description": "How many meal slots (not fuel) a training day holds. Five by default, 2 to 8.",
+      "example": 7,
+      "field_set": "plan"
+    },
+    "plan.meals_per_day.rest": {
+      "level": "extended",
+      "type": "integer",
+      "short": "How many meals a rest day holds.",
+      "description": "How many meal slots (not fuel) a rest day holds. Five by default, 2 to 8.",
+      "example": 5,
+      "field_set": "plan"
+    },
+    "plan.target": {
+      "level": "core",
+      "type": "object",
+      "short": "The daily targets (a `target`).",
+      "description": "The daily targets every stack is measured against. Offered on import, never applied silently.",
+      "field_set": "plan"
+    },
+    "plan.schedule": {
+      "level": "core",
+      "type": "object",
+      "short": "The clock the plan is built on (a `schedule`).",
+      "description": "The times and days the plan is built on. Offered on import, never applied silently.",
+      "field_set": "plan"
+    },
+    "schedule.wake": {
+      "level": "core",
+      "type": "keyword",
+      "short": "When the first meal is, `HH:MM`.",
+      "description": "When the first meal of the day is, as `HH:MM` 24-hour local time.",
+      "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$",
+      "example": "07:00",
+      "field_set": "schedule"
+    },
+    "schedule.session": {
+      "level": "core",
+      "type": "keyword",
+      "short": "When the first working set is, `HH:MM`.",
+      "description": "When the training session starts (the first working set), `HH:MM`. Rest days have no session.",
+      "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$",
+      "example": "18:00",
+      "field_set": "schedule"
+    },
+    "schedule.latest_meal": {
+      "level": "core",
+      "type": "keyword",
+      "short": "The latest a meal may land, `HH:MM`.",
+      "description": "The latest a meal may land, `HH:MM`. The day compresses rather than cross it.",
+      "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$",
+      "example": "21:00",
+      "field_set": "schedule"
+    },
+    "schedule.training_weekdays": {
+      "level": "core",
+      "type": "integer",
+      "normalize": [
+        "array"
+      ],
+      "short": "Which weekdays are training days, 1 = Sunday … 7 = Saturday.",
+      "description": "Which weekdays are training days, as 1 = Sunday through 7 = Saturday. Every other day is a rest day.",
+      "example": "[2, 3, 5, 6]",
+      "field_set": "schedule"
+    },
+    "schedule.min_gap_minutes": {
+      "level": "extended",
+      "type": "integer",
+      "short": "The closest two meals may sit.",
+      "description": "The closest two meals may sit when the day compresses. 120 by default.",
+      "example": 120,
+      "field_set": "schedule"
+    },
+    "schedule.home_timezone": {
+      "level": "extended",
+      "type": "keyword",
+      "short": "The home time zone, as an IANA name.",
+      "description": "The time zone the times are in, as an IANA name. A day run away from home is a travel day.",
+      "example": "America/New_York",
+      "field_set": "schedule"
+    },
+    "target.training": {
+      "level": "core",
+      "type": "object",
+      "short": "The training-day target (a `macros`).",
+      "description": "Grams of protein, carbs and fat for a training day.",
+      "example": "{\"protein\": 230, \"carbs\": 360, \"fat\": 63}",
+      "field_set": "target"
+    },
+    "target.rest": {
+      "level": "core",
+      "type": "object",
+      "short": "The rest-day target (a `macros`).",
+      "description": "Grams of protein, carbs and fat for a rest day.",
+      "example": "{\"protein\": 220, \"carbs\": 272, \"fat\": 73}",
+      "field_set": "target"
+    },
+    "target.formula": {
+      "level": "extended",
+      "type": "keyword",
+      "short": "How the target was set.",
+      "description": "Where the numbers came from: typed by hand, Coach's formula, or a file.",
+      "expected_values": [
+        "manual",
+        "coach",
+        "imported"
+      ],
+      "example": "coach",
+      "field_set": "target"
+    },
+    "day.key": {
+      "level": "core",
+      "type": "keyword",
+      "required": true,
+      "short": "The calendar day, `YYYY-MM-DD`, in the day's zone.",
+      "description": "The calendar day as `YYYY-MM-DD` in the day's own time zone. The document's identity.",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+      "example": "2026-09-16",
+      "field_set": "day"
+    },
+    "day.timezone": {
+      "level": "core",
+      "type": "keyword",
+      "short": "The zone the day ran in, as an IANA name.",
+      "description": "The time zone the day ran in. A day keeps its zone when the phone moves, so a day in progress is not abandoned at a border.",
+      "example": "America/New_York",
+      "field_set": "day"
+    },
+    "day.type": {
+      "level": "core",
+      "type": "keyword",
+      "required": true,
+      "short": "Training or rest.",
+      "description": "Whether the day ran as a training day or a rest day, after any override.",
+      "expected_values": [
+        "training",
+        "rest"
+      ],
+      "example": "training",
+      "field_set": "day"
+    },
+    "day.stack": {
+      "level": "core",
+      "type": "keyword",
+      "short": "The stack the day ran on, by name.",
+      "description": "The name of the stack of the rotation the day ran on, stamped at the first log and again if the person says otherwise that day. Absent on a single-stack plan.",
+      "example": "Rice Bowls",
+      "field_set": "day"
+    },
+    "day.travel": {
+      "level": "extended",
+      "type": "boolean",
+      "short": "Whether the day was a travel day.",
+      "description": "Whether the day ran away from home, set by the zone or by hand.",
+      "example": false,
+      "field_set": "day"
+    },
+    "day.meal_count": {
+      "level": "extended",
+      "type": "integer",
+      "short": "How many meals the day ran on, when not the plan's.",
+      "description": "How many meal slots the day ran on when the person set it for the day; absent when it was the plan's count.",
+      "example": 4,
+      "field_set": "day"
+    },
+    "day.session_start": {
+      "level": "extended",
+      "type": "date",
+      "short": "When the session actually started.",
+      "description": "When training actually began, set by logging the session's fuel or by hand; the block around training moves with it.",
+      "example": "2026-09-16T18:12:00-04:00",
+      "field_set": "day"
+    },
+    "day.target": {
+      "level": "core",
+      "type": "object",
+      "short": "The target the day ran against (a `macros`).",
+      "description": "The daily target as it stood when the day was logged.",
+      "field_set": "day"
+    },
+    "day.consumed": {
+      "level": "core",
+      "type": "object",
+      "short": "What was eaten, derived (a `macros`).",
+      "description": "The sum of every logged meal's `consumed`. Derived.",
+      "field_set": "day"
+    },
+    "day.meals": {
+      "level": "core",
+      "type": "object",
+      "normalize": [
+        "array"
+      ],
+      "short": "Every meal of the day and what happened to it (an array of `day.meal`).",
+      "description": "Every slot the day had, logged or not, in the day's order.",
+      "field_set": "day"
+    },
+    "day.meal.id": {
+      "level": "core",
+      "type": "keyword",
+      "required": true,
+      "short": "The slot's id.",
+      "description": "The slot the entry is filed under, matching `meal.id` in the plan.",
+      "example": "train.m3",
+      "field_set": "day"
+    },
+    "day.meal.planned_at": {
+      "level": "core",
+      "type": "date",
+      "short": "When the app said the meal was due.",
+      "description": "The time the app showed for the meal at the moment it was logged. History scores timing against this.",
+      "example": "2026-09-16T12:30:00-04:00",
+      "field_set": "day"
+    },
+    "day.meal.eaten_at": {
+      "level": "core",
+      "type": "date",
+      "short": "When it was eaten.",
+      "description": "When the meal was logged as eaten. Never in the future; absent when it was not eaten.",
+      "example": "2026-09-16T12:41:00-04:00",
+      "field_set": "day"
+    },
+    "day.meal.skipped": {
+      "level": "core",
+      "type": "boolean",
+      "short": "Whether it was skipped.",
+      "description": "Whether the person skipped the meal on purpose.",
+      "example": false,
+      "field_set": "day"
+    },
+    "day.meal.snoozed_minutes": {
+      "level": "extended",
+      "type": "integer",
+      "short": "How far \"not yet\" pushed it.",
+      "description": "How many minutes the meal was pushed by \"not yet\" before it was eaten or the day ended.",
+      "example": 30,
+      "field_set": "day"
+    },
+    "day.meal.landed": {
+      "level": "core",
+      "type": "object",
+      "short": "The meal as it was when eaten, frozen (a `meal`).",
+      "description": "The meal as it stood at the moment it was logged: name, portions or stated figures, anchor, code, kind. Written once, never rewritten.",
+      "field_set": "day"
+    },
+    "day.meal.consumed": {
+      "level": "core",
+      "type": "object",
+      "short": "What the meal came to (a `macros`).",
+      "description": "The macros of the landed meal.",
+      "field_set": "day"
+    },
+    "day.meal.timezone": {
+      "level": "extended",
+      "type": "keyword",
+      "short": "The zone the meal was logged in.",
+      "description": "The phone's time zone when the meal was logged, which can differ from the day's.",
+      "example": "America/Chicago",
+      "field_set": "day"
+    },
+    "event.action": {
+      "level": "core",
+      "type": "keyword",
+      "required": true,
+      "short": "The app's name for what happened.",
+      "description": "The app's name for what happened, lower case with underscores, the same string the app's telemetry has always sent.",
+      "expected_values": [
+        "meal_logged",
+        "meal_skipped",
+        "day_type_changed",
+        "stack_switched",
+        "stack_moved",
+        "stack_kept",
+        "stack_used",
+        "plan_imported",
+        "plan_file_opened",
+        "meal_template_added",
+        "meal_count_changed",
+        "plan_edited",
+        "onboarding_step",
+        "settings_changed",
+        "health_sync"
+      ],
+      "example": "meal_logged",
+      "field_set": "event"
+    },
+    "event.category": {
+      "level": "core",
+      "type": "keyword",
+      "short": "ECS event category.",
+      "description": "The ECS category the action falls under; the app's actions are all `process` events from the person's point of view, or `configuration` for settings.",
+      "example": "process",
+      "field_set": "event"
+    },
+    "event.outcome": {
+      "level": "core",
+      "type": "keyword",
+      "short": "ECS event outcome.",
+      "description": "`success`, `failure` or `unknown`, as ECS defines them.",
+      "example": "success",
+      "field_set": "event"
+    },
+    "event.dataset": {
+      "level": "extended",
+      "type": "keyword",
+      "short": "Where the event came from.",
+      "description": "`mealstack.app`, `mealstack.widget`, `mealstack.coach`.",
+      "example": "mealstack.app",
+      "field_set": "event"
+    }
+  }
+}
