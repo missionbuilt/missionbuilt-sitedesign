@@ -7,276 +7,58 @@
 <title>MealStack · click-through demo</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@600&display=swap" rel="stylesheet" />
 <style>
 /* ═══════════════════════════════════════════════════════════════════════
    MEALSTACK CLICK-THROUGH DEMO
-   A hand-drawn HTML replica of the app on fictional data, with the same
-   guided-step panel the Loadout demos use. Nothing here is a screenshot.
-   The phone is drawn in the app's own dark palette (Ink.*); the guide
-   panel is Iron Log (charcoal, mono, oxblood).
+   Real screens from a Debug build of MealStack in the iPhone 17 Simulator
+   (dark appearance), shot with the build's demo clock set for each step.
+   The Simulator's own clock is painted out of every image
+   (scripts/build_mealstack_demo_images.py) and drawn here instead.
+   The guide panel is Iron Log: charcoal, mono, oxblood.
    ═══════════════════════════════════════════════════════════════════════ */
 :root {
-  /* Site */
-  --bg: #171513; --panel: #1f1c19; --rule: #2a2622; --chalk: #ebe5d8; --chalk-dim: #a8a094; --chalk-faint: #5a564f; --blood: #a8211a; --army: #7a8b3a;
-  /* App (Ink, dark) */
-  --i-bg: #171513; --i-surface: #211e1b; --i-rule: #36312c; --i-ink: #ebe5d8; --i-dim: #a8a094; --i-accent: #a8211a; --i-accent-text: #e85e56; --i-on: #ebe5d8; --i-landed: #8a9a48;
+  --bg: #171513; --rule: #2a2622; --chalk: #ebe5d8; --chalk-dim: #a8a094; --chalk-faint: #5a564f; --blood: #a8211a;
   --mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
-  --ui: -apple-system, 'SF Pro Text', Inter, system-ui, sans-serif;
-  --oswald: 'Oswald', 'Archivo Narrow', 'Helvetica Neue', Arial, sans-serif;
+  --sys: -apple-system, 'SF Pro Text', Inter, system-ui, sans-serif;
+  --pw: 402px; --ph: 874px;
 }
 * { box-sizing: border-box; }
-html, body { margin: 0; height: 100%; background: var(--bg); color: var(--chalk); font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+html, body { margin: 0; height: 100%; background: var(--bg); color: var(--chalk); -webkit-font-smoothing: antialiased; }
 button { font: inherit; }
 
 /* ── Stage ── */
-.stage { height: 100%; display: flex; align-items: stretch; gap: 0; overflow: hidden; }
+.stage { height: 100%; display: flex; align-items: stretch; overflow: hidden; }
 .phone-col { flex: 0 0 auto; display: flex; align-items: center; justify-content: center; padding: 18px 8px 18px 22px; }
 .guide { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; justify-content: center; padding: 24px 28px 24px 22px; border-left: 1px solid var(--rule); }
 
 /* ── Phone ── */
 .phone-scale { transform-origin: top left; }
-.phone {
-  width: 390px; height: 844px; border-radius: 48px; background: #000; padding: 10px; position: relative;
-  box-shadow: 0 0 0 1px #3a3530;
-}
-.screen { width: 100%; height: 100%; border-radius: 40px; background: var(--i-bg); overflow: hidden; position: relative; color: var(--i-ink); }
-.island { position: absolute; top: 11px; left: 50%; transform: translateX(-50%); width: 120px; height: 34px; border-radius: 20px; background: #000; z-index: 5; }
-.statusbar { display: flex; justify-content: space-between; align-items: center; padding: 18px 28px 0 30px; font-size: 15px; font-weight: 600; height: 54px; }
-.statusbar .glyphs { font-family: var(--mono); font-size: 11px; letter-spacing: 0.05em; color: var(--i-ink); }
-.view { position: absolute; inset: 0; display: none; flex-direction: column; }
-.view.on { display: flex; }
-.scroll { position: relative; flex: 1 1 auto; overflow-y: auto; overflow-x: hidden; padding: 0 20px 24px; scrollbar-width: none; }
-.scroll::-webkit-scrollbar { display: none; }
+.phone { width: calc(var(--pw) + 20px); height: calc(var(--ph) + 20px); border-radius: 58px; background: #000; padding: 10px; box-shadow: 0 0 0 1px #3a3530; }
+.screen { position: relative; width: var(--pw); height: var(--ph); border-radius: 48px; overflow: hidden; background: #1c1b1a; }
+.shot { position: absolute; inset: 0; width: 100%; height: 100%; display: block; opacity: 0; transition: opacity 180ms ease; user-select: none; -webkit-user-drag: none; }
+.shot.on { opacity: 1; }
+.clock { position: absolute; left: 36px; top: 19px; width: 78px; height: 26px; display: flex; align-items: center; justify-content: center;
+  font-family: var(--sys); font-size: 17px; font-weight: 600; letter-spacing: -0.2px; color: #fff; pointer-events: none; z-index: 2; }
 
-/* Type */
-.eb { font-family: var(--mono); font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--i-dim); }
-.eb.over { color: var(--i-accent-text); }
-.mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
-.dim { color: var(--i-dim); }
-.acc { color: var(--i-accent-text); }
-.landed { color: var(--i-landed); }
-.rule { height: 1px; background: var(--i-rule); }
-
-/* Tabs */
-.tabs { flex: 0 0 auto; display: flex; align-items: flex-end; justify-content: space-between; padding: 8px 18px 24px; border-top: 1px solid var(--i-rule); background: rgba(23,21,19,.94); backdrop-filter: blur(12px); }
-.tab { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 10px; font-weight: 500; color: var(--i-dim); background: none; border: none; padding: 6px 10px; cursor: pointer; }
-.tab svg { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-.tab.on { color: var(--i-accent-text); }
-.tab.coach { margin-left: 8px; padding: 8px 14px; border-radius: 22px; background: var(--i-surface); border: 1px solid var(--i-rule); }
-
-/* ── Today ── */
-.topline { display: flex; justify-content: space-between; align-items: center; padding-top: 6px; font-size: 14px; color: var(--i-dim); white-space: nowrap; }
-.topline .day { display: flex; align-items: center; gap: 6px; }
-.topline .sess { display: flex; align-items: baseline; gap: 6px; }
-.topline .sess b { font-family: var(--mono); font-weight: 600; border-bottom: 1px solid var(--i-rule); padding-bottom: 1px; }
-.topline .gear { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 1.6; margin-left: 10px; flex: 0 0 auto; }
-.daybar { display: flex; align-items: center; gap: 2px; height: 20px; margin: 14px 0 4px; position: relative; padding: 0 2px; }
-.daybar::before { content: ''; position: absolute; left: 0; right: 0; top: 9px; height: 2px; background: var(--i-rule); }
-.daybar .plate { position: relative; width: 12px; height: 12px; background: var(--i-bg); border: 1px solid var(--i-dim); flex: 0 0 auto; }
-.daybar .sp { flex: 1 1 auto; }
-.daybar .plate.eaten { background: var(--i-ink); border-color: var(--i-ink); }
-.daybar .plate.next { background: var(--i-accent); border-color: var(--i-accent); }
-.hero { padding: 26px 4px 6px; margin: 0 -4px; }
-.hero .clock { font-family: var(--oswald); font-weight: 700; font-size: 64px; line-height: 1; letter-spacing: 0; margin-top: 4px; font-variant-numeric: tabular-nums; }
-.hero .name { font-size: 22px; font-weight: 600; margin-top: 4px; }
-.hero .plate { font-size: 16px; color: var(--i-dim); margin-top: 6px; line-height: 1.3; }
-.hero .macros { font-family: var(--mono); font-size: 15px; color: var(--i-dim); margin-top: 6px; }
-.btn-primary { display: block; width: 100%; margin-top: 20px; padding: 15px; border-radius: 14px; background: var(--i-accent); color: var(--i-on); font-size: 17px; font-weight: 600; text-align: center; border: none; cursor: pointer; }
-.btn-secondary { display: block; width: 100%; min-height: 44px; background: none; border: none; color: var(--i-dim); font-size: 17px; cursor: pointer; }
-.footnote { font-size: 13px; color: var(--i-dim); line-height: 1.35; margin-top: 4px; }
-.totals { margin-top: 30px; border-top: 1px solid var(--i-rule); padding-top: 24px; }
-.totals-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 84px; gap: 12px; margin-top: 12px; align-items: end; }
-.mbar .l { font-size: 12px; color: var(--i-dim); }
-.mbar .v { font-family: var(--mono); font-size: 12px; font-weight: 600; margin-top: 2px; }
-.mbar .t { height: 3px; border-radius: 2px; background: var(--i-rule); margin: 6px 0 4px; overflow: hidden; }
-.mbar .t i { display: block; height: 100%; background: var(--i-ink); }
-.mbar .s { font-family: var(--mono); font-size: 11px; color: var(--i-dim); }
-.kcal { text-align: right; }
-.kcal .n { font-family: var(--mono); font-size: 18px; font-weight: 600; }
-.kcal .of { font-size: 12px; color: var(--i-dim); }
-.totals .left { font-size: 13px; color: var(--i-dim); margin-top: 10px; line-height: 1.35; }
-.daylist { margin-top: 26px; border-top: 1px solid var(--i-rule); padding-top: 18px; }
-.row { display: flex; align-items: center; gap: 12px; padding: 12px 0; }
-.row.sep { border-top: 1px solid var(--i-rule); margin-left: 44px; }
-.row.sep .box { margin-left: -44px; }
-.box { width: 20px; height: 20px; border-radius: 6px; border: 1.5px solid var(--i-dim); flex: 0 0 auto; margin: 0 12px 0 0; display: flex; align-items: center; justify-content: center; }
-.box.on { background: var(--i-accent); border-color: var(--i-accent); }
-.box.on::after { content: ''; width: 10px; height: 6px; border-left: 2px solid #fff; border-bottom: 2px solid #fff; transform: translateY(-1px) rotate(-45deg); }
-.row .nm { flex: 1 1 auto; font-size: 17px; font-weight: 500; line-height: 1.2; }
-.row.done .nm { color: var(--i-dim); font-weight: 400; }
-.row .st { display: block; font-size: 12px; font-weight: 400; color: var(--i-dim); margin-top: 2px; }
-.row .st.acc { color: var(--i-accent-text); }
-.row .tm { font-family: var(--mono); font-size: 16px; font-weight: 500; }
-.nowline, .sessline { display: flex; align-items: center; gap: 10px; padding: 7px 0; }
-.nowline span { font-family: var(--mono); font-size: 11px; font-weight: 600; color: var(--i-accent-text); white-space: nowrap; }
-.nowline i { flex: 1; height: 1px; background: var(--i-accent-text); }
-.sessline::before { content: ''; width: 7px; height: 7px; background: var(--i-accent); flex: 0 0 auto; }
-.sessline span { font-family: var(--mono); font-size: 12px; font-weight: 600; white-space: nowrap; }
-.sessline i { flex: 1; height: 2px; background: var(--i-ink); }
-
-/* ── Sheet ── */
-.sheet { position: absolute; inset: 0; z-index: 20; display: none; flex-direction: column; background: var(--i-surface); border-radius: 40px 40px 0 0; transform: translateY(100%); transition: transform 260ms cubic-bezier(.2,.8,.2,1); }
-.sheet.on { display: flex; }
-.sheet.show { transform: translateY(0); }
-.sheet-head { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px 0; }
-.sheet-head .cancel { color: var(--i-accent-text); background: none; border: none; font-size: 17px; cursor: pointer; padding: 6px 0; }
-.sheet-head .ttl { font-size: 17px; font-weight: 600; }
-.sheet-head .sp { width: 52px; }
-.sheet .scroll { padding-top: 10px; }
-.sheet .mname { font-size: 28px; font-weight: 700; margin-top: 10px; }
-.sheet .planned { font-size: 15px; color: var(--i-dim); margin-top: 2px; }
-.sheet .macros { font-family: var(--mono); font-size: 15px; color: var(--i-dim); margin-top: 4px; }
-.chips { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px; }
-.chip { min-height: 44px; border-radius: 22px; border: 1px solid var(--i-dim); background: none; color: var(--i-ink); font-size: 14px; cursor: pointer; padding: 6px 4px; white-space: nowrap; }
-.chip.on { background: var(--i-ink); color: var(--i-bg); border-color: var(--i-ink); font-weight: 600; }
-.chip.wide { grid-column: span 2; }
-.delta { font-size: 13px; color: var(--i-dim); margin-top: 10px; min-height: 18px; }
-.prev { margin-top: 22px; }
-.prow { display: flex; align-items: center; gap: 8px; padding: 9px 0; border-bottom: 1px solid var(--i-rule); }
-.prow .nm { font-size: 16px; color: var(--i-dim); }
-.prow .mv { font-size: 12px; color: var(--i-accent-text); }
-.prow .sp { flex: 1; }
-.prow s { font-family: var(--mono); font-size: 13px; color: var(--i-dim); }
-.prow .tm { font-family: var(--mono); font-size: 16px; font-weight: 500; color: var(--i-dim); }
-.prow .tm.acc { color: var(--i-accent-text); }
-.sheet-bar { flex: 0 0 auto; padding: 12px 20px 30px; border-top: 1px solid var(--i-rule); background: var(--i-surface); }
-.sheet-bar .btn-primary { margin-top: 0; }
-
-/* ── Lock screen ── */
-.lock { background: radial-gradient(900px 600px at 80% 110%, rgba(168,33,26,.18), transparent 60%), #0e0d0c; align-items: center; }
-.lock .time { font-family: var(--oswald); font-weight: 700; font-size: 92px; line-height: 1; margin-top: 46px; letter-spacing: 0.01em; }
-.lock .date { font-size: 18px; font-weight: 500; color: var(--i-dim); margin-top: 4px; }
-.la { width: 350px; margin-top: 46px; background: var(--i-bg); border: 1px solid var(--i-rule); border-radius: 24px; padding: 16px 18px; display: flex; gap: 14px; align-items: center; }
-.la .l { flex: 1; min-width: 0; }
-.la .eb { display: flex; align-items: center; gap: 6px; font-size: 11px; }
-.la .eb::before { content: ''; width: 6px; height: 6px; background: var(--i-accent); }
-.la .t { font-family: var(--oswald); font-weight: 700; font-size: 34px; line-height: 1.05; margin-top: 4px; }
-.la .n { font-size: 17px; font-weight: 600; margin-top: 2px; }
-.la .p { font-size: 13px; color: var(--i-dim); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.la .log { width: 66px; height: 66px; border-radius: 14px; background: var(--i-accent); color: var(--i-on); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-size: 13px; font-weight: 600; flex: 0 0 auto; border: none; cursor: pointer; }
-.la .log::before { content: ''; width: 12px; height: 7px; border-left: 2.5px solid #fff; border-bottom: 2.5px solid #fff; transform: rotate(-45deg); margin-bottom: 4px; }
-.notif { width: 350px; margin-top: 12px; background: rgba(33,30,27,.92); border: 1px solid var(--i-rule); border-radius: 22px; padding: 14px 16px; }
-.notif .h { display: flex; justify-content: space-between; font-size: 12px; color: var(--i-dim); }
-.notif .t { font-size: 15px; font-weight: 600; margin-top: 6px; }
-.notif .b { font-size: 14px; color: var(--i-dim); margin-top: 2px; line-height: 1.3; }
-.notif .acts { display: flex; gap: 8px; margin-top: 12px; }
-.notif .acts span { flex: 1; text-align: center; font-size: 13px; padding: 9px 6px; border-radius: 12px; background: rgba(235,229,216,.08); }
-.lock .hint { margin-top: auto; margin-bottom: 26px; font-size: 13px; color: var(--i-dim); }
-
-/* ── Coach ── */
-.divider { display: flex; align-items: center; gap: 10px; margin: 16px 0 14px; font-family: var(--mono); font-size: 11px; color: var(--i-dim); }
-.divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--i-rule); }
-.msg.me { margin-left: 44px; background: var(--i-surface); border: 1px solid var(--i-rule); border-radius: 14px; padding: 12px 14px; font-size: 16px; line-height: 1.35; }
-.msg.me .ph { margin-top: 10px; height: 92px; border-radius: 8px; background: linear-gradient(135deg, #3a3129, #26221f); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 11px; color: var(--i-dim); letter-spacing: 0.08em; }
-.msg.coach { margin-top: 18px; }
-.msg.coach .eb { color: var(--i-accent-text); }
-.msg.coach .body { font-size: 16px; line-height: 1.4; margin-top: 8px; }
-.card { margin-top: 12px; background: var(--i-surface); border: 1px solid var(--i-rule); border-radius: 14px; padding: 14px; }
-.card .hd { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-.card .hd b { font-size: 17px; font-weight: 600; }
-.pill { font-family: var(--mono); font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: 12px; border: 1px solid; opacity: .9; white-space: nowrap; }
-.pill.dim { color: var(--i-dim); border-color: rgba(168,160,148,.5); }
-.pill.landed { color: var(--i-landed); border-color: rgba(138,154,72,.5); }
-.card .desc { font-size: 14px; color: var(--i-dim); margin-top: 6px; line-height: 1.35; }
-.card ul { list-style: none; margin: 10px 0 0; padding: 0; }
-.card li { display: flex; justify-content: space-between; gap: 10px; font-size: 14px; padding: 5px 0; }
-.card li span:last-child { font-family: var(--mono); font-size: 12px; color: var(--i-dim); white-space: nowrap; }
-.card li::before { content: ''; }
-.card .about { font-family: var(--mono); font-size: 12px; color: var(--i-dim); margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--i-rule); }
-.card .verdict { font-size: 13px; margin-top: 6px; }
-.card .btn-primary { margin-top: 12px; padding: 12px; font-size: 16px; }
-.thumbs { display: flex; gap: 18px; margin-top: 10px; color: var(--i-dim); font-size: 13px; }
-.compose { flex: 0 0 auto; display: flex; align-items: center; gap: 10px; padding: 10px 16px 12px; border-top: 1px solid var(--i-rule); }
-.compose .ic { width: 22px; height: 22px; stroke: var(--i-dim); fill: none; stroke-width: 1.6; }
-.compose .field { flex: 1; min-height: 40px; border-radius: 14px; background: var(--i-surface); border: 1px solid var(--i-rule); padding: 10px 12px; font-size: 15px; color: var(--i-dim); }
-.compose .send { width: 36px; height: 36px; border-radius: 18px; background: var(--i-accent); display: flex; align-items: center; justify-content: center; }
-.compose .send::after { content: ''; width: 8px; height: 8px; border-left: 2px solid #fff; border-top: 2px solid #fff; transform: translateY(2px) rotate(45deg); }
-.focuspill { display: inline-block; margin: 8px 0 0 20px; }
-.focuspill[hidden] { display: none; }
-
-/* ── History ── */
-.pagehead { padding-top: 6px; }
-.pagehead h1 { font-size: 34px; font-weight: 700; margin: 4px 0 0; }
-.pagehead .sub { font-size: 15px; color: var(--i-dim); margin-top: 4px; }
-.section { border-top: 1px solid var(--i-rule); margin-top: 18px; padding-top: 18px; }
-.stats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-top: 12px; }
-.stat .n { font-size: 22px; font-weight: 700; }
-.stat .n small { font-size: 12px; font-weight: 400; color: var(--i-dim); margin-left: 2px; }
-.stat .k { font-size: 11px; color: var(--i-dim); margin-top: 2px; }
-.dayrow { padding: 12px 4px; margin: 0 -4px; border-bottom: 1px solid var(--i-rule); }
-#thisweek .eb { margin-bottom: 10px; }
-.dayrow .h { display: flex; align-items: center; gap: 8px; }
-.dayrow .h b { font-size: 17px; font-weight: 600; flex: 1; }
-.dayrow .pill { font-size: 11px; }
-.pill.acc { color: var(--i-accent-text); border-color: rgba(232,94,86,.5); }
-.dayrow .daybar { margin: 10px 0 8px; height: 14px; }
-.dayrow .daybar::before { top: 6px; }
-.dayrow .plate { width: 8px; height: 8px; }
-.dayrow .plate.late { background: var(--i-dim); border-color: var(--i-dim); }
-.dayrow .sent { font-size: 13px; line-height: 1.3; }
-.dayrow .ml { font-family: var(--mono); font-size: 12px; color: var(--i-dim); margin-top: 4px; }
-.weekrow { display: flex; align-items: center; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--i-rule); }
-.weekrow .l { flex: 1; }
-.weekrow .r { font-size: 17px; font-weight: 600; }
-.weekrow .c { font-size: 13px; color: var(--i-dim); margin-top: 2px; }
-.weekrow .ml { font-family: var(--mono); font-size: 12px; color: var(--i-dim); margin-top: 4px; }
-.weekrow .chev { color: var(--i-dim); font-size: 18px; }
-
-/* ── Plan ── */
-.seg { display: flex; margin-top: 14px; background: var(--i-surface); border: 1px solid var(--i-rule); border-radius: 10px; padding: 2px; }
-.seg span { flex: 1; text-align: center; font-size: 14px; font-weight: 500; padding: 7px; border-radius: 8px; color: var(--i-dim); }
-.seg span.on { background: var(--i-rule); color: var(--i-ink); }
-.cells { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 12px; }
-.cell .n { font-size: 22px; font-weight: 700; }
-.cell .s { font-family: var(--mono); font-size: 11px; margin-top: 2px; }
-.prow2 { display: flex; align-items: center; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--i-rule); }
-.prow2 .l { flex: 1; min-width: 0; }
-.prow2 .n { font-size: 16px; font-weight: 500; display: flex; align-items: center; gap: 6px; }
-.prow2 .n svg { width: 13px; height: 13px; stroke: var(--i-dim); fill: none; stroke-width: 1.8; }
-.prow2 .p { font-size: 13px; color: var(--i-dim); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.prow2 .m { font-family: var(--mono); font-size: 12px; color: var(--i-dim); margin-top: 2px; }
-.prow2 .chev { color: var(--i-dim); }
-.plan-foot { font-size: 13px; color: var(--i-dim); line-height: 1.35; margin-top: 14px; }
-
-
-/* ── Welcome ── */
-.welcome { background: var(--i-bg); }
-.wl { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 70px 24px 0; text-align: center; }
-.wordmark { font-family: var(--oswald); font-weight: 700; font-size: 40px; letter-spacing: 0.06em; }
-.wl-line { font-size: 17px; color: var(--i-dim); margin-top: 6px; }
-.doors { width: 100%; margin-top: 14px; display: flex; flex-direction: column; }
-.door { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; width: 100%; text-align: left; background: none; border: none; border-top: 1px solid var(--i-rule); padding: 16px 4px; color: var(--i-ink); cursor: pointer; }
-.door:last-child { border-bottom: 1px solid var(--i-rule); }
-.door b { font-size: 17px; font-weight: 600; }
-.door span { font-size: 14px; color: var(--i-dim); line-height: 1.3; }
-
-/* ── Quick start ── */
-.frow { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--i-rule); font-size: 16px; }
-.frow .fval { font-family: var(--mono); font-size: 15px; font-weight: 500; color: var(--i-dim); padding: 4px 8px; border-radius: 6px; background: var(--i-surface); }
-.frow.disclosure { color: var(--i-dim); border-bottom: none; }
-.frow .chev { color: var(--i-dim); }
-.lk { width: 13px; height: 13px; stroke: var(--i-dim); fill: none; stroke-width: 1.8; vertical-align: -1px; margin-left: 4px; }
-#v-quick .sheet-bar { border-top: 1px solid var(--i-rule); }
-
-/* ── Coach starters ── */
-.starter { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; text-align: left; background: none; border: none; border-bottom: 1px solid var(--i-rule); padding: 14px 0; color: var(--i-ink); cursor: pointer; }
-.starter b { display: block; font-size: 16px; font-weight: 600; }
-.starter small { display: block; font-size: 13px; color: var(--i-dim); margin-top: 2px; line-height: 1.3; }
-.starter .arr { color: var(--i-dim); font-size: 16px; }
-.card li small { font-size: 12px; }
-
-/* ── Highlight ring (same as the Loadout demos) ── */
+/* Hotspots: a pulsing ring on the thing to tap. Invisible tab targets sit on the tab bar. */
 @keyframes mb-pulse {
-  0%, 100% { box-shadow: 0 0 0 3px #fffaeb, 0 0 0 6px #a8211a, 0 0 18px 4px rgba(168,33,26,0.55); }
-  50%      { box-shadow: 0 0 0 3px #fffaeb, 0 0 0 8px #a8211a, 0 0 28px 8px rgba(168,33,26,0.70); }
+  0%, 100% { box-shadow: 0 0 0 2px #fffaeb, 0 0 0 5px #a8211a, 0 0 18px 4px rgba(168,33,26,0.55); }
+  50%      { box-shadow: 0 0 0 2px #fffaeb, 0 0 0 7px #a8211a, 0 0 28px 8px rgba(168,33,26,0.70); }
 }
-.mb-highlight { animation: mb-pulse 1.6s ease-in-out infinite; position: relative; z-index: 30; border-radius: 6px; }
+.hot { position: absolute; border-radius: 12px; cursor: pointer; z-index: 3; background: none; border: none; padding: 0; animation: mb-pulse 1.6s ease-in-out infinite; }
+.hot:focus-visible { outline: 2px solid #fffaeb; outline-offset: 4px; }
+.tab { position: absolute; top: 795px; height: 53px; z-index: 3; cursor: pointer; background: none; border: none; padding: 0; border-radius: 26px; }
+.tab:hover { background: rgba(255,250,235,0.06); }
 
 /* ── Guide panel ── */
+.g-parts { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 22px; }
+.g-part { background: none; border: 1px solid #3a342d; color: var(--chalk-dim); font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; padding: 5px 9px; cursor: pointer; }
+.g-part:hover { border-color: var(--blood); color: var(--chalk); }
+.g-part.on { border-color: var(--blood); color: #fffaeb; background: rgba(168,33,26,0.18); }
 .g-counter { font-family: var(--mono); font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--blood); }
 .g-title { font-family: var(--mono); font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #fffaeb; margin: 10px 0 0; }
-.g-desc { font-family: 'Merriweather', Georgia, serif; font-size: 15px; line-height: 1.6; color: #c8bea7; margin: 12px 0 0; max-width: 46ch; }
+.g-desc { font-family: 'Merriweather', Georgia, serif; font-size: 15px; line-height: 1.6; color: #c8bea7; margin: 12px 0 0; max-width: 48ch; }
 .g-do { margin: 18px 0 0; font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--chalk); display: flex; align-items: center; gap: 10px; min-height: 18px; }
 .g-do::before { content: ''; width: 7px; height: 7px; background: var(--blood); flex: 0 0 auto; }
 .g-do:empty { display: none; }
@@ -286,249 +68,41 @@ button { font: inherit; }
 .g-btn:disabled { opacity: .4; cursor: default; }
 .g-btn.primary { border-color: var(--blood); background: var(--blood); }
 .g-btn.primary:hover { background: #c02a20; border-color: #c02a20; color: #fffaeb; }
-.g-skip { margin-left: auto; background: none; border: none; color: var(--chalk-faint); font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; cursor: pointer; }
-.g-skip:hover { color: var(--chalk); }
-.g-fine { margin-top: 26px; font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; color: var(--chalk-faint); line-height: 1.6; }
+.g-fine { margin-top: 26px; font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; color: var(--chalk-faint); line-height: 1.6; max-width: 60ch; }
 
 @media (max-width: 720px) {
   .stage { flex-direction: column; overflow-y: auto; }
   .phone-col { order: 2; padding: 10px 0 14px; }
   .guide { order: 1; border-left: none; border-bottom: 1px solid var(--rule); padding: 14px 18px 16px; justify-content: flex-start; }
+  .g-parts { margin-bottom: 12px; padding-right: 96px; }
   .g-desc { font-size: 13px; line-height: 1.5; margin-top: 8px; }
   .g-title { margin-top: 6px; }
   .g-nav { margin-top: 12px; }
   .g-fine { display: none; }
-  .g-counter { padding-right: 110px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hot { animation: none; box-shadow: 0 0 0 2px #fffaeb, 0 0 0 5px #a8211a; }
+  .shot { transition: none; }
 }
 </style>
+</head>
 <body>
 <div class="stage">
   <div class="phone-col">
     <div class="phone-scale" id="scale">
       <div class="phone">
-        <div class="screen" id="screen">
-          <div class="island"></div>
-
-          <!-- ═══════════ WELCOME ═══════════ -->
-          <div class="view welcome on" id="v-welcome">
-            <div class="statusbar"><span>6:40</span><span class="glyphs">●●●● ▲ ▮▮▮</span></div>
-            <div class="wl">
-              <div class="wordmark">MEALSTACK</div>
-              <div class="wl-line">Fueling is training.</div>
-              <div class="eb" style="margin-top:56px">How do you want to start?</div>
-              <div class="doors">
-                <button class="door" id="door-times"><b>Just the times</b><span>Two questions. A working day, empty plates.</span></button>
-                <button class="door"><b>Let Coach build it</b><span>Answer a few questions and Coach proposes the whole plan.</span></button>
-                <button class="door"><b>I'll build it myself</b><span>Meals, times and plates by hand.</span></button>
-              </div>
-            </div>
-          </div>
-
-          <!-- ═══════════ QUICK START ═══════════ -->
-          <div class="view" id="v-quick">
-            <div class="statusbar"><span>6:40</span><span class="glyphs">●●●● ▲ ▮▮▮</span></div>
-            <div class="scroll">
-              <div class="pagehead"><div class="eb">Quick start</div><h1>Your day, on the clock</h1></div>
-              <div class="section" id="qs-form">
-                <div class="eb">Schedule</div>
-                <div class="frow"><span>First meal</span><span class="fval">7:00 AM</span></div>
-                <div class="frow"><span>Session</span><span class="fval">6:00 PM</span></div>
-                <div class="footnote" style="margin-top:10px">The morning chains forward from your first meal. Pre-workout, post-workout and anything after are pinned to the session and don't move when the morning does.</div>
-                <div class="frow disclosure"><span>More options</span><span class="chev">›</span></div>
-              </div>
-              <div class="section" id="qs-preview">
-                <div class="eb">Today, a training day</div>
-                <div class="frow"><span>Breakfast</span><span class="fval">7:00 AM</span></div>
-                <div class="frow"><span>Mid-morning</span><span class="fval">10:00 AM</span></div>
-                <div class="frow"><span>Lunch</span><span class="fval">1:00 PM</span></div>
-                <div class="frow"><span>Pre-workout <svg class="lk" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="1"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span><span class="fval">4:30 PM</span></div>
-                <div class="frow"><span>Post-workout <svg class="lk" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="1"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span><span class="fval">7:00 PM</span></div>
-                <div class="frow"><span>Dinner <svg class="lk" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="1"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span><span class="fval">8:30 PM</span></div>
-              </div>
-            </div>
-            <div class="sheet-bar"><button class="btn-primary" id="btn-build">Build my plan</button></div>
-          </div>
-
-          <!-- ═══════════ TODAY (rendered by script) ═══════════ -->
-          <div class="view" id="v-today">
-            <div class="statusbar"><span id="clock-now">6:41</span><span class="glyphs">●●●● ▲ ▮▮▮</span></div>
-            <div class="scroll" id="today-scroll"></div>
-            <div class="tabs">
-              <button class="tab on" data-tab="today"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Today</button>
-              <button class="tab" data-tab="plan"><svg viewBox="0 0 24 24"><path d="M7 3v7a3 3 0 0 0 6 0V3M10 13v8M17 3c-2 2-2 6-2 9h3v9"/></svg>Plan</button>
-              <button class="tab" data-tab="history"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg>History</button>
-              <button class="tab coach" data-tab="coach"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg>Coach</button>
-            </div>
-
-            <!-- ═══════════ LOG SHEET ═══════════ -->
-            <div class="sheet" id="sheet">
-              <div class="sheet-head"><button class="cancel" id="sheet-cancel">Cancel</button><span class="ttl">Log it</span><span class="sp"></span></div>
-              <div class="scroll" id="sheet-scroll">
-                <div class="mname">Mid-morning</div>
-                <div class="planned">Planned 10:00 AM</div>
-                <div class="macros">32P · 41C · 14F · 420 kcal</div>
-                <div class="eb" style="margin-top:22px">When did you eat it</div>
-                <div class="chips" id="chips">
-                  <button class="chip on" data-min="730">Now</button>
-                  <button class="chip" data-min="715">15 min ago</button>
-                  <button class="chip" data-min="700" id="chip-30">30 min ago</button>
-                  <button class="chip" data-min="670">1 hr ago</button>
-                  <button class="chip wide" data-min="600">Planned 10:00 AM</button>
-                  <button class="chip" data-min="">Other time…</button>
-                </div>
-                <div class="delta" id="delta"></div>
-                <div class="prev" id="preview">
-                  <div class="eb">What happens next</div>
-                  <div id="prev-rows"></div>
-                </div>
-              </div>
-              <div class="sheet-bar"><button class="btn-primary" id="btn-commit">Log at 12:10 PM</button></div>
-            </div>
-          </div>
-
-          <!-- ═══════════ LOCK SCREEN ═══════════ -->
-          <div class="view lock" id="v-lock">
-            <div class="statusbar" style="width:100%"><span></span><span class="glyphs">●●●● ▲ ▮▮▮</span></div>
-            <div class="time">2:05</div>
-            <div class="date">Saturday, September 13</div>
-            <div class="la" id="la">
-              <div class="l">
-                <div class="eb">Next · 25 m</div>
-                <div class="t">2:30 PM</div>
-                <div class="n">Lunch</div>
-                <div class="p">Chicken bowl, no cheese, double chicken</div>
-              </div>
-              <button class="log" id="la-log">Log</button>
-            </div>
-            <div class="notif" id="notif">
-              <div class="h"><span>MealStack</span><span>9:58 AM</span></div>
-              <div class="t">M2 · Mid-morning</div>
-              <div class="b">P32 C41 F14 · 420 kcal<br/>Greek yogurt · Blueberries · Almonds · Honey</div>
-              <div class="acts"><span>Ate it now</span><span>Not yet, ask in 20</span></div>
-            </div>
-            <div class="hint">Swipe up to open</div>
-          </div>
-
-          <!-- ═══════════ COACH (rendered by script) ═══════════ -->
-          <div class="view" id="v-coach">
-            <div class="statusbar"><span id="coach-clock">6:41</span><span class="glyphs">●●●● ▲ ▮▮▮</span></div>
-            <div class="scroll" id="coach-scroll"></div>
-            <div class="focuspill" id="coach-pill" hidden><span class="pill acc">Can't eat Lunch</span></div>
-            <div class="compose">
-              <svg class="ic" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l5-5 4 4 3-3 6 6"/></svg>
-              <svg class="ic" viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>
-              <div class="field" id="coach-field">Ask Coach…</div>
-              <div class="send"></div>
-            </div>
-            <div class="tabs">
-              <button class="tab" data-tab="today"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Today</button>
-              <button class="tab" data-tab="plan"><svg viewBox="0 0 24 24"><path d="M7 3v7a3 3 0 0 0 6 0V3M10 13v8M17 3c-2 2-2 6-2 9h3v9"/></svg>Plan</button>
-              <button class="tab" data-tab="history"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg>History</button>
-              <button class="tab coach on" data-tab="coach"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg>Coach</button>
-            </div>
-          </div>
-
-          <!-- ═══════════ HISTORY ═══════════ -->
-          <div class="view" id="v-history">
-            <div class="statusbar"><span>8:50</span><span class="glyphs">●●●● ▲ ▮▮▮</span></div>
-            <div class="scroll">
-              <div class="pagehead"><div class="eb">Every day so far</div><h1>History</h1></div>
-              <div class="section">
-                <div class="eb">Last 7 days, average</div>
-                <div class="stats">
-                  <div class="stat"><div class="n">196<small>g</small></div><div class="k">Protein</div></div>
-                  <div class="stat"><div class="n">262<small>g</small></div><div class="k">Carbs</div></div>
-                  <div class="stat"><div class="n">67<small>g</small></div><div class="k">Fat</div></div>
-                  <div class="stat"><div class="n">2440</div><div class="k">kcal</div></div>
-                  <div class="stat"><div class="n">91<small>%</small></div><div class="k">On time</div></div>
-                </div>
-              </div>
-              <div class="section" id="thisweek">
-                <div class="eb">This week</div>
-                <div class="dayrow" id="dr-sat">
-                  <div class="h"><b>Sat, Sep 13</b><span class="pill acc">Training</span></div>
-                  <div class="daybar"><span class="plate eaten"></span><span class="sp"></span><span class="plate late"></span><span class="sp"></span><span class="plate eaten"></span><span class="sp"></span><span class="plate eaten"></span><span class="sp"></span><span class="plate eaten"></span><span class="sp"></span><span class="plate eaten"></span></div>
-                  <div class="sent acc">Mid-morning 1 hr 40 min late · pre-workout 92 min before</div>
-                  <div class="ml">P203 · C300 · F67 · 2680 kcal of 2650 · 13.5 hr window</div>
-                </div>
-                <div class="dayrow">
-                  <div class="h"><b>Fri, Sep 12</b><span class="pill acc">Training</span></div>
-                  <div class="daybar"><span class="plate eaten"></span><span class="sp"></span><span class="plate eaten"></span><span class="sp"></span><span class="plate eaten"></span><span class="sp"></span><span class="plate eaten"></span><span class="sp"></span><span class="plate eaten"></span><span class="sp"></span><span class="plate eaten"></span></div>
-                  <div class="sent landed">Every meal on time · pre-workout 88 min before</div>
-                  <div class="ml">P198 · C296 · F68 · 2590 kcal of 2650 · 12 hr window</div>
-                </div>
-                <div class="dayrow">
-                  <div class="h"><b>Thu, Sep 11</b><span class="pill dim">Rest</span></div>
-                  <div class="daybar"><span class="plate eaten"></span><span class="sp"></span><span class="plate eaten"></span><span class="sp"></span><span class="plate eaten"></span><span class="sp"></span><span class="plate eaten"></span><span class="sp"></span><span class="plate eaten"></span></div>
-                  <div class="sent landed">Every meal on time</div>
-                  <div class="ml">P202 · C118 · F71 · 1900 kcal of 1890 · 11.5 hr window</div>
-                </div>
-                <div class="dayrow">
-                  <div class="h"><b>Wed, Sep 10</b><span class="pill acc">Travel</span><span class="pill acc">Training</span></div>
-                  <div class="daybar"><span class="plate eaten"></span><span class="sp"></span><span class="plate eaten"></span><span class="sp"></span><span class="plate late"></span><span class="sp"></span><span class="plate eaten"></span><span class="sp"></span><span class="plate eaten"></span><span class="sp"></span><span class="plate eaten"></span></div>
-                  <div class="sent acc">Lunch 40 min late · pre-workout 92 min before</div>
-                  <div class="ml">P188 · C284 · F72 · 2540 kcal of 2650 · 13 hr window</div>
-                </div>
-              </div>
-              <div class="section">
-                <div class="eb">Earlier</div>
-                <div class="weekrow" id="wk">
-                  <div class="l"><div class="r">Sep 1–7</div><div class="c">4 train · 3 rest · 31 of 35 on time · 3 of 4 pre-workouts landed</div><div class="ml">185P · 280C · 66F · 2460 kcal a day · 96% logged</div></div>
-                  <span class="chev">›</span>
-                </div>
-                <div class="weekrow">
-                  <div class="l"><div class="r">Aug 25–31</div><div class="c">4 train · 3 rest · 33 of 35 on time · 4 of 4 pre-workouts landed</div><div class="ml">190P · 292C · 64F · 2500 kcal a day · 100% logged</div></div>
-                  <span class="chev">›</span>
-                </div>
-              </div>
-            </div>
-            <div class="tabs">
-              <button class="tab" data-tab="today"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Today</button>
-              <button class="tab" data-tab="plan"><svg viewBox="0 0 24 24"><path d="M7 3v7a3 3 0 0 0 6 0V3M10 13v8M17 3c-2 2-2 6-2 9h3v9"/></svg>Plan</button>
-              <button class="tab on" data-tab="history"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg>History</button>
-              <button class="tab coach" data-tab="coach"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg>Coach</button>
-            </div>
-          </div>
-
-          <!-- ═══════════ PLAN ═══════════ -->
-          <div class="view" id="v-plan">
-            <div class="statusbar"><span>6:41</span><span class="glyphs">●●●● ▲ ▮▮▮</span></div>
-            <div class="scroll">
-              <div class="pagehead"><div class="eb">Quick start</div><h1>Plan</h1><div class="sub">Six meals on a training day, five on a rest day. Evening session.</div></div>
-              <div class="seg"><span class="on">Training</span><span>Rest</span></div>
-              <div class="section">
-                <div class="eb">Training day totals</div>
-                <div class="cells" id="plan-cells">
-                  <div class="cell"><div class="eb">Protein</div><div class="n">200</div><div class="s landed">on target</div></div>
-                  <div class="cell"><div class="eb">Carbs</div><div class="n">300</div><div class="s landed">on target</div></div>
-                  <div class="cell"><div class="eb">Fat</div><div class="n">70</div><div class="s landed">on target</div></div>
-                  <div class="cell"><div class="eb">kcal</div><div class="n">2650</div><div class="s dim">planned</div></div>
-                </div>
-              </div>
-              <div class="section">
-                <div class="prow2"><div class="l"><div class="n">Daily target</div><div class="m">P200  C300  F70  ·  2650 kcal</div><div class="p landed">The meals below land on it.</div></div><span class="chev">›</span></div>
-                <div class="prow2"><div class="l"><div class="n">Shelves</div><div class="p">6 meals · 62 ingredients</div></div><span class="chev">›</span></div>
-              </div>
-              <div class="section">
-                <div class="eb">Meals</div>
-                <div id="plan-rows"></div>
-                <div class="plan-foot">Tap a meal to change what's on the plate, or use a saved meal from the Meals shelf. Macros come from the quantities, so the totals above move with your edits.</div>
-              </div>
-            </div>
-            <div class="tabs">
-              <button class="tab" data-tab="today"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Today</button>
-              <button class="tab on" data-tab="plan"><svg viewBox="0 0 24 24"><path d="M7 3v7a3 3 0 0 0 6 0V3M10 13v8M17 3c-2 2-2 6-2 9h3v9"/></svg>Plan</button>
-              <button class="tab" data-tab="history"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg>History</button>
-              <button class="tab coach" data-tab="coach"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg>Coach</button>
-            </div>
-          </div>
-
+        <div class="screen" id="screen" role="img" aria-live="polite">
+          <img class="shot on" id="shot-a" alt="" />
+          <img class="shot" id="shot-b" alt="" />
+          <div class="clock" id="clock" aria-hidden="true"></div>
+          <div id="targets"></div>
         </div>
       </div>
     </div>
   </div>
 
   <div class="guide" id="guide">
+    <div class="g-parts" id="g-parts" aria-label="Parts of the tour"></div>
     <div class="g-counter" id="g-counter"></div>
     <p class="g-title" id="g-title"></p>
     <p class="g-desc" id="g-desc"></p>
@@ -536,9 +110,8 @@ button { font: inherit; }
     <div class="g-nav">
       <button class="g-btn" id="g-prev">← Prev</button>
       <button class="g-btn primary" id="g-next">Next →</button>
-      <button class="g-skip" id="g-skip">Skip the tour</button>
     </div>
-    <p class="g-fine">Drawn by hand on invented numbers. The tabs work; the tour can be restarted at any time. ← → on the keyboard also step.</p>
+    <p class="g-fine">Real screens from a Debug build of MealStack 0.9.1 in the iPhone Simulator, with the build's demo clock set for each step. Coach can't answer from the Simulator, so the tour stops at its door. Tap the ringed spot, use the buttons, or ← → on the keyboard. The tab bar works.</p>
   </div>
 </div>
 
@@ -546,370 +119,210 @@ button { font: inherit; }
 (function () {
   'use strict';
 
-  /* ── The fictional day ──
-     Training day, session 6:00 PM. Quick start at 6:40 AM: Breakfast 7:00,
-     Mid-morning 10:00, Lunch 1:00, Pre-workout 4:30 (pinned 90 min before),
-     Post-workout shake 7:00, Dinner 8:30. Coach fills the plates. Later:
-     Breakfast eaten 7:00, Mid-morning not logged, clock 12:10; the log
-     re-flows Lunch. Then Lunch is swapped for a taco-place order via Coach.
-     Cascade: forward gaps 180 min; the last forward meal must sit at least
-     120 min before the pre-workout; gaps scale and round to 5 min; the
-     pinned block never moves for a late morning. */
-  var PRE = 16 * 60 + 30, MIN_GAP = 120, NATURAL = 180, LUNCH_PLANNED = 13 * 60, NOW_LATE = 12 * 60 + 10;
+  var IMG = 'mealstack/';
+  // Screen boxes are in points on the 402 × 874 screen: [left, top, right, bottom].
+  var LOG_BAR = [22, 780, 382, 830];
+  var TABS = { today: [25, 125], plan: [125, 212], history: [212, 300], coach: [318, 384] };
 
-  var MEALS = [
-    { name: 'Breakfast',          t: 7 * 60,        plate: 'Eggs · Oats · Banana · Whey',                      p: 38, c: 55, f: 12, k: 480, pinned: false },
-    { name: 'Mid-morning',        t: 10 * 60,       plate: 'Greek yogurt · Blueberries · Almonds · Honey',    p: 32, c: 41, f: 14, k: 420, pinned: false },
-    { name: 'Lunch',              t: 13 * 60,       plate: 'Chicken breast · Jasmine rice · Broccoli · Olive oil', p: 45, c: 62, f: 11, k: 530, pinned: false },
-    { name: 'Pre-workout',        t: PRE,           plate: 'Rice cakes · Turkey · Apple',                     p: 30, c: 40, f: 4,  k: 320, pinned: true },
-    { name: 'Post-workout shake', t: 19 * 60,       plate: 'Whey · Dextrose · Banana',                        p: 30, c: 50, f: 2,  k: 340, pinned: true },
-    { name: 'Dinner',             t: 20 * 60 + 30,  plate: 'Salmon · Potatoes · Green beans · Butter',        p: 25, c: 52, f: 27, k: 560, pinned: true },
+  var steps = [
+    // ── Set up ──
+    { id: 'setup', part: 'Set up', img: '00-welcome', clock: '6:40', title: 'Four ways in', tabs: false,
+      hot: [20, 380, 382, 490], doText: 'Tap “Just the times”',
+      desc: 'First open. Give it your times and fill the plates later, let Coach build the plan in a short chat, build it by hand, or bring a plan file a coach or Claude wrote. No account either way.' },
+    { part: 'Set up', img: '01-quickstart', clock: '6:40', title: 'Two answers', tabs: false,
+      hot: LOG_BAR, doText: 'Tap “Build my plan”',
+      desc: 'When you eat first and when you train. The morning chains forward from the first meal; the carb surge, the session and everything after it are pinned to the session. The app asks to send alerts after this, not before.' },
+    { id: 'today', part: 'Set up', img: '04-today-morning', clock: '6:40', title: 'Today',
+      hot: [262, 118, 362, 146], doText: 'Tap the stack menu, “The Base”',
+      desc: 'The next meal is the biggest thing on the screen, counting down. Across the top are three menus: the day type, the session, and the stack. A stack is a named set of meals for a training day and a rest day.' },
+    { part: 'Set up', img: '03-stack-menu', clock: '6:40', title: 'One stack a week', tabs: false,
+      hot: [118, 194, 300, 230], doText: 'Tap “The Base”',
+      desc: 'Your rotation runs one stack per calendar week and repeats. Kept stacks wait on the shelf. Picking one runs it for the rest of this week, and what you’ve already eaten stays logged.' },
+    { part: 'Set up', img: '02-stack-switched', clock: '6:40', title: 'One line, with Undo',
+      desc: 'Every change says what it did in one line at the bottom, with Undo. There are no “are you sure?” dialogs anywhere in the app.' },
+    { part: 'Set up', img: '05-today-list', clock: '6:41', title: 'The day, laid out', tabs: false,
+      desc: 'The thin red line is now; the white line is the session. Meals above it follow whatever you ate last. The carb surge is pinned to the session. Fuel, like the scoop and the jug, is its own row and never counts as a meal.' },
+
+    // ── Log ──
+    { id: 'log', part: 'Log a meal', img: '06-log-sheet', clock: '7:06', title: 'Log when you ate', tabs: false,
+      hot: LOG_BAR, doText: 'Tap “Log at 7:06 AM”',
+      desc: 'Tap Log on the next meal. The sheet opens on now, with the common answers one tap away, and shows what the rest of the day does before you commit: the yogurt and lunch slide six minutes, the carb surge holds.' },
+    { part: 'Log a meal', img: '07-logged-undo', clock: '7:06', title: 'On the record',
+      hot: [110, 118, 242, 146], doText: 'Tap “Session 6:00 PM”',
+      desc: 'Breakfast is logged at 7:06. A plate fills in the bar, “Since last” starts counting, and the line at the bottom can still take it back.' },
+    { part: 'Log a meal', img: '08-session-menu', clock: '7:06', title: 'Training moved', tabs: false,
+      hot: [60, 308, 300, 354], doText: 'Tap “30 min later”',
+      desc: 'Mark the session done, or move it: an hour or thirty minutes either way, or pick a time. Each step shows where it lands, and a move that would leave today isn’t offered.' },
+    { part: 'Log a meal', img: '09-session-moved', clock: '7:07', title: 'What’s pinned moves with it',
+      desc: 'Session 6:30 PM. The carb surge, the scoop and the jug move with it; the morning doesn’t. The line says exactly what moved.' },
+
+    // ── A late morning ──
+    { id: 'late', part: 'A late morning', img: '10-late-morning', clock: '12:40', title: 'Two and a half hours late',
+      hot: [20, 448, 382, 498], doText: 'Tap Log',
+      desc: 'It’s 12:40. A meeting ran long and the yogurt never happened. Only the small label turns red: overdue, 2 hr 34 min.' },
+    { part: 'A late morning', img: '11-late-log', clock: '12:40', title: 'The session is protected', tabs: false,
+      hot: LOG_BAR, doText: 'Tap “Log at 12:40 PM”',
+      desc: 'Three hours after 12:40 would put lunch at 3:40, too close to the carb surge. So the gap tightens and lunch moves to 3:00. The carb surge holds at 5:00.' },
+    { part: 'A late morning', img: '12-late-logged', clock: '12:40', title: 'Running late, in words',
+      hot: [150, 508, 252, 542], doText: 'Tap “Not yet”',
+      desc: '“Running late. The gaps tightened so the carb surge still lands before your session.” Lunch is next, at 3:00.' },
+    { part: 'A late morning', img: '13-not-yet-menu', clock: '12:40', title: 'Not yet', tabs: false,
+      hot: [78, 438, 324, 492], doText: 'Tap “Swap for another meal”',
+      desc: 'Push the meal back 15, 30 or 45 minutes, skip it, or swap it for another meal.' },
+    { part: 'A late morning', img: '14-swap-shelf', clock: '12:40', title: 'Swap from your shelf', tabs: false,
+      hot: [20, 82, 94, 118], doText: 'Tap Cancel',
+      desc: 'Your Meals shelf opens for this meal. Pick one for today only, for this stack, or for every stack. Lunch is out with a client instead? Cancel, and ask Coach.' },
+
+    // ── Coach ──
+    { id: 'coach', part: 'Coach', img: '12-late-logged', clock: '12:41', title: 'Eating out',
+      hot: [66, 554, 334, 582], doText: 'Tap “Eating out? Send Coach the menu”',
+      desc: 'Under the next meal: “Eating out? Send Coach the menu.” It opens Coach with this meal in focus.' },
+    { part: 'Coach', img: '15-coach-terms', clock: '12:41', title: 'Coach is an AI',
+      hot: [22, 512, 382, 560], doText: 'Tap “I agree”',
+      desc: 'The first time, three plain lines: not medical advice, menu numbers are estimates, and nothing changes until you tap. It says what gets sent, and asks you to confirm you’re 18 or older.' },
+    { part: 'Coach', img: '16-coach-eating-out', clock: '12:41', title: 'Send the menu',
+      hot: [240, 698, 268, 724], doText: 'Tap × on the pill',
+      desc: 'The pill says what Coach is working on: eating out, in place of the Paprika chicken box. Snap the menu or paste a link. Coach picks what fits this meal’s numbers, for today only, and nothing lands until you tap its card.' },
+    { id: 'coach-home', part: 'Coach', img: '17-coach-starters', clock: '12:41', title: 'Every conversation starts here',
+      hot: [TABS.today[0], 795, TABS.today[1], 848], doText: 'Tap Today',
+      desc: 'Starters head every new conversation, eating out first: fill the empty plates, work out your macros, ideas for the next meal, or say what’s in the fridge.' },
+
+    // ── The evening ──
+    { id: 'evening', part: 'The evening', img: '18-session-started-preview', clock: '7:20', title: 'The session started without it', tabs: false,
+      hot: LOG_BAR, doText: 'Tap “Log at 7:20 PM”',
+      desc: 'Later: it’s 7:20 PM and lunch finally happened. The carb surge and the scoop were due before the 6:30 session, which has started. They don’t slide past it; they’re marked “session started”. Only what comes after the session moves.' },
+    { part: 'The evening', img: '19-evening-list', clock: '7:20', title: 'It says why', tabs: false,
+      desc: 'Under the carb surge and the scoop: “Session started without it”, with Skip right there. If you did eat it, tap the box.' },
+    { part: 'The evening', img: '19b-session-done', clock: '7:20', title: 'Session done',
+      desc: 'Nothing to log at the session? “Session done” in the session menu marks the day trained, at the session’s time. The menu now reads “Trained 6:30 PM”, and the line can take it back.' },
+    { part: 'The evening', img: '19c-wont-fit', clock: '9:45', title: 'Nothing lands on tomorrow', tabs: false,
+      desc: '9:45 PM. The shake went in late, and dinner can’t fit before your 9:30 “Last meal by”. It says so and waits to be logged or skipped. No 11:45 PM dinner, and no alert for it.' },
+    { part: 'The evening', img: '19d-nothing-fits', clock: '9:45', title: 'Nothing else fits today',
+      hot: [TABS.history[0], 795, TABS.history[1], 848], doText: 'Tap History',
+      desc: 'When only what can’t happen is left, Today says so and offers to skip the rest in one tap, and one Undo.' },
+    { id: 'history', part: 'The evening', img: '26-history', clock: '9:45', title: 'History keeps the record',
+      hot: [TABS.plan[0], 795, TABS.plan[1], 848], doText: 'Tap Plan',
+      desc: 'Today is on the record as a day in progress, with its stack and what happened. Averages wait until the day is over.' },
+
+    // ── The Plan tab ──
+    { id: 'plan', part: 'The Plan tab', img: '20-plan-stacks', clock: '6:42', title: 'Stacks, meals, ingredients',
+      hot: [18, 388, 384, 438], doText: 'Tap The Base',
+      desc: 'Three shelves. Ingredients make meals, and meals make stacks. The rotation runs one stack each week; kept stacks wait until you add them.' },
+    { part: 'The Plan tab', img: '21-stack-detail', clock: '6:42', title: 'A stack',
+      hot: [18, 600, 384, 688], doText: 'Tap Paprika chicken box',
+      desc: 'A training day and a rest day of meals, with the day’s planned totals. Open a meal to change it.' },
+    { part: 'The Plan tab', img: '22-meal-editor', clock: '6:42', title: 'A meal is its ingredients', tabs: false,
+      desc: 'Weighed ingredients with their macros. The meal’s totals and the whole day’s update as you edit. The same screen makes fuel.' },
+    { part: 'The Plan tab', img: '23-meal-scope', clock: '6:42', title: 'Say how far it goes', tabs: false,
+      desc: 'Today only, or every training day of The Base from now on. A meal already logged keeps what it was logged with.' },
+    { part: 'The Plan tab', img: '24-plan-meals', clock: '6:42', title: 'The Meals shelf',
+      hot: [262, 178, 382, 208], doText: 'Tap Ingredients',
+      desc: 'Every meal you keep, searchable by name or by what’s in it. Built-in examples to start from, or bring your own with the MealStack plan skill.' },
+    { part: 'The Plan tab', img: '25-plan-ingredients', clock: '6:42', title: 'That’s MealStack',
+      desc: 'Per-unit figures for the built-in ingredients, and yours from the label. Timing that bends around your day and protects your session. It’s in private beta on iPhone; the form under this demo gets you a build.' }
   ];
-  var SWAP = { plate: 'Chicken bowl, no cheese, double chicken', p: 48, c: 62, f: 8, k: 560 };
-  var TARGET = { p: 200, c: 300, f: 70, k: 2650 };
-
-  var state = { plates: false, now: 6 * 60 + 41, breakfastEaten: false, midLogged: false, midAt: null, lunchSwapped: false, eatenAt: NOW_LATE, view: 'welcome' };
 
   var $ = function (id) { return document.getElementById(id); };
-  function fmt(m) { var h = Math.floor(m / 60), mm = m % 60, ap = h >= 12 ? 'PM' : 'AM'; h = h % 12; if (h === 0) h = 12; return h + ':' + (mm < 10 ? '0' : '') + mm + ' ' + ap; }
-  function clock(m) { var h = Math.floor(m / 60), mm = m % 60; h = h % 12; if (h === 0) h = 12; return h + ':' + (mm < 10 ? '0' : '') + mm; }
-  function span(m) { var h = Math.floor(m / 60), mm = m % 60; return (h ? h + ' h ' : '') + mm + ' m'; }
-  function r5(x) { return Math.round(x / 5) * 5; }
-  function lunchFor(eatenAt) {
-    var ceiling = PRE - MIN_GAP, natural = eatenAt + NATURAL;
-    if (natural <= ceiling) return { t: natural, compressed: false };
-    return { t: eatenAt + Math.max(MIN_GAP, r5(ceiling - eatenAt)), compressed: true };
+  var byId = {};
+  steps.forEach(function (s, i) { if (s.id) byId[s.id] = i; });
+  var parts = [];
+  steps.forEach(function (s, i) { if (!parts.length || parts[parts.length - 1].name !== s.part) parts.push({ name: s.part, first: i }); });
+
+  // Preload, so a tap swaps the screen at once.
+  var cache = {};
+  steps.forEach(function (s) { if (!cache[s.img]) { var im = new Image(); im.src = IMG + s.img + '.webp'; cache[s.img] = im; } });
+
+  var cur = -1, front = 'shot-a';
+  function swapImage(name, label) {
+    var src = IMG + name + '.webp';
+    var a = $(front);
+    if (a.getAttribute('src') === src) { a.alt = label; return; }
+    var backId = front === 'shot-a' ? 'shot-b' : 'shot-a', b = $(backId);
+    b.src = src; b.alt = label;
+    b.classList.add('on'); a.classList.remove('on');
+    front = backId;
   }
-  function macroLine(m) { return m.p + 'P · ' + m.c + 'C · ' + m.f + 'F · ' + m.k + ' kcal'; }
-  function lock() { return '<svg class="lk" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="1"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>'; }
-
-  /* ── Today ── */
-  function renderToday() {
-    var now = state.now;
-    var lunch = state.midLogged ? lunchFor(state.midAt) : { t: LUNCH_PLANNED, compressed: false };
-    var lunchMeal = state.lunchSwapped ? Object.assign({}, MEALS[2], SWAP) : MEALS[2];
-    var eaten = [state.breakfastEaten, state.midLogged, false, false, false, false];
-    var nextIdx = eaten.indexOf(false);
-    var next = MEALS[nextIdx];
-    var nextT = nextIdx === 2 ? lunch.t : next.t;
-    var nextMeal = nextIdx === 2 ? lunchMeal : next;
-    $('clock-now').textContent = clock(now);
-
-    var h = '';
-    h += '<div class="topline"><span class="day">Sat, Sep 13 · Training <span style="font-size:11px">⌄</span></span><span class="sess">Session <b>6:00 PM</b>' +
-      '<svg class="gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></span></div>';
-
-    // bar
-    h += '<div class="daybar" id="daybar">';
-    for (var i = 0; i < 6; i++) {
-      h += '<span class="plate' + (eaten[i] ? ' eaten' : (i === nextIdx ? ' next' : '')) + '"></span>' + (i < 5 ? '<span class="sp"></span>' : '');
+  function box(el, r) {
+    el.style.left = r[0] + 'px'; el.style.top = r[1] + 'px';
+    el.style.width = (r[2] - r[0]) + 'px'; el.style.height = (r[3] - r[1]) + 'px';
+  }
+  function renderTargets(s) {
+    var t = $('targets');
+    t.innerHTML = '';
+    if (s.hot) {
+      var h = document.createElement('button');
+      h.className = 'hot';
+      h.setAttribute('aria-label', s.doText || 'Continue');
+      box(h, s.hot);
+      h.addEventListener('click', next);
+      t.appendChild(h);
     }
-    h += '</div>';
-
-    // hero
-    var overdue = now > nextT;
-    h += '<div class="hero" id="hero">' +
-      '<div class="eb' + (overdue ? ' over' : '') + '">' + (overdue ? 'Overdue · ' + span(now - nextT) : 'Next · in ' + span(nextT - now)) + '</div>' +
-      '<div class="clock">' + fmt(nextT) + '</div>' +
-      '<div class="name">' + nextMeal.name + '</div>' +
-      '<div class="plate">' + (state.plates ? nextMeal.plate : 'Nothing on the plate yet') + '</div>' +
-      (state.plates ? '<div class="macros">' + macroLine(nextMeal) + '</div>' : '') +
-      '</div>' +
-      '<button class="btn-primary" id="btn-log">Log</button>' +
-      '<button class="btn-secondary">Not yet</button>' +
-      (lunch.compressed && !eaten[2] ? '<div class="footnote">Running late. The gaps tightened so the carb surge still lands before your session.</div>' : '');
-
-    // totals
-    var tp = 0, tc = 0, tf = 0, tk = 0, toCome = 0;
-    for (i = 0; i < 6; i++) { var m = i === 2 ? lunchMeal : MEALS[i]; if (eaten[i]) { tp += m.p; tc += m.c; tf += m.f; tk += m.k; } else toCome++; }
-    h += '<div class="totals" id="totals"><div class="eb">Today\'s totals</div>';
-    if (state.plates) {
-      h += '<div class="totals-grid">' + mbar('Protein', tp, TARGET.p) + mbar('Carbs', tc, TARGET.c) + mbar('Fat', tf, TARGET.f) +
-        '<div class="kcal"><div class="n">' + tk + '</div><div class="of">of ' + TARGET.k + ' kcal</div></div></div>' +
-        '<div class="left">' + (TARGET.p - tp) + 'P · ' + (TARGET.c - tc) + 'C · ' + (TARGET.f - tf) + 'F left for the day, ' + toCome + ' meals to come.</div>';
-    } else {
-      h += '<div class="left">Nothing to count yet. Add food or type the macros into a meal in Plan and the day\'s totals show up here.</div>';
-    }
-    h += '</div>';
-
-    // list
-    h += '<div class="daylist" id="daylist"><div class="eb">Today</div>';
-    var nowPlaced = false, prevWasRow = false;
-    for (i = 0; i < 6; i++) {
-      m = i === 2 ? lunchMeal : MEALS[i];
-      var t = i === 2 ? lunch.t : (i === 1 && state.midLogged ? state.midAt : m.t);
-      var status = '';
-      if (i === 2 && state.lunchSwapped) status = '<span class="st acc">for today</span>';
-      else if (i === 2 && lunch.compressed && !eaten[2]) status = '<span class="st acc">moved up</span>';
-      var afterThis = (i < 5 ? (i + 1 === 2 ? lunch.t : MEALS[i + 1].t) : 99999);
-      h += '<div class="row' + (eaten[i] ? ' done' : '') + (prevWasRow ? ' sep' : '') + '" id="r-' + i + '">' +
-        '<span class="box' + (eaten[i] ? ' on' : '') + '"></span><span class="nm">' + m.name + status + '</span><span class="tm">' + fmt(t) + '</span></div>';
-      prevWasRow = true;
-      if (!nowPlaced && now >= t && now < afterThis) { h += '<div class="nowline" id="nowline"><span>now · ' + fmt(now) + '</span><i></i></div>'; nowPlaced = true; prevWasRow = false; }
-      if (i === 3) { h += '<div class="sessline"><span>session · 6:00 PM</span><i></i></div>'; prevWasRow = false; }
-    }
-    h += '</div>';
-    $('today-scroll').innerHTML = h;
-    $('btn-log').addEventListener('click', function () {
-      if (state.midLogged || !state.breakfastEaten) return;
-      openSheet();
-      if (steps[cur] && steps[cur].awaits === 'log') goTo(cur + 1);
+    if (s.tabs === false) return;
+    [['today', 'Today', 'today'], ['plan', 'Plan', 'plan'], ['history', 'History', 'history'], ['coach', 'Coach', 'coach-home']].forEach(function (d) {
+      var r = TABS[d[0]];
+      if (s.hot && s.hot[1] >= 790 && s.hot[0] === r[0]) return; // the ringed tab is already a target
+      var b = document.createElement('button');
+      b.className = 'tab';
+      b.style.left = r[0] + 'px'; b.style.width = (r[1] - r[0]) + 'px';
+      b.setAttribute('aria-label', 'Open ' + d[1]);
+      b.addEventListener('click', function () { goTo(byId[d[2]]); });
+      t.appendChild(b);
     });
   }
-  function mbar(label, v, goal) {
-    var left = goal - v;
-    return '<div class="mbar"><div class="l">' + label + '</div><div class="v">' + v + ' g</div><div class="t"><i style="width:' + Math.min(100, Math.round(v / goal * 100)) + '%"></i></div><div class="s">' + (left > 0 ? left + ' left' : (left === 0 ? 'on target' : (-left) + ' over')) + '</div></div>';
-  }
-
-  /* ── Plan ── */
-  function renderPlan() {
-    var h = '';
-    MEALS.forEach(function (m, i) {
-      var mm = i === 2 && state.lunchSwapped ? Object.assign({}, m, SWAP) : m;
-      h += '<div class="prow2"><div class="l"><div class="n">' + m.name + (m.pinned ? ' ' + lock() : '') + '</div>' +
-        '<div class="p">' + (state.plates ? mm.plate : 'Nothing on the plate yet') + '</div>' +
-        (state.plates ? '<div class="m">P' + mm.p + ' · C' + mm.c + ' · F' + mm.f + '</div>' : '') + '</div><span class="chev">›</span></div>';
-    });
-    $('plan-rows').innerHTML = h;
-    $('plan-cells').style.display = state.plates ? '' : 'none';
-  }
-
-  /* ── Coach ── */
-  var coachMode = 'empty';
-  function renderCoach(mode) {
-    coachMode = mode;
-    var h = '';
-    $('coach-pill').hidden = mode !== 'swap';
-    $('coach-field').textContent = mode === 'swap' ? 'Answer Coach, or add detail…' : 'Ask Coach…';
-    if (mode === 'empty') {
-      h += '<div class="eb" style="margin-top:14px">Ask</div>' +
-        starter('Build my plan from scratch', 'A schedule, a target and every plate, from a few questions.', '') +
-        starter('Fill the empty plates', 'Keep my times. Propose food and numbers for every meal.', 'st-fill') +
-        starter('What should my macros be?', 'Bodyweight, how you train, goal. The app does the arithmetic.', '') +
-        starter('Ideas for Breakfast', 'Something new for this plate, from your ingredients.', '') +
-        starter('I can\'t eat Breakfast as planned', 'Snap the menu, paste a link, or say what\'s around.', '');
-    } else if (mode === 'plan') {
-      h += '<div class="divider">This conversation</div>' +
-        '<div class="msg me">Fill the empty plates. Six meals, evening session, training day.</div>' +
-        '<div class="msg coach" id="coach-reply"><div class="eb">Coach</div>' +
-        '<div class="body">Your target is 200P · 300C · 70F, 2650 kcal on a training day. Here is a plate for every meal that lands on it, with the carbs leaning toward the session.</div>' +
-        '<div class="card" id="plan-card"><div class="hd"><b>Every plate</b><span class="pill dim">proposal</span></div><ul>';
-      MEALS.forEach(function (m) { h += '<li><span>' + m.name + '<br/><small class="dim">' + m.plate + '</small></span><span>P' + m.p + ' · C' + m.c + ' · F' + m.f + '</span></li>'; });
-      h += '</ul><div class="about">Adds up to P200 · C300 · F70 · 2650 kcal · from your ingredients</div><div class="verdict landed">Lands on the plan.</div>' +
-        '<button class="btn-primary" id="btn-fill">Put it all on the plates</button></div>' +
-        '<div class="footnote" style="margin-top:8px">Nothing changes in your plan until you tap.</div>' +
-        '<div class="thumbs"><span>👍</span><span>👎</span></div></div>';
-    } else if (mode === 'filled') {
-      h += '<div class="divider">This conversation</div>' +
-        '<div class="msg me">Fill the empty plates. Six meals, evening session, training day.</div>' +
-        '<div class="msg coach"><div class="eb">Coach</div><div class="body">Done. Six plates are on the plan. Edit any of them from Plan; the totals follow.</div>' +
-        '<div class="card"><div class="hd"><b>Every plate</b><span class="pill landed">Saved to Plan</span></div></div></div>';
-    } else if (mode === 'swap') {
-      h += '<div class="divider">This conversation</div>' +
-        '<div class="msg me">Can\'t eat Lunch as planned. Client took us to a taco place. Here\'s the menu.<div class="ph">MENU PHOTO</div></div>' +
-        '<div class="msg coach" id="coach-reply"><div class="eb">Coach</div>' +
-        '<div class="body">Three things on that menu land near Lunch\'s numbers. The bowl is the closest, and the easiest to order right.</div>' +
-        '<div class="card" id="idea-card"><div class="hd"><b>Chicken bowl, no cheese, double chicken</b><span class="pill dim">medium</span></div>' +
-        '<div class="desc">Rice for the carbs, double chicken for the protein, pico instead of cheese and sour cream so the fat stays where the plan wants it.</div>' +
-        '<ul><li><span>Grilled chicken, double</span><span>P44 · C0 · F6</span></li><li><span>Cilantro-lime rice, regular</span><span>P4 · C58 · F2</span></li><li><span>Pico de gallo, lettuce, no cheese</span><span>P0 · C4 · F0</span></li></ul>' +
-        '<div class="about">About P48 · C62 · F8 · 560 kcal · from the menu</div><div class="verdict landed">Lands on the plan.</div>' +
-        '<button class="btn-primary" id="btn-use">Use it today</button></div>' +
-        '<div class="footnote" style="margin-top:8px">Log it from Today once you\'ve eaten, the same as any other meal.</div>' +
-        '<div class="thumbs"><span>👍</span><span>👎</span></div></div>';
-    } else if (mode === 'swapped') {
-      h += '<div class="divider">This conversation</div>' +
-        '<div class="msg me">Can\'t eat Lunch as planned. Client took us to a taco place. Here\'s the menu.<div class="ph">MENU PHOTO</div></div>' +
-        '<div class="msg coach"><div class="eb">Coach</div><div class="body">The bowl is on today\'s plan in place of Lunch. Tomorrow goes back to chicken and rice.</div>' +
-        '<div class="card"><div class="hd"><b>Chicken bowl, no cheese, double chicken</b><span class="pill landed">On the plate</span></div></div></div>';
+  function renderParts(s) {
+    var wrap = $('g-parts');
+    if (!wrap.childElementCount) {
+      parts.forEach(function (p) {
+        var b = document.createElement('button');
+        b.className = 'g-part'; b.textContent = p.name;
+        b.addEventListener('click', function () { goTo(p.first); });
+        wrap.appendChild(b);
+      });
     }
-    $('coach-scroll').innerHTML = h;
-    var fill = $('st-fill'); if (fill) fill.addEventListener('click', function () { renderCoach('plan'); if (steps[cur] && steps[cur].awaits === 'starter') goTo(cur + 1); });
-    var bf = $('btn-fill'); if (bf) bf.addEventListener('click', function () { fillPlates(); if (steps[cur] && steps[cur].awaits === 'fill') goTo(cur + 1); });
-    var bu = $('btn-use'); if (bu) bu.addEventListener('click', function () { useSwap(); if (steps[cur] && steps[cur].awaits === 'use') goTo(cur + 1); });
-  }
-  function starter(t, s, id) {
-    return '<button class="starter"' + (id ? ' id="' + id + '"' : '') + '><span><b>' + t + '</b><small>' + s + '</small></span><span class="arr">↗</span></button>';
-  }
-  function fillPlates() { state.plates = true; state.now = 6 * 60 + 43; renderCoach('filled'); renderToday(); renderPlan(); showView('today'); }
-  function useSwap() { state.lunchSwapped = true; renderCoach('swapped'); renderToday(); renderPlan(); showView('today'); }
-
-  /* ── Views ── */
-  function showView(name) {
-    ['welcome', 'quick', 'today', 'lock', 'coach', 'history', 'plan'].forEach(function (v) { $('v-' + v).classList.toggle('on', v === name); });
-    document.querySelectorAll('.tab').forEach(function (t) { t.classList.toggle('on', t.dataset.tab === name); });
-    $('coach-clock').textContent = clock(state.now);
-    state.view = name;
-  }
-  document.querySelectorAll('.tab').forEach(function (t) {
-    t.addEventListener('click', function () {
-      showView(t.dataset.tab);
-      if (steps[cur] && steps[cur].awaits === 'tab:' + t.dataset.tab) goTo(cur + 1);
-    });
-  });
-  $('door-times').addEventListener('click', function () { showView('quick'); if (steps[cur] && steps[cur].awaits === 'door') goTo(cur + 1); });
-  $('btn-build').addEventListener('click', function () { buildPlan(); if (steps[cur] && steps[cur].awaits === 'build') goTo(cur + 1); });
-  function buildPlan() { state.now = 6 * 60 + 41; renderToday(); renderPlan(); renderCoach('empty'); showView('today'); }
-
-  /* ── Log sheet ── */
-  function openSheet() { var s = $('sheet'); s.classList.add('on'); requestAnimationFrame(function () { requestAnimationFrame(function () { s.classList.add('show'); }); }); setChip(NOW_LATE); }
-  function closeSheet() { var s = $('sheet'); s.classList.remove('show'); setTimeout(function () { s.classList.remove('on'); }, 280); }
-  function setChip(min) {
-    state.eatenAt = min;
-    document.querySelectorAll('#chips .chip').forEach(function (c) { c.classList.toggle('on', c.dataset.min !== '' && parseInt(c.dataset.min, 10) === min); });
-    var d = min - 600;
-    $('delta').textContent = d > 5 ? d + ' min later than planned (10:00 AM).' : (d < -5 ? (-d) + ' min earlier than planned (10:00 AM).' : '');
-    var L = lunchFor(min), moved = L.t !== LUNCH_PLANNED;
-    $('prev-rows').innerHTML = prow('Lunch', moved, fmt(LUNCH_PLANNED), fmt(L.t)) + prow('Pre-workout', false, '', '4:30 PM') + prow('Post-workout shake', false, '', '7:00 PM') + prow('Dinner', false, '', '8:30 PM');
-    $('btn-commit').textContent = 'Log at ' + fmt(min);
-  }
-  function prow(name, moved, oldT, newT) {
-    return '<div class="prow"><span class="nm">' + name + '</span>' + (moved ? '<span class="mv">moves</span>' : '') + '<span class="sp"></span>' + (moved ? '<s>' + oldT + '</s>' : '') + '<span class="tm' + (moved ? ' acc' : '') + '">' + newT + '</span></div>';
-  }
-  document.querySelectorAll('#chips .chip').forEach(function (c) {
-    c.addEventListener('click', function () { if (c.dataset.min === '') return; setChip(parseInt(c.dataset.min, 10)); if (steps[cur] && steps[cur].awaits === 'chip') goTo(cur + 1); });
-  });
-  $('sheet-cancel').addEventListener('click', closeSheet);
-  $('btn-commit').addEventListener('click', function () { commit(); if (steps[cur] && steps[cur].awaits === 'commit') goTo(cur + 1); });
-  function commit() { state.midLogged = true; state.midAt = state.eatenAt; closeSheet(); renderToday(); }
-  function lateMorning() { state.now = NOW_LATE; state.breakfastEaten = true; renderToday(); showView('today'); }
-  function afternoon() { state.now = 13 * 60 + 48; renderCoach('swap'); showView('coach'); }
-
-  /* ── Tour ── */
-  var steps = [
-    { part: 'Getting started', sel: '#door-times', view: 'welcome', awaits: 'door', doText: 'Tap "Just the times"', title: 'Three ways in',
-      desc: 'First open. You can answer two questions and get a working day, let Coach build the whole plan from a short interview, or build it by hand. Take the first door.' },
-    { part: 'Getting started', sel: '#qs-form', title: 'Two questions',
-      desc: 'When is your first meal, and when do you train. That is all it needs. No account, no email, no AI involved yet.' },
-    { part: 'Getting started', sel: '#qs-preview', awaits: 'build', doText: 'Tap "Build my plan"', title: 'The day it builds',
-      desc: 'Morning meals every three hours from your first meal. The pre-workout meal ninety minutes before the session, then the post-workout shake and dinner after it. The lock means that meal is tied to the session and does not move when the morning runs late. Build it.' },
-    { part: 'Getting started', sel: '#hero', view: 'today', title: 'A working day, empty plates',
-      desc: 'The next meal is the biggest thing on the screen, counting down. There is no food on the plates yet. You can fill them yourself from your shelves, or ask Coach to do it.' },
-    { part: 'Getting started', sel: '.tab.coach', awaits: 'tab:coach', doText: 'Tap Coach', title: 'Ask Coach',
-      desc: 'Coach is an assistant that proposes and never decides. It is off by default; the first time you open it, the app tells you what it is, what it sends, and that it is not a doctor. Open it.' },
-    { part: 'Getting started', sel: '#st-fill', awaits: 'starter', doText: 'Tap "Fill the empty plates"', title: 'Fill the plates',
-      desc: 'A few ready-made questions. This one keeps your times and asks for food and numbers for every meal.' },
-    { part: 'Getting started', sel: '#plan-card', awaits: 'fill', doText: 'Tap "Put it all on the plates"', title: 'Coach proposes. You decide.',
-      desc: 'Coach reads your target and your ingredients and proposes a plate for each of the six meals, with the numbers next to it and whether the day adds up. Nothing is on your plan until you tap the button.' },
-    { part: 'Getting started', sel: '#totals', title: 'Ready',
-      desc: 'Every plate has food and numbers now, and the totals know what the day is worth. Change any plate later from Plan and the numbers follow. That was the setup. Now a real day.' },
-    { part: 'A late morning', sel: '#hero', jump: 'late', title: 'Later that morning',
-      desc: 'It is ten past twelve. Breakfast went in on time. A meeting ran long, so the mid-morning meal is two hours overdue and says so in the small red label above the time. Nothing else turns red.' },
-    { part: 'A late morning', sel: '#daylist', scroll: '#daylist', title: 'Two kinds of meal',
-      desc: 'The list shows how the day is built. The thin red line is where you are right now. The dark line is your session, and everything is arranged around it: meals above it follow on from whatever you ate last; the pre-workout meal and everything below it are tied to 6:00 PM and stay put.' },
-    { part: 'A late morning', sel: '#btn-log', scroll: '#hero', awaits: 'log', doText: 'Tap Log', title: 'Log it',
-      desc: 'You ate the mid-morning meal at your desk half an hour ago and forgot to log it. That happens. Tap Log.' },
-    { part: 'A late morning', sel: '#chip-30', awaits: 'chip', doText: 'Tap "30 min ago"', title: 'When you ate, not when you tapped',
-      desc: 'The sheet opens on now, with the common cases one tap away. The day is worked out from the time you pick, so pick the true one.' },
-    { part: 'A late morning', sel: '#preview', title: 'What happens next',
-      desc: 'Before you commit, the sheet shows what every remaining meal does. Lunch would normally come three hours after 11:40, at 2:40. That would leave less than two hours before the pre-workout meal, so the gap tightens to 2:30 and Lunch is marked as moved. The pre-workout meal holds at 4:30. The session is what the app protects.' },
-    { part: 'A late morning', sel: '#btn-commit', awaits: 'commit', doText: 'Tap "Log at 11:40 AM"', title: 'Commit',
-      desc: 'The button says the time it will record. Apple Health gets the macros at that time too, if you let it.' },
-    { part: 'A late morning', sel: '#r-2', scroll: '#daylist', title: 'Back on Today',
-      desc: 'Lunch moved and says so, in words, under its name. The pre-workout meal did not. The totals now count the mid-morning meal, and the next plate is counting down again.' },
-    { part: 'Change a meal', sel: '#idea-card', jump: 'afternoon', pad: 150, title: 'Lunch is somewhere else',
-      desc: 'Quarter to two. A client picked a taco place, so the chicken and rice on the plan is not happening. Send Coach a photo of the menu and it fits an order to this meal\'s numbers, shows the arithmetic, and says whether it lands on the plan.' },
-    { part: 'Change a meal', sel: '#btn-use', awaits: 'use', doText: 'Tap "Use it today"', title: 'For today only',
-      desc: 'This swaps Lunch for today. Tomorrow the plan still says chicken and rice. Tap it.' },
-    { part: 'Change a meal', sel: '#r-2', scroll: '#daylist', title: 'On the plan',
-      desc: 'Lunch now reads as the bowl, marked "for today", with its own numbers in the totals. When you eat it, you log it from here like any other meal. Coach is metered, and every question costs something on a server the author pays for, which is why it is a switch and not the default.' },
-    { part: 'The rest', sel: '#la', view: 'lock', title: 'You should rarely have to open it',
-      desc: 'An hour before a meal, a card appears on the Lock Screen with the plate and a Log button, and stays for half an hour after. The notification under it is the one you missed this morning: two buttons, "Ate it now" and "Not yet, ask in 20." Home and Lock Screen widgets carry the same countdown.' },
-    { part: 'The rest', sel: '#dr-sat', view: 'history', pad: 96, title: 'History keeps score',
-      desc: 'Every day gets a row: a bar with one square per meal, and a sentence. On time means within fifteen minutes of the plan; the pre-workout meal "landed" if it went in at least thirty minutes before the session. Today shows the late mid-morning meal. Older weeks fold to two numbers. Travel days are marked, so you can see what the road does to you.' },
-    { part: 'The rest', sel: null, view: 'today', title: 'That is the app',
-      desc: 'Two questions to start. Timing that bends around your day and protects your session. Macros from the plate. A coach that asks first. Your data on your phone. It is in private beta on iPhone; the form under this demo gets you a build.' }
-  ];
-  var cur = -1, hl = null;
-  function clearHl() { if (hl) { hl.classList.remove('mb-highlight'); hl = null; } }
-  function scrollTo(container, el, pad) {
-    if (!container || !el) return;
-    var top = el.offsetTop, bottom = top + el.offsetHeight, vTop = container.scrollTop, vBottom = vTop + container.clientHeight;
-    if (top - 12 >= vTop && bottom + 12 <= vBottom) return;
-    container.scrollTo({ top: Math.max(0, top - (pad || 60)), behavior: 'smooth' });
-  }
-  function applyJump(j) {
-    if (j === 'late') lateMorning();
-    if (j === 'afternoon') afternoon();
+    Array.prototype.forEach.call(wrap.children, function (b, i) { b.classList.toggle('on', parts[i].name === s.part); });
   }
   function goTo(n) {
     if (n < 0 || n >= steps.length) return;
-    clearHl();
     cur = n;
     var s = steps[n];
-    if (s.jump) applyJump(s.jump);
-    if (s.view) showView(s.view);
-    $('g-counter').textContent = s.part + ' · ' + (n + 1) + ' of ' + steps.length;
+    swapImage(s.img, s.title);
+    $('clock').textContent = s.clock;
+    renderTargets(s);
+    renderParts(s);
+    var p = parts.filter(function (x) { return x.name === s.part; })[0];
+    var inPart = steps.filter(function (x) { return x.part === s.part; }).length;
+    $('g-counter').textContent = s.part + ' · ' + (n - p.first + 1) + ' of ' + inPart;
     $('g-title').textContent = s.title;
     $('g-desc').textContent = s.desc;
     $('g-do').textContent = s.doText || '';
     $('g-prev').disabled = n === 0;
+    $('g-next').textContent = n === steps.length - 1 ? 'Start over' : (s.hot ? 'Do it for me →' : 'Next →');
     if (window.innerWidth <= 720) fit();
-    $('g-next').textContent = n === steps.length - 1 ? 'Start over' : (s.awaits ? 'Do it for me →' : 'Next →');
-    if (s.scroll) scrollTo($('today-scroll'), document.querySelector(s.scroll), 40);
-    if (s.sel) {
-      var el = document.querySelector(s.sel);
-      if (el) { el.classList.add('mb-highlight'); hl = el; var sc = el.closest('.scroll'); if (sc && !s.scroll) scrollTo(sc, el, s.pad); }
-    } else if (state.view === 'today') {
-      $('today-scroll').scrollTo({ top: 0, behavior: 'smooth' });
-    }
   }
-  function next() {
-    var s = steps[cur]; if (!s) return;
-    if (cur === steps.length - 1) { location.reload(); return; }
-    var a = s.awaits;
-    if (a === 'door') showView('quick');
-    else if (a === 'build') buildPlan();
-    else if (a === 'tab:coach') showView('coach');
-    else if (a === 'starter') renderCoach('plan');
-    else if (a === 'fill') fillPlates();
-    else if (a === 'log') openSheet();
-    else if (a === 'chip') setChip(NOW_LATE - 30);
-    else if (a === 'commit') commit();
-    else if (a === 'use') useSwap();
-    goTo(cur + 1);
-  }
-  function prev() {
-    // Steps mutate state, so going back replays from the start up to n-1.
-    var target = cur - 1; if (target < 0) return;
-    resetState(); cur = -1;
-    for (var i = 0; i < target; i++) { cur = i; var a = steps[i].awaits; if (steps[i].jump) applyJump(steps[i].jump);
-      if (a === 'door') showView('quick'); else if (a === 'build') buildPlan(); else if (a === 'tab:coach') showView('coach'); else if (a === 'starter') renderCoach('plan'); else if (a === 'fill') fillPlates(); else if (a === 'log') openSheet(); else if (a === 'chip') setChip(NOW_LATE - 30); else if (a === 'commit') commit(); else if (a === 'use') useSwap(); }
-    goTo(target);
-  }
-  function resetState() {
-    state = { plates: false, now: 6 * 60 + 41, breakfastEaten: false, midLogged: false, midAt: null, lunchSwapped: false, eatenAt: NOW_LATE, view: 'welcome' };
-    $('sheet').classList.remove('on', 'show');
-    renderToday(); renderPlan(); renderCoach('empty'); showView('welcome');
-  }
+  function next() { goTo(cur === steps.length - 1 ? 0 : cur + 1); }
+  function prev() { goTo(cur - 1); }
 
   $('g-prev').addEventListener('click', prev);
   $('g-next').addEventListener('click', next);
-  $('g-skip').addEventListener('click', function () {
-    clearHl(); cur = steps.length - 1;
-    // Land on a full, mid-day app so there is something to look around.
-    state.plates = true; state.now = NOW_LATE; state.breakfastEaten = true; renderToday(); renderPlan(); renderCoach('empty'); showView('today');
-    $('g-counter').textContent = 'Free run';
-    $('g-title').textContent = 'Have a look around';
-    $('g-desc').textContent = 'The tabs work, Log on Today walks the re-flow, and Coach shows the starters. Everything is fictional.';
-    $('g-do').textContent = '';
-    $('g-prev').disabled = true; $('g-next').textContent = 'Start the tour';
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight') next();
+    if (e.key === 'ArrowLeft') prev();
   });
-  document.addEventListener('keydown', function (e) { if (e.key === 'ArrowRight') next(); if (e.key === 'ArrowLeft') prev(); });
 
   /* ── Fit the phone to the frame ── */
+  var PW = 422, PH = 894;
   function fit() {
     var col = document.querySelector('.phone-col'), narrow = window.innerWidth <= 720;
     var guideH = narrow ? $('guide').offsetHeight : 0;
-    var availH = narrow ? Math.max(360, window.innerHeight - guideH - 28) : window.innerHeight - 36;
-    var availW = narrow ? window.innerWidth - 24 : Math.min(window.innerWidth * 0.48, 420) - 30;
-    var s = Math.min(availH / 844, availW / 390, 1), sc = $('scale');
-    sc.style.transform = 'scale(' + s + ')'; sc.style.width = (390 * s) + 'px'; sc.style.height = (844 * s) + 'px';
-    col.style.flexBasis = narrow ? 'auto' : (390 * s + 30) + 'px';
+    var availH = narrow ? Math.max(380, window.innerHeight - guideH - 28) : window.innerHeight - 36;
+    var availW = narrow ? window.innerWidth - 24 : Math.min(window.innerWidth * 0.48, 450) - 30;
+    var k = Math.min(availH / PH, availW / PW, 1), sc = $('scale');
+    sc.style.transform = 'scale(' + k + ')'; sc.style.width = (PW * k) + 'px'; sc.style.height = (PH * k) + 'px';
+    col.style.flexBasis = narrow ? 'auto' : (PW * k + 30) + 'px';
   }
   window.addEventListener('resize', fit);
   fit();
-  renderToday(); renderPlan(); renderCoach('empty'); setChip(NOW_LATE);
-  setTimeout(function () { goTo(0); }, 500);
+  goTo(0);
 })();
 </script>
 </body>

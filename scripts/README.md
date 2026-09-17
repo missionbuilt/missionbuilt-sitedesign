@@ -129,3 +129,14 @@ python3 scripts/sync_mealstack.py
 
 Then commit what changed and push.
 
+
+## build_mealstack_demo_images.py
+
+The MealStack demo (`public/demos/mealstack.html`) is real screens, not a drawing. To reshoot after the app changes:
+
+1. Run a Debug build of MealStack on the iPhone 17 Simulator, with Features → Toggle Appearance set to dark, from a fresh install (Settings → Start over, or erase the Simulator).
+2. In the app, Settings → Debug → Demo clock sets the time of day. It's Debug-only, so it never ships.
+3. Walk the day and save each screen with File → Save Screen (⌘S). Name the files as the `img:` values in the `steps` list in `mealstack.html` (`00-welcome.png`, `04-today-morning.png`, …).
+4. Run `python3 scripts/build_mealstack_demo_images.py <folder of pngs>` (needs Pillow). It paints out the Simulator's status-bar clock and writes `public/demos/mealstack/*.webp`. The page draws each step's `clock:` there instead.
+
+Hotspots in `steps` are boxes in points on the 402 × 874 screen. If a screen's layout moves, update its `hot:` box.

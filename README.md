@@ -80,7 +80,7 @@ Outside `src/`: `public/` holds static assets, including the generated `public/d
 - `/source` Source: links to the book repo and this repo.
 - `/download` Download: the book (PDF/Markdown) and the standalone Loadout skill zips.
 - `/loadout` The Loadout: overview of the product-leadership skill kit (the boardroom half), with a page per skill — `/loadout/warmup`, `/loadout/approach`, `/loadout/spotter` (each embeds a live click-through demo and a download) and `/loadout/floodlight` (in development).
-- `/rack` The Rack: the barbell half — `/rack/mealstack` (the iPhone app, open source with 1.0 and the license not yet settled, private beta: a product page with a hand-drawn click-through demo at `public/demos/mealstack.html` and a Join-the-beta form posting to the Pages Function `functions/api/beta.js`, which needs the `BETA_KV` binding described in `wrangler.jsonc`), `/rack/ironstack` (in testing: the page is live, the install doors open with v1.0) and `/rack/mealstack/privacy` (the privacy policy the app and the App Store listing link to). Both tools lived under `/loadout` until Sept 13, 2026; `public/_redirects` carries permanent 301s from the old paths, and must keep them, because installed MealStack builds link to the old privacy URL.
+- `/rack` The Rack: the barbell half — `/rack/mealstack` (the iPhone app, open source with 1.0 and the license not yet settled, private beta: a product page with a click-through demo of real Simulator screens at `public/demos/mealstack.html` (images in `public/demos/mealstack/`, made by `scripts/build_mealstack_demo_images.py`) and a Join-the-beta form posting to the Pages Function `functions/api/beta.js`, which needs the `BETA_KV` binding described in `wrangler.jsonc`), `/rack/ironstack` (in testing: the page is live, the install doors open with v1.0) and `/rack/mealstack/privacy` (the privacy policy the app and the App Store listing link to). Both tools lived under `/loadout` until Sept 13, 2026; `public/_redirects` carries permanent 301s from the old paths, and must keep them, because installed MealStack builds link to the old privacy URL.
 
 ## Adding or editing content
 
@@ -130,7 +130,7 @@ The rest of the site has no environment variables and no runtime requirements, s
 
 Site code is licensed under the [MIT License](LICENSE). Use it, fork it, learn from it.
 
-The MealStack files the site hosts (`public/downloads/mealstack-plan.zip`, `public/downloads/mealstack/`, `public/demos/mealstack.html`) are not covered by that license. MealStack's license is not decided yet; nothing on the site names one.
+The MealStack files the site hosts (`public/downloads/mealstack-plan.zip`, `public/downloads/mealstack/`, `public/demos/mealstack.html`, `public/demos/mealstack/`) are not covered by that license. MealStack's license is not decided yet; nothing on the site names one.
 
 The book content (the prose) lives in a separate repo and is licensed [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
 
