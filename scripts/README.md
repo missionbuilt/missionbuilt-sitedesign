@@ -114,3 +114,18 @@ It reads `~/Projects/mealstack/MealStack/CHANGELOG.md` by default (pass another 
 
 Commit the generated files and push. Cloudflare builds without the app repo, so the copies have to be in this one.
 
+## sync_mealstack_skill.py
+
+Packages the MealStack plan skill for [/rack/mealstack/skill](https://missionbuilt.io/rack/mealstack/skill), the page the app's About ("Build a plan with Claude") and import sheet link to. It zips `~/Projects/mealstack/MealStack/skills/mealstack-plan` (SKILL.md, references, scripts, examples; no tests or caches) into `public/downloads/mealstack-plan.zip`, copies the example plans to `public/downloads/mealstack/`, and writes the page's figures to `src/data/mealstack-skill.json`. The zip is reproducible: nothing changed in the skill, nothing changes here.
+
+## sync_mealstack.py
+
+Runs both MealStack scripts. After any change to the app's changelog or the skill:
+
+```bash
+cd ~/Projects/missionbuilt-site
+python3 scripts/sync_mealstack.py
+```
+
+Then commit what changed and push.
+

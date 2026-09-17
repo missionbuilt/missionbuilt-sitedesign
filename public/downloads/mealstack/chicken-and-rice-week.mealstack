@@ -1,0 +1,298 @@
+{
+ "mealstack": 1,
+ "name": "Chicken and rice week",
+ "notes": "One week that repeats. Five meals a day, carbs stacked around the session, creatine and a jug on training days. General nutrition information for healthy adults, not medical advice. Written by an AI from your answers; check with a physician or registered dietitian before changing how you eat.",
+ "schedule": {
+  "wake": "07:00",
+  "session": "18:00",
+  "latestMeal": "21:30",
+  "trainingWeekdays": [
+   2,
+   3,
+   5,
+   6
+  ]
+ },
+ "targets": {
+  "training": {
+   "p": 200,
+   "c": 265,
+   "f": 50
+  },
+  "rest": {
+   "p": 190,
+   "c": 200,
+   "f": 60
+  }
+ },
+ "foods": [
+  {
+   "id": "my.rice_crispy_cereal",
+   "name": "crisped rice cereal",
+   "unit": "cup",
+   "per": {
+    "p": 2,
+    "c": 29,
+    "f": 0.3
+   },
+   "qualifier": "1 cup = 240 ml, from the box"
+  }
+ ],
+ "stacks": [
+  {
+   "name": "Chicken and rice",
+   "note": "Chicken thighs are fine in place of breast; add 1 g fat an ounce.",
+   "training": [
+    {
+     "name": "Eggs and oats",
+     "anchor": "forward",
+     "offsetMinutes": 0,
+     "items": [
+      {
+       "food": "egg_whole",
+       "quantity": 2
+      },
+      {
+       "food": "egg_white",
+       "quantity": 2
+      },
+      {
+       "food": "oats_dry",
+       "quantity": 50
+      },
+      {
+       "food": "blueberries",
+       "quantity": 100
+      }
+     ],
+     "note": "Oats in the microwave, eggs scrambled dry.",
+     "steps": [
+      "Oats, 1 cup water, 2 min.",
+      "Eggs in a nonstick pan, no oil."
+     ]
+    },
+    {
+     "name": "Creatine",
+     "kind": "fuel",
+     "anchor": "forward",
+     "offsetMinutes": 30,
+     "note": "One scoop in water, any time after breakfast."
+    },
+    {
+     "name": "Yogurt and whey",
+     "anchor": "forward",
+     "offsetMinutes": 180,
+     "items": [
+      {
+       "food": "greek_yogurt_0",
+       "quantity": 150
+      },
+      {
+       "food": "whey",
+       "quantity": 1
+      },
+      {
+       "food": "banana",
+       "quantity": 1
+      }
+     ]
+    },
+    {
+     "name": "Chicken and rice",
+     "anchor": "forward",
+     "offsetMinutes": 180,
+     "items": [
+      {
+       "food": "chicken_raw",
+       "quantity": 5
+      },
+      {
+       "food": "rice_cooked",
+       "quantity": 150
+      },
+      {
+       "food": "broccoli",
+       "quantity": 150
+      },
+      {
+       "food": "olive_oil",
+       "quantity": 1
+      }
+     ],
+     "note": "Blue box from Sunday prep."
+    },
+    {
+     "name": "Carb surge",
+     "anchor": "beforeSession",
+     "offsetMinutes": 90,
+     "items": [
+      {
+       "food": "my.rice_crispy_cereal",
+       "quantity": 1.25
+      },
+      {
+       "food": "whey",
+       "quantity": 1
+      },
+      {
+       "food": "banana",
+       "quantity": 1
+      }
+     ],
+     "note": "The meal the day is built around: carbs stacked, fat light so it clears before the first set."
+    },
+    {
+     "name": "The jug",
+     "kind": "fuel",
+     "anchor": "atSession",
+     "offsetMinutes": 0,
+     "note": "A litre of water with an electrolyte packet, through the session."
+    },
+    {
+     "name": "Post-workout shake",
+     "anchor": "afterSession",
+     "offsetMinutes": 30,
+     "items": [
+      {
+       "food": "whey",
+       "quantity": 1
+      },
+      {
+       "food": "oat_milk",
+       "quantity": 1
+      }
+     ]
+    },
+    {
+     "name": "Beef and sweet potato",
+     "anchor": "afterSession",
+     "offsetMinutes": 150,
+     "items": [
+      {
+       "food": "beef_93_raw",
+       "quantity": 5
+      },
+      {
+       "food": "sweet_potato",
+       "quantity": 180
+      },
+      {
+       "food": "green_beans",
+       "quantity": 150
+      }
+     ],
+     "steps": [
+      "Sweet potato first: microwave 6 to 8 min.",
+      "Brown the beef, salt it properly.",
+      "Green beans steamed, 3 min."
+     ]
+    }
+   ],
+   "rest": [
+    {
+     "name": "Eggs and oats",
+     "anchor": "forward",
+     "offsetMinutes": 0,
+     "items": [
+      {
+       "food": "egg_whole",
+       "quantity": 2
+      },
+      {
+       "food": "egg_white",
+       "quantity": 4
+      },
+      {
+       "food": "oats_dry",
+       "quantity": 40
+      },
+      {
+       "food": "blueberries",
+       "quantity": 100
+      }
+     ]
+    },
+    {
+     "name": "Yogurt and whey",
+     "anchor": "forward",
+     "offsetMinutes": 180,
+     "items": [
+      {
+       "food": "greek_yogurt_0",
+       "quantity": 200
+      },
+      {
+       "food": "whey",
+       "quantity": 1
+      }
+     ]
+    },
+    {
+     "name": "Chicken and rice",
+     "anchor": "forward",
+     "offsetMinutes": 180,
+     "items": [
+      {
+       "food": "chicken_raw",
+       "quantity": 6
+      },
+      {
+       "food": "rice_cooked",
+       "quantity": 150
+      },
+      {
+       "food": "broccoli",
+       "quantity": 150
+      },
+      {
+       "food": "olive_oil",
+       "quantity": 1
+      }
+     ]
+    },
+    {
+     "name": "Shake and fruit",
+     "anchor": "forward",
+     "offsetMinutes": 180,
+     "items": [
+      {
+       "food": "whey",
+       "quantity": 1
+      },
+      {
+       "food": "apple",
+       "quantity": 1
+      },
+      {
+       "food": "peanut_butter",
+       "quantity": 1
+      }
+     ]
+    },
+    {
+     "name": "Beef and sweet potato",
+     "anchor": "forward",
+     "offsetMinutes": 210,
+     "items": [
+      {
+       "food": "beef_93_raw",
+       "quantity": 6
+      },
+      {
+       "food": "sweet_potato",
+       "quantity": 200
+      },
+      {
+       "food": "green_beans",
+       "quantity": 150
+      },
+      {
+       "food": "avocado",
+       "quantity": 0.25
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

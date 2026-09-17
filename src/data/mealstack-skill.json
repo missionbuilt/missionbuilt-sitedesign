@@ -1,0 +1,23 @@
+{
+  "name": "mealstack-plan",
+  "zip": "/downloads/mealstack-plan.zip",
+  "zipBytes": 27769,
+  "sha256": "ae6c1a0f16dfdd7194bb39d0821e99a80e00fddcb51bd5c09aab7b9bbf1b15c5",
+  "files": 7,
+  "pantryFoods": 208,
+  "pantryVersion": 4,
+  "examples": [
+    {
+      "file": "/downloads/mealstack/chicken-and-rice-week.mealstack",
+      "name": "Chicken and rice week",
+      "stacks": 1,
+      "meals": 0
+    },
+    {
+      "file": "/downloads/mealstack/three-lunches.mealstack",
+      "name": "Three lunches",
+      "stacks": 0,
+      "meals": 3
+    }
+  ]
+}

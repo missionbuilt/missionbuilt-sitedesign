@@ -130,6 +130,8 @@ The rest of the site has no environment variables and no runtime requirements, s
 
 Site code is licensed under the [MIT License](LICENSE). Use it, fork it, learn from it.
 
+The MealStack files the site hosts (`public/downloads/mealstack-plan.zip`, `public/downloads/mealstack/`, `public/demos/mealstack.html`) are not covered by that license. MealStack's license is not decided yet; nothing on the site names one.
+
 The book content (the prose) lives in a separate repo and is licensed [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
 
 ## Acknowledgments

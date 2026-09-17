@@ -1,0 +1,39 @@
+{
+  "mealstack": 1,
+  "name": "Three lunches",
+  "notes": "Three lunches to rotate through, for the Meals shelf. General nutrition information for healthy adults, not medical advice. Written by an AI from your answers; check with a physician or registered dietitian before changing how you eat.",
+  "meals": [
+    {
+      "name": "Tuna rice bowl",
+      "items": [
+        { "food": "tuna_can", "quantity": 2 },
+        { "food": "rice_cooked", "quantity": 175 },
+        { "food": "avocado", "quantity": 0.5 },
+        { "food": "salsa", "quantity": 4 }
+      ],
+      "note": "Three minutes, no prep.",
+      "steps": [ "Drain two cans over the sink; fork the tuna over the rice, avocado and salsa on top." ]
+    },
+    {
+      "name": "Teriyaki chicken bowl",
+      "items": [
+        { "food": "chicken_raw", "quantity": 7.05 },
+        { "food": "rice_cooked", "quantity": 200 },
+        { "food": "stir_fry_veg", "quantity": 150 },
+        { "food": "teriyaki", "quantity": 2 }
+      ],
+      "note": "Blue box. Microwave 2½ min, stir, 1½ min."
+    },
+    {
+      "name": "Lemon-oregano chicken + tzatziki",
+      "items": [
+        { "food": "chicken_raw", "quantity": 7.05 },
+        { "food": "rice_cooked", "quantity": 225 },
+        { "food": "green_beans", "quantity": 150 },
+        { "food": "tzatziki", "quantity": 60 },
+        { "food": "cucumber", "quantity": 60 }
+      ],
+      "note": "Tzatziki on after reheating. Never microwave the tzatziki."
+    }
+  ]
+}

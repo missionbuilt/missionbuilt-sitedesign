@@ -6,16 +6,14 @@
  * repo's CHANGELOG.md, split one file per release by
  * scripts/sync_mealstack_changelog.py into src/content/releases.
  *
- * Built on the Log layout (/logs/[slug]) so it reads like "Fueling is training":
- * one 680px column, mono eyebrow, display h1 with one word in oxblood, Oswald
- * standfirst, ruled byline, serif body with oxblood list dashes. Each release is a
- * ruled h2 with a mono status line. A build not yet shipped (in progress, or
- * submitted and waiting on Apple) carries the page's one army-green micro-mark.
+ * On ToolNoteLayout, so it reads like the Log "Fueling is training". Each release
+ * is a ruled heading with a mono status line. A build not yet shipped (in
+ * progress, or submitted and waiting on Apple) carries the page's one army-green
+ * micro-mark.
  */
 import { getCollection } from 'astro:content';
-import BaseLayout from '../../../layouts/BaseLayout.astro';
-import TopNav from '../../../components/TopNav.astro';
-import { TOOLS, longDate, isoDay } from '../../../data/logs';
+import ToolNoteLayout from '../../../layouts/ToolNoteLayout.astro';
+import { longDate, isoDay } from '../../../data/logs';
 
 const releases = (await getCollection('releases', ({ data }) => data.app === 'mealstack'))
   .sort((a, b) => b.data.order - a.data.order);
@@ -39,132 +37,63 @@ function when(d: (typeof releases)[number]['data'], short = false): string {
 
 const latest = releases.find((r) => r.data.status === 'shipped');
 const lastDated = releases.find((r) => r.data.date)?.data.date;
-const tool = TOOLS.mealstack;
 ---
-<BaseLayout
+<ToolNoteLayout
   title="Release notes · MealStack · Mission Built"
   description="What changed in each MealStack build, written for the people testing it. Newest first."
-  active="rack"
+  crumbs={[{ label: 'MealStack', href: '/rack/mealstack' }, { label: 'Release notes' }]}
+  eyebrow="MealStack release notes"
+  heading="What changed"
+  accent="changed"
+  standfirst="Every build that goes to TestFlight, in plain words. If you can see it or feel it in the app, it gets a line here before it ships."
+  tool="mealstack"
+  back={{ label: 'MealStack', href: '/rack/mealstack' }}
+  footLinks={[{ label: 'Plan skill', href: '/rack/mealstack/skill' }, { label: 'Privacy', href: '/rack/mealstack/privacy' }]}
 >
-  <TopNav active="rack" />
+  <Fragment slot="byline">
+    MealStack · Private beta{latest && <> · Latest {latest.data.version}</>}
+    {lastDated && <> · Updated <time datetime={isoDay(lastDated)}>{longDate(lastDated)}</time></>}
+  </Fragment>
 
-  <main class="page">
-    <nav class="breadcrumb" aria-label="Breadcrumb">
-      <a href="/rack">The Rack</a>
-      <span aria-hidden="true"> / </span>
-      <a href="/rack/mealstack">MealStack</a>
-      <span aria-hidden="true"> / </span>
-      <span class="here">Release notes</span>
-    </nav>
+  <Fragment slot="lead">
+    {releases.length > 1 && (
+      <nav class="index" aria-label="Releases">
+        <ul>
+          {releases.map((r) => (
+            <li>
+              <a href={`#${anchor(r.data.version)}`}>
+                <span class="v">{r.data.version}</span>
+                <span class={r.data.status === 'shipped' ? 'w' : 'w next'}>{when(r.data, true)}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    )}
+  </Fragment>
 
-    <article class="note">
-      {/* ---------- HEADER ---------- */}
-      <header class="head">
-        <p class="eyebrow"><span class="dots" aria-hidden="true">▮▮▮</span><span>MealStack release notes</span></p>
-        <h1>What <span class="accent">changed</span></h1>
-        <p class="standfirst">Every build that goes to TestFlight, in plain words. If you can see it or feel it in the app, it gets a line here before it ships.</p>
-        <p class="byline">
-          MealStack · Private beta{latest && <> · Latest {latest.data.version}</>}
-          {lastDated && <> · Updated <time datetime={isoDay(lastDated)}>{longDate(lastDated)}</time></>}
+  {rendered.map(({ r, Content }) => (
+    <section class="release" id={anchor(r.data.version)} aria-labelledby={`${anchor(r.data.version)}-h`}>
+      <header class="release-head">
+        <h2 id={`${anchor(r.data.version)}-h`}>{r.data.version}</h2>
+        <p class={r.data.status === 'shipped' ? 'status' : 'status next'}>
+          {r.data.date
+            ? <>Shipped <time datetime={isoDay(r.data.date)}>{longDate(r.data.date)}</time></>
+            : when(r.data)}
         </p>
       </header>
+      <div class="notes">
+        <Content />
+      </div>
+    </section>
+  ))}
 
-      {/* ---------- INDEX ---------- */}
-      {releases.length > 1 && (
-        <nav class="index" aria-label="Releases">
-          <ul>
-            {releases.map((r) => (
-              <li>
-                <a href={`#${anchor(r.data.version)}`}>
-                  <span class="v">{r.data.version}</span>
-                  <span class={r.data.status === 'shipped' ? 'w' : 'w next'}>{when(r.data, true)}</span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      )}
-
-      {/* ---------- RELEASES ---------- */}
-      {rendered.map(({ r, Content }) => (
-        <section class="release" id={anchor(r.data.version)} aria-labelledby={`${anchor(r.data.version)}-h`}>
-          <header class="release-head">
-            <h2 id={`${anchor(r.data.version)}-h`}>{r.data.version}</h2>
-            <p class={r.data.status === 'shipped' ? 'status' : 'status next'}>
-              {r.data.date
-                ? <>Shipped <time datetime={isoDay(r.data.date)}>{longDate(r.data.date)}</time></>
-                : when(r.data)}
-            </p>
-          </header>
-          <div class="body">
-            <Content />
-          </div>
-        </section>
-      ))}
-
-      {releases.length === 0 && (
-        <p class="empty">Nothing here yet. The first notes land with the next build.</p>
-      )}
-
-      {/* ---------- FOOT ---------- */}
-      <footer class="note-foot">
-        <a href={tool.href} class="tool-card">
-          <span class="k">The app</span>
-          <span class="name">{tool.name}</span>
-          <span class="line">{tool.line}</span>
-          <span class="cta">{tool.cta}</span>
-        </a>
-        <a href="/rack/mealstack" class="back">← MealStack</a>
-      </footer>
-    </article>
-
-    <footer class="foot">
-      <span>Real strength is lifting others</span>
-      <span class="foot-links">
-        <a href="/rack/mealstack/privacy">Privacy</a>
-        <a href="mailto:mike@missionbuilt.io">mike@missionbuilt.io</a>
-      </span>
-    </footer>
-  </main>
-</BaseLayout>
+  {releases.length === 0 && (
+    <p>Nothing here yet. The first notes land with the next build.</p>
+  )}
+</ToolNoteLayout>
 
 <style>
-  /* ============ BREADCRUMB ============ */
-  .breadcrumb {
-    padding: 18px var(--pad-page-x) 0;
-    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
-    color: var(--color-chalk-faint);
-  }
-  .breadcrumb a { color: var(--color-chalk-dim); transition: color 120ms ease-out; }
-  .breadcrumb a:hover { color: var(--color-chalk); }
-  .breadcrumb .here { color: var(--color-chalk-faint); }
-
-  /* ============ COLUMN ============ */
-  .note { max-width: 680px; margin: 0 auto; padding: 36px var(--pad-page-x-mobile) 0; }
-
-  /* ============ HEADER ============ */
-  .eyebrow {
-    display: flex; align-items: center; gap: 10px; margin: 0 0 18px;
-    font-family: var(--font-mono); font-size: 10px; font-weight: 500; letter-spacing: 0.24em; text-transform: uppercase;
-    color: var(--color-blood);
-  }
-  .eyebrow .dots { color: var(--color-blood-dim); letter-spacing: 0.1em; }
-  h1 {
-    margin: 0; font-family: var(--font-display); font-weight: 700;
-    font-size: clamp(38px, 9vw, 60px); line-height: 0.98; letter-spacing: -0.02em; text-transform: uppercase;
-    color: var(--color-chalk);
-  }
-  h1 .accent { color: var(--color-blood); }
-  .standfirst {
-    margin: 18px 0 0; font-family: var(--font-display); font-weight: 400; font-size: 19px; line-height: 1.4; letter-spacing: 0.01em;
-    color: var(--color-chalk-dim);
-  }
-  .byline {
-    margin: 20px 0 0; padding-top: 14px; border-top: var(--border-thin);
-    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-faint);
-  }
-
-  /* ============ INDEX ============ */
   .index { margin-top: 22px; }
   .index ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
   .index a {
@@ -177,7 +106,6 @@ const tool = TOOLS.mealstack;
   .index .w { color: var(--color-chalk-faint); }
   .index .w.next { color: var(--color-chalk-dim); }
 
-  /* ============ RELEASE ============ */
   .release { scroll-margin-top: 24px; }
   .release-head { margin: 46px 0 0; padding-top: 18px; border-top: var(--border-thin); }
   .release-head h2 {
@@ -190,61 +118,14 @@ const tool = TOOLS.mealstack;
   }
   .status.next { display: inline-block; padding: 3px 7px; border: 1px solid var(--color-army); color: var(--color-army); }
 
-  /* ============ BODY (markdown via :global) ============ */
-  .body { margin-top: 16px; font-family: var(--font-serif); font-size: 17px; line-height: 1.62; color: var(--color-chalk-dim); }
-  .body > :global(p) { margin: 0 0 18px; }
-  .body :global(strong) { color: var(--color-chalk); font-weight: 700; }
-  .body :global(em) { font-style: italic; }
-  .body :global(a) {
-    color: var(--color-chalk); border-bottom: 1px solid var(--color-blood); padding-bottom: 1px;
-    transition: color 120ms ease-out;
-  }
-  .body :global(a:hover) { color: var(--color-blood); }
-  .body > :global(ul) { list-style: none; margin: 0 0 8px; padding: 0; }
-  .body > :global(ul) > :global(li) { position: relative; padding-left: 20px; margin-bottom: 14px; font-size: 16.5px; }
-  .body > :global(ul) > :global(li::before) {
+  .notes { margin-top: 16px; }
+  .notes :global(ul) { list-style: none; margin: 0 0 8px; padding: 0; }
+  .notes :global(ul > li) { position: relative; padding-left: 20px; margin-bottom: 14px; font-size: 16.5px; }
+  .notes :global(ul > li::before) {
     content: ""; position: absolute; left: 0; top: 11px; width: 9px; height: 2px; background: var(--color-blood);
   }
-  .body :global(code) { font-family: var(--font-mono); font-size: 0.86em; color: var(--color-chalk); }
 
-  .empty { margin: 36px 0 0; font-family: var(--font-serif); color: var(--color-chalk-dim); }
-
-  /* ============ FOOT ============ */
-  .note-foot { margin-top: 44px; display: flex; flex-direction: column; gap: 22px; }
-  .tool-card {
-    display: grid; grid-template-columns: auto 1fr auto; grid-template-areas: "k name cta" "k line cta"; column-gap: 18px; row-gap: 4px; align-items: center;
-    padding: 18px 20px; border: var(--border-thin); text-decoration: none; transition: background 120ms ease-out;
-  }
-  .tool-card:hover { background: rgba(255,255,255,0.015); }
-  .tool-card .k { grid-area: k; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); }
-  .tool-card .name { grid-area: name; font-family: var(--font-display); font-weight: 700; font-size: 20px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--color-chalk); }
-  .tool-card .line { grid-area: line; font-family: var(--font-serif); font-size: 14px; line-height: 1.5; color: var(--color-chalk-dim); }
-  .tool-card .cta { grid-area: cta; font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-faint); transition: color 120ms ease-out; white-space: nowrap; }
-  .tool-card:hover .cta { color: var(--color-blood); }
-  .back { align-self: flex-start; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-dim); transition: color 120ms ease-out; }
-  .back:hover { color: var(--color-chalk); }
-
-  /* ============ FOOTER ============ */
-  .foot {
-    display: flex; justify-content: space-between; align-items: center; gap: 14px;
-    margin-top: 64px; padding: 22px var(--pad-page-x) 40px; border-top: var(--border-thin);
-    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-faint);
-  }
-  .foot .foot-links { display: inline-flex; gap: 22px; }
-  .foot a { color: var(--color-chalk-dim); transition: color 120ms ease-out; text-transform: none; }
-  .foot a:hover { color: var(--color-chalk); }
-
-  /* ============ RESPONSIVE ============ */
-  @media (max-width: 1099px) {
-    .breadcrumb { padding: 18px var(--pad-page-x-mid) 0; }
-    .foot { padding: 22px var(--pad-page-x-mid) 40px; }
-  }
   @media (max-width: 720px) {
-    .breadcrumb { padding: 18px var(--pad-page-x-mobile) 0; }
-    .note { padding-top: 28px; }
-    .body { font-size: 16.5px; }
     .release-head h2 { font-size: 30px; }
-    .tool-card { grid-template-columns: 1fr; grid-template-areas: "k" "name" "line" "cta"; row-gap: 6px; }
-    .foot { padding: 22px var(--pad-page-x-mobile) 32px; flex-direction: column; align-items: flex-start; }
   }
 </style>

@@ -1,0 +1,163 @@
+---
+/**
+ * MealStack — the plan skill. /rack/mealstack/skill
+ *
+ * The app's About ("Build a plan with Claude") and the import sheet link here.
+ * The download is the app repo's skills/mealstack-plan, packaged by
+ * scripts/sync_mealstack_skill.py into public/downloads/mealstack-plan.zip, with
+ * the figures the page shows in src/data/mealstack-skill.json.
+ *
+ * On ToolNoteLayout, so it reads like the Log "Fueling is training". The caveat
+ * sits in plain view before the install steps, as the skill states it before its
+ * first question, and the disclaimer in full closes the page, as on the Log.
+ * The license is not decided: the copy names none, anywhere.
+ */
+import ToolNoteLayout from '../../../layouts/ToolNoteLayout.astro';
+import Disclaimer from '../../../components/logs/Disclaimer.astro';
+import skill from '../../../data/mealstack-skill.json';
+
+const kb = Math.max(1, Math.round(skill.zipBytes / 1024));
+
+const asks = [
+  'Write me a week of meals for a cut. I train Monday, Tuesday, Thursday and Friday at 6 pm.',
+  'Turn this spreadsheet from my coach into a MealStack plan.',
+  'Give me three lunches I can rotate, around 50 g of protein each.',
+  'Add my protein powder to MealStack. Here is the label.',
+];
+
+const describe = (e: (typeof skill.examples)[number]) =>
+  e.stacks > 0 ? `${e.stacks} stack${e.stacks === 1 ? '' : 's'}, a training day and a rest day` : `${e.meals} meals on their own`;
+---
+<ToolNoteLayout
+  title="Build a plan with Claude · MealStack · Mission Built"
+  description="The MealStack plan skill teaches Claude to write a plan file the MealStack iPhone app opens with one tap: a rotation, a week, a few meals or a single food."
+  crumbs={[{ label: 'MealStack', href: '/rack/mealstack' }, { label: 'Plan skill' }]}
+  eyebrow="The MealStack plan skill"
+  heading="Build a plan with Claude"
+  accent="plan"
+  standfirst="A skill that teaches Claude to write a MealStack plan file. Ask for a week of meals, tap the file on your phone, and it lands on your shelves."
+  tool="mealstack"
+  back={{ label: 'MealStack', href: '/rack/mealstack' }}
+  footLinks={[{ label: 'Release notes', href: '/rack/mealstack/changelog' }, { label: 'Privacy', href: '/rack/mealstack/privacy' }]}
+>
+  <Fragment slot="byline">
+    Skill · {skill.name} · {skill.pantryFoods} pantry foods · {skill.files} files
+  </Fragment>
+
+  <Fragment slot="lead">
+    <div class="get">
+      <a class="dl-btn" href={skill.zip} download>
+        <span class="dl-ico" aria-hidden="true">↓</span>
+        <span class="dl-text">
+          <span class="dl-name">Download {skill.name}.zip</span>
+          <span class="dl-meta">Skill folder · {kb} KB · Claude or any tool that reads skills</span>
+        </span>
+      </a>
+    </div>
+  </Fragment>
+
+  <aside class="caveat" aria-label="Read this first">
+    <p class="k">Read this first</p>
+    <p class="lead"><strong>I am not a doctor. I am not a dietitian.</strong> Neither is this skill, and neither is MealStack. Nothing it writes is advice about how you should eat.</p>
+    <p>What it writes is general nutrition information for healthy adults, put together by an AI from what you tell it, and it can be wrong. Talk to a physician or registered dietitian who knows you before changing how you eat or train, especially if you are pregnant or breastfeeding, managing a medical condition, or taking medication. It is for adults only.</p>
+    <p>The skill says this before its first question and again when it hands over the file, and writes the short form into the plan so it shows when you import it. It will not advise on medical conditions, medication, supplement doses or weight-cut protocols, and it will not write a plan below a safe floor.</p>
+  </aside>
+
+  <h2 class="rule">What it writes</h2>
+  <p>One file, named for the plan, ending in <code>.mealstack</code>. JSON inside, in the format the app reads. It can carry any mix of the three things MealStack keeps:</p>
+  <ul class="dash">
+    <li><strong>Stacks.</strong> A training day and a rest day of meals under a name. One stack is a week that repeats; several are a rotation, one per week.</li>
+    <li><strong>Meals on their own.</strong> Plates with no time on them, for the Meals shelf. "Three lunches I can rotate."</li>
+    <li><strong>Foods.</strong> Anything the app's pantry doesn't have, with what one unit is worth. "Add my protein powder."</li>
+  </ul>
+  <p>It lays out the day the way the app does: morning meals chained from the first one, the carb surge pinned before the session, fuel as its own entry, nothing past your last meal. It sizes each day to your targets within 5%, then runs a checker that refuses what the app refuses. Where Claude can't run code, it checks by hand and tells you so.</p>
+
+  <h2 class="rule">Install it</h2>
+  <ol class="steps">
+    <li><span class="n">01</span><div><strong>Download the zip</strong> above. Leave it zipped for Claude; unzip it for a tool that wants the folder.</div></li>
+    <li><span class="n">02</span><div><strong>Claude.</strong> Add it under Settings, Capabilities, Skills.</div></li>
+    <li><span class="n">03</span><div><strong>Claude Code, or another tool that reads skills.</strong> Put the unzipped <code>mealstack-plan</code> folder in its skills folder, <code>~/.claude/skills/</code> for Claude Code.</div></li>
+  </ol>
+
+  <h2 class="rule">Use it</h2>
+  <p>Ask the way you'd ask a coach. The skill takes it from there in two or three questions: when you eat and train, how many meals, your targets, what you like.</p>
+  <ul class="asks">
+    {asks.map((a) => <li>{a}</li>)}
+  </ul>
+  <p>Then get the file onto your phone and tap it:</p>
+  <ul class="dash">
+    <li><strong>AirDrop it, mail it to yourself, or save it to Files.</strong> Tap it and MealStack opens with a preview: the stacks and their macros, the meals, the foods it adds.</li>
+    <li><strong>Pick where it goes.</strong> <em>Make it my plan</em> runs the first stack this week and the rest as the rotation, and keeps the plan you had on the Stacks shelf. <em>Kitchen only</em> puts everything on the shelves and leaves your plan alone. Nothing changes until you choose.</li>
+    <li><strong>Or from inside the app.</strong> The Plan tab, the + on any shelf, Bring in a plan file.</li>
+  </ul>
+
+  <h2 class="rule">Try an example</h2>
+  <p>The two files the skill learns from. On an iPhone with MealStack installed, tap one to see the import preview.</p>
+  <div class="examples">
+    {skill.examples.map((e) => (
+      <a class="example" href={e.file} download>
+        <span class="ex-name">{e.name}</span>
+        <span class="ex-meta">{describe(e)}</span>
+        <span class="ex-cta">Download ↓</span>
+      </a>
+    ))}
+  </div>
+
+  <h2 class="rule">What stays where</h2>
+  <p>The skill runs in your Claude, under your account. Nothing it writes passes through Mission Built, and the file goes from Claude to your phone the way any file does. The app refuses a file it can't read, so the worst a bad file does is show a message. What the app itself keeps and sends is on <a href="/rack/mealstack/privacy">the privacy page</a>.</p>
+  <p>The format is documented inside the skill (<code>references/plan-format.md</code>), along with the {skill.pantryFoods} built-in foods and what one unit of each is worth. MealStack is a Mission Built mark.</p>
+
+  <Disclaimer title="The disclaimer, in full">
+    <p><strong>I am not a doctor. I am not a dietitian.</strong> I am not qualified to tell you how to eat, and nothing this skill writes is advice.</p>
+    <p>The skill turns what you tell it into a plan the app can run, the same way I plan my own meals while training. It does not know your health, your history or your bloodwork. If you want to know what <em>you</em> should eat, talk to a registered dietitian and to your physician before you change how you eat or train. What you eat is your decision and your responsibility.</p>
+  </Disclaimer>
+</ToolNoteLayout>
+
+<style>
+  .get { margin-top: 24px; }
+  .dl-btn {
+    display: inline-flex; align-items: center; gap: 16px; padding: 16px 22px;
+    background: var(--color-panel); border: var(--border-thin); border-left: 3px solid var(--color-blood);
+    text-decoration: none; transition: background 120ms ease-out;
+  }
+  .dl-btn:hover { background: rgba(255,255,255,0.02); }
+  .dl-ico { font-family: var(--font-mono); font-size: 18px; color: var(--color-blood); line-height: 1; }
+  .dl-text { display: flex; flex-direction: column; gap: 4px; }
+  .dl-name { font-family: var(--font-display); font-weight: 600; font-size: 16px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--color-chalk); }
+  .dl-meta { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-chalk-faint); }
+
+  .caveat { margin: 34px 0 0; padding: 18px 20px; border: var(--border-thin); }
+  .caveat .k {
+    margin: 0 0 10px; font-family: var(--font-mono); font-size: 10px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--color-chalk);
+  }
+  .caveat p:not(.k) { font-size: 15px; line-height: 1.6; }
+  .caveat p.lead { font-size: 16px; color: var(--color-chalk); }
+  .caveat p:last-child { margin-bottom: 0; }
+
+  .steps { list-style: none; margin: 0 0 22px; padding: 0; border-top: var(--border-thin); }
+  .steps li { display: grid; grid-template-columns: 44px 1fr; gap: 8px; padding: 14px 0; border-bottom: var(--border-thin); font-size: 16px; }
+  .steps .n { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; color: var(--color-chalk-faint); padding-top: 5px; }
+
+  .asks { list-style: none; margin: 0 0 22px; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+  .asks li {
+    padding: 10px 14px; background: var(--color-panel); border: var(--border-thin);
+    font-family: var(--font-mono); font-size: 13px; line-height: 1.5; color: var(--color-chalk);
+  }
+
+  .examples { display: grid; grid-template-columns: 1fr 1fr; border-top: var(--border-thin); border-bottom: var(--border-thin); margin: 0 0 22px; }
+  .example { display: flex; flex-direction: column; gap: 6px; padding: 18px 20px; border-right: var(--border-thin); text-decoration: none; transition: background 120ms ease-out; }
+  .example:last-child { border-right: none; }
+  .example:hover { background: rgba(255,255,255,0.015); }
+  .ex-name { font-family: var(--font-display); font-weight: 600; font-size: 18px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--color-chalk); }
+  .ex-meta { font-family: var(--font-serif); font-size: 14px; color: var(--color-chalk-dim); }
+  .ex-cta { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-faint); transition: color 120ms ease-out; }
+  .example:hover .ex-cta { color: var(--color-blood); }
+
+  @media (max-width: 720px) {
+    .dl-btn { display: flex; }
+    .examples { grid-template-columns: 1fr; }
+    .example { border-right: none; border-bottom: var(--border-thin); }
+    .example:last-child { border-bottom: none; }
+  }
+</style>

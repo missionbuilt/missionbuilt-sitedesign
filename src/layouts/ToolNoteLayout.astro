@@ -1,0 +1,178 @@
+---
+/**
+ * ToolNoteLayout — a tool's supporting page in the Log's shape.
+ *
+ * Used by /rack/mealstack/changelog and /rack/mealstack/skill. Same grammar as a
+ * Log (/logs/[slug]): breadcrumb, one 680px column, mono eyebrow, display h1 with
+ * one word in oxblood, Oswald standfirst, ruled mono byline, serif body with
+ * oxblood list dashes, the tool card and a back link at the foot.
+ *
+ * Slots: default (the body, styled through :global on direct children of
+ * `.body`), `byline`, `lead` (between the header and the body, unstyled), `head`
+ * (passed to BaseLayout). Section styles for things a page adds live on the page.
+ */
+import BaseLayout from './BaseLayout.astro';
+import TopNav from '../components/TopNav.astro';
+import { TOOLS, type ToolKey } from '../data/logs';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Breadcrumb trail after "The Rack"; the last entry is the current page. */
+  crumbs: { label: string; href?: string }[];
+  eyebrow: string;
+  heading: string;
+  /** One word of `heading` to set in oxblood. */
+  accent?: string;
+  standfirst: string;
+  tool: ToolKey;
+  toolKicker?: string;
+  back: { label: string; href: string };
+  footLinks?: { label: string; href: string }[];
+}
+
+const { title, description, crumbs, eyebrow, heading, accent, standfirst, tool: toolKey, toolKicker = 'The app', back, footLinks = [] } = Astro.props;
+const i = accent ? heading.indexOf(accent) : -1;
+const hBefore = i >= 0 ? heading.slice(0, i) : heading;
+const hAfter = i >= 0 ? heading.slice(i + (accent?.length ?? 0)) : '';
+const tool = TOOLS[toolKey];
+---
+<BaseLayout title={title} description={description} active="rack">
+  <slot name="head" slot="head" />
+  <TopNav active="rack" />
+
+  <main class="page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/rack">The Rack</a>
+      {crumbs.map((c) => (
+        <>
+          <span aria-hidden="true"> / </span>
+          {c.href ? <a href={c.href}>{c.label}</a> : <span class="here">{c.label}</span>}
+        </>
+      ))}
+    </nav>
+
+    <article class="note">
+      <header class="head">
+        <p class="eyebrow"><span class="dots" aria-hidden="true">▮▮▮</span><span>{eyebrow}</span></p>
+        <h1>{hBefore}{i >= 0 && <span class="accent">{accent}</span>}{hAfter}</h1>
+        <p class="standfirst">{standfirst}</p>
+        <p class="byline"><slot name="byline" /></p>
+      </header>
+
+      <slot name="lead" />
+
+      <div class="body">
+        <slot />
+      </div>
+
+      <footer class="note-foot">
+        <a href={tool.href} class="tool-card">
+          <span class="k">{toolKicker}</span>
+          <span class="name">{tool.name}</span>
+          <span class="line">{tool.line}</span>
+          <span class="cta">{tool.cta}</span>
+        </a>
+        <a href={back.href} class="back">← {back.label}</a>
+      </footer>
+    </article>
+
+    <footer class="foot">
+      <span>Real strength is lifting others</span>
+      <span class="foot-links">
+        {footLinks.map((l) => <a href={l.href}>{l.label}</a>)}
+        <a href="mailto:mike@missionbuilt.io">mike@missionbuilt.io</a>
+      </span>
+    </footer>
+  </main>
+</BaseLayout>
+
+<style>
+  .breadcrumb {
+    padding: 18px var(--pad-page-x) 0;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--color-chalk-faint);
+  }
+  .breadcrumb a { color: var(--color-chalk-dim); transition: color 120ms ease-out; }
+  .breadcrumb a:hover { color: var(--color-chalk); }
+  .breadcrumb .here { color: var(--color-chalk-faint); }
+
+  .note { max-width: 680px; margin: 0 auto; padding: 36px var(--pad-page-x-mobile) 0; }
+
+  .eyebrow {
+    display: flex; align-items: center; gap: 10px; margin: 0 0 18px;
+    font-family: var(--font-mono); font-size: 10px; font-weight: 500; letter-spacing: 0.24em; text-transform: uppercase;
+    color: var(--color-blood);
+  }
+  .eyebrow .dots { color: var(--color-blood-dim); letter-spacing: 0.1em; }
+  h1 {
+    margin: 0; font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(38px, 9vw, 60px); line-height: 0.98; letter-spacing: -0.02em; text-transform: uppercase;
+    color: var(--color-chalk);
+  }
+  h1 .accent { color: var(--color-blood); }
+  .standfirst {
+    margin: 18px 0 0; font-family: var(--font-display); font-weight: 400; font-size: 19px; line-height: 1.4; letter-spacing: 0.01em;
+    color: var(--color-chalk-dim);
+  }
+  .byline {
+    margin: 20px 0 0; padding-top: 14px; border-top: var(--border-thin);
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-faint);
+  }
+
+  .body { margin-top: 8px; font-family: var(--font-serif); font-size: 17px; line-height: 1.62; color: var(--color-chalk-dim); }
+  .body :global(h2.rule) {
+    margin: 46px 0 6px; padding-top: 18px; border-top: var(--border-thin);
+    font-family: var(--font-display); font-weight: 600; font-size: 25px; line-height: 1.15; letter-spacing: 0.02em; text-transform: uppercase;
+    color: var(--color-chalk);
+  }
+  .body :global(p) { margin: 0 0 18px; }
+  .body :global(strong) { color: var(--color-chalk); font-weight: 700; }
+  .body :global(em) { font-style: italic; }
+  .body :global(a:not([class])) {
+    color: var(--color-chalk); border-bottom: 1px solid var(--color-blood); padding-bottom: 1px;
+    transition: color 120ms ease-out;
+  }
+  .body :global(a:not([class]):hover) { color: var(--color-blood); }
+  .body :global(ul.dash) { list-style: none; margin: 0 0 22px; padding: 0; }
+  .body :global(ul.dash > li) { position: relative; padding-left: 20px; margin-bottom: 14px; font-size: 16.5px; }
+  .body :global(ul.dash > li::before) {
+    content: ""; position: absolute; left: 0; top: 11px; width: 9px; height: 2px; background: var(--color-blood);
+  }
+  .body :global(code) { font-family: var(--font-mono); font-size: 0.86em; color: var(--color-chalk); }
+
+  .note-foot { margin-top: 44px; display: flex; flex-direction: column; gap: 22px; }
+  .tool-card {
+    display: grid; grid-template-columns: auto 1fr auto; grid-template-areas: "k name cta" "k line cta"; column-gap: 18px; row-gap: 4px; align-items: center;
+    padding: 18px 20px; border: var(--border-thin); text-decoration: none; transition: background 120ms ease-out;
+  }
+  .tool-card:hover { background: rgba(255,255,255,0.015); }
+  .tool-card .k { grid-area: k; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); }
+  .tool-card .name { grid-area: name; font-family: var(--font-display); font-weight: 700; font-size: 20px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--color-chalk); }
+  .tool-card .line { grid-area: line; font-family: var(--font-serif); font-size: 14px; line-height: 1.5; color: var(--color-chalk-dim); }
+  .tool-card .cta { grid-area: cta; font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-faint); transition: color 120ms ease-out; white-space: nowrap; }
+  .tool-card:hover .cta { color: var(--color-blood); }
+  .back { align-self: flex-start; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-dim); transition: color 120ms ease-out; }
+  .back:hover { color: var(--color-chalk); }
+
+  .foot {
+    display: flex; justify-content: space-between; align-items: center; gap: 14px;
+    margin-top: 64px; padding: 22px var(--pad-page-x) 40px; border-top: var(--border-thin);
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-faint);
+  }
+  .foot .foot-links { display: inline-flex; gap: 22px; flex-wrap: wrap; }
+  .foot a { color: var(--color-chalk-dim); transition: color 120ms ease-out; text-transform: none; }
+  .foot a:hover { color: var(--color-chalk); }
+
+  @media (max-width: 1099px) {
+    .breadcrumb { padding: 18px var(--pad-page-x-mid) 0; }
+    .foot { padding: 22px var(--pad-page-x-mid) 40px; }
+  }
+  @media (max-width: 720px) {
+    .breadcrumb { padding: 18px var(--pad-page-x-mobile) 0; }
+    .note { padding-top: 28px; }
+    .body { font-size: 16.5px; }
+    .tool-card { grid-template-columns: 1fr; grid-template-areas: "k" "name" "line" "cta"; row-gap: 6px; }
+    .foot { padding: 22px var(--pad-page-x-mobile) 32px; flex-direction: column; align-items: flex-start; }
+  }
+</style>

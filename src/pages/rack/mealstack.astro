@@ -12,8 +12,9 @@
  * order: hero → try it (the click-through demo, /demos/mealstack.html) →
  * why (the four pillars, linking to the Log) → the rule (live cascade)
  * → what it does differently → how you use it → side by side → fine print →
- * join the beta (form → /api/beta) → FAQ → tester quotes (rendered only when
- * there are real ones) → related.
+ * join the beta (form → /api/beta) → the kit (plan skill, release notes,
+ * privacy) → FAQ → tester quotes (rendered only when there are real ones) →
+ * related.
  *
  * How we talk about it: the Log "Fueling is training"
  * (src/content/logs/fueling-is-training.mdx) is the source of truth. Four
@@ -386,6 +387,32 @@ const ld = {
 
     <hr class="dashed" />
 
+    {/* ---------- THE KIT ---------- */}
+    <section class="block" id="kit">
+      <p class="section-label">For testers</p>
+      <h2 class="section-h2">Build a plan, see what changed, read the fine print.</h2>
+
+      <div class="related three">
+        <a href="/rack/mealstack/skill" class="related-card">
+          <h3>Plan skill</h3>
+          <p>Teach Claude to write a MealStack plan file. Ask for a week of meals, tap the file on your phone, and it lands on your shelves.</p>
+          <span class="related-cta">Download →</span>
+        </a>
+        <a href="/rack/mealstack/changelog" class="related-card">
+          <h3>Release notes</h3>
+          <p>What changed in each build, in plain words, newest first. The app's About links here.</p>
+          <span class="related-cta">Read →</span>
+        </a>
+        <a href="/rack/mealstack/privacy" class="related-card">
+          <h3>Privacy</h3>
+          <p>What stays on your phone, what leaves it, who touches it, how long it lasts, and how to make it all go away.</p>
+          <span class="related-cta">Read →</span>
+        </a>
+      </div>
+    </section>
+
+    <hr class="dashed" />
+
     {/* ---------- FAQ ---------- */}
     <section class="block" id="faq">
       <p class="section-label">Questions</p>
@@ -448,6 +475,7 @@ const ld = {
     <footer class="foot">
       <span>Real strength is lifting others</span>
       <span class="foot-links">
+        <a href="/rack/mealstack/skill">Plan skill</a>
         <a href="/rack/mealstack/changelog">Release notes</a>
         <a href="/rack/mealstack/privacy">Privacy</a>
         <a href="mailto:mike@missionbuilt.io">mike@missionbuilt.io</a>
@@ -807,6 +835,7 @@ const ld = {
 
   /* ============ RELATED ============ */
   .related { margin-top: 28px; display: grid; grid-template-columns: 1fr 1fr; border-top: var(--border-thin); border-bottom: var(--border-thin); }
+  .related.three { grid-template-columns: repeat(3, 1fr); }
   .related-card { display: flex; flex-direction: column; gap: 10px; padding: 28px; border-right: var(--border-thin); text-decoration: none; transition: background 120ms ease-out; }
   .related-card:last-child { border-right: none; }
   .related-card:hover { background: rgba(255,255,255,0.015); }
@@ -862,7 +891,7 @@ const ld = {
     .vr { grid-template-columns: 1fr; gap: 6px; }
     .vr span:nth-child(2)::before { content: 'Other apps · '; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-chalk-faint); }
     .vr span:last-child::before { content: 'MealStack · '; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-chalk-faint); }
-    .related { grid-template-columns: 1fr; }
+    .related, .related.three { grid-template-columns: 1fr; }
     .related-card { border-right: none; border-bottom: var(--border-thin); }
     .related-card:last-child { border-bottom: none; }
     .dashed { margin: 40px var(--pad-page-x-mobile); }
