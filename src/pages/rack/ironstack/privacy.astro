@@ -1,0 +1,373 @@
+---
+/**
+ * Ironstack — privacy.
+ *
+ * The page App Store Connect points at (Privacy Policy URL) and the app should link to
+ * from Settings › Your data. Written from the code, not from a template, on Sept 19,
+ * 2026, against ~/Projects/ironstack (app, coach-proxy, social-server). Same shape and
+ * voice as /rack/mealstack/privacy, so the two read as one family.
+ *
+ * Apple's App Review Guidelines 5.1.1(i) want what is collected and every use, that
+ * third parties protect it at least as well, and retention, deletion and how consent is
+ * withdrawn; 5.1.1(v) wants in-app account deletion (Social has it); 5.1.2(i) wants
+ * third-party AI named and permission asked first; 5.1.3 wants the health data named
+ * and never used for marketing; 1.2 wants reporting and blocking for Social. All here.
+ *
+ * THREE THINGS THIS PAGE ASSUMES, which must be true in the build that is submitted
+ * (see claude/ironstack-web-pages-2026-09-19.md in the Ironstack project):
+ *   1. coach-proxy treats a missing x-usage-sharing header as OFF (changed Sept 19,
+ *      src/telemetry.ts; needs `npx wrangler deploy`). Until it deploys, and if
+ *      POSTHOG_KEY is set on ironstack-coach, Coach events reach PostHog.
+ *   2. App Review 5.1.2(i) wants Coach to ask before it sends anything to a third-party
+ *      AI, naming Anthropic. Today coachEnabled defaults to true with no acceptance
+ *      screen (SessionStore.swift:80). The page is written to be true today ("sends
+ *      nothing until you ask it something"); when the app gains the ask, add one
+ *      sentence here saying so.
+ *   3. The app links here. It has no privacy link yet.
+ *
+ * Color discipline: oxblood for the hero period, section labels and the one
+ * emphasised word. No army green on this page.
+ */
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import SiteFooter from '../../../components/SiteFooter.astro';
+import TopNav from '../../../components/TopNav.astro';
+
+const EFFECTIVE = 'September 19, 2026';
+const ASK = 'mailto:mike@missionbuilt.io?subject=Ironstack%20data%20request';
+
+const stats = [
+  { key: 'Account to log',     value: 'None' },
+  { key: 'Your training log',  value: 'On your phone' },
+  { key: 'Leaves the phone',   value: 'Coach questions. Cards you share.' },
+  { key: 'Sold or advertised', value: 'Never' },
+];
+
+type Party = { who: string; role: string; what: string; where: string };
+const parties: Party[] = [
+  { who: 'Cloudflare', role: 'Runs the Coach and Social servers', what: 'Sees each Coach request in transit. Stores the install record and allowance counters for Coach, the Social account and everything Social holds, and the log copy if you turn that on. Keeps a count-and-cost record of Coach use for about ninety days.', where: 'Global edge, US account' },
+  { who: 'Anthropic', role: 'Runs the Claude model behind Coach', what: 'Receives what the app sends with a Coach question and produces the answer. Does not train models on it. Handles it under its commercial terms and Data Processing Addendum.', where: 'United States' },
+  { who: 'Apple', role: 'Health, Sign in with Apple, notifications, weather, maps, TestFlight', what: 'Health holds what you allow the app to read and the workouts it writes. Sign in with Apple identifies your Social account. Push notifications for Social go through Apple. WeatherKit and Apple Maps receive a rounded location to return the weather and a town name. Apple\'s own privacy terms cover these.', where: 'Per Apple' },
+];
+
+type Keep = { what: string; how: string };
+const keeps: Keep[] = [
+  { what: 'Your training log, plan, notes, gear, profile, Coach conversation', how: 'On your phone until you delete them or delete the app. Included in your iPhone backup like any other app data.' },
+  { what: 'What you send Coach', how: 'Not stored by Mission Built. Gone from the server when the answer is sent. Anthropic\'s handling is governed by its commercial terms.' },
+  { what: 'The Coach install record (public key, receipt, timestamps)', how: 'While the install exists. Removed when you delete your data in the app, or on request.' },
+  { what: 'Coach allowance counters', how: 'Reset at the start of each month.' },
+  { what: 'Count-and-cost record of Coach use (Cloudflare)', how: 'About ninety days, then gone.' },
+  { what: 'Social account, handle, spotters, shared cards, support given', how: 'Until you delete your Social account or all your data in the app. Your sign-in on the phone lasts 180 days; an unused invite link expires after 7.' },
+  { what: 'Notification token (Social)', how: 'Until you sign out of Social or delete it.' },
+  { what: 'Reports you file', how: 'Until you delete your Social account. Reports others file about a card are kept for moderation.' },
+  { what: 'The log copy (only if you turn it on)', how: 'Until you delete your data in the app, or ask.' },
+];
+---
+<BaseLayout
+  title="Privacy · Ironstack · Mission Built"
+  description="What Ironstack keeps on your phone, what leaves it for Coach and Social, who touches it, how long it lasts, and how to make it all go away."
+  active="rack"
+>
+  <TopNav active="rack" />
+
+  <main id="main" class="page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/rack">The Rack</a>
+      <span aria-hidden="true"> / </span>
+      <a href="/rack/ironstack">Ironstack</a>
+      <span aria-hidden="true"> / </span>
+      <span class="here">Privacy</span>
+    </nav>
+
+    <section class="hero">
+      <p class="eyebrow">
+        <span class="dots" aria-hidden="true">▮▮▮</span>
+        <span>Ironstack</span>
+        <span class="dots" aria-hidden="true">▮▮▮</span>
+      </p>
+      <h1 class="display"><span>Privacy</span><span class="dot">.</span></h1>
+      <p class="subtitle">
+        <span class="line1">What the app keeps, what leaves your phone, and how to make it all go away.</span>
+        <span class="line2">Your training log is yours. Here is everything else.</span>
+      </p>
+      <p class="effective">Effective {EFFECTIVE} · Mission Built · Mike Nichols · Pittsburgh, PA</p>
+    </section>
+
+    <section class="meta-strip" aria-label="Ironstack privacy at a glance">
+      {stats.map((s) => (
+        <div class="stat">
+          <div class="stat-key">{s.key}</div>
+          <div class="stat-value">{s.value}</div>
+        </div>
+      ))}
+    </section>
+
+    {/* ---------- WHO ---------- */}
+    <section class="block">
+      <p class="section-label">Who this is</p>
+      <h2 class="section-h2">Mission Built makes Ironstack. This page is the whole policy.</h2>
+      <div class="prose-block">
+        <p>Ironstack is made by Mission Built, which is Mike Nichols, in Pittsburgh, Pennsylvania. For the purposes of privacy law, Mission Built is the controller of whatever this page says leaves your phone. There is no parent company, no subsidiary and no partner with access to your data. The source goes public with 1.0, so the code that does what this page describes can be read.</p>
+      </div>
+    </section>
+
+    <hr class="dashed" />
+
+    {/* ---------- NO ACCOUNT ---------- */}
+    <section class="block">
+      <p class="section-label">No account to log</p>
+      <h2 class="section-h2">Logging never asks who you are.</h2>
+      <div class="prose-block">
+        <p>You can log every set you will ever do without signing up, logging in or giving a name, an email address or a phone number. The only identity Coach ever sees is a key your phone creates in its secure hardware, which proves a request came from a real copy of Ironstack and nothing more.</p>
+        <p><strong>Social is the one exception, and it is optional.</strong> To share sessions with the people you train with, you sign in with Apple. Ironstack asks Apple for neither your name nor your email, and stores neither if Apple sends them. The Social server keeps the stable, anonymous user id Apple gives it, and a sealed token it uses for one thing: disconnecting Sign in with Apple when you delete your account.</p>
+      </div>
+    </section>
+
+    <hr class="dashed" />
+
+    {/* ---------- ON YOUR PHONE ---------- */}
+    <section class="block">
+      <p class="section-label">On your phone</p>
+      <h2 class="section-h2">Your training log lives in files on the phone.</h2>
+      <div class="prose-block">
+        <p>Every set, session, note and correction; your programs, workouts and exercises; your gear and home gym; the details you give for a session (bodyweight, sleep); your Coach conversation; and your Social settings. All of it lives in files in the app's own container on your iPhone, written under the phone's encryption and protected until the first unlock after a restart. Those files are included in your iCloud or computer backup the way any app's data is; Mission Built has no access to your backups.</p>
+        <p><strong>Apple Health, if you allow it.</strong> Ironstack reads your weigh-ins, sleep, height, date of birth and biological sex, so the questions it asks before a session answer themselves and Insights can line your sleep up with your lifting. It only fills empty fields; you can always type over them. If you turn on the separate switch in Settings (off until you do), it saves each finished session to Health as a strength workout. It never writes your weight or your sleep. Nothing from Health is used for marketing, advertising or anything but the log and your own Insights.</p>
+        <p><strong>Location, if you allow it.</strong> From your second session on, the app asks once, and only uses location while a session is live. It asks for roughly a kilometre of accuracy and rounds the coordinates to two decimal places the moment they arrive. The session keeps the town name, those rounded coordinates, whether you were away from home, and the weather. To get the weather and the town name, the rounded point goes to Apple's WeatherKit and Apple Maps. Logging never needs location, and an export leaves coordinates out unless you switch them on.</p>
+        <p><strong>Your voice, only while you hold the button.</strong> Speech is turned into text on the phone, offline, only while you hold the talk button. No audio is kept or sent anywhere.</p>
+        <p><strong>MealStack, only if you say yes.</strong> Ironstack can put a few facts on a private shelf on your phone that only Mission Built apps can open: whether Travel mode is on, and, only after a separate yes for each, your last session's summary and when you usually train. Nothing crosses to a server to do this. Turn a share off and Ironstack takes it back off the shelf.</p>
+        <p class="note">This section also serves as the consumer health data notice some states require. The health data involved: bodyweight, sleep, height, date of birth and biological sex read from Apple Health with your permission, the workouts written to it with your permission, and the sets, effort ratings and notes you log. Source: you and Apple Health. Purpose: the log, your Insights, and Coach when you ask it. Shared with: nobody, except what goes to Coach when you ask it a question, and the session card you choose to share on Social, as described next.</p>
+      </div>
+    </section>
+
+    <hr class="dashed" />
+
+    {/* ---------- WHAT LEAVES ---------- */}
+    <section class="block">
+      <p class="section-label">What leaves your phone</p>
+      <h2 class="section-h2">Only what you use, and only when you use it.</h2>
+
+      <div class="two">
+        <div class="cell">
+          <p class="k">Coach</p>
+          <p class="v">What it needs to answer, when you ask.</p>
+          <p class="body">Coach sends nothing until you ask it something. When you do, the app sends your question and the conversation so far, today's date and your units, your sessions from the last ninety days (each with its sets, weights, reps, effort ratings and notes, the town it happened in, and the bodyweight and hours of sleep you gave for it), where you are in your program, and exercise names waiting to be matched. It goes to Mission Built's server at ironstack-coach.missionbuilt.io, which runs on Cloudflare. The server passes it to Anthropic's Claude model, checks every weight the model names against a ceiling from your own sets, and sends the answer back. Mission Built does not store your questions or your sessions on the server; they are gone when the answer is sent. Anthropic processes them to produce the answer and does not use them to train its models.</p>
+          <p class="body">To run Coach without accounts, the server keeps one small record per install: the public half of the key your phone created, the receipt Apple issued for it, when it registered and was last seen, and how many Coach requests that install has made today and this month and roughly what they cost. That is how the allowance works. It identifies the install, not you. You can turn Coach off in Settings at any time; off, it sends nothing.</p>
+        </div>
+        <div class="cell">
+          <p class="k">Social</p>
+          <p class="v">The cards you choose to share, to people you invite.</p>
+          <p class="body">If you sign in to Social, the Social server at social.missionbuilt.io (on Cloudflare) holds your handle, your spotters and invitations, the session cards you share, the support you give and get, who you have muted or blocked, reports you file, and a notification token so a new spotter or support can reach your phone. Notifications are asked for only when you have something to be notified about.</p>
+          <p class="body">A card carries no free text. It holds the date and start time, how long you trained, how many working sets, the lifts by name from the app's list, the day's best moments, up to three badges, and a place: your home gym as a phrase you pick, or the city name. Never coordinates. Weights are left off unless you turn them on. You approve every card before it goes, and only your spotters, people you invited or who invited you, can see it. You can take a card back at any time.</p>
+          <p class="body">You can report a card or block a person from Social at any time. Reports use a fixed list of reasons and are read by Mission Built, which can hide a card, release a handle or suspend an account.</p>
+        </div>
+      </div>
+
+      <div class="fine">
+        <p class="k">And one switch almost nobody needs</p>
+        <p><strong>Settings › Your data › Advanced › Copy my log to the server</strong> is off for new installs. It exists so the app's author can read his own log with the command-line tools on his laptop; nothing in the app needs it. On, it sends your raw log (including rounded location, bodyweight, sleep and notes) to storage Mission Built runs on Cloudflare, filed under a one-way hash of the install key. History you brought in from another app is never sent. It stays until you delete your data in the app.</p>
+      </div>
+
+      <div class="fine">
+        <p class="k">Nothing else</p>
+        <p>No advertising identifiers, no third-party software kits in the app, no usage analytics sent to anyone, no tracking in Apple's sense of the word, no selling, no sharing for anyone else's marketing. The App Store privacy label says the same.</p>
+      </div>
+    </section>
+
+    <hr class="dashed" />
+
+    {/* ---------- WHO TOUCHES IT ---------- */}
+    <section class="block">
+      <p class="section-label">Who touches it</p>
+      <h2 class="section-h2">Three companies, each for one job.</h2>
+      <p class="prose">Each of them is bound by its own terms and, where it processes data for Mission Built, by a data processing agreement, to protect your data at least as well as this page promises. None of them may use it for their own marketing.</p>
+      <div class="parties">
+        <div class="ph"><span>Who</span><span>Job</span><span>What they see</span><span>Where</span></div>
+        {parties.map((p) => (
+          <div class="pr">
+            <span class="pk">{p.who}</span>
+            <span class="role">{p.role}</span>
+            <span>{p.what}</span>
+            <span class="where">{p.where}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <hr class="dashed" />
+
+    {/* ---------- HOW LONG ---------- */}
+    <section class="block">
+      <p class="section-label">How long</p>
+      <h2 class="section-h2">What is kept, and for how long.</h2>
+      <div class="keeps">
+        {keeps.map((k) => (
+          <div class="kr">
+            <span class="kk">{k.what}</span>
+            <span>{k.how}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <hr class="dashed" />
+
+    {/* ---------- DELETE ---------- */}
+    <section class="block">
+      <p class="section-label">Seeing, taking and deleting your data</p>
+      <h2 class="section-h2">It is all in Settings. No email needed.</h2>
+      <div class="prose-block">
+        <p><strong>Settings › Your data › Export all my data</strong> writes every session you have ever logged, your plan and your own exercises into one file, in the Mission Built Schema, a documented format you can read anywhere or bring back into Ironstack. <strong>Export the raw log</strong> gives you the log itself, line for line.</p>
+        <p><strong>What the server holds</strong> asks the Coach server, live, for everything it keeps for your install and shows it to you. The request is signed by your phone's key, so the server can only ever answer for the install that asked.</p>
+        <p><strong>Delete all Ironstack data</strong> is one screen that erases everything, everywhere, in order: first the server's copy (the install record, the counters, and the log copy if you had it on), then your Social account if you have one, then everything on the phone. It reports each one. If the server or Social cannot be reached, it stops before touching the phone and says so, so nothing is left behind that you can no longer ask to erase; you can try again or delete the phone's data anyway. <strong>Social › Delete Social account</strong> deletes only the Social side: your handle, spotters, shared cards and support, and disconnects Sign in with Apple. Your log is not touched.</p>
+        <p>Two things those buttons do not remove: workouts Ironstack wrote to Apple Health stay in Health, where you can delete them in the Health app; and the count-and-cost record of Coach use expires on its own within about ninety days. Turning Coach off in Settings stops it from sending anything from then on; signing out of Social stops notifications.</p>
+        <p>If the app was deleted before you asked, nothing on the Coach server can be matched to you, which also means nothing there can identify you. For that, for your Social account, or for anything else about your data, email <a href={ASK}>mike@missionbuilt.io</a>. Mission Built will confirm within ten days and finish within thirty.</p>
+      </div>
+    </section>
+
+    <hr class="dashed" />
+
+    {/* ---------- RIGHTS ---------- */}
+    <section class="block">
+      <p class="section-label">Your rights</p>
+      <h2 class="section-h2">Wherever you are, the same answer.</h2>
+      <div class="prose-block">
+        <p>You can ask what Mission Built holds that relates to your install or your Social account, ask for it to be corrected or deleted, ask for a copy, object to or restrict its use, and withdraw any consent you gave, all at the address above, and you will not be treated differently for asking. Under the GDPR, the legal bases are your consent (Coach, Social, Health, location, the log copy) and Mission Built's legitimate interest in running the Coach allowance, keeping Social safe and keeping the service from being abused. If you are in the EU, the EEA or the UK you may also complain to your supervisory authority. Under California law, Mission Built does not sell or share personal information and has not done so in the past twelve months.</p>
+        <p>Mission Built operates from the United States and the companies above process data there, so anything that leaves your phone leaves your country if you are outside the US. Cloudflare and Anthropic each rely on recognised transfer mechanisms such as standard contractual clauses or the EU–US Data Privacy Framework for that.</p>
+      </div>
+    </section>
+
+    <hr class="dashed" />
+
+    <section class="block">
+      <div class="two">
+        <div class="cell">
+          <p class="k">Coach is not a clinician</p>
+          <p class="body">Coach gives general training information from your own log. It will not name a weight above a ceiling drawn from your own sets, it does not write programs, and it points any question about pain, injury or a medical condition to a qualified person. Check with your physician before making decisions about your health, and treat what Coach says as a starting point, not an instruction.</p>
+        </div>
+        <div class="cell">
+          <p class="k">Children</p>
+          <p class="body">Ironstack is not directed at children under 13 and does not knowingly collect anything from them. If you believe a child has used Coach or Social, email the address above and the install record or the Social account will be removed.</p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="dashed" />
+
+    <section class="block">
+      <p class="section-label">Changes</p>
+      <h2 class="section-h2">This page changes when the app does.</h2>
+      <div class="prose-block">
+        <p>If what the app collects or shares changes, this page changes first, with a new effective date at the top. A change that widens what leaves your phone will be asked about in the app before it applies to you. Effective {EFFECTIVE}.</p>
+      </div>
+    </section>
+  </main>
+  <SiteFooter links={[{ label: 'Back to Ironstack', href: '/rack/ironstack' }, { label: 'MealStack privacy', href: '/rack/mealstack/privacy' }]} />
+</BaseLayout>
+
+<style>
+  .page { max-width: 1280px; margin: 0 auto; }
+
+  .breadcrumb {
+    padding: 18px var(--pad-page-x) 0;
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--color-chalk-faint);
+  }
+  .breadcrumb a { color: var(--color-chalk-dim); transition: color 120ms ease-out; }
+  .breadcrumb a:hover { color: var(--color-chalk); }
+  .breadcrumb .here { color: var(--color-chalk-faint); }
+
+  .hero { padding: 40px var(--pad-page-x) 28px; text-align: center; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 14px; margin: 0 0 18px;
+    font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.24em;
+    color: var(--color-chalk-dim); text-transform: uppercase;
+  }
+  .eyebrow .dots { letter-spacing: 0.04em; color: var(--color-blood-bright); }
+  .display {
+    margin: 0; font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(56px, 11vw, 108px); line-height: 0.95; letter-spacing: -0.02em;
+    color: var(--color-chalk); text-transform: uppercase;
+  }
+  .display .dot { color: var(--color-blood-bright); }
+  .subtitle {
+    margin: 22px auto 0; max-width: 820px; display: grid; gap: 8px;
+    font-family: var(--font-display); font-weight: 400; letter-spacing: 0.04em; text-transform: uppercase;
+  }
+  .subtitle .line1 { font-size: clamp(16px, 2.4vw, 24px); font-weight: 500; color: var(--color-chalk); }
+  .subtitle .line2 { font-size: clamp(13px, 1.9vw, 19px); color: var(--color-chalk-dim); }
+  .effective {
+    margin: 22px 0 0; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--color-chalk-faint);
+  }
+
+  .meta-strip {
+    margin: 28px var(--pad-page-x) 0; padding: 14px 0;
+    border-top: var(--border-thin); border-bottom: var(--border-thin);
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+    font-family: var(--font-mono); font-size: 12px; text-align: left;
+  }
+  .stat-key { font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); margin-bottom: 8px; }
+  .stat-value { font-family: var(--font-display); font-weight: 500; font-size: 20px; line-height: 1.1; letter-spacing: 0.02em; text-transform: uppercase; color: var(--color-chalk); }
+
+  .block { padding: 56px var(--pad-page-x) 0; max-width: 1180px; }
+  .section-label {
+    margin: 0 0 14px; font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+    letter-spacing: 0.24em; color: var(--color-blood-text); text-transform: uppercase;
+  }
+  .section-h2 {
+    margin: 0 0 18px; max-width: 30ch; font-family: var(--font-display); font-weight: 600; font-size: 36px;
+    line-height: 1.05; letter-spacing: 0.02em; color: var(--color-chalk); text-transform: uppercase;
+  }
+  .prose, .prose-block p { margin: 0 0 16px; max-width: 70ch; font-family: var(--font-serif); font-weight: 300; font-size: 17px; line-height: 1.65; color: var(--color-chalk); }
+  .prose { color: var(--color-chalk-dim); }
+  .prose-block p strong { font-weight: 700; color: var(--color-chalk); }
+  .fine p strong { color: var(--color-chalk); font-weight: 700; }
+  .prose-block a, .note a { color: var(--color-chalk); border-bottom: 1px solid var(--color-chalk-ghost); text-decoration: none; }
+  .prose-block a:hover { border-bottom-color: var(--color-blood); }
+  .note { margin: 14px 0 0; max-width: 78ch; font-family: var(--font-mono); font-size: 12px; line-height: 1.6; letter-spacing: 0.02em; color: var(--color-chalk-faint); }
+  .k { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); margin: 0; }
+
+  .two { display: grid; grid-template-columns: 1fr 1fr; margin-top: 28px; border: var(--border-thin); background: var(--color-panel); }
+  .cell { padding: 22px 24px 20px; border-right: var(--border-thin); }
+  .cell:last-child { border-right: 0; }
+  .cell .k { margin-bottom: 10px; }
+  .cell .v { margin: 0 0 12px; font-family: var(--font-display); font-weight: 500; font-size: 21px; line-height: 1.1; text-transform: uppercase; letter-spacing: 0.01em; color: var(--color-chalk); }
+  .cell .body { margin: 0 0 12px; font-family: var(--font-serif); font-size: 14.5px; line-height: 1.6; color: var(--color-chalk-dim); }
+  .cell .body:last-child { margin-bottom: 0; }
+
+  .fine { margin-top: 18px; background: var(--color-panel); border: var(--border-thin); padding: 22px 26px; }
+  .fine .k { margin-bottom: 10px; }
+  .fine p:not(.k) { margin: 0; max-width: 70ch; font-family: var(--font-serif); font-size: 14px; line-height: 1.6; color: var(--color-chalk-dim); }
+
+  .parties { margin-top: 24px; border-top: var(--border-thin); }
+  .ph, .pr { display: grid; grid-template-columns: 120px 200px 1fr 140px; gap: 24px; padding: 14px 0; border-bottom: var(--border-thin); align-items: baseline; }
+  .ph span { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); }
+  .pr .pk { font-family: var(--font-display); font-weight: 500; font-size: 18px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--color-chalk); }
+  .pr .role { font-family: var(--font-mono); font-size: 12px; line-height: 1.5; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-chalk-dim); }
+  .pr span { font-family: var(--font-serif); font-size: 14px; line-height: 1.55; color: var(--color-chalk-dim); }
+  .pr .where { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; color: var(--color-chalk-faint); }
+
+  .keeps { margin-top: 24px; border-top: var(--border-thin); }
+  .kr { display: grid; grid-template-columns: 1fr 1.4fr; gap: 24px; padding: 14px 0; border-bottom: var(--border-thin); align-items: baseline; }
+  .kr .kk { font-family: var(--font-mono); font-size: 12px; line-height: 1.5; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-chalk); }
+  .kr span:last-child { font-family: var(--font-serif); font-size: 14px; line-height: 1.55; color: var(--color-chalk-dim); }
+
+  .dashed { margin: 48px var(--pad-page-x) 0; border: none; border-top: 1px dashed var(--color-rule-soft); }
+
+  @media (max-width: 1099px) {
+    .meta-strip { grid-template-columns: repeat(2, 1fr); gap: 18px; }
+    .ph { display: none; }
+    .pr { grid-template-columns: 1fr; gap: 6px; }
+    .two { grid-template-columns: 1fr; }
+    .cell { border-right: 0; border-bottom: var(--border-thin); }
+    .cell:last-child { border-bottom: 0; }
+  }
+  @media (max-width: 720px) {
+    .breadcrumb { padding: 18px var(--pad-page-x-mobile) 0; }
+    .hero { padding: 28px var(--pad-page-x-mobile) 20px; }
+    .meta-strip { margin: 24px var(--pad-page-x-mobile) 0; grid-template-columns: 1fr; gap: 14px; }
+    .block { padding: 40px var(--pad-page-x-mobile) 0; }
+    .section-h2 { font-size: 28px; }
+    .kr { grid-template-columns: 1fr; gap: 6px; }
+    .dashed { margin: 36px var(--pad-page-x-mobile) 0; }
+  }
+</style>

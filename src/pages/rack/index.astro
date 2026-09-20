@@ -28,8 +28,8 @@ const PHONE = '<svg class="ph-glyph" viewBox="0 0 24 24" aria-hidden="true"><rec
 const stats = [
   { key: 'Tools',   value: '2',             href: undefined },
   { key: 'Status',  value: 'Pre-release',   href: undefined },
-  { key: 'License', value: 'Open source', href: undefined },
-  { key: 'Source',  value: 'GitHub',        href: 'https://github.com/missionbuilt/ironstack' },
+  { key: 'License', value: 'MIT for Ironstack', href: undefined },
+  { key: 'Source',  value: 'With 1.0',      href: undefined },
 ];
 
 type ToolStatus = 'live' | 'beta' | 'testing' | 'planned';
@@ -55,18 +55,18 @@ const tools: Tool[] = [
   },
   {
     name: 'Ironstack',
-    status: 'testing',
-    kind: 'Claude skills + Kibana',
+    status: 'beta',
+    kind: 'iPhone app',
     blurb:
-      'Weight is a number. Heavy is a feeling. A training partner with your whole history in its head: two Claude skills, seven Kibana dashboards, and a coach with a ceiling, over an Elasticsearch you own. Nothing phones home. MIT.',
+      'Log it. Time it. Lift each other up. A lifting log that brings your Hevy or Strong history, talks you through rest, and stays out of your way. Free during the beta.',
     href: '/rack/ironstack',
-    cta: 'Preview →',
+    cta: 'Join the beta →',
   },
 ];
 ---
 <BaseLayout
   title="The Rack · Mission Built"
-  description="Open-source tools for the barbell: a training partner with your whole history in its head, and a meal timing tracker for people who train. The other half of Mission Built."
+  description="Tools for the barbell, open source with 1.0: a training partner with your whole history in its head, and a meal timing tracker for people who train. The other half of Mission Built."
   active="rack"
 >
   <TopNav active="rack" />
@@ -76,7 +76,7 @@ const tools: Tool[] = [
     <section class="hero">
       <p class="eyebrow">
         <span class="dots" aria-hidden="true">▮▮▮</span>
-        <span>Open-source tools for the barbell, from Mission Built</span>
+        <span>Tools for the barbell, from Mission Built</span>
         <span class="dots" aria-hidden="true">▮▮▮</span>
       </p>
 
@@ -85,7 +85,7 @@ const tools: Tool[] = [
         <span class="line">Rack<span class="dot">.</span></span>
       </h1>
 
-      <p class="subtitle">Open-source tools for the other half of the book.</p>
+      <p class="subtitle">Tools for the other half of the book. Open source with 1.0.</p>
     </section>
 
     {/* ---------- META STRIP ---------- */}
@@ -116,11 +116,12 @@ const tools: Tool[] = [
         The Loadout is the boardroom half: skills for product leaders. The Rack is
         the barbell half: the tools I train with. A training partner with your whole
         history in its head, and an iPhone app that times your meals to the session.
-        Both were built for one lifter, in a home gym, during a meet prep.
+        Both were built for one lifter, in a home gym, during a meet prep, and they work
+        better on the same phone.
       </p>
       <p class="prose">
-        <strong>Open source, and your data stays yours.</strong> Ironstack is MIT and
-        never phones home. MealStack will be open source too, the license settled with 1.0, and it sends nothing you
+        <strong>Open source with 1.0, and your data stays yours.</strong> Both apps open their source
+        with 1.0: Ironstack under MIT, MealStack's license settled then. Your Ironstack log is files on your phone, and MealStack sends nothing you
         have not switched on. Each one installs its own way, and its page says how. For the boardroom,
         see <a class="inline-link" href="/loadout">the Loadout</a>.
       </p>
@@ -169,7 +170,7 @@ const tools: Tool[] = [
     </section>
 
   </main>
-  <SiteFooter links={[{ label: 'github.com/missionbuilt/ironstack', href: 'https://github.com/missionbuilt/ironstack', external: true }]} />
+  <SiteFooter />
 </BaseLayout>
 
 <style>

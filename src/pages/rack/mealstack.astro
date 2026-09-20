@@ -14,7 +14,7 @@
  * → what it does differently → how you use it → side by side → fine print →
  * join the beta (form → /api/beta) → the kit (plan skill, release notes,
  * schema, privacy) → FAQ → tester quotes (rendered only when there are real ones) →
- * related.
+ * better together (components/BetterTogether.astro, shared with Ironstack) → related.
  *
  * How we talk about it: the Log "Fueling is training"
  * (src/content/logs/fueling-is-training.mdx) is the source of truth. Four
@@ -32,6 +32,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
 import TopNav from '../../components/TopNav.astro';
 import DemoEmbed from '../../components/DemoEmbed.astro';
+import BetterTogether from '../../components/BetterTogether.astro';
 import { getCollection } from 'astro:content';
 import { byNewest, logUrl } from '../../data/logs';
 
@@ -331,7 +332,7 @@ const ld = {
         <div class="lic-cell">
           <p class="k">License</p>
           <p class="v">Open source. Which license, not yet.</p>
-          <p class="body">The source goes public with 1.0; that part is settled. The license is not. The Loadout skills and Ironstack are MIT, take them and do what you like. For an app the question is whether a fork has to stay open, which is what a copyleft license like the GPL does and MIT does not. I have gone back and forth. The answer lands here with 1.0, and either way you will be able to read, change and ship it.</p>
+          <p class="body">The source goes public with 1.0; that part is settled. The license is not. The Loadout skills are MIT, and Ironstack will be; take them and do what you like. For an app the question is whether a fork has to stay open, which is what a copyleft license like the GPL does and MIT does not. I have gone back and forth. The answer lands here with 1.0, and either way you will be able to read, change and ship it.</p>
         </div>
         <div class="lic-cell">
           <p class="k">Price</p>
@@ -454,6 +455,11 @@ const ld = {
 
     <hr class="dashed" />
 
+    {/* ---------- BETTER TOGETHER (shared with /rack/ironstack) ---------- */}
+    <BetterTogether here="mealstack" />
+
+    <hr class="dashed" />
+
     {/* ---------- ALSO ON THE RACK ---------- */}
     <section class="block">
       <p class="section-label">Also on the Rack</p>
@@ -462,8 +468,8 @@ const ld = {
       <div class="related">
         <a href="/rack/ironstack" class="related-card">
           <h3>Ironstack</h3>
-          <p>Weight is a number. Heavy is a feeling. A training partner with your whole history in its head. Nothing phones home.</p>
-          <span class="related-cta">Preview →</span>
+          <p>Log it. Time it. Lift each other up. A lifting log for iPhone that stays out of your way, and a feed that is only the people you train with.</p>
+          <span class="related-cta">Open →</span>
         </a>
         <a href="/loadout" class="related-card">
           <h3>The Loadout</h3>

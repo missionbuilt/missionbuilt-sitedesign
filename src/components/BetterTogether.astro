@@ -1,0 +1,268 @@
+---
+/**
+ * BetterTogether.astro
+ *
+ * The closing section on both app pages (/rack/ironstack and /rack/mealstack): how
+ * MealStack and Ironstack make each other better. Same facts on both pages, told from
+ * the side of the page it sits on.
+ *
+ * The honesty rule for this section: every flow carries a status, and "Live" means the
+ * code ships in BOTH apps today. As of Sept 19, 2026 (checked against both repos):
+ *
+ *   - Apple Health: live. MealStack writes protein, carbs, fat and calories at the time
+ *     you ate (HealthKitManager.swift); Ironstack writes each session as a strength
+ *     workout when you switch it on, and reads weigh-ins and sleep (HealthSync.swift).
+ *     Neither app reads what the other writes; Health shows both side by side.
+ *   - Travel mode: Ironstack's half ships (Progress/TravelMode.swift, the
+ *     group.io.missionbuilt.shared suite). MealStack is not in that App Group yet and has
+ *     its own time-zone travel days. So: "Ironstack ready · MealStack next".
+ *   - training-signal.json and rhythm.json: Ironstack writes them after a separate yes
+ *     for each (Sharing.swift); MealStack does not read them yet.
+ *   - Mission Built Schema: Ironstack exports 0.11.0 (Data/MissionBuiltSchema.swift);
+ *     MealStack's plan files are still on the MealStack Schema 0.9.3 line.
+ *   - One coach profile: designed only (app/docs/TWO-APPS-ONE-BODY.md).
+ *
+ * When MealStack ships a flow, flip its status here and both pages update.
+ * Color discipline: army green marks "Live" (it landed); oxblood is not used for status.
+ */
+interface Props {
+  /** Which page this sits on. Decides the lead, the order of the two apps and the link out. */
+  here: 'ironstack' | 'mealstack';
+}
+const { here } = Astro.props;
+const other = here === 'ironstack' ? 'mealstack' : 'ironstack';
+
+type Status = 'live' | 'half' | 'next';
+type Flow = { title: string; from: string; to: string; carries: string; gives: string; status: Status; statusNote: string };
+
+const flows: Flow[] = [
+  {
+    title: 'One record of the day',
+    from: 'Both apps', to: 'Apple Health',
+    carries: 'MealStack writes protein, carbs, fat and calories at the time you actually ate. Ironstack writes the session as a strength workout, if you switch it on.',
+    gives: 'Food and training on one timeline in Health, from two apps that never had to know about each other.',
+    status: 'live', statusNote: 'Live in both',
+  },
+  {
+    title: 'Travel mode, one switch',
+    from: 'Either app', to: 'Both apps',
+    carries: 'On or off, which app flipped it, and when the trip started. A few bytes in a shelf on the phone that only Mission Built apps can open.',
+    gives: 'Land in Denver, flip it once. MealStack plans meals for a hotel instead of your kitchen; Ironstack counts the session in a strange gym toward Road Warrior.',
+    status: 'half', statusNote: 'Ironstack ready · MealStack next',
+  },
+  {
+    title: 'Fuel follows the work',
+    from: 'Ironstack', to: 'MealStack',
+    carries: 'The last session: when it started, how long it ran, working sets, and whether it was a heavy lower day, an upper day or conditioning.',
+    gives: 'A heavy lower day and a rest day stop looking like the same nutritional day. The meals after the session land after the session, not at an hour picked in advance.',
+    status: 'half', statusNote: 'Ironstack ready · MealStack next',
+  },
+  {
+    title: 'The carb surge knows when you train',
+    from: 'Ironstack', to: 'MealStack',
+    carries: 'When your sessions usually start, by weekday, worked out from your own log.',
+    gives: 'MealStack anchors the pre-workout meal to the hour you really lift on a Saturday, without you typing it in.',
+    status: 'half', statusNote: 'Ironstack ready · MealStack next',
+  },
+  {
+    title: 'One way to write it all down',
+    from: 'Both apps', to: 'Your files',
+    carries: 'The Mission Built Schema: one documented, versioned vocabulary. A workout reads like a meal, a program like a plan, a session like a day.',
+    gives: 'Export from both and a single script, a spreadsheet or Claude reads the lot. Your data outlives either app.',
+    status: 'half', statusNote: 'Ironstack exports it · MealStack moving',
+  },
+  {
+    title: 'One coach profile',
+    from: 'Either app', to: 'Both coaches',
+    carries: 'Bodyweight, height, age and goal, the details a coach needs for a target.',
+    gives: 'Tell one coach once. The other already knows.',
+    status: 'next', statusNote: 'Designed',
+  },
+];
+
+type Rule = { k: string; v: string };
+const rules: Rule[] = [
+  { k: 'Neither needs the other', v: 'Delete one and the other works exactly as it did. Nothing in either app pretends the other is there.' },
+  { k: 'Nothing crosses without a yes', v: 'Every share is its own switch, off until you turn it on. Turn it off and what was shared is taken back.' },
+  { k: 'It stays on the phone', v: 'The two apps talk through Apple Health and a private shelf on your iPhone. No server, no account, nothing in between.' },
+  { k: 'One writer per fact', v: 'Ironstack owns what happened in the gym. MealStack owns what you ate. Neither edits the other.' },
+];
+
+// A Saturday with both apps, in order. `next` marks the beats that wait on MealStack.
+type Beat = { t: string; app: 'mealstack' | 'ironstack' | 'health'; say: string; next?: boolean };
+const day: Beat[] = [
+  { t: '7:10 AM', app: 'mealstack', say: 'Breakfast logged forty minutes late. The morning tightens; the carb surge does not move.' },
+  { t: '8:30 AM', app: 'mealstack', say: 'Carb surge, ninety minutes before the session Ironstack says you usually start on a Saturday.', next: true },
+  { t: '10:02 AM', app: 'ironstack', say: '"Three fifteen for three at eight." Chalk stays on the bar. The rest clock starts itself.' },
+  { t: '11:14 AM', app: 'ironstack', say: 'STACKED. Heavy lower day, 22 working sets, one new record. The workout goes to Health.' },
+  { t: '11:45 AM', app: 'mealstack', say: 'Post-session meal, timed from when the session actually ended, sized for a heavy lower day.', next: true },
+  { t: '9:00 PM', app: 'health', say: 'Apple Health shows the day whole: what you ate and what you lifted, on one timeline.' },
+];
+const appName = { mealstack: 'MealStack', ironstack: 'Ironstack', health: 'Apple Health' } as const;
+
+const lead = here === 'ironstack'
+  ? 'Ironstack keeps the record of the work. MealStack times the fuel around it. Each one stands on its own, and neither will ever ask you to install the other. Put both on one phone and they start talking about the same person.'
+  : 'MealStack times the fuel. Ironstack keeps the record of the work it fuels. Each one stands on its own, and neither will ever ask you to install the other. Put both on one phone and they start talking about the same person.';
+const otherHref = `/rack/${other}`;
+const otherPitch = other === 'mealstack'
+  ? { name: 'MealStack', line: 'Fueling is training. A meal timing tracker built backward from the session.' }
+  : { name: 'Ironstack', line: 'Log it. Time it. Lift each other up. A lifting log that stays out of your way.' };
+---
+<section class="bt" id="better-together" aria-labelledby="bt-h">
+  <p class="section-label">Better together</p>
+  <h2 class="section-h2" id="bt-h">Two apps. One body.</h2>
+  <p class="prose">{lead}</p>
+
+  {/* ---------- The picture: two apps, the phone in the middle ---------- */}
+  <div class="bt-map" role="img" aria-label="MealStack and Ironstack on one iPhone. MealStack writes nutrition to Apple Health; Ironstack writes workouts to Apple Health and reads weigh-ins and sleep. A private shelf on the phone carries travel mode, the training signal and your training rhythm from Ironstack to MealStack.">
+    <div class:list={['bt-app', here === 'mealstack' && 'here']}>
+      <p class="bt-k">MealStack</p>
+      <p class="bt-name">What you ate</p>
+      <ul><li>Meals, macros, when you ate</li><li>The carb surge before the session</li><li>Travel days</li></ul>
+    </div>
+    <div class="bt-mid">
+      <div class="bt-lane">
+        <span class="bt-arrow r" aria-hidden="true">macros →</span>
+        <div class="bt-hub"><p class="bt-k">Apple Health</p><p class="bt-hub-v">Food and workouts, one timeline</p></div>
+        <span class="bt-arrow l" aria-hidden="true">← workouts</span>
+      </div>
+      <div class="bt-lane">
+        <span class="bt-arrow l next" aria-hidden="true">← session, rhythm</span>
+        <div class="bt-hub shelf"><p class="bt-k">Shelf on your phone</p><p class="bt-hub-v">Travel mode · last session · when you train</p></div>
+        <span class="bt-arrow r" aria-hidden="true">travel ⇄</span>
+      </div>
+    </div>
+    <div class:list={['bt-app', here === 'ironstack' && 'here']}>
+      <p class="bt-k">Ironstack</p>
+      <p class="bt-name">What you lifted</p>
+      <ul><li>Every set, said or typed</li><li>When you train, from your log</li><li>Sessions on the road</li></ul>
+    </div>
+  </div>
+
+  {/* ---------- The flows, each with an honest status ---------- */}
+  <div class="bt-flows">
+    {flows.map((f) => (
+      <article class="bt-flow">
+        <div class="bt-flow-top">
+          <p class="bt-route">{f.from} <span aria-hidden="true">→</span><span class="sr"> to </span> {f.to}</p>
+          <span class:list={['bt-status', f.status]}>{f.statusNote}</span>
+        </div>
+        <h3>{f.title}</h3>
+        <p class="bt-carries"><b>Carries</b> {f.carries}</p>
+        <p class="bt-gives">{f.gives}</p>
+      </article>
+    ))}
+  </div>
+  <p class="note">"Ironstack ready" means Ironstack's half is built and waiting: it asks before it shares anything, and MealStack reading it is next on MealStack's list. Nothing on this list is switched on just by installing both.</p>
+
+  {/* ---------- A day with both ---------- */}
+  <h3 class="sub-h3">A Saturday with both</h3>
+  <ol class="bt-day">
+    {day.map((b) => (
+      <li class:list={['bt-beat', b.app, b.next && 'next']}>
+        <span class="bt-t">{b.t}</span>
+        <span class="bt-who">{appName[b.app]}{b.next && <em> · next</em>}</span>
+        <span class="bt-say">{b.say}</span>
+      </li>
+    ))}
+  </ol>
+
+  {/* ---------- The rules ---------- */}
+  <div class="bt-rules">
+    <p class="k">The rules that outrank the features</p>
+    <dl>
+      {rules.map((r) => (<div><dt>{r.k}</dt><dd>{r.v}</dd></div>))}
+    </dl>
+  </div>
+
+  <a class="bt-out" href={otherHref}>
+    <span class="bt-k">The other half</span>
+    <span class="bt-out-name">{otherPitch.name} →</span>
+    <span class="bt-out-line">{otherPitch.line}</span>
+  </a>
+</section>
+
+<style>
+  .bt { padding: 56px var(--pad-page-x) 0; max-width: 1180px; }
+  .section-label { margin: 0 0 14px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.24em; color: var(--color-blood-text); text-transform: uppercase; }
+  .section-h2 { margin: 0 0 18px; max-width: 28ch; font-family: var(--font-display); font-weight: 600; font-size: 36px; line-height: 1.05; letter-spacing: 0.02em; color: var(--color-chalk); text-transform: uppercase; }
+  .sub-h3 { margin: 40px 0 12px; font-family: var(--font-display); font-weight: 500; font-size: 20px; letter-spacing: 0.03em; text-transform: uppercase; color: var(--color-chalk); }
+  .prose { margin: 0 0 14px; max-width: 760px; font-family: var(--font-serif); font-size: 17px; line-height: 1.65; color: var(--color-chalk-dim); }
+  .note { margin: 14px 0 0; max-width: 78ch; font-family: var(--font-mono); font-size: 12px; line-height: 1.6; letter-spacing: 0.02em; color: var(--color-chalk-faint); }
+  .k, .bt-k { margin: 0; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+  /* The map */
+  .bt-map { margin-top: 28px; display: grid; grid-template-columns: 1fr 1.5fr 1fr; border: var(--border-thin); background: var(--color-panel); }
+  .bt-app { padding: 22px 22px 20px; }
+  .bt-app:first-child { border-right: var(--border-thin); }
+  .bt-app:last-child { border-left: var(--border-thin); }
+  .bt-app.here { background: var(--color-bg); }
+  .bt-app.here .bt-k { color: var(--color-blood-text); }
+  .bt-name { margin: 8px 0 12px; font-family: var(--font-display); font-weight: 600; font-size: 24px; line-height: 1.05; text-transform: uppercase; color: var(--color-chalk); }
+  .bt-app ul { margin: 0; padding: 0; list-style: none; }
+  .bt-app li { padding: 6px 0; border-top: 1px dashed var(--color-rule); font-family: var(--font-serif); font-size: 14px; line-height: 1.45; color: var(--color-chalk-dim); }
+  .bt-mid { display: grid; gap: 14px; padding: 22px 18px; align-content: center; }
+  .bt-lane { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: center; }
+  .bt-arrow { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em; color: var(--color-army); white-space: nowrap; }
+  .bt-arrow.next { color: var(--color-chalk-faint); }
+  .bt-hub { border: 1px solid var(--color-chalk-ghost); padding: 12px 14px; text-align: center; background: var(--color-bg); }
+  .bt-hub.shelf { border-style: dashed; }
+  .bt-hub-v { margin: 6px 0 0; font-family: var(--font-serif); font-size: 13.5px; line-height: 1.45; color: var(--color-chalk); }
+
+  /* The flows */
+  .bt-flows { margin-top: 28px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: var(--border-thin); border-left: var(--border-thin); }
+  .bt-flow { min-width: 0; padding: 22px 22px 20px; border-right: var(--border-thin); border-bottom: var(--border-thin); display: grid; grid-template-rows: auto auto 1fr auto; gap: 10px; }
+  .bt-flow-top { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .bt-route { margin: 0; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-chalk-faint); }
+  .bt-status { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; padding: 2px 8px; border: 1px solid var(--color-chalk-ghost); color: var(--color-chalk-dim); white-space: nowrap; }
+  .bt-status.live { border-color: var(--color-army); color: var(--color-army); }
+  .bt-status.next { border-style: dashed; color: var(--color-chalk-faint); }
+  .bt-flow h3 { margin: 0; font-family: var(--font-display); font-weight: 500; font-size: 21px; line-height: 1.1; text-transform: uppercase; color: var(--color-chalk); }
+  .bt-carries { margin: 0; font-family: var(--font-serif); font-size: 14px; line-height: 1.55; color: var(--color-chalk-dim); }
+  .bt-carries b { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-chalk-faint); margin-right: 6px; }
+  .bt-gives { margin: 0; padding-top: 10px; border-top: 1px dashed var(--color-rule); font-family: var(--font-serif); font-size: 14px; line-height: 1.55; color: var(--color-chalk); }
+
+  /* A day */
+  .bt-day { list-style: none; margin: 0; padding: 0; border-top: var(--border-thin); max-width: 900px; }
+  .bt-beat { display: grid; grid-template-columns: 92px 130px 1fr; gap: 18px; padding: 13px 0; border-bottom: var(--border-thin); align-items: baseline; }
+  .bt-t { font-family: var(--font-display); font-size: 18px; font-variant-numeric: tabular-nums; color: var(--color-chalk); }
+  .bt-who { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-chalk-dim); }
+  .bt-who em { font-style: normal; color: var(--color-chalk-faint); }
+  .bt-say { font-family: var(--font-serif); font-size: 15px; line-height: 1.55; color: var(--color-chalk); }
+  .bt-beat.next .bt-say, .bt-beat.next .bt-t { color: var(--color-chalk-dim); }
+  .bt-beat.ironstack .bt-who { color: var(--color-chalk); }
+
+  /* Rules */
+  .bt-rules { margin-top: 32px; border: var(--border-thin); background: var(--color-panel); padding: 22px 24px; }
+  .bt-rules dl { margin: 14px 0 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .bt-rules dt { margin: 0 0 6px; font-family: var(--font-display); font-weight: 500; font-size: 17px; line-height: 1.15; text-transform: uppercase; color: var(--color-chalk); }
+  .bt-rules dd { margin: 0; font-family: var(--font-serif); font-size: 14px; line-height: 1.55; color: var(--color-chalk-dim); }
+
+  /* Link out */
+  .bt-out { margin-top: 18px; display: grid; gap: 6px; padding: 22px 24px; border: var(--border-thin); text-decoration: none; transition: background 120ms ease-out; }
+  .bt-out:hover { background: rgba(255,255,255,0.015); }
+  .bt-out-name { font-family: var(--font-display); font-weight: 700; font-size: 24px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--color-chalk); }
+  .bt-out:hover .bt-out-name { color: var(--color-blood-text); }
+  .bt-out-line { font-family: var(--font-serif); font-size: 15px; color: var(--color-chalk-dim); }
+
+  @media (max-width: 1099px) {
+    .bt-map { grid-template-columns: 1fr 1fr; }
+    .bt-mid { grid-column: 1 / -1; grid-row: 2; border-top: var(--border-thin); }
+    .bt-app:last-child { border-left: 0; }
+    .bt-flows { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .bt-rules dl { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 720px) {
+    .bt { padding: 40px var(--pad-page-x-mobile) 0; }
+    .section-h2 { font-size: 28px; }
+    .bt-map { grid-template-columns: 1fr; }
+    .bt-app:first-child { border-right: 0; border-bottom: var(--border-thin); }
+    .bt-mid { grid-row: auto; border-top: 0; border-bottom: var(--border-thin); padding: 18px 16px; }
+    .bt-lane { grid-template-columns: 1fr; text-align: center; gap: 6px; }
+    .bt-flows { grid-template-columns: minmax(0, 1fr); }
+    .bt-status { white-space: normal; }
+    .bt-beat { grid-template-columns: 1fr; gap: 4px; }
+    .bt-rules dl { grid-template-columns: 1fr; }
+  }
+</style>

@@ -104,6 +104,9 @@ export async function onRequestPost({ request, env }) {
     updated: new Date().toISOString(),
     country: request.headers.get('cf-ipcountry') || '',
     invited: (existing && existing.invited) || false,
+    // Which app page(s) the person signed up from, so MealStack and Ironstack testers
+    // can be told apart. Only values from RETURN_PAGES are kept.
+    pages: [...new Set([...((existing && existing.pages) || []), ...(RETURN_PAGES.has(page) ? [page] : [])])],
   };
   await env.BETA_KV.put(key, JSON.stringify(record));
 
