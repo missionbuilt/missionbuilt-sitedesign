@@ -2,55 +2,50 @@
 /**
  * Home — landing page.
  *
- * Layout (top → bottom):
- *   1. TopNav
- *   2. Hero (eyebrow + display headline + subtitle)
- *   3. Meta strip (4 stat cells)
- *      On wide screens the blurb, buttons and author sit beside the headline.
- *   4. Start here: prologue + first two chapters, one row of cards
- *   5. The Loadout, the Rack, and the latest log, one row of cards each
- *   6. SiteFooter
+ * Rebuilt Sept 20, 2026 (focus pass, same as the app landing pages). The old home
+ * gave the book, the Loadout, the Rack and Logs equal weight in four card bands plus
+ * a stat strip, and nothing told a visitor where to go. Mike's call: the book and the
+ * two iPhone apps are the goals; the Loadout skills are great but niche.
+ * Backup: Claude outputs/home-index-before-2026-09-20.astro.bak.
  *
- * Ambient: a fixed radial gradient overlay sits above the page bg
- * (chalk-dust glow top-left, faint oxblood vignette bottom-right).
+ *   1. Hero: the book. One primary button (Start reading), Download beside it,
+ *      the facts as one mono line, the author.
+ *   2. The apps: Ironstack and MealStack, each with a real screen, its promise and
+ *      Join the beta. Chalk only here: oxblood stays with "Built." and Start reading.
+ *   3. More: one quiet row with the Loadout (for product leaders) and the latest log.
  *
- * Recreated from `design_handoff_missionbuilt/` Variant A "Iron Log".
+ * Ambient: a fixed radial gradient overlay (chalk-dust top-left, oxblood bottom-right).
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import TopNav from '../components/TopNav.astro';
 import { getCollection } from 'astro:content';
-import { MB, TOTAL_CHAPTERS, TOTAL_SECTIONS, totalReadTime, firstSectionUrl, sectionUrl } from '../data/book.ts';
-import { byNewest, logUrl, longDate } from '../data/logs';
-
-// Read order starts at the prologue. No reading state is shown: nothing
-// tracks a reader's progress yet, so the cards only say where to begin.
-const startHere = [
-  { n: MB.prologue.n, kicker: MB.prologue.kicker, title: MB.prologue.title,
-    meta: `${MB.prologue.mins} min`, href: sectionUrl(MB.prologue.n, MB.prologue.title) },
-  ...MB.chapters.slice(0, 2).map((c) => ({
-    n: c.n, kicker: 'Chapter', title: c.title,
-    meta: `${c.sections.length} sections · ${c.mins} min`, href: firstSectionUrl(c),
-  })),
-];
+import { MB, TOTAL_CHAPTERS, totalReadTime, sectionUrl } from '../data/book.ts';
+import { byNewest, logUrl } from '../data/logs';
 
 const latestLog = (await getCollection('logs', ({ data }) => !data.draft)).sort(byNewest)[0];
 
-const stats = [
-  { key: 'The book',  value: `${TOTAL_CHAPTERS} chapters`,   accent: 'chalk' as const, href: undefined },
-  { key: 'Sections',  value: `${TOTAL_SECTIONS}`,            accent: 'chalk' as const, href: undefined },
-  { key: 'Read time', value: totalReadTime(),                accent: 'chalk' as const, href: undefined },
-  { key: 'License',   value: MB.license.replace(' 4.0',''),  accent: 'army'  as const,
-    href: 'https://creativecommons.org/licenses/by-nc-sa/4.0/' },
+const apps = [
+  {
+    name: 'Ironstack', href: '/rack/ironstack',
+    promise: 'Log fast. See progress. A coach in your corner.',
+    line: 'A lifting log with big timers, insights, your crew, and a Coach that picks your next weight from your own sets.',
+    shot: { src: '/images/ironstack/log-session.webp', w: 540, h: 1174, alt: 'Ironstack mid-session: sets logged, the next one ready to confirm, the rest clock at 1:52.' },
+  },
+  {
+    name: 'MealStack', href: '/rack/mealstack',
+    promise: 'Your tracker says what you ate. This says when.',
+    line: 'Meal timing built backward from your training session. Eat late and the day re-flows; your pre-workout meal still lands.',
+    shot: { src: '/images/mealstack/today-training.webp', w: 540, h: 1176, alt: 'MealStack Today on a training day: next is yogurt and berries at 12:03 PM, with the day\'s totals.' },
+  },
 ];
 ---
 <BaseLayout title="Mission Built · A Field Guide for Building Things That Matter" active="book">
   <div class="ambient" aria-hidden="true"></div>
-
   <TopNav active="book" />
 
   <main id="main" class="page">
-    {/* ---------- HERO ---------- */}
+    {/* ---------- 1. THE BOOK ---------- */}
     <section class="hero">
       <div class="hero-head">
         <p class="eyebrow">
@@ -58,494 +53,149 @@ const stats = [
           <span>An open-source book by Mike Nichols</span>
           <span class="dots" aria-hidden="true">▮▮▮</span>
         </p>
-
-        <h1 class="display">
-          <span class="line">Mission</span>
-          <span class="line built">Built.</span>
-        </h1>
-
-        <p class="subtitle">
-          A field guide for building things that matter.
-        </p>
+        <h1 class="display"><span class="line">Mission</span><span class="line built">Built.</span></h1>
+        <p class="subtitle">A field guide for building things that matter.</p>
       </div>
 
       <div class="hero-side">
         <p class="blurb">{MB.blurbLong}</p>
-
         <div class="buttons">
-          <a href={sectionUrl(MB.prologue.n, MB.prologue.title)} class="btn primary">
-            Start reading <span aria-hidden="true">→</span>
-          </a>
-          <a href={firstSectionUrl(MB.chapters[0])} class="btn ghost">Jump to Chapter 1</a>
-          <a href="/download" class="btn ghost dim">
-            <span aria-hidden="true">↓</span> Download
-          </a>
+          <a href={sectionUrl(MB.prologue.n, MB.prologue.title)} class="btn primary">Start reading <span aria-hidden="true">→</span></a>
+          <a href="/download" class="btn ghost"><span aria-hidden="true">↓</span> Download</a>
         </div>
-
+        <p class="facts">{TOTAL_CHAPTERS} chapters · {totalReadTime()} · free to read · <a href="/chapters">All chapters →</a></p>
         <div class="author">
           <div class="avatar" aria-hidden="true">MN</div>
           <div class="author-meta">
-            <a
-              href="https://www.linkedin.com/in/hmikenichols"
-              class="author-name"
-              target="_blank"
-              rel="noopener"
-              aria-label={`${MB.author} on LinkedIn`}
-            >{MB.author}<span class="ext" aria-hidden="true"> ↗</span></a>
+            <a href="/about" class="author-name">{MB.author}</a>
             <div class="author-tag">{MB.authorTagline}</div>
           </div>
         </div>
       </div>
     </section>
 
-    {/* ---------- META STRIP ---------- */}
-    <section class="meta-strip" aria-label="Book at a glance">
-      {stats.map((s) => (
-        <div class="stat">
-          <div class="stat-key">{s.key}</div>
-          {s.href ? (
-            <a
-              class:list={["stat-value", "linked", s.accent === 'army' && "army"]}
-              href={s.href}
-              target="_blank"
-              rel="noopener license"
-            >{s.value}</a>
-          ) : (
-            <div class:list={["stat-value", s.accent === 'army' && "army"]}>{s.value}</div>
-          )}
-        </div>
-      ))}
-    </section>
-
-    {/* ---------- START HERE ---------- */}
-    <section class="band start-band" aria-labelledby="start-here">
+    {/* ---------- 2. THE APPS ---------- */}
+    <section class="band" aria-labelledby="apps-h">
       <div class="band-head">
-        <h2 id="start-here" class="band-title">Start here. <span class="band-sub">The first three stops in the book.</span></h2>
-        <a href="/chapters" class="band-link">All {TOTAL_CHAPTERS} chapters <span aria-hidden="true">→</span></a>
+        <h2 id="apps-h" class="band-title">The apps. <span class="band-sub">Two iPhone apps for people who train.</span></h2>
+        <a href="/rack" class="band-link">The Rack <span aria-hidden="true">→</span></a>
       </div>
-
-      <div class="cards cards-3">
-        {startHere.map((c) => (
-          <a href={c.href} class="card">
-            <div class="card-top">
-              <span class="c-num">{c.n}</span>
-              <span class="card-kicker">{c.kicker}</span>
+      <div class="apps">
+        {apps.map((a) => (
+          <a class="app" href={a.href}>
+            <div class="shot"><img src={a.shot.src} width={a.shot.w} height={a.shot.h} alt={a.shot.alt} loading="lazy" decoding="async" /></div>
+            <div class="app-body">
+              <p class="tag"><span class="sq" aria-hidden="true"></span>Private beta · iPhone · free</p>
+              <h3 class="app-name">{a.name}</h3>
+              <p class="promise">{a.promise}</p>
+              <p class="app-line">{a.line}</p>
+              <span class="app-cta">Join the beta →</span>
             </div>
-            <h3 class="card-name">{c.title}</h3>
-            <p class="card-meta">{c.meta}</p>
           </a>
         ))}
       </div>
     </section>
 
-    {/* ---------- THE LOADOUT ---------- */}
-    <section class="band" aria-labelledby="the-loadout">
-      <div class="band-head">
-        <h2 id="the-loadout" class="band-title">The Loadout. <span class="band-sub">Skills for the boardroom.</span></h2>
-        <a href="/loadout" class="band-link">Explore the Loadout <span aria-hidden="true">→</span></a>
-      </div>
-
-      <div class="cards cards-3">
-        <a href="/loadout/warmup" class="card">
-          <div class="tag"><span class="sq" aria-hidden="true"></span>Live</div>
-          <h3 class="card-name">The Warmup</h3>
-          <p class="card-blurb">A daily intelligence brief for your first coffee. Curated sources, link safety scanning, live artifact. Know what moved before you open your inbox.</p>
+    {/* ---------- 3. MORE ---------- */}
+    <section class="band more" aria-label="More from Mission Built">
+      <a class="more-item" href="/loadout">
+        <span class="k">The Loadout</span>
+        <span class="t">For product leaders: open-source Claude skills for the boardroom half of the book.</span>
+        <span class="c" aria-hidden="true">→</span>
+      </a>
+      {latestLog && (
+        <a class="more-item" href={logUrl(latestLog)}>
+          <span class="k">Latest log</span>
+          <span class="t">{latestLog.data.title}</span>
+          <span class="c" aria-hidden="true">→</span>
         </a>
-        <a href="/loadout/approach" class="card">
-          <div class="tag"><span class="sq" aria-hidden="true"></span>Live</div>
-          <h3 class="card-name">The Approach</h3>
-          <p class="card-blurb">A pre-call brief for enterprise meetings and QBRs. Decision makers, live signals, MEDDPICC scored from public intel. Know the room before you walk in.</p>
-        </a>
-        <a href="/loadout/spotter" class="card">
-          <div class="tag"><span class="sq" aria-hidden="true"></span>Live</div>
-          <h3 class="card-name">The Spotter</h3>
-          <p class="card-blurb">Walk a product epic through nine areas. Get a structured worksheet back: critique notes, pip verdicts, and an export when every area closes.</p>
-        </a>
-      </div>
+      )}
     </section>
-
-    {/* ---------- THE RACK ---------- */}
-    <section class="band" aria-labelledby="the-rack">
-      <div class="band-head">
-        <h2 id="the-rack" class="band-title">The Rack. <span class="band-sub">Tools for the barbell.</span></h2>
-        <a href="/rack" class="band-link">Explore the Rack <span aria-hidden="true">→</span></a>
-      </div>
-
-      <div class="cards cards-2">
-        <a href="/rack/mealstack" class="card">
-          <div class="tag beta"><span class="sq hollow" aria-hidden="true"></span>Private beta<span class="sep" aria-hidden="true">·</span><svg class="ph-glyph" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M10 18.5h4"/></svg>iPhone</div>
-          <h3 class="card-name">MealStack</h3>
-          <p class="card-blurb">Your tracker says what you ate. This says when. Meal timing built backward from your training session: eat late and the day re-flows, and your pre-workout meal still lands before you train.</p>
-        </a>
-        <a href="/rack/ironstack" class="card">
-          <div class="tag beta"><span class="sq hollow" aria-hidden="true"></span>Private beta<span class="sep" aria-hidden="true">·</span><svg class="ph-glyph" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M10 18.5h4"/></svg>iPhone</div>
-          <h3 class="card-name">Ironstack</h3>
-          <p class="card-blurb">Log fast. See progress. A coach in your corner. A lifting log with big timers, insights that show you getting stronger, your crew, and a Coach that picks your next weight from your own sets.</p>
-        </a>
-      </div>
-    </section>
-
-    {/* ---------- LATEST LOG ---------- */}
-    {latestLog && (
-      <section class="band" aria-labelledby="the-logs">
-        <div class="band-head">
-          <h2 id="the-logs" class="band-title">Logs. <span class="band-sub">What happened, written down.</span></h2>
-          <a href="/logs" class="band-link">All logs <span aria-hidden="true">→</span></a>
-        </div>
-
-        <div class="cards cards-1">
-          <a href={logUrl(latestLog)} class="card card-wide">
-            <div class="tag plain">Latest · <time datetime={latestLog.data.date.toISOString()}>{longDate(latestLog.data.date)}</time></div>
-            <h3 class="card-name">{latestLog.data.title}</h3>
-            {latestLog.data.description && <p class="card-blurb">{latestLog.data.description}</p>}
-          </a>
-        </div>
-      </section>
-    )}
   </main>
   <SiteFooter />
 </BaseLayout>
 
 <style>
-  /* ============ Ambient background ============ */
-  .ambient {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    opacity: 0.55;
-    background:
-      radial-gradient(1200px 600px at 20% -10%, rgba(255,250,235,.04), transparent 60%),
-      radial-gradient(800px 500px at 110% 110%, rgba(168,33,26,.10), transparent 60%);
-    z-index: 0;
-  }
+  .ambient { position: fixed; inset: 0; pointer-events: none; opacity: 0.55; z-index: 0;
+    background: radial-gradient(1200px 600px at 20% -10%, rgba(255,250,235,.04), transparent 60%),
+                radial-gradient(800px 500px at 110% 110%, rgba(168,33,26,.10), transparent 60%); }
   .page { position: relative; z-index: 1; }
 
-  /* ============ HERO ============ */
-  /* Wide screens: headline left, blurb + buttons right, bottoms aligned,
-     so the right half of the first screen does work instead of sitting empty. */
-  .hero {
-    padding: 52px var(--pad-page-x) 36px;
-    display: grid;
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
-    gap: 56px;
-    align-items: end;
-  }
-
-  .eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 14px;
-    margin: 0 0 18px;
-    font-family: var(--font-mono);
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.22em;
-    color: var(--color-chalk-dim);
-    text-transform: uppercase;
-  }
-  .eyebrow .dots {
-    letter-spacing: 0.04em;
-    color: var(--color-blood-bright);
-  }
-
-  .display {
-    margin: 0;
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: clamp(56px, 14vw, 132px);
-    line-height: 0.86;
-    letter-spacing: -0.02em;
-    color: var(--color-chalk);
-    text-transform: uppercase;
-  }
+  /* HERO */
+  .hero { padding: 64px var(--pad-page-x) 8px; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 56px; align-items: end; }
+  .eyebrow { display: inline-flex; align-items: center; gap: 14px; margin: 0 0 20px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.24em; color: var(--color-chalk-dim); text-transform: uppercase; }
+  .eyebrow .dots { letter-spacing: 0.04em; color: var(--color-blood-bright); }
+  .display { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(56px, 11vw, 132px); line-height: 0.88; letter-spacing: -0.02em; text-transform: uppercase; color: var(--color-chalk); }
   .display .line { display: block; }
-  /* The one oxblood word on the page. */
   .display .built { color: var(--color-blood-bright); }
+  .subtitle { margin: 22px 0 0; font-family: var(--font-display); font-weight: 400; font-size: 22px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-chalk-dim); }
+  .blurb { margin: 0; max-width: 52ch; font-family: var(--font-serif); font-size: 18px; line-height: 1.6; color: var(--color-chalk); }
+  .buttons { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 15px 24px; font-family: var(--font-display); font-weight: 600; font-size: 15px; letter-spacing: 0.06em; text-transform: uppercase; border: 1px solid var(--color-rule); color: var(--color-chalk); transition: background 120ms ease-out; }
+  .btn.primary { background: var(--color-blood); border-color: var(--color-blood); }
+  .btn.primary:hover { background: var(--color-blood-bright); }
+  .btn.ghost:hover { background: var(--color-panel); }
+  .facts { margin: 16px 0 0; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-chalk-faint); }
+  .facts a { color: var(--color-chalk-dim); border-bottom: 1px solid var(--color-chalk-ghost); }
+  .facts a:hover { color: var(--color-chalk); }
+  .author { margin-top: 26px; padding-top: 18px; border-top: 1px dashed var(--color-rule); display: flex; gap: 14px; align-items: center; }
+  .avatar { width: 40px; height: 40px; display: grid; place-items: center; border: var(--border-thin); background: var(--color-panel); font-family: var(--font-display); font-size: 15px; color: var(--color-chalk-dim); }
+  .author-name { font-family: var(--font-display); font-size: 15px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-chalk); }
+  .author-tag { margin-top: 2px; font-family: var(--font-serif); font-size: 13px; color: var(--color-chalk-faint); }
 
-  .subtitle {
-    margin: 22px 0 0;
-    max-width: 900px;
-    font-family: var(--font-display);
-    font-weight: 400;
-    font-size: clamp(16px, 2.4vw, 22px);
-    color: var(--color-chalk-dim);
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-  }
-
-  /* Home blurb stays in Oswald so the page keeps one display voice. */
-  .blurb {
-    margin: 0;
-    max-width: 560px;
-    font-family: var(--font-display);
-    font-weight: 400;
-    font-size: 19px;
-    line-height: 1.5;
-    letter-spacing: 0.015em;
-    color: var(--color-chalk);
-  }
-
-  /* ---- Buttons ---- */
-  .buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 24px;
-  }
-  .btn {
-    display: inline-block;
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 14px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 14px 22px;
-    border: 1px solid transparent;
-    cursor: pointer;
-    transition: background 120ms ease-out, color 120ms ease-out, filter 120ms ease-out;
-    white-space: nowrap;
-  }
-  .btn.primary {
-    background: var(--color-blood);
-    color: var(--color-chalk);
-    border-color: var(--color-blood);
-  }
-  .btn.primary:hover { filter: brightness(1.12); }
-  .btn.ghost {
-    background: transparent;
-    color: var(--color-chalk);
-    border-color: var(--color-rule);
-  }
-  .btn.ghost.dim { color: var(--color-chalk-dim); }
-  .btn.ghost:hover { background: var(--color-panel); color: var(--color-chalk); }
-
-  /* ---- Author block ---- */
-  .author {
-    margin-top: 24px;
-    padding-top: 18px;
-    border-top: var(--border-dashed);
-    display: flex;
-    gap: 14px;
-    align-items: center;
-  }
-  .avatar {
-    width: 44px;
-    height: 44px;
-    border: var(--border-thin);
-    background: var(--color-panel);
-    color: var(--color-chalk-dim);
-    font-family: var(--font-display);
-    font-size: 16px;
-    letter-spacing: 0.04em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-  .author-name {
-    display: inline-flex;
-    align-items: baseline;
-    gap: 6px;
-    font-family: var(--font-display);
-    font-size: 15px;
-    color: var(--color-chalk);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    transition: color 120ms ease-out;
-  }
-  .author-name:hover { color: var(--color-blood-text); }
-  .author-name .ext {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: var(--color-chalk-faint);
-    letter-spacing: 0;
-  }
-  .author-tag {
-    margin-top: 2px;
-    font-family: var(--font-serif);
-    font-size: 13px;
-    color: var(--color-chalk-faint);
-    letter-spacing: 0.04em;
-  }
-
-  /* ============ META STRIP ============ */
-  .meta-strip {
-    margin: 0 var(--pad-page-x);
-    padding: 14px 0;
-    border-top: var(--border-thin);
-    border-bottom: var(--border-thin);
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
-    font-family: var(--font-mono);
-    text-transform: uppercase;
-  }
-  .stat-key {
-    color: var(--color-chalk-faint);
-    font-size: 12px;
-    letter-spacing: 0.2em;
-  }
-  .stat-value {
-    margin-top: 2px;
-    color: var(--color-chalk);
-    font-family: var(--font-display);
-    font-size: 22px;
-    letter-spacing: 0.04em;
-    display: inline-block;
-  }
-  .stat-value.army { color: var(--color-army); }
-  .stat-value.linked {
-    border-bottom: 1px solid var(--color-army-dim);
-    transition: border-bottom-color 120ms ease-out;
-  }
-  .stat-value.linked:hover { border-bottom-color: currentColor; }
-
-  /* ============ BANDS (start here, Loadout, Rack, Logs) ============ */
-  .band { padding: 48px var(--pad-page-x) 0; }
-
-  .band-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 12px 24px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-  }
-  .band-title {
-    margin: 0;
-    font-family: var(--font-display);
-    font-weight: 500;
-    font-size: clamp(19px, 1.8vw, 24px);
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-    color: var(--color-chalk);
-    line-height: 1.2;
-  }
+  /* BANDS */
+  .band { padding: 80px var(--pad-page-x) 0; }
+  .band-head { display: flex; justify-content: space-between; align-items: baseline; gap: 24px; margin-bottom: 24px; }
+  .band-title { margin: 0; font-family: var(--font-display); font-weight: 500; font-size: 26px; letter-spacing: 0.03em; text-transform: uppercase; color: var(--color-chalk); }
   .band-sub { color: var(--color-chalk-dim); }
+  .band-link { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-dim); border-bottom: 1px solid var(--color-chalk-ghost); padding-bottom: 2px; white-space: nowrap; }
+  .band-link:hover { color: var(--color-chalk); }
 
-  .band-link {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--color-chalk-dim);
-    white-space: nowrap;
-    border-bottom: 1px solid var(--color-chalk-ghost);
-    transition: color 120ms ease-out, border-color 120ms ease-out;
-  }
-  .band-link:hover { color: var(--color-chalk); border-bottom-color: var(--color-chalk-dim); }
+  /* APPS */
+  .apps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: var(--border-thin); border-left: var(--border-thin); }
+  .app { min-width: 0; display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 28px; padding: 28px 28px 0; border-right: var(--border-thin); border-bottom: var(--border-thin); transition: background 120ms ease-out; }
+  .app:hover { background: var(--color-panel); }
+  .shot { height: 250px; overflow: hidden; align-self: end; }
+  .shot img { display: block; width: 100%; height: auto; border-radius: 18px 18px 0 0; outline: 1px solid var(--color-rule); background: var(--color-panel); }
+  .app-body { padding-bottom: 28px; display: grid; gap: 10px; align-content: start; }
+  .tag { margin: 0; display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-chalk-dim); }
+  .tag .sq { width: 7px; height: 7px; border: 1px solid var(--color-chalk-dim); }
+  .app-name { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 28px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-chalk); }
+  .promise { margin: 0; font-family: var(--font-display); font-weight: 500; font-size: 18px; line-height: 1.2; text-transform: uppercase; letter-spacing: 0.02em; color: var(--color-chalk); }
+  .app-line { margin: 0; font-family: var(--font-serif); font-size: 15px; line-height: 1.55; color: var(--color-chalk-dim); }
+  .app-cta { margin-top: 6px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk); }
+  .app:hover .app-cta { color: var(--color-blood-text); }
 
-  .cards {
-    display: grid;
-    border-top: var(--border-thin);
-    border-bottom: var(--border-thin);
-  }
-  .cards-3 { grid-template-columns: repeat(3, 1fr); }
-  .cards-2 { grid-template-columns: repeat(2, 1fr); }
-  .cards-1 { grid-template-columns: 1fr; }
+  /* MORE */
+  .more { padding-top: 56px; padding-bottom: 72px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; }
+  .more-item { display: grid; grid-template-columns: 130px minmax(0, 1fr) auto; gap: 18px; align-items: baseline; padding: 18px 0; border-top: 1px dashed var(--color-rule); margin-right: 28px; }
+  .more-item .k { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-faint); }
+  .more-item .t { font-family: var(--font-serif); font-size: 15px; line-height: 1.5; color: var(--color-chalk-dim); }
+  .more-item .c { font-family: var(--font-mono); color: var(--color-chalk-faint); }
+  .more-item:hover .t, .more-item:hover .c { color: var(--color-chalk); }
 
-  .card {
-    padding: 22px 24px;
-    border-right: var(--border-thin);
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    transition: background 120ms ease-out;
-  }
-  .card:last-child { border-right: none; }
-  .card:hover { background: rgba(255,255,255,0.02); }
-  .card-wide .card-blurb { max-width: 72ch; }
-
-  .card-top {
-    display: flex;
-    align-items: baseline;
-    gap: 12px;
-  }
-  .c-num {
-    font-family: var(--font-display);
-    font-size: 26px;
-    line-height: 1;
-    color: var(--color-chalk-faint);
-  }
-  .card-kicker, .card-meta, .tag {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--color-chalk-faint);
-  }
-  .card-meta { margin: 0; letter-spacing: 0.08em; }
-
-  .tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    color: var(--color-army);
-  }
-  .tag.beta { color: var(--color-chalk); }
-  .tag.testing { color: var(--color-chalk-dim); }
-  .tag.plain { color: var(--color-chalk-faint); }
-  .sq {
-    width: 6px;
-    height: 6px;
-    background: var(--color-army);
-    display: inline-block;
-    flex-shrink: 0;
-  }
-  .sq.hollow { background: transparent; border: 1px solid currentColor; }
-  .sep { color: var(--color-chalk-faint); margin: 0 2px; }
-  .ph-glyph { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
-
-  .card-name {
-    margin: 0;
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 22px;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-    color: var(--color-chalk);
-    line-height: 1.05;
-  }
-  .card-blurb {
-    margin: 0;
-    font-family: var(--font-serif);
-    font-size: 15px;
-    line-height: 1.6;
-    color: var(--color-chalk-dim);
-  }
-
-  /* ============ Responsive ============ */
   @media (max-width: 1099px) {
-    .hero { grid-template-columns: 1fr; gap: 36px; padding: 44px var(--pad-page-x-mid) 32px; }
-    .meta-strip { margin: 0 var(--pad-page-x-mid); }
-    .band { padding: 40px var(--pad-page-x-mid) 0; }
-    .cards-3 { grid-template-columns: 1fr; }
-    .cards-3 .card, .cards-2 .card { border-right: none; border-bottom: var(--border-thin); }
-    .cards-3 .card:last-child, .cards-2 .card:last-child { border-bottom: none; }
-    .cards-2 { grid-template-columns: 1fr; }
+    .hero, .band { padding-left: var(--pad-page-x-mid); padding-right: var(--pad-page-x-mid); }
+    .hero { grid-template-columns: minmax(0, 1fr); gap: 32px; align-items: start; }
+    .apps { grid-template-columns: minmax(0, 1fr); }
+    .more { grid-template-columns: minmax(0, 1fr); }
+    .more-item { margin-right: 0; }
   }
-
   @media (max-width: 720px) {
-    .hero { padding: 36px var(--pad-page-x-mobile) 24px; gap: 28px; }
-    .eyebrow { gap: 8px; flex-wrap: wrap; }
-    .eyebrow .dots { display: none; }
-
-    .meta-strip {
-      margin: 0 var(--pad-page-x-mobile);
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px 24px;
-      padding: 16px 0;
-    }
-    .stat-value { font-size: 20px; }
-
-    .blurb { font-size: 18px; }
-    .buttons { gap: 8px; }
-    .btn { padding: 13px 16px; font-size: 13px; flex: 1 1 auto; min-width: 0; text-align: center; }
-    .btn.ghost.dim { flex-basis: 100%; }
-
-    .band { padding: 36px var(--pad-page-x-mobile) 0; }
-    .card { padding: 20px 4px; }
+    .hero, .band { padding-left: var(--pad-page-x-mobile); padding-right: var(--pad-page-x-mobile); }
+    .hero { padding-top: 36px; }
+    .subtitle { font-size: 17px; }
+    .blurb { font-size: 17px; }
+    .btn { flex: 1 1 auto; justify-content: center; padding: 14px 16px; }
+    .band { padding-top: 56px; }
+    .band-head { flex-direction: column; gap: 10px; }
+    .band-title { font-size: 21px; }
+    .app { grid-template-columns: 112px minmax(0, 1fr); gap: 18px; padding: 22px 18px 0; }
+    .shot { height: 190px; }
+    .app-name { font-size: 22px; }
+    .promise { font-size: 15px; }
+    .app-line { display: none; }
+    .more-item { grid-template-columns: minmax(0, 1fr) auto; }
+    .more-item .k { grid-column: 1 / -1; }
   }
 </style>

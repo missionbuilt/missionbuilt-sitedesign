@@ -1,688 +1,155 @@
 ---
 /**
- * The Loadout — overview page.
+ * The Loadout — overview page (/loadout).
  *
- * Catalog of the open-source skills shipped from Mission Built, as
- * full-width rule-bordered rows. Three skills live (Warmup, Approach,
- * Spotter), all MIT. The barbell tools (Ironstack, MealStack) moved to
- * The Rack (/rack) on Sept 13, 2026; this page is the boardroom kit only.
- *
- * Pattern: TopNav → Hero (eyebrow + h1 + subtitle) → Meta strip →
- * What this is → Dashed divider → The skills (3 cards) → Closer → Footer.
+ * Rebuilt Sept 20, 2026 in the site-wide focus pass. The Loadout is the niche half
+ * (product leaders), so the page does two jobs, fast: show the three skills on real
+ * screens, and get them into Claude. Order: hero (one action: Add to Claude) → the
+ * three skills, each with its demo screen → install (one URL, two ways; the zips and
+ * git clone folded under "Other ways") → closer.
+ * Screens: public/images/loadout/*.webp, captured from the site's own demos
+ * (public/demos/*.html) with the tour overlay hidden.
+ * Backup: Claude outputs/loadout-index-before-2026-09-20.astro.bak.
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
 import TopNav from '../../components/TopNav.astro';
 
-const stats = [
-  { key: 'Skills live', value: '3',      href: undefined },
-  { key: 'MCP tools',   value: '18',     href: undefined },
-  { key: 'License',     value: 'MIT',    href: undefined },
-  { key: 'Source',      value: 'GitHub', href: 'https://github.com/missionbuilt/loadout' },
+const skills = [
+  { name: 'The Warmup', href: '/loadout/warmup', img: 'warmup', when: 'Before your first meeting',
+    line: 'A daily brief for your first coffee: what moved in your field overnight, every link scanned for safety.' },
+  { name: 'The Approach', href: '/loadout/approach', img: 'approach', when: 'Before a customer call',
+    line: 'A pre-call brief for enterprise meetings and QBRs: the account, the decision makers, live signals.' },
+  { name: 'The Spotter', href: '/loadout/spotter', img: 'spotter', when: 'Before an epic ships',
+    line: 'Walk an epic through nine product-leadership areas and get a worksheet back, area by area.' },
 ];
-
-type SkillStatus = 'live' | 'testing' | 'planned';
-interface Skill {
-  name: string;
-  status: SkillStatus;
-  blurb: string;
-  href?: string;
-  cta: string;
-}
-
-const skills: Skill[] = [
-  {
-    name: 'The Warmup',
-    status: 'live',
-    blurb:
-      'A daily intelligence brief for your first coffee. Three modes (CISO, Product Leader, Custom), each pulling from curated sources, scanning every link for safety, and rendering as a live artifact that refreshes each morning.',
-    href: '/loadout/warmup',
-    cta: 'Open →',
-  },
-  {
-    name: 'The Approach',
-    status: 'live',
-    blurb:
-      'A pre-meeting brief for enterprise calls, QBRs, and executive meetings. Researches the account, maps decision makers, surfaces live signals, and renders a structured field brief before you walk in.',
-    href: '/loadout/approach',
-    cta: 'Open →',
-  },
-  {
-    name: 'The Spotter',
-    status: 'live',
-    blurb:
-      'Walk your epic through nine product-leadership areas. Get a structured worksheet back: critique notes per area, an accept and skip loop, a verdict on each, and an export that unlocks when you have closed every area.',
-    href: '/loadout/spotter',
-    cta: 'Open →',
-  },
-];
+const URL_SSE = 'https://mcp.missionbuilt.io/sse';
 ---
 <BaseLayout
   title="The Loadout · Mission Built"
-  description="Open-source skills to help build what matters. Part of the Mission Built ecosystem."
+  description="Three open-source Claude skills for product leaders: the Warmup, the Approach and the Spotter. One MCP connection, MIT licensed."
   active="loadout"
 >
   <TopNav active="loadout" />
 
   <main id="main" class="page">
-    {/* ---------- HERO ---------- */}
     <section class="hero">
-      <p class="eyebrow">
-        <span class="dots" aria-hidden="true">▮▮▮</span>
-        <span>Open-source skills from Mission Built</span>
-        <span class="dots" aria-hidden="true">▮▮▮</span>
-      </p>
-
-      <h1 class="display">
-        <span class="line">The</span>
-        <span class="line">Loadout<span class="dot">.</span></span>
-      </h1>
-
-      <p class="subtitle">Open-source skills to help build what matters.</p>
+      <p class="eyebrow"><span class="dots" aria-hidden="true">▮▮▮</span><span>Open-source skills from Mission Built</span><span class="dots" aria-hidden="true">▮▮▮</span></p>
+      <h1 class="display">The Loadout<span class="dot">.</span></h1>
+      <p class="sub">Three Claude skills for product leaders: the boardroom half of the book, put to work. One connection, all three, MIT.</p>
+      <div class="ctas">
+        <a class="cta" href="#install">Add to Claude →</a>
+        <a class="soft" href="https://github.com/missionbuilt/loadout" target="_blank" rel="noopener">Source on GitHub ↗</a>
+      </div>
     </section>
 
-    {/* ---------- META STRIP ---------- */}
-    <section class="meta-strip" aria-label="Loadout at a glance">
-      {stats.map((s) => (
-        <div class="stat">
-          <div class="stat-key">{s.key}</div>
-          {s.href ? (
-            <a
-              class="stat-value linked"
-              href={s.href}
-              target="_blank"
-              rel="noopener"
-            >{s.value}<span class="ext" aria-hidden="true"> ↗</span></a>
-          ) : (
-            <div class="stat-value">{s.value}</div>
-          )}
-        </div>
+    <section class="skills" aria-label="The skills">
+      {skills.map((s) => (
+        <a class="skill" href={s.href}>
+          <div class="shot"><img src={`/images/loadout/${s.img}.webp`} width="1200" height="760" alt={`${s.name}, from its live demo.`} loading="lazy" decoding="async" /></div>
+          <div class="skill-body">
+            <p class="when">{s.when}</p>
+            <h2>{s.name}</h2>
+            <p class="line">{s.line}</p>
+            <span class="more">See it work →</span>
+          </div>
+        </a>
       ))}
     </section>
 
-    {/* ---------- WHAT THIS IS ---------- */}
-    <section class="block">
-      <p class="section-label">What this is</p>
-      <h2 class="section-h2">A kit for product leaders.</h2>
-      <p class="prose">
-        The Loadout is a set of small, focused skills you can drop into your
-        agent. Each one helps you do a specific piece of the work better:
-        review an epic, prep for a customer meeting, scan the news before
-        your day starts.
-      </p>
-      <p class="prose">
-        The book teaches the principles. The Loadout puts them into operation.
-        <strong>Open source and built to be forked.</strong> Every skill is MIT.
-        The barbell half of the book, a training partner and a meal-timing app,
-        lives on <a class="inline-link" href="/rack">the Rack</a>.
-      </p>
-    </section>
-
-    <hr class="dashed" />
-
-    {/* ---------- THE SKILLS ---------- */}
-    <section class="block">
-      <header class="block-head">
-        <h2 class="section-h2">The kit.</h2>
-        <span class="block-count">3 skills · 3 live</span>
-      </header>
-
-      <div class="skills">
-        {skills.map((s) => (
-          s.href ? (
-            <a
-              href={s.href}
-              class:list={['skill-row', s.status === 'planned' && 'dim']}
-            >
-              <div class="skill-name">
-                <h3>{s.name}</h3>
-                {s.status === 'live' ? (
-                  <span class="tag live"><span class="tag-sq" aria-hidden="true"></span>Live</span>
-                ) : s.status === 'testing' ? (
-                  <span class="tag testing"><span class="tag-sq" aria-hidden="true"></span>In testing</span>
-                ) : (
-                  <span class="tag planned">In development</span>
-                )}
-              </div>
-              <p class="skill-blurb">{s.blurb}</p>
-              <div class="skill-cta">{s.cta}</div>
-            </a>
-          ) : (
-            <article
-              class:list={['skill-row', s.status === 'planned' && 'dim']}
-            >
-              <div class="skill-name">
-                <h3>{s.name}</h3>
-                {s.status === 'live' ? (
-                  <span class="tag live"><span class="tag-sq" aria-hidden="true"></span>Live</span>
-                ) : s.status === 'testing' ? (
-                  <span class="tag testing"><span class="tag-sq" aria-hidden="true"></span>In testing</span>
-                ) : (
-                  <span class="tag planned">In development</span>
-                )}
-              </div>
-              <p class="skill-blurb">{s.blurb}</p>
-              <div class="skill-cta">{s.cta}</div>
-            </article>
-          )
-        ))}
-      </div>
-    </section>
-
-    {/* ---------- INSTALL ---------- */}
-    <section class="install-block">
+    <section class="install" id="install">
       <p class="section-label">One connection. All three skills.</p>
-      <h2 class="section-h2">Add to your AI coding tool.</h2>
-      <p class="install-intro">
-        The Loadout is a standard MCP server. Any MCP-compatible agent can connect using the URL below. Tested on Claude.
-      </p>
-
-      <div class="install-url">
-        <span class="install-url-label">Server URL</span>
-        <code class="install-url-value">https://mcp.missionbuilt.io/sse</code>
-      </div>
-
-      <p class="install-verified">✓ Verified on Claude</p>
-
-      <div class="install-options">
-        <article class="install-opt">
+      <h2 class="section-h2">Add to Claude.</h2>
+      <div class="url"><span class="k">Server URL</span><code>{URL_SSE}</code></div>
+      <div class="ways">
+        <div class="way">
+          <h3>Claude · app</h3>
+          <p>Settings → Connections → Add MCP Server. Paste the URL above and save.</p>
+        </div>
+        <div class="way">
           <h3>Claude Code · CLI</h3>
-          <p>If you have Claude Code installed, run this in your terminal:</p>
-          <pre class="install-opt-code" tabindex="0">claude mcp add loadout https://mcp.missionbuilt.io/sse</pre>
-        </article>
-
-        <article class="install-opt">
-          <h3>Claude · No CLI</h3>
-          <p>Open Claude, then go to <strong>Settings → Connections → Add MCP Server</strong>. Paste the server URL above and save.</p>
-        </article>
+          <pre tabindex="0">claude mcp add loadout {URL_SSE}</pre>
+        </div>
       </div>
-
-      <p class="install-or">Or download the standalone</p>
-      <p class="install-intro">
-        Every live skill is also a self-contained folder. The hosted server is the recommended path: always current, one connection. A download is pinned and runs offline. Grab one and drop it into any AI coding tool's skills folder:
-      </p>
-      <div class="dl-row">
-        <a class="dl-pill" href="/downloads/warmup.zip" download><span aria-hidden="true">↓</span> warmup.zip</a>
-        <a class="dl-pill" href="/downloads/the-approach.zip" download><span aria-hidden="true">↓</span> the-approach.zip</a>
-        <a class="dl-pill" href="/downloads/spotter.zip" download><span aria-hidden="true">↓</span> spotter.zip</a>
-      </div>
-      <p class="install-git-label">Or via git:</p>
-      <pre class="install-opt-code" tabindex="0">git clone https://github.com/missionbuilt/loadout.git
-# then copy a skill folder into your AI coding tool's skills directory</pre>
+      <details class="other">
+        <summary>Other ways: offline downloads and git</summary>
+        <p>Each skill is also a self-contained folder. The hosted server stays current; a download is pinned and runs offline. Drop one into any AI coding tool's skills folder.</p>
+        <div class="dl">
+          <a href="/downloads/warmup.zip" download>↓ warmup.zip</a>
+          <a href="/downloads/the-approach.zip" download>↓ the-approach.zip</a>
+          <a href="/downloads/spotter.zip" download>↓ spotter.zip</a>
+        </div>
+        <pre tabindex="0">git clone https://github.com/missionbuilt/loadout.git</pre>
+      </details>
+      <p class="note">Any MCP-compatible agent can connect. Tested on Claude. Want the barbell half? <a href="/rack">The Rack →</a></p>
     </section>
 
-    {/* ---------- CLOSER ---------- */}
-    <section class="closer">
-      <p>
-        The book is the plan. <strong>The Loadout is the execution.</strong>
-      </p>
-    </section>
-
+    <section class="closer"><p>The book is the plan. <strong>The Loadout is the execution.</strong></p></section>
   </main>
   <SiteFooter links={[{ label: 'github.com/missionbuilt/loadout', href: 'https://github.com/missionbuilt/loadout', external: true }]} />
 </BaseLayout>
 
 <style>
-  /* ============ HERO ============ */
-  .hero {
-    padding: 56px var(--pad-page-x) 28px;
-  }
+  .hero { padding: 56px var(--pad-page-x) 8px; }
+  .eyebrow { display: inline-flex; align-items: center; gap: 14px; margin: 0 0 18px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.24em; color: var(--color-chalk-dim); text-transform: uppercase; }
+  .eyebrow .dots { letter-spacing: 0.04em; color: var(--color-blood-bright); }
+  .display { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(48px, 8vw, 96px); line-height: 0.95; letter-spacing: -0.02em; text-transform: uppercase; color: var(--color-chalk); }
+  .dot { color: var(--color-blood-bright); }
+  .sub { margin: 18px 0 0; max-width: 60ch; font-family: var(--font-serif); font-size: 18px; line-height: 1.6; color: var(--color-chalk-dim); }
+  .ctas { margin-top: 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; }
+  .cta { display: inline-flex; padding: 14px 22px; background: var(--color-blood); color: var(--color-chalk); font-family: var(--font-display); font-weight: 600; font-size: 15px; letter-spacing: 0.04em; text-transform: uppercase; }
+  .cta:hover { background: var(--color-blood-bright); }
+  .soft { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-dim); border-bottom: 1px solid var(--color-chalk-ghost); padding-bottom: 2px; }
+  .soft:hover { color: var(--color-chalk); }
 
-  .eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 14px;
-    margin: 0 0 18px;
-    font-family: var(--font-mono);
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.24em;
-    color: var(--color-chalk-dim);
-    text-transform: uppercase;
-  }
-  .eyebrow .dots {
-    letter-spacing: 0.04em;
-    color: var(--color-blood-bright);
-  }
+  .skills { margin: 48px var(--pad-page-x) 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: var(--border-thin); border-left: var(--border-thin); }
+  .skill { min-width: 0; display: grid; grid-template-rows: auto 1fr; border-right: var(--border-thin); border-bottom: var(--border-thin); transition: background 120ms ease-out; }
+  .skill:hover { background: var(--color-panel); }
+  .shot { padding: 22px 22px 0; background: var(--color-panel); border-bottom: var(--border-thin); overflow: hidden; height: 210px; }
+  .shot img { display: block; width: 100%; height: auto; outline: 1px solid var(--color-rule); }
+  .skill-body { padding: 22px 24px 26px; display: grid; gap: 10px; align-content: start; }
+  .when { margin: 0; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-faint); }
+  .skill h2 { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 26px; letter-spacing: 0.03em; text-transform: uppercase; color: var(--color-chalk); }
+  .line { margin: 0; font-family: var(--font-serif); font-size: 15px; line-height: 1.55; color: var(--color-chalk-dim); }
+  .more { margin-top: 4px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk); }
+  .skill:hover .more { color: var(--color-blood-text); }
 
-  .display {
-    margin: 0;
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: clamp(56px, 11vw, 108px);
-    line-height: 0.88;
-    letter-spacing: -0.02em;
-    color: var(--color-chalk);
-    text-transform: uppercase;
-  }
-  .display .line { display: block; }
-  .display .dot { color: var(--color-blood-bright); }
+  .install { padding: 72px var(--pad-page-x) 0; }
+  .section-label { margin: 0 0 12px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.24em; color: var(--color-blood-text); text-transform: uppercase; }
+  .section-h2 { margin: 0 0 20px; font-family: var(--font-display); font-weight: 600; font-size: clamp(28px, 3.4vw, 40px); text-transform: uppercase; color: var(--color-chalk); }
+  .url { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; padding: 16px 20px; background: var(--color-panel); border: var(--border-thin); max-width: 760px; }
+  .url .k { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-faint); }
+  .url code { font-family: var(--font-mono); font-size: 16px; color: var(--color-chalk); word-break: break-all; }
+  .ways { margin-top: 20px; max-width: 760px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .way { min-width: 0; padding: 18px 20px; border: var(--border-thin); }
+  .way h3 { margin: 0 0 8px; font-family: var(--font-display); font-weight: 500; font-size: 17px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--color-chalk); }
+  .way p { margin: 0; font-family: var(--font-serif); font-size: 15px; line-height: 1.55; color: var(--color-chalk-dim); }
+  pre { margin: 0; padding: 10px 12px; overflow-x: auto; background: var(--color-bg); border: var(--border-thin); font-family: var(--font-mono); font-size: 13px; color: var(--color-chalk); }
+  .other { margin-top: 20px; max-width: 760px; border-top: 1px dashed var(--color-rule); padding-top: 14px; }
+  .other summary { cursor: pointer; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-chalk-dim); }
+  .other p { font-family: var(--font-serif); font-size: 15px; line-height: 1.55; color: var(--color-chalk-dim); }
+  .dl { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; }
+  .dl a { padding: 8px 12px; border: var(--border-thin); font-family: var(--font-mono); font-size: 12px; color: var(--color-chalk); }
+  .dl a:hover { background: var(--color-panel); }
+  .note { margin: 22px 0 0; font-family: var(--font-mono); font-size: 12px; line-height: 1.6; color: var(--color-chalk-faint); }
+  .note a { color: var(--color-chalk-dim); border-bottom: 1px solid var(--color-chalk-ghost); }
 
-  .subtitle {
-    margin: 22px 0 0;
-    max-width: 760px;
-    font-family: var(--font-display);
-    font-weight: 400;
-    font-size: clamp(15px, 2.2vw, 22px);
-    color: var(--color-chalk-dim);
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-  }
+  .closer { margin-top: 72px; padding: 44px var(--pad-page-x); border-top: var(--border-thin); text-align: center; }
+  .closer p { margin: 0; font-family: var(--font-display); font-weight: 500; font-size: 22px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-chalk); }
+  .closer strong { font-weight: 500; color: var(--color-blood-text); }
 
-  /* ============ META STRIP ============ */
-  .meta-strip {
-    margin: 28px var(--pad-page-x) 0;
-    padding: 14px 0;
-    border-top: var(--border-thin);
-    border-bottom: var(--border-thin);
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
-    font-family: var(--font-mono);
-    font-size: 12px;
-  }
-  .stat-key {
-    color: var(--color-chalk-faint);
-    font-size: 12px;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-  }
-  .stat-value {
-    margin-top: 2px;
-    color: var(--color-chalk);
-    font-family: var(--font-display);
-    font-size: 22px;
-    letter-spacing: 0.04em;
-    display: inline-block;
-  }
-  /* Linked stat values get a subtle underline on hover, same color */
-  .stat-value.linked {
-    border-bottom: 1px solid transparent;
-    transition: border-bottom-color 120ms ease-out, color 120ms ease-out;
-  }
-  .stat-value.linked:hover { border-bottom-color: currentColor; }
-  .stat-value .ext {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: var(--color-chalk-faint);
-    letter-spacing: 0;
-    transition: color 120ms ease-out;
-  }
-  .stat-value.linked:hover .ext { color: var(--color-chalk); }
-
-  /* ============ BLOCKS ============ */
-  .block {
-    padding: 56px var(--pad-page-x) 0;
-  }
-
-  .section-label {
-    margin: 0 0 14px;
-    font-family: var(--font-mono);
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.24em;
-    color: var(--color-blood-text);
-    text-transform: uppercase;
-  }
-
-  .section-h2 {
-    margin: 0 0 18px;
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 36px;
-    line-height: 1.05;
-    letter-spacing: 0.02em;
-    color: var(--color-chalk);
-    text-transform: uppercase;
-  }
-
-  .prose {
-    margin: 0 0 14px;
-    max-width: 720px;
-    font-family: var(--font-serif);
-    font-size: 17px;
-    line-height: 1.65;
-    color: var(--color-chalk-dim);
-  }
-  .prose strong { color: var(--color-chalk); font-weight: 700; }
-  .inline-link {
-    color: var(--color-chalk);
-    border-bottom: 1px solid var(--color-chalk-ghost);
-    transition: border-color 120ms ease-out;
-  }
-  .inline-link:hover { border-bottom-color: var(--color-chalk); }
-
-  .block-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-bottom: 22px;
-  }
-  .block-count {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--color-chalk-faint);
-  }
-
-  /* ============ SKILL CARDS (row form) ============ */
-  .skills {
-    border-top: var(--border-thin);
-  }
-
-  .skill-row {
-    display: grid;
-    grid-template-columns: 200px 1fr 140px;
-    gap: 36px;
-    align-items: center;
-    padding: 22px 0;
-    border-bottom: var(--border-thin);
-    text-decoration: none;
-    transition: background 120ms ease-out;
-  }
-  .skill-row:hover {
-    background: rgba(255, 255, 255, 0.015);
-  }
-  .skill-row.dim { cursor: default; }
-
-  .skill-name { display: flex; flex-direction: column; gap: 8px; }
-  .skill-name h3 {
-    margin: 0;
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 22px;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-    color: var(--color-chalk);
-  }
-  .skill-row.dim .skill-name h3 { color: var(--color-chalk-faint); }
-
-  .tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-family: var(--font-mono);
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-  }
-  .tag.live { color: var(--color-army); }
-  .tag.live .tag-sq {
-    width: 6px;
-    height: 6px;
-    background: var(--color-army);
-    display: inline-block;
-  }
-  .tag.testing { color: var(--color-chalk-dim); }
-  .tag.testing .tag-sq {
-    width: 6px;
-    height: 6px;
-    border: 1px solid var(--color-chalk-dim);
-    display: inline-block;
-  }
-  .tag.planned { color: var(--color-chalk-faint); }
-
-  .skill-blurb {
-    margin: 0;
-    max-width: 68ch;
-    font-family: var(--font-serif);
-    font-size: 15px;
-    line-height: 1.6;
-    color: var(--color-chalk-dim);
-  }
-  .skill-row.dim .skill-blurb { color: var(--color-chalk-faint); }
-
-  .skill-cta {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--color-chalk);
-    text-align: right;
-    white-space: nowrap;
-    transition: color 120ms ease-out;
-  }
-  .skill-row.dim .skill-cta { color: var(--color-chalk-faint); }
-  a.skill-row:hover .skill-cta { color: var(--color-blood-text); }
-
-  /* ============ DASHED DIVIDER ============ */
-  .dashed {
-    margin: 48px var(--pad-page-x) 0;
-    border: none;
-    border-top: 1px dashed var(--color-rule-soft);
-  }
-
-  /* ============ CLOSER ============ */
-  .closer {
-    margin-top: 56px;
-    padding: 48px var(--pad-page-x);
-    border-top: var(--border-thin);
-    text-align: center;
-  }
-  .closer p {
-    margin: 0;
-    font-family: var(--font-display);
-    font-weight: 500;
-    font-size: 22px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--color-chalk);
-  }
-  .closer p strong {
-    font-weight: 500;
-    color: var(--color-blood-text);
-  }
-
-  /* ============ FOOTER ============ */
-
-  /* ============ INSTALL BLOCK ============ */
-  .install-block {
-    padding: 56px var(--pad-page-x) 0;
-  }
-
-  .install-intro {
-    margin: 0 0 28px;
-    max-width: 720px;
-    font-family: var(--font-serif);
-    font-size: 17px;
-    line-height: 1.65;
-    color: var(--color-chalk-dim);
-  }
-
-  .install-url {
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    margin-bottom: 28px;
-    padding: 14px 20px;
-    background: var(--color-panel);
-    border: var(--border-thin);
-    border-left: 3px solid var(--color-blood);
-  }
-
-  .install-url-label {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--color-chalk-faint);
-    white-space: nowrap;
-  }
-
-  .install-url-value {
-    font-family: var(--font-mono);
-    font-size: 14px;
-    color: var(--color-chalk);
-    letter-spacing: 0.04em;
-  }
-
-  .install-verified {
-    margin: 0 0 24px;
-    font-family: var(--font-mono);
-    font-size: 12px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--color-army);
-  }
-
-  .install-or {
-    margin: 40px 0 14px;
-    padding-top: 28px;
-    border-top: 1px dashed var(--color-rule-soft);
-    font-family: var(--font-mono);
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--color-chalk-faint);
-  }
-  .dl-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-bottom: 24px;
-  }
-  .dl-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 16px;
-    background: var(--color-panel);
-    border: var(--border-thin);
-    border-left: 3px solid var(--color-blood);
-    font-family: var(--font-mono);
-    font-size: 12px;
-    letter-spacing: 0.06em;
-    color: var(--color-chalk);
-    text-decoration: none;
-    transition: background 120ms ease-out;
-  }
-  .dl-pill span { color: var(--color-blood-text); }
-  .dl-pill:hover { background: rgba(255,255,255,0.02); }
-  .install-git-label {
-    margin: 0 0 10px;
-    font-family: var(--font-mono);
-    font-size: 12px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--color-chalk-faint);
-  }
-
-  .install-options {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    border-top: var(--border-thin);
-    border-bottom: var(--border-thin);
-  }
-
-  .install-opt {
-    min-width: 0;
-    padding: 24px 28px;
-    border-right: var(--border-thin);
-    border-bottom: var(--border-thin);
-  }
-  .install-opt:nth-child(2n) { border-right: none; }
-  .install-opt:nth-last-child(-n+2) { border-bottom: none; }
-
-  .install-opt h3 {
-    margin: 0 0 10px;
-    font-family: var(--font-mono);
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--color-chalk);
-  }
-
-  .install-opt p {
-    margin: 0 0 12px;
-    font-family: var(--font-serif);
-    font-size: 15px;
-    line-height: 1.6;
-    color: var(--color-chalk-dim);
-  }
-  .install-opt p:last-child { margin-bottom: 0; }
-  .install-opt p strong { color: var(--color-chalk); font-weight: 600; }
-
-  .install-opt code {
-    font-family: var(--font-mono);
-    font-size: 0.88em;
-    color: var(--color-chalk);
-    background: var(--color-bg);
-    padding: 1px 5px;
-  }
-
-  .install-opt-code {
-    margin: 0;
-    padding: 10px 14px;
-    background: var(--color-bg);
-    border: var(--border-thin);
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: var(--color-chalk-dim);
-    letter-spacing: 0.03em;
-    overflow-x: auto;
-    white-space: pre;
-  }
-
-  /* ============ Responsive ============ */
   @media (max-width: 1099px) {
-    .meta-strip {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 18px;
-    }
-    .skill-row {
-      grid-template-columns: 180px 1fr 110px;
-      gap: 24px;
-    }
+    .hero, .install, .closer { padding-left: var(--pad-page-x-mid); padding-right: var(--pad-page-x-mid); }
+    .skills { margin-left: var(--pad-page-x-mid); margin-right: var(--pad-page-x-mid); grid-template-columns: minmax(0, 1fr); }
+    .shot { height: 260px; }
   }
-
   @media (max-width: 720px) {
-    .install-block {
-      padding: 40px var(--pad-page-x-mobile) 0;
-    }
-    .install-url {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 8px;
-    }
-    .install-options {
-      grid-template-columns: minmax(0, 1fr);
-    }
-    .install-opt {
-      border-right: none;
-      border-bottom: var(--border-thin);
-    }
-    .install-opt:last-child { border-bottom: none; }
-    .install-opt:nth-last-child(-n+2) { border-bottom: var(--border-thin); }
-    .install-opt:last-child { border-bottom: none; }
-
-    .hero {
-      padding: 36px var(--pad-page-x-mobile) 20px;
-    }
-    .meta-strip {
-      margin: 24px var(--pad-page-x-mobile) 0;
-      grid-template-columns: 1fr;
-      gap: 14px;
-    }
-    .block {
-      padding: 40px var(--pad-page-x-mobile) 0;
-    }
-    .section-h2 { font-size: 28px; }
-    .skill-row {
-      grid-template-columns: 1fr;
-      gap: 14px;
-      padding: 22px 0;
-    }
-    .skill-cta { text-align: left; }
-    .dashed { margin: 36px var(--pad-page-x-mobile) 0; }
-    .closer { padding: 36px var(--pad-page-x-mobile); }
+    .hero, .install, .closer { padding-left: var(--pad-page-x-mobile); padding-right: var(--pad-page-x-mobile); }
+    .hero { padding-top: 32px; }
+    .sub { font-size: 17px; }
+    .skills { margin: 32px var(--pad-page-x-mobile) 0; }
+    .shot { height: 170px; padding: 14px 14px 0; }
+    .ways { grid-template-columns: minmax(0, 1fr); }
     .closer p { font-size: 18px; }
   }
 </style>

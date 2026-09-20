@@ -36,9 +36,74 @@ import TopNav from '../components/TopNav.astro';
     </header>
 
     <article class="prose">
-      {/* ---------- PROFESSIONAL JOURNEY ---------- */}
+      {/* ---------- THE SHORT VERSION (Sept 20, 2026 focus pass) ---------- */}
+      <ul class="facts" aria-label="The short version">
+        <li><span class="k">Work</span>General Manager, Elastic Security</li>
+        <li><span class="k">Before</span>U.S. Army intelligence, SOC analyst, product leader</li>
+        <li><span class="k">Barbell</span>USAPL-certified powerlifting coach, garage gym</li>
+        <li><span class="k">Home</span>Dad first</li>
+      </ul>
+      <div class="next">
+        <a class="cta" href="/chapters">Read the book →</a>
+        <a class="soft" href="/rack">The apps →</a>
+      </div>
+
+      {/* ---------- ABOUT THE BOOK ---------- */}
       <section>
-        <h2>Professional Journey</h2>
+        <p class="kicker">The mission behind Mission Built</p>
+        <h2>Why this book exists</h2>
+        <p>
+          MissionBuilt was born from a simple idea: the principles driving successful
+          product teams and driven lifters are more alike than they seem. I've spent
+          decades in both worlds: tech product management and competitive
+          powerlifting. The same core truths show up in each. Consistency, purpose,
+          and relentless focus on the mission.
+        </p>
+        <p>
+          This project isn't a manifesto. It's not here to tell you how it must be
+          done. It's a personal contribution to the shared pool of knowledge: a new
+          lens for understanding the craft of product leadership, seen through the
+          eyes of the lifter, the builder, the grinder.
+        </p>
+        <p>
+          Some people learn best from frameworks and acronyms. Others need narrative
+          and analogy. MissionBuilt is for the latter. It's product management as
+          told through the chalk-dusted hands of someone who's felt the pressure of a
+          heavy barbell and a tight roadmap.
+        </p>
+      </section>
+
+      {/* ---------- THIS PROJECT EXISTS TO ---------- */}
+      <section>
+        <h3 class="h3">This project exists to:</h3>
+        <ul class="missions">
+          <li>
+            Offer a free and open-source book that ties together the rigor of
+            product leadership with the discipline of physical training.
+          </li>
+          <li>
+            Present an alternative philosophy, not a prescriptive method.
+          </li>
+          <li>
+            Encourage introspection, empathy, and ownership, especially in a world
+            that too often prizes speed over substance.
+          </li>
+          <li>
+            Share what's been learned from years of building: products, teams,
+            strength, and character.
+          </li>
+        </ul>
+        <p class="closer">
+          Most of all, MissionBuilt exists because you might be like me. Someone who
+          cares deeply, grinds daily, and believes that strength (in life, in teams,
+          in outcomes) is built, not bought.
+        </p>
+      </section>
+
+      <p class="fold-label">The longer story</p>
+      {/* ---------- PROFESSIONAL JOURNEY ---------- */}
+      <details class="fold">
+        <summary><span>Professional journey</span></summary>
         <p>
           I'm the General Manager of Elastic Security, leading the global
           organization across product and engineering toward a single mission:
@@ -83,11 +148,11 @@ import TopNav from '../components/TopNav.astro';
           is rooted in empathy, mission, and execution. I've never believed in
           building for metrics. I build for outcomes.
         </p>
-      </section>
+      </details>
 
       {/* ---------- BEYOND WORK ---------- */}
-      <section>
-        <h2>Beyond Work</h2>
+      <details class="fold">
+        <summary><span>Beyond work</span></summary>
         <p>
           Outside of work, I'm a USAPL-certified powerlifting coach and a
           not-so-serious competitive lifter. My platform may be unofficial, but my PR
@@ -100,11 +165,11 @@ import TopNav from '../components/TopNav.astro';
           schemes; it's a space that keeps my body sharp and my mind clearer than any
           meeting ever could.
         </p>
-      </section>
+      </details>
 
       {/* ---------- FAMILY ---------- */}
-      <section>
-        <h2>Family</h2>
+      <details class="fold">
+        <summary><span>Family</span></summary>
         <p>
           I'm a proud and lucky dad who learned the meaning of unconditional love the
           moment they arrived. They've taught me more about patience, play, and
@@ -115,66 +180,12 @@ import TopNav from '../components/TopNav.astro';
           honesty, heart, and a little bit of barbell grit. I don't pretend to have
           all the answers, but I show up, give a shit, and do the reps. Every day.
         </p>
-      </section>
+      </details>
 
-      {/* ---------- DIVIDER ---------- */}
-      <hr class="section-divider" />
-
-      {/* ---------- ABOUT THE BOOK ---------- */}
-      <section>
-        <p class="kicker">The Mission Behind MissionBuilt</p>
-        <h2>Why this book exists</h2>
-        <p>
-          MissionBuilt was born from a simple idea: the principles driving successful
-          product teams and driven lifters are more alike than they seem. I've spent
-          decades in both worlds: tech product management and competitive
-          powerlifting. The same core truths show up in each. Consistency, purpose,
-          and relentless focus on the mission.
-        </p>
-        <p>
-          This project isn't a manifesto. It's not here to tell you how it must be
-          done. It's a personal contribution to the shared pool of knowledge: a new
-          lens for understanding the craft of product leadership, seen through the
-          eyes of the lifter, the builder, the grinder.
-        </p>
-        <p>
-          Some people learn best from frameworks and acronyms. Others need narrative
-          and analogy. MissionBuilt is for the latter. It's product management as
-          told through the chalk-dusted hands of someone who's felt the pressure of a
-          heavy barbell and a tight roadmap.
-        </p>
-      </section>
-
-      {/* ---------- THIS PROJECT EXISTS TO ---------- */}
-      <section>
-        <h2>This project exists to:</h2>
-        <ul class="missions">
-          <li>
-            Offer a free and open-source book that ties together the rigor of
-            product leadership with the discipline of physical training.
-          </li>
-          <li>
-            Present an alternative philosophy, not a prescriptive method.
-          </li>
-          <li>
-            Encourage introspection, empathy, and ownership, especially in a world
-            that too often prizes speed over substance.
-          </li>
-          <li>
-            Share what's been learned from years of building: products, teams,
-            strength, and character.
-          </li>
-        </ul>
-        <p class="closer">
-          Most of all, MissionBuilt exists because you might be like me. Someone who
-          cares deeply, grinds daily, and believes that strength (in life, in teams,
-          in outcomes) is built, not bought.
-        </p>
-      </section>
 
       {/* ---------- EMBRACING AI ---------- */}
-      <section>
-        <h2>Embracing AI</h2>
+      <details class="fold">
+        <summary><span>Embracing AI</span></summary>
         <p>
           I'm not just okay with using AI. I depend on it. MissionBuilt is a
           product of passion, purpose, and pragmatic tooling. AI is the creative
@@ -197,11 +208,11 @@ import TopNav from '../components/TopNav.astro';
           suffering. It's a modern-day field manual forged by a human lifter,
           builder, and father, built with tools that work.
         </p>
-      </section>
+      </details>
 
       {/* ---------- OPEN THANKS ---------- */}
-      <section>
-        <h2>Open Thanks</h2>
+      <details class="fold">
+        <summary><span>Open thanks</span></summary>
         <p>
           Mission Built isn't just a book. It's a collaboration across domains,
           disciplines, and even dimensions. An open-source memoir shaped by years
@@ -231,7 +242,7 @@ import TopNav from '../components/TopNav.astro';
             <dd>who engages, critiques, and adds weight to these ideas.</dd>
           </div>
         </dl>
-      </section>
+      </details>
 
       {/* ---------- FINE PRINT ---------- */}
       <aside class="fine-print" aria-label="Fine print">
@@ -502,4 +513,23 @@ import TopNav from '../components/TopNav.astro';
     .closer-block { margin-top: 48px; padding-top: 28px; }
     .closer-credo { font-size: 20px; }
   }
+
+  /* Sept 20, 2026 focus pass: short facts, the why, then the long story folded. */
+  .facts { list-style: none; margin: 0 0 28px; padding: 0; border-top: var(--border-thin); }
+  .facts li { display: grid; grid-template-columns: 90px minmax(0, 1fr); gap: 14px; padding: 12px 0; border-bottom: var(--border-thin); font-family: var(--font-serif); font-size: 16px; color: var(--color-chalk); }
+  .facts .k { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-faint); padding-top: 3px; }
+  .next { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; margin: 0 0 48px; }
+  .cta { display: inline-flex; padding: 13px 20px; background: var(--color-blood); color: var(--color-chalk); font-family: var(--font-display); font-weight: 600; font-size: 15px; letter-spacing: 0.04em; text-transform: uppercase; }
+  .cta:hover { background: var(--color-blood-bright); }
+  .soft { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-dim); border-bottom: 1px solid var(--color-chalk-ghost); padding-bottom: 2px; }
+  .h3 { margin: 28px 0 12px; font-family: var(--font-display); font-weight: 500; font-size: 20px; text-transform: uppercase; letter-spacing: 0.02em; color: var(--color-chalk); }
+  .fold-label { margin: 56px 0 8px !important; font-family: var(--font-mono) !important; font-size: 12px !important; letter-spacing: 0.24em; text-transform: uppercase; color: var(--color-blood-text) !important; }
+  .fold { border-top: var(--border-thin); }
+  .fold:last-of-type { border-bottom: var(--border-thin); }
+  .fold summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; padding: 16px 0; font-family: var(--font-display); font-weight: 500; font-size: 22px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--color-chalk); }
+  .fold summary::-webkit-details-marker { display: none; }
+  .fold summary::after { content: '+'; font-family: var(--font-mono); font-size: 18px; color: var(--color-chalk-faint); }
+  .fold[open] summary::after { content: '–'; }
+  .fold[open] { padding-bottom: 20px; }
+  .fold + .fine-print, .fold + aside { margin-top: 40px; }
 </style>

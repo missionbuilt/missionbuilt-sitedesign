@@ -1120,10 +1120,16 @@ def build_spotter():
 
     # Inject SPOTTER_DATA — replace the placeholder
     # Template uses: window.SPOTTER_DATA = null; // ← AGENT: replace this line — see Path B step B-4.
-    html = html.replace(
-        'window.SPOTTER_DATA = null; // ← AGENT: replace this line — see Path B step B-4.',
-        f'window.SPOTTER_DATA = {data_json};'
-    )
+    # The template's placeholder has changed shape over time. Replace whichever is
+    # present and fail loudly if none is: a silent miss shipped a demo that said
+    # "No data" from June to Sept 20, 2026.
+    for marker in ('window.SPOTTER_DATA = null; // ← AGENT: replace this line — see Path B step B-4.',
+                   'window.SPOTTER_DATA = __SPOTTER_DATA__;'):
+        if marker in html:
+            html = html.replace(marker, f'window.SPOTTER_DATA = {data_json};')
+            break
+    else:
+        raise SystemExit('spotter: no SPOTTER_DATA placeholder found in the template')
 
     # Stamp the build version so each regeneration produces a different hash,
     # ensuring Cloudflare always treats it as a changed asset on deploy.
@@ -1169,6 +1175,12 @@ def build_approach():
     return True
 
 
+# Freezes "now" at the sample brief's date, keeping the time of day moving.
+DEMO_CLOCK_PIN = """<script id="demo-clock">(function(){var R=Date,real=R.now(),pin=new R('2026-05-20T11:21:00Z').getTime(),off=pin-real;
+function D(a,b,c,d,e,f,g){if(!(this instanceof D))return new R(R.now()+off).toString();var n=arguments.length;return n===0?new R(R.now()+off):n===1?new R(a):new R(a,b,c||1,d||0,e||0,f||0,g||0);}
+D.prototype=R.prototype;D.now=function(){return R.now()+off};D.UTC=R.UTC;D.parse=R.parse;window.Date=D;})();</script>"""
+
+
 def build_warmup():
     print("Building warmup demo...")
     # As of loadout thin-server v2 the Warmup runtime is the self-contained
@@ -1182,8 +1194,15 @@ def build_warmup():
     saved_at  = datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
 
     # Inject sample data + a saved-at stamp into the template placeholders.
+    if 'window.WARMUP_DATA = __WARMUP_DATA__;' not in html:
+        raise SystemExit('warmup: no WARMUP_DATA placeholder found in the template')
     html = html.replace('window.WARMUP_DATA = __WARMUP_DATA__;', f'window.WARMUP_DATA = {data_json};')
     html = html.replace('__WARMUP_SAVED_AT__', saved_at)
+
+    # Pin the demo's clock to the sample brief's day. The Warmup hides items older
+    # than its lookback window, so against the real date the sample aged out and the
+    # demo showed an empty brief (0 items) from late May to Sept 20, 2026.
+    html = html.replace('<head>', '<head>\n' + DEMO_CLOCK_PIN, 1)
 
     # Stamp the build version so each regeneration produces a different hash,
     # ensuring Cloudflare always treats it as a changed asset on deploy.

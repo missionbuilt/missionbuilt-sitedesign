@@ -14,14 +14,14 @@ export const TOOLS: Record<ToolKey, { name: string; href: string; line: string; 
   mealstack: {
     name: 'MealStack',
     href: '/rack/mealstack',
-    line: 'Fueling is training. A meal timing tracker for people who train, on iPhone. Private beta.',
-    cta: 'See the app →',
+    line: 'Your tracker says what you ate. This says when. Meal timing built around your training, on iPhone. Private beta.',
+    cta: 'Join the beta →',
   },
   ironstack: {
     name: 'Ironstack',
     href: '/rack/ironstack',
-    line: 'Weight is a number. Heavy is a feeling. A training partner with your whole history in its head.',
-    cta: 'Preview →',
+    line: 'Log fast. See progress. A coach in your corner. A lifting log for iPhone. Private beta.',
+    cta: 'Join the beta →',
   },
   loadout: {
     name: 'The Loadout',
