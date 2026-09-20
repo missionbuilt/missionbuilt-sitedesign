@@ -1,474 +1,186 @@
 ---
 /**
- * The Rack — overview page.
+ * The Rack — overview page (/rack).
  *
- * The barbell half of the site. The Loadout is the boardroom kit: skills for
- * product leaders, installed over MCP, MIT. The Rack holds the tools Mike
- * trains with: Ironstack (two Claude skills, seven Kibana dashboards and a
- * coach over an Elasticsearch you own, MIT) and MealStack (an iPhone app,
- * open source with 1.0, license not yet settled). Both in testing as of Sept 2026.
- * Each card opens on the tool's own line ("Fueling is training." / "Weight is a
- * number. Heavy is a feeling."); MealStack's wording follows the Log
- * "Fueling is training" (src/content/logs/fueling-is-training.mdx). Ironstack and MealStack moved
- * here from /loadout on Sept 13, 2026; public/_redirects carries the 301s.
+ * Rebuilt Sept 20, 2026 to match the lean app landing pages (AppLanding.astro).
+ * The old page was a text overview with a meta strip and two text rows; its copy
+ * described the Kibana-era Ironstack ("a training partner with your whole history
+ * in its head") and named Hevy. Backup: Claude outputs/rack-index-before-2026-09-20.astro.bak.
  *
- * Same skeleton as the Loadout index, minus the install section: each tool
- * installs its own way and its page says how.
- *
- * Pattern: TopNav → Hero (eyebrow + h1 + subtitle) → Meta strip →
- * What this is → Dashed divider → The tools (2 rows) → Closer → Footer.
+ * One job: show the two apps side by side, each with its real screens, its promise
+ * and a way in. Order: hero (short) → two app cards → better together → why (one
+ * paragraph, below the fold) → closer. Each card uses the same promise, oxblood
+ * phrase and hero screens as its own landing page, so the family reads as one.
+ * No competitor is named. Oxblood: the brand dot, the two promise phrases, the
+ * Join buttons. "Better together" claims only what is live (both write to Apple Health);
+ * travel mode and the training signal are Ironstack-ready, MealStack next (Sept 19 audit).
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
 import TopNav from '../../components/TopNav.astro';
 
-/** A phone outline for the iPhone rows. Our own drawing: Apple's logo and the App Store badge are not ours to use until the app is on the store. */
-const PHONE = '<svg class="ph-glyph" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M10 18.5h4"/></svg>';
-
-const stats = [
-  { key: 'Tools',   value: '2',             href: undefined },
-  { key: 'Status',  value: 'Pre-release',   href: undefined },
-  { key: 'License', value: 'MIT for Ironstack', href: undefined },
-  { key: 'Source',  value: 'With 1.0',      href: undefined },
-];
-
-type ToolStatus = 'live' | 'beta' | 'testing' | 'planned';
-interface Tool {
+type Shot = { src: string; w: number; h: number; alt: string };
+interface App {
   name: string;
-  status: ToolStatus;
-  /** What kind of thing it is: the second tag on the row. */
-  kind: string;
-  blurb: string;
   href: string;
-  cta: string;
+  promise: string;
+  accent: string;
+  sub: string;
+  points: string[];
+  shots: [Shot, Shot];
 }
 
-const tools: Tool[] = [
-  {
-    name: 'MealStack',
-    status: 'beta',
-    kind: 'iPhone app',
-    blurb:
-      'Fueling is training. A meal timing tracker for people who train: protein stacked across the day, a pre-workout meal that holds its time, a day you can change on the road, and a log of when you actually ate. Not a nutrition app. Open source with 1.0.',
-    href: '/rack/mealstack',
-    cta: 'Join the beta →',
-  },
+const apps: App[] = [
   {
     name: 'Ironstack',
-    status: 'beta',
-    kind: 'iPhone app',
-    blurb:
-      'Log it. Time it. Lift each other up. A lifting log that brings your Hevy or Strong history, talks you through rest, and stays out of your way. Free during the beta.',
     href: '/rack/ironstack',
-    cta: 'Join the beta →',
+    promise: 'Log fast. See progress.',
+    accent: 'A coach in your corner.',
+    sub: 'A lifting log for iPhone. Every lifting app I used was missing something; this one puts it in one place.',
+    points: ['Tap, type or say the set', 'Big rest and EMOM timers', 'Insights, badges, your crew', 'A Coach that picks your next weight'],
+    shots: [
+      { src: '/images/ironstack/log-session.webp', w: 540, h: 1174, alt: 'Ironstack mid-session: Comp Squat, two sets logged, the third ready to confirm with one tap, and the rest clock at 1:52.' },
+      { src: '/images/ironstack/coach-swap.webp', w: 540, h: 1176, alt: 'Ironstack Coach with the squat rack taken: swap in SSB Box Squat and open at 220 for 5, under a ceiling from your own sets.' },
+    ],
+  },
+  {
+    name: 'MealStack',
+    href: '/rack/mealstack',
+    promise: 'Your tracker says what you ate.',
+    accent: 'This says when.',
+    sub: 'Meal timing for iPhone, built backward from your training session. Eat late and the day re-flows; your pre-workout meal still lands before you train.',
+    points: ['Anchored to your session', 'Log when you actually ate', 'Holds up on the road', 'A Coach for eating out'],
+    shots: [
+      { src: '/images/mealstack/today-training.webp', w: 540, h: 1176, alt: 'MealStack Today on a training day: next is yogurt and berries at 12:03 PM, with totals against the day\'s target.' },
+      { src: '/images/mealstack/session-moved.webp', w: 540, h: 1174, alt: 'MealStack after the session moved to 6:30 PM: the meals tied to it move with it, with an Undo.' },
+    ],
   },
 ];
 ---
 <BaseLayout
   title="The Rack · Mission Built"
-  description="Tools for the barbell, open source with 1.0: a training partner with your whole history in its head, and a meal timing tracker for people who train. The other half of Mission Built."
+  description="Two iPhone apps for people who train, from Mission Built. Ironstack: log fast, see progress, a coach in your corner. MealStack: meal timing built around your training session. Both free during the private beta."
   active="rack"
 >
   <TopNav active="rack" />
 
   <main id="main" class="page">
-    {/* ---------- HERO ---------- */}
     <section class="hero">
       <p class="eyebrow">
         <span class="dots" aria-hidden="true">▮▮▮</span>
         <span>Tools for the barbell, from Mission Built</span>
         <span class="dots" aria-hidden="true">▮▮▮</span>
       </p>
-
-      <h1 class="display">
-        <span class="line">The</span>
-        <span class="line">Rack<span class="dot">.</span></span>
-      </h1>
-
-      <p class="subtitle">Tools for the other half of the book. Open source with 1.0.</p>
+      <h1 class="display">The Rack<span class="dot">.</span></h1>
+      <p class="subtitle">Two iPhone apps for people who train: one for the lifting, one for the eating around it.</p>
+      <ul class="trust" aria-label="The short version">
+        <li>Private beta</li><li>Free during the beta</li><li>iPhone, iOS 26+</li><li>Your data stays yours</li>
+      </ul>
     </section>
 
-    {/* ---------- META STRIP ---------- */}
-    <section class="meta-strip" aria-label="The Rack at a glance">
-      {stats.map((s) => (
-        <div class="stat">
-          <div class="stat-key">{s.key}</div>
-          {s.href ? (
-            <a
-              class="stat-value linked"
-              href={s.href}
-              target="_blank"
-              rel="noopener"
-            >{s.value}<span class="ext" aria-hidden="true"> ↗</span></a>
-          ) : (
-            <div class="stat-value">{s.value}</div>
-          )}
-        </div>
+    <section class="apps" aria-label="The apps">
+      {apps.map((a) => (
+        <article class="app">
+          <a class="shots" href={a.href} tabindex="-1" aria-hidden="true">
+            <img class="ph back" src={a.shots[1].src} width={a.shots[1].w} height={a.shots[1].h} alt="" loading="lazy" decoding="async" />
+            <img class="ph front" src={a.shots[0].src} width={a.shots[0].w} height={a.shots[0].h} alt={a.shots[0].alt} decoding="async" />
+          </a>
+          <div class="app-body">
+            <p class="app-name">{a.name}<span class="dot">.</span></p>
+            <h2 class="promise">{a.promise} <span class="accent">{a.accent}</span></h2>
+            <p class="sub">{a.sub}</p>
+            <ul class="points">
+              {a.points.map((pt) => <li>{pt}</li>)}
+            </ul>
+            <div class="ctas">
+              <a class="cta" href={`${a.href}#beta`}>Join the beta →</a>
+              <a class="soft" href={a.href}>See {a.name} →</a>
+            </div>
+          </div>
+        </article>
       ))}
     </section>
 
-    {/* ---------- WHAT THIS IS ---------- */}
-    <section class="block">
-      <p class="section-label">What this is</p>
-      <h2 class="section-h2">The other half of the book.</h2>
+    <section class="block together">
+      <p class="section-label">Better together</p>
+      <p class="line">Each stands on its own. Both write to Apple Health today; a shared travel switch and a training signal are next.</p>
+      <a class="soft" href="/rack/mealstack/details#better-together">What they share today →</a>
+    </section>
+
+    <section class="block why">
+      <p class="section-label">Why these exist</p>
       <p class="prose">
-        The book is subtitled <em>Lessons from the Barbell and the Boardroom</em>.
-        The Loadout is the boardroom half: skills for product leaders. The Rack is
-        the barbell half: the tools I train with. A training partner with your whole
-        history in its head, and an iPhone app that times your meals to the session.
-        Both were built for one lifter, in a home gym, during a meet prep, and they work
-        better on the same phone.
-      </p>
-      <p class="prose">
-        <strong>Open source with 1.0, and your data stays yours.</strong> Both apps open their source
-        with 1.0: Ironstack under MIT, MealStack's license settled then. Your Ironstack log is files on your phone, and MealStack sends nothing you
-        have not switched on. Each one installs its own way, and its page says how. For the boardroom,
-        see <a class="inline-link" href="/loadout">the Loadout</a>.
+        The book is subtitled <em>Lessons from the Barbell and the Boardroom</em>. The Loadout is the boardroom
+        half: skills for product leaders. The Rack is the barbell half: the tools I train with. I built them
+        for one lifter, in a home gym, during a meet prep, because nothing I tried did the whole job. Both open
+        their source with 1.0, and your data stays on your phone unless you switch something on.
+        For the boardroom, see <a class="inline-link" href="/loadout">the Loadout</a>.
       </p>
     </section>
 
-    <hr class="dashed" />
-
-    {/* ---------- THE TOOLS ---------- */}
-    <section class="block">
-      <header class="block-head">
-        <h2 class="section-h2">The tools.</h2>
-        <span class="block-count">2 total · 1 in beta</span>
-      </header>
-
-      <div class="skills">
-        {tools.map((t) => (
-          <a
-            href={t.href}
-            class:list={['skill-row', t.status === 'planned' && 'dim']}
-          >
-            <div class="skill-name">
-              <h3>{t.name}</h3>
-              {t.status === 'live' ? (
-                <span class="tag live"><span class="tag-sq" aria-hidden="true"></span>Live</span>
-              ) : t.status === 'beta' ? (
-                <span class="tag beta"><span class="tag-sq" aria-hidden="true"></span>Private beta</span>
-              ) : t.status === 'testing' ? (
-                <span class="tag testing"><span class="tag-sq" aria-hidden="true"></span>In testing</span>
-              ) : (
-                <span class="tag planned">In development</span>
-              )}
-              <span class="tag kind">{t.kind === 'iPhone app' && <Fragment set:html={PHONE} />}{t.kind}</span>
-            </div>
-            <p class="skill-blurb">{t.blurb}</p>
-            <div class="skill-cta">{t.cta}</div>
-          </a>
-        ))}
-      </div>
-    </section>
-
-    {/* ---------- CLOSER ---------- */}
     <section class="closer">
-      <p>
-        The book is the plan. <strong>The Rack is the work.</strong>
-      </p>
+      <p>The book is the plan. <strong>The Rack is the work.</strong></p>
     </section>
-
   </main>
   <SiteFooter />
 </BaseLayout>
 
 <style>
-  /* ============ HERO ============ */
-  .hero {
-    padding: 56px var(--pad-page-x) 28px;
-  }
+  .hero { padding: 48px var(--pad-page-x) 8px; }
+  .eyebrow { display: inline-flex; align-items: center; gap: 14px; margin: 0 0 18px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.24em; color: var(--color-chalk-dim); text-transform: uppercase; }
+  .eyebrow .dots { letter-spacing: 0.04em; color: var(--color-blood-bright); }
+  .display { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(48px, 8vw, 96px); line-height: 0.95; letter-spacing: -0.02em; text-transform: uppercase; color: var(--color-chalk); }
+  .dot { color: var(--color-blood-bright); }
+  .subtitle { margin: 18px 0 0; max-width: 60ch; font-family: var(--font-serif); font-size: 18px; line-height: 1.6; color: var(--color-chalk-dim); }
+  .trust { list-style: none; margin: 16px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 18px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; color: var(--color-chalk-dim); }
+  .trust li::before { content: '✓'; margin-right: 7px; color: var(--color-army); }
 
-  .eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 14px;
-    margin: 0 0 18px;
-    font-family: var(--font-mono);
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.24em;
-    color: var(--color-chalk-dim);
-    text-transform: uppercase;
-  }
-  .eyebrow .dots {
-    letter-spacing: 0.04em;
-    color: var(--color-blood-bright);
-  }
+  /* the two apps */
+  .apps { margin: 40px var(--pad-page-x) 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: var(--border-thin); border-left: var(--border-thin); }
+  .app { min-width: 0; border-right: var(--border-thin); border-bottom: var(--border-thin); display: grid; grid-template-rows: auto 1fr; }
+  .shots { display: flex; justify-content: center; align-items: flex-start; padding: 36px 24px 0; background: var(--color-panel); border-bottom: var(--border-thin); height: 360px; overflow: hidden; }
+  .ph { display: block; height: auto; border-radius: 22px 22px 0 0; outline: 1px solid var(--color-rule); background: var(--color-bg); }
+  .ph.front { width: min(230px, 46%); position: relative; z-index: 2; order: 1; margin-left: -28px; }
+  .ph.back { width: min(210px, 42%); margin-top: 40px; order: 0; }
+  .app-body { padding: 28px 32px 32px; display: grid; gap: 14px; align-content: start; }
+  .app-name { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 22px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-chalk); }
+  .promise { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3vw, 40px); line-height: 1; letter-spacing: -0.01em; text-transform: uppercase; color: var(--color-chalk); }
+  .promise .accent { color: var(--color-blood-bright); }
+  .sub { margin: 0; max-width: 52ch; font-family: var(--font-serif); font-size: 16px; line-height: 1.6; color: var(--color-chalk-dim); }
+  .points { list-style: none; margin: 4px 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 18px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em; color: var(--color-chalk-dim); }
+  .points li { padding-left: 16px; position: relative; }
+  .points li::before { content: ''; position: absolute; left: 0; top: 6px; width: 6px; height: 6px; border: 1px solid var(--color-chalk-faint); }
+  .ctas { margin-top: 10px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 22px; }
+  .cta { display: inline-flex; padding: 13px 20px; background: var(--color-blood); color: var(--color-chalk); font-family: var(--font-display); font-weight: 600; font-size: 15px; letter-spacing: 0.04em; text-transform: uppercase; transition: background 120ms ease-out; }
+  .cta:hover { background: var(--color-blood-bright); }
+  .soft { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-dim); border-bottom: 1px solid var(--color-chalk-ghost); padding-bottom: 2px; }
+  .soft:hover { color: var(--color-chalk); border-bottom-color: var(--color-chalk); }
 
-  .display {
-    margin: 0;
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: clamp(56px, 11vw, 108px);
-    line-height: 0.88;
-    letter-spacing: -0.02em;
-    color: var(--color-chalk);
-    text-transform: uppercase;
-  }
-  .display .line { display: block; }
-  .display .dot { color: var(--color-blood-bright); }
-
-  .subtitle {
-    margin: 22px 0 0;
-    max-width: 760px;
-    font-family: var(--font-display);
-    font-weight: 400;
-    font-size: clamp(15px, 2.2vw, 22px);
-    color: var(--color-chalk-dim);
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-  }
-
-  /* ============ META STRIP ============ */
-  .meta-strip {
-    margin: 28px var(--pad-page-x) 0;
-    padding: 14px 0;
-    border-top: var(--border-thin);
-    border-bottom: var(--border-thin);
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
-    font-family: var(--font-mono);
-    font-size: 12px;
-  }
-  .stat-key {
-    color: var(--color-chalk-faint);
-    font-size: 12px;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-  }
-  .stat-value {
-    margin-top: 2px;
-    color: var(--color-chalk);
-    font-family: var(--font-display);
-    font-size: 22px;
-    letter-spacing: 0.04em;
-    display: inline-block;
-  }
-  /* Linked stat values get a subtle underline on hover, same color */
-  .stat-value.linked {
-    border-bottom: 1px solid transparent;
-    transition: border-bottom-color 120ms ease-out, color 120ms ease-out;
-  }
-  .stat-value.linked:hover { border-bottom-color: currentColor; }
-  .stat-value .ext {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: var(--color-chalk-faint);
-    letter-spacing: 0;
-    transition: color 120ms ease-out;
-  }
-  .stat-value.linked:hover .ext { color: var(--color-chalk); }
-
-  /* ============ BLOCKS ============ */
-  .block {
-    padding: 56px var(--pad-page-x) 0;
-  }
-
-  .section-label {
-    margin: 0 0 14px;
-    font-family: var(--font-mono);
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.24em;
-    color: var(--color-blood-text);
-    text-transform: uppercase;
-  }
-
-  .section-h2 {
-    margin: 0 0 18px;
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 36px;
-    line-height: 1.05;
-    letter-spacing: 0.02em;
-    color: var(--color-chalk);
-    text-transform: uppercase;
-  }
-
-  .prose {
-    margin: 0 0 14px;
-    max-width: 720px;
-    font-family: var(--font-serif);
-    font-size: 17px;
-    line-height: 1.65;
-    color: var(--color-chalk-dim);
-  }
-  .prose strong { color: var(--color-chalk); font-weight: 700; }
-  .prose em { color: var(--color-chalk); font-style: italic; }
-  .inline-link {
-    color: var(--color-chalk);
-    border-bottom: 1px solid var(--color-chalk-ghost);
-    transition: border-color 120ms ease-out;
-  }
+  /* below the fold */
+  .block { padding: 56px var(--pad-page-x) 0; }
+  .section-label { margin: 0 0 12px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.24em; color: var(--color-blood-text); text-transform: uppercase; }
+  .together .line { margin: 0 0 14px; max-width: 60ch; font-family: var(--font-display); font-weight: 500; font-size: 22px; line-height: 1.25; text-transform: uppercase; letter-spacing: 0.01em; color: var(--color-chalk); }
+  .prose { margin: 0; max-width: 68ch; font-family: var(--font-serif); font-size: 16px; line-height: 1.65; color: var(--color-chalk-dim); }
+  .prose em { color: var(--color-chalk); }
+  .inline-link { color: var(--color-chalk); border-bottom: 1px solid var(--color-chalk-ghost); }
   .inline-link:hover { border-bottom-color: var(--color-chalk); }
+  .closer { margin-top: 64px; padding: 44px var(--pad-page-x); border-top: var(--border-thin); text-align: center; }
+  .closer p { margin: 0; font-family: var(--font-display); font-weight: 500; font-size: 22px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-chalk); }
+  .closer strong { font-weight: 500; color: var(--color-blood-text); }
 
-  .block-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-bottom: 22px;
-  }
-  .block-count {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--color-chalk-faint);
-  }
-
-  /* ============ SKILL CARDS (row form) ============ */
-  .skills {
-    border-top: var(--border-thin);
-  }
-
-  .skill-row {
-    display: grid;
-    grid-template-columns: 200px 1fr 140px;
-    gap: 36px;
-    align-items: center;
-    padding: 22px 0;
-    border-bottom: var(--border-thin);
-    text-decoration: none;
-    transition: background 120ms ease-out;
-  }
-  .skill-row:hover {
-    background: rgba(255, 255, 255, 0.015);
-  }
-  .skill-row.dim { cursor: default; }
-
-  .skill-name { display: flex; flex-direction: column; gap: 8px; }
-  .skill-name h3 {
-    margin: 0;
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 22px;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-    color: var(--color-chalk);
-  }
-  .skill-row.dim .skill-name h3 { color: var(--color-chalk-faint); }
-
-  .tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-family: var(--font-mono);
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-  }
-  .tag.live { color: var(--color-army); }
-  .tag.live .tag-sq {
-    width: 6px;
-    height: 6px;
-    background: var(--color-army);
-    display: inline-block;
-  }
-  .tag.beta { color: var(--color-chalk); }
-  .tag.beta .tag-sq { background: transparent; border: 1px solid var(--color-chalk); }
-  .tag.testing { color: var(--color-chalk-dim); }
-  .tag.testing .tag-sq {
-    width: 6px;
-    height: 6px;
-    border: 1px solid var(--color-chalk-dim);
-    display: inline-block;
-  }
-  .tag.planned { color: var(--color-chalk-faint); }
-  .tag.kind { color: var(--color-chalk-faint); border: 1px solid var(--color-rule); padding: 3px 7px; align-self: flex-start; display: inline-flex; align-items: center; gap: 6px; }
-  .tag.kind :global(.ph-glyph) { width: 11px; height: 11px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
-
-  .skill-blurb {
-    margin: 0;
-    max-width: 68ch;
-    font-family: var(--font-serif);
-    font-size: 15px;
-    line-height: 1.6;
-    color: var(--color-chalk-dim);
-  }
-  .skill-row.dim .skill-blurb { color: var(--color-chalk-faint); }
-
-  .skill-cta {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--color-chalk);
-    text-align: right;
-    white-space: nowrap;
-    transition: color 120ms ease-out;
-  }
-  .skill-row.dim .skill-cta { color: var(--color-chalk-faint); }
-  a.skill-row:hover .skill-cta { color: var(--color-blood-text); }
-
-  /* ============ DASHED DIVIDER ============ */
-  .dashed {
-    margin: 48px var(--pad-page-x) 0;
-    border: none;
-    border-top: 1px dashed var(--color-rule-soft);
-  }
-
-  /* ============ CLOSER ============ */
-  .closer {
-    margin-top: 56px;
-    padding: 48px var(--pad-page-x);
-    border-top: var(--border-thin);
-    text-align: center;
-  }
-  .closer p {
-    margin: 0;
-    font-family: var(--font-display);
-    font-weight: 500;
-    font-size: 22px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--color-chalk);
-  }
-  .closer p strong {
-    font-weight: 500;
-    color: var(--color-blood-text);
-  }
-
-  /* ============ FOOTER ============ */
-
-  /* ============ Responsive ============ */
   @media (max-width: 1099px) {
-    .meta-strip {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 18px;
-    }
-    .skill-row {
-      grid-template-columns: 180px 1fr 110px;
-      gap: 24px;
-    }
+    .hero, .block, .closer { padding-left: var(--pad-page-x-mid); padding-right: var(--pad-page-x-mid); }
+    .apps { margin-left: var(--pad-page-x-mid); margin-right: var(--pad-page-x-mid); grid-template-columns: minmax(0, 1fr); }
   }
-
   @media (max-width: 720px) {
-    .hero {
-      padding: 36px var(--pad-page-x-mobile) 20px;
-    }
-    .meta-strip {
-      margin: 24px var(--pad-page-x-mobile) 0;
-      grid-template-columns: 1fr;
-      gap: 14px;
-    }
-    .block {
-      padding: 40px var(--pad-page-x-mobile) 0;
-    }
-    .section-h2 { font-size: 28px; }
-    .skill-row {
-      grid-template-columns: 1fr;
-      gap: 14px;
-      padding: 22px 0;
-    }
-    .skill-cta { text-align: left; }
-    .dashed { margin: 36px var(--pad-page-x-mobile) 0; }
-    .closer { padding: 36px var(--pad-page-x-mobile); }
+    .hero, .block, .closer { padding-left: var(--pad-page-x-mobile); padding-right: var(--pad-page-x-mobile); }
+    .hero { padding-top: 32px; }
+    .subtitle { font-size: 17px; }
+    .apps { margin: 28px var(--pad-page-x-mobile) 0; }
+    .shots { height: 260px; padding-top: 24px; }
+    .app-body { padding: 22px 20px 26px; }
+    .points { grid-template-columns: minmax(0, 1fr); }
+    .together .line { font-size: 19px; }
     .closer p { font-size: 18px; }
   }
 </style>
