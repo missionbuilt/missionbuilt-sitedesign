@@ -1,0 +1,45 @@
+---
+/**
+ * 404 — dist/404.html.
+ *
+ * Why it exists (Sept 20, 2026): without a 404.html, Cloudflare Pages answers a missing
+ * path with the home page and a 200. During a deploy, a request for a stylesheet or image
+ * that was not live yet got that 200 HTML, and the zone cache kept it under the asset's
+ * name for a year (/_astro/* is cached immutable). Every page lost its styling until the
+ * cache was purged. With this page, a missing path is a real 404, which is not kept.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import TopNav from '../components/TopNav.astro';
+---
+<BaseLayout title="Not found · Mission Built" description="That page is not on missionbuilt.io.">
+  <TopNav />
+  <main id="main" class="page">
+    <section class="nf">
+      <p class="eyebrow"><span class="dots" aria-hidden="true">▮▮▮</span><span>404</span><span class="dots" aria-hidden="true">▮▮▮</span></p>
+      <h1 class="display">Missed the lift<span class="dot">.</span></h1>
+      <p class="sub">That page is not here. It may have moved when the apps went to the Rack.</p>
+      <ul class="ways">
+        <li><a href="/">Home</a></li>
+        <li><a href="/chapters">The Book</a></li>
+        <li><a href="/loadout">The Loadout</a></li>
+        <li><a href="/rack">The Rack</a></li>
+        <li><a href="/logs">Logs</a></li>
+      </ul>
+    </section>
+  </main>
+  <SiteFooter />
+</BaseLayout>
+
+<style>
+  .nf { padding: 72px var(--pad-page-x) 96px; }
+  .eyebrow { display: inline-flex; gap: 14px; margin: 0 0 18px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.24em; color: var(--color-chalk-dim); text-transform: uppercase; }
+  .eyebrow .dots { letter-spacing: 0.04em; color: var(--color-blood-bright); }
+  .display { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(44px, 8vw, 96px); line-height: 0.95; letter-spacing: -0.02em; text-transform: uppercase; color: var(--color-chalk); }
+  .dot { color: var(--color-blood-bright); }
+  .sub { margin: 20px 0 0; max-width: 56ch; font-family: var(--font-serif); font-size: 18px; line-height: 1.6; color: var(--color-chalk-dim); }
+  .ways { list-style: none; margin: 32px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 12px 28px; }
+  .ways a { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk); border-bottom: 1px solid var(--color-chalk-ghost); padding-bottom: 2px; }
+  .ways a:hover { border-bottom-color: var(--color-chalk); }
+  @media (max-width: 720px) { .nf { padding: 44px var(--pad-page-x-mobile) 64px; } }
+</style>
