@@ -1,0 +1,367 @@
+---
+/**
+ * AppLanding.astro — the short landing page shared by /rack/ironstack and /rack/mealstack.
+ *
+ * Sept 20, 2026 design review: the app pages had grown to 15+ sections and the only
+ * signup form sat eleven sections down. A Hevy user (or a macro-tracker user) decides
+ * in one screen. This page does three jobs, in order, and nothing else:
+ *   1. What is different  (hero promise + three differences, each against the other app)
+ *   2. The key features   (real screenshots, one line each)
+ *   3. How to get it      (signup in the hero AND at the bottom, three steps)
+ * Everything else lives on /rack/<app>/details, linked from one band below the fold.
+ *
+ * Rules kept from the old pages: real screenshots only (never draw app screens in HTML),
+ * every "them" line must stay true of the named app, no em-dashes in UI strings,
+ * oxblood for the dot and the Join buttons only.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteFooter from './SiteFooter.astro';
+import TopNav from './TopNav.astro';
+
+type Shot = { src: string; w: number; h: number; alt: string };
+type Diff = { claim: string; body: string; them?: string };
+type Feature = Shot & { k: string; title: string; body: string };
+type Step = { title: string; body: string };
+type Detail = { label: string; body: string; href: string };
+
+interface Props {
+  app: 'ironstack' | 'mealstack';
+  name: string;
+  title: string;
+  description: string;
+  ogImageAlt: string;
+  ld: object;
+  promise: string;
+  /** The key phrase, set after the promise in oxblood (blood-bright: display size, 3.4:1). One per page. */
+  promiseAccent?: string;
+  sub: string;
+  /** The phone-width subhead: one or two lines, so the app peek and the Join button both fit on the first screen. */
+  subShort?: string;
+  trust: string[];
+  hero: [Shot, Shot];
+  soft: { label: string; href: string };
+  diffLabel: string;
+  diffH2: string;
+  themLabel: string;
+  diffs: Diff[];
+  featH2: string;
+  features: Feature[];
+  featNote?: string;
+  steps: Step[];
+  noteLabel: string;
+  notePlaceholder: string;
+  details: Detail[];
+  closer: { four: string; line: string };
+  footLinks: { label: string; href: string }[];
+}
+const p = Astro.props;
+const page = `/rack/${p.app}`;
+const MAILTO = `mailto:mike@missionbuilt.io?subject=${encodeURIComponent(p.name + ' beta')}&body=Apple%20ID%20email%3A%20`;
+---
+<BaseLayout title={p.title} description={p.description} ogImageAlt={p.ogImageAlt} active="rack">
+  <script is:inline slot="head" type="application/ld+json" set:html={JSON.stringify(p.ld)} />
+  <TopNav active="rack" />
+
+  <main id="main" class="page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/rack">The Rack</a><span aria-hidden="true"> / </span><span class="here">{p.name}</span>
+    </nav>
+
+    {/* ---------- 1. HERO: the promise, and the door ---------- */}
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">
+          <span class="dots" aria-hidden="true">▮▮▮</span>
+          <span>Private beta · iPhone</span>
+          <span class="dots" aria-hidden="true">▮▮▮</span>
+        </p>
+        <p class="appname">{p.name}<span class="dot">.</span></p>
+        <h1 class="promise">{p.promise}{p.promiseAccent && <> <span class="accent">{p.promiseAccent}</span></>}</h1>
+        {/* Phones only: a strip of the two hero screens right under the headline, so the
+            first screen shows the app and not only words about it. */}
+        <div class="hero-peek" aria-hidden="true">
+          <img src={p.hero[0].src} width={p.hero[0].w} height={p.hero[0].h} alt="" />
+          <img src={p.hero[1].src} width={p.hero[1].w} height={p.hero[1].h} alt="" />
+        </div>
+        <p class:list={['sub', p.subShort && 'has-short']}>{p.sub}</p>
+        {p.subShort && <p class="sub sub-short">{p.subShort}</p>}
+
+        <form class="beta-form inline" method="post" action="/api/beta" novalidate data-beta>
+          <label class="sr" for="hero-email">Apple ID email</label>
+          <div class="inline-row">
+            <input type="email" name="email" id="hero-email" required autocomplete="email" inputmode="email" placeholder="Your Apple ID email" maxlength="254" />
+            <button class="cta" type="submit">Join the beta →</button>
+          </div>
+          <div class="hp" aria-hidden="true"><label>Website<input type="text" name="website" tabindex="-1" autocomplete="off" /></label></div>
+          <input type="hidden" name="t" value="" data-t />
+          <input type="hidden" name="page" value={page} />
+          <p class="status" role="status" aria-live="polite" data-status></p>
+          <p class="status" hidden data-fallback>The form is not taking names right now. Email <a href={MAILTO}>mike@missionbuilt.io</a> with the address on your Apple ID and I will add you by hand.</p>
+        </form>
+        <ul class="trust" aria-label="The short version">
+          {p.trust.map((t) => <li>{t}</li>)}
+        </ul>
+        <a class="soft" href={p.soft.href}>{p.soft.label}</a>
+      </div>
+      <div class="hero-phones" aria-hidden="false">
+        <img class="ph back" src={p.hero[1].src} width={p.hero[1].w} height={p.hero[1].h} alt={p.hero[1].alt} />
+        <img class="ph front" src={p.hero[0].src} width={p.hero[0].w} height={p.hero[0].h} alt={p.hero[0].alt} fetchpriority="high" />
+      </div>
+    </section>
+
+    {/* ---------- 2. WHAT IS DIFFERENT: three, each against the other app ---------- */}
+    <section class="block" id="different">
+      <p class="section-label">{p.diffLabel}</p>
+      <h2 class="section-h2">{p.diffH2}</h2>
+      <ol class="diffs" style={`--n:${p.diffs.length}`}>
+        {p.diffs.map((d, i) => (
+          <li>
+            <span class="num">0{i + 1}</span>
+            <h3>{d.claim}</h3>
+            <p class="body">{d.body}</p>
+            {d.them && <p class="them"><b>{p.themLabel}</b> {d.them}</p>}
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    {/* ---------- 3. KEY FEATURES: real screens ---------- */}
+    <section class="block" id="features">
+      <p class="section-label">In the app</p>
+      <h2 class="section-h2">{p.featH2}</h2>
+      <div class="feats">
+        {p.features.map((f) => (
+          <figure class="feat">
+            <img src={f.src} width={f.w} height={f.h} alt={f.alt} loading="lazy" decoding="async" />
+            <figcaption>
+              <span class="k">{f.k}</span>
+              <span class="t">{f.title}</span>
+              <span class="b">{f.body}</span>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+      {p.featNote && <p class="note">{p.featNote}</p>}
+    </section>
+
+    {/* ---------- 4. GET IT ---------- */}
+    <section class="block" id="beta">
+      <p class="section-label">Get it</p>
+      <h2 class="section-h2">Three steps. About five minutes.</h2>
+      <div class="get">
+        <ol class="steps">
+          {p.steps.map((s, i) => (
+            <li><span class="num">0{i + 1}</span><div><h3>{s.title}</h3><p>{s.body}</p></div></li>
+          ))}
+        </ol>
+        <form class="beta-form panel" method="post" action="/api/beta" novalidate data-beta>
+          <p class="panel-h">Join the beta</p>
+          <label class="field">
+            <span class="field-k">Apple ID email</span>
+            <input type="email" name="email" required autocomplete="email" inputmode="email" placeholder="the address on your Apple ID" maxlength="254" />
+          </label>
+          <label class="field">
+            <span class="field-k">{p.noteLabel} <em>optional</em></span>
+            <input type="text" name="note" autocomplete="off" placeholder={p.notePlaceholder} maxlength="200" />
+          </label>
+          <div class="hp" aria-hidden="true"><label>Website<input type="text" name="website" tabindex="-1" autocomplete="off" /></label></div>
+          <input type="hidden" name="t" value="" data-t />
+          <input type="hidden" name="page" value={page} />
+          <button class="cta" type="submit">Join the beta →</button>
+          <p class="status" role="status" aria-live="polite" data-status>Free during the beta · used for the invite and nothing else</p>
+          <p class="status" hidden data-fallback>The form is not taking names right now. Email <a href={MAILTO}>mike@missionbuilt.io</a> with the address on your Apple ID and I will add you by hand.</p>
+        </form>
+      </div>
+    </section>
+
+    {/* ---------- BELOW THE FOLD: everything else is one click away ---------- */}
+    <section class="block" id="more">
+      <p class="section-label">The details</p>
+      <h2 class="section-h2">Want the whole story first?</h2>
+      <div class="details">
+        {p.details.map((d) => (
+          <a class="detail" href={d.href}><span class="dl">{d.label}</span><span class="db">{d.body}</span><span class="dc" aria-hidden="true">→</span></a>
+        ))}
+      </div>
+    </section>
+
+    <section class="closer">
+      <p class="four">{p.closer.four}</p>
+      <p class="line">{p.closer.line}</p>
+    </section>
+  </main>
+  <SiteFooter links={p.footLinks} />
+</BaseLayout>
+
+<script>
+  // Every signup form on the page posts to /api/beta (Pages Function). Without JS they
+  // still post and the function redirects back with ?beta=ok|err.
+  const OK = 'You are on the list. Watch for an email from Apple; it can take a few days.';
+  const ERR = 'That did not go through. Check the address and try again.';
+  const forms = document.querySelectorAll<HTMLFormElement>('form[data-beta]');
+  const q = new URLSearchParams(location.search).get('beta');
+  forms.forEach((form, i) => {
+    const status = form.querySelector<HTMLElement>('[data-status]');
+    const fallback = form.querySelector<HTMLElement>('[data-fallback]');
+    const t = form.querySelector<HTMLInputElement>('[data-t]');
+    const btn = form.querySelector<HTMLButtonElement>('button[type=submit]');
+    if (t) t.value = String(Date.now());
+    const say = (msg: string, tone: '' | 'ok' | 'err') => { if (status) { status.textContent = msg; status.className = 'status' + (tone ? ' ' + tone : ''); } };
+    if (i === 0 && q === 'ok') say(OK, 'ok');
+    if (i === 0 && q === 'err') say(ERR, 'err');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = (form.querySelector<HTMLInputElement>('input[name=email]')?.value || '').trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { say('That does not look like an email address.', 'err'); return; }
+      if (btn) btn.disabled = true;
+      say('Adding you…', '');
+      try {
+        const res = await fetch('/api/beta', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(Object.fromEntries(new FormData(form).entries())) });
+        const data = await res.json().catch(() => ({}));
+        if (res.ok && data.ok) { say(OK, 'ok'); form.reset(); if (t) t.value = String(Date.now()); }
+        else if (res.status === 503 || data.fallback) { if (fallback) fallback.hidden = false; say('', ''); }
+        else if (res.status === 429) say('Too many tries from here. Give it an hour.', 'err');
+        else say(data.error || ERR, 'err');
+      } catch { if (fallback) fallback.hidden = false; say('', ''); }
+      finally { if (btn) btn.disabled = false; }
+    });
+  });
+</script>
+
+<style>
+  .breadcrumb { padding: 18px var(--pad-page-x) 0; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-faint); }
+  .breadcrumb a { color: var(--color-chalk-dim); }
+  .breadcrumb a:hover { color: var(--color-chalk); }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+  /* ---------- HERO ---------- */
+  .hero { padding: 36px var(--pad-page-x) 8px; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 48px; align-items: center; }
+  .eyebrow { display: inline-flex; align-items: center; gap: 14px; margin: 0 0 22px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.24em; color: var(--color-chalk-dim); text-transform: uppercase; }
+  .eyebrow .dots { letter-spacing: 0.04em; color: var(--color-blood-bright); }
+  .appname { margin: 0 0 10px; font-family: var(--font-display); font-weight: 700; font-size: 30px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-chalk); }
+  .appname .dot { color: var(--color-blood-bright); }
+  .promise { margin: 0; max-width: 16ch; font-family: var(--font-display); font-weight: 700; font-size: clamp(40px, 6.2vw, 76px); line-height: 0.98; letter-spacing: -0.015em; text-transform: uppercase; color: var(--color-chalk); }
+  .hero-peek, .sub-short { display: none; }
+  .promise .accent { color: var(--color-blood-bright); }
+  .sub { margin: 22px 0 0; max-width: 54ch; font-family: var(--font-serif); font-size: 18px; line-height: 1.6; color: var(--color-chalk-dim); }
+
+  .cta { display: inline-flex; align-items: center; justify-content: center; padding: 14px 22px; background: var(--color-blood); color: var(--color-chalk); border: none; cursor: pointer; font-family: var(--font-display); font-weight: 600; font-size: 16px; letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap; transition: background 120ms ease-out; }
+  .cta:hover { background: var(--color-blood-bright); }
+  .cta:disabled { opacity: 0.6; cursor: default; }
+  input[type=email], input[type=text] { width: 100%; min-width: 0; padding: 13px 14px; background: var(--color-panel); border: 1px solid var(--color-rule); color: var(--color-chalk); font-family: var(--font-mono); font-size: 14px; }
+  input::placeholder { color: var(--color-chalk-faint); }
+  input:focus { border-color: var(--color-chalk-faint); outline: none; }
+  input:focus-visible { outline: 2px solid var(--color-blood-text); outline-offset: 2px; }
+
+  .beta-form.inline { margin-top: 30px; max-width: 540px; }
+  .inline-row { display: flex; gap: 0; }
+  .inline-row input { flex: 1 1 auto; border-right: none; }
+  .status { margin: 10px 0 0; min-height: 1em; font-family: var(--font-mono); font-size: 12px; line-height: 1.5; letter-spacing: 0.04em; color: var(--color-chalk-faint); }
+  .status:empty { min-height: 0; margin: 0; }
+  .status.ok { color: var(--color-army); }
+  .status.err { color: var(--color-blood-text); }
+  .status a { color: var(--color-chalk); border-bottom: 1px solid var(--color-chalk-ghost); }
+  .trust { list-style: none; margin: 16px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 18px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; color: var(--color-chalk-dim); }
+  .trust li::before { content: '✓'; margin-right: 7px; color: var(--color-army); }
+  .soft { display: inline-block; margin-top: 22px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-dim); border-bottom: 1px solid var(--color-chalk-ghost); padding-bottom: 2px; }
+  .soft:hover { color: var(--color-chalk); border-bottom-color: var(--color-chalk); }
+
+  .hero-phones { position: relative; display: flex; justify-content: center; align-items: flex-start; gap: 0; min-width: 0; }
+  .ph { display: block; height: auto; border-radius: 26px; outline: 1px solid var(--color-rule); background: var(--color-panel); }
+  .ph.front { width: min(260px, 44%); position: relative; z-index: 2; margin-left: -34px; }
+  .ph.back { width: min(236px, 40%); margin-top: 56px; opacity: 0.9; order: -1; }
+  .hero-phones .front { order: 1; }
+
+  /* ---------- BLOCKS ---------- */
+  .block { padding: 72px var(--pad-page-x) 0; }
+  .section-label { margin: 0 0 14px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.24em; color: var(--color-blood-text); text-transform: uppercase; }
+  .section-h2 { margin: 0 0 28px; max-width: 26ch; font-family: var(--font-display); font-weight: 600; font-size: clamp(28px, 3.4vw, 40px); line-height: 1.05; letter-spacing: 0.02em; text-transform: uppercase; color: var(--color-chalk); }
+  .note { margin: 18px 0 0; max-width: 78ch; font-family: var(--font-mono); font-size: 12px; line-height: 1.6; color: var(--color-chalk-faint); }
+
+  /* differences */
+  .diffs { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(var(--n, 3), minmax(0, 1fr)); border-top: var(--border-thin); border-bottom: var(--border-thin); }
+  .diffs li { min-width: 0; padding: 26px 26px 24px 0; margin-right: 26px; border-right: 1px dashed var(--color-rule); display: grid; grid-template-rows: auto auto 1fr auto; gap: 10px; }
+  .diffs li:last-child { border-right: none; margin-right: 0; }
+  .diffs .num { font-family: var(--font-mono); font-size: 12px; font-weight: 600; letter-spacing: 0.1em; color: var(--color-blood-text); }
+  .diffs h3 { margin: 0; font-family: var(--font-display); font-weight: 600; font-size: 24px; line-height: 1.05; text-transform: uppercase; letter-spacing: 0.01em; color: var(--color-chalk); }
+  .diffs .body { margin: 0; font-family: var(--font-serif); font-size: 15.5px; line-height: 1.6; color: var(--color-chalk-dim); }
+  .diffs .them { margin: 6px 0 0; padding-top: 12px; border-top: 1px dashed var(--color-rule); font-family: var(--font-mono); font-size: 12px; line-height: 1.55; color: var(--color-chalk-faint); }
+  .diffs .them b { font-weight: 500; color: var(--color-chalk-dim); }
+
+  /* features */
+  .feats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 56px 40px; }
+  .feat { margin: 0; min-width: 0; display: grid; grid-template-rows: auto 1fr; gap: 20px; }
+  .feat img { display: block; width: 100%; max-width: 248px; height: auto; border-radius: 22px; outline: 1px solid var(--color-rule); background: #000; }
+  .feat figcaption { display: grid; gap: 8px; align-content: start; max-width: 36ch; }
+  .feat .k { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); }
+  .feat .t { font-family: var(--font-display); font-weight: 500; font-size: 21px; line-height: 1.1; text-transform: uppercase; color: var(--color-chalk); }
+  .feat .b { font-family: var(--font-serif); font-size: 14.5px; line-height: 1.55; color: var(--color-chalk-dim); }
+
+  /* get it */
+  .get { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 48px; align-items: start; }
+  .steps { list-style: none; margin: 0; padding: 0; border-top: var(--border-thin); }
+  .steps li { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 12px; padding: 20px 0; border-bottom: var(--border-thin); }
+  .steps .num { font-family: var(--font-mono); font-size: 12px; font-weight: 600; letter-spacing: 0.1em; color: var(--color-blood-text); padding-top: 5px; }
+  .steps h3 { margin: 0 0 6px; font-family: var(--font-display); font-weight: 500; font-size: 22px; line-height: 1.1; text-transform: uppercase; color: var(--color-chalk); }
+  .steps p { margin: 0; font-family: var(--font-serif); font-size: 15px; line-height: 1.6; color: var(--color-chalk-dim); }
+  .panel { padding: 26px; background: var(--color-panel); border: var(--border-thin); display: grid; gap: 16px; }
+  .panel-h { margin: 0; font-family: var(--font-display); font-weight: 600; font-size: 24px; text-transform: uppercase; letter-spacing: 0.02em; color: var(--color-chalk); }
+  .panel input { background: var(--color-bg); }
+  .panel .cta { justify-self: start; }
+  .field { display: grid; gap: 6px; }
+  .field-k { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); }
+  .field-k em { font-style: normal; letter-spacing: 0.1em; text-transform: none; margin-left: 6px; }
+
+  /* details */
+  .details { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: var(--border-thin); border-left: var(--border-thin); }
+  .detail { min-width: 0; padding: 20px 22px; border-right: var(--border-thin); border-bottom: var(--border-thin); display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 14px; transition: background 120ms ease-out; }
+  .detail:hover { background: var(--color-panel); }
+  .dl { font-family: var(--font-display); font-weight: 500; font-size: 18px; text-transform: uppercase; letter-spacing: 0.02em; color: var(--color-chalk); }
+  .db { grid-column: 1; font-family: var(--font-serif); font-size: 14px; line-height: 1.5; color: var(--color-chalk-dim); }
+  .dc { grid-column: 2; grid-row: 1 / span 2; align-self: center; font-family: var(--font-mono); color: var(--color-chalk-faint); }
+  .detail:hover .dc { color: var(--color-chalk); }
+
+  .closer { padding: 72px var(--pad-page-x) 64px; text-align: center; }
+  .closer .four { margin: 0 0 12px; font-family: var(--font-mono); font-size: 12px; font-weight: 600; letter-spacing: 0.26em; text-transform: uppercase; color: var(--color-chalk-faint); }
+  .closer .line { margin: 0; font-family: var(--font-display); font-weight: 600; font-size: 26px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-chalk); }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 1099px) {
+    .hero { grid-template-columns: minmax(0, 1fr); gap: 36px; }
+    .hero-phones { max-width: 560px; }
+    .feats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .diffs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .diffs li:nth-child(2n) { border-right: none; margin-right: 0; }
+    .diffs li:nth-child(n+3) { border-top: 1px dashed var(--color-rule); }
+    .get { grid-template-columns: minmax(0, 1fr); }
+    .details { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .block { padding-top: 60px; }
+    .breadcrumb, .hero, .block, .closer { padding-left: var(--pad-page-x-mid); padding-right: var(--pad-page-x-mid); }
+  }
+  @media (max-width: 720px) {
+    .hero { padding-top: 24px; }
+    .hero-phones { display: none; }
+    .hero-peek { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 20px 0 0; height: 210px; overflow: hidden;
+      -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent); mask-image: linear-gradient(to bottom, #000 70%, transparent); }
+    .hero-peek img { display: block; width: 100%; height: auto; border-radius: 18px 18px 0 0; outline: 1px solid var(--color-rule); background: var(--color-panel); }
+    .sub.has-short { display: none; }
+    .sub-short { display: block; margin-top: 16px; }
+    .beta-form.inline { margin-top: 20px; }
+    .appname { font-size: 24px; }
+    .sub { font-size: 17px; }
+    .inline-row { flex-direction: column; gap: 10px; }
+    .inline-row input { border-right: 1px solid var(--color-rule); }
+    .inline-row .cta { width: 100%; }
+    .diffs { grid-template-columns: minmax(0, 1fr); border-bottom: none; }
+    .diffs li { margin-right: 0; padding: 22px 0; border-right: none; border-top: none; border-bottom: var(--border-thin); }
+    .feats { grid-template-columns: minmax(0, 1fr); gap: 36px; }
+    .feat { grid-template-rows: none; grid-template-columns: 132px minmax(0, 1fr); gap: 18px; align-items: start; }
+    .feat img { border-radius: 16px; }
+    .breadcrumb, .hero, .block, .closer { padding-left: var(--pad-page-x-mobile); padding-right: var(--pad-page-x-mobile); }
+    .eyebrow { gap: 10px; letter-spacing: 0.18em; }
+    .ph.front { margin-left: -22px; }
+    .details { grid-template-columns: minmax(0, 1fr); }
+    .block { padding-top: 52px; }
+  }
+</style>
