@@ -16,6 +16,9 @@ Heading forms it reads:
 
 Run from the site root:
     python3 scripts/sync_mealstack_changelog.py [path/to/CHANGELOG.md]
+    python3 scripts/sync_mealstack_changelog.py --app ironstack [path/to/CHANGELOG.md]
+
+Ironstack's CHANGELOG.md sits at the root of ../ironstack and follows the same rules.
 """
 from __future__ import annotations  # the Mac's system Python is 3.9
 import json
@@ -25,7 +28,11 @@ from datetime import datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-DEFAULT_SOURCE = ROOT.parent / "mealstack" / "MealStack" / "CHANGELOG.md"
+SOURCES = {
+    "mealstack": ROOT.parent / "mealstack" / "MealStack" / "CHANGELOG.md",
+    "ironstack": ROOT.parent / "ironstack" / "CHANGELOG.md",
+}
+APP = "mealstack"
 OUT = ROOT / "src" / "content" / "releases"
 HEADING = re.compile(r"^##\s+(\d+(?:\.\d+)*)\s*(?:\((.*)\))?\s*$")
 GROUP = re.compile(r"^###\s+(.+?)\s*$")
@@ -142,7 +149,7 @@ def order(version: str) -> int:
 
 
 def frontmatter(version: str, note: str, groups: list[dict]) -> str:
-    lines = ["---", "app: mealstack", f'version: "{version}"', f"order: {order(version)}"]
+    lines = ["---", f"app: {APP}", f'version: "{version}"', f"order: {order(version)}"]
     lines.append(f"changes: {sum(len(g['leads']) for g in groups)}")
     # JSON is YAML; it keeps quotes and colons in the lead-ins safe.
     lines.append("groups: " + json.dumps(groups, ensure_ascii=False))
@@ -163,7 +170,14 @@ def frontmatter(version: str, note: str, groups: list[dict]) -> str:
 
 
 def main() -> int:
-    source = Path(sys.argv[1]) if len(sys.argv) > 1 else DEFAULT_SOURCE
+    global APP
+    args = sys.argv[1:]
+    if args[:1] == ["--app"]:
+        APP, args = args[1], args[2:]
+    if APP not in SOURCES:
+        print(f"Unknown app {APP!r}; expected one of {sorted(SOURCES)}", file=sys.stderr)
+        return 1
+    source = Path(args[0]) if args else SOURCES[APP]
     if not source.exists():
         print(f"No changelog at {source}", file=sys.stderr)
         return 1
@@ -181,13 +195,13 @@ def main() -> int:
     OUT.mkdir(parents=True, exist_ok=True)
     keep = set()
     for version, note, body in releases:
-        path = OUT / f"mealstack-{version}.md"
+        path = OUT / f"{APP}-{version}.md"
         keep.add(path.name)
         shaped, groups = shape(body)
         text = frontmatter(version, note, groups) + "\n\n" + shaped + "\n"
         path.write_text(text, encoding="utf-8")
         print(f"wrote {path.relative_to(ROOT)}")
-    for stale in OUT.glob("mealstack-*.md"):
+    for stale in OUT.glob(f"{APP}-*.md"):
         if stale.name not in keep:
             stale.unlink()
             print(f"removed {stale.relative_to(ROOT)}")

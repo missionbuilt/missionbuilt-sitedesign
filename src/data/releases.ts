@@ -1,6 +1,6 @@
 /**
- * Releases — shared helpers for the MealStack release notes pages.
- * The content comes from scripts/sync_mealstack_changelog.py.
+ * Releases — shared helpers for the MealStack and Ironstack release notes pages.
+ * The content comes from scripts/sync_mealstack_changelog.py (`--app ironstack`).
  */
 import type { CollectionEntry } from 'astro:content';
 import { longDate } from './logs';
@@ -8,11 +8,14 @@ import { longDate } from './logs';
 export type Release = CollectionEntry<'releases'>;
 type Data = Release['data'];
 
-export const CHANGELOG = '/rack/mealstack/changelog';
+/** An app's release notes index. */
+export const changelogFor = (app: Data['app']) => `/rack/${app}/changelog`;
+
+export const CHANGELOG = changelogFor('mealstack');
 
 /** "0.9.1" → "0-9-1": the release's URL segment. */
 export const releaseSlug = (version: string) => version.replaceAll('.', '-');
-export const releaseUrl = (r: Release) => `${CHANGELOG}/${releaseSlug(r.data.version)}`;
+export const releaseUrl = (r: Release) => `${changelogFor(r.data.app)}/${releaseSlug(r.data.version)}`;
 
 export const byOrder = (a: Release, b: Release) => b.data.order - a.data.order;
 

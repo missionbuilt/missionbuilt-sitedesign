@@ -1,0 +1,128 @@
+---
+/**
+ * Ironstack — release notes, the index. /rack/ironstack/changelog
+ *
+ * Same page as /rack/mealstack/changelog, for Ironstack. Source: ../ironstack/CHANGELOG.md,
+ * synced with `python3 scripts/sync_mealstack_changelog.py --app ironstack`. One row per release, newest first: version, status,
+ * how many changes, and the groups they fall in. The release testers have or are
+ * about to get (the newest one submitted or shipped) also shows its highlights: each
+ * group's first lines. Every release has its own page (changelog/[release].astro),
+ * so this page stays short however many builds there are.
+ *
+ * Rows keep the old `#v0-9` anchors so links into the one-page version still land.
+ * A build not yet shipped carries the page's one army-green micro-mark.
+ */
+import { getCollection } from 'astro:content';
+import ToolNoteLayout from '../../../../layouts/ToolNoteLayout.astro';
+import { longDate, isoDay } from '../../../../data/logs';
+import { byOrder, releaseUrl, releaseSlug, when, plural } from '../../../../data/releases';
+
+const releases = (await getCollection('releases', ({ data }) => data.app === 'ironstack')).sort(byOrder);
+const latest = releases.find((r) => r.data.status === 'shipped');
+const lastDated = releases.find((r) => r.data.date)?.data.date;
+const featured = releases.find((r) => r.data.status !== 'in-progress');
+const PER_GROUP = 3;
+---
+<ToolNoteLayout
+  title="Release notes · Ironstack · Mission Built"
+  description="What changed in each Ironstack build, written for the people testing it. Newest first."
+  crumbs={[{ label: 'Ironstack', href: '/rack/ironstack' }, { label: 'Release notes' }]}
+  eyebrow="Ironstack release notes"
+  heading="What changed"
+  accent="changed"
+  standfirst="Every build that goes to TestFlight, in plain words. If you can see it or feel it in the app, it gets a line here before it ships."
+  tool="ironstack"
+  back={{ label: 'Ironstack', href: '/rack/ironstack' }}
+  footLinks={[{ label: 'The details', href: '/rack/ironstack/details' }, { label: 'Privacy', href: '/rack/ironstack/privacy' }]}
+>
+  <Fragment slot="byline">
+    Ironstack · Private beta{latest && <> · Latest {latest.data.version}</>}
+    {lastDated && <> · Updated <time datetime={isoDay(lastDated)}>{longDate(lastDated)}</time></>}
+  </Fragment>
+
+  {featured && (
+    <section class="featured" aria-labelledby="featured-h">
+      <header class="f-head">
+        <p class="f-k">{featured.data.status === 'shipped' ? 'Latest build' : 'Next build'}</p>
+        <h2 id="featured-h"><a class="plain" href={releaseUrl(featured)}>{featured.data.version}</a></h2>
+        <p class:list={['status', featured.data.status !== 'shipped' && 'next']}>{when(featured.data)}</p>
+      </header>
+      {featured.data.groups.map((g) => (
+        <div class="f-group">
+          {g.title && <h3><a class="plain" href={`${releaseUrl(featured)}#${g.slug}`}>{g.title}</a></h3>}
+          <ul class="leads">
+            {g.leads.slice(0, PER_GROUP).map((l) => <li>{l}</li>)}
+          </ul>
+          {g.leads.length > PER_GROUP && (
+            <a class="more" href={`${releaseUrl(featured)}#${g.slug}`}>{plural(g.leads.length - PER_GROUP, 'more change')} →</a>
+          )}
+        </div>
+      ))}
+      <a class="read" href={releaseUrl(featured)}>Read all {plural(featured.data.changes, 'change')} in {featured.data.version} →</a>
+    </section>
+  )}
+
+  <section class="all" aria-labelledby="all-h">
+    <h2 id="all-h" class="rule">Every release</h2>
+    <ol class="rows">
+      {releases.map((r) => (
+        <li id={`v${releaseSlug(r.data.version)}`}>
+          <a href={releaseUrl(r)} class="row">
+            <span class="v">{r.data.version}</span>
+            <span class="mid">
+              <span class:list={['w', r.data.status !== 'shipped' && 'next']}>{when(r.data, true)} · {plural(r.data.changes, 'change')}</span>
+              {r.data.groups.some((g) => g.title) && (
+                <span class="g">{r.data.groups.map((g) => g.title).filter(Boolean).join(' · ')}</span>
+              )}
+              {!r.data.groups.some((g) => g.title) && r.data.groups[0] && (
+                <span class="g">{r.data.groups[0].leads[0]}</span>
+              )}
+            </span>
+            <span class="go" aria-hidden="true">→</span>
+          </a>
+        </li>
+      ))}
+    </ol>
+    {releases.length === 0 && <p>Nothing here yet. The first notes land with the next build.</p>}
+  </section>
+</ToolNoteLayout>
+
+<style>
+  .featured { margin-top: 30px; padding: 20px 22px 22px; border: var(--border-thin); }
+  .f-head { display: grid; grid-template-columns: auto 1fr; column-gap: 16px; align-items: baseline; }
+  .f-k { grid-column: 1 / -1; margin: 0 0 6px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); }
+  .f-head h2 { margin: 0; font-family: var(--font-display); font-weight: 600; font-size: 34px; line-height: 1; letter-spacing: 0.02em; }
+  .f-head h2 a { color: var(--color-chalk); text-decoration: none; }
+  .status { margin: 0; justify-self: start; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-faint); }
+  .status.next { padding: 3px 7px; border: 1px solid var(--color-army); color: var(--color-army); }
+
+  .f-group { margin-top: 20px; }
+  .f-group h3 { margin: 0 0 8px; font-family: var(--font-display); font-weight: 500; font-size: 15px; letter-spacing: 0.04em; text-transform: uppercase; }
+  .f-group h3 a { color: var(--color-chalk); text-decoration: none; }
+  .f-group h3 a:hover { color: var(--color-blood-text); }
+  .leads { list-style: none; margin: 0; padding: 0; }
+  .leads li { position: relative; padding-left: 18px; margin: 0 0 6px; font-size: 15px; line-height: 1.5; }
+  .leads li::before { content: ""; position: absolute; left: 0; top: 10px; width: 8px; height: 2px; background: var(--color-blood); }
+  .more, .read { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-chalk-dim); text-decoration: none; transition: color 120ms ease-out; }
+  .more { display: inline-block; margin: 2px 0 0 18px; }
+  .read { display: inline-block; margin-top: 22px; padding-top: 14px; border-top: var(--border-thin); width: 100%; color: var(--color-chalk); }
+  .more:hover, .read:hover { color: var(--color-blood-text); }
+
+  .rows { list-style: none; margin: 14px 0 0; padding: 0; border-top: var(--border-thin); }
+  .rows li { scroll-margin-top: 24px; border-bottom: var(--border-thin); }
+  .row { display: grid; grid-template-columns: 76px 1fr auto; gap: 14px; align-items: center; padding: 14px 4px; text-decoration: none; transition: background 120ms ease-out; }
+  .row:hover { background: rgba(255,255,255,0.015); }
+  .row .v { font-family: var(--font-display); font-weight: 600; font-size: 24px; letter-spacing: 0.02em; color: var(--color-chalk); }
+  .row .mid { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+  .row .w { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-chalk-faint); }
+  .row .w.next { color: var(--color-chalk-dim); }
+  .row .g { font-family: var(--font-serif); font-size: 14px; line-height: 1.45; color: var(--color-chalk-dim); }
+  .row .go { font-family: var(--font-mono); font-size: 14px; color: var(--color-chalk-faint); transition: color 120ms ease-out; }
+  .row:hover .go { color: var(--color-blood-text); }
+
+  @media (max-width: 720px) {
+    .featured { padding: 18px 16px; }
+    .row { grid-template-columns: 58px 1fr auto; }
+    .row .v { font-size: 20px; }
+  }
+</style>

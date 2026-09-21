@@ -74,14 +74,15 @@ const logs = defineCollection({
  * Releases collection — release notes for the tools.
  *
  * Layout: src/content/releases/{app}-{version}.md. Generated, not hand-written:
- * scripts/sync_mealstack_changelog.py splits the app repo's CHANGELOG.md into one
- * file per release. /rack/mealstack/changelog lists them newest first by `order`;
- * /rack/mealstack/changelog/{version with dashes} is one release.
+ * scripts/sync_mealstack_changelog.py splits an app repo's CHANGELOG.md into one
+ * file per release (`--app ironstack` for Ironstack). /rack/{app}/changelog lists
+ * them newest first by `order`; /rack/{app}/changelog/{version with dashes} is one
+ * release.
  */
 const releases = defineCollection({
   type: 'content',
   schema: z.object({
-    app: z.enum(['mealstack']),
+    app: z.enum(['mealstack', 'ironstack']),
     /** "0.9", "0.8.1". */
     version: z.string(),
     /** Sort key: major * 1e6 + minor * 1e3 + patch. */
