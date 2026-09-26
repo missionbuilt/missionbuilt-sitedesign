@@ -20,3 +20,7 @@
 /loadout/floodlight    /loadout                301
 /loadout/floodlight/*  /loadout                301
 /downloads/floodlight.zip  /loadout            301
+
+# Book downloads carry the edition in the filename (Sept 2026). Old links keep working.
+/downloads/mission-built.pdf  /downloads/mission-built-second-edition-revised.pdf  301
+/downloads/mission-built.md   /downloads/mission-built-second-edition-revised.md   301

@@ -139,3 +139,31 @@ The MealStack demo (`public/demos/mealstack.html`) is real screens, not a drawin
 4. Run `python3 scripts/build_mealstack_demo_images.py <folder of pngs>` (needs Pillow). It paints out the Simulator's status-bar clock and writes `public/demos/mealstack/*.webp`. The page draws each step's `clock:` there instead.
 
 Hotspots in `steps` are boxes in points on the 402 × 874 screen. If a screen's layout moves, update its `hot:` box.
+
+---
+
+## sync_book.py
+
+Pulls the manuscript from the book repo into the site. The book repo (`~/Projects/missionbuilt-book`, a sibling of this one) is the source of truth; every `## Section` in `book/NN-*.md` becomes the body of one `.mdx` under `src/content/chapters/`, keeping each file's frontmatter. Chapter 13's boardroom section is split into 13.2 and 13.3 at "Here is what AI does not change." It recomputes every section's read time from its word count (230 wpm) and rewrites the chapter totals in `src/data/book.ts` to match, and it copies `manuscript.md` to `public/downloads/mission-built-second-edition-revised.md`.
+
+```bash
+cd ~/Projects/missionbuilt-site
+python3 scripts/sync_book.py --check   # list what would change
+python3 scripts/sync_book.py           # write it
+```
+
+Chapter epigraphs and the chapter 13 intro are not on the site by design.
+
+## build_pdf.py
+
+Builds `public/downloads/mission-built-second-edition-revised.pdf` from the same book repo: one print HTML in the Iron Log design (charcoal pages, chalk type, oxblood accent), printed to 6 x 9 in with Chromium through Playwright. Cover, title and license pages, contents, front matter, chapter openers with epigraphs, section pages, sources, about, acknowledgments, tools, colophon, end page.
+
+```bash
+cd ~/Projects/missionbuilt-site
+pip install markdown playwright pymupdf && playwright install chromium   # once
+(cd scripts/fonts && npm install)                                  # once: local copies of Oswald, Merriweather, JetBrains Mono
+python3 scripts/build_pdf.py                                       # writes public/downloads/mission-built-second-edition-revised.pdf
+python3 scripts/build_pdf.py --html-only                           # writes the HTML beside it, to check layout in a browser
+```
+
+The edition label and version string on the cover default to "Second Edition, Revised" / v2.1; pass `--edition` and `--version` when they change, rename the output (`--out`), and add 301s for the old filenames in `public/_redirects`. After a manuscript change: run `sync_book.py`, then `build_pdf.py`, then commit the mdx, the .md and the .pdf together so the site and both downloads stay in sync.

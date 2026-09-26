@@ -35,6 +35,8 @@ interface Props {
   draft?: boolean;
   /** Optional kicker shown above the section eyebrow (e.g. "Prologue"). */
   kicker?: string;
+  /** Estimated read time for this section, in minutes (from frontmatter). */
+  mins?: number;
 }
 
 const {
@@ -48,7 +50,10 @@ const {
   next,
   draft = false,
   kicker,
+  mins,
 } = Astro.props;
+
+const chapterLabel = kicker ?? `Chapter ${chapterN}`;
 
 ---
 <BaseLayout
@@ -114,10 +119,15 @@ const {
     <main id="main" class="main">
       <article class="main-inner">
         <p class="section-eyebrow">
-          §{sectionN} · {chapterTitle}
+          <span class="dots" aria-hidden="true">▮▮▮</span>
+          <span>§{sectionN} · {chapterTitle}</span>
         </p>
 
         <h1 class="section-h1">{sectionTitle}</h1>
+
+        <p class="section-byline">
+          {chapterLabel}{sections.length > 1 && <> · Section {sectionN}</>}{mins && <> · {mins} min read</>} · Mike Nichols
+        </p>
 
         {draft && (
           <p class="draft-flag">
@@ -294,25 +304,36 @@ const {
   }
 
   .section-eyebrow {
-    margin: 0 0 14px;
+    display: flex; align-items: center; gap: 10px;
+    margin: 0 0 18px;
     font-family: var(--font-mono);
     font-size: 12px;
-    color: var(--color-blood-text);
+    font-weight: 500;
     letter-spacing: 0.24em;
     text-transform: uppercase;
+    color: var(--color-chalk-dim);
   }
-
+  .section-eyebrow .dots { letter-spacing: 0.1em; color: var(--color-blood-bright); }
   .section-h1 {
-    margin: 0 0 28px;
+    margin: 0;
     font-family: var(--font-display);
-    font-weight: 600;
-    font-size: clamp(30px, 4.4vw, 42px);
-    line-height: 1.0;
-    letter-spacing: -0.005em;
+    font-weight: 700;
+    font-size: clamp(38px, 7vw, 56px);
+    line-height: 0.98;
+    letter-spacing: -0.02em;
     text-transform: uppercase;
     color: var(--color-chalk);
   }
-
+  .section-byline {
+    margin: 20px 0 26px;
+    padding-top: 14px;
+    border-top: var(--border-thin);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-chalk-faint);
+  }
   .draft-flag {
     margin: 0 0 28px;
     padding: 12px 14px;
@@ -324,84 +345,100 @@ const {
     letter-spacing: 0.06em;
   }
 
-  /* Prose styles target the rendered MDX body */
-  .prose :global(p) {
-    margin: 0 0 20px;
+  /* Prose styles target the rendered MDX body. Same grammar as the Logs body:
+     serif 17px/1.62 in chalk-dim, strong in chalk, ruled Oswald h2s, oxblood
+     list dashes, a 3px oxblood rail on the pull quote. */
+  .prose {
     font-family: var(--font-serif);
-    font-size: 18px;
-    line-height: 1.65;
-    color: var(--color-chalk);
+    font-size: 17px;
+    line-height: 1.62;
+    color: var(--color-chalk-dim);
   }
+  .prose :global(p) { margin: 0 0 18px; }
   .prose :global(p:last-child) { margin-bottom: 0; }
-  .prose :global(em) { color: var(--color-chalk-dim); }
+  .prose :global(em) { font-style: italic; }
   .prose :global(strong) { color: var(--color-chalk); font-weight: 700; }
-
   /* Pull quote — markdown blockquote rendered as the iron-log pull */
   .prose :global(blockquote) {
-    margin: 28px 0;
-    padding: 18px 22px;
-    border-left: 2px solid var(--color-blood);
-    background: var(--color-panel);
+    margin: 30px 0;
+    padding: 4px 0 4px 18px;
+    border-left: 3px solid var(--color-blood);
   }
   .prose :global(blockquote p) {
     margin: 0;
     font-family: var(--font-display);
     font-weight: 500;
-    font-size: 24px;
-    line-height: 1.25;
-    letter-spacing: -0.005em;
+    font-size: 22px;
+    line-height: 1.28;
+    letter-spacing: 0.01em;
     color: var(--color-chalk);
   }
-
+  .prose :global(blockquote em) { font-style: normal; }
+  .prose :global(blockquote p + p) {
+    margin-top: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-chalk-faint);
+  }
   /* Headings within prose body. MDX `###` renders as h2 (see ProseH2). */
   .prose :global(h2) {
-    margin: 36px 0 12px;
+    margin: 46px 0 6px;
+    padding-top: 18px;
+    border-top: var(--border-thin);
     font-family: var(--font-display);
-    font-weight: 500;
-    font-size: 21px;
-    letter-spacing: 0.03em;
+    font-weight: 600;
+    font-size: 25px;
+    line-height: 1.15;
+    letter-spacing: 0.02em;
     text-transform: uppercase;
     color: var(--color-chalk);
   }
+  .prose :global(h2 + p) { margin-top: 12px; }
   .prose :global(h3) {
-    margin: 28px 0 10px;
+    margin: 28px 0 8px;
     font-family: var(--font-display);
     font-weight: 500;
     font-size: 18px;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.02em;
     text-transform: uppercase;
-    color: var(--color-chalk-dim);
+    color: var(--color-chalk);
   }
-
   /* Inline links inside prose */
   .prose :global(a) {
     color: var(--color-chalk);
-    border-bottom: 1px solid var(--color-blood-dim);
-    transition: border-bottom-color 120ms ease-out;
+    border-bottom: 1px solid var(--color-blood);
+    padding-bottom: 1px;
+    transition: color 120ms ease-out;
   }
-  .prose :global(a:hover) { border-bottom-color: var(--color-blood-text); }
-
-  /* Bullet/ordered lists inside prose */
-  .prose :global(ul),
-  .prose :global(ol) {
-    margin: 0 0 20px;
-    padding-left: 22px;
-  }
+  .prose :global(a:hover) { color: var(--color-blood-text); }
+  /* Lists: oxblood dashes for bullets, numbers for ordered */
+  .prose :global(ul) { list-style: none; margin: 0 0 22px; padding: 0; }
+  .prose :global(ol) { margin: 0 0 22px; padding-left: 22px; }
   .prose :global(li) {
-    font-family: var(--font-serif);
-    font-size: 18px;
-    line-height: 1.65;
-    color: var(--color-chalk);
-    margin-bottom: 6px;
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 12px;
+    font-size: 16.5px;
+    line-height: 1.6;
   }
-
+  .prose :global(ol > li) { padding-left: 4px; }
+  .prose :global(ul > li::before) {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 11px;
+    width: 9px;
+    height: 2px;
+    background: var(--color-blood);
+  }
   .prose :global(hr) {
     margin: 36px 0;
     border: 0;
     height: 1px;
     background: var(--color-rule);
   }
-
   /* ============ Prev / Next ============ */
   .prev-next {
     margin-top: 56px;
@@ -453,10 +490,8 @@ const {
     }
     .rail-left .rail-block + .rail-block { margin-top: 18px; }
     .main-inner { padding: 32px 24px 56px; }
-    .section-h1 { font-size: clamp(28px, 8vw, 36px); }
-    .prose :global(p),
-    .prose :global(li) { font-size: 17px; }
-    .prose :global(blockquote) { padding: 14px 16px; }
+    .section-h1 { font-size: clamp(32px, 9vw, 38px); }
+    .prose { font-size: 16.5px; }
     .prose :global(blockquote p) { font-size: 19px; }
     .prev-next { flex-direction: column; gap: 18px; }
     .pn-link { max-width: none; }

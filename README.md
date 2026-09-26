@@ -69,7 +69,7 @@ src/
     └── global.css     # reset + base typography
 ```
 
-Outside `src/`: `public/` holds static assets, including the generated `public/demos/` (Loadout and Rack click-through demos) and `public/downloads/` (the book PDF/Markdown and the standalone skill zips). `scripts/` holds the Python builders that regenerate those — see [`scripts/README.md`](scripts/README.md).
+Outside `src/`: `public/` holds static assets, including the generated `public/demos/` (Loadout and Rack click-through demos) and `public/downloads/` (the book as PDF and Markdown, named for the edition, and the standalone skill zips). `scripts/` holds the Python builders that regenerate those — see [`scripts/README.md`](scripts/README.md).
 
 ## Pages
 

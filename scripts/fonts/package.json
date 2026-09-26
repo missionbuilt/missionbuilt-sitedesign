@@ -1,0 +1,10 @@
+{
+  "name": "missionbuilt-pdf-fonts",
+  "private": true,
+  "description": "Local copies of the three Mission Built typefaces, embedded into the book PDF by scripts/build_pdf.py.",
+  "dependencies": {
+    "@fontsource/jetbrains-mono": "^5.2.0",
+    "@fontsource/merriweather": "^5.2.0",
+    "@fontsource/oswald": "^5.2.0"
+  }
+}

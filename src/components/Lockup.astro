@@ -1,4 +1,5 @@
 ---
+import { MB } from '../data/book.ts';
 /**
  * Lockup — the MISSION ▪ BUILT mark.
  *
@@ -25,7 +26,7 @@ const squarePx = Math.max(5, Math.round(size * 7 / 16));
   <span class="word">Mission</span>
   <span class="bar" aria-hidden="true"></span>
   <span class="word">Built</span>
-  {!bare && <span class="version">v1.13 · open source</span>}
+  {!bare && <span class="version">{MB.version} · open source</span>}
 </span>
 
 <style>

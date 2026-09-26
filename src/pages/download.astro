@@ -3,33 +3,42 @@
  * Download — formats of the book a reader can take offline.
  *
  * Files served from /downloads/ (Astro copies anything under public/ as-is).
- * If you regenerate the PDF, drop the new file at
- *   public/downloads/mission-built.pdf
- * and the link below picks it up automatically.
+ * The filenames carry the edition. When the edition changes, rename the files,
+ * update `edition` and `formats` below, and add 301s for the old names to
+ * public/_redirects so shared links keep working.
+ *
+ * Regenerate with scripts/sync_book.py (the .md) and scripts/build_pdf.py (the .pdf).
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import TopNav from '../components/TopNav.astro';
 
+const edition = {
+  label: 'Second Edition, Revised',
+  version: 'v2.1',
+  year: '2026',
+  pages: 172,
+};
+
 const formats = [
   {
     kicker: 'PDF',
-    title: 'mission-built.pdf',
+    title: 'mission-built-second-edition-revised.pdf',
     blurb:
-      "The full book in print-ready PDF. 6 by 9 trade paperback, designed " +
+      `The full book as a ${edition.pages}-page PDF. 6 by 9 trade paperback, designed ` +
       "to match the website's chalk-on-charcoal language. Read on screen " +
       "or print at home.",
-    href: '/downloads/mission-built.pdf',
+    href: '/downloads/mission-built-second-edition-revised.pdf',
     accent: 'blood' as const,
   },
   {
     kicker: 'Markdown',
-    title: 'mission-built.md',
+    title: 'mission-built-second-edition-revised.md',
     blurb:
-      "The raw manuscript as markdown. For developers, contributors, and " +
-      "anyone who wants to fork the source. Same content, ready for any " +
+      "The manuscript as one markdown file. For developers, contributors, and " +
+      "anyone who wants to fork the source. Same content as the site, ready for any " +
       "tool that reads .md.",
-    href: '/downloads/mission-built.md',
+    href: '/downloads/mission-built-second-edition-revised.md',
     accent: 'army' as const,
   },
 ];
@@ -47,6 +56,10 @@ const formats = [
       <p class="lede">
         The book is free in two formats. The same content the website serves,
         ready for the screen on the plane or the printer in the garage.
+      </p>
+      <p class="edition">
+        {edition.label} · {edition.version} · {edition.year}. The text of this edition was revised
+        to restore the author's voice; no content changed.
       </p>
     </header>
 
@@ -112,6 +125,19 @@ const formats = [
     line-height: 1.45;
     letter-spacing: 0.015em;
     color: var(--color-chalk-dim);
+  }
+
+  .edition {
+    margin: 18px 0 0;
+    padding-top: 14px;
+    border-top: var(--border-thin);
+    max-width: 600px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 1.7;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-chalk-faint);
   }
 
   .formats {
