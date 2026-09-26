@@ -1,6 +1,6 @@
 ---
 /**
- * Ironstack — privacy.
+ * IronStack — privacy.
  *
  * The page App Store Connect points at (Privacy Policy URL) and the app should link to
  * from Settings › Your data. Written from the code, not from a template, on Sept 19,
@@ -14,7 +14,7 @@
  * and never used for marketing; 1.2 wants reporting and blocking for Social. All here.
  *
  * THREE THINGS THIS PAGE ASSUMES, which must be true in the build that is submitted
- * (see claude/ironstack-web-pages-2026-09-19.md in the Ironstack project):
+ * (see claude/ironstack-web-pages-2026-09-19.md in the IronStack project):
  *   1. coach-proxy treats a missing x-usage-sharing header as OFF (changed Sept 19,
  *      src/telemetry.ts; needs `npx wrangler deploy`). Until it deploys, and if
  *      POSTHOG_KEY is set on ironstack-coach, Coach events reach PostHog.
@@ -33,7 +33,7 @@ import SiteFooter from '../../../components/SiteFooter.astro';
 import TopNav from '../../../components/TopNav.astro';
 
 const EFFECTIVE = 'September 19, 2026';
-const ASK = 'mailto:mike@missionbuilt.io?subject=Ironstack%20data%20request';
+const ASK = 'mailto:mike@missionbuilt.io?subject=IronStack%20data%20request';
 
 const stats = [
   { key: 'Account to log',     value: 'None' },
@@ -63,8 +63,8 @@ const keeps: Keep[] = [
 ];
 ---
 <BaseLayout
-  title="Privacy · Ironstack · Mission Built"
-  description="What Ironstack keeps on your phone, what leaves it for Coach and Social, who touches it, how long it lasts, and how to make it all go away."
+  title="Privacy · IronStack · Mission Built"
+  description="What IronStack keeps on your phone, what leaves it for Coach and Social, who touches it, how long it lasts, and how to make it all go away."
   active="rack"
 >
   <TopNav active="rack" />
@@ -73,7 +73,7 @@ const keeps: Keep[] = [
     <nav class="breadcrumb" aria-label="Breadcrumb">
       <a href="/rack">The Rack</a>
       <span aria-hidden="true"> / </span>
-      <a href="/rack/ironstack">Ironstack</a>
+      <a href="/rack/ironstack">IronStack</a>
       <span aria-hidden="true"> / </span>
       <span class="here">Privacy</span>
     </nav>
@@ -81,7 +81,7 @@ const keeps: Keep[] = [
     <section class="hero">
       <p class="eyebrow">
         <span class="dots" aria-hidden="true">▮▮▮</span>
-        <span>Ironstack</span>
+        <span>IronStack</span>
         <span class="dots" aria-hidden="true">▮▮▮</span>
       </p>
       <h1 class="display"><span>Privacy</span><span class="dot">.</span></h1>
@@ -92,7 +92,7 @@ const keeps: Keep[] = [
       <p class="effective">Effective {EFFECTIVE} · Mission Built · Mike Nichols · Pittsburgh, PA</p>
     </section>
 
-    <section class="meta-strip" aria-label="Ironstack privacy at a glance">
+    <section class="meta-strip" aria-label="IronStack privacy at a glance">
       {stats.map((s) => (
         <div class="stat">
           <div class="stat-key">{s.key}</div>
@@ -104,9 +104,9 @@ const keeps: Keep[] = [
     {/* ---------- WHO ---------- */}
     <section class="block">
       <p class="section-label">Who this is</p>
-      <h2 class="section-h2">Mission Built makes Ironstack. This page is the whole policy.</h2>
+      <h2 class="section-h2">Mission Built makes IronStack. This page is the whole policy.</h2>
       <div class="prose-block">
-        <p>Ironstack is made by Mission Built, which is Mike Nichols, in Pittsburgh, Pennsylvania. For the purposes of privacy law, Mission Built is the controller of whatever this page says leaves your phone. There is no parent company, no subsidiary and no partner with access to your data. The source goes public with 1.0, so the code that does what this page describes can be read.</p>
+        <p>IronStack is made by Mission Built, which is Mike Nichols, in Pittsburgh, Pennsylvania. For the purposes of privacy law, Mission Built is the controller of whatever this page says leaves your phone. There is no parent company, no subsidiary and no partner with access to your data. The source goes public with 1.0, so the code that does what this page describes can be read.</p>
       </div>
     </section>
 
@@ -117,8 +117,8 @@ const keeps: Keep[] = [
       <p class="section-label">No account to log</p>
       <h2 class="section-h2">Logging never asks who you are.</h2>
       <div class="prose-block">
-        <p>You can log every set you will ever do without signing up, logging in or giving a name, an email address or a phone number. The only identity Coach ever sees is a key your phone creates in its secure hardware, which proves a request came from a real copy of Ironstack and nothing more.</p>
-        <p><strong>Social is the one exception, and it is optional.</strong> To share sessions with the people you train with, you sign in with Apple. Ironstack asks Apple for neither your name nor your email, and stores neither if Apple sends them. The Social server keeps the stable, anonymous user id Apple gives it, and a sealed token it uses for one thing: disconnecting Sign in with Apple when you delete your account.</p>
+        <p>You can log every set you will ever do without signing up, logging in or giving a name, an email address or a phone number. The only identity Coach ever sees is a key your phone creates in its secure hardware, which proves a request came from a real copy of IronStack and nothing more.</p>
+        <p><strong>Social is the one exception, and it is optional.</strong> To share sessions with the people you train with, you sign in with Apple. IronStack asks Apple for neither your name nor your email, and stores neither if Apple sends them. The Social server keeps the stable, anonymous user id Apple gives it, and a sealed token it uses for one thing: disconnecting Sign in with Apple when you delete your account.</p>
       </div>
     </section>
 
@@ -130,10 +130,10 @@ const keeps: Keep[] = [
       <h2 class="section-h2">Your training log lives in files on the phone.</h2>
       <div class="prose-block">
         <p>Every set, session, note and correction; your programs, workouts and exercises; your gear and home gym; the details you give for a session (bodyweight, sleep); your Coach conversation; and your Social settings. All of it lives in files in the app's own container on your iPhone, written under the phone's encryption and protected until the first unlock after a restart. Those files are included in your iCloud or computer backup the way any app's data is; Mission Built has no access to your backups.</p>
-        <p><strong>Apple Health, if you allow it.</strong> Ironstack reads your weigh-ins, sleep, height, date of birth and biological sex, so the questions it asks before a session answer themselves and Insights can line your sleep up with your lifting. It only fills empty fields; you can always type over them. If you turn on the separate switch in Settings (off until you do), it saves each finished session to Health as a strength workout. It never writes your weight or your sleep. Nothing from Health is used for marketing, advertising or anything but the log and your own Insights.</p>
+        <p><strong>Apple Health, if you allow it.</strong> IronStack reads your weigh-ins, sleep, height, date of birth and biological sex, so the questions it asks before a session answer themselves and Insights can line your sleep up with your lifting. It only fills empty fields; you can always type over them. If you turn on the separate switch in Settings (off until you do), it saves each finished session to Health as a strength workout. It never writes your weight or your sleep. Nothing from Health is used for marketing, advertising or anything but the log and your own Insights.</p>
         <p><strong>Location, if you allow it.</strong> From your second session on, the app asks once, and only uses location while a session is live. It asks for roughly a kilometre of accuracy and rounds the coordinates to two decimal places the moment they arrive. The session keeps the town name, those rounded coordinates, whether you were away from home, and the weather. To get the weather and the town name, the rounded point goes to Apple's WeatherKit and Apple Maps. Logging never needs location, and an export leaves coordinates out unless you switch them on.</p>
         <p><strong>Your voice, only while you hold the button.</strong> Speech is turned into text on the phone, offline, only while you hold the talk button. No audio is kept or sent anywhere.</p>
-        <p><strong>MealStack, only if you say yes.</strong> Ironstack can put a few facts on a private shelf on your phone that only Mission Built apps can open: whether Travel mode is on, and, only after a separate yes for each, your last session's summary and when you usually train. Nothing crosses to a server to do this. Turn a share off and Ironstack takes it back off the shelf.</p>
+        <p><strong>MealStack, only if you say yes.</strong> IronStack can put a few facts on a private shelf on your phone that only Mission Built apps can open: whether Travel mode is on, and, only after a separate yes for each, your last session's summary and when you usually train. Nothing crosses to a server to do this. Turn a share off and IronStack takes it back off the shelf.</p>
         <p class="note">This section also serves as the consumer health data notice some states require. The health data involved: bodyweight, sleep, height, date of birth and biological sex read from Apple Health with your permission, the workouts written to it with your permission, and the sets, effort ratings and notes you log. Source: you and Apple Health. Purpose: the log, your Insights, and Coach when you ask it. Shared with: nobody, except what goes to Coach when you ask it a question, and the session card you choose to share on Social, as described next.</p>
       </div>
     </section>
@@ -215,10 +215,10 @@ const keeps: Keep[] = [
       <p class="section-label">Seeing, taking and deleting your data</p>
       <h2 class="section-h2">It is all in Settings. No email needed.</h2>
       <div class="prose-block">
-        <p><strong>Settings › Your data › Export all my data</strong> writes every session you have ever logged, your plan and your own exercises into one file, in the Mission Built Schema, a documented format you can read anywhere or bring back into Ironstack. <strong>Export the raw log</strong> gives you the log itself, line for line.</p>
+        <p><strong>Settings › Your data › Export all my data</strong> writes every session you have ever logged, your plan and your own exercises into one file, in the Mission Built Schema, a documented format you can read anywhere or bring back into IronStack. <strong>Export the raw log</strong> gives you the log itself, line for line.</p>
         <p><strong>What the server holds</strong> asks the Coach server, live, for everything it keeps for your install and shows it to you. The request is signed by your phone's key, so the server can only ever answer for the install that asked.</p>
-        <p><strong>Delete all Ironstack data</strong> is one screen that erases everything, everywhere, in order: first the server's copy (the install record, the counters, and the log copy if you had it on), then your Social account if you have one, then everything on the phone. It reports each one. If the server or Social cannot be reached, it stops before touching the phone and says so, so nothing is left behind that you can no longer ask to erase; you can try again or delete the phone's data anyway. <strong>Social › Delete Social account</strong> deletes only the Social side: your handle, spotters, shared cards and support, and disconnects Sign in with Apple. Your log is not touched.</p>
-        <p>Two things those buttons do not remove: workouts Ironstack wrote to Apple Health stay in Health, where you can delete them in the Health app; and the count-and-cost record of Coach use expires on its own within about ninety days. Turning Coach off in Settings stops it from sending anything from then on; signing out of Social stops notifications.</p>
+        <p><strong>Delete all IronStack data</strong> is one screen that erases everything, everywhere, in order: first the server's copy (the install record, the counters, and the log copy if you had it on), then your Social account if you have one, then everything on the phone. It reports each one. If the server or Social cannot be reached, it stops before touching the phone and says so, so nothing is left behind that you can no longer ask to erase; you can try again or delete the phone's data anyway. <strong>Social › Delete Social account</strong> deletes only the Social side: your handle, spotters, shared cards and support, and disconnects Sign in with Apple. Your log is not touched.</p>
+        <p>Two things those buttons do not remove: workouts IronStack wrote to Apple Health stay in Health, where you can delete them in the Health app; and the count-and-cost record of Coach use expires on its own within about ninety days. Turning Coach off in Settings stops it from sending anything from then on; signing out of Social stops notifications.</p>
         <p>If the app was deleted before you asked, nothing on the Coach server can be matched to you, which also means nothing there can identify you. For that, for your Social account, or for anything else about your data, email <a href={ASK}>mike@missionbuilt.io</a>. Mission Built will confirm within ten days and finish within thirty.</p>
       </div>
     </section>
@@ -245,7 +245,7 @@ const keeps: Keep[] = [
         </div>
         <div class="cell">
           <p class="k">Children</p>
-          <p class="body">Ironstack is not directed at children under 13 and does not knowingly collect anything from them. If you believe a child has used Coach or Social, email the address above and the install record or the Social account will be removed.</p>
+          <p class="body">IronStack is not directed at children under 13 and does not knowingly collect anything from them. If you believe a child has used Coach or Social, email the address above and the install record or the Social account will be removed.</p>
         </div>
       </div>
     </section>
@@ -260,7 +260,7 @@ const keeps: Keep[] = [
       </div>
     </section>
   </main>
-  <SiteFooter links={[{ label: 'Back to Ironstack', href: '/rack/ironstack' }, { label: 'MealStack privacy', href: '/rack/mealstack/privacy' }]} />
+  <SiteFooter links={[{ label: 'Back to IronStack', href: '/rack/ironstack' }, { label: 'MealStack privacy', href: '/rack/mealstack/privacy' }]} />
 </BaseLayout>
 
 <style>

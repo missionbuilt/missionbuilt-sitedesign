@@ -18,7 +18,7 @@ export const TOOLS: Record<ToolKey, { name: string; href: string; line: string; 
     cta: 'Join the beta →',
   },
   ironstack: {
-    name: 'Ironstack',
+    name: 'IronStack',
     href: '/rack/ironstack',
     line: 'Log fast. See progress. A coach in your corner. A lifting log for iPhone. Private beta.',
     cta: 'Join the beta →',

@@ -1,8 +1,8 @@
 ---
 /**
- * Ironstack — release notes, the index. /rack/ironstack/changelog
+ * IronStack — release notes, the index. /rack/ironstack/changelog
  *
- * Same page as /rack/mealstack/changelog, for Ironstack. Source: ../ironstack/CHANGELOG.md,
+ * Same page as /rack/mealstack/changelog, for IronStack. Source: ../ironstack/CHANGELOG.md,
  * synced with `python3 scripts/sync_mealstack_changelog.py --app ironstack`. One row per release, newest first: version, status,
  * how many changes, and the groups they fall in. The release testers have or are
  * about to get (the newest one submitted or shipped) also shows its highlights: each
@@ -24,19 +24,19 @@ const featured = releases.find((r) => r.data.status !== 'in-progress');
 const PER_GROUP = 3;
 ---
 <ToolNoteLayout
-  title="Release notes · Ironstack · Mission Built"
-  description="What changed in each Ironstack build, written for the people testing it. Newest first."
-  crumbs={[{ label: 'Ironstack', href: '/rack/ironstack' }, { label: 'Release notes' }]}
-  eyebrow="Ironstack release notes"
+  title="Release notes · IronStack · Mission Built"
+  description="What changed in each IronStack build, written for the people testing it. Newest first."
+  crumbs={[{ label: 'IronStack', href: '/rack/ironstack' }, { label: 'Release notes' }]}
+  eyebrow="IronStack release notes"
   heading="What changed"
   accent="changed"
   standfirst="Every build that goes to TestFlight, in plain words. If you can see it or feel it in the app, it gets a line here before it ships."
   tool="ironstack"
-  back={{ label: 'Ironstack', href: '/rack/ironstack' }}
+  back={{ label: 'IronStack', href: '/rack/ironstack' }}
   footLinks={[{ label: 'The details', href: '/rack/ironstack/details' }, { label: 'Privacy', href: '/rack/ironstack/privacy' }]}
 >
   <Fragment slot="byline">
-    Ironstack · Private beta{latest && <> · Latest {latest.data.version}</>}
+    IronStack · Private beta{latest && <> · Latest {latest.data.version}</>}
     {lastDated && <> · Updated <time datetime={isoDay(lastDated)}>{longDate(lastDated)}</time></>}
   </Fragment>
 

@@ -1,6 +1,6 @@
 # Cloudflare Pages redirects.
 #
-# Ironstack and MealStack moved from the Loadout to the Rack on Sept 13, 2026.
+# IronStack and MealStack moved from the Loadout to the Rack on Sept 13, 2026.
 # Permanent: the MealStack app links to the old privacy URL in builds already
 # installed. The splat rules cover trailing slashes.
 #
