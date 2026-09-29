@@ -10,7 +10,7 @@ Mission Built, which is Mike Nichols · Pittsburgh, Pennsylvania, USA
 
 | What | When |
 |---|---|
-| A bug, a question, an idea | Within **2 business days** |
+| A bug, a question, an idea | Usually within **two business days** |
 | A report about someone on IronStack Social (harassment, a handle, a card) | Looked at within **24 hours**, usually sooner |
 | A privacy request (what's held, a copy, delete it) | Confirmed within **10 days**, done within **30** (the same promise as the privacy pages) |
 | Something that puts someone at risk | Say so in the subject line. It goes first. |
