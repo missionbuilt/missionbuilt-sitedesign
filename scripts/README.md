@@ -169,3 +169,13 @@ python3 scripts/build_pdf.py --html-only                           # writes the 
 ```
 
 The edition label and version string on the cover default to "Second Edition, Revised" / v2.1; pass `--edition` and `--version` when they change, rename the output (`--out`), and add 301s for the old filenames in `public/_redirects`. After a manuscript change: run `sync_book.py`, then `build_pdf.py`, then commit the mdx, the .md and the .pdf together so the site and both downloads stay in sync.
+
+## build_og_images.py
+
+Draws the share cards (og:image, 1200 × 630) for the app pages: `public/images/ironstack/og.jpg`, `public/images/mealstack/og.jpg` and `public/images/rack-og.jpg` (both phones, for `/rack`, Support and Acknowledgements). Each is the Iron Log look (charcoal, the lockup, the app's name with the oxblood period, its line) with a real phone screen from `public/images/`. Needs Pillow and the fonts in `scripts/fonts` (`cd scripts/fonts && npm install`). Run it again after the screen a card uses is recaptured:
+
+```bash
+python3 scripts/build_og_images.py
+```
+
+The book and the Loadout keep `/og-image.jpg`.

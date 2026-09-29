@@ -23,8 +23,11 @@
  */
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import SiteFooter from '../../../components/SiteFooter.astro';
+import { getCollection as getReleases } from 'astro:content';
+import { newestBuild, releaseUrl, when } from '../../../data/releases';
 import TopNav from '../../../components/TopNav.astro';
 
+const build = newestBuild(await getReleases('releases'), 'ironstack');
 const MAILTO = 'mailto:support@missionbuilt.io?subject=IronStack%20beta&body=Apple%20ID%20email%3A%20';
 
 const stats = [
@@ -127,6 +130,7 @@ const ld = {
 <BaseLayout
   title={title}
   description={description}
+  ogImage="/images/ironstack/og.jpg"
   ogImageAlt="IronStack. Log it. Time it. Lift each other up. A lifting log for iPhone, by Mission Built."
   active="rack"
 >
@@ -350,6 +354,7 @@ const ld = {
       <div class="status-panel">
         <div class="status-copy">
           <h3>On TestFlight now, with outside testers</h3>
+          {build && <p class="build-line">Newest build: <a class="inline-link" href={releaseUrl(build)}>IronStack {build.data.version}</a> · {when(build.data, true)}</p>}
           <p>IronStack logs every session I do, and a small group of outside testers is on it with me. New testers come in small batches, added by hand from the email on your Apple ID, and I would especially like people coming from Hevy or Strong, and training partners who want to try Social together.</p>
           <p>You get an email from TestFlight, Apple's own app for trying apps before they reach the App Store: install TestFlight, tap the link, and IronStack installs like any other app. Keep Hevy or Strong on your phone the whole time. The address is used for the invite and nothing else.</p>
           <p>Training with someone? Sign up together and put their name in the note, and I will add you in the same batch.</p>
@@ -459,7 +464,7 @@ const ld = {
 </BaseLayout>
 
 <script>
-  // ── The voice card: the app's own examples (Voice/VoiceExamples.swift) ──
+  // ── The voice card: the app's own examples ──
   const chips = document.querySelectorAll<HTMLButtonElement>('#voice .chip');
   const vParse = document.getElementById('v-parse');
   const vMeans = document.getElementById('v-means');
@@ -469,7 +474,7 @@ const ld = {
     if (vMeans) vMeans.textContent = c.dataset.means || '';
   }));
 
-  // ── The rest clock: the app's stages (Views/IntervalTimer.swift) ──
+  // ── The rest clock: the app's stages ──
   // 10 to 4 seconds left: oxblood numerals and a wash. 3 to 1: solid panel, beating.
   const LEN = 20;
   const box = document.getElementById('clockdemo');
@@ -580,6 +585,7 @@ const ld = {
   .prose { margin: 0 0 14px; max-width: 760px; font-family: var(--font-serif); font-size: 17px; line-height: 1.65; color: var(--color-chalk-dim); }
   .note { margin: 14px 0 0; max-width: 78ch; font-family: var(--font-mono); font-size: 12px; line-height: 1.6; letter-spacing: 0.02em; color: var(--color-chalk-faint); }
   .k { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); margin: 0; }
+  .build-line { margin: -4px 0 14px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-chalk-faint); }
   .kit-links { margin: 18px 0 0; font-family: var(--font-serif); font-size: 15px; line-height: 1.6; color: var(--color-chalk-faint); }
   .inline-link { color: var(--color-chalk); border-bottom: 1px solid var(--color-chalk-ghost); transition: border-color 120ms ease-out; }
   .inline-link:hover { border-bottom-color: var(--color-chalk); }

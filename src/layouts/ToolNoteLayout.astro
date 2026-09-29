@@ -41,8 +41,16 @@ const i = accent ? heading.indexOf(accent) : -1;
 const hBefore = i >= 0 ? heading.slice(0, i) : heading;
 const hAfter = i >= 0 ? heading.slice(i + (accent?.length ?? 0)) : '';
 const tool = toolKey ? TOOLS[toolKey] : undefined;
+// The share card: the app's own for its pages, the Rack's for Rack pages about both
+// apps, and the book's (BaseLayout's default) on the Loadout.
+const shareCard =
+  toolKey === 'ironstack' || toolKey === 'mealstack'
+    ? { ogImage: `/images/${toolKey}/og.jpg`, ogImageAlt: `${tool!.name}, by Mission Built: ${tool!.line}` }
+    : section === 'rack'
+      ? { ogImage: '/images/rack-og.jpg', ogImageAlt: 'The Rack. IronStack and MealStack, two iPhone apps for people who train, by Mission Built.' }
+      : {};
 ---
-<BaseLayout title={title} description={description} active={section}>
+<BaseLayout title={title} description={description} active={section} {...shareCard}>
   <slot name="head" slot="head" />
   <TopNav active={section} />
 

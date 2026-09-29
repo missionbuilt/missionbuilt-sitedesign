@@ -14,6 +14,10 @@ interface Props {
   ogImageAlt?: string;
   /** Active top-nav link key: 'book' | 'chapters' | 'loadout' | 'rack' | 'logs' | 'about' | 'source' */
   active?: 'book' | 'chapters' | 'loadout' | 'rack' | 'logs' | 'about' | 'source' | undefined;
+  /** The page's one address, when it is served at more than one (a path, e.g. '/rack/mealstack/privacy/'). */
+  canonical?: string;
+  /** Keep the page out of search: no canonical, no og:url (the 404 page). */
+  noindex?: boolean;
 }
 
 const SITE = 'https://missionbuilt.io';
@@ -24,10 +28,12 @@ const {
   ogType = 'website',
   ogImage = '/og-image.jpg',
   ogImageAlt = "Mission Built: a field guide for building things that matter, by Mike Nichols. Second edition, revised, 2026.",
+  canonical,
+  noindex = false,
 } = Astro.props;
 
 // Absolute URLs for everything social scrapers need
-const canonicalUrl = new URL(Astro.url.pathname, SITE).toString();
+const canonicalUrl = new URL(canonical ?? Astro.url.pathname, SITE).toString();
 const absoluteOgImage = ogImage.startsWith('http') ? ogImage : new URL(ogImage, SITE).toString();
 ---
 <!doctype html>
@@ -38,13 +44,13 @@ const absoluteOgImage = ogImage.startsWith('http') ? ogImage : new URL(ogImage, 
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonicalUrl} />
+    {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonicalUrl} />}
 
     {/* Open Graph */}
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content={ogType} />
-    <meta property="og:url" content={canonicalUrl} />
+    {!noindex && <meta property="og:url" content={canonicalUrl} />}
     <meta property="og:site_name" content="Mission Built" />
     <meta property="og:image" content={absoluteOgImage} />
     <meta property="og:image:width" content="1200" />

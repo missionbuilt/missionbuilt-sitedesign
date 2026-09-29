@@ -4,8 +4,10 @@
 # Permanent: the MealStack app links to the old privacy URL in builds already
 # installed. The splat rules cover trailing slashes.
 #
-# While MealStack 0.8.0 is in App Review, /loadout/mealstack/privacy is served
-# by a shim page (src/pages/loadout/mealstack/privacy.astro), not redirected:
+# Until App Store Connect holds /rack/mealstack/privacy as MealStack's privacy URL
+# (0.8.0 was submitted with the old one; check before removing), /loadout/mealstack/privacy
+# is served by a shim page (src/pages/loadout/mealstack/privacy.astro), not redirected. Its
+# canonical is /rack/mealstack/privacy and the sitemap leaves it out, so it isn't indexed twice.
 # Cloudflare evaluates these rules before static files, so the rules below
 # name /loadout/mealstack and /loadout/mealstack/ explicitly instead of using
 # a splat. After approval, delete the shim and replace the two MealStack rules

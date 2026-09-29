@@ -5,7 +5,7 @@
  * Rebuilt Sept 20, 2026 to match the lean app landing pages (AppLanding.astro).
  * The old page was a text overview with a meta strip and two text rows; its copy
  * described the Kibana-era IronStack ("a training partner with your whole history
- * in its head") and named Hevy. Backup: Claude outputs/rack-index-before-2026-09-20.astro.bak.
+ * in its head") and named Hevy.
  *
  * One job: show the two apps side by side, each with its real screens, its promise
  * and a way in. Order: hero (short) → two app cards → better together → why (one
@@ -59,6 +59,8 @@ const apps: App[] = [
 ---
 <BaseLayout
   title="The Rack · Mission Built"
+  ogImage="/images/rack-og.jpg"
+  ogImageAlt="The Rack. IronStack and MealStack, two iPhone apps for people who train, by Mission Built, with a real screen from each."
   description="Two iPhone apps for people who train, from Mission Built. IronStack: log fast, see progress, a coach in your corner. MealStack: meal timing built around your training session. Both free during the private beta."
   active="rack"
 >

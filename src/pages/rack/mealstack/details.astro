@@ -33,6 +33,8 @@
  */
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import SiteFooter from '../../../components/SiteFooter.astro';
+import { getCollection as getReleases } from 'astro:content';
+import { newestBuild, releaseUrl, when } from '../../../data/releases';
 import TopNav from '../../../components/TopNav.astro';
 import DemoEmbed from '../../../components/DemoEmbed.astro';
 import BetterTogether from '../../../components/BetterTogether.astro';
@@ -45,6 +47,7 @@ const story = logs[0];
 const storyHref = story ? logUrl(story) : '/logs';
 const storyTitle = story ? story.data.title : 'Logs';
 
+const build = newestBuild(await getReleases('releases'), 'mealstack');
 const MAILTO = 'mailto:support@missionbuilt.io?subject=MealStack%20beta&body=Apple%20ID%20email%3A%20';
 
 const stats = [
@@ -127,6 +130,7 @@ const ld = {
 <BaseLayout
   title={title}
   description={description}
+  ogImage="/images/mealstack/og.jpg"
   ogImageAlt="MealStack. Fueling is training. A meal timing tracker for people who train, on iPhone, by Mission Built."
   active="rack"
 >
@@ -366,6 +370,7 @@ const ld = {
       <div class="status-panel">
         <div class="status-copy">
           <h3>On TestFlight now, with outside testers</h3>
+          {build && <p class="build-line">Newest build: <a class="inline-link" href={releaseUrl(build)}>MealStack {build.data.version}</a> · {when(build.data, true)}</p>}
           <p>MealStack runs my own day, every day, and a small group of outside testers is on it with me. I add testers by hand, in small batches, from the email on your Apple ID. You get an invite from Apple, a link to install, a choice of how to start, and a short list of things I would like you to break.</p>
           <p>Builds expire every ninety days and you get the next one. The address is used for the invite and nothing else; you can leave from the invite email at any time.</p>
 
@@ -493,7 +498,7 @@ const ld = {
 
 <script>
   // ── The cascade rule on fictional data ──
-  // The app's rule (Scheduler.swift), on one training day: the meals before the
+  // The app's rule, on one training day: the meals before the
   // carb surge chain off the logged breakfast in three-hour gaps and must finish
   // two hours before the carb surge; when they can't, the gaps shrink evenly
   // (rounded to 5 minutes) and never below two hours. The carb surge is pinned
@@ -767,6 +772,7 @@ const ld = {
   .hero-ctas { margin-top: 26px; display: inline-flex; align-items: center; gap: 22px; flex-wrap: wrap; justify-content: center; }
   .cta-soft { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-dim); transition: color 120ms ease-out; }
   .cta-soft:hover { color: var(--color-chalk); }
+  .build-line { margin: -4px 0 14px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-chalk-faint); }
   .kit-links { margin: 18px 0 0; font-family: var(--font-serif); font-size: 15px; line-height: 1.6; color: var(--color-chalk-faint); }
   .inline-link { color: var(--color-chalk); border-bottom: 1px solid var(--color-chalk-ghost); transition: border-color 120ms ease-out; }
   .inline-link:hover { border-bottom-color: var(--color-chalk); }

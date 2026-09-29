@@ -60,7 +60,7 @@ const p = Astro.props;
 const page = `/rack/${p.app}`;
 const MAILTO = `mailto:support@missionbuilt.io?subject=${encodeURIComponent(p.name + ' beta')}&body=Apple%20ID%20email%3A%20`;
 ---
-<BaseLayout title={p.title} description={p.description} ogImageAlt={p.ogImageAlt} active="rack">
+<BaseLayout title={p.title} description={p.description} ogImage={`/images/${p.app}/og.jpg`} ogImageAlt={p.ogImageAlt} active="rack">
   <script is:inline slot="head" type="application/ld+json" set:html={JSON.stringify(p.ld)} />
   <TopNav active="rack" />
 
