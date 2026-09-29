@@ -1,4 +1,4 @@
-MealStack keeps three things: **ingredients** (a thing with macros per unit: what one unit of it is worth), **meals** (ingredients with amounts on a plate) and **stacks** (a training day and a rest day of meals, in order, under a name). Ingredients make meals, meals make stacks. A **plan** is stacks in rotation, one per calendar week, with a target and a schedule; a **day** is the record of what ran and what was eaten. "Week" in the schema always means the calendar week, never a stack. The same five things show up in five places: the app's own stores, the `.mealstack` file the app imports and exports, the file the MealStack skill writes in a model, what Coach proposes, and the telemetry the app sends. Until now each place spelled them a little differently. The MealStack Schema is one vocabulary for all five, so an ingredient is `ingredient.id` everywhere, a meal's time is `meal.anchor` and `meal.offset_minutes` everywhere, and a document from any of them reads the same.
+MealStack keeps three things: **ingredients** (a thing with macros per unit: what one unit of it is worth), **meals** (ingredients with amounts on a plate) and **stacks** (a training day and a recovery day of meals, in order, under a name). Ingredients make meals, meals make stacks. A **plan** is stacks in rotation, one per calendar week, with a target and a schedule; a **day** is the record of what ran and what was eaten. "Week" in the schema always means the calendar week, never a stack. The same five things show up in five places: the app's own stores, the `.mealstack` file the app imports and exports, the file the MealStack skill writes in a model, what Coach proposes, and the telemetry the app sends. Until now each place spelled them a little differently. The MealStack Schema is one vocabulary for all five, so an ingredient is `ingredient.id` everywhere, a meal's time is `meal.anchor` and `meal.offset_minutes` everywhere, and a document from any of them reads the same.
 
 ## Borrowed from ECS
 
@@ -6,7 +6,7 @@ The schema follows the [Elastic Common Schema](https://www.elastic.co/guide/en/e
 
 - **Field sets are namespaces.** Every field lives under a set named for the thing it describes (`ingredient.*`, `meal.*`, `day.*`), nested from general to specific with dots. A reader can understand `meal.*` without reading anything else. The only fields at the root are the ones ECS keeps at the root: `@timestamp`, `labels`, `tags`.
 - **Names are lower case, words joined with underscores, no abbreviations** except the ones everyone uses (`kcal`, `id`). Present tense. Singular for one thing, plural for a list (`meal.portions`, `schedule.training_weekdays`). No stuttering: `ingredient.name`, not `ingredient.ingredient_name`.
-- **Reuse instead of repetition.** `macros` (protein, carbs, fat, kcal) is defined once and nested wherever a value lives: `ingredient.per`, `meal.stated`, `target.training`, `day.consumed`. `meal` is nested under `stack.training`, `stack.rest` and `day.meal.landed`; `ingredient` under `portion.ingredient`. The reference says where each set is reused.
+- **Reuse instead of repetition.** `macros` (protein, carbs, fat, kcal) is defined once and nested wherever a value lives: `ingredient.per`, `meal.stated`, `target.training`, `day.consumed`. `meal` is nested under `stack.training`, `stack.recovery` and `day.meal.landed`; `ingredient` under `portion.ingredient`. The reference says where each set is reused.
 - **Core and extended.** Core fields are the ones every document of that kind carries and every reader must handle. Extended fields are narrower and more likely to change.
 - **A version field.** Every document says which schema version it follows (`mealstack.version`, the way ECS carries `ecs.version`), and what kind of document it is (`mealstack.kind`).
 - **Custom fields are welcome, outside the schema's names.** Anything the schema does not name goes under `labels` (key/value) or `tags`, never as a new key inside a MealStack field set, so a later version of the schema cannot collide with it.
@@ -19,7 +19,7 @@ Two rules are MealStack's own and shape everything:
 
 ## Versioning
 
-The schema has a semantic version, kept in `docs/schema/VERSION` and written into every document as `mealstack.version`. It tracks the app's version while both are under 1.0; the rules below apply from 1.0 on, and until then any release may rename. 0.9.2 renamed the `food` field set to `ingredient` (so `portion.food` is `portion.ingredient` and `plan.foods` is `plan.ingredients`), the `source` value `pantry` to `built_in`, and `pantry_version` to `built_in_version`. 0.9.3 redefined fuel (`meal.kind: fuel`): fuel may carry macros, which count in the day's totals; it never counts in `day.meal_count` or `plan.meals_per_day`; and an `at_session` anchor makes an item fuel.
+The schema has a semantic version, kept in `docs/schema/VERSION` and written into every document as `mealstack.version`. It tracks the app's version while both are under 1.0; the rules below apply from 1.0 on, and until then any release may rename. 0.9.2 renamed the `food` field set to `ingredient` (so `portion.food` is `portion.ingredient` and `plan.foods` is `plan.ingredients`), the `source` value `pantry` to `built_in`, and `pantry_version` to `built_in_version`. 0.9.3 redefined fuel (`meal.kind: fuel`): fuel may carry macros, which count in the day's totals; it never counts in `day.meal_count` or `plan.meals_per_day`; and an `at_session` anchor makes an item fuel. MealStack 0.13 renamed the day without a session from rest to recovery everywhere a value or a key says it (`day.type: recovery`, `stack.recovery`, `target.recovery`, `plan.meals_per_day.recovery`), with the Mission Built Schema 0.13; ids that contain `rest` (slot ids such as `rest.m1`) are ids and stay.
 
 - A **patch** changes descriptions and examples only.
 - A **minor** adds fields, field sets or expected values. A reader built for 1.0 reads a 1.3 document and ignores what it does not know.
@@ -27,17 +27,21 @@ The schema has a semantic version, kept in `docs/schema/VERSION` and written int
 
 Field sets and fields can also carry a stability marker the way ECS does: nothing in 1.0 is marked, which means stable; a field added later may arrive as `beta` for a release before it is held to the major/minor rule.
 
+## The Mission Built Schema
+
+IronStack and MealStack share a vocabulary: the Mission Built Schema, in the `missionbuilt-kit` repository under `schema/` (0.13 at the time of writing). The field sets the two apps have in common are defined there, once, and read there; they are not copied here. This schema stays MealStack's own. It describes what MealStack keeps and writes: its stores, its plan file (format 2) and what Coach proposes, in names that match the kit's where the two describe the same thing.
+
 ## How the five places map onto it
 
 | Place | Today | Under the schema |
 |---|---|---|
-| `.mealstack` plan file (format 1) | camelCase keys (`offsetMinutes`, `latestMeal`, `trainingWeekdays`), `"mealstack": 1`, anchors `beforeSession` etc.; `stacks` (with `weeks` read as the older spelling); declared ingredients under `foods`, with `ingredients` read as the same list from app 0.9.1 and written once 0.9.1 is the oldest build in use | Format 2 is the schema's names verbatim: `mealstack.version`, `meal.offset_minutes`, `schedule.latest_meal`, `meal.anchor: before_session`, `plan.ingredients`. The app reads both; the skill writes 2. |
+| `.mealstack` plan file (format 2) | camelCase keys (`offsetMinutes`, `latestMeal`, `trainingWeekdays`), `"mealstack": 2`, anchors `beforeSession` etc.; `stacks` (with `weeks` read as the older spelling), each a `training` and a `recovery` list, and `targets.recovery`; declared ingredients under `foods`, with `ingredients` read as the same list from app 0.9.1 and written once 0.9.1 is the oldest build in use. Format 1 (`"mealstack": 1`, the recovery day written `rest`) is read, translated, until 2026-11-30 | A later format 3 is the schema's names verbatim: `mealstack.version`, `meal.offset_minutes`, `schedule.latest_meal`, `meal.anchor: before_session`, `plan.ingredients`. The app will read 2 and 3; the skill will write 3. |
 | The app's stores (`plan.json`, `logs.json`, `kitchen*.json`) | Swift property names, camelCase, some historical (`rule` for the anchor, `dayKey`, `moreWeeks` and `SavedWeek` for stacks, `Food` and `foods.json` for ingredients) | Migrated on the first launch after the change, to the schema's names, one store at a time behind a version stamp; the old file is kept until the new one has been read back once. |
-| The MealStack skill | writes format 1 | writes format 2 and reads `mealstack-schema.json` for its field reference instead of a hand-kept copy |
-| Coach's `propose_plan` | its own JSON shape, close to format 1 | the same document as a plan file with `mealstack.kind: proposal`; accepting a proposal is importing it |
+| The MealStack skill | writes format 2 | writes format 3 and reads `mealstack-schema.json` for its field reference instead of a hand-kept copy |
+| Coach's `propose_plan` | its own JSON shape, close to the plan file; a coach's plan written down by Coach is a plan file, format 2 | the same document as a plan file with `mealstack.kind: proposal`; accepting a proposal is importing it |
 | Telemetry | event names as strings | ECS `event.*` with the same names in `event.action` |
 
-The mapping table for format 1 to the schema, key by key, lives in `plan-format.md` once format 2 ships; until then format 1 is documented there as it is.
+The mapping table from the plan file to the schema, key by key, goes in `plan-format.md` when format 3 ships; until then format 2 is documented there as it is, with how format 1 is still read.
 
 ## Reading the reference
 

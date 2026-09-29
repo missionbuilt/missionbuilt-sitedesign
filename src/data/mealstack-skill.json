@@ -1,11 +1,11 @@
 {
   "name": "mealstack-plan",
   "zip": "/downloads/mealstack-plan.zip",
-  "zipBytes": 30471,
-  "sha256": "465c9cea7bf920d23d1b9b1f13af913f6676a611f358f3834fed5b0c08aa4ac5",
+  "zipBytes": 33156,
+  "sha256": "09f6cdad64931396719f0cd69fa4e7cf717d9ad3a536bac0782613dcfc4a00d4",
   "files": 7,
   "builtInIngredients": 208,
-  "builtInVersion": 4,
+  "builtInVersion": 5,
   "examples": [
     {
       "file": "/downloads/mealstack/chicken-and-rice-week.mealstack",

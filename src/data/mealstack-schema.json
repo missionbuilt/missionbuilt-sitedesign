@@ -79,7 +79,7 @@
           "array": false,
           "short": "The MealStack Schema version the document follows.",
           "paragraphs": [
-            "The version of the MealStack Schema the document is written against, as a semantic version string. A reader refuses a major version it does not know and reads any minor or patch version at or below the one it was built for. The `.mealstack` plan file format 1 carries `\"mealstack\": 1` instead and predates this field; format 2 carries `mealstack.version`."
+            "The version of the MealStack Schema the document is written against, as a semantic version string. A reader refuses a major version it does not know and reads any minor or patch version at or below the one it was built for. The `.mealstack` plan file carries a format number instead (`\"mealstack\": 2` from MealStack 0.13, `\"mealstack\": 1` before it) and predates this field; a later format 3, the schema's names verbatim, carries `mealstack.version`."
           ],
           "values": [],
           "pattern": null,
@@ -176,9 +176,9 @@
           "note": "The training-day target."
         },
         {
-          "path": "target.rest",
+          "path": "target.recovery",
           "array": false,
-          "note": "The rest-day target."
+          "note": "The recovery-day target."
         },
         {
           "path": "day.target",
@@ -465,9 +465,9 @@
           "note": "The training day's meals, in the order eaten."
         },
         {
-          "path": "stack.rest",
+          "path": "stack.recovery",
           "array": true,
-          "note": "The rest day's meals, in the order eaten."
+          "note": "The recovery day's meals, in the order eaten."
         },
         {
           "path": "plan.meals",
@@ -490,7 +490,7 @@
           "array": false,
           "short": "The slot's identifier within a plan.",
           "paragraphs": [
-            "The slot's identifier within a plan: `train.m1`, `train.f2`, `rest.m3`. The same slot ids run through every stack of a rotation (only the plates change), which is how a day's log stays whole when the stack changes. A meal on its own has no slot and reads `shelf.m1`."
+            "The slot's identifier within a plan: `train.m1`, `train.f2`, `rest.m3`. The same slot ids run through every stack of a rotation (only the plates change), which is how a day's log stays whole when the stack changes. A meal on its own has no slot and reads `shelf.m1`. An id, not a day kind: a recovery-day slot keeps the `rest.` prefix from 0.13 on, so logs, alerts and Health samples written before it still match."
           ],
           "values": [],
           "pattern": null,
@@ -549,7 +549,7 @@
           "array": false,
           "short": "What the meal's time hangs from.",
           "paragraphs": [
-            "What the meal's time hangs from. `forward` chains off the meal before it (the first forward meal of the day sits on wake time); `before_session`, `at_session` and `after_session` are pinned to the session and do not move when the morning runs late. `at_session` makes the item fuel. Rest days have no session, so every rest meal and fuel item is `forward`. Every training day has one meal (not fuel) anchored `before_session`: the carb surge. Required inside a stack; absent on a meal on its own."
+            "What the meal's time hangs from. `forward` chains off the meal before it (the first forward meal of the day sits on wake time); `before_session`, `at_session` and `after_session` are pinned to the session and do not move when the morning runs late. `at_session` makes the item fuel. Recovery days have no session, so every meal and fuel item on one is `forward`. Every training day has one meal (not fuel) anchored `before_session`: the carb surge. Required inside a stack; absent on a meal on its own."
           ],
           "values": [
             "forward",
@@ -682,9 +682,9 @@
     {
       "name": "stack",
       "title": "Stack",
-      "short": "A training day and a rest day of meals, kept under a name; what a rotation runs one per week.",
+      "short": "A training day and a recovery day of meals, kept under a name; what a rotation runs one per week.",
       "paragraphs": [
-        "A stack is the unit the rotation runs on: one training day and one rest day of meals, in the order they are eaten, under a name. Ingredients make meals, meals make stacks. A person keeps stacks on the Stacks shelf and runs them in a rotation, one per calendar week, repeating; a plan file carries one or several. The slots (ids, anchors, offsets) are the same across the stacks of a rotation; only the plates change. \"Week\" in this schema always means the calendar week."
+        "A stack is the unit the rotation runs on: one training day and one recovery day of meals, in the order they are eaten, under a name. Ingredients make meals, meals make stacks. A person keeps stacks on the Stacks shelf and runs them in a rotation, one per calendar week, repeating; a plan file carries one or several. The slots (ids, anchors, offsets) are the same across the stacks of a rotation; only the plates change. \"Week\" in this schema always means the calendar week."
       ],
       "root": false,
       "reusedAs": [
@@ -753,14 +753,14 @@
           "example": null
         },
         {
-          "name": "stack.rest",
+          "name": "stack.recovery",
           "level": "core",
           "type": "object",
           "required": false,
           "array": true,
-          "short": "The rest day's meals (an array of `meal`).",
+          "short": "The recovery day's meals (an array of `meal`).",
           "paragraphs": [
-            "The rest day's meals, in the order eaten, all anchored `forward`."
+            "The recovery day's meals, in the order eaten, all anchored `forward`. Plan file format 1 wrote this list as `rest`; format 2 writes `recovery`."
           ],
           "values": [],
           "pattern": null,
@@ -848,7 +848,7 @@
           "array": true,
           "short": "The stacks, in rotation order (an array of `stack`).",
           "paragraphs": [
-            "The stacks, in rotation order, one per calendar week. The first runs first; when the last ends the first runs again. In plan file format 1 the key `weeks` is the older spelling and reads as the same thing."
+            "The stacks, in rotation order, one per calendar week. The first runs first; when the last ends the first runs again. In the plan file (formats 1 and 2) the key `weeks` is the older spelling and reads as the same thing."
           ],
           "values": [],
           "pattern": null,
@@ -876,7 +876,7 @@
           "array": true,
           "short": "Ingredients the app doesn't have built in (an array of `ingredient`).",
           "paragraphs": [
-            "Ingredients the app doesn't have built in, declared once and referenced by id from portions. A file may carry only these. In plan file format 1 the app reads the key `ingredients` from 0.9.1 and `foods` (the spelling 0.9 reads, and the one writers still write until 0.9.1 is the oldest build in use) as the same thing; a file with both is read by `ingredients`."
+            "Ingredients the app doesn't have built in, declared once and referenced by id from portions. A file may carry only these. In the plan file (formats 1 and 2) the app reads the key `ingredients` from 0.9.1 and `foods` (the spelling 0.9 reads, and the one writers still write until 0.9.1 is the oldest build in use) as the same thing; a file with both is read by `ingredients`."
           ],
           "values": [],
           "pattern": null,
@@ -911,14 +911,14 @@
           "example": "5"
         },
         {
-          "name": "plan.meals_per_day.rest",
+          "name": "plan.meals_per_day.recovery",
           "level": "extended",
           "type": "integer",
           "required": false,
           "array": false,
-          "short": "How many meals a rest day holds.",
+          "short": "How many meals a recovery day holds.",
           "paragraphs": [
-            "How many meal slots a rest day holds, never counting fuel. Five by default, 2 to 8."
+            "How many meal slots a recovery day holds, never counting fuel. Five by default, 2 to 8."
           ],
           "values": [],
           "pattern": null,
@@ -993,7 +993,7 @@
           "array": false,
           "short": "When the first working set is, `HH:MM`.",
           "paragraphs": [
-            "When the training session starts (the first working set), `HH:MM`. Rest days have no session."
+            "When the training session starts (the first working set), `HH:MM`. Recovery days have no session."
           ],
           "values": [],
           "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$",
@@ -1021,7 +1021,7 @@
           "array": true,
           "short": "Which weekdays are training days, 1 = Sunday … 7 = Saturday.",
           "paragraphs": [
-            "Which weekdays are training days, as 1 = Sunday through 7 = Saturday. Every other day is a rest day."
+            "Which weekdays are training days, as 1 = Sunday through 7 = Saturday. Every other day is a recovery day."
           ],
           "values": [],
           "pattern": null,
@@ -1060,9 +1060,9 @@
     {
       "name": "target",
       "title": "Target",
-      "short": "The daily targets, one for a training day and one for a rest day.",
+      "short": "The daily targets, one for a training day and one for a recovery day.",
       "paragraphs": [
-        "The daily target is what every stack is measured against: grams of protein, carbs and fat for a training day and for a rest day. It belongs to the plan, not to any one stack. A plan with no target measures each day against what its plates add up to."
+        "The daily target is what every stack is measured against: grams of protein, carbs and fat for a training day and for a recovery day. It belongs to the plan, not to any one stack. A plan with no target measures each day against what its plates add up to."
       ],
       "root": false,
       "reusedAs": [
@@ -1089,14 +1089,14 @@
           "example": "{\"protein\": 230, \"carbs\": 360, \"fat\": 63}"
         },
         {
-          "name": "target.rest",
+          "name": "target.recovery",
           "level": "core",
           "type": "object",
           "required": false,
           "array": false,
-          "short": "The rest-day target (a `macros`).",
+          "short": "The recovery-day target (a `macros`).",
           "paragraphs": [
-            "Grams of protein, carbs and fat for a rest day."
+            "Grams of protein, carbs and fat for a recovery day."
           ],
           "values": [],
           "pattern": null,
@@ -1167,13 +1167,13 @@
           "type": "keyword",
           "required": true,
           "array": false,
-          "short": "Training or rest.",
+          "short": "Training or recovery.",
           "paragraphs": [
-            "Whether the day ran as a training day or a rest day, after any override."
+            "Whether the day ran as a training day or a recovery day, after any override. Written `rest` for a recovery day before MealStack 0.13; the app migrates its own stores once, on the first launch of 0.13."
           ],
           "values": [
             "training",
-            "rest"
+            "recovery"
           ],
           "pattern": null,
           "example": "training"

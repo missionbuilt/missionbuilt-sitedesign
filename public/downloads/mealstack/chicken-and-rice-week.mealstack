@@ -1,5 +1,5 @@
 {
- "mealstack": 1,
+ "mealstack": 2,
  "name": "Chicken and rice week",
  "notes": "One week that repeats. Five meals a day, carbs stacked around the session; on training days creatine, a jug and a shake after the session are fuel on top of the five. General nutrition information for healthy adults, not medical advice. Written by an AI from your answers; check with a physician or registered dietitian before changing how you eat.",
  "schedule": {
@@ -19,7 +19,7 @@
    "c": 265,
    "f": 50
   },
-  "rest": {
+  "recovery": {
    "p": 190,
    "c": 200,
    "f": 60
@@ -189,7 +189,7 @@
      ]
     }
    ],
-   "rest": [
+   "recovery": [
     {
      "name": "Eggs and oats",
      "anchor": "forward",
