@@ -113,9 +113,11 @@ It reads `~/Projects/mealstack/MealStack/CHANGELOG.md` by default (pass another 
 
 Commit the generated files and push. Cloudflare builds without the app repo, so the copies have to be in this one.
 
-## sync_mealstack_skill.py
+## sync_plan_skill.py
 
-Packages the MealStack plan skill for [/rack/mealstack/skill](https://missionbuilt.io/rack/mealstack/skill), the page the app's About ("Build a plan with Claude") and import sheet link to. It zips `~/Projects/mealstack/MealStack/skills/mealstack-plan` (SKILL.md, references, scripts, examples; no tests or caches) into `public/downloads/mealstack-plan.zip`, copies the example plans to `public/downloads/mealstack/`, and writes the page's figures to `src/data/mealstack-skill.json`. The zip is reproducible: nothing changed in the skill, nothing changes here.
+Packages an app's plan skill for [/loadout/plans](https://missionbuilt.io/loadout/plans): `python3 scripts/sync_plan_skill.py --app ironstack` or `--app mealstack`. It zips the skill folder from the app repo (`~/Projects/ironstack/skills/ironstack-plan` or `~/Projects/mealstack/MealStack/skills/mealstack-plan`; SKILL.md, references, scripts, examples; no tests, caches or `build_*.py`) into `public/downloads/<app>-plan.zip`, copies the examples to `public/downloads/<app>/`, and writes the page's figures to `src/data/<app>-skill.json`. It refuses a skill that names a private file (a Swift source, the kit, a home folder), because this repo is public. The zip is reproducible: nothing changed in the skill, nothing changes here.
+
+The skills live on the Loadout, not the Rack: the app pages don't mention them. `/rack/mealstack/skill` 301s to `/loadout/plans` because installed MealStack builds still link there.
 
 ## sync_mealstack.py
 

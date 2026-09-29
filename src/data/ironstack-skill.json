@@ -1,0 +1,16 @@
+{
+  "name": "ironstack-plan",
+  "zip": "/downloads/ironstack-plan.zip",
+  "zipBytes": 32111,
+  "sha256": "0aa6f20c406588b36202da51d04588dc21df65007ea84731f57b6b761823f344",
+  "files": 8,
+  "lifts": 603,
+  "examples": [
+    {
+      "file": "/downloads/ironstack/four-day-powerlifting.ironstack",
+      "name": "Four-day powerlifting, block 1",
+      "workouts": 4,
+      "days": 4
+    }
+  ]
+}

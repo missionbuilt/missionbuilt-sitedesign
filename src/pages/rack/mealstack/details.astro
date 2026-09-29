@@ -15,8 +15,8 @@
  * order: hero → try it (the click-through demo, /demos/mealstack.html) →
  * why (the four pillars, linking to the Log) → the rule (live cascade)
  * → what it does differently → how you use it → side by side → fine print →
- * join the beta (form → /api/beta) → the kit (plan skill, release notes,
- * schema, privacy) → FAQ → tester quotes (rendered only when there are real ones) →
+ * join the beta (form → /api/beta) → the kit (release notes, schema,
+ * privacy) → FAQ → tester quotes (rendered only when there are real ones) →
  * better together (components/BetterTogether.astro, shared with IronStack) → related.
  *
  * How we talk about it: the Log "Fueling is training"
@@ -337,7 +337,7 @@ const ld = {
         <div class="lic-cell" id="your-data">
           <p class="k">The code</p>
           <p class="v">Closed app. Open data.</p>
-          <p class="body">MealStack is a closed-source app from Mission Built. What is open is your data: a plan is a plain JSON file in a documented format, <a class="inline-link" href="/rack/mealstack/schema">the MealStack Schema</a>. Plans and stacks export as those files and import back in, and you can read one, write one, or have Claude write one with <a class="inline-link" href="/rack/mealstack/skill">the plan skill</a>. The MealStack name and the marks stay with Mission Built.</p>
+          <p class="body">MealStack is a closed-source app from Mission Built. What is open is your data: a plan is a plain JSON file in a documented format, <a class="inline-link" href="/rack/mealstack/schema">the MealStack Schema</a>. Plans and stacks export as those files and import back in. The MealStack name and the marks stay with Mission Built.</p>
         </div>
         <div class="lic-cell">
           <p class="k">Price</p>
@@ -400,14 +400,9 @@ const ld = {
     {/* ---------- THE KIT ---------- */}
     <section class="block" id="kit">
       <p class="section-label">For testers</p>
-      <h2 class="section-h2">Build a plan, see what changed, read the fine print.</h2>
+      <h2 class="section-h2">See what changed, and read the fine print.</h2>
 
-      <div class="related four">
-        <a href="/rack/mealstack/skill" class="related-card">
-          <h3>Plan skill</h3>
-          <p>Teach Claude to write a MealStack plan file. Ask for a week of meals, tap the file on your phone, and it lands on your shelves.</p>
-          <span class="related-cta">Download →</span>
-        </a>
+      <div class="related three">
         <a href="/rack/mealstack/changelog" class="related-card">
           <h3>Release notes</h3>
           <p>What changed in each build, in plain words, newest first. The app's About links here.</p>
@@ -415,7 +410,7 @@ const ld = {
         </a>
         <a href="/rack/mealstack/schema" class="related-card">
           <h3>Schema</h3>
-          <p>One set of names for ingredients, meals, stacks, plans and days, in the app, the plan file, the skill and Coach. Every field, with a download for tools.</p>
+          <p>One set of names for ingredients, meals, stacks, plans and days, in the app, the plan file and Coach. Every field, with a download for tools.</p>
           <span class="related-cta">Read →</span>
         </a>
         <a href="/rack/mealstack/privacy" class="related-card">
@@ -492,7 +487,7 @@ const ld = {
     </section>
 
   </main>
-  <SiteFooter links={[{ label: 'Plan skill', href: '/rack/mealstack/skill' }, { label: 'Release notes', href: '/rack/mealstack/changelog' }, { label: 'Schema', href: '/rack/mealstack/schema' }, { label: 'Privacy', href: '/rack/mealstack/privacy' }]} />
+  <SiteFooter links={[{ label: 'Release notes', href: '/rack/mealstack/changelog' }, { label: 'Schema', href: '/rack/mealstack/schema' }, { label: 'Privacy', href: '/rack/mealstack/privacy' }]} />
 </BaseLayout>
 
 <script>
@@ -859,6 +854,7 @@ const ld = {
 
   /* ============ RELATED ============ */
   .related { margin-top: 28px; display: grid; grid-template-columns: 1fr 1fr; border-top: var(--border-thin); border-bottom: var(--border-thin); }
+  .related.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .related.four .related-card:nth-child(2n) { border-right: none; }
   .related.four .related-card:nth-child(-n+2) { border-bottom: var(--border-thin); }
   .related-card { display: flex; flex-direction: column; gap: 10px; padding: 28px; border-right: var(--border-thin); text-decoration: none; transition: background 120ms ease-out; }
@@ -908,7 +904,7 @@ const ld = {
     .vr { grid-template-columns: 1fr; gap: 6px; }
     .vr span:nth-child(2)::before { content: 'Other apps · '; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-chalk-faint); }
     .vr span:last-child::before { content: 'MealStack · '; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-chalk-faint); }
-    .related { grid-template-columns: 1fr; }
+    .related, .related.three { grid-template-columns: 1fr; }
     .related-card { border-right: none; border-bottom: var(--border-thin); }
     .related-card:last-child { border-bottom: none; }
     .dashed { margin: 36px var(--pad-page-x-mobile) 0; }

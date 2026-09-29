@@ -2,7 +2,7 @@
 /**
  * ToolNoteLayout — a tool's supporting page in the Log's shape.
  *
- * Used by /rack/mealstack/changelog and /rack/mealstack/skill. Same grammar as a
+ * Used by the Rack's changelog and schema pages and by /loadout/plans. Same grammar as a
  * Log (/logs/[slug]): breadcrumb, one 680px column, mono eyebrow, display h1 with
  * one word in oxblood, Oswald standfirst, ruled mono byline, serif body with
  * oxblood list dashes, the tool card and a back link at the foot.
@@ -19,8 +19,10 @@ import { TOOLS, type ToolKey } from '../data/logs';
 interface Props {
   title: string;
   description: string;
-  /** Breadcrumb trail after "The Rack"; the last entry is the current page. */
+  /** Breadcrumb trail after the section root; the last entry is the current page. */
   crumbs: { label: string; href?: string }[];
+  /** The section the page sits in: the breadcrumb root and the lit nav link. The Rack by default. */
+  section?: 'rack' | 'loadout';
   eyebrow: string;
   heading: string;
   /** One word of `heading` to set in oxblood. */
@@ -32,19 +34,20 @@ interface Props {
   footLinks?: { label: string; href: string }[];
 }
 
-const { title, description, crumbs, eyebrow, heading, accent, standfirst, tool: toolKey, toolKicker = 'The app', back, footLinks = [] } = Astro.props;
+const { title, description, crumbs, section = 'rack', eyebrow, heading, accent, standfirst, tool: toolKey, toolKicker = 'The app', back, footLinks = [] } = Astro.props;
+const root = section === 'loadout' ? { label: 'The Loadout', href: '/loadout' } : { label: 'The Rack', href: '/rack' };
 const i = accent ? heading.indexOf(accent) : -1;
 const hBefore = i >= 0 ? heading.slice(0, i) : heading;
 const hAfter = i >= 0 ? heading.slice(i + (accent?.length ?? 0)) : '';
 const tool = TOOLS[toolKey];
 ---
-<BaseLayout title={title} description={description} active="rack">
+<BaseLayout title={title} description={description} active={section}>
   <slot name="head" slot="head" />
-  <TopNav active="rack" />
+  <TopNav active={section} />
 
   <main id="main" class="page">
     <nav class="breadcrumb" aria-label="Breadcrumb">
-      <a href="/rack">The Rack</a>
+      <a href={root.href}>{root.label}</a>
       {crumbs.map((c) => (
         <>
           <span aria-hidden="true"> / </span>

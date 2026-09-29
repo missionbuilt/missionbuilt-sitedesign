@@ -1,0 +1,195 @@
+---
+/**
+ * The plan skills. /loadout/plans
+ *
+ * Two skills that turn a plan into a file an app on the Rack opens with one tap:
+ * ironstack-plan (a program someone already has, transcribed into an .ironstack
+ * file; it does not write programs) and mealstack-plan (stacks, meals and
+ * ingredients as a .mealstack file). The skills live in the app repos and are
+ * packaged by scripts/sync_plan_skill.py into public/downloads/<app>-plan.zip,
+ * with the figures the page shows in src/data/<app>-skill.json.
+ *
+ * Skills live on the Loadout, not the Rack: the app pages don't mention them.
+ * This page moved here from /rack/mealstack/skill on Sept 29, 2026; that URL
+ * 301s here because installed MealStack builds still link to it.
+ *
+ * On ToolNoteLayout, so it reads like a Log. The caveat sits in plain view before
+ * the install steps, as each skill states it before its first question, and the
+ * disclaimer in full closes the page. No license is named for either skill.
+ */
+import ToolNoteLayout from '../../layouts/ToolNoteLayout.astro';
+import Disclaimer from '../../components/logs/Disclaimer.astro';
+import iron from '../../data/ironstack-skill.json';
+import meal from '../../data/mealstack-skill.json';
+
+const kb = (bytes: number) => Math.max(1, Math.round(bytes / 1024));
+const downloads = [
+  { app: 'IronStack', skill: iron },
+  { app: 'MealStack', skill: meal },
+];
+
+const ironAsks = [
+  'Here is the spreadsheet my coach sent. Put it in IronStack.',
+  'This is a photo of week one of my program. Make it a plan file.',
+  'I squat Monday and Thursday and bench Tuesday and Friday, then accessories. Load that.',
+  'Check this .ironstack file before I import it.',
+];
+const mealAsks = [
+  'Write me a week of meals for a cut. I train Monday, Tuesday, Thursday and Friday at 6 pm.',
+  'Turn this spreadsheet from my coach into a MealStack plan.',
+  'Give me three lunches I can rotate, around 50 g of protein each.',
+  'Add my protein powder to MealStack. Here is the label.',
+];
+
+const examples = [
+  ...iron.examples.map((e) => ({ app: 'IronStack', file: e.file, name: e.name, meta: `${e.workouts} workouts, ${e.days} days a week` })),
+  ...meal.examples.map((e) => ({ app: 'MealStack', file: e.file, name: e.name,
+    meta: e.stacks > 0 ? `${e.stacks} stack${e.stacks === 1 ? '' : 's'}, a training day and a recovery day` : `${e.meals} meals on their own` })),
+];
+---
+<ToolNoteLayout
+  title="Bring your plan with Claude · The Loadout · Mission Built"
+  description="Two Claude skills for the barbell half: one puts the program you already run into IronStack, the other writes meal plans for MealStack. One file, one tap on your iPhone."
+  section="loadout"
+  crumbs={[{ label: 'Plan skills' }]}
+  eyebrow="Plan skills for the Rack"
+  heading="Bring your plan with Claude"
+  accent="plan"
+  standfirst="Two skills for the barbell half. One puts the program you already run into IronStack. The other writes meals for MealStack. Either way Claude hands you one file, you tap it on your phone, and it lands in the app."
+  tool="loadout"
+  toolKicker="The Loadout"
+  back={{ label: 'The Loadout', href: '/loadout' }}
+  footLinks={[{ label: 'IronStack', href: '/rack/ironstack' }, { label: 'MealStack', href: '/rack/mealstack' }]}
+>
+  <Fragment slot="byline">
+    Two skills · {iron.name} · {meal.name} · downloads, not on the Loadout server
+  </Fragment>
+
+  <Fragment slot="lead">
+    <div class="get">
+      {downloads.map((d) => (
+        <a class="dl-btn" href={d.skill.zip} download>
+          <span class="dl-ico" aria-hidden="true">↓</span>
+          <span class="dl-text">
+            <span class="dl-name">{d.app} · {d.skill.name}.zip</span>
+            <span class="dl-meta">Skill folder · {kb(d.skill.zipBytes)} KB · Claude or any tool that reads skills</span>
+          </span>
+        </a>
+      ))}
+    </div>
+  </Fragment>
+
+  <aside class="caveat" aria-label="Read this first">
+    <p class="k">Read this first</p>
+    <p class="lead"><strong>I am not a coach, a doctor or a dietitian.</strong> Neither are these skills, and neither are the apps. Nothing they write is advice about how you should train or eat.</p>
+    <p>What they write is general training and nutrition information for healthy adults, put together by an AI from what you give it, and it can be wrong. Talk to a physician, a qualified coach or a registered dietitian who knows you before changing how you train or eat, especially after an injury, if you are pregnant or breastfeeding, managing a medical condition, or taking medication. Stop any lift that hurts. They are for adults only.</p>
+    <p>Each skill says this before its first question and again when it hands over the file, and writes the short form into the file so it shows when you import it. Neither advises on pain, injury, medical conditions, medication or supplement doses.</p>
+  </aside>
+
+  <h2 class="rule" id="ironstack">IronStack: the program you already run</h2>
+  <p>Your program is already written somewhere: a spreadsheet, a coach's PDF, a photo of a handout, or a week you can describe from memory. The skill copies it into a file IronStack opens, so the lifts, their order, the gear, the pace and the rest are on screen when you train, and all that is left to say is the weight and how it felt.</p>
+  <ul class="dash">
+    <li><strong>It copies; it does not write.</strong> The plan comes from you or your coach, lift for lift. Ask it to design a block from nothing and it will say that is a coach's job, and offer to load one once you have it.</li>
+    <li><strong>Names that join your history.</strong> Every lift is matched to the app's list of {iron.lifts} lifts, so "last time" works on the first day. A lift that isn't on the list comes in under the plan's own name, marked new.</li>
+    <li><strong>No weights it made up.</strong> A weight goes in only when the plan states it in pounds. A percentage of a max never becomes a number: the app knows your lifting, and fills each weight from last time.</li>
+    <li><strong>Prep sets as prep sets.</strong> Warm-up sets your plan lists come in as prep; it adds none of its own.</li>
+  </ul>
+  <ul class="asks">
+    {ironAsks.map((a) => <li>{a}</li>)}
+  </ul>
+  <p>Tap the file on your phone and IronStack opens a preview. <em>Make it my program</em> sets the program's name and days a week; a workout for a day replaces the one already on that day. Nothing is logged. On a training day, Today offers that day's workout first.</p>
+
+  <h2 class="rule" id="mealstack">MealStack: a week of meals</h2>
+  <p>One file, named for the plan, ending in <code>.mealstack</code>. It can carry any mix of the three things MealStack keeps, each landing on its own shelf of the Plan tab:</p>
+  <ul class="dash">
+    <li><strong>Stacks.</strong> A training day and a recovery day of meals under a name. One stack is a week that repeats; several are a rotation, one per week.</li>
+    <li><strong>Meals on their own.</strong> Plates with no time on them, for the Meals shelf. "Three lunches I can rotate."</li>
+    <li><strong>Ingredients.</strong> Anything the app doesn't have built in, with what one unit is worth. "Add my protein powder."</li>
+  </ul>
+  <p>It lays out the day the way the app does: morning meals chained from the first one, the carb surge pinned before the session, fuel as its own entry, nothing past your last meal. It sizes each day to your targets within 5%. Ask the way you'd ask a coach; it takes it from there in two or three questions: when you eat and train, how many meals, your targets, what you like.</p>
+  <ul class="asks">
+    {mealAsks.map((a) => <li>{a}</li>)}
+  </ul>
+  <p>Tap the file on your phone and MealStack opens a preview: the stacks and their macros, the meals, the ingredients it adds. <em>Make it my plan</em> runs the first stack this week and the rest as the rotation, and keeps the plan you had on the Stacks shelf. <em>Add to the shelves</em> puts everything on the shelves and leaves your plan alone. Nothing changes until you choose.</p>
+
+  <h2 class="rule">Install them</h2>
+  <ol class="steps">
+    <li><span class="n">01</span><div><strong>Download the zip</strong> for the app you use, or both. Leave it zipped for Claude; unzip it for a tool that wants the folder.</div></li>
+    <li><span class="n">02</span><div><strong>Claude.</strong> Add it under Settings, Capabilities, Skills.</div></li>
+    <li><span class="n">03</span><div><strong>Claude Code, or another tool that reads skills.</strong> Put the unzipped folder in its skills folder, <code>~/.claude/skills/</code> for Claude Code.</div></li>
+    <li><span class="n">04</span><div><strong>Get the file to your phone.</strong> AirDrop it, mail it to yourself, or save it to Files, then tap it.</div></li>
+  </ol>
+  <p>Each skill runs a checker that refuses what its app refuses before it hands a file over. Where Claude can't run code, it checks by hand and tells you so.</p>
+
+  <h2 class="rule">Try an example</h2>
+  <p>The files the skills learn from. On an iPhone with the app installed, tap one to see the import preview.</p>
+  <div class="examples">
+    {examples.map((e) => (
+      <a class="example" href={e.file} download>
+        <span class="ex-app">{e.app}</span>
+        <span class="ex-name">{e.name}</span>
+        <span class="ex-meta">{e.meta}</span>
+        <span class="ex-cta">Download ↓</span>
+      </a>
+    ))}
+  </div>
+
+  <h2 class="rule">What stays where</h2>
+  <p>The skills run in your Claude, under your account. Nothing they write passes through Mission Built, and the file goes from Claude to your phone the way any file does. Each app refuses a file it can't read, so the worst a bad file does is show a message. What the apps themselves keep and send is on their privacy pages: <a href="/rack/ironstack/privacy">IronStack</a> and <a href="/rack/mealstack/privacy">MealStack</a>.</p>
+  <p>Each format is documented inside its skill (<code>references/plan-format.md</code>), along with IronStack's {iron.lifts} lifts and MealStack's {meal.builtInIngredients} built-in ingredients. IronStack and MealStack are Mission Built marks.</p>
+
+  <Disclaimer title="The disclaimer, in full">
+    <p><strong>I am not a coach, a doctor or a dietitian.</strong> I am not qualified to tell you how to train or eat, and nothing these skills write is advice.</p>
+    <p>The IronStack skill copies a program you already have into a file; it does not write one. The MealStack skill turns what you tell it into a meal plan the app can run, the same way I plan my own meals while training. Neither knows your health, your history or your bloodwork. If you want to know how <em>you</em> should train or eat, talk to a qualified coach, a registered dietitian and your physician before you change anything. How you train and what you eat are your decisions and your responsibility.</p>
+  </Disclaimer>
+</ToolNoteLayout>
+
+<style>
+  .get { margin-top: 24px; display: flex; flex-wrap: wrap; gap: 12px; }
+  .dl-btn {
+    display: inline-flex; align-items: center; gap: 16px; padding: 16px 22px;
+    background: var(--color-panel); border: var(--border-thin); border-left: 3px solid var(--color-blood);
+    text-decoration: none; transition: background 120ms ease-out;
+  }
+  .dl-btn:hover { background: rgba(255,255,255,0.02); }
+  .dl-ico { font-family: var(--font-mono); font-size: 18px; color: var(--color-blood-text); line-height: 1; }
+  .dl-text { display: flex; flex-direction: column; gap: 4px; }
+  .dl-name { font-family: var(--font-display); font-weight: 600; font-size: 16px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--color-chalk); }
+  .dl-meta { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-chalk-faint); }
+
+  .caveat { margin: 34px 0 0; padding: 18px 20px; border: var(--border-thin); }
+  .caveat .k {
+    margin: 0 0 10px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--color-chalk);
+  }
+  .caveat p:not(.k) { font-size: 15px; line-height: 1.6; }
+  .caveat p.lead { font-size: 16px; color: var(--color-chalk); }
+  .caveat p:last-child { margin-bottom: 0; }
+
+  .steps { list-style: none; margin: 0 0 22px; padding: 0; border-top: var(--border-thin); }
+  .steps li { display: grid; grid-template-columns: 44px 1fr; gap: 8px; padding: 14px 0; border-bottom: var(--border-thin); font-size: 16px; }
+  .steps .n { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.16em; color: var(--color-chalk-faint); padding-top: 5px; }
+
+  .asks { list-style: none; margin: 0 0 22px; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+  .asks li {
+    padding: 10px 14px; background: var(--color-panel); border: var(--border-thin);
+    font-family: var(--font-mono); font-size: 13px; line-height: 1.5; color: var(--color-chalk);
+  }
+
+  .examples { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: var(--border-thin); border-bottom: var(--border-thin); margin: 0 0 22px; }
+  .example { display: flex; flex-direction: column; gap: 6px; padding: 18px 20px; border-right: var(--border-thin); text-decoration: none; transition: background 120ms ease-out; }
+  .example:last-child { border-right: none; }
+  .example:hover { background: rgba(255,255,255,0.015); }
+  .ex-app { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-faint); }
+  .ex-name { font-family: var(--font-display); font-weight: 600; font-size: 18px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--color-chalk); }
+  .ex-meta { font-family: var(--font-serif); font-size: 14px; color: var(--color-chalk-dim); }
+  .ex-cta { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-faint); transition: color 120ms ease-out; }
+  .example:hover .ex-cta { color: var(--color-blood-text); }
+
+  @media (max-width: 720px) {
+    .dl-btn { display: flex; }
+    .examples { grid-template-columns: 1fr; }
+    .example { border-right: none; border-bottom: var(--border-thin); }
+    .example:last-child { border-bottom: none; }
+  }
+</style>

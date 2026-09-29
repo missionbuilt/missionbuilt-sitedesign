@@ -6,7 +6,9 @@
  * (product leaders), so the page does two jobs, fast: show the three skills on real
  * screens, and get them into Claude. Order: hero (one action: Add to Claude) → the
  * three skills, each with its demo screen → install (one URL, two ways; the zips and
- * git clone folded under "Other ways") → closer.
+ * git clone folded under "Other ways") → closer. Since Sept 29, 2026 a band after the
+ * three skills links /loadout/plans, the barbell half's plan skills (downloads, not on the
+ * MCP server); the Rack's app pages no longer mention skills.
  * Screens: public/images/loadout/*.webp, captured from the site's own demos
  * (public/demos/*.html) with the tour overlay hidden.
  * Backup: Claude outputs/loadout-index-before-2026-09-20.astro.bak.
@@ -56,6 +58,13 @@ const URL_SSE = 'https://mcp.missionbuilt.io/sse';
         </a>
       ))}
     </section>
+
+    <a class="plans" href="/loadout/plans">
+      <p class="when">For the barbell half</p>
+      <h2>Bring your plan with Claude</h2>
+      <p class="line">Two skills for the apps on the Rack. One puts the program you already run into IronStack; the other writes meals for MealStack. One file, one tap on your phone.</p>
+      <span class="more">See the plan skills →</span>
+    </a>
 
     <section class="install" id="install">
       <p class="section-label">One connection. All three skills.</p>
@@ -114,6 +123,12 @@ const URL_SSE = 'https://mcp.missionbuilt.io/sse';
   .more { margin-top: 4px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk); }
   .skill:hover .more { color: var(--color-blood-text); }
 
+  .plans { display: grid; gap: 10px; margin: 0 var(--pad-page-x); padding: 26px 24px; border: var(--border-thin); border-top: none; transition: background 120ms ease-out; }
+  .plans:hover { background: var(--color-panel); }
+  .plans h2 { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 26px; letter-spacing: 0.03em; text-transform: uppercase; color: var(--color-chalk); }
+  .plans .line { max-width: 68ch; }
+  .plans:hover .more { color: var(--color-blood-text); }
+
   .install { padding: 72px var(--pad-page-x) 0; }
   .section-label { margin: 0 0 12px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.24em; color: var(--color-blood-text); text-transform: uppercase; }
   .section-h2 { margin: 0 0 20px; font-family: var(--font-display); font-weight: 600; font-size: clamp(28px, 3.4vw, 40px); text-transform: uppercase; color: var(--color-chalk); }
@@ -140,7 +155,8 @@ const URL_SSE = 'https://mcp.missionbuilt.io/sse';
 
   @media (max-width: 1099px) {
     .hero, .install, .closer { padding-left: var(--pad-page-x-mid); padding-right: var(--pad-page-x-mid); }
-    .skills { margin-left: var(--pad-page-x-mid); margin-right: var(--pad-page-x-mid); grid-template-columns: minmax(0, 1fr); }
+    .skills, .plans { margin-left: var(--pad-page-x-mid); margin-right: var(--pad-page-x-mid); }
+    .skills { grid-template-columns: minmax(0, 1fr); }
     .shot { height: 260px; }
   }
   @media (max-width: 720px) {
@@ -148,6 +164,7 @@ const URL_SSE = 'https://mcp.missionbuilt.io/sse';
     .hero { padding-top: 32px; }
     .sub { font-size: 17px; }
     .skills { margin: 32px var(--pad-page-x-mobile) 0; }
+    .plans { margin: 0 var(--pad-page-x-mobile); padding: 22px 18px; }
     .shot { height: 170px; padding: 14px 14px 0; }
     .ways { grid-template-columns: minmax(0, 1fr); }
     .closer p { font-size: 18px; }
