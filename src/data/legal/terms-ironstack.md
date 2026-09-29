@@ -25,9 +25,9 @@ You got IronStack from Apple's App Store, so **Apple's Licensed Application End 
 
 ## 3. Who can use IronStack
 
-You must be at least **13** to use IronStack. If you're 13 to 17, or under the age of majority where you live, a parent or guardian must agree to these terms for you and oversee your use of the app, Coach and Social included.
+You must be at least **18**, or the age of majority where you live if that's higher, to use IronStack, Coach and Social included.
 
-IronStack isn't made for children and isn't directed at anyone under 13.
+IronStack isn't made for or directed at anyone under 18.
 
 If you use IronStack for an organisation, such as a gym or a team, you confirm you're allowed to accept these terms for it.
 
