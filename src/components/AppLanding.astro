@@ -31,6 +31,8 @@ interface Props {
   description: string;
   ogImageAlt: string;
   ld: object;
+  /** The hero eyebrow. "Private beta · iPhone" when left out; MealStack puts its tagline here. */
+  eyebrow?: string;
   promise: string;
   /** The key phrase, set after the promise in oxblood (blood-bright: display size, 3.4:1). One per page. */
   promiseAccent?: string;
@@ -56,7 +58,7 @@ interface Props {
 }
 const p = Astro.props;
 const page = `/rack/${p.app}`;
-const MAILTO = `mailto:mike@missionbuilt.io?subject=${encodeURIComponent(p.name + ' beta')}&body=Apple%20ID%20email%3A%20`;
+const MAILTO = `mailto:support@missionbuilt.io?subject=${encodeURIComponent(p.name + ' beta')}&body=Apple%20ID%20email%3A%20`;
 ---
 <BaseLayout title={p.title} description={p.description} ogImageAlt={p.ogImageAlt} active="rack">
   <script is:inline slot="head" type="application/ld+json" set:html={JSON.stringify(p.ld)} />
@@ -72,7 +74,7 @@ const MAILTO = `mailto:mike@missionbuilt.io?subject=${encodeURIComponent(p.name 
       <div class="hero-copy">
         <p class="eyebrow">
           <span class="dots" aria-hidden="true">▮▮▮</span>
-          <span>Private beta · iPhone</span>
+          <span>{p.eyebrow ?? 'Private beta · iPhone'}</span>
           <span class="dots" aria-hidden="true">▮▮▮</span>
         </p>
         <p class="appname">{p.name}<span class="dot">.</span></p>
@@ -96,7 +98,7 @@ const MAILTO = `mailto:mike@missionbuilt.io?subject=${encodeURIComponent(p.name 
           <input type="hidden" name="t" value="" data-t />
           <input type="hidden" name="page" value={page} />
           <p class="status" role="status" aria-live="polite" data-status></p>
-          <p class="status" hidden data-fallback>The form is not taking names right now. Email <a href={MAILTO}>mike@missionbuilt.io</a> with the address on your Apple ID and I will add you by hand.</p>
+          <p class="status" hidden data-fallback>The form is not taking names right now. Email <a href={MAILTO}>support@missionbuilt.io</a> with the address on your Apple ID and I will add you by hand.</p>
         </form>
         <ul class="trust" aria-label="The short version">
           {p.trust.map((t) => <li>{t}</li>)}
@@ -169,7 +171,7 @@ const MAILTO = `mailto:mike@missionbuilt.io?subject=${encodeURIComponent(p.name 
           <input type="hidden" name="page" value={page} />
           <button class="cta" type="submit">Join the beta →</button>
           <p class="status" role="status" aria-live="polite" data-status>Free during the beta · used for the invite and nothing else</p>
-          <p class="status" hidden data-fallback>The form is not taking names right now. Email <a href={MAILTO}>mike@missionbuilt.io</a> with the address on your Apple ID and I will add you by hand.</p>
+          <p class="status" hidden data-fallback>The form is not taking names right now. Email <a href={MAILTO}>support@missionbuilt.io</a> with the address on your Apple ID and I will add you by hand.</p>
         </form>
       </div>
     </section>

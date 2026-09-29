@@ -1,40 +1,21 @@
 ---
 /**
- * THE DETAILS PAGE (/rack/ironstack/details). Since Sept 20, 2026 /rack/ironstack is a short landing page
- * (what is different, the features with real screens, how to get it); this is the full page it links to.
+ * THE DETAILS PAGE (/rack/ironstack/details). /rack/ironstack is the short landing page
+ * (what is different, the features with real screens, how to get it); this is the full page.
  *
- * IronStack — product page on the Rack.
+ * An iPhone app for logging lifting: tap, type or say the set, the rest clock runs itself,
+ * and a feed that is only the people you train with. The app's own line: "Log it. Time it.
+ * Lift each other up." Built on MealStack's page skeleton so the two read as one family.
  *
- * An iPhone app for logging lifting: say the set, the rest clock runs itself, and a
- * feed that is only the people you train with. The app's own line, from its welcome
- * screen (Views/Welcome.swift): "Log it. Time it. Lift each other up."
+ * Order: hero → coming from Hevy → six cards → why → try it → how → side by side →
+ * fine print → beta → FAQ → at the table (your log as files, and what reads them) →
+ * the kit → related, with MealStack as a card linking to its Better Together section.
  *
- * Rebuilt Sept 19, 2026 for the iPhone app, on MealStack's page skeleton so the two
- * read as one family: hero → what it does differently (six cards, each with its real
- * screen, then more screens) → why (four pillars) → try it (the voice card and the rest
- * clock, live) → how you use
- * it → side by side → fine print → join the beta → at the table (your log as files,
- * and what reads them) → the kit → FAQ → better together → related.
- * (Order since the Jess session: hero → coming from Hevy → six cards → why → try it → how →
- * side by side → fine print → beta → FAQ → at the table → the kit → related, with MealStack
- * as a card linking to its page's Better Together section.)
- * The Kibana-era page is kept at "Claude outputs/ironstack-kibana-page-2026-09-13.astro.bak".
- *
- * Every claim here was checked against ~/Projects/ironstack on Sept 19, 2026:
- * voice examples are the app's own (Voice/VoiceExamples.swift), the award count is
- * Progress/Awards.swift, the importers are Data/DataPorts.swift + Workouts/TrackerCSV.swift.
- *
- * The phone screens are real screenshots (public/images/ironstack/*.webp): Mike's iPhone
- * through iPhone Mirroring on Sept 19, 2026, and Social from the Simulator's sample feed.
- * Never redraw app screens in HTML here; capture them.
- *
- * Sept 19, 2026, evening: reworked after a research session with a three-year Hevy Pro
- * user (Claude-simulated participant "Jess"; notes in the IronStack project). What moved her:
- * the Hevy import done right, "keep Hevy", never having to talk to it, and the clock in her
- * earbuds. What cost trust: "other apps" lines that were not true of Hevy. So the Hevy
- * section sits under the hero, every "other apps" line is written against Hevy's and
- * Strong's free tiers, and the full Better Together section lives on MealStack's page.
- * The pre-interview page is kept at "Claude outputs/ironstack-page-before-jess-2026-09-19.astro.bak".
+ * Every "other apps" line is written against Hevy's and Strong's free tiers; a Hevy user
+ * reads a wrong one as a reason to distrust the rest. Every claim is checked against the
+ * app before it goes up. Phone screens are real screenshots (public/images/ironstack/*.webp);
+ * never redraw app screens in HTML here. Skills are not mentioned on the Rack; they live
+ * on the Loadout (/loadout/plans).
  *
  * Color discipline: oxblood for the hero period, eyebrows, section labels, the one
  * marked card (Logging), the Join buttons and the closer accent. Army green for the
@@ -44,21 +25,20 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import SiteFooter from '../../../components/SiteFooter.astro';
 import TopNav from '../../../components/TopNav.astro';
 
-const MAILTO = 'mailto:mike@missionbuilt.io?subject=IronStack%20beta&body=Apple%20ID%20email%3A%20';
+const MAILTO = 'mailto:support@missionbuilt.io?subject=IronStack%20beta&body=Apple%20ID%20email%3A%20';
 
 const stats = [
   { key: 'Runs on',           value: 'iPhone',  sub: 'iOS 26 and up',             army: false },
-  { key: 'From Hevy or Strong', value: 'Bring it', sub: 'supersets, warm-ups', army: false },
+  { key: 'From any app',      value: 'Bring it', sub: 'supersets, prep sets',     army: false },
   { key: 'Account to log',    value: 'None',    sub: 'Social is optional',        army: false },
   { key: 'During the beta',   value: 'Free',    sub: 'Coach included',            army: true  },
 ];
 
-/** Real screens. Captured Sept 19, 2026 from Mike's iPhone via iPhone Mirroring (his own log),
- *  Social from the Simulator's signed-out sample feed. Sources: Claude outputs/ironstack-captures. */
+/** Real screens, from Mike's own log; Social from the app's signed-out sample feed. */
 type Shot = { file: string; h: number; k: string; cap: string; alt: string };
 const shots: Shot[] = [
-  { file: 'home', h: 1188, k: 'Home', cap: 'Stacked for today: what is on the docket, your people, the best thing from your last session, how it is going.', alt: 'IronStack Home screen: Stacked for today, a Start a session button, an Ask Coach prompt, and how it is going.' },
-  { file: 'exercise', h: 1188, k: 'An exercise', cap: 'Today\'s aim from your own history. Load the bar in competition plate colours.', alt: 'IronStack Comp Deadlift page: 225 lb for 8 at RPE 6 from history, and plate math for 225.' },
+  { file: 'home', h: 1188, k: 'Home', cap: 'Today first: what is on the docket, loaded in one tap. Then your people, who is in your corner, your progress, and Coach.', alt: 'IronStack Home screen: Stacked for today, a Start a session button, an Ask Coach prompt, and how it is going.' },
+  { file: 'exercise', h: 1188, k: 'An exercise', cap: 'Today\'s aim from your own history. Add it to today\'s session in one tap; the bar is drawn the way it is loaded.', alt: 'IronStack Comp Deadlift page: 225 lb for 8 at RPE 6 from history, and plate math for 225.' },
   { file: 'progress', h: 1188, k: 'Progress', cap: 'Every exercise you have done, with its line and the change.', alt: 'IronStack Progress list filtered to deadlift, each exercise with a sparkline and a percent change.' },
   { file: 'sessions', h: 1188, k: 'Sessions', cap: 'Every session, searchable, records called out by name.', alt: 'IronStack Sessions list with a record: Conventional Deadlift, heaviest set of 5 ever, 275 lb.' },
 ];
@@ -66,28 +46,27 @@ const shots: Shot[] = [
 type Card = { label: string; pillar: string; verdict: string; evidence: string; them: string; img: string; h: number; alt: string; mark?: boolean };
 const cards: Card[] = [
   { mark: true, img: 'today', h: 1188, alt: 'IronStack Today: where you are in the program, last session, a type-it field and a large Hold to talk button.', label: 'Logging', pillar: 'Chalk on your hands', verdict: 'Tap it, type it, or say it.', evidence: 'Last time\'s numbers are already in the set: tap to confirm. Changed something? Type 225x8 @7 in the one field. Or hold the talk button and say "two twenty five for eight at seven"; "same again" and "switch to hack squat" work too. Speech is turned into text on the phone, offline, and only while you hold the button.', them: 'Tap the numbers in, set by set, with a keypad.' },
-  { img: 'clock-final', h: 1188, alt: 'An E3MOM clock at 0:01: the top of the screen solid oxblood with white numbers, the day\'s lifts below.', label: 'The clock', pillar: 'Chalk on your hands', verdict: 'A rest clock you can read from the platform.', evidence: 'The set lands and rest starts itself, at the length the program asked for. With earbuds in, it says "Thirty seconds" and then "Get to work", and your music dips under it and comes back. On screen the last ten seconds go oxblood and the last three fill the top and beat. On the Lock Screen, "same again" logs another set like the last without unlocking the phone.', them: 'A timer that buzzes, and a phone to unlock to log the next set.' },
-  { img: 'plan', h: 1188, alt: 'IronStack Plan tab on Exercises, with Training, Muscle and Equipment filters and recently done exercises.', label: 'Plan', pillar: 'Capture cannot fail', verdict: 'Bring the plan you already have.', evidence: 'Programs, workouts and exercises, on one tab. Bring your history and routines over from Hevy, Strong or JuggernautAI, open a plan file Claude wrote, or save today\'s session as a workout. Next time, last session\'s numbers are already in every set. Logging becomes confirming.', them: 'Routines and custom exercises capped on the free tier.' },
-  { img: 'insights', h: 1188, alt: 'IronStack Insights: You against you, 14 sessions in 4 weeks, 5 week streak, Comp Deadlift up 4 percent, 12.0 million pounds all time.', label: 'Insights', pillar: 'You against you', verdict: 'Every number is you against you.', evidence: 'Sessions this month against last, your estimated max over twelve weeks, records by name, a progress line on every exercise, and how your lifting lines up with your sleep. Measured against your own log and nobody else\'s. When the data is thin, it says so instead of guessing.', them: 'Graphs, only the last three months of them on Hevy\'s free tier. Working out what they mean is your job.' },
+  { img: 'clock-final', h: 1188, alt: 'An E3MOM clock at 0:01: the top of the screen solid oxblood with white numbers, the day\'s lifts below.', label: 'The clock', pillar: 'Chalk on your hands', verdict: 'A rest clock you can read from the platform.', evidence: 'The set lands and rest starts itself, at the length the program asked for. With earbuds in, a recorded voice calls "Thirty seconds", "Five seconds" and "Get to work", and your music dips under it and comes back. Voice, buzz or off, and it minds the silent switch. On screen the last ten seconds go oxblood and the last three fill the top and beat. On the Lock Screen, "same again" logs another set like the last without unlocking the phone.', them: 'A timer that buzzes, and a phone to unlock to log the next set.' },
+  { img: 'plan', h: 1188, alt: 'IronStack Plan tab on Exercises, with Training, Muscle and Equipment filters and recently done exercises.', label: 'Plan', pillar: 'Capture cannot fail', verdict: 'Bring the plan you already have.', evidence: 'Programs, workouts and exercises, on one tab. Bring your history over from Hevy, Strong, JuggernautAI or any spreadsheet you kept, send Coach a photo or PDF of your program and it writes it down, or save today\'s session as a workout. Workouts hold your targets, 3 × 8 · 135 lb, and next time last session\'s numbers are already in every set. Logging becomes confirming.', them: 'Routines and custom exercises capped on the free tier.' },
+  { img: 'insights', h: 1188, alt: 'IronStack Insights: You against you, 14 sessions in 4 weeks, 5 week streak, Comp Deadlift up 4 percent, 12.0 million pounds all time.', label: 'Insights', pillar: 'You against you', verdict: 'Every number is you against you.', evidence: 'Sessions this month against last, your estimated max over twelve weeks, records by name, a progress line on every exercise, and how you lift on the days you feel good against the flat ones. Measured against your own log and nobody else\'s. When the data is thin, it says so instead of guessing.', them: 'Graphs, only the last three months of them on Hevy\'s free tier. Working out what they mean is your job.' },
   { img: 'social', h: 1174, alt: 'IronStack Social sample feed: @dana_lifts Bench day, Comp Bench heaviest triple ever, supported by two spotters.', label: 'Social', pillar: 'Lift each other up', verdict: 'A quiet way to share with the people you train with.', evidence: 'Invite a training partner by text. Share a session as a card: time, sets, the best thing you did. No strangers, and no comments, on purpose: the one thing to give is support, and you see who gave it. If your crew lives in the comments, this is not trying to replace that. Social is optional, and nothing else here needs it.', them: 'Followers, strangers, likes and comments.' },
-  { img: 'coach', h: 1188, alt: 'IronStack Coach proposing a Comp Deadlift opener of 225x8 at RPE 6, with the ceiling and the sets it came from, and a Fill the weight in button.', label: 'Coach', pillar: 'You against you', verdict: 'A coach with a ceiling.', evidence: 'Ask what to open at, what covers a taken rack, or how today went. Every weight it names comes from your own sets, under a ceiling it can show you, with the set the ceiling came from. Nothing it suggests lands in your log until you tap. Not a doctor, and it says so.', them: 'A chatbot that invents a number, or no number at all.' },
+  { img: 'coach', h: 1188, alt: 'IronStack Coach proposing a Comp Deadlift opener of 225x8 at RPE 6, with the ceiling and the sets it came from, and a Fill the weight in button.', label: 'Coach', pillar: 'You against you', verdict: 'A coach with a ceiling.', evidence: 'Ask what to open at, what covers a taken rack, or how today went. Send it a photo or PDF of the program your coach wrote and it writes it down for you to check. Every weight it names comes from your own sets, under a ceiling it can show you, with the set the ceiling came from. Nothing it suggests lands in your log until you tap. Not a doctor, and it says so.', them: 'A chatbot that invents a number, or no number at all.' },
 ];
 
-/** Coming from Hevy. Checked against Data/DataPorts.swift + Workouts/TrackerCSV.swift:
- *  set_type warmup/dropset, superset_id pairs, unknown names kept as "my.<slug>" with the
- *  name as logged, and a preview (IncomingData) before anything is saved. The Hevy menu path
- *  is the one the app's own error message gives. */
+/** Coming from Hevy. Checked against the app's importers: warm-up and drop set types, superset
+ *  pairs, unknown names kept as logged, and a preview before anything is saved. The Hevy menu
+ *  path is the one the app's own error message gives. */
 type Switch = { k: string; v: string; body: string };
 const switching: Switch[] = [
-  { k: 'Bring it', v: 'All of it comes over.', body: 'Export from Hevy (Settings, Export & Import Data) or Strong (Settings, Export Data) and open the file in IronStack. Sessions, routines, supersets paired the way you paired them, warm-ups and drop sets tagged as what they were. Names it knows are matched; names it does not are kept exactly as you had them. A preview shows what it found before anything is saved.' },
+  { k: 'Bring it', v: 'All of it comes over.', body: 'Export from Hevy (Settings, Export & Import Data) or Strong (Settings, Export Data) and open the file in IronStack, or bring any spreadsheet you kept. Sessions, routines as workouts, supersets paired the way you paired them, prep sets and drop sets tagged as what they were. Names it knows are matched; names it does not are kept exactly as you had them. A preview shows what it found before anything is saved.' },
   { k: 'Keep your app', v: 'Nothing here needs you to quit.', body: 'The import reads a file you exported. It never signs in to Hevy or Strong, never touches your account, and bringing the same file twice adds nothing. Run both for a couple of weeks and keep whichever earns it.' },
   { k: 'Tap, type or say it', v: 'You never have to talk to it.', body: 'Last time\'s weight and reps are already in every set, so most sets are one tap to confirm. Or type 225x8 in the one field. Voice is there for the days your hands are covered in chalk, and only while you hold the button.' },
 ];
 
 type Step = { n: string; title: string; body: string };
 const steps: Step[] = [
-  { n: '01', title: 'Bring your history, or just start.', body: 'Coming from Hevy, Strong or JuggernautAI? Export, open the file, and the preview says what it found before anything lands: sessions, routines, and names to check. Or skip it and log your first set. That starts the session.' },
-  { n: '02', title: 'Log it. Time it.', body: 'Tap the number that is already there, type it, or say it. Rest starts itself. Bodyweight and last night\'s sleep come from Apple Health if you let them, and you can always type over them. Tap the weight to change it; the keypad converts pounds and kilos on the spot.' },
+  { n: '01', title: 'Bring your history, or just start.', body: 'Coming from Hevy, Strong, JuggernautAI or a spreadsheet? Export, open the file, and the preview says what it found before anything lands: sessions, workouts, and names to check. Or skip it and log your first set. That starts the session.' },
+  { n: '02', title: 'Log it. Time it.', body: 'Tap the number that is already there, type it, or say it. Rest starts itself. Bodyweight comes from Apple Health if you let it, and you can always type over it. Tap the weight to change it; the keypad converts pounds and kilos on the spot.' },
   { n: '03', title: 'Stacked.', body: 'Finish and the session closes on what mattered: time, working sets, records by name, a badge if you earned one. Share the card with your spotters, or don\'t. Next time, today\'s lifts are waiting with what you hit.' },
 ];
 
@@ -97,9 +76,9 @@ type Versus = { k: string; them: string; us: string; honest?: boolean };
  *  true of Hevy; a Hevy user reads a wrong one as a reason to distrust the rest. */
 const versus: Versus[] = [
   { k: 'Logging a set', them: 'Tap the numbers in, or check off last time\'s.', us: 'The same, plus type 225x8 in one field, or say it.' },
-  { k: 'Rest', them: 'A timer that buzzes.', us: 'Starts itself, says "Thirty seconds" and "Get to work" in your earbuds, and fills the screen at the end.' },
+  { k: 'Rest', them: 'A timer that buzzes.', us: 'Starts itself, calls "Thirty seconds", "Five seconds" and "Get to work" in your earbuds, and fills the screen at the end.' },
   { k: 'A new exercise', them: 'Make a custom one first; the free tier allows seven.', us: 'Say or type any name. It is kept exactly as you said it. Match it later, or never.' },
-  { k: 'What is free', them: 'Every workout, but four routines and three months of graphs.', us: 'Every session, every routine, every chart, free in the beta. The launch price is not set; the fine print says why.' },
+  { k: 'What is free', them: 'Every workout, but four routines and three months of graphs.', us: 'Every session, every workout, every chart, free in the beta. The launch price is not set; the fine print says why.' },
   { k: 'Social', them: 'Followers, strangers, likes and comments.', us: 'Only partners you invite. Support, no comments, on purpose.' },
   { k: 'Best at', them: 'A watch app, Android, and exercise videos.', us: 'None of those yet. Keep the other app for them; nothing here needs you to quit it.', honest: true },
 ];
@@ -107,22 +86,23 @@ const versus: Versus[] = [
 type Faq = { q: string; a: string };
 const faqs: Faq[] = [
   { q: 'Do I have to quit Hevy or Strong?', a: 'No. IronStack reads a file you export; it never signs in there or changes anything. Run both for a couple of weeks. If you go back, your app is exactly as you left it. One honest limit: IronStack exports your log as a documented JSON file, not a Hevy or Strong CSV, so sessions you log here will not load into them on their own. If an unbroken Hevy history matters to you, log in both while you try it.' },
-  { q: 'What comes over from Hevy?', a: 'Sessions and routines, with supersets paired the way Hevy paired them, warm-ups and drop sets tagged as what they were, and your custom exercise names kept exactly. The preview shows what it found, and any names it wants you to check, before anything is saved. In Hevy: Settings, Export & Import Data.' },
+  { q: 'What comes over from Hevy?', a: 'Sessions and routines (they come in as workouts), with supersets paired the way Hevy paired them, warm-ups as prep sets and drop sets tagged as what they were, and your custom exercise names kept exactly. The preview shows what it found, and any names it wants you to check, before anything is saved. In Hevy: Settings, Export & Import Data.' },
   { q: 'What is TestFlight?', a: 'Apple\'s own app for beta testing. I add your Apple ID email, Apple sends you an invite, and TestFlight installs IronStack like an App Store app. Updates arrive through it until 1.0 lands in the store.' },
-  { q: 'Is it free?', a: 'During the beta, yes, Coach included, on an allowance. The launch price is not settled, for the same reason as MealStack: every Coach question runs on a server I pay for. Logging, the clock, your history, Insights and Social cost nothing to run and will not be what you pay for.' },
+  { q: 'Is it free?', a: 'During the TestFlight beta, yes. Coach runs on a monthly allowance per phone, because every Coach question runs on a server I pay for. The launch price is not set, and it lands on this page before it lands in the store.' },
   { q: 'Does it need an account?', a: 'Not to log. Everything you log is a file on your phone. Social is the one part that needs you to be someone, and it uses Sign in with Apple without asking for your name or email. Skip Social and there is nothing to sign up for.' },
   { q: 'What leaves my phone?', a: 'What you send Coach, when you ask it something. The cards you choose to share with your spotters, if you use Social. Nothing else unless you switch it on. The privacy page says exactly what, where, and for how long.' },
-  { q: 'Can I bring my history?', a: 'Yes. Hevy and Strong exports bring history and routines; JuggernautAI brings history. Imported sessions count in your records, Insights and "last time", are labelled as imported, and never go on a card. Bringing the same file twice adds nothing.' },
+  { q: 'Can I bring my history?', a: 'Yes. Hevy and Strong exports bring history and routines; JuggernautAI and any spreadsheet you kept bring history, with a preview to match the columns. Imported sessions count in your records, Insights and "last time", are labelled as imported, and never go on a card. Bringing the same file twice adds nothing.' },
   { q: 'Pounds or kilos?', a: 'Both. Pick one for the app, and switch any single exercise the other way, because the dumbbells at a hotel gym do not care where you live. The keypad shows the other unit under every number, and one tap types in it.' },
-  { q: 'Streaks and badges?', a: 'A weekly streak on Insights and 167 badges that take years to finish: Road Warrior for training on the road, Dawn patrol, a thousand feet of carries, In their corner for supporting others. Earned, never shamed. Miss a week and nothing scolds you.' },
+  { q: 'Streaks and badges?', a: 'A weekly streak on Insights and badges that take years to finish: Road Warrior for training on the road, Dawn patrol, a thousand feet of carries, In their corner for supporting others. Earned, never shamed. Miss a week and nothing scolds you.' },
   { q: 'Is Coach a doctor?', a: 'No. Coach is an AI. It answers from your own sets, never names a weight above a ceiling it can show you, and points any question about pain or injury to a qualified person. Nothing it suggests changes your log until you tap.' },
   { q: 'Android, iPad, watch?', a: 'iPhone only, iOS 26 and up. No Android, no iPad layout, and no watch app yet. What covers some of the watch: the clock talks in your earbuds, and the Lock Screen has a "same again" button that logs a set without unlocking. If your phone lives in a locker, that is not enough, and I would rather say so.' },
+  { q: 'How old do I have to be?', a: 'Thirteen. If you are 13 to 17, a parent or guardian needs to say yes before you start. The privacy page says what that means for Coach and Social.' },
   { q: 'Is the code open?', a: 'No. IronStack is a closed app. Your data is open: one tap exports everything in the Mission Built Schema, and it imports back. The IronStack name and marks stay with Mission Built.' },
   { q: 'When is 1.0?', a: 'When a fresh install has been proven on phones that are not mine, and two lifters who are not me have used Social against each other. The date lands on this page before it lands in the store.' },
 ];
 
 const title = 'IronStack, the details: log it, time it, lift each other up · Mission Built';
-const description = 'IronStack is a lifting log for iPhone. Bring your Hevy or Strong history, supersets and warm-ups included, and keep the app you use now. Tap, type or say the set; the rest clock talks in your earbuds; Insights compare you only to you; and a feed that is only the people you train with. Free during the private beta.';
+const description = 'IronStack is a lifting log for iPhone. Bring your history from Hevy, Strong or any spreadsheet, supersets and prep sets included, and keep the app you use now. Tap, type or say the set; the rest clock talks in your earbuds; Insights compare you only to you; and a feed that is only the people you train with. Free during the TestFlight beta.';
 
 const ld = {
   '@context': 'https://schema.org',
@@ -136,7 +116,6 @@ const ld = {
       description,
       author: { '@type': 'Person', name: 'Mike Nichols', url: 'https://missionbuilt.io/about' },
       publisher: { '@type': 'Organization', name: 'Mission Built', url: 'https://missionbuilt.io' },
-      offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', availability: 'https://schema.org/PreOrder', description: 'Free during the private beta. Launch price not yet set.' },
     },
     { '@type': 'FAQPage', mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
   ],
@@ -258,7 +237,7 @@ const ld = {
         <li><span class="num">01</span><span class="label">Capture cannot fail</span><span class="say">A set you did is a fact. A name the app does not know is kept exactly as you said it, never refused.</span></li>
         <li><span class="num">02</span><span class="label">Chalk on your hands</span><span class="say">Tap, type or say the set. Big targets. A clock you can read from the platform and hear in your earbuds.</span></li>
         <li><span class="num">03</span><span class="label">You against you</span><span class="say">Every number is measured against your own log. No leaderboards, no strangers, no one else's PR.</span></li>
-        <li><span class="num">04</span><span class="label">Lift each other up</span><span class="say">Only the people you invite. Cards carry no free text. The one thing you can give is support.</span></li>
+        <li><span class="num">04</span><span class="label">Lift each other up</span><span class="say">Only the people you invite. Cards carry no comments, and a name you type is checked before it goes. The one thing you can give is support.</span></li>
       </ol>
     </section>
 
@@ -309,9 +288,9 @@ const ld = {
       <h3 class="sub-h3">And the rest</h3>
       <p class="prose">
         An exercise is not always a lift: the collection covers barbell, machines and bodybuilding, conditioning (twenty minutes on the air bike is a session too) and strongman, browsable by muscle group.
-        Every exercise page has plate math in competition colours, with the bar and the plates in their own units, hidden in one tap for anything without a bar.
-        Travel mode for sessions on the road, a Home Screen widget, and 167 badges that grow with you over years, not just the first week.
-        Apple Health fills in your weigh-in and last night's sleep, and can take each session as a strength workout. Your whole log exports in one file, in a documented format, any time.
+        Every exercise has a load card that fits it: a loaded bar with plate math, a fixed bar, a stack, bodyweight or a band. Plate math switches itself off for cables, machines, dumbbells, kettlebells and bands.
+        Home or Away on Today for sessions on the road, flipped by hand or automatically when you are far from home, and shared with MealStack if it is on the phone. A Home Screen widget, and badges that grow with you over years, not just the first week.
+        Apple Health fills in your weigh-in, and can take each session as a strength workout. Your whole log exports in one file, in a documented format, any time.
       </p>
     </section>
 
@@ -355,7 +334,7 @@ const ld = {
       </div>
       <div class="fine">
         <p class="k">Not a doctor. Not your programmer.</p>
-        <p>I am not a coach or a clinician, and nothing on this page or in the app is advice about how you should train. IronStack is how I log my own. Coach is an AI: it gives a starting weight under a ceiling it can show you, a cue from your own notes, or an alternative when the rack is taken. It will not write your program, and any question about pain or injury gets pointed to a qualified person.</p>
+        <p>I am not a coach or a clinician, and nothing on this page or in the app is advice about how you should train. IronStack is how I log my own. Coach is an AI: it gives a starting weight under a ceiling it can show you, a cue from your own notes, or an alternative when the rack is taken. It writes down the program you send it and never makes one up, and any question about pain or injury gets pointed to a qualified person.</p>
       </div>
     </section>
 
@@ -367,8 +346,8 @@ const ld = {
       <h2 class="section-h2">Private beta, on iPhone.</h2>
       <div class="status-panel">
         <div class="status-copy">
-          <h3>On one phone every day, heading for more</h3>
-          <p>IronStack is logging every session I do right now, through a meet prep. The first outside testers come in small batches, added by hand from the email on your Apple ID, and I would especially like people coming from Hevy or Strong, and training partners who want to try Social together.</p>
+          <h3>On TestFlight now, with outside testers</h3>
+          <p>IronStack logs every session I do, and a small group of outside testers is on it with me. New testers come in small batches, added by hand from the email on your Apple ID, and I would especially like people coming from Hevy or Strong, and training partners who want to try Social together.</p>
           <p>You get an email from TestFlight, Apple's own app for trying apps before they reach the App Store: install TestFlight, tap the link, and IronStack installs like any other app. Keep Hevy or Strong on your phone the whole time. The address is used for the invite and nothing else.</p>
           <p>Training with someone? Sign up together and put their name in the note, and I will add you in the same batch.</p>
           <form class="beta-form" id="beta-form" method="post" action="/api/beta" novalidate>
@@ -388,11 +367,11 @@ const ld = {
               <p class="cta-note" id="beta-status" role="status" aria-live="polite">Free during the beta · iPhone, iOS 26 and up · keep your app</p>
             </div>
           </form>
-          <p class="cta-note" id="beta-fallback" hidden>The form is not taking names right now. Email <a href={MAILTO}>mike@missionbuilt.io</a> with the address on your Apple ID and I will add you by hand.</p>
+          <p class="cta-note" id="beta-fallback" hidden>The form is not taking names right now. Email <a href={MAILTO}>support@missionbuilt.io</a> with the address on your Apple ID and I will add you by hand.</p>
         </div>
         <div class="doors">
           <div class="door open"><div><div class="n">Beta</div><p class="d">By invite, from the form. Small batches, added by hand.</p></div><span class="s">Now</span></div>
-          <div class="door dim"><div><div class="n">App Store</div><p class="d">The public door.</p></div><span class="s">With 1.0</span></div>
+          <div class="door dim"><div><div class="n">App Store</div><p class="d">The public door, published by Mission Built.</p></div><span class="s">After the beta</span></div>
         </div>
       </div>
     </section>
@@ -414,11 +393,11 @@ const ld = {
     <section class="block" id="table">
       <p class="section-label">At the table</p>
       <h2 class="section-h2">For the data nerds: your log is files.</h2>
-      <p class="prose">The phone is where the set gets written down. Everything behind it is optional. The same log reads on a laptop, and if you want the deep read, it indexes into an Elasticsearch you own.</p>
+      <p class="prose">The phone is where the set gets written down. What you do with the record after that is up to you: it leaves the app as plain files, in a published format, whenever you ask, and any tool you like can read them.</p>
       <div class="ladder">
-        <div class="rung"><span class="n">1</span><div><h3>The log</h3><p class="what">An append-only file per day, one event per set, that the app writes and nothing rewrites. Corrections are new lines, never edits. Export it raw from Settings any time.</p></div></div>
-        <div class="rung"><span class="n">2</span><div><h3>The command line</h3><p class="what"><code>iron today</code> for the brief before you train, <code>iron last "Comp Squat"</code> for the last three times, <code>iron ceiling</code> for the heaviest load anything may name. Reads the files alone; no server.</p></div></div>
-        <div class="rung"><span class="n">3</span><div><h3>The dashboards</h3><p class="what">Seven Kibana dashboards and an Agent Builder coach, over an Elasticsearch you run: how heavy a week was for you now, whether you are ramping, what you have been neglecting. Rebuilt from the files, so it can never disagree with them for long.</p></div></div>
+        <div class="rung"><span class="n">1</span><div><h3>The log</h3><p class="what">An append-only file per day, one event per set, that the app writes and nothing rewrites. Corrections are new lines, never edits. <em>Export the raw log</em> in Settings hands it over as it is, one line per event.</p></div></div>
+        <div class="rung"><span class="n">2</span><div><h3>The export</h3><p class="what"><em>Export all my data</em> writes one file in the Mission Built Schema: every session and set, your programs, workouts and exercises, and your units. Map coordinates only if you switch them on. Anything that reads JSON reads it, and <em>Bring in data</em> takes it back on a new phone.</p></div></div>
+        <div class="rung"><span class="n">3</span><div><h3>Any tool</h3><p class="what">A spreadsheet, a script, a notebook, a database, or the dashboards you already run. I index mine into Elasticsearch and read it in Kibana: how heavy a week was, whether I am ramping, what I have been neglecting. That is a choice, not a requirement; the file works the same in whatever you use.</p></div></div>
       </div>
     </section>
 
@@ -451,7 +430,7 @@ const ld = {
       <div class="related three">
         <a href="/rack/mealstack/details#better-together" class="related-card">
           <h3>MealStack</h3>
-          <p>Meal timing built backward from the session. Each app stands on its own; on one phone they share Apple Health and a few things you switch on.</p>
+          <p>Meal timing built backward from the session. Each app stands on its own; on one phone they share one travel switch, today's session time, and badges that see both.</p>
           <span class="related-cta">Better together →</span>
         </a>
         <a href="/rack" class="related-card">

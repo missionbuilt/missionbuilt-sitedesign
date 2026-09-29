@@ -13,7 +13,7 @@
  * phrase and hero screens as its own landing page, so the family reads as one.
  * No competitor is named. Oxblood: the brand dot, the two promise phrases, the
  * Join buttons. "Better together" claims only what is live (both write to Apple Health);
- * travel mode and the training signal are IronStack-ready, MealStack next (Sept 19 audit).
+ * both write to Apple Health, share one travel switch and keep today's session time in step (Sept 29, 2026).
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
@@ -49,7 +49,7 @@ const apps: App[] = [
     promise: 'Your tracker says what you ate.',
     accent: 'This says when.',
     sub: 'Meal timing for iPhone, built backward from your training session. Eat late and the day re-flows; your pre-workout meal still lands before you train.',
-    points: ['Anchored to your session', 'Log when you actually ate', 'Holds up on the road', 'A Coach for eating out'],
+    points: ['Anchored to your session', 'Log when you actually ate', 'Holds up on the road', 'A Coach that builds your plan or reads a menu'],
     shots: [
       { src: '/images/mealstack/today-training.webp', w: 540, h: 1176, alt: 'MealStack Today on a training day: next is yogurt and berries at 12:03 PM, with totals against the day\'s target.' },
       { src: '/images/mealstack/session-moved.webp', w: 540, h: 1174, alt: 'MealStack after the session moved to 6:30 PM: the meals tied to it move with it, with an Undo.' },
@@ -103,7 +103,7 @@ const apps: App[] = [
 
     <section class="block together">
       <p class="section-label">Better together</p>
-      <p class="line">Each stands on its own. Both write to Apple Health today; a shared travel switch and a training signal are next.</p>
+      <p class="line">Each stands on its own. Both write to Apple Health, share one travel switch, and keep today's session time in step.</p>
       <a class="soft" href="/rack/mealstack/details#better-together">What they share today →</a>
     </section>
 

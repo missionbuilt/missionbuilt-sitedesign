@@ -3,27 +3,20 @@
  * IronStack — privacy.
  *
  * The page App Store Connect points at (Privacy Policy URL) and the app should link to
- * from Settings › Your data. Written from the code, not from a template, on Sept 19,
- * 2026, against ~/Projects/ironstack (app, coach-proxy, social-server). Same shape and
- * voice as /rack/mealstack/privacy, so the two read as one family.
+ * from Settings › Your data. Written from the code, not from a template, and rewritten
+ * Sept 29, 2026 against the app, its Coach server and its Social server. Same shape and
+ * voice as /rack/mealstack/privacy, so the two read as one family. Draft for review by a
+ * lawyer before public launch.
  *
  * Apple's App Review Guidelines 5.1.1(i) want what is collected and every use, that
  * third parties protect it at least as well, and retention, deletion and how consent is
  * withdrawn; 5.1.1(v) wants in-app account deletion (Social has it); 5.1.2(i) wants
  * third-party AI named and permission asked first; 5.1.3 wants the health data named
- * and never used for marketing; 1.2 wants reporting and blocking for Social. All here.
+ * and never used for marketing; 1.2 wants reporting and blocking for Social.
  *
- * THREE THINGS THIS PAGE ASSUMES, which must be true in the build that is submitted
- * (see claude/ironstack-web-pages-2026-09-19.md in the IronStack project):
- *   1. coach-proxy treats a missing x-usage-sharing header as OFF (changed Sept 19,
- *      src/telemetry.ts; needs `npx wrangler deploy`). Until it deploys, and if
- *      POSTHOG_KEY is set on ironstack-coach, Coach events reach PostHog.
- *   2. App Review 5.1.2(i) wants Coach to ask before it sends anything to a third-party
- *      AI, naming Anthropic. Today coachEnabled defaults to true with no acceptance
- *      screen (SessionStore.swift:80). The page is written to be true today ("sends
- *      nothing until you ask it something"); when the app gains the ask, add one
- *      sentence here saying so.
- *   3. The app links here. It has no privacy link yet.
+ * Every sentence here must be true of the build that is live. When the app gains a Coach
+ * consent screen, say so in the Coach cell. The publisher line stays "Mission Built, which
+ * is Mike Nichols" until the LLC exists.
  *
  * Color discipline: oxblood for the hero period, section labels and the one
  * emphasised word. No army green on this page.
@@ -32,8 +25,8 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import SiteFooter from '../../../components/SiteFooter.astro';
 import TopNav from '../../../components/TopNav.astro';
 
-const EFFECTIVE = 'September 19, 2026';
-const ASK = 'mailto:mike@missionbuilt.io?subject=IronStack%20data%20request';
+const EFFECTIVE = 'September 29, 2026';
+const ASK = 'mailto:support@missionbuilt.io?subject=IronStack%20data%20request';
 
 const stats = [
   { key: 'Account to log',     value: 'None' },
@@ -45,20 +38,21 @@ const stats = [
 type Party = { who: string; role: string; what: string; where: string };
 const parties: Party[] = [
   { who: 'Cloudflare', role: 'Runs the Coach and Social servers', what: 'Sees each Coach request in transit. Stores the install record and allowance counters for Coach, the Social account and everything Social holds, and the log copy if you turn that on. Keeps a count-and-cost record of Coach use for about ninety days.', where: 'Global edge, US account' },
-  { who: 'Anthropic', role: 'Runs the Claude model behind Coach', what: 'Receives what the app sends with a Coach question and produces the answer. Does not train models on it. Handles it under its commercial terms and Data Processing Addendum.', where: 'United States' },
+  { who: 'Anthropic', role: 'Runs the Claude model behind Coach, and sorts Social reports', what: 'Receives what the app sends with a Coach question and produces the answer; receives a reported handle or card title so it can be sorted for review. Keeps it up to 30 days, then deletes it, and does not train models on it. Handles it under its commercial terms and Data Processing Addendum.', where: 'United States' },
   { who: 'Apple', role: 'Health, Sign in with Apple, notifications, weather, maps, TestFlight', what: 'Health holds what you allow the app to read and the workouts it writes. Sign in with Apple identifies your Social account. Push notifications for Social go through Apple. WeatherKit and Apple Maps receive a rounded location to return the weather and a town name. Apple\'s own privacy terms cover these.', where: 'Per Apple' },
 ];
 
 type Keep = { what: string; how: string };
 const keeps: Keep[] = [
   { what: 'Your training log, plan, notes, gear, profile, Coach conversation', how: 'On your phone until you delete them or delete the app. Included in your iPhone backup like any other app data.' },
-  { what: 'What you send Coach', how: 'Not stored by Mission Built. Gone from the server when the answer is sent. Anthropic\'s handling is governed by its commercial terms.' },
+  { what: 'What you send Coach, including photos and files', how: 'Not stored by Mission Built: gone from the server when the answer is sent. Anthropic keeps it up to 30 days to watch for abuse, then deletes it; if its automated safety checks flag a message, it may keep that message up to two years.' },
   { what: 'The Coach install record (public key, receipt, timestamps)', how: 'While the install exists. Removed when you delete your data in the app, or on request.' },
   { what: 'Coach allowance counters', how: 'Reset at the start of each month.' },
-  { what: 'Count-and-cost record of Coach use (Cloudflare)', how: 'About ninety days, then gone.' },
+  { what: 'Count-and-cost record of Coach use (Cloudflare)', how: 'One line per Coach question: when, which model, how many tokens, roughly what it cost, filed under a one-way hash of the install key. No question, answer or training data. About ninety days, then gone.' },
   { what: 'Social account, handle, spotters, shared cards, support given', how: 'Until you delete your Social account or all your data in the app. Your sign-in on the phone lasts 180 days; an unused invite link expires after 7.' },
   { what: 'Notification token (Social)', how: 'Until you sign out of Social or delete it.' },
-  { what: 'Reports you file', how: 'Until you delete your Social account. Reports others file about a card are kept for moderation.' },
+  { what: 'Reports you file', how: 'Until the report is closed, then up to one year for moderation. If you delete your Social account, they stay, with your account removed from them.' },
+  { what: 'Reports about you, and moderation decisions', how: 'Until the report is closed, then up to one year. If you delete your Social account, the text quoted from you is removed from them.' },
   { what: 'The log copy (only if you turn it on)', how: 'Until you delete your data in the app, or ask.' },
 ];
 ---
@@ -106,7 +100,7 @@ const keeps: Keep[] = [
       <p class="section-label">Who this is</p>
       <h2 class="section-h2">Mission Built makes IronStack. This page is the whole policy.</h2>
       <div class="prose-block">
-        <p>IronStack is made by Mission Built, which is Mike Nichols, in Pittsburgh, Pennsylvania. For the purposes of privacy law, Mission Built is the controller of whatever this page says leaves your phone. There is no parent company, no subsidiary and no partner with access to your data.</p>
+        <p>IronStack is made by Mission Built, which is Mike Nichols, in Pittsburgh, Pennsylvania. For the purposes of privacy law, Mission Built is the controller of whatever this page says leaves your phone. There is no parent company, no subsidiary and no partner with access to your data. The app is not open source; this page is where to read what it does with your data, and the What the server holds screen shows you the rest, live.</p>
       </div>
     </section>
 
@@ -131,10 +125,12 @@ const keeps: Keep[] = [
       <div class="prose-block">
         <p>Every set, session, note and correction; your programs, workouts and exercises; your gear and home gym; the details you give for a session (bodyweight, sleep); your Coach conversation; and your Social settings. All of it lives in files in the app's own container on your iPhone, written under the phone's encryption and protected until the first unlock after a restart. Those files are included in your iCloud or computer backup the way any app's data is; Mission Built has no access to your backups.</p>
         <p><strong>Apple Health, if you allow it.</strong> IronStack reads your weigh-ins, sleep, height, date of birth and biological sex, so the questions it asks before a session answer themselves and Insights can line your sleep up with your lifting. It only fills empty fields; you can always type over them. If you turn on the separate switch in Settings (off until you do), it saves each finished session to Health as a strength workout. It never writes your weight or your sleep. Nothing from Health is used for marketing, advertising or anything but the log and your own Insights.</p>
-        <p><strong>Location, if you allow it.</strong> From your second session on, the app asks once, and only uses location while a session is live. It asks for roughly a kilometre of accuracy and rounds the coordinates to two decimal places the moment they arrive. The session keeps the town name, those rounded coordinates, whether you were away from home, and the weather. To get the weather and the town name, the rounded point goes to Apple's WeatherKit and Apple Maps. Logging never needs location, and an export leaves coordinates out unless you switch them on.</p>
-        <p><strong>Your voice, only while you hold the button.</strong> Speech is turned into text on the phone, offline, only while you hold the talk button. No audio is kept or sent anywhere.</p>
-        <p><strong>MealStack, only if you say yes.</strong> IronStack can put a few facts on a private shelf on your phone that only Mission Built apps can open: whether Travel mode is on, and, only after a separate yes for each, your last session's summary and when you usually train. Nothing crosses to a server to do this. Turn a share off and IronStack takes it back off the shelf.</p>
-        <p class="note">This section also serves as the consumer health data notice some states require. The health data involved: bodyweight, sleep, height, date of birth and biological sex read from Apple Health with your permission, the workouts written to it with your permission, and the sets, effort ratings and notes you log. Source: you and Apple Health. Purpose: the log, your Insights, and Coach when you ask it. Shared with: nobody, except what goes to Coach when you ask it a question, and the session card you choose to share on Social, as described next.</p>
+        <p><strong>Location, if you allow it.</strong> From your second session on, the app asks once. During a session it asks for roughly a kilometre of accuracy and rounds the coordinates to two decimal places the moment they arrive. The session keeps the town name, those rounded coordinates, whether you were away from home, and the weather. To get the weather and the town name, the rounded point goes to Apple's WeatherKit and Apple Maps. Logging never needs location, and an export leaves coordinates out unless you switch them on.</p>
+        <p><strong>Automatic travel, only if you turn it on.</strong> Set travel automatically, in Settings, is off until you turn it on. On, the app remembers where home is, rounded to about a kilometre, and watches for large moves in location (not a live track), even when a session is not running, so it can switch you to Away when you are farther from home than the distance you pick (50 miles unless you change it) and back when you return. The check happens on the phone; no location is sent anywhere for it. Turning the switch off stops the watching; Forget home erases the home area.</p>
+        <p><strong>Your voice, only while you hold the button.</strong> Speech is turned into text on the phone, by Apple's on-device speech recognition, only while you hold the talk button. No audio is kept or sent anywhere.</p>
+        <p><strong>MealStack, if it is on the same phone.</strong> The two apps share a private shelf on your phone that only Mission Built apps can open. On it: the travel switch (Home or Away, which app flipped it, and your rounded home area if you use automatic travel); today's session time when you move it, so the other app can offer to follow, Sync or Skip; and, only after a separate yes for each, when your last session started and how long it ran, and when you usually train. Each app also leaves a note that it is installed and when it was last used, which is how the Double Stacked badges know you used both. Neither app moves anything in the other without asking, and nothing crosses to a server to do this. Turn a share off and IronStack takes it back off the shelf.</p>
+        <p class="note" id="health-data">This section also serves as the consumer health data notice some states require. The health data involved: bodyweight, sleep, height, date of birth and biological sex read from Apple Health with your permission, the workouts written to it with your permission, and the sets, effort ratings and notes you log. Source: you and Apple Health. Purpose: the log, your Insights, and Coach when you ask it. Shared with: nobody, except what goes to Coach when you ask it a question, and the session card you choose to share on Social, as described next.</p>
+        <p class="note"><strong>Consent and withdrawal.</strong> Nothing in this notice is read or shared until you allow it: Health access in iOS Settings › Health › Data Access &amp; Devices, and Coach only when you ask it something. Turning either off withdraws your consent from then on, and Delete all IronStack data removes what was collected. Your rights under Washington's My Health My Data Act and similar laws (to confirm, access, delete and withdraw consent) are the ones in Your rights below, at the same address. Mission Built does not sell consumer health data.</p>
       </div>
     </section>
 
@@ -149,26 +145,26 @@ const keeps: Keep[] = [
         <div class="cell">
           <p class="k">Coach</p>
           <p class="v">What it needs to answer, when you ask.</p>
-          <p class="body">Coach sends nothing until you ask it something. When you do, the app sends your question and the conversation so far, today's date and your units, your sessions from the last ninety days (each with its sets, weights, reps, effort ratings and notes, the town it happened in, and the bodyweight and hours of sleep you gave for it), where you are in your program, and exercise names waiting to be matched. It goes to Mission Built's server at ironstack-coach.missionbuilt.io, which runs on Cloudflare. The server passes it to Anthropic's Claude model, checks every weight the model names against a ceiling from your own sets, and sends the answer back. Mission Built does not store your questions or your sessions on the server; they are gone when the answer is sent. Anthropic processes them to produce the answer and does not use them to train its models.</p>
+          <p class="body">Coach sends nothing until you ask it something. When you do, the app sends your question and the conversation so far, today's date and your units, your sessions from the last ninety days (each with its sets, weights, reps, effort ratings and notes, the town it happened in, and the bodyweight and hours of sleep you gave for it), where you are in your program, and exercise names waiting to be matched. If you attach something, that goes too: up to five photos (from your library or the camera, shrunk on the phone first, with location and camera details stripped), a PDF of up to 30 pages, or a spreadsheet, text or .ironstack file, such as the program your coach sent or a page of an old log. Coach reads them to answer, and to write a program or workout down for you to check and save. It all goes to Mission Built's server at ironstack-coach.missionbuilt.io, which runs on Cloudflare. The server passes it to Anthropic's Claude model, checks every weight the model names against a ceiling from your own sets, and sends the answer back. Mission Built does not store your questions, sessions, photos or files on the server; they are gone when the answer is sent. Anthropic keeps them up to 30 days, then deletes them, and does not use them to train its models.</p>
           <p class="body">To run Coach without accounts, the server keeps one small record per install: the public half of the key your phone created, the receipt Apple issued for it, when it registered and was last seen, and how many Coach requests that install has made today and this month and roughly what they cost. That is how the allowance works. It identifies the install, not you. You can turn Coach off in Settings at any time; off, it sends nothing.</p>
         </div>
         <div class="cell">
           <p class="k">Social</p>
           <p class="v">The cards you choose to share, to people you invite.</p>
           <p class="body">If you sign in to Social, the Social server at social.missionbuilt.io (on Cloudflare) holds your handle, your spotters and invitations, the session cards you share, the support you give and get, who you have muted or blocked, reports you file, and a notification token so a new spotter or support can reach your phone. Notifications are asked for only when you have something to be notified about.</p>
-          <p class="body">A card carries no free text. It holds the date and start time, how long you trained, how many working sets, the lifts by name from the app's list, the day's best moments, up to three badges, and a place: your home gym as a phrase you pick, or the city name. Never coordinates. Weights are left off unless you turn them on. You approve every card before it goes, and only your spotters, people you invited or who invited you, can see it. You can take a card back at any time.</p>
-          <p class="body">You can report a card or block a person from Social at any time. Reports use a fixed list of reasons and are read by Mission Built, which can hide a card, release a handle or suspend an account.</p>
+          <p class="body">A card carries no messages and no comments. It holds the date and start time, how long you trained, how many working sets, the lifts by name from the app's list, the day's best moments, up to three badges, a title if you type one (up to 30 characters), and a place: your home gym as a phrase you pick, or the city name. Never coordinates. Your handle, a title and a city name go through a word filter on the server before they are accepted. Weights are left off unless you turn them on. You approve every card before it goes, and only your spotters, people you invited or who invited you, can see it. Anyone you send an invite link to sees your handle on it. You can take a card back at any time.</p>
+          <p class="body">You can report a handle, a card title or a person, and block anyone, at any time. Reports use a fixed list of reasons (an offensive name or title, harassment, spam, impersonation, or something else), and the person reported is not told who reported them. To handle reports quickly, the Social server sends a reported handle or title, never your training log, to Anthropic's Claude model, which sorts it for review. Mission Built reads reports before anything lasting happens, and can hide a card, reset or release a handle, or suspend an account. If you think a decision was wrong, email the address below.</p>
         </div>
       </div>
 
       <div class="fine">
         <p class="k">And one switch almost nobody needs</p>
-        <p><strong>Settings › Your data › Advanced › Copy my log to the server</strong> is off for new installs. It exists so the app's author can read his own log with the command-line tools on his laptop; nothing in the app needs it. On, it sends your raw log (including rounded location, bodyweight, sleep and notes) to storage Mission Built runs on Cloudflare, filed under a one-way hash of the install key. History you brought in from another app is never sent. It stays until you delete your data in the app.</p>
+        <p><strong>Settings › Your data › Advanced › Copy my log to the server</strong> is off for new installs. It exists for reading your log with tools on a computer; nothing in the app, Coach included, needs it. On, it sends your raw log (including rounded location, bodyweight, sleep and notes) to storage Mission Built runs on Cloudflare, filed under a one-way hash of the install key. History you brought in from another app is never sent. It stays until you erase it from The server's copy on the same screen, or delete your data in the app.</p>
       </div>
 
       <div class="fine">
         <p class="k">Nothing else</p>
-        <p>No advertising identifiers, no third-party software kits in the app, no usage analytics sent to anyone, no tracking in Apple's sense of the word, no selling, no sharing for anyone else's marketing. The App Store privacy label says the same.</p>
+        <p>Notifications and the Home Screen widget are made on the phone from the same files the app reads. No advertising identifiers, no third-party software kits in the app, no usage analytics sent to anyone, no tracking in Apple's sense of the word, no selling, no sharing for anyone else's marketing. The App Store privacy label says the same.</p>
       </div>
     </section>
 
@@ -177,7 +173,7 @@ const keeps: Keep[] = [
     {/* ---------- WHO TOUCHES IT ---------- */}
     <section class="block">
       <p class="section-label">Who touches it</p>
-      <h2 class="section-h2">Three companies, each for one job.</h2>
+      <h2 class="section-h2">Three companies, each for its jobs.</h2>
       <p class="prose">Each of them is bound by its own terms and, where it processes data for Mission Built, by a data processing agreement, to protect your data at least as well as this page promises. None of them may use it for their own marketing.</p>
       <div class="parties">
         <div class="ph"><span>Who</span><span>Job</span><span>What they see</span><span>Where</span></div>
@@ -219,7 +215,7 @@ const keeps: Keep[] = [
         <p><strong>What the server holds</strong> asks the Coach server, live, for everything it keeps for your install and shows it to you. The request is signed by your phone's key, so the server can only ever answer for the install that asked.</p>
         <p><strong>Delete all IronStack data</strong> is one screen that erases everything, everywhere, in order: first the server's copy (the install record, the counters, and the log copy if you had it on), then your Social account if you have one, then everything on the phone. It reports each one. If the server or Social cannot be reached, it stops before touching the phone and says so, so nothing is left behind that you can no longer ask to erase; you can try again or delete the phone's data anyway. <strong>Social › Delete Social account</strong> deletes only the Social side: your handle, spotters, shared cards and support, and disconnects Sign in with Apple. Your log is not touched.</p>
         <p>Two things those buttons do not remove: workouts IronStack wrote to Apple Health stay in Health, where you can delete them in the Health app; and the count-and-cost record of Coach use expires on its own within about ninety days. Turning Coach off in Settings stops it from sending anything from then on; signing out of Social stops notifications.</p>
-        <p>If the app was deleted before you asked, nothing on the Coach server can be matched to you, which also means nothing there can identify you. For that, for your Social account, or for anything else about your data, email <a href={ASK}>mike@missionbuilt.io</a>. Mission Built will confirm within ten days and finish within thirty.</p>
+        <p>If the app was deleted before you asked, nothing on the Coach server can be matched to you, which also means nothing there can identify you. For that, for your Social account, or for anything else about your data, email <a href={ASK}>support@missionbuilt.io</a>. Mission Built will confirm within ten days and finish within thirty.</p>
       </div>
     </section>
 
@@ -230,7 +226,7 @@ const keeps: Keep[] = [
       <p class="section-label">Your rights</p>
       <h2 class="section-h2">Wherever you are, the same answer.</h2>
       <div class="prose-block">
-        <p>You can ask what Mission Built holds that relates to your install or your Social account, ask for it to be corrected or deleted, ask for a copy, object to or restrict its use, and withdraw any consent you gave, all at the address above, and you will not be treated differently for asking. Under the GDPR, the legal bases are your consent (Coach, Social, Health, location, the log copy) and Mission Built's legitimate interest in running the Coach allowance, keeping Social safe and keeping the service from being abused. If you are in the EU, the EEA or the UK you may also complain to your supervisory authority. Under California law, Mission Built does not sell or share personal information and has not done so in the past twelve months.</p>
+        <p>You can ask what Mission Built holds that relates to your install or your Social account, ask for it to be corrected or deleted, ask for a copy, object to or restrict its use, and withdraw any consent you gave, all at the address above, and you will not be treated differently for asking. Under the GDPR, the legal bases are your explicit consent for anything involving health data (Coach, Apple Health, the log copy), your consent for Social and location, and Mission Built's legitimate interest in running the Coach allowance, keeping Social safe and keeping the service from being abused. Mission Built has not appointed an EU or UK representative; write to the address above. If you are in the EU, the EEA or the UK you may also complain to your supervisory authority. Under California law, Mission Built does not sell or share personal information and has not done so in the past twelve months.</p>
         <p>Mission Built operates from the United States and the companies above process data there, so anything that leaves your phone leaves your country if you are outside the US. Cloudflare and Anthropic each rely on recognised transfer mechanisms such as standard contractual clauses or the EU–US Data Privacy Framework for that.</p>
       </div>
     </section>
@@ -241,11 +237,11 @@ const keeps: Keep[] = [
       <div class="two">
         <div class="cell">
           <p class="k">Coach is not a clinician</p>
-          <p class="body">Coach gives general training information from your own log. It will not name a weight above a ceiling drawn from your own sets, it does not write programs, and it points any question about pain, injury or a medical condition to a qualified person. Check with your physician before making decisions about your health, and treat what Coach says as a starting point, not an instruction.</p>
+          <p class="body">Coach gives general training information from your own log. It will not name a weight above a ceiling drawn from your own sets, it does not make programs up (it writes down one you send it, for you to check), and it points any question about pain, injury or a medical condition to a qualified person. Check with your physician before making decisions about your health, and treat what Coach says as a starting point, not an instruction.</p>
         </div>
         <div class="cell">
-          <p class="k">Children</p>
-          <p class="body">IronStack is not directed at children under 13 and does not knowingly collect anything from them. If you believe a child has used Coach or Social, email the address above and the install record or the Social account will be removed.</p>
+          <p class="k">Age</p>
+          <p class="body">IronStack is for people 13 and older. If you are 13 to 17, a parent or guardian needs to agree before you use it, Coach and Social included. It is not directed at children under 13 and does not knowingly collect anything from them. If you believe a child under 13 has used the app, email the address above and the install record and any Social account will be removed.</p>
         </div>
       </div>
     </section>
