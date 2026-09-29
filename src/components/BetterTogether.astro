@@ -3,24 +3,22 @@
  * BetterTogether.astro
  *
  * The closing section on both app pages (/rack/ironstack and /rack/mealstack): how
- * MealStack and Ironstack make each other better. Same facts on both pages, told from
+ * MealStack and IronStack make each other better. Same facts on both pages, told from
  * the side of the page it sits on.
  *
  * The honesty rule for this section: every flow carries a status, and "Live" means the
- * code ships in BOTH apps today. As of Sept 19, 2026 (checked against both repos):
+ * code ships in BOTH apps today. As of Sept 29, 2026 (checked against both apps; Mike's
+ * answers are in the refresh brief):
  *
- *   - Apple Health: live. MealStack writes protein, carbs, fat and calories at the time
- *     you ate (HealthKitManager.swift); Ironstack writes each session as a strength
- *     workout when you switch it on, and reads weigh-ins and sleep (HealthSync.swift).
- *     Neither app reads what the other writes; Health shows both side by side.
- *   - Travel mode: Ironstack's half ships (Progress/TravelMode.swift, the
- *     group.io.missionbuilt.shared suite). MealStack is not in that App Group yet and has
- *     its own time-zone travel days. So: "Ironstack ready · MealStack next".
- *   - training-signal.json and rhythm.json: Ironstack writes them after a separate yes
- *     for each (Sharing.swift); MealStack does not read them yet.
- *   - Mission Built Schema: Ironstack exports 0.11.0 (Data/MissionBuiltSchema.swift);
- *     MealStack's plan files are still on the MealStack Schema 0.9.3 line.
- *   - One coach profile: designed only (app/docs/TWO-APPS-ONE-BODY.md).
+ *   - Apple Health: live in both. Neither app reads what the other writes.
+ *   - Travel: one switch shared by both apps, on the phone. Live.
+ *   - Session time: either app moving today's session asks the other, Sync or Skip. Live.
+ *   - Session end: with "IronStack times my after-session meals" on, MealStack re-times the
+ *     after-session meals on the real end. Live.
+ *   - Badges: Double Stacked in both; Fuelled and Stacked and Straight off the bar in MealStack. Live.
+ *   - Training rhythm (when you usually start): IronStack writes it; MealStack doesn't read it yet.
+ *   - Mission Built Schema 0.13: IronStack exports it; MealStack's plan files use its words.
+ *   - One coach profile: designed only.
  *
  * When MealStack ships a flow, flip its status here and both pages update.
  * Color discipline: army green marks "Live" (it landed); oxblood is not used for status.
@@ -39,37 +37,51 @@ const flows: Flow[] = [
   {
     title: 'One record of the day',
     from: 'Both apps', to: 'Apple Health',
-    carries: 'MealStack writes protein, carbs, fat and calories at the time you actually ate. Ironstack writes the session as a strength workout, if you switch it on.',
+    carries: 'MealStack writes protein, carbs, fat and calories at the time you actually ate. IronStack writes the session as a strength workout, if you switch it on.',
     gives: 'Food and training on one timeline in Health, from two apps that never had to know about each other.',
     status: 'live', statusNote: 'Live in both',
   },
   {
-    title: 'Travel mode, one switch',
+    title: 'Travel, one switch',
     from: 'Either app', to: 'Both apps',
-    carries: 'On or off, which app flipped it, and when the trip started. A few bytes in a shelf on the phone that only Mission Built apps can open.',
-    gives: 'Land in Denver, flip it once. MealStack plans meals for a hotel instead of your kitchen; Ironstack counts the session in a strange gym toward Road Warrior.',
-    status: 'half', statusNote: 'Ironstack ready · MealStack next',
+    carries: 'Home or Away, which app flipped it, and when the trip started. A few bytes in a shelf on the phone that only Mission Built apps can open.',
+    gives: 'Land in Denver, flip it once, or let either app do it when you are far from home. MealStack plans the day for the road; IronStack counts the session in a strange gym toward Road Warrior.',
+    status: 'live', statusNote: 'Live in both',
+  },
+  {
+    title: 'One session time',
+    from: 'Either app', to: 'Both apps',
+    carries: 'Today\'s session time, when you move it in either app.',
+    gives: 'Move the session in IronStack and MealStack says so the next time you open it: Sync to the new time, or Skip. It works the other way too. Neither moves the other by itself.',
+    status: 'live', statusNote: 'Live in both',
   },
   {
     title: 'Fuel follows the work',
-    from: 'Ironstack', to: 'MealStack',
-    carries: 'The last session: when it started, how long it ran, working sets, and whether it was a heavy lower day, an upper day or conditioning.',
-    gives: 'A heavy lower day and a recovery day stop looking like the same nutritional day. The meals after the session land after the session, not at an hour picked in advance.',
-    status: 'half', statusNote: 'Ironstack ready · MealStack next',
+    from: 'IronStack', to: 'MealStack',
+    carries: 'When today\'s session started and when it ended.',
+    gives: 'The shake after the session is called when you finish, not at an hour picked in advance, and the meals after it re-time on the real end. Switch on "IronStack times my after-session meals" in MealStack.',
+    status: 'live', statusNote: 'Live in both',
+  },
+  {
+    title: 'Badges that see both',
+    from: 'Both apps', to: 'Both apps',
+    carries: 'Whether you trained and ate to plan on the same day.',
+    gives: 'Double Stacked in both apps, for the days both did their job. In MealStack, Fuelled and Stacked for a carb surge before a session IronStack logged, and Straight off the bar for a shake on time after one.',
+    status: 'live', statusNote: 'Live in both',
   },
   {
     title: 'The carb surge knows when you train',
-    from: 'Ironstack', to: 'MealStack',
+    from: 'IronStack', to: 'MealStack',
     carries: 'When your sessions usually start, by weekday, worked out from your own log.',
-    gives: 'MealStack anchors the pre-workout meal to the hour you really lift on a Saturday, without you typing it in.',
-    status: 'half', statusNote: 'Ironstack ready · MealStack next',
+    gives: 'MealStack anchors the carb surge to the hour you really lift on a Saturday, without you typing it in.',
+    status: 'half', statusNote: 'IronStack ready · MealStack next',
   },
   {
     title: 'One way to write it all down',
     from: 'Both apps', to: 'Your files',
     carries: 'The Mission Built Schema: one documented, versioned vocabulary. A workout reads like a meal, a program like a plan, a session like a day.',
-    gives: 'Export from both and a single script, a spreadsheet or Claude reads the lot. Your data outlives either app.',
-    status: 'half', statusNote: 'Ironstack exports it · MealStack moving',
+    gives: 'Export from both and a single script or spreadsheet reads the lot. Your data outlives either app.',
+    status: 'half', statusNote: 'IronStack exports it · MealStack uses its words',
   },
   {
     title: 'One coach profile',
@@ -83,30 +95,30 @@ const flows: Flow[] = [
 type Rule = { k: string; v: string };
 const rules: Rule[] = [
   { k: 'Neither needs the other', v: 'Delete one and the other works exactly as it did. Nothing in either app pretends the other is there.' },
-  { k: 'Nothing crosses without a yes', v: 'Every share is its own switch, off until you turn it on. Turn it off and what was shared is taken back.' },
+  { k: 'Nothing moves without a yes', v: 'A moved session asks before it moves anything. The after-session timing is its own switch. Travel is one switch because it is one trip.' },
   { k: 'It stays on the phone', v: 'The two apps talk through Apple Health and a private shelf on your iPhone. No server, no account, nothing in between.' },
-  { k: 'One writer per fact', v: 'Ironstack owns what happened in the gym. MealStack owns what you ate. Neither edits the other.' },
+  { k: 'One writer per fact', v: 'IronStack owns what happened in the gym. MealStack owns what you ate. Neither edits the other.' },
 ];
 
-// A Saturday with both apps, in order. `next` marks the beats that wait on MealStack.
+// A Saturday with both apps, in order. `next` marks the beats that wait on MealStack reading IronStack's rhythm.
 type Beat = { t: string; app: 'mealstack' | 'ironstack' | 'health'; say: string; next?: boolean };
 const day: Beat[] = [
   { t: '7:10 AM', app: 'mealstack', say: 'Breakfast logged forty minutes late. The morning tightens; the carb surge does not move.' },
-  { t: '8:30 AM', app: 'mealstack', say: 'Carb surge, ninety minutes before the session Ironstack says you usually start on a Saturday.', next: true },
+  { t: '8:30 AM', app: 'mealstack', say: 'Carb surge, ninety minutes before the session IronStack says you usually start on a Saturday.', next: true },
   { t: '10:02 AM', app: 'ironstack', say: '"Three fifteen for three at eight." Chalk stays on the bar. The rest clock starts itself.' },
   { t: '11:14 AM', app: 'ironstack', say: 'STACKED. Heavy lower day, 22 working sets, one new record. The workout goes to Health.' },
-  { t: '11:45 AM', app: 'mealstack', say: 'Post-session meal, timed from when the session actually ended, sized for a heavy lower day.', next: true },
+  { t: '11:45 AM', app: 'mealstack', say: 'The shake, called the minute the session ended. The meals after it re-time on the real end.' },
   { t: '9:00 PM', app: 'health', say: 'Apple Health shows the day whole: what you ate and what you lifted, on one timeline.' },
 ];
-const appName = { mealstack: 'MealStack', ironstack: 'Ironstack', health: 'Apple Health' } as const;
+const appName = { mealstack: 'MealStack', ironstack: 'IronStack', health: 'Apple Health' } as const;
 
 const lead = here === 'ironstack'
-  ? 'Ironstack keeps the record of the work. MealStack times the fuel around it. Each one stands on its own, and neither will ever ask you to install the other. Put both on one phone and they start talking about the same person.'
-  : 'MealStack times the fuel. Ironstack keeps the record of the work it fuels. Each one stands on its own, and neither will ever ask you to install the other. Put both on one phone and they start talking about the same person.';
+  ? 'IronStack keeps the record of the work. MealStack times the fuel around it. Each one stands on its own, and neither will ever ask you to install the other. Put both on one phone and they start talking about the same person.'
+  : 'MealStack times the fuel. IronStack keeps the record of the work it fuels. Each one stands on its own, and neither will ever ask you to install the other. Put both on one phone and they start talking about the same person.';
 const otherHref = `/rack/${other}`;
 const otherPitch = other === 'mealstack'
   ? { name: 'MealStack', line: 'Fueling is training. A meal timing tracker built backward from the session.' }
-  : { name: 'Ironstack', line: 'Log it. Time it. Lift each other up. A lifting log that stays out of your way.' };
+  : { name: 'IronStack', line: 'Log it. Time it. Lift each other up. A lifting log that stays out of your way.' };
 ---
 <section class="bt" id="better-together" aria-labelledby="bt-h">
   <p class="section-label">Better together</p>
@@ -114,7 +126,7 @@ const otherPitch = other === 'mealstack'
   <p class="prose">{lead}</p>
 
   {/* ---------- The picture: two apps, the phone in the middle ---------- */}
-  <div class="bt-map" role="img" aria-label="MealStack and Ironstack on one iPhone. MealStack writes nutrition to Apple Health; Ironstack writes workouts to Apple Health and reads weigh-ins and sleep. A private shelf on the phone carries travel mode, the training signal and your training rhythm from Ironstack to MealStack.">
+  <div class="bt-map" role="img" aria-label="MealStack and IronStack on one iPhone. MealStack writes nutrition to Apple Health; IronStack writes workouts to Apple Health and reads weigh-ins. A private shelf on the phone carries the travel switch and today's session time both ways, and when the session ended from IronStack to MealStack.">
     <div class:list={['bt-app', here === 'mealstack' && 'here']}>
       <p class="bt-k">MealStack</p>
       <p class="bt-name">What you ate</p>
@@ -127,13 +139,13 @@ const otherPitch = other === 'mealstack'
         <span class="bt-arrow l" aria-hidden="true">← workouts</span>
       </div>
       <div class="bt-lane">
-        <span class="bt-arrow l next" aria-hidden="true">← session, rhythm</span>
-        <div class="bt-hub shelf"><p class="bt-k">Shelf on your phone</p><p class="bt-hub-v">Travel mode · last session · when you train</p></div>
-        <span class="bt-arrow r" aria-hidden="true">travel ⇄</span>
+        <span class="bt-arrow l" aria-hidden="true">← session end</span>
+        <div class="bt-hub shelf"><p class="bt-k">Shelf on your phone</p><p class="bt-hub-v">Travel · session time · session end</p></div>
+        <span class="bt-arrow r" aria-hidden="true">travel, time ⇄</span>
       </div>
     </div>
     <div class:list={['bt-app', here === 'ironstack' && 'here']}>
-      <p class="bt-k">Ironstack</p>
+      <p class="bt-k">IronStack</p>
       <p class="bt-name">What you lifted</p>
       <ul><li>Every set, said or typed</li><li>When you train, from your log</li><li>Sessions on the road</li></ul>
     </div>
@@ -153,7 +165,7 @@ const otherPitch = other === 'mealstack'
       </article>
     ))}
   </div>
-  <p class="note">"Ironstack ready" means Ironstack's half is built and waiting: it asks before it shares anything, and MealStack reading it is next on MealStack's list. Nothing on this list is switched on just by installing both.</p>
+  <p class="note">"IronStack ready" means IronStack's half is built and waiting, and MealStack reading it is next on MealStack's list. Installing both turns nothing on that you have not said yes to.</p>
 
   {/* ---------- A day with both ---------- */}
   <h3 class="sub-h3">A Saturday with both</h3>

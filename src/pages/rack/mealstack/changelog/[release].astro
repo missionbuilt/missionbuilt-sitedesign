@@ -10,7 +10,7 @@
 import { getCollection } from 'astro:content';
 import ToolNoteLayout from '../../../../layouts/ToolNoteLayout.astro';
 import { longDate, isoDay } from '../../../../data/logs';
-import { byOrder, releaseUrl, releaseSlug, when, plural, CHANGELOG, type Release } from '../../../../data/releases';
+import { changelogFor, byOrder, releaseUrl, releaseSlug, when, plural, type Release } from '../../../../data/releases';
 
 export async function getStaticPaths() {
   const releases = (await getCollection('releases', ({ data }) => data.app === 'mealstack')).sort(byOrder);
@@ -29,14 +29,14 @@ const standfirst = `${when(d)} ${plural(d.changes, 'change')}${titled.length > 1
 <ToolNoteLayout
   title={`MealStack ${d.version} · Release notes · Mission Built`}
   description={`What changed in MealStack ${d.version}: ${d.groups.flatMap((g) => g.leads).slice(0, 3).join(' ')}`}
-  crumbs={[{ label: 'MealStack', href: '/rack/mealstack' }, { label: 'Release notes', href: CHANGELOG }, { label: d.version }]}
+  crumbs={[{ label: 'MealStack', href: '/rack/mealstack' }, { label: 'Release notes', href: changelogFor('mealstack') }, { label: d.version }]}
   eyebrow="MealStack release notes"
   heading={`Release ${d.version}`}
   accent={d.version}
   standfirst={standfirst}
   tool="mealstack"
-  back={{ label: 'All releases', href: CHANGELOG }}
-  footLinks={[{ label: 'Plan skill', href: '/rack/mealstack/skill' }, { label: 'Schema', href: '/rack/mealstack/schema' }, { label: 'Privacy', href: '/rack/mealstack/privacy' }]}
+  back={{ label: 'All releases', href: changelogFor('mealstack') }}
+  footLinks={[{ label: 'Schema', href: '/rack/mealstack/schema' }, { label: 'Privacy', href: '/rack/mealstack/privacy' }]}
 >
   <Fragment slot="byline">
     MealStack {d.version} · {d.date ? <>Shipped <time datetime={isoDay(d.date)}>{longDate(d.date)}</time></> : when(d, true)}

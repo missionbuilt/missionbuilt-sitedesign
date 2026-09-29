@@ -1,0 +1,29 @@
+---
+/**
+ * MealStack — Terms of Use. /rack/mealstack/terms
+ *
+ * Apple's Standard EULA is the licence; these terms add the rest. The text is
+ * src/data/legal/terms-mealstack.md, written from the lawyer-review draft in the private briefs
+ * with Mike's decisions applied (Sept 29, 2026). It shows "Draft, not yet in force" until
+ * Mike says the review is done: set DRAFT to false then, and put the effective date in.
+ */
+import ToolNoteLayout from '../../../layouts/ToolNoteLayout.astro';
+import LegalProse from '../../../components/LegalProse.astro';
+import { Content } from '../../../data/legal/terms-mealstack.md';
+const DRAFT = true;
+---
+<ToolNoteLayout
+  title="Terms of Use · MealStack · Mission Built"
+  description="The terms for using MealStack: your data, Coach, training and your health, purchases, and Apple's part. Draft, under review."
+  crumbs={[{ label: 'MealStack', href: '/rack/mealstack' }, { label: 'Terms' }]}
+  eyebrow="MealStack terms of use"
+  heading="Terms of use"
+  accent="use"
+  standfirst="The rules for using MealStack, in plain words. Apple's Standard EULA is your licence to the app; these terms cover the rest."
+  tool="mealstack"
+  back={{ label: 'MealStack', href: '/rack/mealstack' }}
+  footLinks={[{ label: 'Privacy', href: '/rack/mealstack/privacy' }, { label: 'Support', href: '/rack/support' }, { label: 'Acknowledgements', href: '/rack/acknowledgements' }]}
+>
+  <Fragment slot="byline">Mission Built, which is Mike Nichols · Pittsburgh, PA · {DRAFT ? 'Draft, not yet in force' : 'In force'}</Fragment>
+  <LegalProse draft={DRAFT}><Content /></LegalProse>
+</ToolNoteLayout>

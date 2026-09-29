@@ -113,9 +113,11 @@ It reads `~/Projects/mealstack/MealStack/CHANGELOG.md` by default (pass another 
 
 Commit the generated files and push. Cloudflare builds without the app repo, so the copies have to be in this one.
 
-## sync_mealstack_skill.py
+## sync_plan_skill.py
 
-Packages the MealStack plan skill for [/rack/mealstack/skill](https://missionbuilt.io/rack/mealstack/skill), the page the app's About ("Build a plan with Claude") and import sheet link to. It zips `~/Projects/mealstack/MealStack/skills/mealstack-plan` (SKILL.md, references, scripts, examples; no tests or caches) into `public/downloads/mealstack-plan.zip`, copies the example plans to `public/downloads/mealstack/`, and writes the page's figures to `src/data/mealstack-skill.json`. The zip is reproducible: nothing changed in the skill, nothing changes here.
+Packages an app's plan skill for [/loadout/plans](https://missionbuilt.io/loadout/plans): `python3 scripts/sync_plan_skill.py --app ironstack` or `--app mealstack`. It zips the skill folder from the app repo (`~/Projects/ironstack/skills/ironstack-plan` or `~/Projects/mealstack/MealStack/skills/mealstack-plan`; SKILL.md, references, scripts, examples; no tests, caches or `build_*.py`) into `public/downloads/<app>-plan.zip`, copies the examples to `public/downloads/<app>/`, and writes the page's figures to `src/data/<app>-skill.json`. It refuses a skill that names a private file (a Swift source, the kit, a home folder), because this repo is public. The zip is reproducible: nothing changed in the skill, nothing changes here.
+
+The skills live on the Loadout, not the Rack: the app pages don't mention them. `/rack/mealstack/skill` 301s to `/loadout/plans` because installed MealStack builds still link there.
 
 ## sync_mealstack.py
 
@@ -167,3 +169,13 @@ python3 scripts/build_pdf.py --html-only                           # writes the 
 ```
 
 The edition label and version string on the cover default to "Second Edition, Revised" / v2.1; pass `--edition` and `--version` when they change, rename the output (`--out`), and add 301s for the old filenames in `public/_redirects`. After a manuscript change: run `sync_book.py`, then `build_pdf.py`, then commit the mdx, the .md and the .pdf together so the site and both downloads stay in sync.
+
+## build_og_images.py
+
+Draws the share cards (og:image, 1200 × 630) for the app pages: `public/images/ironstack/og.jpg`, `public/images/mealstack/og.jpg` and `public/images/rack-og.jpg` (both phones, for `/rack`, Support and Acknowledgements). Each is the Iron Log look (charcoal, the lockup, the app's name with the oxblood period, its line) with a real phone screen from `public/images/`. Needs Pillow and the fonts in `scripts/fonts` (`cd scripts/fonts && npm install`). Run it again after the screen a card uses is recaptured:
+
+```bash
+python3 scripts/build_og_images.py
+```
+
+The book and the Loadout keep `/og-image.jpg`.

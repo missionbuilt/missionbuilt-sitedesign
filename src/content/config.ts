@@ -75,7 +75,7 @@ const logs = defineCollection({
  *
  * Layout: src/content/releases/{app}-{version}.md. Generated, not hand-written:
  * scripts/sync_mealstack_changelog.py splits an app repo's CHANGELOG.md into one
- * file per release (`--app ironstack` for Ironstack). /rack/{app}/changelog lists
+ * file per release (`--app ironstack` for IronStack). /rack/{app}/changelog lists
  * them newest first by `order`; /rack/{app}/changelog/{version with dashes} is one
  * release.
  */

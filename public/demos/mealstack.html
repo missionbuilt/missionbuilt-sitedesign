@@ -126,7 +126,6 @@ button { font: inherit; }
 
   var IMG = 'mealstack/';
   // Screen boxes are in points on the 402 × 874 screen: [left, top, right, bottom].
-  var HISTORY_TAB = [212, 795, 300, 848];
 
   // The tour is the four pillars from the Log "Fueling is training", two to four screens each.
   var PILLARS = {
@@ -148,39 +147,36 @@ button { font: inherit; }
     { part: 'protein', img: '04-today-morning', clock: '6:40', title: 'The next meal is the screen',
       desc: 'The day is a stack of meals, spaced out. The next one is the biggest thing on Today, counting down, with what’s on the plate and its protein. An alert finds you when it’s due.' },
     { part: 'protein', img: '21-stack-detail', clock: '6:42', title: 'Planned plate by plate',
-      hot: [18, 600, 384, 688], doText: 'Tap Paprika chicken box',
+      hot: [18, 680, 384, 762], doText: 'Tap Paprika chicken box',
       desc: 'A stack is a training day and a recovery day of meals. The Base puts 224 g of protein across the training day, and every plate shows its share.' },
     { part: 'protein', img: '22-meal-editor', clock: '6:42', title: 'Weighed, not guessed',
       desc: 'A meal is its ingredients, by weight, with their macros. The meal’s totals and the day’s update as you edit. Fuel, like the shake after the session, counts its protein toward the day but never counts as a meal.' },
 
     // ── 02 Session ──
     { part: 'session', img: '08-session-menu', clock: '7:06', title: 'The session is the anchor',
-      hot: [60, 308, 300, 354], doText: 'Tap “30 min later”',
-      desc: 'Say when you train and the day is built around it: the carb surge, the pre-workout scoop and the jug are pinned to the session. Training moved? Move it here, and each choice shows where it lands.' },
+      hot: [56, 446, 306, 506], doText: 'Tap “30 min later”',
+      desc: 'Say when you train and the day is built around it: the carb surge before the session and the shake after it are pinned to it. Training moved? Move it here, and each choice shows where it lands.' },
     { part: 'session', img: '09-session-moved', clock: '7:07', title: 'What’s pinned moves with it',
-      desc: 'Session 6:30 PM. The carb surge, the scoop and the jug moved with it; the morning didn’t. One line says what moved, with Undo. No “are you sure?” dialogs.' },
-    { part: 'session', img: '11-late-log', clock: '12:40', title: 'The carb surge holds',
-      desc: 'It’s 12:40 and the 10:06 yogurt is only happening now. The rest of the day slides, except where it would crowd the session: lunch tightens to 3:00 so the carb surge still lands at 5:00, before you train.' },
+      desc: 'Session 6:30 PM. The carb surge, the shake and dinner moved with it; the morning didn’t. One line says what moved, with Undo. No “are you sure?” dialogs.' },
+    { part: 'session', img: '11-late-log', clock: '11:40', title: 'The carb surge holds',
+      desc: 'It’s 11:40 and the 10:06 yogurt is only happening now. Lunch slides to 2:40; the carb surge doesn’t move, and still lands at 5:00, before you train.' },
 
     // ── 03 Day ──
-    { part: 'day', img: '13-not-yet-menu', clock: '12:40', title: 'Can’t eat it as planned?',
-      hot: [78, 438, 324, 492], doText: 'Tap “Swap for another meal”',
-      desc: '“Not yet” under every meal: push it back 15, 30 or 45 minutes, skip it, or swap it. Prepped lunch sitting in a fridge in another city? Swap.' },
-    { part: 'day', img: '14-swap-shelf', clock: '12:40', title: 'Swap from your shelf',
-      desc: 'Your Meals shelf opens for this plate. Pick one for today only, for this stack, or for every stack. The day around it doesn’t have to be rebuilt.' },
-    { part: 'day', img: '16-coach-eating-out', clock: '12:41', title: 'Eating out? Send Coach the menu',
+    { part: 'day', img: '13-not-yet-menu', clock: '11:41', title: 'Can’t eat it as planned?',
+      hot: [76, 556, 326, 618], doText: 'Tap “Swap for another meal”',
+      desc: '“Not yet” under every meal: push it back 15 minutes to an hour, pick a time, swap it, or skip it. Prepped lunch sitting in a fridge in another city? Swap.' },
+    { part: 'day', img: '14-swap-shelf', clock: '11:41', title: 'Swap from your shelf',
+      desc: 'Your Meals shelf opens for this plate, with a new meal one tap away. Pick one for today only, for this stack, or for every stack. The day around it doesn’t have to be rebuilt.' },
+    { part: 'day', img: '16-coach-eating-out', clock: '11:42', title: 'Eating out? Send Coach the menu',
       desc: 'Snap the menu or paste a link. Coach picks what fits this meal’s numbers, for today only. Coach is an AI and can be wrong, so nothing changes until you tap its card.' },
-    { part: 'day', img: '27-daytype-menu', clock: '9:45', title: 'Recovery day, today only',
+    { part: 'day', img: '27-daytype-menu', clock: '10:15', title: 'Recovery day, today only',
       desc: 'The day went sideways? Flip it to recovery from the top of Today; tomorrow follows your training days. Next to it, the stack menu changes the week’s meals in one tap.' },
 
     // ── 04 Record ──
     { part: 'record', img: '06-log-sheet', clock: '7:06', title: 'Log when you ate',
       desc: 'The sheet opens on now, with 15 min ago, 1 hr ago and the planned time a tap away, and shows what the rest of the day will do before you commit.' },
-    { part: 'record', img: '19d-nothing-fits', clock: '9:45', title: 'No pretending',
-      hot: HISTORY_TAB, doText: 'Tap History',
-      desc: '9:45 PM, past the 9:30 last meal. What can’t happen says so: log what you did eat, or skip the rest in one tap. Nothing gets pushed onto tomorrow, and there are no streaks to protect.' },
-    { part: 'record', img: '26-history', clock: '9:45', title: 'The day as it happened',
-      desc: 'History keeps the real day: carb surge missed, the yogurt 2 hr 34 min late, 177 g of protein. Tomorrow gets tuned on that, not on the plan. That’s MealStack. It’s in private beta on iPhone; the form under this demo gets you a build.' }
+    { part: 'record', img: '26-history', clock: '10:15', title: 'The day as it happened',
+      desc: 'History keeps the real record: a streak of full days, every meal logged or skipped on purpose, the badges you have earned and the next one up, and the week on time and on protein. Tomorrow gets tuned on that, not on the plan. That’s MealStack. It’s in private beta on iPhone; the Join the beta form on this page gets you a build.' }
   ];
 
   var $ = function (id) { return document.getElementById(id); };

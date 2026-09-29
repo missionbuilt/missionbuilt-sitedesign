@@ -1,6 +1,6 @@
 ---
 /**
- * Ironstack — one release's notes. /rack/ironstack/changelog/{0-1-0}. Same page as MealStack's.
+ * IronStack — one release's notes. /rack/ironstack/changelog/{0-1-0}. Same page as MealStack's.
  *
  * The release's `###` groups are the sections, with a contents row at the top so a
  * long build reads as five short lists, not one long one. Each line's first sentence
@@ -29,10 +29,10 @@ const titled = d.groups.filter((g) => g.title);
 const standfirst = `${when(d)} ${plural(d.changes, 'change')}${titled.length > 1 ? `, grouped by where you'll notice them` : ''}.`;
 ---
 <ToolNoteLayout
-  title={`Ironstack ${d.version} · Release notes · Mission Built`}
-  description={`What changed in Ironstack ${d.version}: ${d.groups.flatMap((g) => g.leads).slice(0, 3).join(' ')}`}
-  crumbs={[{ label: 'Ironstack', href: '/rack/ironstack' }, { label: 'Release notes', href: CHANGELOG }, { label: d.version }]}
-  eyebrow="Ironstack release notes"
+  title={`IronStack ${d.version} · Release notes · Mission Built`}
+  description={`What changed in IronStack ${d.version}: ${d.groups.flatMap((g) => g.leads).slice(0, 3).join(' ')}`}
+  crumbs={[{ label: 'IronStack', href: '/rack/ironstack' }, { label: 'Release notes', href: CHANGELOG }, { label: d.version }]}
+  eyebrow="IronStack release notes"
   heading={`Release ${d.version}`}
   accent={d.version}
   standfirst={standfirst}
@@ -41,7 +41,7 @@ const standfirst = `${when(d)} ${plural(d.changes, 'change')}${titled.length > 1
   footLinks={[{ label: 'The details', href: '/rack/ironstack/details' }, { label: 'Privacy', href: '/rack/ironstack/privacy' }]}
 >
   <Fragment slot="byline">
-    Ironstack {d.version} · {d.date ? <>Shipped <time datetime={isoDay(d.date)}>{longDate(d.date)}</time></> : when(d, true)}
+    IronStack {d.version} · {d.date ? <>Shipped <time datetime={isoDay(d.date)}>{longDate(d.date)}</time></> : when(d, true)}
   </Fragment>
 
   <Fragment slot="lead">

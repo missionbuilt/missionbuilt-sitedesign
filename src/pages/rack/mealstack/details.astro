@@ -6,18 +6,18 @@
  * MealStack — product page on the Rack.
  *
  * An iPhone app for meal timing built backward from the training session.
- * Open source with 1.0; the license itself is not settled (MIT or copyleft),
- * and the copy must not commit to one. Private beta (TestFlight, added by hand
- * from the form below); the App Store listing and the source open with 1.0.
+ * A closed-source app; what is open is your data (plan files in a documented
+ * format, the MealStack Schema). Private beta (TestFlight, added by hand from
+ * the form below); the App Store listing comes with 1.0.
  *
  * The page has one job: someone who has never heard of the app learns why it
  * exists, what it does differently, how you use it, and how to get it. In
  * order: hero → try it (the click-through demo, /demos/mealstack.html) →
  * why (the four pillars, linking to the Log) → the rule (live cascade)
  * → what it does differently → how you use it → side by side → fine print →
- * join the beta (form → /api/beta) → the kit (plan skill, release notes,
- * schema, privacy) → FAQ → tester quotes (rendered only when there are real ones) →
- * better together (components/BetterTogether.astro, shared with Ironstack) → related.
+ * join the beta (form → /api/beta) → the kit (release notes, schema,
+ * privacy) → FAQ → tester quotes (rendered only when there are real ones) →
+ * better together (components/BetterTogether.astro, shared with IronStack) → related.
  *
  * How we talk about it: the Log "Fueling is training"
  * (src/content/logs/fueling-is-training.mdx) is the source of truth. Four
@@ -29,10 +29,12 @@
  *
  * Color discipline: oxblood for the hero period, eyebrows, section labels,
  * the one marked card (Timing), the two Join buttons, and the closer accent.
- * Army green for the license stat only. No em-dashes in UI strings.
+ * Army green for the your-data stat only. No em-dashes in UI strings.
  */
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import SiteFooter from '../../../components/SiteFooter.astro';
+import { getCollection as getReleases } from 'astro:content';
+import { newestBuild, releaseUrl, when } from '../../../data/releases';
 import TopNav from '../../../components/TopNav.astro';
 import DemoEmbed from '../../../components/DemoEmbed.astro';
 import BetterTogether from '../../../components/BetterTogether.astro';
@@ -45,13 +47,14 @@ const story = logs[0];
 const storyHref = story ? logUrl(story) : '/logs';
 const storyTitle = story ? story.data.title : 'Logs';
 
-const MAILTO = 'mailto:mike@missionbuilt.io?subject=MealStack%20beta&body=Apple%20ID%20email%3A%20';
+const build = newestBuild(await getReleases('releases'), 'mealstack');
+const MAILTO = 'mailto:support@missionbuilt.io?subject=MealStack%20beta&body=Apple%20ID%20email%3A%20';
 
 const stats = [
   { key: 'Runs on',            value: 'iPhone',     sub: 'iOS 26 and up',            army: false },
   { key: 'Account',            value: 'None',       sub: undefined,                  army: false },
-  { key: 'Leaves your phone',  value: 'Nothing',    sub: 'unless you switch it on',  army: false },
-  { key: 'License',            value: 'Open source', sub: 'settled with 1.0',         army: true  },
+  { key: 'Leaves your phone',  value: 'Only Coach', sub: 'what you send it',         army: false },
+  { key: 'Your data',          value: 'Plan files', sub: 'open format',              army: true  },
 ];
 
 type Card = { label: string; pillar: string; verdict: string; evidence: string; them: string; mark?: boolean };
@@ -59,14 +62,14 @@ const cards: Card[] = [
   { mark: true, label: 'Timing', pillar: 'Protect the session', verdict: 'The day is anchored to the session, not the clock.', evidence: 'The carb surge, the fuel around the session and the meals after it are tied to the session. Everything before them is worked out from the time you actually ate. A late morning tightens the gaps and says what moved; it never pushes the carb surge past the start of the session.', them: 'Alarms every N hours, or routines that roll lateness forward into the session.' },
   { label: 'Macros', pillar: 'Protect the protein', verdict: 'Weighed from the plate, or typed. Never both.', evidence: 'A meal is a list of ingredients and quantities, so the numbers come from the ingredients and editing a portion moves them. The daily target lives apart from the plan, so the editor can say "this plate puts the day 40 g of carbs over" while you are still building it.', them: 'A food database and a total. No plan to measure the plate against.' },
   { label: 'Logging', pillar: 'Protect the record', verdict: 'Log when you eat, not when it was due.', evidence: 'The sheet opens on now with 15, 30 and 60 minutes ago one tap away, and shows what every remaining meal does at that time before you commit. Move today\'s session from the Today screen and the meals tied to it move with it.', them: '"Done" means now, so the day keys off the wrong number.' },
-  { label: 'Travel', pillar: 'Protect the day', verdict: 'A day runs in the zone it started in.', evidence: 'Cross three time zones and the spacing holds. The app says so and offers one tap to switch when local time becomes the truth. Skip a meal and it stays a decision, not a miss. History compares home days to travel days.', them: 'Alarms drift with the phone clock. Breakfast at 9, lunch at 10.' },
-  { label: 'Surfaces', pillar: 'Protect the protein', verdict: 'You should rarely have to open it.', evidence: 'Notifications carry the plate and two actions: "Ate it now" and "Not yet, ask in 20." Home and Lock Screen widgets with a live countdown. A card on the Lock Screen from an hour before each meal to thirty minutes after, with a Log button on it and at the top of the screen.', them: 'A badge, and a screen you unlock to answer it.' },
-  { label: 'Coach', pillar: 'Protect the day', verdict: 'An AI that proposes. You decide.', evidence: 'Ask for targets and a fixed formula does the arithmetic, not the model. Ask for meal ideas, or hand it a menu photo, a link or a restaurant name, and it fits options to this meal\'s numbers. Nothing changes until you tap a card. Not a doctor, and it says so before you ask.', them: 'A chatbot that talks, or a coach that edits your plan without asking.' },
+  { label: 'Travel', pillar: 'Protect the day', verdict: 'Home or Away, in one tap.', evidence: 'Flip Travel on Today, or let the app do it when you are far from home. With IronStack on the phone, it is one switch for both apps. Skip a meal and it stays a decision, not a miss. History compares home days to travel days.', them: 'One schedule, and it assumes you are home.' },
+  { label: 'Surfaces', pillar: 'Protect the protein', verdict: 'You should rarely have to open it.', evidence: 'Notifications carry the plate and two actions: "Ate it now" and "Not yet · 20 min". Home and Lock Screen widgets with a live countdown. A card on the Lock Screen from an hour before each meal to thirty minutes after, with a Log button on it and at the top of the screen.', them: 'A badge, and a screen you unlock to answer it.' },
+  { label: 'Coach', pillar: 'Protect the day', verdict: 'An AI that proposes. You decide.', evidence: 'Let Coach build the plan, or send it the plan your coach wrote, as a photo or a PDF, and it brings it in for you to review. Ask for targets and a fixed formula does the arithmetic, not the model. Eating out, hand it up to five menu photos, a link or a restaurant name, and it fits options to this meal\'s numbers. Nothing changes until you tap a card. Not a doctor, and it says so before you ask.', them: 'A chatbot that talks, or a coach that edits your plan without asking.' },
 ];
 
 type Step = { n: string; title: string; body: string };
 const steps: Step[] = [
-  { n: '01', title: 'Answer two questions.', body: 'When is your first meal, and when do you train. Quick start builds a working day from that, no AI and no account: the morning meals follow one another from your first meal, the carb surge before the session and everything after it are tied to the session. Five meals by default; change the number in Settings. Put food on the plates when you are ready, or let Coach fill them.' },
+  { n: '01', title: 'Pick how to start.', body: 'Just the times, your coach\'s plan, let Coach build it, or build it yourself; or see a finished day first. Just the times builds a working day from when you eat and train, no AI and no account: the morning meals follow one another from your first meal, the carb surge before the session and everything after it are tied to the session. Five meals by default; change the number in Settings. Put food on the plates when you are ready, or let Coach fill them.' },
   { n: '02', title: 'Log when you actually ate.', body: 'One tap for now, one for thirty minutes ago. The sheet shows what every remaining meal does before you commit, and the notification can log it without opening the app. The carb surge holds. The rest of the day bends around you.' },
   { n: '03', title: 'Ask when the plan breaks.', body: 'Client lunch, airport, empty fridge. Send Coach the menu, a link or what is in the kitchen and it fits an order to this meal\'s numbers. Nothing changes until you tap. History keeps score, so you can see what the road does to you.' },
 ];
@@ -77,23 +80,24 @@ const versus: Versus[] = [
   { k: 'A late meal', them: 'The next alarm fires anyway.', us: 'The rest of the day re-flows. The carb surge holds.' },
   { k: 'Macros', them: 'Typed in, or scanned, then summed.', us: 'Weighed from the plate, measured against a target you set.' },
   { k: 'Logging time', them: 'Now.', us: 'When you actually ate, with the consequence shown first.' },
-  { k: 'Time zones', them: 'Alarms drift with the phone.', us: 'Spacing holds. You choose when to switch.' },
+  { k: 'On the road', them: 'One schedule, and it assumes you are home.', us: 'Home or Away in one tap, or automatic.' },
   { k: 'Eating out', them: 'Search the database, guess the portion.', us: 'Coach reads the menu against this meal\'s numbers.' },
-  { k: 'Your data', them: 'Their servers, your account.', us: 'Your phone. Coach and usage data are switches, off until you say.' },
+  { k: 'Your data', them: 'Their servers, your account.', us: 'Your phone. Coach sends only what you give it, after you accept its terms; usage data only if you say yes.' },
   { k: 'Best at', them: 'A database of a million foods and a barcode scanner.', us: 'Timing. Keep the other app for the barcode if you like.', honest: true },
 ];
 
 type Faq = { q: string; a: string };
 const faqs: Faq[] = [
-  { q: 'Is it free?', a: 'During the beta, yes, Coach included, on an allowance. The launch price is not settled. The fine print above says why, and the answer lands on this page before it lands in the store.' },
-  { q: 'Does it need an account?', a: 'No. There is nothing to sign up for. Your plan, your log and your history are files on your phone. One button in Settings wipes them, and the little the server holds for Coach along with them.' },
-  { q: 'What leaves my phone?', a: 'Nothing, unless you switch it on. Coach sends what you type or photograph to a server I run, and only while Coach is on. Usage data goes to an analytics service only if you say yes when the app asks. The privacy page says exactly what, where and for how long.' },
+  { q: 'Is it free?', a: 'During the TestFlight beta, yes. Coach runs on a monthly allowance per phone. The launch price is not settled. The fine print above says why, and the answer lands on this page before it lands in the store.' },
+  { q: 'Does it need an account?', a: 'No. There is nothing to sign up for. Your plan, your log and your history are files on your phone. Delete all MealStack data, under Start over in Settings, wipes them, and the little the server holds for Coach along with them.' },
+  { q: 'What leaves my phone?', a: 'What you send Coach. Coach sends nothing until you accept its terms and ask it something, and you can turn it off in Settings. What you type, photograph or attach goes to a server I run. Usage data goes to an analytics service only if you say yes when the app asks. The privacy page says exactly what, where and for how long.' },
   { q: 'Is Coach a doctor?', a: 'No. Coach is an AI. Its targets come from a formula you can read, its meal ideas are estimates, and it declines questions about medical conditions, medication, pregnancy and supplement doses. Nothing it proposes changes your plan until you tap.' },
   { q: 'Can I keep my macro tracker?', a: 'Yes, and if you lean on a barcode scanner you should. MealStack is the timing layer. It knows the plate, weighs macros from it, and writes them to Apple Health at the time you ate, so the two live side by side.' },
-  { q: 'Does it have streaks?', a: 'No. A streak rewards you for tapping the button, and the easiest way to keep one alive is to lie a little. The log is the input for tomorrow, so it has to be true. History scores the week on what actually landed, and that is the only score.' },
+  { q: 'Does it have streaks?', a: 'Yes, for full days: every meal logged or skipped on purpose. A skip you chose is a decision, not a miss, so there is nothing to fudge. Only good habits earn badges, and nothing is taken away. History still scores the week on what actually landed.' },
+  { q: 'How old do I have to be?', a: 'Eighteen. MealStack sets targets, plans cuts and reads your weight, and that is for adults.' },
   { q: 'Android, iPad, watch?', a: 'iPhone only, iOS 26 and up. No Android, no iPad layout, no watch app, and none planned for 1.0. The Lock Screen, the widgets and the notifications are where the app lives when it is not open.' },
-  { q: 'Which license?', a: 'Not decided. It will be open source, and the source opens with 1.0; whether it is MIT like the rest of the kit or a copyleft license that keeps forks open is the part I have not settled. The name and the marks stay with Mission Built either way.' },
-  { q: 'When is 1.0?', a: 'After the meet it is being tested through, in October 2026, once a fresh install has been proven on phones that are not mine.' },
+  { q: 'Is the code open?', a: 'No. MealStack is a closed app. Your plan is yours: plan files are documented JSON (the MealStack Schema), and they go out and come back in. The name and the marks stay with Mission Built.' },
+  { q: 'When is 1.0?', a: 'When the beta has proven it on phones that are not mine. The date lands on this page before it lands in the store.' },
 ];
 
 /** Tester quotes. Empty until there are real ones; the section does not render while empty. */
@@ -101,7 +105,7 @@ type Quote = { text: string; who: string };
 const quotes: Quote[] = [];
 
 const title = 'MealStack, the details: meal timing built around your training session · Mission Built';
-const description = 'Fueling is training. MealStack is a meal timing tracker for people who train: protein stacked across the day, a pre-workout meal that holds its time, a day you can change on the road, and a log of when you actually ate. Not a nutrition app. iPhone, no account, open source with 1.0. Private beta.';
+const description = 'Fueling is training. MealStack is a meal timing tracker for people who train: protein stacked across the day, a carb surge that holds its time, a day you can change on the road, a Coach that builds the plan with you, and a log of when you actually ate. Not a nutrition app. iPhone, no account, your data in an open format. Private beta.';
 
 const ld = {
   '@context': 'https://schema.org',
@@ -115,7 +119,6 @@ const ld = {
       description,
       author: { '@type': 'Person', name: 'Mike Nichols', url: 'https://missionbuilt.io/about' },
       publisher: { '@type': 'Organization', name: 'Mission Built', url: 'https://missionbuilt.io' },
-      offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', availability: 'https://schema.org/PreOrder', description: 'Free during the private beta. Launch price not yet set.' },
     },
     {
       '@type': 'FAQPage',
@@ -127,6 +130,7 @@ const ld = {
 <BaseLayout
   title={title}
   description={description}
+  ogImage="/images/mealstack/og.jpg"
   ogImageAlt="MealStack. Fueling is training. A meal timing tracker for people who train, on iPhone, by Mission Built."
   active="rack"
 >
@@ -215,7 +219,7 @@ const ld = {
       <ol class="pillars" aria-label="The four pillars">
         <li><span class="num">01</span><span class="label">Protect the protein</span><span class="say">Protein has no storage tank. Stack it across the day, and never send it out alone.</span></li>
         <li><span class="num">02</span><span class="label">Protect the session</span><span class="say">Your pre-workout meal is equipment, not a snack. It anchors backward from when you train and holds its time.</span></li>
-        <li><span class="num">03</span><span class="label">Protect the day</span><span class="say">Flights, time zones, a session that moved to 8pm. Change the day to rest, move the session, swap the plate, keep going.</span></li>
+        <li><span class="num">03</span><span class="label">Protect the day</span><span class="say">Flights, time zones, a session that moved to 8pm. Change the day to recovery, move the session, swap the plate, keep going.</span></li>
         <li><span class="num">04</span><span class="label">Protect the record</span><span class="say">Log when you eat, not when it was due. Today shows what actually landed, so tomorrow is built on the real day.</span></li>
       </ol>
 
@@ -307,8 +311,8 @@ const ld = {
         own line on the record.
         Three shelves on the Plan tab: stacks, meals, and ingredients (about two hundred built in, plus
         your own, entered like the label). Drop a saved meal onto any plate. Apple Health gets the macros at the real
-        eat time, and never reads anything back. Light and dark. History that scores against the target you set.
-        Your plan is a file on your phone. No account, no sign-in, nothing to sync.
+        eat time; if you allow it, the app shows what other apps logged (never added to yours) and offers your weight. Light and dark. History that scores against the target you set.
+        Your plan is a file on your phone. No account, no sign-in, no cloud sync.
       </p>
     </section>
 
@@ -332,22 +336,22 @@ const ld = {
     {/* ---------- FINE PRINT ---------- */}
     <section class="block" id="fine-print">
       <p class="section-label">The fine print, in plain words</p>
-      <h2 class="section-h2">Open source, your data, and two things I have not picked.</h2>
+      <h2 class="section-h2">Your data, and the one thing I have not picked.</h2>
       <div class="lic three">
-        <div class="lic-cell">
-          <p class="k">License</p>
-          <p class="v">Open source. Which license, not yet.</p>
-          <p class="body">The source goes public with 1.0; that part is settled. The license is not. The Loadout skills are MIT, and Ironstack will be; take them and do what you like. For an app the question is whether a fork has to stay open, which is what a copyleft license like the GPL does and MIT does not. I have gone back and forth. The answer lands here with 1.0, and either way you will be able to read, change and ship it.</p>
+        <div class="lic-cell" id="your-data">
+          <p class="k">The code</p>
+          <p class="v">Closed app. Open data.</p>
+          <p class="body">MealStack is a closed-source app from Mission Built. What is open is your data: a plan is a plain JSON file in a documented format, <a class="inline-link" href="/rack/mealstack/schema">the MealStack Schema</a>. Plans and stacks export as those files and import back in. The MealStack name and the marks stay with Mission Built.</p>
         </div>
         <div class="lic-cell">
           <p class="k">Price</p>
           <p class="v">Not settled yet. Here is why.</p>
-          <p class="body">Every Coach question runs on a server I pay for. I want Coach in the app, and I am not willing to lose money keeping it there, so the launch price is an open question: free with Coach on an allowance, a one-time price, or Coach as the paid part of a free app. What is settled: timing, the log, the plan and the widgets cost nothing to run and will not be what you pay for, and the answer lands here before it lands in the store.</p>
+          <p class="body">Every Coach question runs on a server I pay for. I want Coach in the app, and I am not willing to lose money keeping it there, so the launch price is an open question: free with Coach on an allowance, a one-time price, or Coach as the paid part of a free app. The answer lands here before it lands in the store.</p>
         </div>
         <div class="lic-cell">
           <p class="k">Your data</p>
           <p class="v">On your phone. Two switches.</p>
-          <p class="body">The plan, the log and the day never leave the phone. Coach is a switch, off by default; when it is on, what you send it goes to a server Mission Built runs, and it is metered. Usage data is a second switch the app asks about once. <a class="inline-link" href="/rack/mealstack/privacy">The privacy page</a> says exactly what, where, and for how long.</p>
+          <p class="body">The plan, the log and the day never leave the phone. Coach is on, but sends nothing until you accept its terms and ask it something; what you send it goes to a server Mission Built runs, and it is metered. Turn it off in Settings any time. Usage data is a second switch the app asks about once. <a class="inline-link" href="/rack/mealstack/privacy">The privacy page</a> says exactly what, where, and for how long.</p>
         </div>
       </div>
       <div class="fine">
@@ -365,8 +369,9 @@ const ld = {
 
       <div class="status-panel">
         <div class="status-copy">
-          <h3>Running through a meet prep, October 2026</h3>
-          <p>MealStack is on one phone every day right now: five meals and the fuel around the session, an evening session, a carb surge that does not move. I add testers by hand, in small batches, from the email on your Apple ID. You get an invite from Apple, a link to install, the quick start, and a short list of things I would like you to break.</p>
+          <h3>On TestFlight now, with outside testers</h3>
+          {build && <p class="build-line">Newest build: <a class="inline-link" href={releaseUrl(build)}>MealStack {build.data.version}</a> · {when(build.data, true)}</p>}
+          <p>MealStack runs my own day, every day, and a small group of outside testers is on it with me. I add testers by hand, in small batches, from the email on your Apple ID. You get an invite from Apple, a link to install, a choice of how to start, and a short list of things I would like you to break.</p>
           <p>Builds expire every ninety days and you get the next one. The address is used for the invite and nothing else; you can leave from the invite email at any time.</p>
 
           <form class="beta-form" id="beta-form" method="post" action="/api/beta" novalidate>
@@ -383,15 +388,14 @@ const ld = {
             <input type="hidden" name="page" value="/rack/mealstack" />
             <div class="form-row">
               <button class="cta" type="submit" id="beta-submit">Join the beta →</button>
-              <p class="cta-note" id="beta-status" role="status" aria-live="polite">iPhone only · iOS 26 and up · no account</p>
+              <p class="cta-note" id="beta-status" role="status" aria-live="polite">iPhone only · iOS 26 and up · no account · 18 and over</p>
             </div>
           </form>
-          <p class="cta-note" id="beta-fallback" hidden>The form is not taking names right now. Email <a href={MAILTO}>mike@missionbuilt.io</a> with the address on your Apple ID and I will add you by hand.</p>
+          <p class="cta-note" id="beta-fallback" hidden>The form is not taking names right now. Email <a href={MAILTO}>support@missionbuilt.io</a> with the address on your Apple ID and I will add you by hand.</p>
         </div>
         <div class="doors">
           <div class="door open"><div><div class="n">Beta</div><p class="d">By invite, from the form. Small batches, added by hand.</p></div><span class="s">Now</span></div>
-          <div class="door dim"><div><div class="n">App Store</div><p class="d">The public door.</p></div><span class="s">With 1.0</span></div>
-          <div class="door dim"><div><div class="n">Source</div><p class="d">github.com/missionbuilt/mealstack, open source.</p></div><span class="s">With 1.0</span></div>
+          <div class="door dim"><div><div class="n">App Store</div><p class="d">The public door, published by Mission Built.</p></div><span class="s">After the beta</span></div>
         </div>
       </div>
     </section>
@@ -401,14 +405,9 @@ const ld = {
     {/* ---------- THE KIT ---------- */}
     <section class="block" id="kit">
       <p class="section-label">For testers</p>
-      <h2 class="section-h2">Build a plan, see what changed, read the fine print.</h2>
+      <h2 class="section-h2">See what changed, and read the fine print.</h2>
 
-      <div class="related four">
-        <a href="/rack/mealstack/skill" class="related-card">
-          <h3>Plan skill</h3>
-          <p>Teach Claude to write a MealStack plan file. Ask for a week of meals, tap the file on your phone, and it lands on your shelves.</p>
-          <span class="related-cta">Download →</span>
-        </a>
+      <div class="related three">
         <a href="/rack/mealstack/changelog" class="related-card">
           <h3>Release notes</h3>
           <p>What changed in each build, in plain words, newest first. The app's About links here.</p>
@@ -416,7 +415,7 @@ const ld = {
         </a>
         <a href="/rack/mealstack/schema" class="related-card">
           <h3>Schema</h3>
-          <p>One set of names for ingredients, meals, stacks, plans and days, in the app, the plan file, the skill and Coach. Every field, with a download for tools.</p>
+          <p>One set of names for ingredients, meals, stacks, plans and days, in the app, the plan file and Coach. Every field, with a download for tools.</p>
           <span class="related-cta">Read →</span>
         </a>
         <a href="/rack/mealstack/privacy" class="related-card">
@@ -425,6 +424,7 @@ const ld = {
           <span class="related-cta">Read →</span>
         </a>
       </div>
+      <p class="kit-links"><a class="inline-link" href="/rack/mealstack/terms">Terms of use</a> (a draft, under review) · <a class="inline-link" href="/rack/mealstack/privacy">Privacy</a> · <a class="inline-link" href="/rack/support">Support</a> · <a class="inline-link" href="/rack/acknowledgements">Acknowledgements</a></p>
     </section>
 
     <hr class="dashed" />
@@ -472,7 +472,7 @@ const ld = {
 
       <div class="related">
         <a href="/rack/ironstack" class="related-card">
-          <h3>Ironstack</h3>
+          <h3>IronStack</h3>
           <p>Log it. Time it. Lift each other up. A lifting log for iPhone that stays out of your way, and a feed that is only the people you train with.</p>
           <span class="related-cta">Open →</span>
         </a>
@@ -493,12 +493,12 @@ const ld = {
     </section>
 
   </main>
-  <SiteFooter links={[{ label: 'Plan skill', href: '/rack/mealstack/skill' }, { label: 'Release notes', href: '/rack/mealstack/changelog' }, { label: 'Schema', href: '/rack/mealstack/schema' }, { label: 'Privacy', href: '/rack/mealstack/privacy' }]} />
+  <SiteFooter links={[{ label: 'Release notes', href: '/rack/mealstack/changelog' }, { label: 'Schema', href: '/rack/mealstack/schema' }, { label: 'Privacy', href: '/rack/mealstack/privacy' }, { label: 'Terms', href: '/rack/mealstack/terms' }, { label: 'Support', href: '/rack/support' }]} />
 </BaseLayout>
 
 <script>
   // ── The cascade rule on fictional data ──
-  // The app's rule (Scheduler.swift), on one training day: the meals before the
+  // The app's rule, on one training day: the meals before the
   // carb surge chain off the logged breakfast in three-hour gaps and must finish
   // two hours before the carb surge; when they can't, the gaps shrink evenly
   // (rounded to 5 minutes) and never below two hours. The carb surge is pinned
@@ -772,6 +772,8 @@ const ld = {
   .hero-ctas { margin-top: 26px; display: inline-flex; align-items: center; gap: 22px; flex-wrap: wrap; justify-content: center; }
   .cta-soft { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-dim); transition: color 120ms ease-out; }
   .cta-soft:hover { color: var(--color-chalk); }
+  .build-line { margin: -4px 0 14px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-chalk-faint); }
+  .kit-links { margin: 18px 0 0; font-family: var(--font-serif); font-size: 15px; line-height: 1.6; color: var(--color-chalk-faint); }
   .inline-link { color: var(--color-chalk); border-bottom: 1px solid var(--color-chalk-ghost); transition: border-color 120ms ease-out; }
   .inline-link:hover { border-bottom-color: var(--color-chalk); }
 
@@ -860,6 +862,7 @@ const ld = {
 
   /* ============ RELATED ============ */
   .related { margin-top: 28px; display: grid; grid-template-columns: 1fr 1fr; border-top: var(--border-thin); border-bottom: var(--border-thin); }
+  .related.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .related.four .related-card:nth-child(2n) { border-right: none; }
   .related.four .related-card:nth-child(-n+2) { border-bottom: var(--border-thin); }
   .related-card { display: flex; flex-direction: column; gap: 10px; padding: 28px; border-right: var(--border-thin); text-decoration: none; transition: background 120ms ease-out; }
@@ -909,7 +912,7 @@ const ld = {
     .vr { grid-template-columns: 1fr; gap: 6px; }
     .vr span:nth-child(2)::before { content: 'Other apps · '; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-chalk-faint); }
     .vr span:last-child::before { content: 'MealStack · '; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-chalk-faint); }
-    .related { grid-template-columns: 1fr; }
+    .related, .related.three { grid-template-columns: 1fr; }
     .related-card { border-right: none; border-bottom: var(--border-thin); }
     .related-card:last-child { border-bottom: none; }
     .dashed { margin: 36px var(--pad-page-x-mobile) 0; }

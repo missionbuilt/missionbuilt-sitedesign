@@ -33,7 +33,7 @@ const [firstPara, ...moreParas] = set.paragraphs;
   standfirst={set.short}
   tool="mealstack"
   back={{ label: 'All field sets', href: `${SCHEMA}#field-sets` }}
-  footLinks={[{ label: 'Plan skill', href: '/rack/mealstack/skill' }, { label: 'Release notes', href: '/rack/mealstack/changelog' }]}
+  footLinks={[{ label: 'Release notes', href: '/rack/mealstack/changelog' }, { label: 'Privacy', href: '/rack/mealstack/privacy' }]}
 >
   <Fragment slot="byline">
     {set.root ? 'At the root of every document' : `${set.name}.*`} · {set.fields.length} fields · {set.fields.filter((f) => f.level === 'core').length} core

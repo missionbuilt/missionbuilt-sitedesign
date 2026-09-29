@@ -9,7 +9,10 @@
  * use; that third parties protect it at least as well; retention, deletion and how
  * consent is withdrawn), 5.1.2(i) wants third-party AI disclosed with permission
  * asked first, and 5.1.3 wants the specific health data named and never marketed.
- * All of that is here, in the order a person would ask.
+ * All of that is here, in the order a person would ask. Rewritten Sept 29, 2026 for
+ * 0.9.1 (Health read, calendar, automatic travel, the IronStack shelf, Coach files and
+ * web search). /loadout/mealstack/privacy renders this page too. Draft for review by a
+ * lawyer before public launch. MealStack is 18+.
  *
  * Color discipline: oxblood for the hero period, section labels and the one
  * emphasised word. No army green on this page.
@@ -18,7 +21,8 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import SiteFooter from '../../../components/SiteFooter.astro';
 import TopNav from '../../../components/TopNav.astro';
 
-const EFFECTIVE = 'September 12, 2026';
+const EFFECTIVE = 'September 29, 2026';
+const ASK = 'mailto:support@missionbuilt.io?subject=MealStack%20data%20request';
 
 const stats = [
   { key: 'Account',            value: 'None' },
@@ -30,15 +34,15 @@ const stats = [
 type Party = { who: string; role: string; what: string; where: string };
 const parties: Party[] = [
   { who: 'Cloudflare', role: 'Runs the Coach server', what: 'Sees each Coach request in transit and keeps the allowance counters and the ninety-day accounting record. Discards your IP address.', where: 'Global edge, US account' },
-  { who: 'Anthropic', role: 'Runs the Claude model behind Coach', what: 'Receives what you send Coach, produces the answer. Does not train models on it. Handles it under its Data Processing Addendum.', where: 'United States' },
+  { who: 'Anthropic', role: 'Runs the Claude model behind Coach', what: 'Receives what you send Coach and produces the answer; for some questions, runs a short web search drawn from your question. Keeps it up to 30 days, then deletes it, and does not train models on it. Handles it under its Data Processing Addendum.', where: 'United States' },
   { who: 'PostHog', role: 'Product analytics', what: 'Receives the usage events described below, and only while your usage-data switch is on. Keyed to a hash, no IP.', where: 'United States' },
-  { who: 'Apple', role: 'Health, TestFlight, the App Store', what: 'Health receives the macros of meals you log if you allow it. Apple\'s own privacy terms cover TestFlight and the App Store.', where: 'Per Apple' },
+  { who: 'Apple', role: 'Health, TestFlight, the App Store', what: 'Health receives the macros of meals you log, and gives the app food from other apps and your weight, each only if you allow it. Apple\'s own privacy terms cover TestFlight and the App Store.', where: 'Per Apple' },
 ];
 
 type Keep = { what: string; how: string };
 const keeps: Keep[] = [
   { what: 'Your plan, logs, ingredients, meals, stacks, Coach conversation, Coach profile', how: 'On your phone until you delete them, or delete the app. Included in your iPhone backup like any other app data.' },
-  { what: 'What you send Coach', how: 'Not stored by Mission Built. Gone from the server when the answer is sent. Anthropic\'s handling is governed by its Data Processing Addendum.' },
+  { what: 'What you send Coach, including photos and files', how: 'Not stored by Mission Built: gone from the server when the answer is sent. Anthropic keeps it up to 30 days to watch for abuse, then deletes it; if its automated safety checks flag a message, it may keep that message up to two years.' },
   { what: 'The install record (public key, receipt, timestamps)', how: 'Kept while the install exists. Removed the moment you delete your data in the app, or on request.' },
   { what: 'Coach allowance counters', how: 'Wiped at the start of each month.' },
   { what: 'Accounting record of Coach use (Cloudflare)', how: 'About ninety days, then gone.' },
@@ -46,9 +50,12 @@ const keeps: Keep[] = [
 ];
 ---
 <BaseLayout
+  canonical="/rack/mealstack/privacy/"
   title="Privacy · MealStack · Mission Built"
   description="What MealStack keeps on your phone, what leaves it, who touches it, how long it lasts, and how to make it all go away."
   active="rack"
+  ogImage="/images/mealstack/og.jpg"
+  ogImageAlt="MealStack. Fueling is training. Meal timing for iPhone, by Mission Built, with a real screen of Today on a training day."
 >
   <TopNav active="rack" />
 
@@ -89,7 +96,7 @@ const keeps: Keep[] = [
       <p class="section-label">Who this is</p>
       <h2 class="section-h2">Mission Built makes MealStack. This page is the whole policy.</h2>
       <div class="prose-block">
-        <p>MealStack is made by Mission Built, which is Mike Nichols, in Pittsburgh, Pennsylvania. For the purposes of privacy law, Mission Built is the controller of whatever this page says leaves your phone. There is no parent company, no subsidiary and no partner with access to your data. The source of the app is published once it launches, so the code that does what this page describes can be read.</p>
+        <p>MealStack is made by Mission Built, which is Mike Nichols, in Pittsburgh, Pennsylvania. For the purposes of privacy law, Mission Built is the controller of whatever this page says leaves your phone. There is no parent company, no subsidiary and no partner with access to your data. The app is not open source; this page is where to read what it does with your data, and the What the server holds screen shows you the rest, live.</p>
       </div>
     </section>
 
@@ -112,8 +119,12 @@ const keeps: Keep[] = [
       <h2 class="section-h2">Everything you put in stays in files on the phone.</h2>
       <div class="prose-block">
         <p>Your plan, every day's log, the ingredients you add, the meals and stacks you save, your Coach conversation, and the details you give Coach for a target: bodyweight, height, age, sex if you chose to say, how you train, and your goal. All of it lives in files inside the app's own container on your iPhone, written under the phone's encryption and protected until the first unlock after a restart. Those files are included in your iCloud or computer backup the way any app's data is; Mission Built has no access to your backups.</p>
-        <p>If you turn on the Health connection, the app writes four numbers for each meal you log into Apple Health, at the time you ate: protein, carbohydrates, fat and calories. Correct or un-log the meal and the app takes those entries back out. MealStack never reads anything from Health. Nothing from Health is used for marketing, advertising or anything but the entries themselves, and nothing from Health is stored anywhere but Health.</p>
-        <p class="note">This section also serves as the consumer health data notice some states require. The health data involved: the four nutrition figures the app writes to Health with your permission, and the body measurements you type in for Coach. Source: you. Purpose: the log and the target. Shared with: nobody, except that the measurements go to Coach when you ask Coach for a target, as described next.</p>
+        <p><strong>Apple Health, each way behind its own switch.</strong> With <em>Write the meals you log</em> on, the app writes four numbers for each meal you log into Apple Health, at the time you ate: protein, carbohydrates, fat and calories. Correct or un-log the meal and the app takes those entries back out. With <em>Read food and weight from other apps</em> on, the app reads two things: the food other apps logged today (calories, protein, carbohydrates and fat, and which app logged them), shown beside your totals and never added to them; and your latest weight, offered when you fill in About you. MealStack's own entries are left out of what it reads. What it reads stays on the phone, and your weight goes to Coach only if you put it in About you and then ask Coach for a target. Nothing from Health is used for marketing, advertising or anything but these screens. Both switches are in Settings › Apple Health, and in the Health app.</p>
+        <p><strong>Your calendar, only if you ask.</strong> <em>Check my calendar</em> is off until you turn it on. On, the app reads today's events on the phone so it can offer to move a meal that lands in one. It never changes your calendar, keeps the events only while the app is open, and never sends them anywhere, Coach included. If you accept a move, the new meal time is part of your plan like any other.</p>
+        <p><strong>Location, only for automatic travel.</strong> <em>Set travel automatically</em> is off until you turn it on. On, the app asks for your location, remembers where home is, rounded to about a kilometre, and turns Travel on when the phone is more than 100 km from there and off when you are back. The home area and the check stay on the phone; no location is sent anywhere. Turning the switch off stops the watching; <em>Forget home</em> erases the home area.</p>
+        <p><strong>IronStack, if it is on the same phone.</strong> The two apps share a private shelf on your phone that only Mission Built apps can open. MealStack puts there the travel switch (and your rounded home area if you use automatic travel), today's session time when you move it, and, with <em>IronStack times my after-session meals</em> on, the name and contents of the first thing after the session, so IronStack can call it when you finish. It reads the same from IronStack, plus when your session started and how long it ran, and a note that IronStack is installed and when it was last used, for the Double Stacked badges. Neither app moves anything in the other without asking, and nothing crosses to a server to do this.</p>
+        <p class="note" id="health-data">This section also serves as the consumer health data notice some states require. The health data involved: the four nutrition figures the app writes to Health with your permission; the food totals from other apps and the weight it reads from Health with your permission; the body measurements you give for a target; and what you log. Source: you and Apple Health. Purpose: the log, the day and the target. Shared with: nobody, except what goes to Coach when you ask it something, as described next.</p>
+        <p class="note"><strong>Consent and withdrawal.</strong> Nothing in this notice is read or shared until you allow it: the Health switches in Settings › Apple Health, and Coach only after you accept its terms and ask it something. Turning either off withdraws your consent from then on, and Delete all MealStack data removes what was collected. Your rights under Washington's My Health My Data Act and similar laws (to confirm, access, delete and withdraw consent) are the ones in Your rights below, at the same address. Mission Built does not sell consumer health data.</p>
       </div>
     </section>
 
@@ -122,27 +133,27 @@ const keeps: Keep[] = [
     {/* ---------- WHAT LEAVES ---------- */}
     <section class="block">
       <p class="section-label">What leaves your phone</p>
-      <h2 class="section-h2">Two things, and both are switches.</h2>
+      <h2 class="section-h2">Two things, and you decide both.</h2>
 
       <div class="two">
         <div class="cell">
           <p class="k">Coach</p>
           <p class="v">What you send it, to get the answer.</p>
-          <p class="body">Coach is the one part of the app that talks to a server, and it is off until you read and accept its terms inside the app. That acceptance is the permission this section describes.</p>
-          <p class="body">When you send Coach a message, the app sends what you typed, any menu photo or link you attached, your plan and today's totals, your ingredients, and the details you gave for a target to Mission Built's server at coach.missionbuilt.io, which runs on Cloudflare. The server passes that to Anthropic's Claude model, checks every suggestion the model makes, and sends the answer back. Mission Built does not store your messages, photos or plan on the server; they are gone when the answer is sent. Anthropic processes them to produce the answer, under its Data Processing Addendum, and does not use them to train its models.</p>
+          <p class="body">Coach is the one part of the app that talks to a server. It sends nothing until you read and accept its terms inside the app, which name Anthropic and Claude and ask you to confirm you are 18 or older. That acceptance is the permission this section describes. You can turn Coach off in Settings at any time.</p>
+          <p class="body">When you send Coach a message, the app sends what you typed and anything you attached (up to five photos, shrunk on the phone first with location and camera details stripped; a PDF of up to 30 pages; or a text, spreadsheet or plan file, such as a menu, a restaurant link or the plan your coach wrote), your plan and today's totals, your ingredients, and the details you gave for a target, to Mission Built's server at coach.missionbuilt.io, which runs on Cloudflare. The server passes that to Anthropic's Claude model, checks every suggestion the model makes, and sends the answer back. For some questions (a restaurant's menu, say) Claude may run one web search through Anthropic; the search is a few words drawn from your question, never your plan or your measurements. Mission Built does not store your messages, photos, files or plan on the server; they are gone when the answer is sent. Anthropic keeps them up to 30 days, then deletes them, and does not use them to train its models.</p>
           <p class="body">To run Coach without accounts, the server keeps one small record per install: the public half of the key your phone created, the receipt Apple issued for it, when it registered and was last seen, and a count of how many Coach requests that install has made today and this month and roughly what they cost. That is how the Coach allowance works. It identifies the install, not you, and a reinstall creates a new one.</p>
         </div>
         <div class="cell">
           <p class="k">Usage data</p>
           <p class="v">Counts and timings, only if you say yes.</p>
-          <p class="body">After the quick start the app asks once whether you want to send usage data. Say no and nothing is sent. Say yes and the app sends Mission Built counts and timings: which tabs get used and for how long, when meals get logged against the plan and how, whether ingredients, meals or stacks get added, how Coach gets used and what it cost, and the app and iOS version. It never sends food names, anything from Health, your location or your IP address; the server discards the address and never looks it up. Your time zone name is included so the days line up.</p>
+          <p class="body">Once your plan is built, the app asks once whether you want to send usage data. Say no and nothing is sent. Say yes and the app sends Mission Built counts and timings: which tabs get used and for how long, when meals get logged against the plan and how, whether ingredients, meals or stacks get added, how Coach gets used and what it cost, and the app and iOS version. It never sends food names, anything from Health, your location or your IP address; the server discards the address and never looks it up. Your time zone name is included so the days line up.</p>
           <p class="body">The data is keyed to a hash of the same install key and goes to PostHog, a product analytics service in the United States, where Mission Built uses it for one thing: deciding what to build next. Turn the switch off in Settings and nothing more is sent. Mission Built keeps its own copy of the same events on Cloudflare for about ninety days to account for the Coach allowance, whether or not the switch is on; that copy never goes to PostHog.</p>
         </div>
       </div>
 
       <div class="fine">
         <p class="k">Nothing else</p>
-        <p>No advertising identifiers, no third-party software kits on the phone, no tracking in Apple's sense of the word, no selling, no sharing for anyone else's marketing. The App Store privacy label says the same, and the app's About screen lists every kind of event it can send.</p>
+        <p>Meal alerts are scheduled on the phone, and the widgets and Lock Screen read the same files the app does; none of them sends anything anywhere. No advertising identifiers, no third-party software kits on the phone, no tracking in Apple's sense of the word, no selling, no sharing for anyone else's marketing. The App Store privacy label says the same, and <strong>Settings › Your data › What leaves the phone</strong> lists every kind of event the app can send.</p>
       </div>
     </section>
 
@@ -190,9 +201,9 @@ const keeps: Keep[] = [
       <p class="section-label">Seeing and deleting your data</p>
       <h2 class="section-h2">Two buttons on the phone. No email needed.</h2>
       <div class="prose-block">
-        <p><strong>Settings → Privacy → What the server holds about this install</strong> asks the server, live, for everything it keeps for your install and shows it to you, with a share button. The request is signed by your phone's key, so the server can only ever answer for the install that asked.</p>
-        <p><strong>Settings → Privacy → Delete all MealStack data</strong> does the whole job in one tap: it tells the server to delete the install's record, its allowance counters and the hashed analytics person, then removes every file on the phone, the entries this app wrote to Health, your answer to the usage question, and the install's key. If the phone is offline at that moment, the phone is still wiped, the key is never used again, and the server's counters expire within the month. Turning off Send usage data in Settings withdraws that consent from then on; turning off Coach in Settings stops Coach from sending anything.</p>
-        <p>The one case a button cannot cover is an app that was deleted before asking: with the key gone, nothing on the server can be matched to you, which also means nothing on the server can identify you. If you want to ask anyway, or ask anything else about your data, email <a href="mailto:mike@missionbuilt.io?subject=MealStack%20data%20request">mike@missionbuilt.io</a>. Mission Built will confirm within ten days and finish within thirty.</p>
+        <p><strong>Settings › Your data › What the server holds</strong> asks the server, live, for everything it keeps for your install and shows it to you, with a share button. The request is signed by your phone's key, so the server can only ever answer for the install that asked.</p>
+        <p><strong>Settings › Start over › Delete all MealStack data</strong> does the whole job in one tap: it tells the server to delete the install's record, its allowance counters and the hashed analytics person, then removes every file on the phone, the entries this app wrote to Health, your answer to the usage question, and the install's key. If the phone is offline at that moment, the phone is still wiped, the key is never used again, and the server's counters expire within the month. Turning off Send usage data in Settings withdraws that consent from then on; turning off Coach in Settings stops Coach from sending anything.</p>
+        <p>The one case a button cannot cover is an app that was deleted before asking: with the key gone, nothing on the server can be matched to you, which also means nothing on the server can identify you. If you want to ask anyway, or ask anything else about your data, email <a href={ASK}>support@missionbuilt.io</a>. Mission Built will confirm within ten days and finish within thirty.</p>
         <p class="note">The routes behind those two buttons are tested for isolation on every change to the server (an install can never read or delete another's) and probed every hour in production by two synthetic installs; if a probe ever fails, both routes close until a person has looked.</p>
       </div>
     </section>
@@ -204,7 +215,7 @@ const keeps: Keep[] = [
       <p class="section-label">Your rights</p>
       <h2 class="section-h2">Wherever you are, the same answer.</h2>
       <div class="prose-block">
-        <p>You can ask what Mission Built holds that relates to your install, ask for it to be corrected or deleted, ask for a copy, object to or restrict its use, and withdraw any consent you gave, all at the address above, and you will not be treated differently for asking. Under the GDPR, the legal bases are your consent (Coach terms, the usage-data question) and Mission Built's legitimate interest in running the Coach allowance and keeping the service from being abused. If you are in the EU, the EEA or the UK you may also complain to your supervisory authority. Under California law, Mission Built does not sell or share personal information and has not done so in the past twelve months.</p>
+        <p>You can ask what Mission Built holds that relates to your install, ask for it to be corrected or deleted, ask for a copy, object to or restrict its use, and withdraw any consent you gave, all at the address above, and you will not be treated differently for asking. Under the GDPR, the legal bases are your explicit consent for anything involving health data (Coach, Apple Health), your consent for the usage-data question, and Mission Built's legitimate interest in running the Coach allowance and keeping the service from being abused. Mission Built has not appointed an EU or UK representative; write to the address above. If you are in the EU, the EEA or the UK you may also complain to your supervisory authority. Under California law, Mission Built does not sell or share personal information and has not done so in the past twelve months.</p>
         <p>Mission Built operates from the United States and the companies above process data there, so anything that leaves your phone leaves your country if you are outside the US. Cloudflare, Anthropic and PostHog each rely on recognised transfer mechanisms such as standard contractual clauses or the EU–US Data Privacy Framework for that.</p>
       </div>
     </section>
@@ -219,8 +230,8 @@ const keeps: Keep[] = [
           <p class="body">Coach gives general nutrition information for healthy adults and its numbers are estimates. It is not a doctor or a dietitian, it declines medical questions, and it will not set targets for anyone under 18. Check with your physician before making decisions about your health, and treat what Coach says as a starting point, not an instruction.</p>
         </div>
         <div class="cell">
-          <p class="k">Children</p>
-          <p class="body">MealStack is not directed at children under 13 and does not knowingly collect anything from them. Coach does not work for anyone under 18. If you believe a child has used Coach, email the address above and the install record will be removed.</p>
+          <p class="k">Age</p>
+          <p class="body">MealStack is for adults, 18 and over: it sets targets, plans cuts and reads your weight. It is not directed at anyone under 18 and does not knowingly collect anything from them, and Coach's terms ask you to confirm your age. If you believe someone under 18 has used the app, email the address above and the install record will be removed.</p>
         </div>
       </div>
     </section>
@@ -237,7 +248,7 @@ const keeps: Keep[] = [
     </section>
 
   </main>
-  <SiteFooter links={[{ label: 'Back to MealStack', href: '/rack/mealstack' }]} />
+  <SiteFooter links={[{ label: 'Back to MealStack', href: '/rack/mealstack' }, { label: 'Terms', href: '/rack/mealstack/terms' }, { label: 'Support', href: '/rack/support' }]} />
 </BaseLayout>
 
 <style>

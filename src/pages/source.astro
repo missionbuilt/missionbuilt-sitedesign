@@ -1,8 +1,10 @@
 ---
 /**
  * Source — disambiguation page for "open source." MissionBuilt is open
- * in two places: the book content (chapters, edits) and the site code
- * (this thing you're looking at). This page exists so a reader who
+ * in three places: the book content (chapters, edits), the Loadout skills,
+ * and the site code (this thing you're looking at). The iPhone apps on the
+ * Rack are closed; what is open there is your data, and the license line
+ * below says so. This page exists so a reader who
  * clicks "Source" lands somewhere honest about which repo is which.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
@@ -30,16 +32,6 @@ const repos = [
     accent: 'chalk' as const,
   },
   {
-    kicker: 'The Rack',
-    title: 'The Rack, with 1.0',
-    blurb:
-      "The barbell half. Ironstack and MealStack, the iPhone apps, open their source " +
-      "with 1.0, Ironstack under MIT. Until then each app's page says what it does, " +
-      "and its privacy page says what it sends.",
-    href: '/rack',
-    accent: 'chalk' as const,
-  },
-  {
     kicker: 'This site',
     title: 'missionbuilt-sitedesign',
     blurb:
@@ -52,7 +44,7 @@ const repos = [
 ---
 <BaseLayout
   title="Source · Mission Built"
-  description="MissionBuilt is open across the ecosystem: the book, the skills, the barbell tools, and the site. The repos live on GitHub."
+  description="MissionBuilt is open across the ecosystem: the book, the Loadout skills and the site. The repos live on GitHub. The iPhone apps are closed; their data formats are published."
   active="source"
 >
   <TopNav active="source" />
@@ -62,8 +54,8 @@ const repos = [
       <p class="eyebrow">Source</p>
       <h1 class="hero-h1">Open work.</h1>
       <p class="lede">
-        MissionBuilt is open across the ecosystem: the book, the skills, the barbell
-        tools, and the site that hosts them. All of it lives on GitHub.
+        MissionBuilt is open across the ecosystem: the book, the Loadout skills,
+        and the site that hosts them. All of it lives on GitHub.
       </p>
     </header>
 
@@ -91,10 +83,12 @@ const repos = [
     <p class="license">
       Book content licensed
       <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener license">CC&nbsp;BY-NC-SA 4.0</a>.
-      The Loadout skills, Ironstack and site code licensed
+      The Loadout skills and site code licensed
       <a href="https://opensource.org/license/mit" target="_blank" rel="noopener license">MIT</a>.
-      MealStack and its plan skill: license not decided yet.
       Contributions welcome across all of them.
+      IronStack and MealStack, the iPhone apps on the Rack, are closed. What is open is your data:
+      <a href="/rack/ironstack/details#your-data">IronStack's</a> and
+      <a href="/rack/mealstack/details#your-data">MealStack's</a> files are published formats.
     </p>
   </main>
   <SiteFooter />

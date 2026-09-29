@@ -6,11 +6,10 @@
  * gave the book, the Loadout, the Rack and Logs equal weight in four card bands plus
  * a stat strip, and nothing told a visitor where to go. Mike's call: the book and the
  * two iPhone apps are the goals; the Loadout skills are great but niche.
- * Backup: Claude outputs/home-index-before-2026-09-20.astro.bak.
  *
  *   1. Hero: the book. One primary button (Start reading), Download beside it,
  *      the facts as one mono line, the author.
- *   2. The apps: Ironstack and MealStack, each with a real screen, its promise and
+ *   2. The apps: IronStack and MealStack, each with a real screen, its promise and
  *      Join the beta. Chalk only here: oxblood stays with "Built." and Start reading.
  *   3. More: one quiet row with the Loadout (for product leaders) and the latest log.
  *
@@ -27,16 +26,16 @@ const latestLog = (await getCollection('logs', ({ data }) => !data.draft)).sort(
 
 const apps = [
   {
-    name: 'Ironstack', href: '/rack/ironstack',
+    name: 'IronStack', href: '/rack/ironstack',
     promise: 'Log fast. See progress. A coach in your corner.',
     line: 'A lifting log with big timers, insights, your crew, and a Coach that picks your next weight from your own sets.',
-    shot: { src: '/images/ironstack/log-session.webp', w: 540, h: 1174, alt: 'Ironstack mid-session: sets logged, the next one ready to confirm, the rest clock at 1:52.' },
+    shot: { src: '/images/ironstack/log-session.webp', w: 540, h: 1174, alt: 'IronStack mid-session: 1 min, 2 of 16 sets and 1,850 lb moved across the top, and Comp Squat with two sets of 185 for 5 logged and the third lit with Log.' },
   },
   {
     name: 'MealStack', href: '/rack/mealstack',
     promise: 'Your tracker says what you ate. This says when.',
     line: 'Meal timing built backward from your training session. Eat late and the day re-flows; your pre-workout meal still lands.',
-    shot: { src: '/images/mealstack/today-training.webp', w: 540, h: 1176, alt: 'MealStack Today on a training day: next is yogurt and berries at 12:03 PM, with the day\'s totals.' },
+    shot: { src: '/images/mealstack/today-training.webp', w: 540, h: 1174, alt: 'MealStack Today on a training day with the session at 6:30 PM: the yogurt logged late at 11:40, lunch next at 2:40 PM, and the Home travel chip under the MealStack header.' },
   },
 ];
 ---
@@ -85,7 +84,7 @@ const apps = [
           <a class="app" href={a.href}>
             <div class="shot"><img src={a.shot.src} width={a.shot.w} height={a.shot.h} alt={a.shot.alt} loading="lazy" decoding="async" /></div>
             <div class="app-body">
-              <p class="tag"><span class="sq" aria-hidden="true"></span>Private beta · iPhone · free</p>
+              <p class="tag"><span class="sq" aria-hidden="true"></span>Private beta · iPhone</p>
               <h3 class="app-name">{a.name}</h3>
               <p class="promise">{a.promise}</p>
               <p class="app-line">{a.line}</p>

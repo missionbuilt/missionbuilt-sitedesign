@@ -4,8 +4,8 @@
  *
  * Rebuilt Sept 20, 2026 to match the lean app landing pages (AppLanding.astro).
  * The old page was a text overview with a meta strip and two text rows; its copy
- * described the Kibana-era Ironstack ("a training partner with your whole history
- * in its head") and named Hevy. Backup: Claude outputs/rack-index-before-2026-09-20.astro.bak.
+ * described the Kibana-era IronStack ("a training partner with your whole history
+ * in its head") and named Hevy.
  *
  * One job: show the two apps side by side, each with its real screens, its promise
  * and a way in. Order: hero (short) → two app cards → better together → why (one
@@ -13,7 +13,7 @@
  * phrase and hero screens as its own landing page, so the family reads as one.
  * No competitor is named. Oxblood: the brand dot, the two promise phrases, the
  * Join buttons. "Better together" claims only what is live (both write to Apple Health);
- * travel mode and the training signal are Ironstack-ready, MealStack next (Sept 19 audit).
+ * both write to Apple Health, share one travel switch and keep today's session time in step (Sept 29, 2026).
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
@@ -32,15 +32,15 @@ interface App {
 
 const apps: App[] = [
   {
-    name: 'Ironstack',
+    name: 'IronStack',
     href: '/rack/ironstack',
     promise: 'Log fast. See progress.',
     accent: 'A coach in your corner.',
     sub: 'A lifting log for iPhone. Every lifting app I used was missing something; this one puts it in one place.',
     points: ['Tap, type or say the set', 'Big rest and EMOM timers', 'Insights, badges, your crew', 'A Coach that picks your next weight'],
     shots: [
-      { src: '/images/ironstack/log-session.webp', w: 540, h: 1174, alt: 'Ironstack mid-session: Comp Squat, two sets logged, the third ready to confirm with one tap, and the rest clock at 1:52.' },
-      { src: '/images/ironstack/coach-swap.webp', w: 540, h: 1176, alt: 'Ironstack Coach with the squat rack taken: swap in SSB Box Squat and open at 220 for 5, under a ceiling from your own sets.' },
+      { src: '/images/ironstack/log-session.webp', w: 540, h: 1174, alt: 'IronStack mid-session: 1 min, 2 of 16 sets and 1,850 lb moved across the top, and Comp Squat with two sets of 185 for 5 logged and the third lit with Log.' },
+      { src: '/images/ironstack/coach-swap.webp', w: 540, h: 1176, alt: 'IronStack Coach with the squat rack taken: swap in SSB Box Squat and open at 220 for 5, under a ceiling from your own sets.' },
     ],
   },
   {
@@ -49,9 +49,9 @@ const apps: App[] = [
     promise: 'Your tracker says what you ate.',
     accent: 'This says when.',
     sub: 'Meal timing for iPhone, built backward from your training session. Eat late and the day re-flows; your pre-workout meal still lands before you train.',
-    points: ['Anchored to your session', 'Log when you actually ate', 'Holds up on the road', 'A Coach for eating out'],
+    points: ['Anchored to your session', 'Log when you actually ate', 'Holds up on the road', 'A Coach that builds your plan or reads a menu'],
     shots: [
-      { src: '/images/mealstack/today-training.webp', w: 540, h: 1176, alt: 'MealStack Today on a training day: next is yogurt and berries at 12:03 PM, with totals against the day\'s target.' },
+      { src: '/images/mealstack/today-training.webp', w: 540, h: 1174, alt: 'MealStack Today on a training day with the session at 6:30 PM: the yogurt logged late at 11:40, lunch next at 2:40 PM, and the Home travel chip under the MealStack header.' },
       { src: '/images/mealstack/session-moved.webp', w: 540, h: 1174, alt: 'MealStack after the session moved to 6:30 PM: the meals tied to it move with it, with an Undo.' },
     ],
   },
@@ -59,7 +59,9 @@ const apps: App[] = [
 ---
 <BaseLayout
   title="The Rack · Mission Built"
-  description="Two iPhone apps for people who train, from Mission Built. Ironstack: log fast, see progress, a coach in your corner. MealStack: meal timing built around your training session. Both free during the private beta."
+  ogImage="/images/rack-og.jpg"
+  ogImageAlt="The Rack. IronStack and MealStack, two iPhone apps for people who train, by Mission Built, with a real screen from each."
+  description="Two iPhone apps for people who train, from Mission Built. IronStack: log fast, see progress, a coach in your corner. MealStack: meal timing built around your training session. Both free during the private beta."
   active="rack"
 >
   <TopNav active="rack" />
@@ -103,7 +105,7 @@ const apps: App[] = [
 
     <section class="block together">
       <p class="section-label">Better together</p>
-      <p class="line">Each stands on its own. Both write to Apple Health today; a shared travel switch and a training signal are next.</p>
+      <p class="line">Each stands on its own. Both write to Apple Health, share one travel switch, and keep today's session time in step.</p>
       <a class="soft" href="/rack/mealstack/details#better-together">What they share today →</a>
     </section>
 
@@ -112,8 +114,8 @@ const apps: App[] = [
       <p class="prose">
         The first edition of the book was subtitled <em>Lessons from the Barbell and the Boardroom</em>, and that split still holds. The Loadout is the boardroom
         half: skills for product leaders. The Rack is the barbell half: the tools I train with. I built them
-        for one lifter, in a home gym, during a meet prep, because nothing I tried did the whole job. Both open
-        their source with 1.0, and your data stays on your phone unless you switch something on.
+        for one lifter, in a home gym, during a meet prep, because nothing I tried did the whole job. Both keep your data on your phone,
+        in files you can export and bring back, and nothing leaves it unless you switch something on.
         For the boardroom, see <a class="inline-link" href="/loadout">the Loadout</a>.
       </p>
     </section>

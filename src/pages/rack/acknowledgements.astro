@@ -1,0 +1,26 @@
+---
+/**
+ * Acknowledgements and the trademark notice for IronStack and MealStack. /rack/acknowledgements
+ *
+ * Checked against both apps Sept 29, 2026: no third-party Swift packages (only MissionBuiltKit),
+ * Oswald Bold bundled in both, IronStack's word lists as its Settings › Acknowledgements lists
+ * them. The text is src/data/legal/acknowledgements.md. When PostHog is removed (see the
+ * queued app changes), take its rows out here too.
+ */
+import ToolNoteLayout from '../../layouts/ToolNoteLayout.astro';
+import LegalProse from '../../components/LegalProse.astro';
+import { Content } from '../../data/legal/acknowledgements.md';
+---
+<ToolNoteLayout
+  title="Acknowledgements · IronStack and MealStack · Mission Built"
+  description="The services, fonts and word lists IronStack and MealStack rely on, with their licence notices, and the Mission Built trademark notice."
+  crumbs={[{ label: 'Acknowledgements' }]}
+  eyebrow="IronStack and MealStack"
+  heading="Acknowledgements"
+  standfirst="What the apps rely on, the work they include, and whose names are whose."
+  back={{ label: 'The Rack', href: '/rack' }}
+  footLinks={[{ label: 'Support', href: '/rack/support' }, { label: 'IronStack terms', href: '/rack/ironstack/terms' }, { label: 'MealStack terms', href: '/rack/mealstack/terms' }]}
+>
+  <Fragment slot="byline">Mission Built · Pittsburgh, PA</Fragment>
+  <LegalProse><Content /></LegalProse>
+</ToolNoteLayout>

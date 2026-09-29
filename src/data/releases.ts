@@ -1,5 +1,5 @@
 /**
- * Releases — shared helpers for the MealStack and Ironstack release notes pages.
+ * Releases — shared helpers for the MealStack and IronStack release notes pages.
  * The content comes from scripts/sync_mealstack_changelog.py (`--app ironstack`).
  */
 import type { CollectionEntry } from 'astro:content';
@@ -11,7 +11,6 @@ type Data = Release['data'];
 /** An app's release notes index. */
 export const changelogFor = (app: Data['app']) => `/rack/${app}/changelog`;
 
-export const CHANGELOG = changelogFor('mealstack');
 
 /** "0.9.1" → "0-9-1": the release's URL segment. */
 export const releaseSlug = (version: string) => version.replaceAll('.', '-');
@@ -32,3 +31,9 @@ export function when(d: Data, short = false): string {
 }
 
 export const plural = (n: number, one: string, many = `${one}s`) => `${n} ${n === 1 ? one : many}`;
+
+/** The newest release testers can have: the newest one that isn't still in progress.
+ *  The details pages show it in the beta panel, so the status never goes stale by date. */
+export function newestBuild(releases: Release[], app: Data['app']): Release | undefined {
+  return releases.filter((r) => r.data.app === app && r.data.status !== 'in-progress').sort(byOrder)[0];
+}

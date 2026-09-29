@@ -1,11 +1,13 @@
 # Cloudflare Pages redirects.
 #
-# Ironstack and MealStack moved from the Loadout to the Rack on Sept 13, 2026.
+# IronStack and MealStack moved from the Loadout to the Rack on Sept 13, 2026.
 # Permanent: the MealStack app links to the old privacy URL in builds already
 # installed. The splat rules cover trailing slashes.
 #
-# While MealStack 0.8.0 is in App Review, /loadout/mealstack/privacy is served
-# by a shim page (src/pages/loadout/mealstack/privacy.astro), not redirected:
+# Until App Store Connect holds /rack/mealstack/privacy as MealStack's privacy URL
+# (0.8.0 was submitted with the old one; check before removing), /loadout/mealstack/privacy
+# is served by a shim page (src/pages/loadout/mealstack/privacy.astro), not redirected. Its
+# canonical is /rack/mealstack/privacy and the sitemap leaves it out, so it isn't indexed twice.
 # Cloudflare evaluates these rules before static files, so the rules below
 # name /loadout/mealstack and /loadout/mealstack/ explicitly instead of using
 # a splat. After approval, delete the shim and replace the two MealStack rules
@@ -24,3 +26,11 @@
 # Book downloads carry the edition in the filename (Sept 2026). Old links keep working.
 /downloads/mission-built.pdf  /downloads/mission-built-second-edition-revised.pdf  301
 /downloads/mission-built.md   /downloads/mission-built-second-edition-revised.md   301
+
+# The plan skills moved from the Rack to the Loadout on Sept 29, 2026: the app
+# pages don't talk about skills. Permanent: installed MealStack builds link to
+# /rack/mealstack/skill from About and the import sheet.
+/rack/mealstack/skill      /loadout/plans  301
+/rack/mealstack/skill/     /loadout/plans  301
+/loadout/mealstack/skill   /loadout/plans  301
+/loadout/mealstack/skill/  /loadout/plans  301

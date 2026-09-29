@@ -1,0 +1,69 @@
+{
+  "ironstack": 1,
+  "name": "Four-day powerlifting, block 1",
+  "days": 4,
+  "notes": "General training information for healthy adults, not medical or coaching advice. Written by an AI from your answers; check with a qualified coach or physician before changing how you train, and stop any lift that hurts.",
+  "workouts": [
+    {
+      "name": "Heavy squat",
+      "day": 1,
+      "lifts": [
+        { "name": "Comp Squat", "category": "main", "gear": ["cloth-belt", "knee-sleeves"], "rest": "3:00",
+          "sets": [
+            { "reps": 5, "type": "prep" },
+            { "reps": 3, "type": "prep" },
+            { "reps": 3, "type": "working", "rpe": 8 },
+            { "reps": 3, "type": "working", "rpe": 8 },
+            { "reps": 3, "type": "working", "rpe": 8 }
+          ] },
+        { "name": "Romanian Deadlift", "category": "accessory", "rest": "2:00",
+          "sets": [ { "reps": 8 }, { "reps": 8 }, { "reps": 8 } ] },
+        { "name": "Leg Press", "category": "accessory", "rest": "1:30",
+          "sets": [ { "reps": 12 }, { "reps": 12 }, { "reps": 12 } ] }
+      ]
+    },
+    {
+      "name": "Heavy bench",
+      "day": 2,
+      "lifts": [
+        { "name": "Comp Bench", "category": "main", "rest": "3:00",
+          "sets": [
+            { "reps": 5, "type": "prep" },
+            { "reps": 4, "type": "working", "rpe": 8 },
+            { "reps": 4, "type": "working", "rpe": 8 },
+            { "reps": 4, "type": "working", "rpe": 8 }
+          ] },
+        { "name": "Bentover Rows", "category": "accessory", "rest": "2:00",
+          "sets": [ { "reps": 8 }, { "reps": 8 }, { "reps": 8 } ] },
+        { "name": "Rope Pushdown", "category": "accessory",
+          "sets": [ { "reps": 15 }, { "reps": 15 }, { "reps": 15 } ] }
+      ]
+    },
+    {
+      "name": "Heavy deadlift",
+      "day": 3,
+      "lifts": [
+        { "name": "Comp Deadlift", "category": "main", "gear": ["cloth-belt"], "pace": "E3:00",
+          "sets": [
+            { "reps": 3, "type": "prep" },
+            { "reps": 2, "type": "working", "rpe": 8 },
+            { "reps": 2, "type": "working", "rpe": 8 },
+            { "reps": 2, "type": "working", "rpe": 8 },
+            { "reps": 2, "type": "working", "rpe": 8 }
+          ] },
+        { "name": "Pullups", "category": "accessory",
+          "sets": [ { "reps": 8 }, { "reps": 8 }, { "reps": 8 } ] }
+      ]
+    },
+    {
+      "name": "Volume bench and squat",
+      "day": 4,
+      "lifts": [
+        { "name": "Comp Bench", "category": "main", "pace": "EMOM",
+          "sets": [ { "reps": 5, "rpe": 7 }, { "reps": 5, "rpe": 7 }, { "reps": 5, "rpe": 7 }, { "reps": 5, "rpe": 7 }, { "reps": 5, "rpe": 7 } ] },
+        { "name": "Comp Squat", "category": "main", "rest": "2:30",
+          "sets": [ { "reps": 6, "rpe": 7 }, { "reps": 6, "rpe": 7 }, { "reps": 6, "rpe": 7 } ] }
+      ]
+    }
+  ]
+}

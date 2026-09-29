@@ -1,0 +1,5 @@
+# missionbuilt.io. Everything here is public; the sitemap lists the pages.
+User-agent: *
+Allow: /
+
+Sitemap: https://missionbuilt.io/sitemap-index.xml
