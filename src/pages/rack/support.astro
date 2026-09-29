@@ -1,0 +1,25 @@
+---
+/**
+ * Support for IronStack and MealStack. /rack/support
+ *
+ * The Support URL for both apps in App Store Connect. The text is src/data/legal/support.md,
+ * written from the support draft in the private briefs (Sept 29, 2026). One address for
+ * both apps: support@missionbuilt.io. The response times must match the privacy pages.
+ */
+import ToolNoteLayout from '../../layouts/ToolNoteLayout.astro';
+import LegalProse from '../../components/LegalProse.astro';
+import { Content } from '../../data/legal/support.md';
+---
+<ToolNoteLayout
+  title="Support · IronStack and MealStack · Mission Built"
+  description="Help with IronStack and MealStack: how to reach a person, report a bug, take your data with you or delete it, and report someone on Social."
+  crumbs={[{ label: 'Support' }]}
+  eyebrow="IronStack and MealStack"
+  heading="Support"
+  standfirst="How to reach a person, report a bug, take your data with you, or make it go away."
+  back={{ label: 'The Rack', href: '/rack' }}
+  footLinks={[{ label: 'IronStack', href: '/rack/ironstack' }, { label: 'MealStack', href: '/rack/mealstack' }, { label: 'Acknowledgements', href: '/rack/acknowledgements' }]}
+>
+  <Fragment slot="byline">support@missionbuilt.io · One person answers</Fragment>
+  <LegalProse><Content /></LegalProse>
+</ToolNoteLayout>

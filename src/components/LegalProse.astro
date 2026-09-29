@@ -1,0 +1,38 @@
+---
+/**
+ * LegalProse — rendered Markdown for the Rack's legal and support pages (Terms, Support,
+ * Acknowledgements), inside ToolNoteLayout's column. The Markdown lives in src/data/legal/
+ * and is written from the drafts in the private briefs; the page adds the header and the
+ * draft banner. `draft` shows "Draft, not yet in force" until Mike says it's reviewed.
+ */
+interface Props { draft?: boolean }
+const { draft = false } = Astro.props;
+---
+{draft && (
+  <aside class="draft" role="note">
+    <p class="k">Draft, not yet in force</p>
+    <p>These terms are being reviewed by a lawyer before IronStack and MealStack reach the App Store. Until then, this page shows where they are going; the privacy pages are in force now.</p>
+  </aside>
+)}
+<div class="legal"><slot /></div>
+
+<style>
+  .draft { margin: 30px 0 8px; padding: 16px 20px; border: var(--border-thin); border-left: 3px solid var(--color-blood); background: var(--color-panel); }
+  .draft .k { margin: 0 0 6px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-blood-text); }
+  .draft p:not(.k) { margin: 0; font-size: 15px; line-height: 1.6; }
+
+  .legal :global(h2) {
+    margin: 46px 0 10px; padding-top: 18px; border-top: var(--border-thin);
+    font-family: var(--font-display); font-weight: 600; font-size: 24px; line-height: 1.15; letter-spacing: 0.02em; text-transform: uppercase;
+    color: var(--color-chalk);
+  }
+  .legal :global(h3) { margin: 28px 0 8px; font-family: var(--font-display); font-weight: 500; font-size: 18px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--color-chalk); }
+  .legal :global(hr) { display: none; }
+  .legal :global(ul), .legal :global(ol) { margin: 0 0 20px; padding-left: 22px; }
+  .legal :global(li) { margin-bottom: 10px; font-size: 16.5px; }
+  .legal :global(li::marker) { color: var(--color-chalk-faint); }
+  .legal :global(table) { width: 100%; margin: 0 0 22px; border-collapse: collapse; font-size: 15px; display: block; overflow-x: auto; }
+  .legal :global(th), .legal :global(td) { padding: 10px 12px 10px 0; border-bottom: var(--border-thin); text-align: left; vertical-align: top; }
+  .legal :global(th) { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-chalk-faint); }
+  .legal :global(pre) { white-space: pre-wrap; font-family: var(--font-mono); font-size: 12px; line-height: 1.6; color: var(--color-chalk-dim); padding: 14px 16px; background: var(--color-panel); border: var(--border-thin); }
+</style>

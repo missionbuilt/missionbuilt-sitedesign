@@ -332,7 +332,7 @@ const ld = {
         <div class="lic-cell" id="your-data">
           <p class="k">Your data</p>
           <p class="v">On your phone. Yours to take.</p>
-          <p class="body">Your log is files on your phone, and one tap exports all of it in the Mission Built Schema, a format documented in public. Coach and Social send only what they need to work. One screen deletes everything, everywhere, and tells you what it deleted. <a class="inline-link" href="/rack/ironstack/privacy">The privacy page</a> says exactly what, where and for how long.</p>
+          <p class="body">Your log is files on your phone, and one tap exports all of it in the Mission Built Schema, a documented, versioned format. Coach and Social send only what they need to work. One screen deletes everything, everywhere, and tells you what it deleted. <a class="inline-link" href="/rack/ironstack/privacy">The privacy page</a> says exactly what, where and for how long.</p>
         </div>
       </div>
       <div class="fine">
@@ -422,6 +422,7 @@ const ld = {
           <span class="related-cta">Read →</span>
         </a>
       </div>
+      <p class="kit-links"><a class="inline-link" href="/rack/ironstack/terms">Terms of use</a> (a draft, under review) · <a class="inline-link" href="/rack/ironstack/privacy">Privacy</a> · <a class="inline-link" href="/rack/support">Support</a> · <a class="inline-link" href="/rack/acknowledgements">Acknowledgements</a></p>
     </section>
 
     <hr class="dashed" />
@@ -454,7 +455,7 @@ const ld = {
       <p><strong>Stacked.</strong></p>
     </section>
   </main>
-  <SiteFooter links={[{ label: 'Release notes', href: '/rack/ironstack/changelog' }, { label: 'Privacy', href: '/rack/ironstack/privacy' }]} />
+  <SiteFooter links={[{ label: 'Release notes', href: '/rack/ironstack/changelog' }, { label: 'Privacy', href: '/rack/ironstack/privacy' }, { label: 'Terms', href: '/rack/ironstack/terms' }, { label: 'Support', href: '/rack/support' }]} />
 </BaseLayout>
 
 <script>
@@ -579,6 +580,7 @@ const ld = {
   .prose { margin: 0 0 14px; max-width: 760px; font-family: var(--font-serif); font-size: 17px; line-height: 1.65; color: var(--color-chalk-dim); }
   .note { margin: 14px 0 0; max-width: 78ch; font-family: var(--font-mono); font-size: 12px; line-height: 1.6; letter-spacing: 0.02em; color: var(--color-chalk-faint); }
   .k { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); margin: 0; }
+  .kit-links { margin: 18px 0 0; font-family: var(--font-serif); font-size: 15px; line-height: 1.6; color: var(--color-chalk-faint); }
   .inline-link { color: var(--color-chalk); border-bottom: 1px solid var(--color-chalk-ghost); transition: border-color 120ms ease-out; }
   .inline-link:hover { border-bottom-color: var(--color-chalk); }
 

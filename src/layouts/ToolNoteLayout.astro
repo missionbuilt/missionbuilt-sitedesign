@@ -28,7 +28,8 @@ interface Props {
   /** One word of `heading` to set in oxblood. */
   accent?: string;
   standfirst: string;
-  tool: ToolKey;
+  /** The app or kit card at the foot. Left out, the foot has only the back link. */
+  tool?: ToolKey;
   toolKicker?: string;
   back: { label: string; href: string };
   footLinks?: { label: string; href: string }[];
@@ -39,7 +40,7 @@ const root = section === 'loadout' ? { label: 'The Loadout', href: '/loadout' } 
 const i = accent ? heading.indexOf(accent) : -1;
 const hBefore = i >= 0 ? heading.slice(0, i) : heading;
 const hAfter = i >= 0 ? heading.slice(i + (accent?.length ?? 0)) : '';
-const tool = TOOLS[toolKey];
+const tool = toolKey ? TOOLS[toolKey] : undefined;
 ---
 <BaseLayout title={title} description={description} active={section}>
   <slot name="head" slot="head" />
@@ -71,12 +72,14 @@ const tool = TOOLS[toolKey];
       </div>
 
       <footer class="note-foot">
-        <a href={tool.href} class="tool-card">
-          <span class="k">{toolKicker}</span>
-          <span class="name">{tool.name}</span>
-          <span class="line">{tool.line}</span>
-          <span class="cta">{tool.cta}</span>
-        </a>
+        {tool && (
+          <a href={tool.href} class="tool-card">
+            <span class="k">{toolKicker}</span>
+            <span class="name">{tool.name}</span>
+            <span class="line">{tool.line}</span>
+            <span class="cta">{tool.cta}</span>
+          </a>
+        )}
         <a href={back.href} class="back">← {back.label}</a>
       </footer>
     </article>
