@@ -4,7 +4,7 @@
  *
  * Rebuilt Sept 20, 2026 to match the lean app landing pages (AppLanding.astro).
  * The old page was a text overview with a meta strip and two text rows; its copy
- * described the Kibana-era Ironstack ("a training partner with your whole history
+ * described the Kibana-era IronStack ("a training partner with your whole history
  * in its head") and named Hevy. Backup: Claude outputs/rack-index-before-2026-09-20.astro.bak.
  *
  * One job: show the two apps side by side, each with its real screens, its promise
@@ -13,7 +13,7 @@
  * phrase and hero screens as its own landing page, so the family reads as one.
  * No competitor is named. Oxblood: the brand dot, the two promise phrases, the
  * Join buttons. "Better together" claims only what is live (both write to Apple Health);
- * travel mode and the training signal are Ironstack-ready, MealStack next (Sept 19 audit).
+ * travel mode and the training signal are IronStack-ready, MealStack next (Sept 19 audit).
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
@@ -32,15 +32,15 @@ interface App {
 
 const apps: App[] = [
   {
-    name: 'Ironstack',
+    name: 'IronStack',
     href: '/rack/ironstack',
     promise: 'Log fast. See progress.',
     accent: 'A coach in your corner.',
     sub: 'A lifting log for iPhone. Every lifting app I used was missing something; this one puts it in one place.',
     points: ['Tap, type or say the set', 'Big rest and EMOM timers', 'Insights, badges, your crew', 'A Coach that picks your next weight'],
     shots: [
-      { src: '/images/ironstack/log-session.webp', w: 540, h: 1174, alt: 'Ironstack mid-session: Comp Squat, two sets logged, the third ready to confirm with one tap, and the rest clock at 1:52.' },
-      { src: '/images/ironstack/coach-swap.webp', w: 540, h: 1176, alt: 'Ironstack Coach with the squat rack taken: swap in SSB Box Squat and open at 220 for 5, under a ceiling from your own sets.' },
+      { src: '/images/ironstack/log-session.webp', w: 540, h: 1174, alt: 'IronStack mid-session: Comp Squat, two sets logged, the third ready to confirm with one tap, and the rest clock at 1:52.' },
+      { src: '/images/ironstack/coach-swap.webp', w: 540, h: 1176, alt: 'IronStack Coach with the squat rack taken: swap in SSB Box Squat and open at 220 for 5, under a ceiling from your own sets.' },
     ],
   },
   {
@@ -59,7 +59,7 @@ const apps: App[] = [
 ---
 <BaseLayout
   title="The Rack · Mission Built"
-  description="Two iPhone apps for people who train, from Mission Built. Ironstack: log fast, see progress, a coach in your corner. MealStack: meal timing built around your training session. Both free during the private beta."
+  description="Two iPhone apps for people who train, from Mission Built. IronStack: log fast, see progress, a coach in your corner. MealStack: meal timing built around your training session. Both free during the private beta."
   active="rack"
 >
   <TopNav active="rack" />

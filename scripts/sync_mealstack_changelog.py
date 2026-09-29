@@ -18,7 +18,7 @@ Run from the site root:
     python3 scripts/sync_mealstack_changelog.py [path/to/CHANGELOG.md]
     python3 scripts/sync_mealstack_changelog.py --app ironstack [path/to/CHANGELOG.md]
 
-Ironstack's CHANGELOG.md sits at the root of ../ironstack and follows the same rules.
+IronStack's CHANGELOG.md sits at the root of ../ironstack and follows the same rules.
 """
 from __future__ import annotations  # the Mac's system Python is 3.9
 import json

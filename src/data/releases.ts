@@ -1,5 +1,5 @@
 /**
- * Releases — shared helpers for the MealStack and Ironstack release notes pages.
+ * Releases — shared helpers for the MealStack and IronStack release notes pages.
  * The content comes from scripts/sync_mealstack_changelog.py (`--app ironstack`).
  */
 import type { CollectionEntry } from 'astro:content';
