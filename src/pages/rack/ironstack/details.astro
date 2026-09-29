@@ -13,8 +13,8 @@
  * read as one family: hero → what it does differently (six cards, each with its real
  * screen, then more screens) → why (four pillars) → try it (the voice card and the rest
  * clock, live) → how you use
- * it → side by side → fine print → join the beta → at the table (the open-source
- * CLI and Kibana stack the app grew out of) → the kit → FAQ → better together → related.
+ * it → side by side → fine print → join the beta → at the table (your log as files,
+ * and what reads them) → the kit → FAQ → better together → related.
  * (Order since the Jess session: hero → coming from Hevy → six cards → why → try it → how →
  * side by side → fine print → beta → FAQ → at the table → the kit → related, with MealStack
  * as a card linking to its page's Better Together section.)
@@ -117,7 +117,7 @@ const faqs: Faq[] = [
   { q: 'Streaks and badges?', a: 'A weekly streak on Insights and 167 badges that take years to finish: Road Warrior for training on the road, Dawn patrol, a thousand feet of carries, In their corner for supporting others. Earned, never shamed. Miss a week and nothing scolds you.' },
   { q: 'Is Coach a doctor?', a: 'No. Coach is an AI. It answers from your own sets, never names a weight above a ceiling it can show you, and points any question about pain or injury to a qualified person. Nothing it suggests changes your log until you tap.' },
   { q: 'Android, iPad, watch?', a: 'iPhone only, iOS 26 and up. No Android, no iPad layout, and no watch app yet. What covers some of the watch: the clock talks in your earbuds, and the Lock Screen has a "same again" button that logs a set without unlocking. If your phone lives in a locker, that is not enough, and I would rather say so.' },
-  { q: 'Which license?', a: 'MIT, like the Loadout skills, and the source goes public with 1.0. Then read it, change it, ship it. The IronStack name and marks stay with Mission Built.' },
+  { q: 'Is the code open?', a: 'No. IronStack is a closed app. Your data is open: one tap exports everything in the Mission Built Schema, and it imports back. The IronStack name and marks stay with Mission Built.' },
   { q: 'When is 1.0?', a: 'When a fresh install has been proven on phones that are not mine, and two lifters who are not me have used Social against each other. The date lands on this page before it lands in the store.' },
 ];
 
@@ -335,19 +335,19 @@ const ld = {
     {/* ---------- FINE PRINT ---------- */}
     <section class="block" id="fine-print">
       <p class="section-label">The fine print, in plain words</p>
-      <h2 class="section-h2">Open source at 1.0, your data, and one thing I have not picked.</h2>
+      <h2 class="section-h2">Your data, and one thing I have not picked.</h2>
       <div class="lic three">
         <div class="lic-cell">
-          <p class="k">License</p>
-          <p class="v">MIT, at 1.0.</p>
-          <p class="body">The source goes public with 1.0, under MIT like the Loadout skills: the app, the Workers behind Coach and Social, and the command-line tools it grew out of. Then read it, change it, ship your own. The IronStack name and the marks stay with Mission Built.</p>
+          <p class="k">The code</p>
+          <p class="v">Closed app. Open data.</p>
+          <p class="body">IronStack is a closed-source app from Mission Built. What is open is your data: everything you log exports in one file in the Mission Built Schema, a documented, versioned format, and imports back in. The IronStack name and the marks stay with Mission Built.</p>
         </div>
         <div class="lic-cell">
           <p class="k">Price</p>
           <p class="v">Not settled yet. Here is why.</p>
           <p class="body">Every Coach question runs on a server I pay for. I want Coach in the app and I am not willing to lose money keeping it there, so the launch price is open: free with Coach on an allowance, a one-time price, or Coach as the paid part of a free app. What is settled: logging, the clock, your whole history and Social will not be what you pay for.</p>
         </div>
-        <div class="lic-cell">
+        <div class="lic-cell" id="your-data">
           <p class="k">Your data</p>
           <p class="v">On your phone. Yours to take.</p>
           <p class="body">Your log is files on your phone, and one tap exports all of it in the Mission Built Schema, a format documented in public. Coach and Social send only what they need to work. One screen deletes everything, everywhere, and tells you what it deleted. <a class="inline-link" href="/rack/ironstack/privacy">The privacy page</a> says exactly what, where and for how long.</p>
@@ -392,7 +392,6 @@ const ld = {
         </div>
         <div class="doors">
           <div class="door open"><div><div class="n">Beta</div><p class="d">By invite, from the form. Small batches, added by hand.</p></div><span class="s">Now</span></div>
-          <div class="door dim"><div><div class="n">Source</div><p class="d">Goes public on GitHub, MIT.</p></div><span class="s">With 1.0</span></div>
           <div class="door dim"><div><div class="n">App Store</div><p class="d">The public door.</p></div><span class="s">With 1.0</span></div>
         </div>
       </div>
@@ -415,13 +414,12 @@ const ld = {
     <section class="block" id="table">
       <p class="section-label">At the table</p>
       <h2 class="section-h2">For the data nerds: your log is files.</h2>
-      <p class="prose">The phone is where the set gets written down. Everything behind it is optional, and opens with 1.0. The same log reads on a laptop, and if you want the deep read, it indexes into an Elasticsearch you own.</p>
+      <p class="prose">The phone is where the set gets written down. Everything behind it is optional. The same log reads on a laptop, and if you want the deep read, it indexes into an Elasticsearch you own.</p>
       <div class="ladder">
         <div class="rung"><span class="n">1</span><div><h3>The log</h3><p class="what">An append-only file per day, one event per set, that the app writes and nothing rewrites. Corrections are new lines, never edits. Export it raw from Settings any time.</p></div></div>
         <div class="rung"><span class="n">2</span><div><h3>The command line</h3><p class="what"><code>iron today</code> for the brief before you train, <code>iron last "Comp Squat"</code> for the last three times, <code>iron ceiling</code> for the heaviest load anything may name. Reads the files alone; no server.</p></div></div>
         <div class="rung"><span class="n">3</span><div><h3>The dashboards</h3><p class="what">Seven Kibana dashboards and an Agent Builder coach, over an Elasticsearch you run: how heavy a week was for you now, whether you are ramping, what you have been neglecting. Rebuilt from the files, so it can never disagree with them for long.</p></div></div>
       </div>
-      <p class="story-link"><span class="story-meta">The app, both Workers, the CLI and the dashboards live in one repo, public with 1.0.</span></p>
     </section>
 
     <hr class="dashed" />
@@ -429,18 +427,18 @@ const ld = {
     {/* ---------- THE KIT ---------- */}
     <section class="block" id="kit">
       <p class="section-label">For testers</p>
-      <h2 class="section-h2">The fine print and the source.</h2>
+      <h2 class="section-h2">The fine print.</h2>
       <div class="related">
         <a href="/rack/ironstack/privacy" class="related-card">
           <h3>Privacy</h3>
           <p>What stays on your phone, what leaves it for Coach and Social, who touches it, how long it lasts, and how to make it all go away.</p>
           <span class="related-cta">Read →</span>
         </a>
-        <div class="related-card">
-          <h3>Source</h3>
-          <p>Every line that does what this page says, public on GitHub with 1.0, MIT. Issues and pull requests welcome then.</p>
-          <span class="related-cta">With 1.0</span>
-        </div>
+        <a href="/rack/ironstack/details#your-data" class="related-card">
+          <h3>Your data</h3>
+          <p>Closed app, open data. Everything you log exports in one file in the Mission Built Schema, and comes back in.</p>
+          <span class="related-cta">Read →</span>
+        </a>
       </div>
     </section>
 

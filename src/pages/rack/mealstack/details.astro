@@ -6,9 +6,9 @@
  * MealStack — product page on the Rack.
  *
  * An iPhone app for meal timing built backward from the training session.
- * Open source with 1.0; the license itself is not settled (MIT or copyleft),
- * and the copy must not commit to one. Private beta (TestFlight, added by hand
- * from the form below); the App Store listing and the source open with 1.0.
+ * A closed-source app; what is open is your data (plan files in a documented
+ * format, the MealStack Schema). Private beta (TestFlight, added by hand from
+ * the form below); the App Store listing comes with 1.0.
  *
  * The page has one job: someone who has never heard of the app learns why it
  * exists, what it does differently, how you use it, and how to get it. In
@@ -29,7 +29,7 @@
  *
  * Color discipline: oxblood for the hero period, eyebrows, section labels,
  * the one marked card (Timing), the two Join buttons, and the closer accent.
- * Army green for the license stat only. No em-dashes in UI strings.
+ * Army green for the your-data stat only. No em-dashes in UI strings.
  */
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import SiteFooter from '../../../components/SiteFooter.astro';
@@ -51,7 +51,7 @@ const stats = [
   { key: 'Runs on',            value: 'iPhone',     sub: 'iOS 26 and up',            army: false },
   { key: 'Account',            value: 'None',       sub: undefined,                  army: false },
   { key: 'Leaves your phone',  value: 'Nothing',    sub: 'unless you switch it on',  army: false },
-  { key: 'License',            value: 'Open source', sub: 'settled with 1.0',         army: true  },
+  { key: 'Your data',          value: 'Plan files', sub: 'open format',              army: true  },
 ];
 
 type Card = { label: string; pillar: string; verdict: string; evidence: string; them: string; mark?: boolean };
@@ -92,7 +92,7 @@ const faqs: Faq[] = [
   { q: 'Can I keep my macro tracker?', a: 'Yes, and if you lean on a barcode scanner you should. MealStack is the timing layer. It knows the plate, weighs macros from it, and writes them to Apple Health at the time you ate, so the two live side by side.' },
   { q: 'Does it have streaks?', a: 'No. A streak rewards you for tapping the button, and the easiest way to keep one alive is to lie a little. The log is the input for tomorrow, so it has to be true. History scores the week on what actually landed, and that is the only score.' },
   { q: 'Android, iPad, watch?', a: 'iPhone only, iOS 26 and up. No Android, no iPad layout, no watch app, and none planned for 1.0. The Lock Screen, the widgets and the notifications are where the app lives when it is not open.' },
-  { q: 'Which license?', a: 'Not decided. It will be open source, and the source opens with 1.0; whether it is MIT like the rest of the kit or a copyleft license that keeps forks open is the part I have not settled. The name and the marks stay with Mission Built either way.' },
+  { q: 'Is the code open?', a: 'No. MealStack is a closed app. Your plan is yours: plan files are documented JSON (the MealStack Schema), and they go out and come back in. The name and the marks stay with Mission Built.' },
   { q: 'When is 1.0?', a: 'After the meet it is being tested through, in October 2026, once a fresh install has been proven on phones that are not mine.' },
 ];
 
@@ -101,7 +101,7 @@ type Quote = { text: string; who: string };
 const quotes: Quote[] = [];
 
 const title = 'MealStack, the details: meal timing built around your training session · Mission Built';
-const description = 'Fueling is training. MealStack is a meal timing tracker for people who train: protein stacked across the day, a pre-workout meal that holds its time, a day you can change on the road, and a log of when you actually ate. Not a nutrition app. iPhone, no account, open source with 1.0. Private beta.';
+const description = 'Fueling is training. MealStack is a meal timing tracker for people who train: protein stacked across the day, a pre-workout meal that holds its time, a day you can change on the road, and a log of when you actually ate. Not a nutrition app. iPhone, no account, your data in an open format. Private beta.';
 
 const ld = {
   '@context': 'https://schema.org',
@@ -332,12 +332,12 @@ const ld = {
     {/* ---------- FINE PRINT ---------- */}
     <section class="block" id="fine-print">
       <p class="section-label">The fine print, in plain words</p>
-      <h2 class="section-h2">Open source, your data, and two things I have not picked.</h2>
+      <h2 class="section-h2">Your data, and the one thing I have not picked.</h2>
       <div class="lic three">
-        <div class="lic-cell">
-          <p class="k">License</p>
-          <p class="v">Open source. Which license, not yet.</p>
-          <p class="body">The source goes public with 1.0; that part is settled. The license is not. The Loadout skills are MIT, and IronStack will be; take them and do what you like. For an app the question is whether a fork has to stay open, which is what a copyleft license like the GPL does and MIT does not. I have gone back and forth. The answer lands here with 1.0, and either way you will be able to read, change and ship it.</p>
+        <div class="lic-cell" id="your-data">
+          <p class="k">The code</p>
+          <p class="v">Closed app. Open data.</p>
+          <p class="body">MealStack is a closed-source app from Mission Built. What is open is your data: a plan is a plain JSON file in a documented format, <a class="inline-link" href="/rack/mealstack/schema">the MealStack Schema</a>. Plans and stacks export as those files and import back in, and you can read one, write one, or have Claude write one with <a class="inline-link" href="/rack/mealstack/skill">the plan skill</a>. The MealStack name and the marks stay with Mission Built.</p>
         </div>
         <div class="lic-cell">
           <p class="k">Price</p>
@@ -391,7 +391,6 @@ const ld = {
         <div class="doors">
           <div class="door open"><div><div class="n">Beta</div><p class="d">By invite, from the form. Small batches, added by hand.</p></div><span class="s">Now</span></div>
           <div class="door dim"><div><div class="n">App Store</div><p class="d">The public door.</p></div><span class="s">With 1.0</span></div>
-          <div class="door dim"><div><div class="n">Source</div><p class="d">github.com/missionbuilt/mealstack, open source.</p></div><span class="s">With 1.0</span></div>
         </div>
       </div>
     </section>

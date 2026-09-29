@@ -56,9 +56,9 @@ src/
 │   │   └── spotter.astro                    # The Spotter (demo + download)
 │   ├── rack/
 │   │   ├── index.astro                      # The Rack overview (the barbell half)
-│   │   ├── ironstack.astro                  # IronStack (the iPhone app, private beta; phone screens are replicas on invented data)
+│   │   ├── ironstack.astro                  # IronStack (closed-source iPhone app, private beta; phone screens are replicas on invented data)
 │   │   ├── ironstack/privacy.astro          # IronStack privacy policy (the App Store privacy URL)
-│   │   ├── mealstack.astro                  # MealStack (iPhone app, open source with 1.0, private beta; product page with the click-through demo)
+│   │   ├── mealstack.astro                  # MealStack (closed-source iPhone app, private beta; product page with the click-through demo)
 │   │   └── mealstack/privacy.astro          # MealStack privacy policy (the App Store privacy URL)
 │   └── chapters/
 │       ├── index.astro                      # Chapter Index
@@ -80,7 +80,7 @@ Outside `src/`: `public/` holds static assets, including the generated `public/d
 - `/source` Source: links to the book repo and this repo.
 - `/download` Download: the book (PDF/Markdown) and the standalone Loadout skill zips.
 - `/loadout` The Loadout: overview of the product-leadership skill kit (the boardroom half), with a page per skill — `/loadout/warmup`, `/loadout/approach`, `/loadout/spotter` (each embeds a live click-through demo and a download). Floodlight was removed from the site on Sept 17, 2026; `/loadout/floodlight` redirects to `/loadout`.
-- `/rack` The Rack: the barbell half — `/rack/mealstack` (the iPhone app, open source with 1.0 and the license not yet settled, private beta: a product page with a click-through demo of real Simulator screens at `public/demos/mealstack.html` (images in `public/demos/mealstack/`, made by `scripts/build_mealstack_demo_images.py`) and a Join-the-beta form posting to the Pages Function `functions/api/beta.js`, which needs the `BETA_KV` binding described in `wrangler.jsonc`), `/rack/ironstack` (the iPhone app, private beta through the same Join-the-beta form; signups record which page they came from), `/rack/ironstack/privacy` (IronStack's privacy policy for App Store Connect) and `/rack/mealstack/privacy` (the privacy policy the app and the App Store listing link to). Both tools lived under `/loadout` until Sept 13, 2026; `public/_redirects` carries permanent 301s from the old paths, and must keep them, because installed MealStack builds link to the old privacy URL.
+- `/rack` The Rack: the barbell half — `/rack/mealstack` (the iPhone app, closed source, private beta; the site hosts its public plan files and schema: a product page with a click-through demo of real Simulator screens at `public/demos/mealstack.html` (images in `public/demos/mealstack/`, made by `scripts/build_mealstack_demo_images.py`) and a Join-the-beta form posting to the Pages Function `functions/api/beta.js`, which needs the `BETA_KV` binding described in `wrangler.jsonc`), `/rack/ironstack` (the iPhone app, private beta through the same Join-the-beta form; signups record which page they came from), `/rack/ironstack/privacy` (IronStack's privacy policy for App Store Connect) and `/rack/mealstack/privacy` (the privacy policy the app and the App Store listing link to). Both tools lived under `/loadout` until Sept 13, 2026; `public/_redirects` carries permanent 301s from the old paths, and must keep them, because installed MealStack builds link to the old privacy URL.
 
 ## Adding or editing content
 
@@ -130,7 +130,7 @@ The rest of the site has no environment variables and no runtime requirements, s
 
 Site code is licensed under the [MIT License](LICENSE). Use it, fork it, learn from it.
 
-The MealStack files the site hosts (`public/downloads/mealstack-plan.zip`, `public/downloads/mealstack/`, `public/demos/mealstack.html`, `public/demos/mealstack/`) are not covered by that license. MealStack's license is not decided yet; nothing on the site names one.
+IronStack and MealStack are closed-source apps from Mission Built; their code is not in this repo. The app files the site hosts (`public/images/ironstack/`, `public/images/mealstack/`, `public/downloads/mealstack-plan.zip`, `public/downloads/mealstack/`, `public/demos/mealstack.html`, `public/demos/mealstack/`) are not covered by the MIT license. What is open about the apps is your data: the Mission Built Schema and the MealStack plan-file format are published so anything can read and write them.
 
 The book content (the prose) lives in a separate repo and is licensed [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
 
