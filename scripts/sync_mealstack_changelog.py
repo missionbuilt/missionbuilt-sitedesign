@@ -1,18 +1,22 @@
 #!/usr/bin/env python3
-"""Copy MealStack's CHANGELOG.md into the site as one file per release.
+"""Copy an app's CHANGELOG.md into the site as one file per build.
 
 The app repo's CHANGELOG.md is the source of truth. This script splits it on its
-`## <version> (...)` headings and writes src/content/releases/mealstack-<version>.md,
-which /rack/mealstack/changelog renders: an index of releases, and a page per
-release with its `###` groups as sections. Each bullet's first sentence is set in bold
+`## <version> (...)` headings and writes one file per section into src/content/releases/,
+which /rack/<app>/changelog renders: an index with a row per build, and a page per
+build with its `###` groups as sections. Each bullet's first sentence is set in bold
 and listed on the index. The files are committed: Cloudflare builds
 the site without the app repo next to it.
 
-Heading forms it reads:
-    ## 0.9 (in progress)          -> status in-progress (still being built)
-    ## 0.9 (in review)            -> status in-review (submitted, waiting on Apple)
-    ## 0.8.1 (September 16, 2026) -> shipped, with a date
-    ## 0.8.0 (36)                 -> shipped, build 36
+A weekly update keeps the version and bumps only the build (decided 2026-09-29), so one
+version can have several sections: the one being built and the builds already shipped.
+Heading forms it reads, and the file each one becomes:
+    ## 0.9.1 (in progress)        -> mealstack-0.9.1-next.md, status in-progress
+    ## 0.9.1 (86)                 -> mealstack-0.9.1-b86.md, shipped, build 86
+    ## 0.9 (in review)            -> mealstack-0.9.md, status in-review (waiting on Apple)
+    ## 0.8.1 (September 16, 2026) -> mealstack-0.8.1.md, shipped, with a date
+Two sections that would write the same file stop the script before it writes anything.
+Files for sections no longer in the CHANGELOG are removed.
 
 Run from the site root:
     python3 scripts/sync_mealstack_changelog.py [path/to/CHANGELOG.md]
@@ -148,6 +152,17 @@ def order(version: str) -> int:
     return parts[0] * 1_000_000 + parts[1] * 1_000 + parts[2]
 
 
+def file_name(version: str, note: str) -> str:
+    """The section's file: by build when it has one, `-next` while in progress,
+    by version alone otherwise (a date, or in review)."""
+    note = (note or "").strip()
+    if note.lower() == "in progress":
+        return f"{APP}-{version}-next.md"
+    if note.isdigit():
+        return f"{APP}-{version}-b{int(note)}.md"
+    return f"{APP}-{version}.md"
+
+
 def frontmatter(version: str, note: str, groups: list[dict]) -> str:
     lines = ["---", f"app: {APP}", f'version: "{version}"', f"order: {order(version)}"]
     lines.append(f"changes: {sum(len(g['leads']) for g in groups)}")
@@ -161,7 +176,7 @@ def frontmatter(version: str, note: str, groups: list[dict]) -> str:
     else:
         lines.append("status: shipped")
         if note.isdigit():
-            lines.append(f'build: "{note}"')
+            lines.append(f"build: {int(note)}")
         elif note:
             day = datetime.strptime(note, "%B %d, %Y").date()
             lines.append(f"date: {day.isoformat()}")
@@ -192,10 +207,23 @@ def main() -> int:
         print("No '## <version>' headings found", file=sys.stderr)
         return 1
 
+    names: dict[str, str] = {}
+    for version, note, _ in releases:
+        name = file_name(version, note)
+        heading = f"## {version} ({note})" if note else f"## {version}"
+        if name in names:
+            print(
+                f"{source}: '{names[name]}' and '{heading}' would both be {name}.\n"
+                "Give each section of one version its own build number, or one '(in progress)'.",
+                file=sys.stderr,
+            )
+            return 1
+        names[name] = heading
+
     OUT.mkdir(parents=True, exist_ok=True)
     keep = set()
     for version, note, body in releases:
-        path = OUT / f"{APP}-{version}.md"
+        path = OUT / file_name(version, note)
         keep.add(path.name)
         shaped, groups = shape(body)
         text = frontmatter(version, note, groups) + "\n\n" + shaped + "\n"

@@ -1,6 +1,11 @@
 ---
 /**
- * MealStack — one release's notes. /rack/mealstack/changelog/{0-9}
+ * MealStack — one build's notes. /rack/mealstack/changelog/{0-9-1-b86}
+ *
+ * One page per CHANGELOG section: a shipped build (0-9-1-b86), the build in progress
+ * (0-9-1-next), or a version with no build (0-9). The version alone (0-9-1), which
+ * pages had before a version could hold several builds, redirects to its newest build
+ * (versionHeads in src/data/releases.ts), so old links and installed builds still land.
  *
  * The release's `###` groups are the sections, with a contents row at the top so a
  * long build reads as five short lists, not one long one. Each line's first sentence
@@ -10,28 +15,36 @@
 import { getCollection } from 'astro:content';
 import ToolNoteLayout from '../../../../layouts/ToolNoteLayout.astro';
 import { longDate, isoDay } from '../../../../data/logs';
-import { changelogFor, byOrder, releaseUrl, releaseSlug, when, plural, type Release } from '../../../../data/releases';
+import { changelogFor, byOrder, releaseUrl, releaseSlug, releaseLabel, versionHeads, versionSlug, when, plural, type Release } from '../../../../data/releases';
 
 export async function getStaticPaths() {
   const releases = (await getCollection('releases', ({ data }) => data.app === 'mealstack')).sort(byOrder);
-  return releases.map((entry, i) => ({
-    params: { release: releaseSlug(entry.data.version) },
+  const pages = releases.map((entry, i) => ({
+    params: { release: releaseSlug(entry) },
     props: { entry, newer: releases[i - 1] ?? null, older: releases[i + 1] ?? null },
   }));
+  // The version alone, when no section owns it: a redirect to the version's newest build.
+  const taken = new Set(pages.map((p) => p.params.release));
+  const redirects = [...versionHeads(releases)]
+    .filter(([version]) => !taken.has(versionSlug(version)))
+    .map(([version, head]) => ({ params: { release: versionSlug(version) }, props: { redirect: releaseUrl(head) } }));
+  return [...pages, ...redirects];
 }
 
+if ('redirect' in Astro.props) return Astro.redirect(Astro.props.redirect, 301);
 const { entry, newer, older } = Astro.props as { entry: Release; newer: Release | null; older: Release | null };
 const { Content } = await entry.render();
 const d = entry.data;
 const titled = d.groups.filter((g) => g.title);
+const label = releaseLabel(d);
 const standfirst = `${when(d)} ${plural(d.changes, 'change')}${titled.length > 1 ? `, grouped by where you'll notice them` : ''}.`;
 ---
 <ToolNoteLayout
-  title={`MealStack ${d.version} · Release notes · Mission Built`}
-  description={`What changed in MealStack ${d.version}: ${d.groups.flatMap((g) => g.leads).slice(0, 3).join(' ')}`}
-  crumbs={[{ label: 'MealStack', href: '/rack/mealstack' }, { label: 'Release notes', href: changelogFor('mealstack') }, { label: d.version }]}
+  title={`MealStack ${label} · Release notes · Mission Built`}
+  description={`What changed in MealStack ${label}: ${d.groups.flatMap((g) => g.leads).slice(0, 3).join(' ')}`}
+  crumbs={[{ label: 'MealStack', href: '/rack/mealstack' }, { label: 'Release notes', href: changelogFor('mealstack') }, { label }]}
   eyebrow="MealStack release notes"
-  heading={`Release ${d.version}`}
+  heading={d.status === 'in-progress' ? `Release ${d.version}, next build` : d.build ? `Release ${d.version}, build ${d.build}` : `Release ${d.version}`}
   accent={d.version}
   standfirst={standfirst}
   tool="mealstack"
@@ -44,7 +57,7 @@ const standfirst = `${when(d)} ${plural(d.changes, 'change')}${titled.length > 1
 
   <Fragment slot="lead">
     {titled.length > 1 && (
-      <nav class="contents" aria-label={`In ${d.version}`}>
+      <nav class="contents" aria-label={`In ${label}`}>
         <ul>
           {titled.map((g) => (
             <li><a href={`#${g.slug}`}><span class="t">{g.title}</span><span class="n">{g.leads.length}</span></a></li>
@@ -59,7 +72,7 @@ const standfirst = `${when(d)} ${plural(d.changes, 'change')}${titled.length > 1
     <Content />
   </div>
 
-  <nav class="sib" aria-label="Other releases">
+  <nav class="sib" aria-label="Other builds">
     {newer ? <a href={releaseUrl(newer)} class="s newer"><span class="k">Newer</span><span class="v">{newer.data.version}</span><span class="w">{when(newer.data, true)}</span></a> : <span />}
     {older ? <a href={releaseUrl(older)} class="s older"><span class="k">Older</span><span class="v">{older.data.version}</span><span class="w">{when(older.data, true)}</span></a> : <span />}
   </nav>
