@@ -18,7 +18,7 @@
  *   - Badges: Double Stacked in both; Fuelled and Stacked and Straight off the bar in MealStack. Live.
  *   - Training rhythm (when you usually start): IronStack writes it; MealStack doesn't read it yet.
  *   - Mission Built Schema 0.13: IronStack exports it; MealStack's plan files use its words.
- *   - One coach profile: designed only.
+ *   - One About you for Stack AI: designed only.
  *
  * When MealStack ships a flow, flip its status here and both pages update.
  * Color discipline: army green marks "Live" (it landed); oxblood is not used for status.
@@ -84,10 +84,10 @@ const flows: Flow[] = [
     status: 'half', statusNote: 'IronStack exports it · MealStack uses its words',
   },
   {
-    title: 'One coach profile',
-    from: 'Either app', to: 'Both coaches',
-    carries: 'Bodyweight, height, age and goal, the details a coach needs for a target.',
-    gives: 'Tell one coach once. The other already knows.',
+    title: 'One About you for Stack AI',
+    from: 'Either app', to: 'Stack AI in both',
+    carries: 'Bodyweight, height, age and goal, the details Stack AI needs for a target.',
+    gives: 'Tell Stack AI once, in either app. The other already knows.',
     status: 'next', statusNote: 'Designed',
   },
 ];

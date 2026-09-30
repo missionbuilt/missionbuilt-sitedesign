@@ -34,13 +34,13 @@ const stats = [
   { key: 'Runs on',           value: 'iPhone',  sub: 'iOS 26 and up',             army: false },
   { key: 'From any app',      value: 'Bring it', sub: 'supersets, prep sets',     army: false },
   { key: 'Account to log',    value: 'None',    sub: 'Social is optional',        army: false },
-  { key: 'During the beta',   value: 'Free',    sub: 'Coach included',            army: true  },
+  { key: 'During the beta',   value: 'Free',    sub: 'Stack AI included',            army: true  },
 ];
 
 /** Real screens, from Mike's own log; Social from the app's signed-out sample feed. */
 type Shot = { file: string; h: number; k: string; cap: string; alt: string };
 const shots: Shot[] = [
-  { file: 'home', h: 1174, k: 'Home', cap: 'Today first: what is on the docket, loaded in one tap. Then your people, who is in your corner, your progress, and Coach.', alt: 'IronStack Home: the Mission Built header, Today with Heavy lower and a Load it button, Your people, and Progress.' },
+  { file: 'home', h: 1174, k: 'Home', cap: 'Today first: what is on the docket, loaded in one tap. Then your people, who lifted you, your progress, and Stack AI.', alt: 'IronStack Home: the Mission Built header, Today with Heavy lower and a Load it button, Your people, and Progress.' },
   { file: 'exercise', h: 1174, k: 'An exercise', cap: 'Every exercise, with the muscles it works. Add it to today\'s session, or to a workout, in one tap.', alt: 'IronStack Comp Deadlift page: the muscle groups it works, and Add it to a workout with Today\'s session first.' },
   { file: 'progress', h: 1174, k: 'Progress', cap: 'Every exercise you have done, with its line and the change.', alt: 'IronStack Progress: every exercise with its sparkline and the change.' },
   { file: 'set-sheet-load', h: 1174, k: 'The set sheet', cap: 'The load card fits the lift: a barbell drawn the way it is loaded, 45 bar and 70 per side, plates a tap each, RPE in one row.', alt: 'IronStack set sheet for Comp Squat: Loaded, Barbell 45 lb, the bar drawn with its plates, 45 bar + 70 per side, 185 lb for 5, and an RPE row above Save.' },
@@ -53,10 +53,10 @@ type Card = { label: string; pillar: string; verdict: string; evidence: string; 
 const cards: Card[] = [
   { mark: true, img: 'today', h: 1174, alt: 'IronStack Today before the start: Planned 6:00 PM with Move, Heavy lower from Shaw Elite with Change, Comp Squat first up at 185 for 5 with last time, and one Start session button.', label: 'Logging', pillar: 'Chalk on your hands', verdict: 'Tap it, type it, or say it.', evidence: 'Last time\'s numbers are already in the set: tap to confirm. Changed something? Type 225x8 @7 in the one field. Or hold the talk button and say "two twenty five for eight at seven"; "same again" and "switch to hack squat" work too. Speech is turned into text on the phone, offline, and only while you hold the button.', them: 'Tap the numbers in, set by set, with a keypad.' },
   { img: 'clock-final', h: 1174, alt: 'The IronStack rest clock at 0:02: the top of the screen solid oxblood, with the squares row under it.', label: 'The clock', pillar: 'Chalk on your hands', verdict: 'A rest clock you can read from the platform.', evidence: 'The set lands and rest starts itself, at the length the program asked for. With earbuds in, a recorded voice calls "Thirty seconds", "Five seconds" and "Get to work", and your music dips under it and comes back. Voice, buzz or off, and it minds the silent switch. On screen the last ten seconds go oxblood and the last three fill the top and beat. On the Lock Screen, "same again" logs another set like the last without unlocking the phone.', them: 'A timer that buzzes, and a phone to unlock to log the next set.' },
-  { img: 'plan', h: 1174, alt: 'IronStack Plan tab on Exercises: search, Training, Muscle and Equipment filters, and recently done exercises.', label: 'Plan', pillar: 'Capture cannot fail', verdict: 'Bring the plan you already have.', evidence: 'Programs, workouts and exercises, on one tab. Bring your history over from Hevy, Strong, JuggernautAI or any spreadsheet you kept, send Coach a photo or PDF of your program and it writes it down, or save today\'s session as a workout. Workouts hold your targets, 3 × 8 · 135 lb, and next time last session\'s numbers are already in every set. Logging becomes confirming.', them: 'Routines and custom exercises capped on the free tier.' },
+  { img: 'plan', h: 1174, alt: 'IronStack Plan tab on Exercises: search, Training, Muscle and Equipment filters, and recently done exercises.', label: 'Plan', pillar: 'Capture cannot fail', verdict: 'Bring the plan you already have.', evidence: 'Programs, workouts and exercises, on one tab. Bring your history over from Hevy, Strong, JuggernautAI or any spreadsheet you kept, send Stack AI a photo or PDF of your program and it writes it down, or save today\'s session as a workout. Workouts hold your targets, 3 × 8 · 135 lb, and next time last session\'s numbers are already in every set. Logging becomes confirming.', them: 'Routines and custom exercises capped on the free tier.' },
   { img: 'insights', h: 1174, alt: 'IronStack Insights: 13 sessions in 4 weeks, a 5 week streak, Comp Deadlift estimated max up 4 percent, 13.8 million pounds all time.', label: 'Insights', pillar: 'You against you', verdict: 'Every number is you against you.', evidence: 'Sessions this month against last, your estimated max over twelve weeks, records by name, a progress line on every exercise, and how you lift on the days you feel good against the flat ones. Measured against your own log and nobody else\'s. When the data is thin, it says so instead of guessing.', them: 'Graphs, only the last three months of them on Hevy\'s free tier. Working out what they mean is your job.' },
   { img: 'social', h: 1174, alt: 'IronStack Social before you sign in: a sample Bench day card with a heaviest triple and two new badges, supported by spotters.', label: 'Social', pillar: 'Lift each other up', verdict: 'A quiet way to share with the people you train with.', evidence: 'Invite a training partner by text. Share a session as a card: time, sets, the best thing you did. No strangers, and no comments, on purpose: the one thing to give is support, and you see who gave it. If your crew lives in the comments, this is not trying to replace that. Social is optional, and nothing else here needs it.', them: 'Followers, strangers, likes and comments.' },
-  { img: 'coach', h: 1188, alt: 'IronStack Coach proposing a Comp Deadlift opener of 225x8 at RPE 6, with the ceiling and the sets it came from, and a Fill the weight in button.', label: 'Coach', pillar: 'You against you', verdict: 'A coach with a ceiling.', evidence: 'Ask what to open at, what covers a taken rack, or how today went. Send it a photo or PDF of the program your coach wrote and it writes it down for you to check. Every weight it names comes from your own sets, under a ceiling it can show you, with the set the ceiling came from. Nothing it suggests lands in your log until you tap. Not a doctor, and it says so.', them: 'A chatbot that invents a number, or no number at all.' },
+  { img: 'coach', h: 1188, alt: 'Stack AI in IronStack proposing a Comp Deadlift opener of 225x8 at RPE 6, with the ceiling and the sets it came from, and a Fill the weight in button.', label: 'Stack AI', pillar: 'You against you', verdict: 'An AI with a ceiling.', evidence: 'Turn it on, then ask what to open at, what covers a taken rack, or how today went. Send it a photo or PDF of the program your coach wrote and it writes it down for you to check. Every weight it names comes from your own sets, under a ceiling it can show you, with the set the ceiling came from. Nothing it suggests lands in your log until you tap. Not a doctor, and it says so.', them: 'A chatbot that invents a number, or no number at all.' },
 ];
 
 /** Coming from Hevy. Checked against the app's importers: warm-up and drop set types, superset
@@ -94,15 +94,15 @@ const faqs: Faq[] = [
   { q: 'Do I have to quit Hevy or Strong?', a: 'No. IronStack reads a file you export; it never signs in there or changes anything. Run both for a couple of weeks. If you go back, your app is exactly as you left it. One honest limit: IronStack exports your log as a documented JSON file, not a Hevy or Strong CSV, so sessions you log here will not load into them on their own. If an unbroken Hevy history matters to you, log in both while you try it.' },
   { q: 'What comes over from Hevy?', a: 'Sessions and routines (they come in as workouts), with supersets paired the way Hevy paired them, warm-ups as prep sets and drop sets tagged as what they were, and your custom exercise names kept exactly. The preview shows what it found, and any names it wants you to check, before anything is saved. In Hevy: Settings, Export & Import Data.' },
   { q: 'What is TestFlight?', a: 'Apple\'s own app for beta testing. I add your Apple ID email, Apple sends you an invite, and TestFlight installs IronStack like an App Store app. Updates arrive through it until 1.0 lands in the store.' },
-  { q: 'Is it free?', a: 'During the TestFlight beta, yes. Coach runs on a monthly allowance per phone, because every Coach question runs on a server I pay for. The launch price is not set, and it lands on this page before it lands in the store.' },
+  { q: 'Is it free?', a: 'During the TestFlight beta, yes. Stack AI runs on a monthly allowance per phone, because every Stack AI question runs on a server I pay for. The launch price is not set, and it lands on this page before it lands in the store.' },
   { q: 'Does it need an account?', a: 'Not to log. Everything you log is a file on your phone. Social is the one part that needs you to be someone, and it uses Sign in with Apple without asking for your name or email. Skip Social and there is nothing to sign up for.' },
-  { q: 'What leaves my phone?', a: 'What you send Coach, when you ask it something. The cards you choose to share with your spotters, if you use Social. Nothing else unless you switch it on. The privacy page says exactly what, where, and for how long.' },
+  { q: 'What leaves my phone?', a: 'Nothing goes to Anthropic until you turn Stack AI on, and then only what you send it, when you ask. The cards you choose to share with your spotters, if you use Social. Nothing else unless you switch it on. The privacy page says exactly what, where, and for how long.' },
   { q: 'Can I bring my history?', a: 'Yes. Hevy and Strong exports bring history and routines; JuggernautAI and any spreadsheet you kept bring history, with a preview to match the columns. Imported sessions count in your records, Insights and "last time", are labelled as imported, and never go on a card. Bringing the same file twice adds nothing.' },
   { q: 'Pounds or kilos?', a: 'Both. Pick one for the app, and switch any single exercise the other way, because the dumbbells at a hotel gym do not care where you live. The keypad shows the other unit under every number, and one tap types in it.' },
   { q: 'Streaks and badges?', a: 'A weekly streak on Insights and badges that take years to finish: Road Warrior for training on the road, Dawn patrol, a thousand feet of carries, In their corner for supporting others. Earned, never shamed. Miss a week and nothing scolds you.' },
-  { q: 'Is Coach a doctor?', a: 'No. Coach is an AI. It answers from your own sets, never names a weight above a ceiling it can show you, and points any question about pain or injury to a qualified person. Nothing it suggests changes your log until you tap.' },
+  { q: 'Is Stack AI a doctor?', a: 'No. It is an AI, and it can be wrong. It answers from your own sets, never names a weight above a ceiling it can show you, and points any question about pain or injury to a qualified person. Nothing it suggests changes your log until you tap.' },
   { q: 'Android, iPad, watch?', a: 'iPhone only, iOS 26 and up. No Android, no iPad layout, and no watch app yet. What covers some of the watch: the clock talks in your earbuds, and the Lock Screen has a "same again" button that logs a set without unlocking. If your phone lives in a locker, that is not enough, and I would rather say so.' },
-  { q: 'How old do I have to be?', a: 'Eighteen, the same as MealStack. IronStack, Coach and Social are for adults.' },
+  { q: 'How old do I have to be?', a: 'Eighteen, the same as MealStack. IronStack, Stack AI and Social are for adults.' },
   { q: 'Is the code open?', a: 'No. IronStack is a closed app. Your data is open: one tap exports everything in the Mission Built Schema, and it imports back. The IronStack name and marks stay with Mission Built.' },
   { q: 'When is 1.0?', a: 'When a fresh install has been proven on phones that are not mine, and two lifters who are not me have used Social against each other. The date lands on this page before it lands in the store.' },
 ];
@@ -227,7 +227,7 @@ const ld = {
           </figure>
         ))}
       </div>
-      <p class="note">Screens from IronStack 0.1.1 in the iPhone Simulator, loaded with my own training log, Sept 29, 2026. Coach is from my iPhone. The Social screen is the sample feed the app shows before you sign in.</p>
+      <p class="note">Screens from IronStack 0.1.1 in the iPhone Simulator, loaded with my own training log, Sept 29, 2026. Stack AI is from my iPhone. The Social screen is the sample feed the app shows before you sign in.</p>
     </section>
 
     <hr class="dashed" />
@@ -331,17 +331,17 @@ const ld = {
         <div class="lic-cell">
           <p class="k">Price</p>
           <p class="v">Not settled yet. Here is why.</p>
-          <p class="body">Every Coach question runs on a server I pay for. I want Coach in the app and I am not willing to lose money keeping it there, so the launch price is open: free with Coach on an allowance, a one-time price, or Coach as the paid part of a free app. What is settled: logging, the clock, your whole history and Social will not be what you pay for.</p>
+          <p class="body">Every Stack AI question runs on a server I pay for. I want Stack AI in the app and I am not willing to lose money keeping it there, so the launch price is open: free with Stack AI on an allowance, a one-time price, or Stack AI as the paid part of a free app. What is settled: logging, the clock, your whole history and Social will not be what you pay for.</p>
         </div>
         <div class="lic-cell" id="your-data">
           <p class="k">Your data</p>
           <p class="v">On your phone. Yours to take.</p>
-          <p class="body">Your log is files on your phone, and one tap exports all of it in the Mission Built Schema, a documented, versioned format. Coach and Social send only what they need to work. One screen deletes everything, everywhere, and tells you what it deleted. <a class="inline-link" href="/rack/ironstack/privacy">The privacy page</a> says exactly what, where and for how long.</p>
+          <p class="body">Your log is files on your phone, and one tap exports all of it in the Mission Built Schema, a documented, versioned format. Stack AI is off until you turn it on, and Stack AI and Social send only what they need to work. One screen deletes everything, everywhere, and tells you what it deleted. <a class="inline-link" href="/rack/ironstack/privacy">The privacy page</a> says exactly what, where and for how long.</p>
         </div>
       </div>
       <div class="fine">
         <p class="k">Not a doctor. Not your programmer.</p>
-        <p>I am not a coach or a clinician, and nothing on this page or in the app is advice about how you should train. IronStack is how I log my own. Coach is an AI: it gives a starting weight under a ceiling it can show you, a cue from your own notes, or an alternative when the rack is taken. It writes down the program you send it and never makes one up, and any question about pain or injury gets pointed to a qualified person.</p>
+        <p>I am not a coach or a clinician, and nothing on this page or in the app is advice about how you should train. IronStack is how I log my own. Stack AI is an AI and can be wrong: it gives a starting weight under a ceiling it can show you, a cue from your own notes, or an alternative when the rack is taken. It writes down the program you send it and never makes one up, and any question about pain or injury gets pointed to a qualified person.</p>
       </div>
     </section>
 
@@ -418,7 +418,7 @@ const ld = {
       <div class="related">
         <a href="/rack/ironstack/privacy" class="related-card">
           <h3>Privacy</h3>
-          <p>What stays on your phone, what leaves it for Coach and Social, who touches it, how long it lasts, and how to make it all go away.</p>
+          <p>What stays on your phone, what leaves it for Stack AI and Social, who touches it, how long it lasts, and how to make it all go away.</p>
           <span class="related-cta">Read →</span>
         </a>
         <a href="/rack/ironstack/details#your-data" class="related-card">
