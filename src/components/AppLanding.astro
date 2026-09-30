@@ -1,4 +1,5 @@
 ---
+import { SHOW_APP_SCREENS } from '../data/screens';
 /**
  * AppLanding.astro — the short landing page shared by /rack/ironstack and /rack/mealstack.
  *
@@ -81,10 +82,10 @@ const MAILTO = `mailto:support@missionbuilt.io?subject=${encodeURIComponent(p.na
         <h1 class="promise">{p.promise}{p.promiseAccent && <> <span class="accent">{p.promiseAccent}</span></>}</h1>
         {/* Phones only: a strip of the two hero screens right under the headline, so the
             first screen shows the app and not only words about it. */}
-        <div class="hero-peek" aria-hidden="true">
+        {SHOW_APP_SCREENS && <div class="hero-peek" aria-hidden="true">
           <img src={p.hero[0].src} width={p.hero[0].w} height={p.hero[0].h} alt="" />
           <img src={p.hero[1].src} width={p.hero[1].w} height={p.hero[1].h} alt="" />
-        </div>
+        </div>}
         <p class:list={['sub', p.subShort && 'has-short']}>{p.sub}</p>
         {p.subShort && <p class="sub sub-short">{p.subShort}</p>}
 
@@ -105,10 +106,10 @@ const MAILTO = `mailto:support@missionbuilt.io?subject=${encodeURIComponent(p.na
         </ul>
         <a class="soft" href={p.soft.href}>{p.soft.label}</a>
       </div>
-      <div class="hero-phones" aria-hidden="false">
+      {SHOW_APP_SCREENS && <div class="hero-phones" aria-hidden="false">
         <img class="ph back" src={p.hero[1].src} width={p.hero[1].w} height={p.hero[1].h} alt={p.hero[1].alt} />
         <img class="ph front" src={p.hero[0].src} width={p.hero[0].w} height={p.hero[0].h} alt={p.hero[0].alt} fetchpriority="high" />
-      </div>
+      </div>}
     </section>
 
     {/* ---------- 2. WHAT IS DIFFERENT: three, each against the other app ---------- */}
@@ -134,7 +135,7 @@ const MAILTO = `mailto:support@missionbuilt.io?subject=${encodeURIComponent(p.na
       <div class="feats">
         {p.features.map((f) => (
           <figure class="feat">
-            <img src={f.src} width={f.w} height={f.h} alt={f.alt} loading="lazy" decoding="async" />
+            {SHOW_APP_SCREENS && <img src={f.src} width={f.w} height={f.h} alt={f.alt} loading="lazy" decoding="async" />}
             <figcaption>
               <span class="k">{f.k}</span>
               <span class="t">{f.title}</span>
