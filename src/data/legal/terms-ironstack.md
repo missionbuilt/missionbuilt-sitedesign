@@ -4,7 +4,7 @@
 ## The short version
 
 - IronStack is a lifting log. Your log lives on your phone and belongs to you.
-- Coach is an AI. It can be wrong. You decide what goes on the bar.
+- Stack AI is an AI. It can be wrong. You decide what goes on the bar.
 - Lifting is risky. Train within your limits and check with a doctor when in doubt.
 - Social is for the people you train with. Be decent. If you aren't, you lose access.
 - This short version is a summary. The full terms below are what count.
@@ -21,11 +21,11 @@ Email: support@missionbuilt.io.
 
 By downloading, opening or using IronStack, you agree to these terms and to the [IronStack Privacy Policy](/rack/ironstack/privacy). If you don't agree, don't use the app.
 
-You got IronStack from Apple's App Store, so **Apple's Licensed Application End User License Agreement** (the "Standard EULA", https://www.apple.com/legal/internet-services/itunes/dev/stdeula/) also applies. The Standard EULA is your licence to the app. These terms add the rules for Coach, Social, training, purchases and everything else the Standard EULA doesn't cover. If the two conflict on the licence itself, the Standard EULA wins. On everything else, these terms win.
+You got IronStack from Apple's App Store, so **Apple's Licensed Application End User License Agreement** (the "Standard EULA", https://www.apple.com/legal/internet-services/itunes/dev/stdeula/) also applies. The Standard EULA is your licence to the app. These terms add the rules for Stack AI, Social, training, purchases and everything else the Standard EULA doesn't cover. If the two conflict on the licence itself, the Standard EULA wins. On everything else, these terms win.
 
 ## 3. Who can use IronStack
 
-You must be at least **18**, or the age of majority where you live if that's higher, to use IronStack, Coach and Social included.
+You must be at least **18**, or the age of majority where you live if that's higher, to use IronStack, Stack AI and Social included.
 
 IronStack isn't made for or directed at anyone under 18.
 
@@ -42,11 +42,11 @@ IronStack is **not open source**. Unless the law lets you do it anyway, you may 
 - rent, lend, sell, sublicense or redistribute it;
 - remove or change any copyright, trademark or other notice in it.
 
-You may not do any of the following to the services behind the app (the Coach server, the Social server and anything else we run):
+You may not do any of the following to the services behind the app (the Stack AI server, the Social server and anything else we run):
 
 - access them other than through the app, or try to;
 - scrape, load-test or probe them;
-- get around App Attest, the Coach allowance, rate limits or any other protection;
+- get around App Attest, the Stack AI allowance, rate limits or any other protection;
 - use them to build a competing product or to train an AI model.
 
 ## 5. Your data and your files
@@ -63,24 +63,24 @@ The [Privacy Policy](/rack/ironstack/privacy) says what leaves your phone, who h
 
 IronStack can read from and write to **Apple Health**, use **Location**, **Speech** (voice logging), **Notifications**, **WeatherKit** and **Maps**, and share a few settings with **MealStack** on the same phone through an App Group. Each is off until you allow it. You can turn each off in the app or in iOS Settings. Apple's own terms and privacy policy cover Apple's services.
 
-## 7. Coach
+## 7. Stack AI
 
-**Coach is an AI, not a person.** Coach answers questions about your training and can write down a workout or program you send it as a photo, PDF or file. It uses Claude, a model made by Anthropic, reached through a server Mission Built runs on Cloudflare. Coach sends nothing until you ask it something, and you can turn it off in Settings at any time.
+**Stack AI is an AI, not a person.** Stack AI answers questions about your training and can write down a workout or program you send it as a photo, PDF or file. It uses Claude, a model made by Anthropic, reached through a server Mission Built runs on Cloudflare. Stack AI is off until you turn it on from its permission screen in the app, which says what goes to Anthropic and asks you to confirm you are 18 or older. Nothing goes to Anthropic until you turn it on, and then only when you ask. You can turn it off in Settings › Stack AI at any time.
 
-What Coach is not:
+What Stack AI is not:
 
-- **Coach isn't a coach, trainer, physiotherapist, doctor or any other professional.** Nothing it says is medical advice or a professional assessment.
-- **Coach can be wrong.** It can misread a photo, miscount sets, mistake an exercise or give a number that doesn't suit you today. Check everything it gives you before you rely on it.
-- **You decide what goes on the bar.** Coach won't name a weight above a ceiling drawn from your own logged sets. That ceiling is a guardrail, not a promise that a weight is safe for you. How you feel, your form, your recovery, your equipment and anything you haven't logged all matter more.
-- **Pain, injury, illness, pregnancy, medication or a medical condition?** Ask a qualified professional, not Coach. Coach is built to point you there.
-- **Workouts Coach writes down** from a photo or file are a transcription of what you sent. Check every exercise, set, rep and load before you train it.
+- **Stack AI isn't a coach, trainer, physiotherapist, doctor or any other professional.** Nothing it says is medical advice or a professional assessment.
+- **Stack AI can be wrong.** It can misread a photo, miscount sets, mistake an exercise or give a number that doesn't suit you today. Check everything it gives you before you rely on it.
+- **You decide what goes on the bar.** Stack AI won't name a weight above a ceiling drawn from your own logged sets. That ceiling is a guardrail, not a promise that a weight is safe for you. How you feel, your form, your recovery, your equipment and anything you haven't logged all matter more.
+- **Pain, injury, illness, pregnancy, medication or a medical condition?** Ask a qualified professional, not Stack AI. Stack AI is built to point you there.
+- **Workouts Stack AI writes down** from a photo or file are a transcription of what you sent. Check every exercise, set, rep and load before you train it.
 
-Using Coach well:
+Using Stack AI well:
 
-- Only send Coach what you have the right to send. A program a coach wrote for you is fine to send for your own use. Other people's private information isn't.
-- Don't use Coach for anything Anthropic's Usage Policy prohibits (https://www.anthropic.com/aup), or to try to make it produce harmful content.
-- Coach runs on an **allowance** per device per month. We set the allowance and may change it. When it's used up, Coach stops until the next month or until you buy more, if we offer that.
-- We may change, limit, pause or end Coach at any time, for example if a provider changes its terms, costs change or we see abuse. If you've paid for Coach and we end it, §12 applies.
+- Only send Stack AI what you have the right to send. A program a coach wrote for you is fine to send for your own use. Other people's private information isn't.
+- Don't use Stack AI for anything Anthropic's Usage Policy prohibits (https://www.anthropic.com/aup), or to try to make it produce harmful content.
+- Stack AI runs on an **allowance** per device per month. We set the allowance and may change it. When it's used up, Stack AI stops until the next month or until you buy more, if we offer that.
+- We may change, limit, pause or end Stack AI at any time, for example if a provider changes its terms, costs change or we see abuse. If you've paid for Stack AI and we end it, §12 applies.
 
 ## 8. Training is risky. Your safety is on you.
 
@@ -143,8 +143,8 @@ If you send us feedback or ideas, we may use them without owing you anything. We
 
 Nothing in IronStack is for sale yet. This section says how purchases will work when something is.
 
-- IronStack is free during the TestFlight beta. Coach runs on a monthly allowance per phone. The launch price isn't set.
-- Any paid feature (for example, a subscription or one-time purchase for Coach) is bought through Apple's in-app purchase. Apple processes the payment. Apple's terms cover billing, refunds and family sharing.
+- IronStack is free during the TestFlight beta. Stack AI runs on a monthly allowance per phone. The launch price isn't set.
+- Any paid feature (for example, a subscription or one-time purchase for Stack AI) is bought through Apple's in-app purchase. Apple processes the payment. Apple's terms cover billing, refunds and family sharing.
 - **Subscriptions renew automatically** at the end of each period unless you turn off auto-renew at least 24 hours before it ends. You can manage or cancel in your Apple Account settings (Settings › your name › Subscriptions). Cancelling stops the next renewal. You keep access until the end of the period you've paid for.
 - **Before you subscribe**, the app shows the price, the period and what you get. If we offer a free trial, it says how long the trial lasts and what happens when it ends.
 - **Refunds** are handled by Apple (reportaproblem.apple.com). We can't issue them directly.
@@ -154,7 +154,7 @@ Nothing in IronStack is for sale yet. This section says how purchases will work 
 
 ## 13. Third-party services
 
-IronStack relies on Apple (the App Store, Health, Sign in with Apple, notifications, WeatherKit, Maps), Anthropic (the Claude model behind Coach and report triage) and Cloudflare (hosting the Coach and Social servers). We don't control them. If one changes or stops, a feature may change or stop too. You agree to follow any third-party terms that apply to how you use the app. For example, your wireless carrier's terms apply when you use mobile data.
+IronStack relies on Apple (the App Store, Health, Sign in with Apple, notifications, WeatherKit, Maps), Anthropic (the Claude model behind Stack AI and report triage) and Cloudflare (hosting the Stack AI and Social servers). We don't control them. If one changes or stops, a feature may change or stop too. You agree to follow any third-party terms that apply to how you use the app. For example, your wireless carrier's terms apply when you use mobile data.
 
 ## 14. Ownership and trademarks
 
@@ -166,19 +166,19 @@ The Mission Built Schema, the file format, is documented so anything can read an
 
 ## 15. Changes to the app
 
-We improve IronStack often and may add, change or remove features. We'll try to keep your log readable and exportable through any change. We don't promise that any feature, including Coach or Social, will always be available.
+We improve IronStack often and may add, change or remove features. We'll try to keep your log readable and exportable through any change. We don't promise that any feature, including Stack AI or Social, will always be available.
 
 ## 16. Ending these terms
 
 You can stop at any time by deleting the app. Use **Settings › Your data › Delete all IronStack data** first if you want the server copies gone too.
 
-We may suspend or end your access to Coach, Social or the app if you break these terms, if the law requires it, or if continuing would put people, us or the service at risk. Where it's reasonable, we'll tell you why.
+We may suspend or end your access to Stack AI, Social or the app if you break these terms, if the law requires it, or if continuing would put people, us or the service at risk. Where it's reasonable, we'll tell you why.
 
 When these terms end, your licence ends. Sections 5 (your data), 8, 10 (for copies we're allowed to keep), 14 and 17–22 survive.
 
 ## 17. No warranty
 
-IronStack, Coach and Social are provided **"as is" and "as available"**. To the fullest extent the law allows, Mission Built disclaims all warranties, express or implied. That includes merchantability, fitness for a particular purpose, accuracy, non-infringement, and that the app will be uninterrupted, error-free or keep your data safe.
+IronStack, Stack AI and Social are provided **"as is" and "as available"**. To the fullest extent the law allows, Mission Built disclaims all warranties, express or implied. That includes merchantability, fitness for a particular purpose, accuracy, non-infringement, and that the app will be uninterrupted, error-free or keep your data safe.
 
 Some places don't allow these exclusions. If you live in one, the exclusions apply only as far as the law allows, and you keep the rights your local law gives you.
 
@@ -186,7 +186,7 @@ Some places don't allow these exclusions. If you live in one, the exclusions app
 
 To the fullest extent the law allows:
 
-- Mission Built isn't liable for indirect, incidental, special, consequential, exemplary or punitive damages, or for lost data, profits or goodwill, arising from IronStack, Coach, Social or these terms. This applies even if we were told such damage was possible.
+- Mission Built isn't liable for indirect, incidental, special, consequential, exemplary or punitive damages, or for lost data, profits or goodwill, arising from IronStack, Stack AI, Social or these terms. This applies even if we were told such damage was possible.
 - Mission Built's **total liability** for all claims is limited to the greater of **(a) what you paid us for IronStack in the 12 months before the claim, or (b) US $50**.
 
 Nothing in these terms limits liability for death or personal injury caused by our negligence, for fraud, or for anything else the law doesn't allow us to limit.
