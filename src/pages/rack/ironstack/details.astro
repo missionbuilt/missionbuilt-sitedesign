@@ -1,4 +1,5 @@
 ---
+import { SHOW_APP_SCREENS } from '../../../data/screens';
 /**
  * THE DETAILS PAGE (/rack/ironstack/details). /rack/ironstack is the short landing page
  * (what is different, the features with real screens, how to get it); this is the full page.
@@ -207,7 +208,7 @@ const ld = {
       <div class="feats">
         {cards.map((c) => (
           <article class:list={['feat', c.mark && 'mark']}>
-            <img src={`/images/ironstack/${c.img}.webp`} width="540" height={c.h} alt={c.alt} loading="lazy" decoding="async" />
+            {SHOW_APP_SCREENS && <img src={`/images/ironstack/${c.img}.webp`} width="540" height={c.h} alt={c.alt} loading="lazy" decoding="async" />}
             <div class="feat-body">
               <p class="label">{c.label}<span class="pillar"> · {c.pillar}</span></p>
               <p class="verdict">{c.verdict}</p>
@@ -218,16 +219,16 @@ const ld = {
         ))}
       </div>
 
-      <h3 class="sub-h3">More of the app</h3>
-      <div class="phones" tabindex="0" aria-label={`${shots.length} more IronStack screens.`}>
+      {SHOW_APP_SCREENS && <h3 class="sub-h3">More of the app</h3>}
+      {SHOW_APP_SCREENS && <div class="phones" tabindex="0" aria-label={`${shots.length} more IronStack screens.`}>
         {shots.map((s) => (
           <figure class="phone">
             <img src={`/images/ironstack/${s.file}.webp`} width="540" height={s.h} alt={s.alt} loading="lazy" decoding="async" />
             <figcaption><span class="k">{s.k}</span>{s.cap}</figcaption>
           </figure>
         ))}
-      </div>
-      <p class="note">Screens from IronStack 0.1.1 in the iPhone Simulator, loaded with my own training log, Sept 29, 2026. Stack AI is from my iPhone. The Social screen is the sample feed the app shows before you sign in.</p>
+      </div>}
+      {SHOW_APP_SCREENS && <p class="note">Screens from IronStack 0.1.1 in the iPhone Simulator, loaded with my own training log, Sept 29, 2026. Stack AI is from my iPhone. The Social screen is the sample feed the app shows before you sign in.</p>}
     </section>
 
     <hr class="dashed" />

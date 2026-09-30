@@ -1,4 +1,5 @@
 ---
+import { SHOW_APP_SCREENS } from '../data/screens';
 /**
  * Home — landing page.
  *
@@ -82,7 +83,7 @@ const apps = [
       <div class="apps">
         {apps.map((a) => (
           <a class="app" href={a.href}>
-            <div class="shot"><img src={a.shot.src} width={a.shot.w} height={a.shot.h} alt={a.shot.alt} loading="lazy" decoding="async" /></div>
+            {SHOW_APP_SCREENS && <div class="shot"><img src={a.shot.src} width={a.shot.w} height={a.shot.h} alt={a.shot.alt} loading="lazy" decoding="async" /></div>}
             <div class="app-body">
               <p class="tag"><span class="sq" aria-hidden="true"></span>Private beta · iPhone</p>
               <h3 class="app-name">{a.name}</h3>

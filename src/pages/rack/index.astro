@@ -1,4 +1,5 @@
 ---
+import { SHOW_APP_SCREENS } from '../../data/screens';
 /**
  * The Rack — overview page (/rack).
  *
@@ -83,10 +84,10 @@ const apps: App[] = [
     <section class="apps" aria-label="The apps">
       {apps.map((a) => (
         <article class="app">
-          <a class="shots" href={a.href} tabindex="-1" aria-hidden="true">
+          {SHOW_APP_SCREENS && <a class="shots" href={a.href} tabindex="-1" aria-hidden="true">
             <img class="ph back" src={a.shots[1].src} width={a.shots[1].w} height={a.shots[1].h} alt="" loading="lazy" decoding="async" />
             <img class="ph front" src={a.shots[0].src} width={a.shots[0].w} height={a.shots[0].h} alt={a.shots[0].alt} decoding="async" />
-          </a>
+          </a>}
           <div class="app-body">
             <p class="app-name">{a.name}<span class="dot">.</span></p>
             <h2 class="promise">{a.promise} <span class="accent">{a.accent}</span></h2>
