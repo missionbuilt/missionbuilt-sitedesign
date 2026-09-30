@@ -1,8 +1,8 @@
 {
-  "version": "0.9.3",
+  "version": "0.9.4",
   "fieldSets": 12,
   "fields": 82,
-  "download": "/downloads/mealstack/mealstack-schema-0.9.3.json",
+  "download": "/downloads/mealstack/mealstack-schema-0.9.4.json",
   "downloadLatest": "/downloads/mealstack/mealstack-schema.json",
   "sets": [
     {
@@ -93,7 +93,7 @@
           "array": false,
           "short": "What the document is.",
           "paragraphs": [
-            "What the document is, which says which field sets are present. A `plan` carries `plan.*` and its stacks, meals and ingredients; a `shelf` carries meals or ingredients on their own with no plan; a `day` is one day's record; an `event` is one telemetry event; a `proposal` is something Coach offered that the person has not accepted."
+            "What the document is, which says which field sets are present. A `plan` carries `plan.*` and its stacks, meals and ingredients; a `shelf` carries meals or ingredients on their own with no plan; a `day` is one day's record; an `event` is one telemetry event; a `proposal` is something Stack AI offered that the person has not accepted."
           ],
           "values": [
             "plan",
@@ -113,12 +113,12 @@
           "array": false,
           "short": "What wrote the document.",
           "paragraphs": [
-            "What wrote the document: the app itself, the MealStack skill running in a model, Coach, or a person by hand. Used to say where a stack or a meal came from and to decide how much to trust a stated figure."
+            "What wrote the document: the app itself, the MealStack skill running in a model, Stack AI (written `coach` before 0.9.4), or a person by hand. Used to say where a stack or a meal came from and to decide how much to trust a stated figure."
           ],
           "values": [
             "app",
             "skill",
-            "coach",
+            "stack_ai",
             "person"
           ],
           "pattern": null,
@@ -132,7 +132,7 @@
           "array": false,
           "short": "The version of what wrote it.",
           "paragraphs": [
-            "The version of the app, skill or Coach model that wrote the document."
+            "The version of the app, skill or Stack AI model that wrote the document."
           ],
           "values": [],
           "pattern": null,
@@ -504,7 +504,7 @@
           "array": false,
           "short": "The short code, never shown to a person.",
           "paragraphs": [
-            "A short code for telemetry and Coach: `M1`, `M2`, `PRE`, `POST`, `F1`. Never shown to a person; a screen that names a meal uses `meal.name`."
+            "A short code for telemetry and Stack AI: `M1`, `M2`, `PRE`, `POST`, `F1`. Never shown to a person; a screen that names a meal uses `meal.name`."
           ],
           "values": [],
           "pattern": null,
@@ -666,11 +666,11 @@
           "array": false,
           "short": "Where the meal came from.",
           "paragraphs": [
-            "The example plan, Coach, the person's own hands, or an import."
+            "The example plan, Stack AI (written `coach` before 0.9.4), the person's own hands, or an import."
           ],
           "values": [
             "example",
-            "coach",
+            "stack_ai",
             "custom",
             "imported"
           ],
@@ -774,11 +774,11 @@
           "array": false,
           "short": "Where the stack came from.",
           "paragraphs": [
-            "The example rotation, Coach, the person's own hands, or an import."
+            "The example rotation, Stack AI (written `coach` before 0.9.4), the person's own hands, or an import."
           ],
           "values": [
             "example",
-            "coach",
+            "stack_ai",
             "custom",
             "imported"
           ],
@@ -1110,15 +1110,15 @@
           "array": false,
           "short": "How the target was set.",
           "paragraphs": [
-            "Where the numbers came from: typed by hand, Coach's formula, or a file."
+            "Where the numbers came from: typed by hand, Stack AI's formula (written `coach` before 0.9.4), or a file."
           ],
           "values": [
             "manual",
-            "coach",
+            "stack_ai",
             "imported"
           ],
           "pattern": null,
-          "example": "coach"
+          "example": "stack_ai"
         }
       ]
     },
@@ -1467,7 +1467,7 @@
           "array": false,
           "short": "Where the event came from.",
           "paragraphs": [
-            "`mealstack.app`, `mealstack.widget`, `mealstack.coach`."
+            "`mealstack.app`, `mealstack.widget`, `mealstack.stack_ai` (`mealstack.coach` before 0.9.4)."
           ],
           "values": [],
           "pattern": null,
