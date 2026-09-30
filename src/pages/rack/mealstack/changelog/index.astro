@@ -2,25 +2,35 @@
 /**
  * MealStack — release notes, the index. /rack/mealstack/changelog
  *
- * The app's About links here. One row per release, newest first: version, status,
+ * The app's About links here. One row per build, newest first: version and build, status,
  * how many changes, and the groups they fall in. The release testers have or are
  * about to get (the newest one submitted or shipped) also shows its highlights: each
- * group's first lines. Every release has its own page (changelog/[release].astro),
+ * group's first lines. Every build has its own page (changelog/[release].astro),
  * so this page stays short however many builds there are.
  *
- * Rows keep the old `#v0-9` anchors so links into the one-page version still land.
+ * A weekly update keeps the version and bumps the build, so one version can have
+ * several rows: the next build (in progress) first, then its shipped builds by number.
+ * Each row's anchor is its build (`#b86`, `#v0-9-1-next` for the one in progress);
+ * the version's anchor (`#v0-9-1`, which the apps' About screens link to) sits on the
+ * version's newest build only, the one testers can have (see versionHeads).
  * A build not yet shipped carries the page's one army-green micro-mark.
  */
 import { getCollection } from 'astro:content';
 import ToolNoteLayout from '../../../../layouts/ToolNoteLayout.astro';
 import { longDate, isoDay } from '../../../../data/logs';
-import { byOrder, releaseUrl, releaseSlug, when, plural } from '../../../../data/releases';
+import { byOrder, releaseUrl, releaseAnchor, releaseLabel, versionHeads, versionSlug, when, plural, type Release } from '../../../../data/releases';
 
 const releases = (await getCollection('releases', ({ data }) => data.app === 'mealstack')).sort(byOrder);
 const latest = releases.find((r) => r.data.status === 'shipped');
 const lastDated = releases.find((r) => r.data.date)?.data.date;
 const featured = releases.find((r) => r.data.status !== 'in-progress');
+const heads = new Set(versionHeads(releases).values());
 const PER_GROUP = 3;
+/** The row's status line: a build number is already beside the version, so a build
+ *  with no date just says it shipped. */
+const rowWhen = (r: Release) => (r.data.status === 'shipped' && r.data.build && !r.data.date ? 'Shipped' : when(r.data, true));
+/** The row's build line under the version. */
+const buildLine = (r: Release) => (r.data.status === 'in-progress' ? 'next build' : r.data.build ? `build ${r.data.build}` : '');
 ---
 <ToolNoteLayout
   title="Release notes · MealStack · Mission Built"
@@ -35,7 +45,7 @@ const PER_GROUP = 3;
   footLinks={[{ label: 'Schema', href: '/rack/mealstack/schema' }, { label: 'Privacy', href: '/rack/mealstack/privacy' }]}
 >
   <Fragment slot="byline">
-    MealStack · Private beta{latest && <> · Latest {latest.data.version}</>}
+    MealStack · Private beta{latest && <> · Latest {releaseLabel(latest.data)}</>}
     {lastDated && <> · Updated <time datetime={isoDay(lastDated)}>{longDate(lastDated)}</time></>}
   </Fragment>
 
@@ -57,19 +67,23 @@ const PER_GROUP = 3;
           )}
         </div>
       ))}
-      <a class="read" href={releaseUrl(featured)}>Read all {plural(featured.data.changes, 'change')} in {featured.data.version} →</a>
+      <a class="read" href={releaseUrl(featured)}>Read all {plural(featured.data.changes, 'change')} in {releaseLabel(featured.data)} →</a>
     </section>
   )}
 
   <section class="all" aria-labelledby="all-h">
     <h2 id="all-h" class="rule">Every release</h2>
     <ol class="rows">
-      {releases.map((r) => (
-        <li id={`v${releaseSlug(r.data.version)}`}>
-          <a href={releaseUrl(r)} class="row">
-            <span class="v">{r.data.version}</span>
+      {releases.map((r) => {
+        const own = releaseAnchor(r);
+        const version = `v${versionSlug(r.data.version)}`;
+        const holdsVersion = heads.has(r) && own !== version;
+        return (
+        <li id={holdsVersion ? version : own}>
+          <a href={releaseUrl(r)} class="row" id={holdsVersion ? own : undefined}>
+            <span class="v">{r.data.version}{buildLine(r) && <><span class="sr-only"> · </span><span class="b">{buildLine(r)}</span></>}</span>
             <span class="mid">
-              <span class:list={['w', r.data.status !== 'shipped' && 'next']}>{when(r.data, true)} · {plural(r.data.changes, 'change')}</span>
+              <span class:list={['w', r.data.status !== 'shipped' && 'next']}>{rowWhen(r)} · {plural(r.data.changes, 'change')}</span>
               {r.data.groups.some((g) => g.title) && (
                 <span class="g">{r.data.groups.map((g) => g.title).filter(Boolean).join(' · ')}</span>
               )}
@@ -80,7 +94,8 @@ const PER_GROUP = 3;
             <span class="go" aria-hidden="true">→</span>
           </a>
         </li>
-      ))}
+        );
+      })}
     </ol>
     {releases.length === 0 && <p>Nothing here yet. The first notes land with the next build.</p>}
   </section>
@@ -108,10 +123,12 @@ const PER_GROUP = 3;
   .more:hover, .read:hover { color: var(--color-blood-text); }
 
   .rows { list-style: none; margin: 14px 0 0; padding: 0; border-top: var(--border-thin); }
-  .rows li { scroll-margin-top: 24px; border-bottom: var(--border-thin); }
-  .row { display: grid; grid-template-columns: 76px 1fr auto; gap: 14px; align-items: center; padding: 14px 4px; text-decoration: none; transition: background 120ms ease-out; }
+  .rows li, .rows .row { scroll-margin-top: 24px; }
+  .rows li { border-bottom: var(--border-thin); }
+  .row { display: grid; grid-template-columns: 104px 1fr auto; gap: 14px; align-items: center; padding: 14px 4px; text-decoration: none; transition: background 120ms ease-out; }
   .row:hover { background: rgba(255,255,255,0.015); }
-  .row .v { font-family: var(--font-display); font-weight: 600; font-size: 24px; letter-spacing: 0.02em; color: var(--color-chalk); }
+  .row .v { display: flex; flex-direction: column; gap: 2px; font-family: var(--font-display); font-weight: 600; font-size: 24px; letter-spacing: 0.02em; color: var(--color-chalk); }
+  .row .v .b { font-family: var(--font-mono); font-weight: 400; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-chalk-faint); }
   .row .mid { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
   .row .w { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-chalk-faint); }
   .row .w.next { color: var(--color-chalk-dim); }
@@ -121,7 +138,7 @@ const PER_GROUP = 3;
 
   @media (max-width: 720px) {
     .featured { padding: 18px 16px; }
-    .row { grid-template-columns: 58px 1fr auto; }
+    .row { grid-template-columns: 88px 1fr auto; }
     .row .v { font-size: 20px; }
   }
 </style>

@@ -5,7 +5,7 @@ order: 1000
 changes: 5
 groups: [{"title": "Badges for the training you've already done", "slug": "badges-for-the-training-you-ve-already-done", "leads": ["Bring in your history from Hevy, Strong or another app and it earns the badges your lifting already earned.", "The import now ends on a screen called \"On the record\".", "\"First rep\" is saved for your first session logged in IronStack, so switching apps still gives you that first...", "Two new badges.", "On Home, badges you earn in the app now come ahead of badges from your history."]}]
 status: shipped
-build: "44"
+build: 44
 ---
 
 ### Badges for the training you've already done
