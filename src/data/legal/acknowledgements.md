@@ -6,7 +6,6 @@ IronStack and MealStack are built by Mission Built on Apple's frameworks. No thi
 |---|---|---|
 | **Claude, by Anthropic** | Both | Stack AI is powered by Claude, a model made by Anthropic. It answers Stack AI questions and reads the photos, PDFs and files sent to Stack AI. In IronStack it also gives Social reports about a handle or a card's title a first look before a person decides; in MealStack it runs the web searches Stack AI writes from your question. |
 | **Cloudflare** | Both | Runs the Stack AI servers and IronStack's Social server, and keeps the Stack AI allowance and cost record. |
-| **PostHog** | MealStack, only while Send usage data is on | Product analytics. |
 | **Apple Weather** | IronStack | The weather on a session, with Apple's attribution shown in the app. |
 | **Apple Maps, Sign in with Apple, push notifications, App Attest, TestFlight and the App Store** | Both, as each app needs | The town name for a session, the Social sign-in, Social notifications, proving a request came from a real copy of the app, and distribution. |
 
@@ -66,4 +65,4 @@ Hevy, Strong, JuggernautAI, MacroFactor and MyFitnessPal are trademarks of their
 
 **IronStack**, **MealStack**, **Mission Built**, **MISSION ▪ BUILT**, the barbell mark, the oxblood-square mark and the IronStack and MealStack app icons are trademarks of Mission Built (Mike Nichols). They may not be used without written permission, except to refer to the apps or the book by name. Saying what something works with or was derived from is fine; presenting something as IronStack, MealStack or a Mission Built product is not.
 
-Apple, the Apple logo, iPhone, Apple Health, HealthKit, Sign in with Apple, TestFlight and App Store are trademarks of Apple Inc. Claude and Anthropic are trademarks of Anthropic, PBC. Cloudflare is a trademark of Cloudflare, Inc. PostHog is a trademark of PostHog Inc. Other names belong to their owners.
+Apple, the Apple logo, iPhone, Apple Health, HealthKit, Sign in with Apple, TestFlight and App Store are trademarks of Apple Inc. Claude and Anthropic are trademarks of Anthropic, PBC. Cloudflare is a trademark of Cloudflare, Inc. Other names belong to their owners.
