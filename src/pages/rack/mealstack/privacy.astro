@@ -11,7 +11,8 @@
  * asked first, and 5.1.3 wants the specific health data named and never marketed.
  * All of that is here, in the order a person would ask. Rewritten Sept 29, 2026 for
  * 0.9.1 (Health read, calendar, automatic travel, the IronStack shelf, Stack AI files and
- * web search), and updated Sept 30, 2026 for Stack AI's permission screen. The Stack AI
+ * web search), updated Sept 30, 2026 for Stack AI's permission screen, and Oct 3, 2026 when PostHog was
+ * removed (usage data now stays in Mission Built's own record on Cloudflare). The Stack AI
  * cell says what that screen says, in the same order. /loadout/mealstack/privacy renders this page too. Draft for review by a
  * lawyer before public launch. MealStack is 18+.
  *
@@ -36,7 +37,6 @@ type Party = { who: string; role: string; what: string; where: string };
 const parties: Party[] = [
   { who: 'Cloudflare', role: 'Runs the Stack AI server', what: 'Sees each Stack AI request in transit and keeps the device record, the allowance counters, an answer for 10 minutes in case your connection drops, and the ninety-day accounting record. Discards your IP address.', where: 'Global edge, US account' },
   { who: 'Anthropic', role: 'Runs the Claude model behind Stack AI', what: 'Receives what the app sends when you ask Stack AI something, after you turn Stack AI on, and produces the answer; runs the web searches Stack AI writes from your question. Deletes it within 30 days and does not train its models on it; keeps it longer (up to 2 years) only if a request is flagged for breaking its usage policy. Handles it under its Data Processing Addendum.', where: 'United States' },
-  { who: 'PostHog', role: 'Product analytics', what: 'Receives the usage events described below, and only while your usage-data switch is on. Keyed to a hash, no IP.', where: 'United States' },
   { who: 'Apple', role: 'Health, TestFlight, the App Store', what: 'Health receives the macros of meals you log, and gives the app food from other apps and your weight, each only if you allow it. Apple\'s own privacy terms cover TestFlight and the App Store.', where: 'Per Apple' },
 ];
 
@@ -48,7 +48,7 @@ const keeps: Keep[] = [
   { what: 'The device record (App Attest key id, public key, receipt, timestamps)', how: 'Kept while the install exists. Removed the moment you delete your data in the app, or on request.' },
   { what: 'Stack AI allowance counters', how: 'Wiped at the start of each month.' },
   { what: 'Accounting record of Stack AI use (Cloudflare)', how: 'About ninety days, then gone.' },
-  { what: 'Usage data (PostHog)', how: 'Until you delete your data in the app, which removes the hashed person and its events, or ask.' },
+  { what: 'Usage data', how: 'In Mission Built\'s own record on Cloudflare, about ninety days, then gone; sooner if you delete your data in the app.' },
 ];
 ---
 <BaseLayout
@@ -160,7 +160,7 @@ const keeps: Keep[] = [
           <p class="k">Usage data</p>
           <p class="v">Counts and timings, only if you say yes.</p>
           <p class="body">Once your plan is built, the app asks once whether you want to send usage data. Say no and nothing is sent. Say yes and the app sends Mission Built counts and timings: which tabs get used and for how long, when meals get logged against the plan and how, whether ingredients, meals or stacks get added, how Stack AI gets used and what it cost, and the app and iOS version. It never sends food names, anything from Health, your location or your IP address; the server discards the address and never looks it up. Your time zone name is included so the days line up.</p>
-          <p class="body">The data is keyed to a hash of the same install key and goes to PostHog, a product analytics service in the United States, where Mission Built uses it for one thing: deciding what to build next. Turn the switch off in Settings and nothing more is sent. Mission Built keeps its own copy of the same events on Cloudflare for about ninety days to account for the Stack AI allowance, whether or not the switch is on; that copy never goes to PostHog.</p>
+          <p class="body">The data is keyed to a hash of the same install key and stays with Mission Built, in its own record on Cloudflare, for about ninety days. Mission Built uses it for two things: accounting for the Stack AI allowance, and deciding what to build next. It is never sent to an analytics company or anyone else. Turn the switch off in Settings and nothing more is sent.</p>
         </div>
       </div>
 
@@ -175,7 +175,7 @@ const keeps: Keep[] = [
     {/* ---------- WHO TOUCHES IT ---------- */}
     <section class="block">
       <p class="section-label">Who touches it</p>
-      <h2 class="section-h2">Four companies, each for one job.</h2>
+      <h2 class="section-h2">Three companies, each for one job.</h2>
       <p class="prose">Each of them is bound by its own terms and, where it processes data for Mission Built, by a data processing agreement, to protect your data at least as well as this page promises. None of them may use it for their own marketing.</p>
       <div class="parties">
         <div class="ph"><span>Who</span><span>Job</span><span>What they see</span><span>Where</span></div>
@@ -215,7 +215,7 @@ const keeps: Keep[] = [
       <h2 class="section-h2">Two buttons on the phone. No email needed.</h2>
       <div class="prose-block">
         <p><strong>Settings › Your data › What the server holds</strong> asks the server, live, for everything it keeps for your install and shows it to you, with a share button. The request is signed by your phone's key, so the server can only ever answer for the install that asked.</p>
-        <p><strong>Settings › Start over › Delete all MealStack data</strong> does the whole job in one tap: it tells the server to delete the install's device record, its allowance counters and the hashed analytics person, then removes every file on the phone, the entries this app wrote to Health, your answer to the usage question, and the install's key. If the phone is offline at that moment, the phone is still wiped, the key is never used again, and the server's counters expire within the month. Turning off Send usage data in Settings withdraws that consent from then on; turning off Stack AI in Settings › Stack AI stops it from sending anything.</p>
+        <p><strong>Settings › Start over › Delete all MealStack data</strong> does the whole job in one tap: it tells the server to delete the install's device record, its allowance counters and the usage events kept under your install, then removes every file on the phone, the entries this app wrote to Health, your answer to the usage question, and the install's key. If the phone is offline at that moment, the phone is still wiped, the key is never used again, and the server's counters expire within the month. Turning off Send usage data in Settings withdraws that consent from then on; turning off Stack AI in Settings › Stack AI stops it from sending anything.</p>
         <p>The one case a button cannot cover is an app that was deleted before asking: with the key gone, nothing on the server can be matched to you, which also means nothing on the server can identify you. If you want to ask anyway, or ask anything else about your data, email <a href={ASK}>support@missionbuilt.io</a>. Mission Built will confirm within ten days and finish within thirty.</p>
         <p class="note">The routes behind those two buttons are tested for isolation on every change to the server (an install can never read or delete another's) and probed every hour in production by two synthetic installs; if a probe ever fails, both routes close until a person has looked.</p>
       </div>
@@ -229,7 +229,7 @@ const keeps: Keep[] = [
       <h2 class="section-h2">Wherever you are, the same answer.</h2>
       <div class="prose-block">
         <p>You can ask what Mission Built holds that relates to your install, ask for it to be corrected or deleted, ask for a copy, object to or restrict its use, and withdraw any consent you gave, all at the address above, and you will not be treated differently for asking. Under the GDPR, the legal bases are your explicit consent for anything involving health data (Stack AI, Apple Health), your consent for the usage-data question, and Mission Built's legitimate interest in running the Stack AI allowance and keeping the service from being abused. Mission Built has not appointed an EU or UK representative; write to the address above. If you are in the EU, the EEA or the UK you may also complain to your supervisory authority. Under California law, Mission Built does not sell or share personal information and has not done so in the past twelve months.</p>
-        <p>Mission Built operates from the United States and the companies above process data there, so anything that leaves your phone leaves your country if you are outside the US. Cloudflare, Anthropic and PostHog each rely on recognised transfer mechanisms such as standard contractual clauses or the EU–US Data Privacy Framework for that.</p>
+        <p>Mission Built operates from the United States and the companies above process data there, so anything that leaves your phone leaves your country if you are outside the US. Cloudflare and Anthropic each rely on recognised transfer mechanisms such as standard contractual clauses or the EU–US Data Privacy Framework for that.</p>
       </div>
     </section>
 
