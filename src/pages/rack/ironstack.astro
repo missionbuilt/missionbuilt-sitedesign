@@ -8,14 +8,19 @@
  * all, each was missing something, this puts it in one place. The "Most apps:" lines are
  * neutral on purpose (a Pro user read the old free-tier lines as snide); named comparisons
  * live on /details, where people ask for them.
+ *
+ * Oct 1, 2026: "Coach" means a person (Coach mode); the AI is always Stack AI. The hero is one
+ * phone and one Apple Watch on the same set, and the tagline is "Log fast. See progress. A coach
+ * in your corner." The coach and Stack AI diffs carry no "Most apps:" line: Hevy has a coaching
+ * product, so any such line would be untrue.
  */
 import AppLanding from '../../components/AppLanding.astro';
 
 const IMG = '/images/ironstack/';
 const s = (f: string, alt: string, h = 1188) => ({ src: `${IMG}${f}.webp`, w: 540, h, alt });
 
-const title = 'IronStack: the lifting log for chalky hands · Mission Built';
-const description = 'IronStack is a lifting log for iPhone. Tap last time\'s numbers, type 225x8, or say the set. The rest clock talks in your earbuds. Bring your history from Hevy, Strong or any spreadsheet, and keep the app you use now. Free during the TestFlight beta.';
+const title = 'IronStack: the lifting log for iPhone and Apple Watch · Mission Built';
+const description = 'IronStack is a lifting log for iPhone and Apple Watch. Tap last time\'s numbers, type 225x8, or say the set; log from your wrist with the clock a swipe away. Train with a real coach who sends your plan and sees every set, and Stack AI picks your next weight from your own sets. Bring your history from Hevy, Strong or any spreadsheet. Free during the TestFlight beta.';
 
 const ld = {
   '@context': 'https://schema.org',
@@ -23,7 +28,7 @@ const ld = {
   name: 'IronStack',
   url: 'https://missionbuilt.io/rack/ironstack',
   applicationCategory: 'HealthApplication',
-  operatingSystem: 'iOS 26',
+  operatingSystem: 'iOS 26, watchOS 26',
   description,
   author: { '@type': 'Person', name: 'Mike Nichols', url: 'https://missionbuilt.io/about' },
   publisher: { '@type': 'Organization', name: 'Mission Built', url: 'https://missionbuilt.io' },
@@ -34,40 +39,43 @@ const ld = {
   name="IronStack"
   title={title}
   description={description}
-  ogImageAlt="IronStack. Log it. Time it. Lift each other up. A lifting log for iPhone, by Mission Built."
+  ogImageAlt="IronStack. Log fast. See progress. A coach in your corner. A lifting log for iPhone and Apple Watch, by Mission Built."
   ld={ld}
   promise="Log fast. See progress."
-  promiseAccent="Knows your training."
-  sub="I used them all, and every one was missing something. IronStack puts it in one place: sets you tap, type or say, big rest and EMOM clocks, insights that show you getting stronger, a crew that lifts you up, and Stack AI, which picks your opener, your next jump, or a swap when the rack is taken, from your own sets, and writes down the program you already have from a photo or a PDF. Bring your history; your old app is never touched."
-  subShort="I used them all. Each was missing something. This puts the log, your progress, your crew and Stack AI in one place."
-  trust={['Free during the beta', 'iPhone, iOS 26+', 'No account to log', 'Bring your history']}
+  eyebrow="Private beta · iPhone + Apple Watch"
+  promiseAccent="A coach in your corner."
+  sub="I used them all, and every one was missing something. IronStack puts it in one place: sets you tap, type or say, on your phone or your Apple Watch; big rest and EMOM clocks; insights that show you getting stronger; a real coach who sends your plan and sees every set; and Stack AI, which picks your opener, your next jump or a swap from your own sets. Bring your history; your old app is never touched."
+  subShort="Log from your phone or your wrist. Your coach sees every set, and Stack AI picks the next weight from your own."
+  trust={['Free during the beta', 'iPhone + Apple Watch', 'No account to log', 'Bring your history']}
   hero={[
-    s('log-session', 'IronStack mid-session: 1 min, 2 of 16 sets and 1,850 lb moved across the top, and Comp Squat with two sets of 185 for 5 logged and the third lit with Log.', 1174),
-    s('coach-swap', 'Stack AI in IronStack with the squat rack taken: swap Comp Squat for SSB Box Squat, and open at 220 for 5 at RPE 6.5, under a ceiling of 302 lb from your own sets.', 1176),
+    s('hero-session', 'IronStack on iPhone mid-session on a coach\'s plan, tagged Coach\'s plan, W7 D3: Max Effort Lower, Box Squat set 1 of 5 at 275 for 3, with Log lit.', 1174),
   ]}
+  heroWatch={{ src: `${IMG}watch-set.webp`, w: 422, h: 514, alt: 'The same set on Apple Watch: Box Squat, set 1 of 5, working, 275 lb for 3 reps, last time 270 for 3 at RPE 7, the rest clock at 2:00, and Tap to log.' }}
   soft={{ label: 'Switching apps? Bring your history →', href: '/rack/ironstack/details#from-hevy' }}
   diffLabel="Why IronStack"
   diffH2="Everything I needed, in one app."
   themLabel="Most apps:"
   diffs={[
-    { claim: 'Built to log.', body: 'Nothing else gets in the way. Last time is already in the set, so most sets are one tap. Or type 225x8 @7, or say it when your hands are covered in chalk. Big rest and EMOM clocks start themselves and call time in your earbuds.', them: 'A keypad for every set, and a timer that beeps.' },
+    { claim: 'Built to log. Phone or wrist.', body: 'Last time is already in the set, so most sets are one tap. Type 225x8 @7, or say it. On Apple Watch the set and the clock are a swipe apart: tap the card to log, tap the time to pause, hold the card and turn the Crown to change the weight. Your phone stays in your bag.', them: 'A keypad for every set, and a timer that beeps.' },
+    { claim: 'A coach in your corner.', body: 'Train with a real coach who uses IronStack. Their plan arrives as a suggestion; accept it and change anything you like. You lift, and they see every set against the plan: weight, reps, RPE, what you swapped or skipped. Only what you chose to share, and either of you can end it.' },
+    { claim: 'Stack AI, between check-ins.', body: 'Turn it on and it is a tap away on Home and every exercise. Ask for your opener, your next jump, or a swap when the rack is taken, or send it a program and it writes it into Plan. Every weight comes from your own sets, under a ceiling it shows you, and nothing lands until you tap.' },
     { claim: 'See yourself progress.', body: 'Not just history. This month against last, your estimated max over twelve weeks, records by name, and how you lift on the days you feel good against the flat ones. Measured against you and nobody else.', them: 'Graphs. Working out what they mean is your job.' },
-    { claim: 'Lift each other up.', body: 'Only the people you train with. Share a session card and back each other up. Badges for showing up and for supporting others, earned over years: In their corner, Road Warrior, Four plate deadlift.', them: 'A feed of followers and strangers.' },
-    { claim: 'A spotter that knows your training.', body: 'Once you turn it on, Stack AI is a tap away on Home and every exercise. Ask for your opener, your next jump, or a swap when the rack is taken, or send it the program you already have and it writes it into Plan. Every weight comes from your own sets, stays under a ceiling it shows you, and nothing lands until you tap.' },
   ]}
   featH2="Real screens, from my own training."
   features={[
     { ...s('log-session', 'IronStack mid-session: 1 min, 2 of 16 sets and 1,850 lb moved across the top, and Comp Squat with two sets of 185 for 5 logged and the third lit with Log.', 1174), k: 'Log', title: 'Tap, type or talk.', body: 'Last time is already in the set, so most sets are one tap. Or type 225x8 @7, or hold and say it.' },
+    { src: `${IMG}watch-set.webp`, w: 422, h: 514, watch: true, alt: 'IronStack on Apple Watch: Box Squat, set 1 of 5, working, 275 lb for 3 reps, last time 270 for 3 at RPE 7, the rest clock at 2:00, and Tap to log.', k: 'Apple Watch', title: 'Log from your wrist.', body: 'The set and the clock, a swipe apart. Tap the card to log, tap the time to pause, and the Crown steps the weight through loads you can make.' },
     { ...s('clock-closing-sim', 'The IronStack rest clock at 0:05, the top of the screen gone oxblood, the third set of Comp Squat waiting with Log.', 1174), k: 'Timers', title: 'Read it from the platform.', body: 'Rest and EMOM clocks start themselves, call time in your earbuds, and fill the screen at the end.' },
+    { ...s('coach-report', 'Coach mode in IronStack, the coach\'s side: one lifter\'s week with the week strip, the number of changes from the plan, and each change marked in place.', 1174), k: 'Coach mode', title: 'Your coach sees every set.', body: 'Plan in, sessions out. Every change from the plan is marked in place: weight, reps, RPE, swaps and skips. You choose what else they see.' },
+    { ...s('stackai-swap', 'Stack AI in IronStack: a Swap it card for SSB Box Squat when the rack is taken, and a Load card, 220x5 at RPE 6.5, with the ceiling and the sets it came from.', 1176), k: 'Stack AI', title: 'Between check-ins.', body: 'Rack taken? It swaps in a lift you already train and names a starting weight from your own sets, under a ceiling. Nothing lands until you tap.' },
     { ...s('insights-sim', 'IronStack Insights: 13 sessions in 4 weeks, a 5 week streak, Comp Deadlift estimated max up 4 percent, 13.8 million pounds all time.', 1174), k: 'Insights', title: 'See yourself progress.', body: 'This month against last, estimated max, records by name, good days against flat ones. You against you.' },
-    { ...s('badges', 'IronStack Badges: 77 earned, next up Four plate deadlift and Squat 1.5 times bodyweight, with consistency badges below.', 1174), k: 'Badges', title: 'Earned over years.', body: 'Road Warrior, Four plate deadlift, In their corner. Nothing scolds you for a missed week.' },
     { ...s('social-sim', 'IronStack Social before you sign in: a sample Bench day card with a heaviest triple and two new badges, supported by spotters.', 1174), k: 'Social', title: 'Lift each other up.', body: 'Only the people you train with. Share a session card and back each other up. Optional.' },
-    { ...s('coach-swap', 'Stack AI in IronStack: a Swap it card for SSB Box Squat when the rack is taken, and a Load card, 220x5 at RPE 6.5, with the ceiling and the sets it came from.', 1176), k: 'Stack AI', title: 'A spotter that knows your training.', body: 'Rack taken? It swaps in a lift you already train and names a starting weight from your own sets, under a ceiling. Nothing lands until you tap.' },
+    { ...s('badges', 'IronStack Badges: 77 earned, next up Four plate deadlift and Squat 1.5 times bodyweight, with consistency badges below.', 1174), k: 'Badges', title: 'Earned over years.', body: 'Road Warrior, Four plate deadlift, In their corner. Nothing scolds you for a missed week.' },
   ]}
-  featNote="Real screens from IronStack 0.1.1: the iPhone Simulator loaded with my own training log, Sept 29, 2026, and Stack AI on my iPhone. Social is the app's sample feed."
+  featNote="Real screens from the October 3 build: the iPhone and Apple Watch Simulators loaded with my own training log, and Coach mode with two test accounts. Social is the app's sample feed."
   steps={[
     { title: 'Leave your Apple ID email.', body: 'Testers come in small batches, added by hand. Training with someone? Put their name in the note and you come in together.' },
-    { title: 'Install from TestFlight.', body: 'Apple emails you an invite. TestFlight is Apple\'s own app for betas; IronStack installs like any other app.' },
+    { title: 'Install from TestFlight.', body: 'Apple emails you an invite. TestFlight is Apple\'s own app for betas; IronStack installs like any other app. The Apple Watch app comes with it.' },
     { title: 'Bring your history, or just start.', body: 'Export from Hevy, Strong or JuggernautAI, or use any spreadsheet you kept, and open it in IronStack. A preview shows what it found before anything is saved.' },
   ]}
   noteLabel="What do you log in now?"
@@ -75,9 +83,9 @@ const ld = {
   details={[
     { label: 'Try it', body: 'Tap the voice examples and run the rest clock, right in the page.', href: '/rack/ironstack/details#try' },
     { label: 'Side by side', body: 'Every line against Hevy and Strong, including what they do better.', href: '/rack/ironstack/details#compare' },
-    { label: 'Questions', body: 'Quitting Hevy, what comes over, watch and Android, pounds or kilos.', href: '/rack/ironstack/details#faq' },
+    { label: 'Questions', body: 'Quitting Hevy, what comes over, Apple Watch and Android, coaches, pounds or kilos.', href: '/rack/ironstack/details#faq' },
     { label: 'Price and your data', body: 'What is settled, what is not, and how your data comes with you.', href: '/rack/ironstack/details#fine-print' },
-    { label: 'Privacy', body: 'What stays on your phone and what leaves it for Stack AI and Social.', href: '/rack/ironstack/privacy' },
+    { label: 'Privacy', body: 'What stays on your phone and what leaves it for Stack AI, Social and your coach.', href: '/rack/ironstack/privacy' },
     { label: 'Better with MealStack', body: 'Meal timing built around the session. What the two share today.', href: '/rack/mealstack/details#better-together' },
   ]}
   closer={{ four: 'Log it · Time it · Lift each other up', line: 'Stacked.' }}
