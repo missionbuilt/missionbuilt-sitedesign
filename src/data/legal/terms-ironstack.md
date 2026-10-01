@@ -123,6 +123,13 @@ Social is optional. You can use IronStack fully without it.
 
 **Deleting your Social account.** Social › Delete Social account deletes your handle, spotters, shared cards and props, and disconnects Sign in with Apple. It doesn't touch your training log. Some moderation records, such as reports about you, may be kept for up to a year after the report is closed, to keep Social safe. The Privacy Policy has the details.
 
+**Coach mode.** Coach mode is part of Social and is optional. A coach is a person, not Stack AI. A coach can ask to coach you by your handle. Nothing is shared until you accept, and the consent screen shows exactly what your coach will see: every set always; your notes and how you felt, your sleep and bodyweight, and your MealStack fueling only if you switch them on; and from which date. You can have one coach at a time. A coach can have at most 10 lifters.
+
+- **What a coach can do.** See the sessions you share, and send you plans. A plan is a suggestion: it changes nothing until you accept it, and you can change anything in it afterwards. Sessions you've already logged never change when a plan does.
+- **What you're responsible for, as a coach.** You're coaching a real person. Training advice you give is yours, not Mission Built's or Stack AI's. Keep what a lifter shares with you private; don't copy it out of IronStack or show it to anyone else without their permission. The rules above apply to plan notes too.
+- **Stack AI for coaches.** "The read" is a Stack AI summary of a lifter's week, run on the coach's own Stack AI allowance. It describes what happened; it never gives programming advice. Section 7 applies.
+- **Ending it.** Either of you can end coaching at any time. Ending deletes the coach's copy of your sessions and plans from Mission Built's server and from the coach's phone. Deleting your Social account ends it too.
+
 ## 10. Your content and our licence to show it
 
 "Your content" means your handle, the cards you share, the props you give and the reports you file.
