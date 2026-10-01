@@ -29,7 +29,7 @@ Field sets and fields can also carry a stability marker the way ECS does: nothin
 
 ## The Mission Built Schema
 
-IronStack and MealStack share a vocabulary: the Mission Built Schema, in the `missionbuilt-kit` repository under `schema/` (0.14 at the time of writing). The field sets the two apps have in common are defined there, once, and read there; they are not copied here. This schema stays MealStack's own. It describes what MealStack keeps and writes: its stores, its plan file (format 2) and what Stack AI proposes, in names that match the kit's where the two describe the same thing.
+IronStack and MealStack share a vocabulary: the Mission Built Schema, in the `missionbuilt-kit` repository under `schema/` (0.15 at the time of writing). The field sets the two apps have in common are defined there, once, and read there; they are not copied here. This schema stays MealStack's own. It describes what MealStack keeps and writes: its stores, its plan file (format 2) and what Stack AI proposes, in names that match the kit's where the two describe the same thing.
 
 ## How the five places map onto it
 
