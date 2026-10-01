@@ -48,7 +48,7 @@ const keeps: Keep[] = [
   { what: 'The device record (App Attest key id, public key, receipt, timestamps)', how: 'Kept while the install exists. Removed the moment you delete your data in the app, or on request.' },
   { what: 'Stack AI allowance counters', how: 'Wiped at the start of each month.' },
   { what: 'Accounting record of Stack AI use (Cloudflare)', how: 'About ninety days, then gone.' },
-  { what: 'Usage data', how: 'In Mission Built\'s own record on Cloudflare, about ninety days, then gone; sooner if you delete your data in the app.' },
+  { what: 'Usage data', how: 'In Mission Built\'s own record on Cloudflare, about ninety days, then gone. Deleting your data in the app doesn\'t remove them sooner, but nothing in them can be matched to you once the install\'s key is gone.' },
 ];
 ---
 <BaseLayout
@@ -215,7 +215,7 @@ const keeps: Keep[] = [
       <h2 class="section-h2">Two buttons on the phone. No email needed.</h2>
       <div class="prose-block">
         <p><strong>Settings › Your data › What the server holds</strong> asks the server, live, for everything it keeps for your install and shows it to you, with a share button. The request is signed by your phone's key, so the server can only ever answer for the install that asked.</p>
-        <p><strong>Settings › Start over › Delete all MealStack data</strong> does the whole job in one tap: it tells the server to delete the install's device record, its allowance counters and the usage events kept under your install, then removes every file on the phone, the entries this app wrote to Health, your answer to the usage question, and the install's key. If the phone is offline at that moment, the phone is still wiped, the key is never used again, and the server's counters expire within the month. Turning off Send usage data in Settings withdraws that consent from then on; turning off Stack AI in Settings › Stack AI stops it from sending anything.</p>
+        <p><strong>Settings › Start over › Delete all MealStack data</strong> does the whole job in one tap: it tells the server to delete the install's device record and its allowance counters (usage events can't be deleted one install at a time: they hold only a hash of the install's key and expire in about ninety days), then removes every file on the phone, the entries this app wrote to Health, your answer to the usage question, and the install's key. If the phone is offline at that moment, the phone is still wiped, the key is never used again, and the server's counters expire within the month. Turning off Send usage data in Settings withdraws that consent from then on; turning off Stack AI in Settings › Stack AI stops it from sending anything.</p>
         <p>The one case a button cannot cover is an app that was deleted before asking: with the key gone, nothing on the server can be matched to you, which also means nothing on the server can identify you. If you want to ask anyway, or ask anything else about your data, email <a href={ASK}>support@missionbuilt.io</a>. Mission Built will confirm within ten days and finish within thirty.</p>
         <p class="note">The routes behind those two buttons are tested for isolation on every change to the server (an install can never read or delete another's) and probed every hour in production by two synthetic installs; if a probe ever fails, both routes close until a person has looked.</p>
       </div>
