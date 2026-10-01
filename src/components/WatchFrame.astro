@@ -1,0 +1,75 @@
+---
+/**
+ * WatchFrame.astro: an Apple Watch drawn around a real watch screenshot, so the screen reads
+ * as a watch and not as a small phone screen.
+ *
+ * Only the frame is drawn: a titanium case with a 1px edge, a black bezel, the ridged Digital
+ * Crown and the side button on the right, and a band above and below that fades out. The
+ * screen inside is always a real screenshot (never draw app screens in HTML); until it is
+ * captured, a slot with the file name stands in.
+ *
+ * Everything is sized in em, so one font-size on the parent scales the whole watch:
+ * the case is 10 × 11.9 em, each band 6.8 × 3.2 em, and the crown reaches 0.5 em past the
+ * right edge (10.5 em wide, 18.3 em tall in all). Device colours are the frame's own, not
+ * page tokens.
+ */
+import { hasScreen, slotName } from '../data/screens';
+
+type Shot = { src: string; w: number; h: number; alt: string };
+interface Props {
+  shot: Shot;
+  /** Lazy by default; the hero passes false. */
+  lazy?: boolean;
+}
+const { shot, lazy = true } = Astro.props;
+const ready = hasScreen(shot.src);
+---
+<div class="watch">
+  <div class="band top" aria-hidden="true"></div>
+  <div class="case">
+    <span class="crown" aria-hidden="true"></span>
+    <span class="button" aria-hidden="true"></span>
+    <div class="bezel">
+      {ready
+        ? <img src={shot.src} width={shot.w} height={shot.h} alt={shot.alt} loading={lazy ? 'lazy' : 'eager'} decoding="async" />
+        : <div class="screen-slot" role="img" aria-label={shot.alt}><b>Screen to capture</b><span>{slotName(shot.src)}</span></div>}
+    </div>
+  </div>
+  <div class="band bottom" aria-hidden="true"></div>
+</div>
+
+<style>
+  .watch {
+    --ti: #3b3834;      /* titanium case */
+    --ti-edge: #5a564f; /* its 1px edge */
+    --ti-dark: #4a4640; /* side button */
+    --ridge: #6a655e;   /* crown ridges */
+    --strap: #2c2925;   /* band */
+    width: 10.5em;
+    padding-right: 0.5em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .band { width: 6.8em; height: 3.2em; }
+  .band.top { background: linear-gradient(to top, var(--strap) 55%, rgba(44, 41, 37, 0)); border-radius: 0.5em 0.5em 0 0; }
+  .band.bottom { background: linear-gradient(to bottom, var(--strap) 55%, rgba(44, 41, 37, 0)); border-radius: 0 0 0.5em 0.5em; }
+  .case {
+    position: relative;
+    width: 10em;
+    height: 11.9em;
+    padding: 0.55em;
+    background: var(--ti);
+    border-radius: 2.5em;
+    outline: 1px solid var(--ti-edge);
+  }
+  .crown {
+    position: absolute; right: -0.5em; top: 2.9em; width: 0.62em; height: 2em;
+    background: repeating-linear-gradient(to bottom, var(--ridge) 0 0.12em, var(--ti) 0.12em 0.24em);
+    border-radius: 0.15em;
+  }
+  .button { position: absolute; right: -0.3em; top: 6.3em; width: 0.32em; height: 2.4em; background: var(--ti-dark); border-radius: 0.12em; }
+  .bezel { width: 100%; height: 100%; padding: 0.3em; background: #000; border-radius: 2em; }
+  .bezel img { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 1.75em; }
+  .bezel .screen-slot { height: 100%; border-radius: 1.75em; font-size: max(12px, 0.7em); padding: 0.6em; }
+</style>
