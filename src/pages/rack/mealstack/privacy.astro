@@ -37,7 +37,7 @@ const stats = [
 type Party = { who: string; role: string; what: string; where: string };
 const parties: Party[] = [
   { who: 'Cloudflare', role: 'Runs the Stack AI server', what: 'Sees each Stack AI request in transit and keeps the device record, the allowance counters, an answer for 10 minutes in case your connection drops, and the ninety-day accounting record. Discards your IP address.', where: 'Global edge, US account' },
-  { who: 'Anthropic', role: 'Runs the Claude model behind Stack AI', what: 'Receives what the app sends when you ask Stack AI something, after you turn Stack AI on, and produces the answer; runs the web searches Stack AI writes from your question. Deletes it within 30 days and does not train its models on it; keeps it longer (up to 2 years) only if a request is flagged for breaking its usage policy. Handles it under its Data Processing Addendum.', where: 'United States' },
+  { who: 'Anthropic', role: 'Runs the Claude model behind Stack AI', what: 'Receives what the app sends when you ask Stack AI something, after you turn Stack AI on, and produces the answer; runs the web searches Stack AI writes from your question. Deletes it within 30 days and does not train its models on it; keeps it longer (up to 2 years) only if a request is flagged for breaking its usage policy. Stack AI is an AI and can be wrong; it isn\'t medical advice. Handles it under its Data Processing Addendum.', where: 'United States' },
   { who: 'Apple', role: 'Health, TestFlight, the App Store', what: 'Health receives the macros of meals you log, and gives the app food from other apps and your weight, each only if you allow it. Apple\'s own privacy terms cover TestFlight and the App Store.', where: 'Per Apple' },
 ];
 
