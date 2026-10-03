@@ -2,8 +2,8 @@
 app: mealstack
 version: "0.9.1"
 order: 9001
-changes: 9
-groups: [{"title": "Stack AI", "slug": "stack-ai", "leads": ["Coach is now called Stack AI: the tab, Ask Stack AI, its cards, the tips, Settings and the badges.", "Stack AI is off until you turn it on.", "When you tell Stack AI what you're having instead of a meal (\"just the bottle\"), the first card is exactly...", "Those cards no longer say what they miss by in their own words, which could be wrong.", "Stack AI says it's an AI and can be wrong under every chat, and its replies are labelled."]}, {"title": "With IronStack", "slug": "with-ironstack", "leads": ["Where MealStack talks about your training in IronStack, it says workout, as IronStack now does."]}, {"title": "About", "slug": "about", "leads": ["About names the Oswald typeface and its licence, and links to every acknowledgement on missionbuilt.io.", "About › Not medical advice is shorter, in the same words IronStack uses."]}, {"title": "Your data", "slug": "your-data", "leads": ["Usage data, if you said yes, now stays with Mission Built; it no longer goes to an analytics service."]}]
+changes: 12
+groups: [{"title": "Stack AI", "slug": "stack-ai", "leads": ["Coach is now called Stack AI: the tab, Ask Stack AI, its cards, the tips, Settings and the badges.", "Stack AI is off until you turn it on.", "When you tell Stack AI what you're having instead of a meal (\"just the bottle\"), the first card is exactly...", "Those cards no longer say what they miss by in their own words, which could be wrong.", "Stack AI says it's an AI and can be wrong under every chat, and its replies are labelled."]}, {"title": "With IronStack", "slug": "with-ironstack", "leads": ["While an IronStack workout is live, MealStack's card on the Lock Screen and in the Dynamic Island steps back...", "Home and away use IronStack's Counts as away distance, so the two apps agree when you travel.", "Where MealStack talks about your training in IronStack, it says workout, as IronStack now does."]}, {"title": "Today", "slug": "today", "leads": ["Change on a meal, and Swap for another meal, open every time."]}, {"title": "About", "slug": "about", "leads": ["About names the Oswald typeface and its licence, and links to every acknowledgement on missionbuilt.io.", "About › Not medical advice is shorter, in the same words IronStack uses."]}, {"title": "Your data", "slug": "your-data", "leads": ["Usage data, if you said yes, now stays with Mission Built; it no longer goes to an analytics service."]}]
 status: in-progress
 ---
 
@@ -17,12 +17,18 @@ status: in-progress
 
 ### With IronStack
 
+- **While an IronStack workout is live, MealStack's card on the Lock Screen and in the Dynamic Island steps back so IronStack's clock leads.** It comes back after the workout.
+- **Home and away use IronStack's Counts as away distance, so the two apps agree when you travel.** MealStack used to judge away at 100 km, and the apps could flip each other's switch. Changing or forgetting home here forgets IronStack's name for it too.
 - **Where MealStack talks about your training in IronStack, it says workout, as IronStack now does:** "IronStack moved today's workout", the Stacks badges and the IronStack switch in Settings. MealStack's own session time is unchanged.
+
+### Today
+
+- **Change on a meal, and Swap for another meal, open every time.** A sheet left behind could swallow them, so Change sometimes did nothing.
 
 ### About
 
 - **About names the Oswald typeface and its licence, and links to every acknowledgement on missionbuilt.io.**
-- **About › Not medical advice is shorter, in the same words IronStack uses.** About › Your data says what Stack AI sends and what Mission Built keeps, as the Stack AI screen does.
+- **About › Not medical advice is shorter, in the same words IronStack uses.** About › Your data says what Stack AI sends and what Mission Built keeps, as the Stack AI screen does, and so does the Stack AI line where MealStack asks about usage data.
 
 ### Your data
 
