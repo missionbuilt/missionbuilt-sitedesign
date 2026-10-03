@@ -51,11 +51,15 @@ const ready = hasScreen(shot.src);
     flex-direction: column;
     align-items: center;
   }
-  .band { width: 6.8em; height: 3.2em; }
+  /* Stacking: the bands at 1 and the case at 3, with no stacking context on .watch, so where a
+     watch is laid over a PhoneFrame (z-index 2) the bands pass behind the phone and the case,
+     crown and button sit in front of it. */
+  .band { position: relative; z-index: 1; width: 6.8em; height: 3.2em; }
   .band.top { background: linear-gradient(to top, var(--strap) 55%, rgba(44, 41, 37, 0)); border-radius: 0.5em 0.5em 0 0; }
   .band.bottom { background: linear-gradient(to bottom, var(--strap) 55%, rgba(44, 41, 37, 0)); border-radius: 0 0 0.5em 0.5em; }
   .case {
     position: relative;
+    z-index: 3;
     width: 10em;
     height: 11.9em;
     padding: 0.55em;
@@ -67,9 +71,13 @@ const ready = hasScreen(shot.src);
     position: absolute; right: -0.5em; top: 2.9em; width: 0.62em; height: 2em;
     background: repeating-linear-gradient(to bottom, var(--ridge) 0 0.12em, var(--ti) 0.12em 0.24em);
     border-radius: 0.15em;
+    outline: 1px solid var(--ti-edge);
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.55); /* a dark rim, so the crown reads over a phone screen too */
   }
-  .button { position: absolute; right: -0.3em; top: 6.3em; width: 0.32em; height: 2.4em; background: var(--ti-dark); border-radius: 0.12em; }
+  .button { position: absolute; right: -0.3em; top: 6.3em; width: 0.32em; height: 2.4em; background: var(--ti-dark); border-radius: 0.12em; outline: 1px solid var(--ti-edge); box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.55); }
   .bezel { width: 100%; height: 100%; padding: 0.3em; background: #000; border-radius: 2em; }
-  .bezel img { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 1.75em; }
+  /* The whole screenshot, nothing cropped: it sits inset on the screen's black, clear of the
+     rounded corners, so a line in a corner (Tap to log) shows in full. */
+  .bezel img { display: block; width: 100%; height: 100%; padding: 0.4em; object-fit: contain; background: #000; border-radius: 1.75em; }
   .bezel .screen-slot { height: 100%; border-radius: 1.75em; font-size: max(12px, 0.7em); padding: 0.6em; }
 </style>

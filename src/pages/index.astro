@@ -1,5 +1,5 @@
 ---
-import { SHOW_APP_SCREENS, hasScreen, slotName } from '../data/screens';
+import { SHOW_APP_SCREENS } from '../data/screens';
 /**
  * Home — landing page.
  *
@@ -19,6 +19,7 @@ import { SHOW_APP_SCREENS, hasScreen, slotName } from '../data/screens';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import TopNav from '../components/TopNav.astro';
+import PhoneFrame from '../components/PhoneFrame.astro';
 import WatchFrame from '../components/WatchFrame.astro';
 import { getCollection } from 'astro:content';
 import { MB, TOTAL_CHAPTERS, totalReadTime, sectionUrl } from '../data/book.ts';
@@ -89,9 +90,7 @@ const apps = [
         {apps.map((a) => (
           <a class:list={['app', a.watch && 'has-watch']} href={a.href}>
             {SHOW_APP_SCREENS && <div class:list={['shot', a.watch && 'with-watch']}>
-              {hasScreen(a.shot.src)
-                ? <img src={a.shot.src} width={a.shot.w} height={a.shot.h} alt={a.shot.alt} loading="lazy" decoding="async" />
-                : <div class="screen-slot" role="img" aria-label={a.shot.alt} style={`aspect-ratio:${a.shot.w}/${a.shot.h}`}><b>Screen to capture</b><span>{slotName(a.shot.src)}</span></div>}
+              <div class="shot-phone"><PhoneFrame shot={a.shot} fill /></div>
               {a.watch && <div class="shot-watch"><WatchFrame shot={a.watch} /></div>}
             </div>}
             <div class="app-body">
@@ -165,14 +164,14 @@ const apps = [
   .apps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: var(--border-thin); border-left: var(--border-thin); }
   .app { min-width: 0; display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 28px; padding: 28px 28px 0; border-right: var(--border-thin); border-bottom: var(--border-thin); transition: background 120ms ease-out; }
   .app:hover { background: var(--color-panel); }
-  .shot { height: 250px; overflow: hidden; align-self: end; }
-  .shot img, .shot .screen-slot { display: block; width: 100%; height: auto; border-radius: 18px 18px 0 0; outline: 1px solid var(--color-rule); background: var(--color-panel); }
-  .shot .screen-slot { display: flex; outline-style: dashed; outline-color: var(--color-chalk-ghost); }
+  /* The card crops the phone at its foot: the crop is on .shot, around the whole PhoneFrame, so
+     the frame and the screen are cut together. Sideways it stays open for the side buttons. */
+  .shot { height: 250px; overflow-x: visible; overflow-y: clip; align-self: end; }
   /* IronStack: a 200px column, the phone 160px pushed right, the watch in front of it at the left,
      its case about 118px down. --s scales the group on phones. */
   .app.has-watch { grid-template-columns: 200px minmax(0, 1fr); }
   .shot.with-watch { --s: 1; position: relative; }
-  .shot.with-watch img, .shot.with-watch .screen-slot { width: calc(160px * var(--s)); margin-left: auto; }
+  .shot.with-watch .shot-phone { position: relative; z-index: 2; width: calc(160px * var(--s)); margin-left: auto; }
   .shot-watch { position: absolute; left: 0; top: calc(80px * var(--s)); font-size: calc(11px * var(--s)); }
   .app-body { padding-bottom: 28px; display: grid; gap: 10px; align-content: start; }
   .tag { margin: 0; display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-chalk-dim); }
