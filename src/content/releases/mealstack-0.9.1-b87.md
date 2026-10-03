@@ -4,7 +4,8 @@ version: "0.9.1"
 order: 9001
 changes: 12
 groups: [{"title": "Stack AI", "slug": "stack-ai", "leads": ["Coach is now called Stack AI: the tab, Ask Stack AI, its cards, the tips, Settings and the badges.", "Stack AI is off until you turn it on.", "When you tell Stack AI what you're having instead of a meal (\"just the bottle\"), the first card is exactly...", "Those cards no longer say what they miss by in their own words, which could be wrong.", "Stack AI says it's an AI and can be wrong under every chat, and its replies are labelled."]}, {"title": "With IronStack", "slug": "with-ironstack", "leads": ["While an IronStack workout is live, MealStack's card on the Lock Screen and in the Dynamic Island steps back...", "Home and away use IronStack's Counts as away distance, so the two apps agree when you travel.", "Where MealStack talks about your training in IronStack, it says workout, as IronStack now does."]}, {"title": "Today", "slug": "today", "leads": ["Change on a meal, and Swap for another meal, open every time."]}, {"title": "About", "slug": "about", "leads": ["About names the Oswald typeface and its licence, and links to every acknowledgement on missionbuilt.io.", "About › Not medical advice is shorter, in the same words IronStack uses."]}, {"title": "Your data", "slug": "your-data", "leads": ["Usage data, if you said yes, now stays with Mission Built; it no longer goes to an analytics service."]}]
-status: in-progress
+status: shipped
+build: 87
 ---
 
 ### Stack AI
