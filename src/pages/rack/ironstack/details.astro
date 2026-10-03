@@ -1,5 +1,5 @@
 ---
-import { SHOW_APP_SCREENS, hasScreen, slotName } from '../../../data/screens';
+import { SHOW_APP_SCREENS } from '../../../data/screens';
 /**
  * THE DETAILS PAGE (/rack/ironstack/details). /rack/ironstack is the short landing page
  * (what is different, the features with real screens, how to get it); this is the full page.
@@ -27,6 +27,8 @@ import SiteFooter from '../../../components/SiteFooter.astro';
 import { getCollection as getReleases } from 'astro:content';
 import { newestBuild, releaseUrl, when } from '../../../data/releases';
 import TopNav from '../../../components/TopNav.astro';
+import PhoneFrame from '../../../components/PhoneFrame.astro';
+import WatchFrame from '../../../components/WatchFrame.astro';
 
 const build = newestBuild(await getReleases('releases'), 'ironstack');
 const MAILTO = 'mailto:support@missionbuilt.io?subject=IronStack%20beta&body=Apple%20ID%20email%3A%20';
@@ -39,8 +41,10 @@ const stats = [
 ];
 
 /** Real screens, from Mike's own log; Social from the app's signed-out sample feed. */
-type Shot = { file: string; h: number; k: string; cap: string; alt: string };
+/** `watch: true` is an Apple Watch screen (422 × 514), drawn in a WatchFrame. */
+type Shot = { file: string; h: number; k: string; cap: string; alt: string; watch?: boolean };
 const shots: Shot[] = [
+  { file: 'watch-emom', h: 514, watch: true, k: 'Apple Watch', cap: 'Rest, EMOM and the timer for planks and carries, on one screen you can read mid-set. A tap on your wrist at 30 seconds, two at 5, a long one at the end, and the voice in your earbuds when you want it. It never logs a set for you.', alt: 'IronStack on Apple Watch: an EMOM clock at 0:39 in round 1 of 10, heart rate 128, the set up now (Box squat 275 × 3), and Restart round and End.' },
   { file: 'home', h: 1174, k: 'Home', cap: 'Today first: what is on the docket, loaded in one tap. Then your people, who lifted you, your progress, and Stack AI.', alt: 'IronStack Home: the Mission Built header, Today with Heavy lower and a Load it button, Your people, and Progress.' },
   { file: 'exercise', h: 1174, k: 'An exercise', cap: 'Add any exercise to today\'s workout or to a day of your program, in one tap.', alt: 'IronStack Comp Deadlift: Powerlifting, Hamstrings, then Add to a workout with Today\'s workout first, the four days of Shaw Elite, and A new workout.' },
   { file: 'progress', h: 1174, k: 'Progress', cap: 'Every exercise you have done, with its line and the change.', alt: 'IronStack Progress: every exercise with its sparkline and the change.' },
@@ -211,9 +215,7 @@ const ld = {
       <div class="feats">
         {cards.map((c) => (
           <article class:list={['feat', c.mark && 'mark']}>
-            {SHOW_APP_SCREENS && (hasScreen(`/images/ironstack/${c.img}.webp`)
-              ? <img src={`/images/ironstack/${c.img}.webp`} width="540" height={c.h} alt={c.alt} loading="lazy" decoding="async" />
-              : <div class="screen-slot" role="img" aria-label={c.alt} style={`aspect-ratio:540/${c.h}`}><b>Screen to capture</b><span>{slotName(`/images/ironstack/${c.img}.webp`)}</span></div>)}
+            {SHOW_APP_SCREENS && <div class="feat-phone"><PhoneFrame shot={{ src: `/images/ironstack/${c.img}.webp`, w: 540, h: c.h, alt: c.alt }} fill /></div>}
             <div class="feat-body">
               <p class="label">{c.label}<span class="pillar"> · {c.pillar}</span></p>
               <p class="verdict">{c.verdict}</p>
@@ -227,8 +229,10 @@ const ld = {
       {SHOW_APP_SCREENS && <h3 class="sub-h3">More of the app</h3>}
       {SHOW_APP_SCREENS && <div class="phones" tabindex="0" aria-label={`${shots.length} more IronStack screens.`}>
         {shots.map((s) => (
-          <figure class="phone">
-            <img src={`/images/ironstack/${s.file}.webp`} width="540" height={s.h} alt={s.alt} loading="lazy" decoding="async" />
+          <figure class:list={['phone', s.watch && 'watch']}>
+            {s.watch
+              ? <div class="strip-watch"><WatchFrame shot={{ src: `/images/ironstack/${s.file}.webp`, w: 422, h: s.h, alt: s.alt }} /></div>
+              : <PhoneFrame shot={{ src: `/images/ironstack/${s.file}.webp`, w: 540, h: s.h, alt: s.alt }} fill />}
             <figcaption><span class="k">{s.k}</span>{s.cap}</figcaption>
           </figure>
         ))}
@@ -600,8 +604,8 @@ const ld = {
   .feats { margin-top: 32px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: var(--border-thin); border-left: var(--border-thin); }
   .feat { min-width: 0; border-right: var(--border-thin); border-bottom: var(--border-thin); padding: 26px 24px 22px; display: grid; grid-template-rows: auto 1fr; gap: 20px; }
   .feat.mark { background: var(--color-panel); }
-  .feat > .screen-slot { max-width: 250px; margin: 0 auto; border-radius: 22px; }
-  .feat img { display: block; width: 100%; max-width: 250px; height: auto; margin: 0 auto; border-radius: 22px; outline: 1px solid var(--color-rule); background: #000; }
+  /* Each screen is a PhoneFrame filling the width the bare screenshot had (up to 250px). */
+  .feat-phone { width: 100%; max-width: 250px; margin: 0 auto; }
   .feat-body { display: grid; grid-template-rows: auto auto 1fr auto; gap: 10px; }
   .feat .label { margin: 0; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); }
   .feat .label .pillar { color: var(--color-chalk-dim); letter-spacing: 0.14em; }
@@ -615,7 +619,10 @@ const ld = {
   .phones { margin-top: 28px; display: grid; grid-auto-flow: column; grid-auto-columns: 250px; gap: 22px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 14px; outline: none; }
   .phones:focus-visible { box-shadow: 0 0 0 2px var(--color-blood-text); }
   .phone { margin: 0; scroll-snap-align: start; }
-  .phone img { display: block; width: 100%; height: auto; border-radius: 22px; outline: 1px solid var(--color-rule); background: #000; }
+  /* The strip's phones are PhoneFrames 250px wide; the watch is a WatchFrame at 20px (210 × 366px).
+     Side padding leaves room for the side buttons inside the scroller. */
+  .phones { padding-left: 4px; padding-right: 4px; }
+  .strip-watch { font-size: 20px; min-height: 508px; display: flex; justify-content: center; align-items: center; }
   .phone figcaption { margin-top: 12px; font-family: var(--font-serif); font-size: 13.5px; line-height: 1.5; color: var(--color-chalk-dim); }
   .phone figcaption .k { display: block; margin-bottom: 4px; }
   @keyframes beat { 0%,100% { transform: scale(1); } 50% { transform: scale(1.04); } }
