@@ -53,7 +53,7 @@ const MAILTO = 'mailto:support@missionbuilt.io?subject=MealStack%20beta&body=App
 const stats = [
   { key: 'Runs on',            value: 'iPhone',     sub: 'iOS 26 and up',            army: false },
   { key: 'Account',            value: 'None',       sub: undefined,                  army: false },
-  { key: 'Leaves your phone',  value: 'Only Coach', sub: 'what you send it',         army: false },
+  { key: 'Leaves your phone',  value: 'Only Stack AI', sub: 'once you turn it on',         army: false },
   { key: 'Your data',          value: 'Plan files', sub: 'open format',              army: true  },
 ];
 
@@ -64,14 +64,14 @@ const cards: Card[] = [
   { label: 'Logging', pillar: 'Protect the record', verdict: 'Log when you eat, not when it was due.', evidence: 'The sheet opens on now with 15, 30 and 60 minutes ago one tap away, and shows what every remaining meal does at that time before you commit. Move today\'s session from the Today screen and the meals tied to it move with it.', them: '"Done" means now, so the day keys off the wrong number.' },
   { label: 'Travel', pillar: 'Protect the day', verdict: 'Home or Away, in one tap.', evidence: 'Flip Travel on Today, or let the app do it when you are far from home. With IronStack on the phone, it is one switch for both apps. Skip a meal and it stays a decision, not a miss. History compares home days to travel days.', them: 'One schedule, and it assumes you are home.' },
   { label: 'Surfaces', pillar: 'Protect the protein', verdict: 'You should rarely have to open it.', evidence: 'Notifications carry the plate and two actions: "Ate it now" and "Not yet · 20 min". Home and Lock Screen widgets with a live countdown. A card on the Lock Screen from an hour before each meal to thirty minutes after, with a Log button on it and at the top of the screen.', them: 'A badge, and a screen you unlock to answer it.' },
-  { label: 'Coach', pillar: 'Protect the day', verdict: 'An AI that proposes. You decide.', evidence: 'Let Coach build the plan, or send it the plan your coach wrote, as a photo or a PDF, and it brings it in for you to review. Ask for targets and a fixed formula does the arithmetic, not the model. Eating out, hand it up to five menu photos, a link or a restaurant name, and it fits options to this meal\'s numbers. Nothing changes until you tap a card. Not a doctor, and it says so before you ask.', them: 'A chatbot that talks, or a coach that edits your plan without asking.' },
+  { label: 'Stack AI', pillar: 'Protect the day', verdict: 'An AI that proposes. You decide.', evidence: 'Turn it on and let Stack AI build the plan, or send it the plan your coach wrote, as a photo or a PDF, and it brings it in for you to review. Ask for targets and a fixed formula does the arithmetic, not the model. Eating out, hand it up to five menu photos, a link or a restaurant name, and it fits options to this meal\'s numbers. Nothing changes until you tap a card. Not a doctor, and it says so before you ask.', them: 'A chatbot that talks, or an AI that edits your plan without asking.' },
 ];
 
 type Step = { n: string; title: string; body: string };
 const steps: Step[] = [
-  { n: '01', title: 'Pick how to start.', body: 'Just the times, your coach\'s plan, let Coach build it, or build it yourself; or see a finished day first. Just the times builds a working day from when you eat and train, no AI and no account: the morning meals follow one another from your first meal, the carb surge before the session and everything after it are tied to the session. Five meals by default; change the number in Settings. Put food on the plates when you are ready, or let Coach fill them.' },
+  { n: '01', title: 'Pick how to start.', body: 'Just the times, your coach\'s plan, let Stack AI build it, or build it yourself; or see a finished day first. Just the times builds a working day from when you eat and train, no AI and no account: the morning meals follow one another from your first meal, the carb surge before the session and everything after it are tied to the session. Five meals by default; change the number in Settings. Put food on the plates when you are ready, or let Stack AI fill them.' },
   { n: '02', title: 'Log when you actually ate.', body: 'One tap for now, one for thirty minutes ago. The sheet shows what every remaining meal does before you commit, and the notification can log it without opening the app. The carb surge holds. The rest of the day bends around you.' },
-  { n: '03', title: 'Ask when the plan breaks.', body: 'Client lunch, airport, empty fridge. Send Coach the menu, a link or what is in the kitchen and it fits an order to this meal\'s numbers. Nothing changes until you tap. History keeps score, so you can see what the road does to you.' },
+  { n: '03', title: 'Ask when the plan breaks.', body: 'Client lunch, airport, empty fridge. Send Stack AI the menu, a link or what is in the kitchen and it fits an order to this meal\'s numbers. Nothing changes until you tap. History keeps score, so you can see what the road does to you.' },
 ];
 
 type Versus = { k: string; them: string; us: string; honest?: boolean };
@@ -81,17 +81,18 @@ const versus: Versus[] = [
   { k: 'Macros', them: 'Typed in, or scanned, then summed.', us: 'Weighed from the plate, measured against a target you set.' },
   { k: 'Logging time', them: 'Now.', us: 'When you actually ate, with the consequence shown first.' },
   { k: 'On the road', them: 'One schedule, and it assumes you are home.', us: 'Home or Away in one tap, or automatic.' },
-  { k: 'Eating out', them: 'Search the database, guess the portion.', us: 'Coach reads the menu against this meal\'s numbers.' },
-  { k: 'Your data', them: 'Their servers, your account.', us: 'Your phone. Coach sends only what you give it, after you accept its terms; usage data only if you say yes.' },
+  { k: 'Eating out', them: 'Search the database, guess the portion.', us: 'Stack AI reads the menu against this meal\'s numbers.' },
+  { k: 'Your data', them: 'Their servers, your account.', us: 'Your phone. Nothing goes to Anthropic until you turn Stack AI on, and then only when you ask; usage data only if you say yes.' },
   { k: 'Best at', them: 'A database of a million foods and a barcode scanner.', us: 'Timing. Keep the other app for the barcode if you like.', honest: true },
 ];
 
 type Faq = { q: string; a: string };
 const faqs: Faq[] = [
-  { q: 'Is it free?', a: 'During the TestFlight beta, yes. Coach runs on a monthly allowance per phone. The launch price is not settled. The fine print above says why, and the answer lands on this page before it lands in the store.' },
-  { q: 'Does it need an account?', a: 'No. There is nothing to sign up for. Your plan, your log and your history are files on your phone. Delete all MealStack data, under Start over in Settings, wipes them, and the little the server holds for Coach along with them.' },
-  { q: 'What leaves my phone?', a: 'What you send Coach. Coach sends nothing until you accept its terms and ask it something, and you can turn it off in Settings. What you type, photograph or attach goes to a server I run. Usage data goes to an analytics service only if you say yes when the app asks. The privacy page says exactly what, where and for how long.' },
-  { q: 'Is Coach a doctor?', a: 'No. Coach is an AI. Its targets come from a formula you can read, its meal ideas are estimates, and it declines questions about medical conditions, medication, pregnancy and supplement doses. Nothing it proposes changes your plan until you tap.' },
+  { q: 'Is it free?', a: 'During the TestFlight beta, yes. Stack AI runs on a monthly allowance per phone. The launch price is not settled. The fine print above says why, and the answer lands on this page before it lands in the store.' },
+  { q: 'Does it need an account?', a: 'No. There is nothing to sign up for. Your plan, your log and your history are files on your phone. Delete all MealStack data, under Start over in Settings, wipes them, and the little the server holds for Stack AI along with them.' },
+  { q: 'What leaves my phone?', a: 'What you send Stack AI. Stack AI is off until you turn it on. Nothing goes to Anthropic until you do, and then only when you ask. Turn it off any time in Settings › Stack AI. What you type, photograph or attach goes to a server I run, which passes it to Anthropic. Usage data goes to Mission Built only if you say yes when the app asks, and stays there. The privacy page says exactly what, where and for how long.' },
+  { q: 'Is Stack AI a doctor?', a: 'No. It is an AI, and it can be wrong. Its targets come from a formula you can read, its meal ideas are estimates, and it declines questions about medical conditions, medication, pregnancy and supplement doses. Nothing it proposes changes your plan until you tap.' },
+  { q: 'Is Stack AI a dietitian?', a: 'No. It is an AI, and it can be wrong. It reads menus and labels against your plan\'s numbers and says how sure it is. Nothing it suggests changes your plan until you accept it. Stack AI is for adults.' },
   { q: 'Can I keep my macro tracker?', a: 'Yes, and if you lean on a barcode scanner you should. MealStack is the timing layer. It knows the plate, weighs macros from it, and writes them to Apple Health at the time you ate, so the two live side by side.' },
   { q: 'Does it have streaks?', a: 'Yes, for full days: every meal logged or skipped on purpose. A skip you chose is a decision, not a miss, so there is nothing to fudge. Only good habits earn badges, and nothing is taken away. History still scores the week on what actually landed.' },
   { q: 'How old do I have to be?', a: 'Eighteen. MealStack sets targets, plans cuts and reads your weight, and that is for adults.' },
@@ -105,7 +106,7 @@ type Quote = { text: string; who: string };
 const quotes: Quote[] = [];
 
 const title = 'MealStack, the details: meal timing built around your training session · Mission Built';
-const description = 'Fueling is training. MealStack is a meal timing tracker for people who train: protein stacked across the day, a carb surge that holds its time, a day you can change on the road, a Coach that builds the plan with you, and a log of when you actually ate. Not a nutrition app. iPhone, no account, your data in an open format. Private beta.';
+const description = 'Fueling is training. MealStack is a meal timing tracker for people who train: protein stacked across the day, a carb surge that holds its time, a day you can change on the road, Stack AI to build the plan with you, and a log of when you actually ate. Not a nutrition app. iPhone, no account, your data in an open format. Private beta.';
 
 const ld = {
   '@context': 'https://schema.org',
@@ -346,17 +347,17 @@ const ld = {
         <div class="lic-cell">
           <p class="k">Price</p>
           <p class="v">Not settled yet. Here is why.</p>
-          <p class="body">Every Coach question runs on a server I pay for. I want Coach in the app, and I am not willing to lose money keeping it there, so the launch price is an open question: free with Coach on an allowance, a one-time price, or Coach as the paid part of a free app. The answer lands here before it lands in the store.</p>
+          <p class="body">Every Stack AI question runs on a server I pay for. I want Stack AI in the app, and I am not willing to lose money keeping it there, so the launch price is an open question: free with Stack AI on an allowance, a one-time price, or Stack AI as the paid part of a free app. The answer lands here before it lands in the store.</p>
         </div>
         <div class="lic-cell">
           <p class="k">Your data</p>
           <p class="v">On your phone. Two switches.</p>
-          <p class="body">The plan, the log and the day never leave the phone. Coach is on, but sends nothing until you accept its terms and ask it something; what you send it goes to a server Mission Built runs, and it is metered. Turn it off in Settings any time. Usage data is a second switch the app asks about once. <a class="inline-link" href="/rack/mealstack/privacy">The privacy page</a> says exactly what, where, and for how long.</p>
+          <p class="body">The plan, the log and the day never leave the phone. Stack AI is off until you turn it on; nothing goes to Anthropic until you do, and then only when you ask. What you send it goes to a server Mission Built runs, and it is metered. Turn it off in Settings › Stack AI any time. Usage data is a second switch the app asks about once. <a class="inline-link" href="/rack/mealstack/privacy">The privacy page</a> says exactly what, where, and for how long.</p>
         </div>
       </div>
       <div class="fine">
-        <p class="k">Not a doctor. Neither is Coach.</p>
-        <p>I am not a doctor or a dietitian, and nothing on this page or in the app is advice about how you should eat. It is how I manage my own diet. Coach is an AI and is not one either: its targets are estimates from a formula you can read, it declines questions about medical conditions, medication, pregnancy and supplement doses, and it points you to a professional instead. Nothing it proposes changes your plan until you tap.</p>
+        <p class="k">Not a doctor. Neither is Stack AI.</p>
+        <p>I am not a doctor or a dietitian, and nothing on this page or in the app is advice about how you should eat. It is how I manage my own diet. Stack AI is an AI, can be wrong, and is not one either: its targets are estimates from a formula you can read, it declines questions about medical conditions, medication, pregnancy and supplement doses, and it points you to a professional instead. Nothing it proposes changes your plan until you tap.</p>
       </div>
     </section>
 
@@ -415,7 +416,7 @@ const ld = {
         </a>
         <a href="/rack/mealstack/schema" class="related-card">
           <h3>Schema</h3>
-          <p>One set of names for ingredients, meals, stacks, plans and days, in the app, the plan file and Coach. Every field, with a download for tools.</p>
+          <p>One set of names for ingredients, meals, stacks, plans and days, in the app, the plan file and Stack AI. Every field, with a download for tools.</p>
           <span class="related-cta">Read →</span>
         </a>
         <a href="/rack/mealstack/privacy" class="related-card">
@@ -473,7 +474,7 @@ const ld = {
       <div class="related">
         <a href="/rack/ironstack" class="related-card">
           <h3>IronStack</h3>
-          <p>Log it. Time it. Lift each other up. A lifting log for iPhone that stays out of your way, and a feed that is only the people you train with.</p>
+          <p>Log fast. See progress. A coach in your corner. A lifting log for iPhone and Apple Watch that stays out of your way, and a feed that is only the people you train with.</p>
           <span class="related-cta">Open →</span>
         </a>
         <a href="/loadout" class="related-card">

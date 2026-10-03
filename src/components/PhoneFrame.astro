@@ -1,0 +1,81 @@
+---
+/**
+ * PhoneFrame.astro: an iPhone drawn around a real phone screenshot, in the same titanium as
+ * WatchFrame, so every device on the site matches.
+ *
+ * Only the frame is drawn: a titanium case with a 1px edge, a black bezel, the action button
+ * and volume up and down on the left, and the power button on the right. The screen inside is
+ * always a real screenshot (never draw app screens in HTML); until it is captured, a slot with
+ * the file name stands in.
+ *
+ * Everything is sized in em, so one font-size on the parent scales the whole phone: the frame
+ * is 15 em wide (case padding 0.4 em at radius 2.6 em, bezel padding 0.5 em at radius 2.2 em,
+ * the screen 13.2 em wide at radius 1.8 em), and its height follows the screenshot. The side
+ * buttons reach 0.18 em past each edge. `fill` sizes the frame to the width of its box instead
+ * (font-size = box width / 15). Device colours are the frame's own, not page tokens.
+ */
+import { hasScreen, slotName } from '../data/screens';
+
+type Shot = { src: string; w: number; h: number; alt: string };
+interface Props {
+  shot: Shot;
+  /** Lazy by default; the hero passes false. */
+  lazy?: boolean;
+  /** fetchpriority="high" on the screenshot (the page's first screen). */
+  priority?: boolean;
+  /** Fill the width of the containing box rather than take 15 em of the inherited font-size. */
+  fill?: boolean;
+}
+const { shot, lazy = true, priority = false, fill = false } = Astro.props;
+const ready = hasScreen(shot.src);
+---
+<div class:list={['phone-box', fill && 'fill']}>
+  <div class="phone">
+    <span class="btn action" aria-hidden="true"></span>
+    <span class="btn vol-up" aria-hidden="true"></span>
+    <span class="btn vol-down" aria-hidden="true"></span>
+    <span class="btn power" aria-hidden="true"></span>
+    <div class="case">
+      <div class="bezel">
+        <span class="island" aria-hidden="true"></span>
+        {ready
+          ? <img src={shot.src} width={shot.w} height={shot.h} alt={shot.alt} loading={lazy ? 'lazy' : 'eager'} decoding="async" fetchpriority={priority ? 'high' : undefined} />
+          : <div class="screen-slot" role="img" aria-label={shot.alt} style={`aspect-ratio:${shot.w}/${shot.h}`}><b>Screen to capture</b><span>{slotName(shot.src)}</span></div>}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .phone-box.fill { width: 100%; container-type: inline-size; }
+  .phone-box.fill .phone { font-size: calc(100cqi / 15); }
+  .phone {
+    --ti: #3b3834;      /* titanium case */
+    --ti-edge: #5a564f; /* its 1px edge */
+    position: relative;
+    isolation: isolate; /* the case and buttons stack inside the phone, so a watch laid over it stays in front */
+    width: 15em;
+  }
+  .case {
+    position: relative;
+    z-index: 1;
+    padding: 0.4em;
+    background: var(--ti);
+    border-radius: 2.6em;
+    outline: 1px solid var(--ti-edge);
+  }
+  .bezel { position: relative; padding: 0.5em; background: #000; border-radius: 2.2em; }
+  /* The Dynamic Island, at iPhone 17 Pro proportions of a 402pt screen (125.6 × 37.3pt, 11.4pt
+     down), scaled to the 13.2 em screen: 4.12 × 1.22 em, 0.37 em below the screen's top. */
+  .island { position: absolute; z-index: 1; top: calc(0.5em + 0.374em); left: 50%; width: 4.124em; height: 1.225em; transform: translateX(-50%); background: #000; border-radius: 999px; }
+  .bezel img { display: block; width: 100%; height: auto; border-radius: 1.8em; }
+  .bezel .screen-slot { border-radius: 1.8em; font-size: max(12px, 0.7em); padding: 0.6em; }
+  /* Side buttons: in the case colour with its edge, tucked behind the case so only the part
+     past the edge shows, as WatchFrame's side button does. */
+  .btn { position: absolute; z-index: 0; width: 0.4em; background: var(--ti); outline: 1px solid var(--ti-edge); border-radius: 0.12em; }
+  .btn.action, .btn.vol-up, .btn.vol-down { left: -0.18em; }
+  .btn.action { top: 5.4em; height: 1.5em; }
+  .btn.vol-up { top: 7.9em; height: 2.6em; }
+  .btn.vol-down { top: 11.1em; height: 2.6em; }
+  .btn.power { right: -0.18em; top: 8.6em; height: 4.2em; }
+</style>

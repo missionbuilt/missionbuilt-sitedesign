@@ -8,7 +8,7 @@
  * Language from the Log "Fueling is training": meals are plates, the meal before the
  * session is the carb surge, fuel is never a meal. Not a nutrition app.
  * Screens are the tour's real Simulator captures (public/demos/mealstack, MealStack 0.9.1).
- * Coach is a key highlight: in the sub, the trust row, the second hero screen and diff #2.
+ * Stack AI is a key highlight: in the sub, the trust row, the second hero screen and diff #2.
  * The tagline "Fueling is training." is the hero eyebrow, above the fold.
  */
 import AppLanding from '../../components/AppLanding.astro';
@@ -17,7 +17,7 @@ const IMG = '/images/mealstack/';
 const s = (f: string, alt: string) => ({ src: `${IMG}${f}.webp`, w: 540, h: 1174, alt });
 
 const title = 'MealStack: Fueling is training · Mission Built';
-const description = 'Fueling is training. MealStack is a meal timing app for iPhone, built backward from your training session. Log when you actually ate and the day re-flows while your carb surge holds. Coach builds the plan, brings in your coach\'s plan from a photo or PDF, and fits a restaurant menu to the meal. No account. Free during the TestFlight beta.';
+const description = 'Fueling is training. MealStack is a meal timing app for iPhone, built backward from your training session. Log when you actually ate and the day re-flows while your carb surge holds. Stack AI builds the plan, brings in your coach\'s plan from a photo or PDF, and fits a restaurant menu to the meal. No account. Free during the TestFlight beta.';
 
 const ld = {
   '@context': 'https://schema.org',
@@ -41,12 +41,12 @@ const ld = {
   eyebrow="Fueling is training · Private beta · iPhone"
   promise="Your tracker says what you ate."
   promiseAccent="This says when."
-  sub="Tell it when you train and the day builds backward from the session: the meal before it, the fuel around it, the shake after. Breakfast ran late? Log it when you actually ate; the rest of the day re-flows and your carb surge still lands before you train. Coach builds the plan with you, brings in your coach's plan from a photo or PDF, and fits a restaurant menu to the meal. Keep your tracker for the barcode. MealStack does the timing."
-  subShort="Tell it when you train. Eat late and the day re-flows; your carb surge still lands before the session. Coach builds the plan."
-  trust={['Coach built in', 'Free during the beta', 'iPhone, iOS 26+', 'No account']}
+  sub="Tell it when you train and the day builds backward from the session: the meal before it, the fuel around it, the shake after. Breakfast ran late? Log it when you actually ate; the rest of the day re-flows and your carb surge still lands before you train. Stack AI builds the plan with you, brings in your coach's plan from a photo or PDF, and fits a restaurant menu to the meal. Keep your tracker for the barcode. MealStack does the timing."
+  subShort="Tell it when you train. Eat late and the day re-flows; your carb surge still lands before the session. Stack AI builds the plan."
+  trust={['Stack AI built in', 'Free during the beta', 'iPhone, iOS 26+', 'No account']}
   hero={[
-    { src: '/images/mealstack/today-training.webp', w: 540, h: 1174, alt: 'MealStack Today on a training day with the session at 6:30 PM: the yogurt logged late at 11:40, lunch next at 2:40 PM, and the Home travel chip under the MealStack header.' },
-    { src: '/images/mealstack/coach-eating-out.webp', w: 540, h: 1176, alt: 'MealStack Coach, eating out at Chipotle in place of the planned meal: two bowls built from Chipotle items, each with its macros, how it compares with the plan, and a Use it today button.' },
+    { src: '/images/mealstack/today-training.webp', w: 540, h: 1174, alt: 'MealStack Today on a training day with the session at 6:30 PM: yogurt and whey logged late at 11:40, lunch next at 2:40 PM, the Home travel chip, and Eating out? Send Stack AI the menu.' },
+    { src: '/images/mealstack/stackai-eating-out.webp', w: 540, h: 1174, alt: 'Stack AI in MealStack, eating out in place of lunch: the Eating out · Lunch chip, photo, camera and file buttons, Snap the menu, and under it Stack AI is an AI and can be wrong.' },
   ]}
   soft={{ label: 'Take the one-minute tour →', href: '/rack/mealstack/details#demo' }}
   diffLabel="Why it is different"
@@ -54,24 +54,24 @@ const ld = {
   themLabel="Other apps:"
   diffs={[
     { claim: 'Anchored to the session.', body: 'The carb surge (the carb-heavy meal before you train), the fuel around the session and the meals after it are set from the session, not the clock. Move the session and they move with it.', them: 'Alarms every few hours, or routines that roll a late morning into the session.' },
-    { claim: 'A coach in your corner.', body: 'Let Coach build the plan, or send it your coach\'s plan as a photo or PDF and it brings it in. Eating out, hand it up to five menu photos, a link or a restaurant name and it fits an order to this meal\'s numbers. Targets come from a fixed formula, not the model. Nothing changes until you tap.', them: 'A chatbot that talks, or a coach that edits your plan without asking.' },
+    { claim: 'Knows your training.', body: 'Let Stack AI build the plan, or send it your coach\'s plan as a photo or PDF and it brings it in. Eating out, hand it up to five menu photos, a link or a restaurant name and it fits an order to this meal\'s numbers. Targets come from a fixed formula, not the model. Nothing changes until you tap.', them: 'A chatbot that talks, or an AI that edits your plan without asking.' },
     { claim: 'Log when you ate.', body: 'Now, 30 minutes ago, or an hour ago, with what every remaining meal does shown before you commit. A late morning tightens the gaps. The carb surge holds.', them: '"Done" means now, so the day keys off the wrong number.' },
     { claim: 'Holds up on the road.', body: 'Home or Away in one tap, shared with IronStack, or automatic when you are far from home. Skip a meal and it stays a decision, not a miss. History compares home days to travel days.', them: 'One schedule, and it assumes you are home.' },
   ]}
   featH2="Real screens, from the app."
   features={[
-    { ...s('log-late', 'MealStack log sheet for the 10:06 AM yogurt, logged at 11:40: lunch moves from 1:06 to 2:40 PM, and the carb surge holds at 5:00 PM.'), k: 'Log', title: 'When did you eat it?', body: 'Now, 30 minutes ago, an hour ago. See what the rest of the day does before you commit.' },
-    { ...s('session-moved', 'MealStack after the session moved to 6:30 PM: one line says the carb surge moved to 5:00 PM, the shake to 7:30 PM and dinner to 9:00 PM, with an Undo.'), k: 'Session', title: 'Move the session. Meals follow.', body: 'Gym at 6:30 instead of 6? Everything tied to the session moves with it, and one tap undoes it.' },
-    { src: '/images/mealstack/coach-eating-out.webp', w: 540, h: 1176, alt: 'MealStack Coach, eating out at Chipotle in place of the planned meal: two bowls built from Chipotle items, each with its macros, how it compares with the plan, and a Use it today button.', k: 'Coach', title: 'Eating out? Send the menu.', body: 'Up to five menu photos, a link or the place\'s name. Coach builds orders that fit this meal and says how far each one lands from the plan. Nothing changes until you tap.' },
-    { ...s('stack', 'MealStack stack The Base with its Training and Recovery toggle: training day totals of 224 g protein, 312 g carbs, 57 g fat and 2,658 kcal, and every plate with its ingredients.'), k: 'Plan', title: 'A week of plates.', body: 'Training days and recovery days, each with its own plates and totals. Drop a saved meal on any plate.' },
-    { ...s('meal-editor', 'MealStack meal editor for a paprika chicken box: 7 oz chicken breast, 225 g jasmine rice, 150 g broccoli and half a tablespoon of olive oil, with the macros each one brings.'), k: 'Macros', title: 'Weighed from the plate.', body: 'A meal is ingredients and grams, so the numbers come from the food and move when the portion does.' },
-    { ...s('history', 'MealStack History: a streak of eight full days, the badges earned with the next one up, and the last seven days on protein and on time.'), k: 'History', title: 'Scored on what landed.', body: 'Your streak of full days, your badges, and what actually landed: on time, protein, home days against travel days. Only good habits earn anything.' },
+    { ...s('log-late', 'MealStack log sheet for the 10:06 AM yogurt and whey, logged at 11:40: lunch moves from 1:06 to 2:40 PM, and the carb surge holds at 5:00 PM.'), k: 'Log', title: 'When did you eat it?', body: 'Now, 30 minutes ago, an hour ago. See what the rest of the day does before you commit.' },
+    { ...s('session-moved', 'MealStack after the session moved to 6:30 PM: one line says the carb surge moved to 5:00 PM, the after-session shake to 7:30 PM and dinner to 9:00 PM, with an Undo.'), k: 'Session', title: 'Move the session. Meals follow.', body: 'Gym at 6:30 instead of 6? Everything tied to the session moves with it, and one tap undoes it.' },
+    { src: '/images/mealstack/stackai-eating-out.webp', w: 540, h: 1174, alt: 'Stack AI in MealStack, eating out in place of lunch: the Eating out · Lunch chip, photo, camera and file buttons, Snap the menu, and under it Stack AI is an AI and can be wrong.', k: 'Stack AI', title: 'Eating out? Send the menu.', body: 'Tap Eating out and Stack AI opens on this meal. Add up to five menu photos, a link or the place\'s name, and it fits an order to the meal\'s numbers. It says it\'s an AI and can be wrong, and nothing changes until you tap.' },
+    { ...s('stack', 'MealStack Stack 1, this week\'s stack, with its Training and Recovery toggle: training day totals of 201 g protein, 268 g carbs, 45 g fat and 2,280 kcal, all on target, and every plate with its ingredients.'), k: 'Plan', title: 'A week of plates.', body: 'Training days and recovery days, each with its own plates and totals. Drop a saved meal on any plate.' },
+    { ...s('meal-editor', 'MealStack meal editor for a paprika chicken box: 7 oz chicken breast, 225 g jasmine rice, 150 g broccoli and half a tablespoon of olive oil, with the macros each one brings, and Use this meal.'), k: 'Macros', title: 'Weighed from the plate.', body: 'A meal is ingredients and grams, so the numbers come from the food and move when the portion does.' },
+    { ...s('history', 'MealStack History: a streak of four full days (best 11), one badge earned with the next one up, and the last seven days on protein and on time.'), k: 'History', title: 'Scored on what landed.', body: 'Your streak of full days, your badges, and what actually landed: on time, protein, home days against travel days. Only good habits earn anything.' },
   ]}
-  featNote="Real screens from MealStack 0.9.1: a debug build in the iPhone Simulator on the sample plan with four weeks of sample history, Sept 29, 2026. Coach, eating out, is from my iPhone, Sept 20."
+  featNote="Real screens from MealStack 0.9.1: a debug build in the iPhone Simulator on the sample plan with four weeks of sample history, Oct 3, 2026. The Stack AI screen is the composer before anything is sent; the Simulator doesn't reach Stack AI, so no answer is shown."
   steps={[
     { title: 'Leave your Apple ID email.', body: 'Testers come in small batches, added by hand. The address is used for the invite and nothing else.' },
     { title: 'Install from TestFlight.', body: 'Apple emails you an invite. TestFlight is Apple\'s own app for betas; MealStack installs like any other app.' },
-    { title: 'Pick how to start.', body: 'Just the times, your coach\'s plan, let Coach build it, or build it yourself. Or see a finished day first.' },
+    { title: 'Pick how to start.', body: 'Just the times, your coach\'s plan, let Stack AI build it, or build it yourself. Or see a finished day first.' },
   ]}
   noteLabel="What do you train for?"
   notePlaceholder="powerlifting, a marathon, a wedding, getting off the couch"

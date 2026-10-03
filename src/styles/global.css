@@ -107,3 +107,26 @@ img, svg, video, canvas { display: block; max-width: 100%; }
 
 /* A page that ends on a centered closer already has its rule and space */
 main:has(> .closer:last-child) + .site-foot { margin-top: 0; }
+
+/* A screen that has not been captured yet: its shape, and the file it waits for.
+   Never a drawing of the app. See hasScreen() in src/data/screens.ts. */
+.screen-slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  padding: 12px;
+  background: var(--color-panel);
+  outline: 1px dashed var(--color-chalk-ghost);
+  outline-offset: -1px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+  text-align: center;
+  color: var(--color-chalk-faint);
+  overflow-wrap: anywhere;
+}
+.screen-slot b { font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; }

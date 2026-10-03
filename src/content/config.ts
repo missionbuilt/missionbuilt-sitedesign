@@ -73,11 +73,13 @@ const logs = defineCollection({
 /**
  * Releases collection — release notes for the tools.
  *
- * Layout: src/content/releases/{app}-{version}.md. Generated, not hand-written:
+ * Layout: src/content/releases/{app}-{version}-b{build}.md for a shipped build,
+ * {app}-{version}-next.md for the one in progress, {app}-{version}.md for a section
+ * with no build (a date, or in review). Generated, not hand-written:
  * scripts/sync_mealstack_changelog.py splits an app repo's CHANGELOG.md into one
- * file per release (`--app ironstack` for IronStack). /rack/{app}/changelog lists
- * them newest first by `order`; /rack/{app}/changelog/{version with dashes} is one
- * release.
+ * file per section (`--app ironstack` for IronStack). /rack/{app}/changelog lists
+ * them newest first (src/data/releases.ts `byOrder`); each has its own page, see
+ * `releaseSlug` there for the URL.
  */
 const releases = defineCollection({
   type: 'content',
@@ -90,8 +92,8 @@ const releases = defineCollection({
     /** in-progress: still being built. in-review: submitted, waiting on Apple. */
     status: z.enum(['in-progress', 'in-review', 'shipped']),
     date: z.coerce.date().optional(),
-    /** TestFlight build number, when that is all the heading carries. */
-    build: z.string().optional(),
+    /** TestFlight build number, when the heading carries one: `## 0.9.1 (86)`. */
+    build: z.number().optional(),
     /** How many lines the release has. */
     changes: z.number(),
     /** The release's `###` groups, in order, with each line's first sentence. */

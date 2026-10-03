@@ -4,7 +4,7 @@
 ## The short version
 
 - MealStack times your meals around your training. Your plan and log live on your phone and belong to you.
-- Coach is an AI. Its numbers are estimates. It isn't a dietitian or a doctor.
+- Stack AI is an AI. Its numbers are estimates. It isn't a dietitian or a doctor.
 - Food decisions are yours: allergies, medical diets, pregnancy and weight goals included. Check with a professional.
 - This short version is a summary. The full terms below are what count.
 
@@ -20,11 +20,11 @@ Email: support@missionbuilt.io.
 
 By downloading, opening or using MealStack, you agree to these terms and to the [MealStack Privacy Policy](/rack/mealstack/privacy). If you don't agree, don't use the app.
 
-You got MealStack from Apple's App Store, so **Apple's Licensed Application End User License Agreement** (the "Standard EULA", https://www.apple.com/legal/internet-services/itunes/dev/stdeula/) also applies. The Standard EULA is your licence to the app. These terms add the rules for Coach, nutrition, purchases and everything else the Standard EULA doesn't cover. If the two conflict on the licence itself, the Standard EULA wins. On everything else, these terms win.
+You got MealStack from Apple's App Store, so **Apple's Licensed Application End User License Agreement** (the "Standard EULA", https://www.apple.com/legal/internet-services/itunes/dev/stdeula/) also applies. The Standard EULA is your licence to the app. These terms add the rules for Stack AI, nutrition, purchases and everything else the Standard EULA doesn't cover. If the two conflict on the licence itself, the Standard EULA wins. On everything else, these terms win.
 
 ## 3. Who can use MealStack
 
-You must be at least **18**, or the age of majority where you live if that's higher, to use MealStack. It sets targets, plans cuts and reads your weight, and that is for adults. Coach asks you to confirm your age before its first answer.
+You must be at least **18**, or the age of majority where you live if that's higher, to use MealStack. It sets targets, plans cuts and reads your weight, and that is for adults. Stack AI asks you to confirm your age before you turn it on.
 
 MealStack isn't made for or directed at anyone under 18.
 
@@ -39,11 +39,11 @@ MealStack is **not open source**. Unless the law lets you do it anyway, you may 
 - rent, lend, sell, sublicense or redistribute it;
 - remove or change any copyright, trademark or other notice in it.
 
-You may not do any of the following to the Coach server or anything else we run:
+You may not do any of the following to the Stack AI server or anything else we run:
 
 - access it other than through the app, or try to;
 - scrape, load-test or probe it;
-- get around App Attest, the Coach allowance, rate limits or any other protection;
+- get around App Attest, the Stack AI allowance, rate limits or any other protection;
 - use it to build a competing product or to train an AI model.
 
 ## 5. Your data and your files
@@ -62,25 +62,25 @@ MealStack can read from and write to **Apple Health**, use **Location** (to swit
 
 **MealStack writes to Apple Health what you log.** If what you log is wrong, what's in Health is wrong too. Correct or un-log a meal and MealStack updates its entries.
 
-## 7. Coach
+## 7. Stack AI
 
-**Coach is an AI, not a person.** Coach suggests daily targets, meal ideas and substitutes, reads menus from photos or links, and can write down a plan you send it as photos, a PDF or text. It uses Claude, a model made by Anthropic, reached through a server Mission Built runs on Cloudflare. Coach can search the web through Anthropic for some questions, for example a restaurant's menu. The first time you use Coach, the app shows these terms and asks your permission to send what Coach needs to Anthropic. Coach sends nothing until you accept, and you can turn it off at any time.
+**Stack AI is an AI, not a person.** Stack AI suggests daily targets, meal ideas and substitutes, reads menus from photos or links, and can write down a plan you send it as photos, a PDF or text. It uses Claude, a model made by Anthropic, reached through a server Mission Built runs on Cloudflare. Stack AI can run web searches through Anthropic, written from your question, for example to find a restaurant's menu. Stack AI is off until you turn it on: the first time you open it, the app shows a permission screen that says what goes to Anthropic and asks you to confirm you are 18 or older. Nothing goes to Anthropic until you turn it on, and then only when you ask. You can turn it off in Settings › Stack AI at any time.
 
-What Coach is not:
+What Stack AI is not:
 
-- **Coach isn't a registered dietitian, nutritionist, doctor or any other professional.** Nothing it says is medical or nutrition advice for your situation.
-- **Coach's numbers are estimates.** Targets come from a formula using the details you give. Meal and menu macros are estimates, and restaurant food varies. Coach can misread a photo or a menu.
-- **Coach doesn't know about allergies or intolerances, and you must not rely on it for them.** Always check ingredients and allergens yourself, with the restaurant or the label.
-- **Coach is for healthy adults.** It isn't for anyone who is pregnant or breastfeeding, managing diabetes, kidney disease or another medical condition, taking medication that interacts with food, or who has, or has had, an eating disorder, **unless a qualified professional has approved your plan**. Coach declines medical questions, medication, pregnancy and supplement doses.
-- **You decide what to eat.** Nothing Coach proposes changes your plan until you tap it. Check every card before you take it.
+- **Stack AI isn't a registered dietitian, nutritionist, doctor or any other professional.** Nothing it says is medical or nutrition advice for your situation.
+- **Stack AI's numbers are estimates.** Targets come from a formula using the details you give. Meal and menu macros are estimates, and restaurant food varies. Stack AI can misread a photo or a menu.
+- **Stack AI doesn't know about allergies or intolerances, and you must not rely on it for them.** Always check ingredients and allergens yourself, with the restaurant or the label.
+- **Stack AI is for healthy adults.** It isn't for anyone who is pregnant or breastfeeding, managing diabetes, kidney disease or another medical condition, taking medication that interacts with food, or who has, or has had, an eating disorder, **unless a qualified professional has approved your plan**. Stack AI declines medical questions, medication, pregnancy and supplement doses.
+- **You decide what to eat.** Nothing Stack AI proposes changes your plan until you tap it. Check every card before you take it.
 
-Using Coach well:
+Using Stack AI well:
 
-- Only send Coach what you have the right to send, such as a plan your coach wrote for you.
-- Don't use Coach for anything Anthropic's Usage Policy prohibits (https://www.anthropic.com/aup).
-- When you give Coach a link, our server fetches that page on your behalf. Only send links to pages you're allowed to read.
-- Coach runs on an **allowance** per device per month. We set the allowance and may change it. When it's used up, Coach stops until the next month or until you buy more, if we offer that.
-- We may change, limit, pause or end Coach at any time. If you've paid for Coach and we end it, §11 applies.
+- Only send Stack AI what you have the right to send, such as a plan your coach wrote for you.
+- Don't use Stack AI for anything Anthropic's Usage Policy prohibits (https://www.anthropic.com/aup).
+- When you give Stack AI a link, our server fetches that page on your behalf. Only send links to pages you're allowed to read.
+- Stack AI runs on an **allowance** per device per month. We set the allowance and may change it. When it's used up, Stack AI stops until the next month or until you buy more, if we offer that.
+- We may change, limit, pause or end Stack AI at any time. If you've paid for Stack AI and we end it, §11 applies.
 
 ## 8. Food, training and your health
 
@@ -103,8 +103,8 @@ TestFlight builds are **unfinished**. They may crash, lose data, change or stop 
 
 Nothing in MealStack is for sale yet. This section says how purchases will work when something is.
 
-- MealStack is free during the TestFlight beta. Coach runs on a monthly allowance per phone. The launch price isn't set.
-- Any paid feature (for example, a subscription or one-time purchase for Coach) is bought through Apple's in-app purchase. Apple processes the payment. Apple's terms cover billing, refunds and family sharing.
+- MealStack is free during the TestFlight beta. Stack AI runs on a monthly allowance per phone. The launch price isn't set.
+- Any paid feature (for example, a subscription or one-time purchase for Stack AI) is bought through Apple's in-app purchase. Apple processes the payment. Apple's terms cover billing, refunds and family sharing.
 - **Subscriptions renew automatically** at the end of each period unless you turn off auto-renew at least 24 hours before it ends. You can manage or cancel in your Apple Account settings (Settings › your name › Subscriptions). Cancelling stops the next renewal. You keep access until the end of the period you've paid for.
 - **Before you subscribe**, the app shows the price, the period and what you get. If we offer a free trial, it says how long the trial lasts and what happens when it ends.
 - **Refunds** are handled by Apple (reportaproblem.apple.com).
@@ -114,7 +114,7 @@ Nothing in MealStack is for sale yet. This section says how purchases will work 
 
 ## 12. Third-party services
 
-MealStack relies on Apple (the App Store, Health, notifications, widgets, Location, Calendar), Anthropic (the Claude model behind Coach, and its web search), Cloudflare (hosting the Coach server and fetching menu links), and, only if you say yes to usage data, the services the Privacy Policy lists for it. Restaurant websites you link to are theirs, not ours. We don't control any of these. If one changes or stops, a feature may change or stop too. You agree to follow any third-party terms that apply to how you use the app.
+MealStack relies on Apple (the App Store, Health, notifications, widgets, Location, Calendar), Anthropic (the Claude model behind Stack AI, and its web search), Cloudflare (hosting the Stack AI server and fetching menu links), and, only if you say yes to usage data, the services the Privacy Policy lists for it. Restaurant websites you link to are theirs, not ours. We don't control any of these. If one changes or stops, a feature may change or stop too. You agree to follow any third-party terms that apply to how you use the app.
 
 ## 13. Ownership and trademarks
 
@@ -126,25 +126,25 @@ The `.mealstack` plan format is documented publicly in [the MealStack Schema](/r
 
 ## 14. Changes to the app
 
-We improve MealStack often and may add, change or remove features. We don't promise that any feature, including Coach, will always be available.
+We improve MealStack often and may add, change or remove features. We don't promise that any feature, including Stack AI, will always be available.
 
 ## 15. Ending these terms
 
 You can stop at any time by deleting the app. Use **Settings › Start over › Delete all MealStack data** first if you want the server copies and the Health entries MealStack wrote gone too.
 
-We may suspend or end your access to Coach or the app if you break these terms, if the law requires it, or if continuing would put people, us or the service at risk. Where it's reasonable, we'll tell you why.
+We may suspend or end your access to Stack AI or the app if you break these terms, if the law requires it, or if continuing would put people, us or the service at risk. Where it's reasonable, we'll tell you why.
 
 When these terms end, your licence ends. Sections 5, 8, 13 and 16–21 survive.
 
 ## 16. No warranty
 
-MealStack and Coach are provided **"as is" and "as available"**. To the fullest extent the law allows, Mission Built disclaims all warranties, express or implied. That includes merchantability, fitness for a particular purpose, accuracy of any nutrition figure, non-infringement, and that the app will be uninterrupted, error-free or keep your data safe. Some places don't allow these exclusions. If you live in one, the exclusions apply only as far as the law allows.
+MealStack and Stack AI are provided **"as is" and "as available"**. To the fullest extent the law allows, Mission Built disclaims all warranties, express or implied. That includes merchantability, fitness for a particular purpose, accuracy of any nutrition figure, non-infringement, and that the app will be uninterrupted, error-free or keep your data safe. Some places don't allow these exclusions. If you live in one, the exclusions apply only as far as the law allows.
 
 ## 17. Limits on our liability
 
 To the fullest extent the law allows:
 
-- Mission Built isn't liable for indirect, incidental, special, consequential, exemplary or punitive damages, or for lost data, profits or goodwill, arising from MealStack, Coach or these terms.
+- Mission Built isn't liable for indirect, incidental, special, consequential, exemplary or punitive damages, or for lost data, profits or goodwill, arising from MealStack, Stack AI or these terms.
 - Mission Built's **total liability** for all claims is limited to the greater of **(a) what you paid us for MealStack in the 12 months before the claim, or (b) US $50**.
 
 Nothing in these terms limits liability for death or personal injury caused by our negligence, for fraud, or for anything else the law doesn't allow us to limit.

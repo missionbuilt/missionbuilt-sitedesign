@@ -28,8 +28,8 @@ BLOOD = (0xa8, 0x21, 0x1a)
 BLOOD_BRIGHT = (0xcb, 0x28, 0x1f)
 
 CARDS = {
-    "ironstack": {"name": "IRONSTACK", "line": ["Log it. Time it.", "Lift each other up."],
-                  "screen": "log-session.webp", "meta": "A LIFTING LOG FOR IPHONE · PRIVATE BETA"},
+    "ironstack": {"name": "IRONSTACK", "line": ["Log fast. See progress.", "A coach in your corner."],
+                  "screen": "log-session.webp", "meta": "IPHONE + APPLE WATCH · PRIVATE BETA"},
     "mealstack": {"name": "MEALSTACK", "line": ["Fueling is training."],
                   "screen": "today-training.webp", "meta": "MEAL TIMING FOR IPHONE · PRIVATE BETA"},
     "rack": {"name": "THE RACK", "line": ["IronStack and MealStack.", "For people who train."],

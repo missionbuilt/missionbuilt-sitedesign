@@ -46,7 +46,7 @@ TestFlight builds are unfinished. **Export your data now and then while you test
 
 ### Take it with you
 
-- **IronStack:** Settings › Your data › **Export all my data** writes every session, your plan and your own exercises into one file in the Mission Built Schema, a documented format. **Export the raw log** gives you the log line for line.
+- **IronStack:** Settings › Your data › **Export all my data** writes every workout, your plan and your own exercises into one file in the Mission Built Schema, a documented format. **Export the raw log** gives you the log line for line.
 - **MealStack:** plans and stacks go out as `.mealstack` files, in [a documented format](/rack/mealstack/schema), and come back in the same way. History doesn't export yet.
 
 Save the file to Files, iCloud Drive or your computer. You can bring it back into the app on a new phone.
@@ -85,11 +85,11 @@ Nothing is for sale during the beta. When something is, purchases go through App
 
 ---
 
-## Coach
+## Stack AI
 
-Coach is an AI (Claude, by Anthropic). It can be wrong. If an answer looks off, email a screenshot of it. Coach runs on a monthly allowance per device. When it's used up, the app says when it resets.
+Stack AI is an AI (Claude, by Anthropic). It's off until you turn it on from its permission screen in the app, and you can turn it off in Settings › Stack AI. It can be wrong. If an answer looks off, email a screenshot of it. Stack AI runs on a monthly allowance per device. When it's used up, the app says when it resets.
 
-**Coach isn't medical advice.** For pain, injury, illness, pregnancy or a medical diet, ask a qualified professional.
+**Stack AI isn't medical advice.** For pain, injury, illness, pregnancy or a medical diet, ask a qualified professional.
 
 ---
 

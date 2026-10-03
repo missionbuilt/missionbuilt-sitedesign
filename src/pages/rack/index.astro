@@ -1,4 +1,5 @@
 ---
+import { SHOW_APP_SCREENS } from '../../data/screens';
 /**
  * The Rack — overview page (/rack).
  *
@@ -14,10 +15,13 @@
  * No competitor is named. Oxblood: the brand dot, the two promise phrases, the
  * Join buttons. "Better together" claims only what is live (both write to Apple Health);
  * both write to Apple Health, share one travel switch and keep today's session time in step (Sept 29, 2026).
+ * Oct 1, 2026: IronStack's card shows one phone and its Apple Watch screen on the same set.
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
 import TopNav from '../../components/TopNav.astro';
+import PhoneFrame from '../../components/PhoneFrame.astro';
+import WatchFrame from '../../components/WatchFrame.astro';
 
 type Shot = { src: string; w: number; h: number; alt: string };
 interface App {
@@ -27,7 +31,9 @@ interface App {
   accent: string;
   sub: string;
   points: string[];
-  shots: [Shot, Shot];
+  /** One phone with a watch, or two phones (front, back). */
+  shots: [Shot] | [Shot, Shot];
+  watch?: Shot;
 }
 
 const apps: App[] = [
@@ -36,12 +42,12 @@ const apps: App[] = [
     href: '/rack/ironstack',
     promise: 'Log fast. See progress.',
     accent: 'A coach in your corner.',
-    sub: 'A lifting log for iPhone. Every lifting app I used was missing something; this one puts it in one place.',
-    points: ['Tap, type or say the set', 'Big rest and EMOM timers', 'Insights, badges, your crew', 'A Coach that picks your next weight'],
+    sub: 'A lifting log for iPhone and Apple Watch. Every lifting app I used was missing something; this one puts it in one place.',
+    points: ['Tap, type or say the set', 'Log from your Apple Watch', 'Your coach sees every set', 'Stack AI picks your next weight'],
     shots: [
-      { src: '/images/ironstack/log-session.webp', w: 540, h: 1174, alt: 'IronStack mid-session: 1 min, 2 of 16 sets and 1,850 lb moved across the top, and Comp Squat with two sets of 185 for 5 logged and the third lit with Log.' },
-      { src: '/images/ironstack/coach-swap.webp', w: 540, h: 1176, alt: 'IronStack Coach with the squat rack taken: swap in SSB Box Squat and open at 220 for 5, under a ceiling from your own sets.' },
+      { src: '/images/ironstack/hero-session.webp', w: 540, h: 1174, alt: 'IronStack on iPhone mid-workout on a coach\'s plan: Box Squat, set 1 of 5, 275 for 3, with Log lit.' },
     ],
+    watch: { src: '/images/ironstack/watch-set.webp', w: 422, h: 514, alt: 'The same set on Apple Watch: Box Squat, 275 lb for 3 reps, the rest clock and Tap to log.' },
   },
   {
     name: 'MealStack',
@@ -49,10 +55,10 @@ const apps: App[] = [
     promise: 'Your tracker says what you ate.',
     accent: 'This says when.',
     sub: 'Meal timing for iPhone, built backward from your training session. Eat late and the day re-flows; your pre-workout meal still lands before you train.',
-    points: ['Anchored to your session', 'Log when you actually ate', 'Holds up on the road', 'A Coach that builds your plan or reads a menu'],
+    points: ['Anchored to your session', 'Log when you actually ate', 'Holds up on the road', 'Stack AI builds your plan or reads a menu'],
     shots: [
-      { src: '/images/mealstack/today-training.webp', w: 540, h: 1174, alt: 'MealStack Today on a training day with the session at 6:30 PM: the yogurt logged late at 11:40, lunch next at 2:40 PM, and the Home travel chip under the MealStack header.' },
-      { src: '/images/mealstack/session-moved.webp', w: 540, h: 1174, alt: 'MealStack after the session moved to 6:30 PM: the meals tied to it move with it, with an Undo.' },
+      { src: '/images/mealstack/today-training.webp', w: 540, h: 1174, alt: 'MealStack Today on a training day with the session at 6:30 PM: yogurt and whey logged late at 11:40, lunch next at 2:40 PM, the Home travel chip, and Eating out? Send Stack AI the menu.' },
+      { src: '/images/mealstack/session-moved.webp', w: 540, h: 1174, alt: 'MealStack after the session moved to 6:30 PM: one line says the carb surge moved to 5:00 PM, the after-session shake to 7:30 PM and dinner to 9:00 PM, with an Undo.' },
     ],
   },
 ];
@@ -61,7 +67,7 @@ const apps: App[] = [
   title="The Rack · Mission Built"
   ogImage="/images/rack-og.jpg"
   ogImageAlt="The Rack. IronStack and MealStack, two iPhone apps for people who train, by Mission Built, with a real screen from each."
-  description="Two iPhone apps for people who train, from Mission Built. IronStack: log fast, see progress, a coach in your corner. MealStack: meal timing built around your training session. Both free during the private beta."
+  description="Two iPhone apps for people who train, from Mission Built. IronStack, for iPhone and Apple Watch: log fast, see progress, a coach in your corner. MealStack: meal timing built around your training session. Both free during the private beta."
   active="rack"
 >
   <TopNav active="rack" />
@@ -83,10 +89,19 @@ const apps: App[] = [
     <section class="apps" aria-label="The apps">
       {apps.map((a) => (
         <article class="app">
-          <a class="shots" href={a.href} tabindex="-1" aria-hidden="true">
-            <img class="ph back" src={a.shots[1].src} width={a.shots[1].w} height={a.shots[1].h} alt="" loading="lazy" decoding="async" />
-            <img class="ph front" src={a.shots[0].src} width={a.shots[0].w} height={a.shots[0].h} alt={a.shots[0].alt} decoding="async" />
-          </a>
+          {SHOW_APP_SCREENS && <a class:list={['shots', a.watch && 'with-watch']} href={a.href} tabindex="-1" aria-hidden="true">
+            {a.watch ? (
+              <div class="pair" style={`--ar:${a.shots[0].h / a.shots[0].w}`}>
+                <div class="ph front"><PhoneFrame shot={a.shots[0]} lazy={false} /></div>
+                <div class="pair-watch"><WatchFrame shot={a.watch} /></div>
+              </div>
+            ) : (
+              <>
+                {a.shots[1] && <div class="ph back"><PhoneFrame shot={{ ...a.shots[1], alt: '' }} /></div>}
+                <div class="ph front"><PhoneFrame shot={a.shots[0]} lazy={false} /></div>
+              </>
+            )}
+          </a>}
           <div class="app-body">
             <p class="app-name">{a.name}<span class="dot">.</span></p>
             <h2 class="promise">{a.promise} <span class="accent">{a.accent}</span></h2>
@@ -105,7 +120,7 @@ const apps: App[] = [
 
     <section class="block together">
       <p class="section-label">Better together</p>
-      <p class="line">Each stands on its own. Both write to Apple Health, share one travel switch, and keep today's session time in step.</p>
+      <p class="line">Each stands on its own. Both write to Apple Health, share one travel switch, and keep today's training time in step.</p>
       <a class="soft" href="/rack/mealstack/details#better-together">What they share today →</a>
     </section>
 
@@ -140,10 +155,19 @@ const apps: App[] = [
   /* the two apps */
   .apps { margin: 40px var(--pad-page-x) 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: var(--border-thin); border-left: var(--border-thin); }
   .app { min-width: 0; border-right: var(--border-thin); border-bottom: var(--border-thin); display: grid; grid-template-rows: auto 1fr; }
-  .shots { display: flex; justify-content: center; align-items: flex-start; padding: 36px 24px 0; background: var(--color-panel); border-bottom: var(--border-thin); height: 360px; overflow: hidden; }
-  .ph { display: block; height: auto; border-radius: 22px 22px 0 0; outline: 1px solid var(--color-rule); background: var(--color-bg); }
-  .ph.front { width: min(230px, 46%); position: relative; z-index: 2; order: 1; margin-left: -28px; }
-  .ph.back { width: min(210px, 42%); margin-top: 40px; order: 0; }
+  /* The panel crops the phones at its foot: the crop is on .shots, around each whole PhoneFrame,
+     so the frame and the screen are cut together. A PhoneFrame is 15 em wide, so each font-size
+     below sets the device to the width the bare screenshot had. */
+  .shots { display: flex; justify-content: center; align-items: flex-start; padding: 36px 24px 0; background: var(--color-panel); border-bottom: var(--border-thin); height: 360px; overflow: hidden; container-type: inline-size; }
+  .ph.front { font-size: calc(min(230px, 46cqi) / 15); position: relative; z-index: 2; order: 1; margin-left: -28px; }
+  .ph.back { font-size: calc(min(210px, 42cqi) / 15); margin-top: 40px; order: 0; }
+  /* IronStack: the phone right of centre and the watch in front of its left edge, high enough
+     that the whole case shows above the panel's cut. --pw is the phone's width. */
+  .shots.with-watch { display: block; container-type: inline-size; }
+  .pair { --pw: min(230px, 46cqi); position: relative; width: calc(var(--pw) * 1.5); margin: 0 auto; }
+  .pair .ph.front { width: var(--pw); font-size: calc(var(--pw) / 15); margin: 0 0 0 auto; }
+  /* The framed phone is --pw x (0.88 x ar + 0.12) tall; the watch case's top sits at 20% of it. */
+  .pair-watch { position: absolute; left: 0; font-size: calc(var(--pw) * 0.075); top: calc(var(--pw) * (0.88 * var(--ar) + 0.12) * 0.2 - 3.2em); }
   .app-body { padding: 28px 32px 32px; display: grid; gap: 14px; align-content: start; }
   .app-name { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 22px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-chalk); }
   .promise { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3vw, 40px); line-height: 1; letter-spacing: -0.01em; text-transform: uppercase; color: var(--color-chalk); }
