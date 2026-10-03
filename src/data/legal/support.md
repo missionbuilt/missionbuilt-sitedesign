@@ -46,7 +46,7 @@ TestFlight builds are unfinished. **Export your data now and then while you test
 
 ### Take it with you
 
-- **IronStack:** Settings › Your data › **Export all my data** writes every session, your plan and your own exercises into one file in the Mission Built Schema, a documented format. **Export the raw log** gives you the log line for line.
+- **IronStack:** Settings › Your data › **Export all my data** writes every workout, your plan and your own exercises into one file in the Mission Built Schema, a documented format. **Export the raw log** gives you the log line for line.
 - **MealStack:** plans and stacks go out as `.mealstack` files, in [a documented format](/rack/mealstack/schema), and come back in the same way. History doesn't export yet.
 
 Save the file to Files, iCloud Drive or your computer. You can bring it back into the app on a new phone.

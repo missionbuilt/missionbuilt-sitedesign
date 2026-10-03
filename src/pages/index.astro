@@ -1,5 +1,5 @@
 ---
-import { SHOW_APP_SCREENS } from '../data/screens';
+import { SHOW_APP_SCREENS, hasScreen, slotName } from '../data/screens';
 /**
  * Home — landing page.
  *
@@ -11,7 +11,7 @@ import { SHOW_APP_SCREENS } from '../data/screens';
  *   1. Hero: the book. One primary button (Start reading), Download beside it,
  *      the facts as one mono line, the author.
  *   2. The apps: IronStack and MealStack, each with a real screen, its promise and
- *      Join the beta. Chalk only here: oxblood stays with "Built." and Start reading.
+ *      Join the beta. IronStack's card lays its Apple Watch screen over the phone (Oct 1, 2026). Chalk only here: oxblood stays with "Built." and Start reading.
  *   3. More: one quiet row with the Loadout (for product leaders) and the latest log.
  *
  * Ambient: a fixed radial gradient overlay (chalk-dust top-left, oxblood bottom-right).
@@ -19,6 +19,7 @@ import { SHOW_APP_SCREENS } from '../data/screens';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import TopNav from '../components/TopNav.astro';
+import WatchFrame from '../components/WatchFrame.astro';
 import { getCollection } from 'astro:content';
 import { MB, TOTAL_CHAPTERS, totalReadTime, sectionUrl } from '../data/book.ts';
 import { byNewest, logUrl } from '../data/logs';
@@ -28,15 +29,19 @@ const latestLog = (await getCollection('logs', ({ data }) => !data.draft)).sort(
 const apps = [
   {
     name: 'IronStack', href: '/rack/ironstack',
-    promise: 'Log fast. See progress. Knows your training.',
-    line: 'A lifting log with big timers, insights, your crew, and Stack AI, which picks your next weight from your own sets.',
-    shot: { src: '/images/ironstack/log-session.webp', w: 540, h: 1174, alt: 'IronStack mid-session: 1 min, 2 of 16 sets and 1,850 lb moved across the top, and Comp Squat with two sets of 185 for 5 logged and the third lit with Log.' },
+    tag: 'Private beta · iPhone + Apple Watch',
+    promise: 'Log fast. See progress. A coach in your corner.',
+    line: 'A lifting log for your phone and your wrist, with big timers, insights, a real coach who sends your plan, and Stack AI, which picks your next weight from your own sets.',
+    shot: { src: '/images/ironstack/hero-session.webp', w: 540, h: 1174, alt: 'IronStack on iPhone mid-workout on a coach\'s plan: Box Squat, set 1 of 5, 275 for 3, with Log lit.' },
+    watch: { src: '/images/ironstack/watch-set.webp', w: 422, h: 514, alt: 'The same set on Apple Watch: Box Squat, 275 lb for 3, Tap to log.' },
   },
   {
     name: 'MealStack', href: '/rack/mealstack',
+    tag: 'Private beta · iPhone',
     promise: 'Your tracker says what you ate. This says when.',
     line: 'Meal timing built backward from your training session. Eat late and the day re-flows; your pre-workout meal still lands.',
     shot: { src: '/images/mealstack/today-training.webp', w: 540, h: 1174, alt: 'MealStack Today on a training day with the session at 6:30 PM: the yogurt logged late at 11:40, lunch next at 2:40 PM, and the Home travel chip under the MealStack header.' },
+    watch: undefined,
   },
 ];
 ---
@@ -82,10 +87,15 @@ const apps = [
       </div>
       <div class="apps">
         {apps.map((a) => (
-          <a class="app" href={a.href}>
-            {SHOW_APP_SCREENS && <div class="shot"><img src={a.shot.src} width={a.shot.w} height={a.shot.h} alt={a.shot.alt} loading="lazy" decoding="async" /></div>}
+          <a class:list={['app', a.watch && 'has-watch']} href={a.href}>
+            {SHOW_APP_SCREENS && <div class:list={['shot', a.watch && 'with-watch']}>
+              {hasScreen(a.shot.src)
+                ? <img src={a.shot.src} width={a.shot.w} height={a.shot.h} alt={a.shot.alt} loading="lazy" decoding="async" />
+                : <div class="screen-slot" role="img" aria-label={a.shot.alt} style={`aspect-ratio:${a.shot.w}/${a.shot.h}`}><b>Screen to capture</b><span>{slotName(a.shot.src)}</span></div>}
+              {a.watch && <div class="shot-watch"><WatchFrame shot={a.watch} /></div>}
+            </div>}
             <div class="app-body">
-              <p class="tag"><span class="sq" aria-hidden="true"></span>Private beta · iPhone</p>
+              <p class="tag"><span class="sq" aria-hidden="true"></span>{a.tag}</p>
               <h3 class="app-name">{a.name}</h3>
               <p class="promise">{a.promise}</p>
               <p class="app-line">{a.line}</p>
@@ -156,7 +166,14 @@ const apps = [
   .app { min-width: 0; display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 28px; padding: 28px 28px 0; border-right: var(--border-thin); border-bottom: var(--border-thin); transition: background 120ms ease-out; }
   .app:hover { background: var(--color-panel); }
   .shot { height: 250px; overflow: hidden; align-self: end; }
-  .shot img { display: block; width: 100%; height: auto; border-radius: 18px 18px 0 0; outline: 1px solid var(--color-rule); background: var(--color-panel); }
+  .shot img, .shot .screen-slot { display: block; width: 100%; height: auto; border-radius: 18px 18px 0 0; outline: 1px solid var(--color-rule); background: var(--color-panel); }
+  .shot .screen-slot { display: flex; outline-style: dashed; outline-color: var(--color-chalk-ghost); }
+  /* IronStack: a 200px column, the phone 160px pushed right, the watch in front of it at the left,
+     its case about 118px down. --s scales the group on phones. */
+  .app.has-watch { grid-template-columns: 200px minmax(0, 1fr); }
+  .shot.with-watch { --s: 1; position: relative; }
+  .shot.with-watch img, .shot.with-watch .screen-slot { width: calc(160px * var(--s)); margin-left: auto; }
+  .shot-watch { position: absolute; left: 0; top: calc(80px * var(--s)); font-size: calc(11px * var(--s)); }
   .app-body { padding-bottom: 28px; display: grid; gap: 10px; align-content: start; }
   .tag { margin: 0; display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-chalk-dim); }
   .tag .sq { width: 7px; height: 7px; border: 1px solid var(--color-chalk-dim); }
@@ -192,6 +209,8 @@ const apps = [
     .band-title { font-size: 21px; }
     .app { grid-template-columns: 112px minmax(0, 1fr); gap: 18px; padding: 22px 18px 0; }
     .shot { height: 190px; }
+    .app.has-watch { grid-template-columns: 124px minmax(0, 1fr); }
+    .shot.with-watch { --s: 0.62; }
     .app-name { font-size: 22px; }
     .promise { font-size: 15px; }
     .app-line { display: none; }

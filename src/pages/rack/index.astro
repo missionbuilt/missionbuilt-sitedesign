@@ -1,5 +1,5 @@
 ---
-import { SHOW_APP_SCREENS } from '../../data/screens';
+import { SHOW_APP_SCREENS, hasScreen, slotName } from '../../data/screens';
 /**
  * The Rack — overview page (/rack).
  *
@@ -15,10 +15,12 @@ import { SHOW_APP_SCREENS } from '../../data/screens';
  * No competitor is named. Oxblood: the brand dot, the two promise phrases, the
  * Join buttons. "Better together" claims only what is live (both write to Apple Health);
  * both write to Apple Health, share one travel switch and keep today's session time in step (Sept 29, 2026).
+ * Oct 1, 2026: IronStack's card shows one phone and its Apple Watch screen on the same set.
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
 import TopNav from '../../components/TopNav.astro';
+import WatchFrame from '../../components/WatchFrame.astro';
 
 type Shot = { src: string; w: number; h: number; alt: string };
 interface App {
@@ -28,7 +30,9 @@ interface App {
   accent: string;
   sub: string;
   points: string[];
-  shots: [Shot, Shot];
+  /** One phone with a watch, or two phones (front, back). */
+  shots: [Shot] | [Shot, Shot];
+  watch?: Shot;
 }
 
 const apps: App[] = [
@@ -36,13 +40,13 @@ const apps: App[] = [
     name: 'IronStack',
     href: '/rack/ironstack',
     promise: 'Log fast. See progress.',
-    accent: 'Knows your training.',
-    sub: 'A lifting log for iPhone. Every lifting app I used was missing something; this one puts it in one place.',
-    points: ['Tap, type or say the set', 'Big rest and EMOM timers', 'Insights, badges, your crew', 'Stack AI picks your next weight'],
+    accent: 'A coach in your corner.',
+    sub: 'A lifting log for iPhone and Apple Watch. Every lifting app I used was missing something; this one puts it in one place.',
+    points: ['Tap, type or say the set', 'Log from your Apple Watch', 'Your coach sees every set', 'Stack AI picks your next weight'],
     shots: [
-      { src: '/images/ironstack/log-session.webp', w: 540, h: 1174, alt: 'IronStack mid-session: 1 min, 2 of 16 sets and 1,850 lb moved across the top, and Comp Squat with two sets of 185 for 5 logged and the third lit with Log.' },
-      { src: '/images/ironstack/coach-swap.webp', w: 540, h: 1176, alt: 'Stack AI in IronStack with the squat rack taken: swap in SSB Box Squat and open at 220 for 5, under a ceiling from your own sets.' },
+      { src: '/images/ironstack/hero-session.webp', w: 540, h: 1174, alt: 'IronStack on iPhone mid-workout on a coach\'s plan: Box Squat, set 1 of 5, 275 for 3, with Log lit.' },
     ],
+    watch: { src: '/images/ironstack/watch-set.webp', w: 422, h: 514, alt: 'The same set on Apple Watch: Box Squat, 275 lb for 3 reps, the rest clock and Tap to log.' },
   },
   {
     name: 'MealStack',
@@ -62,7 +66,7 @@ const apps: App[] = [
   title="The Rack · Mission Built"
   ogImage="/images/rack-og.jpg"
   ogImageAlt="The Rack. IronStack and MealStack, two iPhone apps for people who train, by Mission Built, with a real screen from each."
-  description="Two iPhone apps for people who train, from Mission Built. IronStack: log fast, see progress, knows your training. MealStack: meal timing built around your training session. Both free during the private beta."
+  description="Two iPhone apps for people who train, from Mission Built. IronStack, for iPhone and Apple Watch: log fast, see progress, a coach in your corner. MealStack: meal timing built around your training session. Both free during the private beta."
   active="rack"
 >
   <TopNav active="rack" />
@@ -84,9 +88,20 @@ const apps: App[] = [
     <section class="apps" aria-label="The apps">
       {apps.map((a) => (
         <article class="app">
-          {SHOW_APP_SCREENS && <a class="shots" href={a.href} tabindex="-1" aria-hidden="true">
-            <img class="ph back" src={a.shots[1].src} width={a.shots[1].w} height={a.shots[1].h} alt="" loading="lazy" decoding="async" />
-            <img class="ph front" src={a.shots[0].src} width={a.shots[0].w} height={a.shots[0].h} alt={a.shots[0].alt} decoding="async" />
+          {SHOW_APP_SCREENS && <a class:list={['shots', a.watch && 'with-watch']} href={a.href} tabindex="-1" aria-hidden="true">
+            {a.watch ? (
+              <div class="pair" style={`--ar:${a.shots[0].h / a.shots[0].w}`}>
+                {hasScreen(a.shots[0].src)
+                  ? <img class="ph front" src={a.shots[0].src} width={a.shots[0].w} height={a.shots[0].h} alt={a.shots[0].alt} decoding="async" />
+                  : <div class="ph front screen-slot" style={`aspect-ratio:${a.shots[0].w}/${a.shots[0].h}`}><b>Screen to capture</b><span>{slotName(a.shots[0].src)}</span></div>}
+                <div class="pair-watch"><WatchFrame shot={a.watch} /></div>
+              </div>
+            ) : (
+              <>
+                {a.shots[1] && <img class="ph back" src={a.shots[1].src} width={a.shots[1].w} height={a.shots[1].h} alt="" loading="lazy" decoding="async" />}
+                <img class="ph front" src={a.shots[0].src} width={a.shots[0].w} height={a.shots[0].h} alt={a.shots[0].alt} decoding="async" />
+              </>
+            )}
           </a>}
           <div class="app-body">
             <p class="app-name">{a.name}<span class="dot">.</span></p>
@@ -145,6 +160,14 @@ const apps: App[] = [
   .ph { display: block; height: auto; border-radius: 22px 22px 0 0; outline: 1px solid var(--color-rule); background: var(--color-bg); }
   .ph.front { width: min(230px, 46%); position: relative; z-index: 2; order: 1; margin-left: -28px; }
   .ph.back { width: min(210px, 42%); margin-top: 40px; order: 0; }
+  .ph.screen-slot { display: flex; height: auto; outline-style: dashed; outline-color: var(--color-chalk-ghost); }
+  /* IronStack: the phone right of centre and the watch in front of its left edge, high enough
+     that the whole case shows above the panel's cut. --pw is the phone's width. */
+  .shots.with-watch { display: block; container-type: inline-size; }
+  .pair { --pw: min(230px, 46cqi); position: relative; width: calc(var(--pw) * 1.5); margin: 0 auto; }
+  .pair .ph.front { width: var(--pw); margin: 0 0 0 auto; }
+  .pair img.ph.front { display: block; }
+  .pair-watch { position: absolute; z-index: 3; left: 0; font-size: calc(var(--pw) * 0.075); top: calc(var(--pw) * var(--ar) * 0.2 - 3.2em); }
   .app-body { padding: 28px 32px 32px; display: grid; gap: 14px; align-content: start; }
   .app-name { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 22px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-chalk); }
   .promise { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3vw, 40px); line-height: 1; letter-spacing: -0.01em; text-transform: uppercase; color: var(--color-chalk); }
