@@ -1,5 +1,5 @@
 ---
-import { SHOW_APP_SCREENS, hasScreen, slotName } from '../../data/screens';
+import { SHOW_APP_SCREENS } from '../../data/screens';
 /**
  * The Rack — overview page (/rack).
  *
@@ -20,6 +20,7 @@ import { SHOW_APP_SCREENS, hasScreen, slotName } from '../../data/screens';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
 import TopNav from '../../components/TopNav.astro';
+import PhoneFrame from '../../components/PhoneFrame.astro';
 import WatchFrame from '../../components/WatchFrame.astro';
 
 type Shot = { src: string; w: number; h: number; alt: string };
@@ -91,15 +92,13 @@ const apps: App[] = [
           {SHOW_APP_SCREENS && <a class:list={['shots', a.watch && 'with-watch']} href={a.href} tabindex="-1" aria-hidden="true">
             {a.watch ? (
               <div class="pair" style={`--ar:${a.shots[0].h / a.shots[0].w}`}>
-                {hasScreen(a.shots[0].src)
-                  ? <img class="ph front" src={a.shots[0].src} width={a.shots[0].w} height={a.shots[0].h} alt={a.shots[0].alt} decoding="async" />
-                  : <div class="ph front screen-slot" style={`aspect-ratio:${a.shots[0].w}/${a.shots[0].h}`}><b>Screen to capture</b><span>{slotName(a.shots[0].src)}</span></div>}
+                <div class="ph front"><PhoneFrame shot={a.shots[0]} lazy={false} /></div>
                 <div class="pair-watch"><WatchFrame shot={a.watch} /></div>
               </div>
             ) : (
               <>
-                {a.shots[1] && <img class="ph back" src={a.shots[1].src} width={a.shots[1].w} height={a.shots[1].h} alt="" loading="lazy" decoding="async" />}
-                <img class="ph front" src={a.shots[0].src} width={a.shots[0].w} height={a.shots[0].h} alt={a.shots[0].alt} decoding="async" />
+                {a.shots[1] && <div class="ph back"><PhoneFrame shot={{ ...a.shots[1], alt: '' }} /></div>}
+                <div class="ph front"><PhoneFrame shot={a.shots[0]} lazy={false} /></div>
               </>
             )}
           </a>}
@@ -156,18 +155,19 @@ const apps: App[] = [
   /* the two apps */
   .apps { margin: 40px var(--pad-page-x) 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: var(--border-thin); border-left: var(--border-thin); }
   .app { min-width: 0; border-right: var(--border-thin); border-bottom: var(--border-thin); display: grid; grid-template-rows: auto 1fr; }
-  .shots { display: flex; justify-content: center; align-items: flex-start; padding: 36px 24px 0; background: var(--color-panel); border-bottom: var(--border-thin); height: 360px; overflow: hidden; }
-  .ph { display: block; height: auto; border-radius: 22px 22px 0 0; outline: 1px solid var(--color-rule); background: var(--color-bg); }
-  .ph.front { width: min(230px, 46%); position: relative; z-index: 2; order: 1; margin-left: -28px; }
-  .ph.back { width: min(210px, 42%); margin-top: 40px; order: 0; }
-  .ph.screen-slot { display: flex; height: auto; outline-style: dashed; outline-color: var(--color-chalk-ghost); }
+  /* The panel crops the phones at its foot: the crop is on .shots, around each whole PhoneFrame,
+     so the frame and the screen are cut together. A PhoneFrame is 15 em wide, so each font-size
+     below sets the device to the width the bare screenshot had. */
+  .shots { display: flex; justify-content: center; align-items: flex-start; padding: 36px 24px 0; background: var(--color-panel); border-bottom: var(--border-thin); height: 360px; overflow: hidden; container-type: inline-size; }
+  .ph.front { font-size: calc(min(230px, 46cqi) / 15); position: relative; z-index: 2; order: 1; margin-left: -28px; }
+  .ph.back { font-size: calc(min(210px, 42cqi) / 15); margin-top: 40px; order: 0; }
   /* IronStack: the phone right of centre and the watch in front of its left edge, high enough
      that the whole case shows above the panel's cut. --pw is the phone's width. */
   .shots.with-watch { display: block; container-type: inline-size; }
   .pair { --pw: min(230px, 46cqi); position: relative; width: calc(var(--pw) * 1.5); margin: 0 auto; }
-  .pair .ph.front { width: var(--pw); margin: 0 0 0 auto; }
-  .pair img.ph.front { display: block; }
-  .pair-watch { position: absolute; z-index: 3; left: 0; font-size: calc(var(--pw) * 0.075); top: calc(var(--pw) * var(--ar) * 0.2 - 3.2em); }
+  .pair .ph.front { width: var(--pw); font-size: calc(var(--pw) / 15); margin: 0 0 0 auto; }
+  /* The framed phone is --pw x (0.88 x ar + 0.12) tall; the watch case's top sits at 20% of it. */
+  .pair-watch { position: absolute; left: 0; font-size: calc(var(--pw) * 0.075); top: calc(var(--pw) * (0.88 * var(--ar) + 0.12) * 0.2 - 3.2em); }
   .app-body { padding: 28px 32px 32px; display: grid; gap: 14px; align-content: start; }
   .app-name { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 22px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-chalk); }
   .promise { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3vw, 40px); line-height: 1; letter-spacing: -0.01em; text-transform: uppercase; color: var(--color-chalk); }
