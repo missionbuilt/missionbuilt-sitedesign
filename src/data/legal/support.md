@@ -53,7 +53,7 @@ Save the file to Files, iCloud Drive or your computer. You can bring it back int
 
 ### See what the server holds
 
-- **IronStack:** Settings › Your data › **What the server holds**
+- **IronStack:** Settings › Stack AI › **What the server holds**
 - **MealStack:** Settings › Your data › **What the server holds**
 
 Both ask the server live and show you the answer.
@@ -63,7 +63,7 @@ Both ask the server live and show you the answer.
 - **Everything, everywhere.** IronStack: Settings › Your data › **Delete all IronStack data**. MealStack: Settings › Start over › **Delete all MealStack data**. Each deletes the server's copy first, then everything on the phone, and tells you what it removed.
 - **Only your IronStack Social account.** Social › your account › **Delete Social account**. This deletes your handle, spotters, shared cards and props, and disconnects Sign in with Apple. Your training log stays.
 - **Workouts and meals in Apple Health.** MealStack removes the entries it wrote when you delete all its data. IronStack's workouts stay in Health. Delete them in the Health app: Browse › Activity › Workouts › Show All Data.
-- **Already deleted the app?** Nothing on the server can be matched to you any more. If you had an IronStack Social account, or want to ask anyway, email **support@missionbuilt.io** with the subject **Data request** and, for Social, your handle.
+- **Already deleted the app?** Nothing on the server can be matched to you any more. IronStack's old log copies (the Copy my log to the server switch in earlier versions) were all erased on TODO-ERASE-DATE; nothing is copied any more. If you had an IronStack Social account, or want to ask anyway, email **support@missionbuilt.io** with the subject **Data request** and, for Social, your handle.
 
 The full detail is on each privacy page: [IronStack](/rack/ironstack/privacy) · [MealStack](/rack/mealstack/privacy).
 
