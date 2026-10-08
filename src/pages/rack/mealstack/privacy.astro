@@ -47,7 +47,7 @@ const keeps: Keep[] = [
   { what: 'Your Stack AI chats', how: 'On your phone until you delete them. Not synced anywhere.' },
   { what: 'What you send Stack AI, including photos and files', how: 'Mission Built never keeps what you said. The answer is held on the server for 10 minutes in case your connection drops, then deleted. Anthropic deletes what you sent within 30 days and doesn\'t train its models on it. It keeps it longer (up to 2 years) only if a request is flagged for breaking its usage policy.' },
   { what: 'The device record (App Attest key id, public key, receipt, timestamps)', how: 'Kept while the install exists. Removed the moment you delete your data in the app, or on request.' },
-  { what: 'Stack AI allowance counters', how: 'Wiped at the start of each month.' },
+  { what: 'Stack AI allowance counters', how: 'Today\'s and this month\'s counts. Nothing resets them on a schedule. Last month\'s counts are replaced the first time your phone asks Stack AI in a new month. If it never asks again, they stay until you delete your data in the app, or with no end date if the app is gone. For the rate limits, counts of each kind of request (questions and plan imports) by minute, day and month: a minute\'s count goes within ten minutes, the rest with the month, the same way. What the server holds, in the app, lists them.' },
   { what: 'Accounting record of Stack AI use (Cloudflare)', how: 'About ninety days, then gone.' },
   { what: 'Usage data', how: 'In Mission Built\'s own record on Cloudflare, about ninety days, then gone. Deleting your data in the app doesn\'t remove them sooner, but nothing in them can be matched to you once the install\'s key is gone.' },
 ];
