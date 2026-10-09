@@ -26,7 +26,7 @@ status: in-progress
 ### Exercise library
 
 - **The library is in sections by movement:** Your exercises, Lifting, Strongman, Conditioning, Jumps, sprints & agility, Sports, Pilates & barre, Yoga & mobility. Tap Sections on any header to go straight to a section, or to a part of Lifting such as Squats or Hips & groin. The same list is in Add an exercise on Today.
-- **Settings › Training › Library sections chooses which sections show when you browse.** Sports starts hidden. Basketball or lacrosse turns on by itself when you log one of its drills or bring in a plan with one, unless you've switched it off. Search and filters always find everything, hidden or not.
+- **Settings › Training › Library sections chooses which sections show when you browse.** Every section shows to start with, Sports too. Search and filters always find everything, hidden or not.
 - **When search results come from more than one section, each one says which, such as "Conditioning · Hyrox" under Wall Ball.**
 - **The Training, Muscle and Equipment buttons and their chips are bigger and easier to see.**
 - **Basketball and lacrosse:** 86 new exercises (jumps, speed, agility, shooting, ball handling, wall ball and more) on a new Sports shelf under Training. Search "hoops", "lax", "plyo" or "agility".
