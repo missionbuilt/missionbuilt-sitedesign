@@ -23,18 +23,18 @@ in ironstack, mealstack, the kit and the site).
 
 ## Weekly update
 
-1. `cd /Users/mike/Projects/missionbuilt-site && git switch -c release/<ship-date> main`
+1. `cd ~/Projects/missionbuilt-site && git switch -c release/<ship-date> main`
 2. Each change on its own branch cut from the release, merged back when
-   `cd /Users/mike/Projects/missionbuilt-site && npm run build` is clean.
+   `cd ~/Projects/missionbuilt-site && npm run build` is clean.
 3. Release notes are generated from each app's `CHANGELOG.md`:
-   `cd /Users/mike/Projects/missionbuilt-site && python3 scripts/sync_mealstack_changelog.py --app ironstack`
+   `cd ~/Projects/missionbuilt-site && python3 scripts/sync_mealstack_changelog.py --app ironstack`
    (and `--app mealstack`). Don't hand-edit `src/content/releases/`.
 4. Push the release branch and check its preview URL.
 5. **The site ships first.** Merge the release into `main` and push (Mike says when), so the
    release notes page is live before either app's `main` moves:
 
    ```
-   cd /Users/mike/Projects/missionbuilt-site && git switch main && git merge --no-ff release/<ship-date> -m "Release <ship-date>" && git push origin main
+   cd ~/Projects/missionbuilt-site && git switch main && git merge --no-ff release/<ship-date> -m "Release <ship-date>" && git push origin main
    ```
 
 6. A privacy page changes on the day the server it describes deploys, never before: it must
