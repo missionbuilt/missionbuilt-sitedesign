@@ -4,7 +4,8 @@ version: "0.9.1"
 order: 9001
 changes: 9
 groups: [{"title": "Today", "slug": "today", "leads": ["When Apple Health has a newer weight than the one in About you, Today offers it."]}, {"title": "Stack AI", "slug": "stack-ai", "leads": ["The Stack AI chat opens at the latest message, with the message box under it, and stays there as replies come...", "Stack AI has its own mark, three plates, wherever you ask it.", "Already have a plan?", "A plan card says whose plan it is.", "While you're on your coach's plan, a plan Stack AI builds is a suggestion.", "What Stack AI says is only about the cards in that reply, and it never calls a card saved or added.", "When Stack AI is broken on our side, it says..."]}, {"title": "Settings", "slug": "settings", "leads": ["What the server holds is under Settings › Stack AI now, below Privacy policy, where IronStack keeps it too."]}]
-status: in-progress
+status: shipped
+build: 88
 ---
 
 ### Today
