@@ -1,0 +1,321 @@
+---
+/**
+ * MissionStack — privacy.
+ *
+ * DRAFT (#118, Chalkboard, Oct 9, 2026): the facts are checked against the code
+ * (missionstack/privacy/data-inventory-2026-10-09.md, §12–14 override); the words are
+ * XO's to rewrite and Mike's to approve. Not linked from the Rack, the nav or the
+ * sitemap, and noindex, until Mike says the name is cleared and the page goes live
+ * with the first external TestFlight build (promise 8: it describes what is live).
+ *
+ * It describes the MVP build (feat/missionstack-mvp): the plan on the iPad or Mac,
+ * the board inside the app, Delete all, export and import. iCloud sync is built but
+ * off in release builds (SyncFlags.shipped = false), so the page says "This version
+ * doesn't sync" and nothing more. The sync section (in the XO handoff) goes in with the
+ * commit that turns sync on, after M32's Delete all wording is answered.
+ *
+ * Before go-live: the /join page (no analytics) ships with this page, or the Camera paragraph
+ * says the page isn't there yet; check Cloudflare Web Analytics is off for the Pages project;
+ * the ASC label is filled in as Data Not Collected; check the Mac clause by trashing the app.
+ *
+ * For the lawyer, as on the other two pages: is an 18+ statement enough with no in-app
+ * age check (only the Team lift join asks), and must the App Store age rating match; the
+ * TLS-PSK listener and ITSAppUsesNonExemptEncryption = NO; private CloudKit counted
+ * as "not collected" (when sync ships). Draft for review by a lawyer before public launch.
+ *
+ * Color discipline: oxblood for the hero period, section labels and the one
+ * emphasised word. No army green on this page.
+ */
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import SiteFooter from '../../../components/SiteFooter.astro';
+import TopNav from '../../../components/TopNav.astro';
+
+const DRAFT = true;
+const EFFECTIVE = 'DRAFT';  // a date, e.g. 'October 17, 2026', at go-live
+const ASK = 'mailto:support@missionbuilt.io?subject=MissionStack%20data%20request';
+
+const stats = [
+  { key: 'Account',            value: 'None' },
+  { key: 'Your plan',          value: 'On your iPad or Mac' },
+  { key: 'Sent to Mission Built', value: 'Nothing' },
+  { key: 'Sold or advertised', value: 'Never' },
+];
+
+type Keep = { what: string; how: string };
+const keeps: Keep[] = [
+  { what: 'Your plan and settings', how: 'On this iPad or Mac until you delete them, or delete the app. Included in your device backup like any other app data.' },
+  { what: 'Phones the board remembers', how: 'The name each phone sent and a pairing key, in this device\'s Keychain. They stay after you delete the app. Delete all data, or Settings › Board › Forget all phones, clears them.' },
+  { what: 'A Team lift', how: 'Held in memory while it runs: the board names, colours and handles of who joined, and the team\'s totals. Gone when the Team lift closes.' },
+  { what: 'The board on your own', how: 'Held in memory only. Gone when its celebration closes, when you close the board, or 45 minutes after the phone goes quiet.' },
+  { what: 'Anything on Mission Built\'s servers', how: 'Nothing. MissionStack doesn\'t talk to them.' },
+];
+---
+<BaseLayout
+  canonical="/rack/missionstack/privacy/"
+  title="Privacy · MissionStack · Mission Built"
+  description="What MissionStack keeps on your iPad or Mac, what the board shares on your Wi-Fi, and how to make it all go away."
+  active="rack"
+  noindex
+>
+  <TopNav active="rack" />
+
+  <main id="main" class="page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/rack">The Rack</a>
+      <span aria-hidden="true"> / </span>
+      <span>MissionStack</span>
+      <span aria-hidden="true"> / </span>
+      <span class="here">Privacy</span>
+    </nav>
+
+    <section class="hero">
+      <p class="eyebrow">
+        <span class="dots" aria-hidden="true">▮▮▮</span>
+        <span>MissionStack</span>
+        <span class="dots" aria-hidden="true">▮▮▮</span>
+      </p>
+      <h1 class="display"><span>Privacy</span><span class="dot">.</span></h1>
+      <p class="subtitle">
+        <span class="line1">What the app keeps, what the board shares on your Wi-Fi, and how to make it all go away.</span>
+        <span class="line2">Short, because nothing leaves for Mission Built.</span>
+      </p>
+      <p class="effective">{DRAFT ? 'Draft, not yet in effect' : `Effective ${EFFECTIVE}`} · Mission Built · Mike Nichols · Pittsburgh, PA</p>
+    </section>
+
+    <section class="meta-strip" aria-label="MissionStack privacy at a glance">
+      {stats.map((s) => (
+        <div class="stat">
+          <div class="stat-key">{s.key}</div>
+          <div class="stat-value">{s.value}</div>
+        </div>
+      ))}
+    </section>
+
+    {/* ---------- WHO ---------- */}
+    <section class="block">
+      <p class="section-label">Who this is</p>
+      <h2 class="section-h2">Mission Built makes MissionStack. This page is the whole policy.</h2>
+      <div class="prose-block">
+        <p>MissionStack is the iPad and Mac app for planning your training, and it runs the gym board. It is made by Mission Built, which is Mike Nichols, in Pittsburgh, Pennsylvania. There is no parent company, no subsidiary and no partner with access to your data.</p>
+      </div>
+    </section>
+
+    <hr class="dashed" />
+
+    {/* ---------- ON YOUR DEVICE ---------- */}
+    <section class="block">
+      <p class="section-label">On your iPad or Mac</p>
+      <h2 class="section-h2">No account, and nothing sent to Mission Built.</h2>
+      <div class="prose-block">
+        <p>MissionStack has no sign-up, no login and no password, and never asks for your name, email address or phone number. The app makes no request to Mission Built's servers or anyone else's. There is no Stack AI in it, no usage data, no advertising identifier, and no third-party software kit.</p>
+        <p>Your plan, its workouts, and your settings, such as appearance and voice cues, are saved inside MissionStack on this iPad or Mac. Those files are included in your iCloud or computer backup the way any app's data is; Mission Built has no access to your backups.</p>
+        <p><strong>This version doesn't sync.</strong> MissionStack itself sends nothing to iCloud. Your device backup and any export you save there are yours. If that changes, this page changes first.</p>
+      </div>
+    </section>
+
+    <hr class="dashed" />
+
+    {/* ---------- THE BOARD ---------- */}
+    <section class="block">
+      <p class="section-label">The board</p>
+      <h2 class="section-h2">It works only on your Wi-Fi.</h2>
+
+      <div class="two">
+        <div class="cell">
+          <p class="k">Local network only</p>
+          <p class="v">Between this device and the phones you let in.</p>
+          <p class="body">The board shows a workout from an iPhone on the same Wi-Fi. It asks for your permission to use the local network first. The link between the phone and the board is encrypted with a key from the code on the board's screen, nothing passes through the internet, and nothing reaches Mission Built. The board announces itself on the network under a random name, never yours.</p>
+          <p class="body"><strong>On your own,</strong> everything your phone sends is on the screen for the room: the workout, each set with its weight, and the name your phone sent.</p>
+          <p class="body"><strong>Phones the board remembers.</strong> If you turn on Remember this iPhone when you pair, the board keeps the name the phone sent and a pairing key, on this iPad or Mac. They stay after you delete the app. Delete all data, or Settings › Board › Forget all phones, clears them.</p>
+          <p class="body"><strong>Delete all IronStack data on your iPhone can't reach someone else's board.</strong> If your phone is remembered there, the board's owner has to forget it.</p>
+        </div>
+        <div class="cell">
+          <p class="k">Team lifts</p>
+          <p class="v">The workout copy carries no weights.</p>
+          <p class="body">Every phone that joins a Team lift gets a copy of the workout:</p>
+          <ul class="list">
+            <li>its name and date, exercise names, order and groups</li>
+            <li>sets, and reps, time or distance</li>
+            <li>RPE targets, prep sets, and the rest or EMOM clock</li>
+          </ul>
+          <p class="body"><strong>Never in the copy:</strong> weights, loads or notes. An exercise from the library goes by its library name. One you added yourself goes as you named it.</p>
+          <p class="body">During the lift each phone sends the board its sets. Weights show on the screen only for lifters who leave Show my numbers on; with it off, the board drops them. Every phone in the room sees the others' board names and colours, and a handle when that lifter shares it. At the end each phone gets the team's totals, and a total is left out unless at least two other lifters added to it. The celebration shows every lifter's card to the room.</p>
+          <p class="body">Who joined is held in memory while the Team lift runs and wiped when it closes.</p>
+        </div>
+      </div>
+
+      <div class="fine">
+        <p class="k">If you scan the board's code with the Camera</p>
+        <p>The code is meant for IronStack. Scanned with the Camera app instead, it opens a page on missionbuilt.io. Cloudflare, which runs the site, handles that request like any visit and sees your phone's network address, but never the code's secret part: that part never leaves your phone. Mission Built adds no analytics to the site.</p>
+      </div>
+    </section>
+
+    <hr class="dashed" />
+
+    {/* ---------- HOW LONG ---------- */}
+    <section class="block">
+      <p class="section-label">How long</p>
+      <h2 class="section-h2">What is kept, and for how long.</h2>
+      <div class="keeps">
+        {keeps.map((k) => (
+          <div class="kr">
+            <span class="kk">{k.what}</span>
+            <span>{k.how}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <hr class="dashed" />
+
+    {/* ---------- DELETE ---------- */}
+    <section class="block">
+      <p class="section-label">Your data</p>
+      <h2 class="section-h2">Export it, or delete it, from Settings.</h2>
+      <div class="prose-block">
+        <p><strong>Settings › Your data › Export</strong> saves your plan and your appearance setting to a file you keep. <strong>Settings › Your data › Import</strong> brings that file back. It replaces the plan and appearance setting on this iPad or Mac, and shows you what it replaces before anything changes.</p>
+        <p><strong>Settings › Your data › Delete all data</strong> closes the board, forgets every phone the board remembers, and removes every file and setting MissionStack keeps on this device. It doesn't reach an export you saved elsewhere, or a backup already made. If something couldn't be deleted, the app says so, and <strong>Settings › Board › Forget all phones</strong> clears it.</p>
+        <p><strong>Deleting the app is not the same.</strong> On an iPad, deleting the app removes your plan and settings. On a Mac, its files can stay behind. Either way, phones the board remembers stay in the Keychain. Run Delete all data first.</p>
+        <p>Anything else about your data, email <a href={ASK}>support@missionbuilt.io</a>. Mission Built will confirm within ten days and finish within thirty.</p>
+      </div>
+    </section>
+
+    <hr class="dashed" />
+
+    {/* ---------- RIGHTS ---------- */}
+    <section class="block">
+      <p class="section-label">Your rights</p>
+      <h2 class="section-h2">Wherever you are, the same answer.</h2>
+      <div class="prose-block">
+        <p>Mission Built holds nothing about you from MissionStack. You can still ask, at the address above, and you will not be treated differently for asking. If you are in the EU, the EEA or the UK you may complain to your supervisory authority. Under California law, Mission Built does not sell or share personal information.</p>
+      </div>
+    </section>
+
+    <hr class="dashed" />
+
+    {/* ---------- AGE, APPLE ---------- */}
+    <section class="block">
+      <div class="two">
+        <div class="cell">
+          <p class="k">Age</p>
+          <p class="body">MissionStack is for adults, 18 and over. The app doesn't ask your age. A phone joining a Team lift has to confirm its lifter is 18 or over, and the board doesn't keep that answer.</p>
+        </div>
+        <div class="cell">
+          <p class="k">Apple</p>
+          <p class="body">Apple's own privacy terms cover TestFlight, the App Store, and your device backups. The App Store privacy label for MissionStack says Data Not Collected.</p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="dashed" />
+
+    {/* ---------- CHANGES ---------- */}
+    <section class="block">
+      <p class="section-label">Changes</p>
+      <h2 class="section-h2">This page changes when the app does.</h2>
+      <div class="prose-block">
+        <p>If what the app keeps or shares changes, this page changes first, with a new effective date at the top. A change that widens what leaves your device will be asked about in the app before it applies to you. {DRAFT ? 'This is a draft and not yet in effect.' : `Effective ${EFFECTIVE}.`}</p>
+      </div>
+    </section>
+
+  </main>
+  <SiteFooter links={[{ label: 'Support', href: '/rack/support' }]} />
+</BaseLayout>
+
+<style>
+  .page { max-width: 1280px; margin: 0 auto; }
+
+  .breadcrumb {
+    padding: 18px var(--pad-page-x) 0;
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--color-chalk-faint);
+  }
+  .breadcrumb a { color: var(--color-chalk-dim); transition: color 120ms ease-out; }
+  .breadcrumb a:hover { color: var(--color-chalk); }
+  .breadcrumb .here { color: var(--color-chalk-faint); }
+
+  .hero { padding: 40px var(--pad-page-x) 28px; text-align: center; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 14px; margin: 0 0 18px;
+    font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.24em;
+    color: var(--color-chalk-dim); text-transform: uppercase;
+  }
+  .eyebrow .dots { letter-spacing: 0.04em; color: var(--color-blood-bright); }
+  .display {
+    margin: 0; font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(56px, 11vw, 108px); line-height: 0.95; letter-spacing: -0.02em;
+    color: var(--color-chalk); text-transform: uppercase;
+  }
+  .display .dot { color: var(--color-blood-bright); }
+  .subtitle {
+    margin: 22px auto 0; max-width: 820px; display: grid; gap: 8px;
+    font-family: var(--font-display); font-weight: 400; letter-spacing: 0.04em; text-transform: uppercase;
+  }
+  .subtitle .line1 { font-size: clamp(16px, 2.4vw, 24px); font-weight: 500; color: var(--color-chalk); }
+  .subtitle .line2 { font-size: clamp(13px, 1.9vw, 19px); color: var(--color-chalk-dim); }
+  .effective {
+    margin: 22px 0 0; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--color-chalk-faint);
+  }
+
+  .meta-strip {
+    margin: 28px var(--pad-page-x) 0; padding: 14px 0;
+    border-top: var(--border-thin); border-bottom: var(--border-thin);
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+    font-family: var(--font-mono); font-size: 12px; text-align: left;
+  }
+  .stat-key { font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); margin-bottom: 8px; }
+  .stat-value { font-family: var(--font-display); font-weight: 500; font-size: 20px; line-height: 1.1; letter-spacing: 0.02em; text-transform: uppercase; color: var(--color-chalk); }
+
+  .block { padding: 56px var(--pad-page-x) 0; max-width: 1180px; }
+  .section-label {
+    margin: 0 0 14px; font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+    letter-spacing: 0.24em; color: var(--color-blood-text); text-transform: uppercase;
+  }
+  .section-h2 {
+    margin: 0 0 18px; max-width: 30ch; font-family: var(--font-display); font-weight: 600; font-size: 36px;
+    line-height: 1.05; letter-spacing: 0.02em; color: var(--color-chalk); text-transform: uppercase;
+  }
+  .prose-block p { margin: 0 0 16px; max-width: 70ch; font-family: var(--font-serif); font-weight: 300; font-size: 17px; line-height: 1.65; color: var(--color-chalk); }
+  .prose-block p strong { font-weight: 700; color: var(--color-chalk); }
+  .prose-block a { color: var(--color-chalk); border-bottom: 1px solid var(--color-chalk-ghost); text-decoration: none; }
+  .prose-block a:hover { border-bottom-color: var(--color-blood); }
+  .k { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); margin: 0; }
+
+  .two { display: grid; grid-template-columns: 1fr 1fr; margin-top: 28px; border: var(--border-thin); background: var(--color-panel); }
+  .cell { padding: 22px 24px 20px; border-right: var(--border-thin); }
+  .cell:last-child { border-right: 0; }
+  .cell .k { margin-bottom: 10px; }
+  .cell .v { margin: 0 0 12px; font-family: var(--font-display); font-weight: 500; font-size: 21px; line-height: 1.1; text-transform: uppercase; letter-spacing: 0.01em; color: var(--color-chalk); }
+  .cell .body { margin: 0 0 12px; font-family: var(--font-serif); font-size: 14.5px; line-height: 1.6; color: var(--color-chalk-dim); }
+  .cell .body:last-child { margin-bottom: 0; }
+  .cell .list { margin: 0 0 12px; padding-left: 20px; font-family: var(--font-serif); font-size: 14.5px; line-height: 1.6; color: var(--color-chalk-dim); }
+  .cell .body strong { color: var(--color-chalk); font-weight: 700; }
+
+  .fine { margin-top: 18px; background: var(--color-panel); border: var(--border-thin); padding: 22px 26px; }
+  .fine .k { margin-bottom: 10px; }
+  .fine p:not(.k) { margin: 0; max-width: 70ch; font-family: var(--font-serif); font-size: 14px; line-height: 1.6; color: var(--color-chalk-dim); }
+
+  .keeps { margin-top: 24px; border-top: var(--border-thin); }
+  .kr { display: grid; grid-template-columns: 1fr 1.4fr; gap: 24px; padding: 14px 0; border-bottom: var(--border-thin); align-items: baseline; }
+  .kr .kk { font-family: var(--font-mono); font-size: 12px; line-height: 1.5; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-chalk); }
+  .kr span:last-child { font-family: var(--font-serif); font-size: 14px; line-height: 1.55; color: var(--color-chalk-dim); }
+
+  .dashed { margin: 48px var(--pad-page-x) 0; border: none; border-top: 1px dashed var(--color-rule-soft); }
+
+  @media (max-width: 1099px) {
+    .meta-strip { grid-template-columns: repeat(2, 1fr); gap: 18px; }
+    .two { grid-template-columns: 1fr; }
+    .cell { border-right: 0; border-bottom: var(--border-thin); }
+    .cell:last-child { border-bottom: 0; }
+  }
+  @media (max-width: 720px) {
+    .breadcrumb { padding: 18px var(--pad-page-x-mobile) 0; }
+    .hero { padding: 28px var(--pad-page-x-mobile) 20px; }
+    .meta-strip { margin: 24px var(--pad-page-x-mobile) 0; grid-template-columns: 1fr; gap: 14px; }
+    .block { padding: 40px var(--pad-page-x-mobile) 0; }
+    .section-h2 { font-size: 28px; }
+    .kr { grid-template-columns: 1fr; gap: 6px; }
+    .dashed { margin: 36px var(--pad-page-x-mobile) 0; }
+  }
+</style>
