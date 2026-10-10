@@ -15,6 +15,11 @@
  * build, and every copy earlier builds made is erased (POST /admin/capture/erase-all,
  * ironstack/stackai-proxy README).
  *
+ * #126 (Oct 10, 2026, branch feat/ironstack-privacy-history): the recent window's words and
+ * the lifetime summary, as the app's Stack AI sheet version 2 says them (Mike approved the
+ * wording 2026-10-09). GOES LIVE with the IronStack build that sends the summary, before its
+ * main moves; set EFFECTIVE to that day.
+ *
  * GOES LIVE ONLY AFTER: both Stack AI Workers (ironstack-stackai and ironstack-coach) run the
  * code that answers the old push 410 (until then an older build's copy is still stored, so
  * "nothing is copied any more" would be false), and the erase-all has answered "done": true.
@@ -173,7 +178,8 @@ const keeps: Keep[] = [
           <p class="body"><strong>Sent to Anthropic, only when you ask:</strong></p>
           <ul class="list">
             <li>Your question and this chat</li>
-            <li>Your last 90 days of training and today's workout: sets, weights, reps, RPE and notes</li>
+            <li>Your last 90 days of training (or your most recent 90 days, if you've had a break) and today's workout: sets, weights, reps, RPE and notes</li>
+            <li>A summary of your whole log, worked out on your phone: for each lift, how often and when you've done it, and your bests. No notes.</li>
             <li>The bodyweight and sleep you logged, typed in or from Apple Health</li>
             <li>Where you are in your program, including a meet date</li>
             <li>Photos (up to 5) with location removed, and PDFs and files you attach, with their names</li>
