@@ -48,6 +48,26 @@
 /downloads/*
   Cache-Control: public, max-age=3600, must-revalidate
 
+# Universal links (#133): iOS fetches this to learn that missionbuilt.io/join opens IronStack.
+# No extension, so the type is set here; a short cache, so a change reaches phones within a day.
+/.well-known/apple-app-site-association
+  Content-Type: application/json
+  Cache-Control: public, max-age=3600, must-revalidate
+
+# The board's QR lands here when IronStack isn't installed (#133). The pairing secret is in the
+# URL's fragment, which a browser never sends. This page must never read it: no script may run
+# and nothing may be fetched from it, on top of the site-wide policy below (both are enforced).
+# Cloudflare joins the two Referrer-Policy values, which may leave the site-wide one in force;
+# the page's own <meta name="referrer"> sets no-referrer. A browser never puts the fragment in a
+# referrer either way. Outside this file: Web Analytics, Zaraz and any challenge page must stay
+# off /join (a challenge page runs Cloudflare's script at this URL).
+/join
+  Content-Security-Policy: script-src 'none'; connect-src 'none'
+  Referrer-Policy: no-referrer
+/join/
+  Content-Security-Policy: script-src 'none'; connect-src 'none'
+  Referrer-Policy: no-referrer
+
 # Content-Security-Policy: Astro and the demo pages use inline <script>/<style>,
 # so 'unsafe-inline' is required until those are hashed. Everything else is locked
 # to this origin — no third-party script host can execute here, and no page can be
