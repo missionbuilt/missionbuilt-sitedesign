@@ -40,6 +40,10 @@ APP = "mealstack"
 OUT = ROOT / "src" / "content" / "releases"
 HEADING = re.compile(r"^##\s+(\d+(?:\.\d+)*)\s*(?:\((.*)\))?\s*$")
 GROUP = re.compile(r"^###\s+(.+?)\s*$")
+# The product lead's tester notes (XO, 2026-10-11): everything in a build's section above this
+# heading is its intro, kept word for word above the groups. A section without it is shaped
+# exactly as before, so older pages don't change.
+INTRO_END = re.compile(r"^####\s+Every change in this build\s*$")
 
 
 def first_sentence(text: str) -> str | None:
@@ -225,7 +229,14 @@ def main() -> int:
     for version, note, body in releases:
         path = OUT / file_name(version, note)
         keep.add(path.name)
+        intro = ""
+        cut = next((i for i, line in enumerate(body) if INTRO_END.match(line)), None)
+        if cut is not None:
+            intro = "\n".join(body[:cut]).strip()
+            body = body[cut + 1:]
         shaped, groups = shape(body)
+        if intro:
+            shaped = intro + "\n\n## Every change in this build\n\n" + shaped
         text = frontmatter(version, note, groups) + "\n\n" + shaped + "\n"
         path.write_text(text, encoding="utf-8")
         print(f"wrote {path.relative_to(ROOT)}")

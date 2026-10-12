@@ -8,6 +8,28 @@ status: shipped
 build: 74
 ---
 
+**Less math between sets.**
+
+This build takes over the arithmetic you used to do in your head between sets.
+
+**Warm-ups built for your bar and your plates.** Any lift with a working weight now has a Build prep line. Tap it and IronStack lays out the warm-up sets up to your first working set, with the plates for each side. Nothing is added until you tap Add. Change your top set and Rebuild prep redoes the warm-ups still to come. No more counting plates with the bar on your back.
+
+**Plates on your wrist.** Turn the Crown on the watch and it shows the plates for each side. They come from the plates you own (Settings › My plates), not a standard gym's. If your plates can't make a weight, it shows the nearest weight they can. You don't need the phone for this.
+
+**Stack AI knows your whole training history.** Before, it saw your last 90 days. Now your phone sends it a summary of every lift you've logged: how often you do it, when, and your bests. Your notes never go in. Stack AI asks for your yes again before it starts, because what you're sharing has changed, and we think that's the right way to do it.
+
+**Also in this build**
+- Supersets and circuits look the same everywhere, grouped under one name. The A1 and A2 tags are gone.
+- You can reorder today's Up next. Your saved workout keeps its own order.
+- Each exercise page says how often you've done it, e.g. "Done 14 times since March."
+- The full exercise library opens from Plan and from Build from muscles.
+- Small fixes: drill sets have no RPE row, Shuttle Run opens on time, Names to check has Undo, and the Edit headers no longer let rows show through.
+- The gear list is trimmed to gear everyone uses. Anything you'd used is kept in Your gear.
+
+**Try this:** next time you're at the rack, tap Build prep on your first lift and tell us whether the jumps feel right.
+
+## Every change in this build
+
 ### Today
 
 - **In Edit, the exercises still under Up next can be dragged into a new order, the way the ones on the day can.** The new order is for today; the saved workout keeps its own.
