@@ -10,9 +10,10 @@
  * and Download live in the site footer.
  */
 import Lockup from './Lockup.astro';
+import { pricingFlags } from '../data/pricing';
 
 interface Props {
-  active?: 'book' | 'chapters' | 'loadout' | 'rack' | 'logs' | 'about' | 'source' | undefined;
+  active?: 'book' | 'chapters' | 'loadout' | 'rack' | 'logs' | 'about' | 'source' | 'pricing' | undefined;
 }
 const { active: rawActive } = Astro.props;
 const active = rawActive === 'chapters' ? 'book' : rawActive;
@@ -20,6 +21,8 @@ const active = rawActive === 'chapters' ? 'book' : rawActive;
 const links = [
   { key: 'book',     label: 'The Book',     href: '/chapters' },
   { key: 'rack',     label: 'The Rack',     href: '/rack' },
+  // Pricing joins the nav at the public launch (1-1), not at the soft launch (#44).
+  ...(pricingFlags().launch ? [{ key: 'pricing', label: 'Pricing', href: '/pricing' }] as const : []),
   { key: 'loadout',  label: 'The Loadout',  href: '/loadout' },
   { key: 'logs',     label: 'Logs',         href: '/logs' },
   { key: 'about',    label: 'About',        href: '/about' },

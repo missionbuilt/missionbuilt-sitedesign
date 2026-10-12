@@ -1,0 +1,69 @@
+{
+  "_source": "Prices: decision log, Mike 2026-10-11 20:33. Features: feature-to-plan map #154 (product lead, 2026-10-12). Spec: briefs/launch/pricing-page-spec.md. The page renders only from this file.",
+  "plans": [
+    { "id": "ironstack_free", "name": "IronStack Free", "monthly": null, "annual": null, "founding": null,
+      "what": "Unlimited logging, programs and history, the watch and the gym board." },
+    { "id": "ironstack_pro", "name": "IronStack Pro", "monthly": "$3.99", "annual": "$29.99", "founding": "$19.99",
+      "what": "Stack AI and your whole training history in Insights." },
+    { "id": "mealstack_free", "name": "MealStack Free", "monthly": null, "annual": null, "founding": null,
+      "what": "Build your kitchen, foods, recipes and week, and import one plan." },
+    { "id": "mealstack", "name": "MealStack", "monthly": "$8.99", "annual": "$59.99", "founding": "$44.99",
+      "what": "Your plan runs your day, around your training." },
+    { "id": "the_stack", "name": "The Stack", "monthly": "$11.99", "annual": "$79.99", "founding": "$59.99",
+      "recommended": true,
+      "what": "IronStack Pro and MealStack together, with one shared Stack AI allowance." }
+  ],
+  "coach": {
+    "line": "Your lifters never pay. Lifters on Pro 10 and 25 get IronStack Pro.",
+    "tiers": [
+      { "id": "coach_free", "name": "Coach Free", "lifters": 5, "monthly": null, "annual": null },
+      { "id": "coach_10", "name": "Coach Pro 10", "lifters": 10, "monthly": "$19", "annual": "$199", "firstMonthFree": true },
+      { "id": "coach_25", "name": "Coach Pro 25", "lifters": 25, "monthly": "$39", "annual": null, "firstMonthFree": true }
+    ]
+  },
+  "featureColumns": ["IronStack Free", "IronStack Pro", "MealStack", "The Stack"],
+  "features": [
+    { "name": "Log fast: prefilled sets, plate math, warm-ups for your bar", "cells": ["✓", "✓", "✓", "✓"] },
+    { "name": "Rest clock, Live Activity, logging from the lock screen", "cells": ["✓", "✓", "✓", "✓"] },
+    { "name": "Apple Watch, with heart rate; it runs the workout when your phone is away", "cells": ["✓", "✓", "✓", "✓"] },
+    { "name": "Unlimited programs, workouts and your own exercises", "cells": ["✓", "✓", "✓", "✓"] },
+    { "name": "Starter programs and how-to for every lift", "cells": ["✓", "✓", "✓", "✓"] },
+    { "name": "Bring your history from Hevy, Strong, JuggernautAI or a spreadsheet", "cells": ["✓", "✓", "✓", "✓"] },
+    { "name": "Records, badges and the workout recap", "cells": ["✓", "✓", "✓", "✓"] },
+    { "name": "Insights: charts and estimated maxes", "cells": ["30 days", "All", "30 days", "All"] },
+    { "name": "Share cards and spotters", "cells": ["✓", "✓", "✓", "✓"] },
+    { "name": "The gym board on iPad, Mac or Apple TV", "cells": ["✓", "✓", "✓", "✓"] },
+    { "name": "Sync across your devices through your iCloud", "cells": ["✓", "✓", "✓", "✓"] },
+    { "name": "Stack AI answers from your log, on your phone", "cells": ["✓", "✓", "✓", "✓"] },
+    { "name": "Stack AI: ask anything, swap a lift, write a workout or a program", "cells": ["Free week", "Allowance", "Allowance", "Shared allowance"] },
+    { "name": "Train with a coach: share what you choose, get their plans", "cells": ["✓", "✓", "✓", "✓"] },
+    { "name": "MealStack's kitchen, foods, recipes and week planner", "cells": ["✓", "✓", "✓", "✓"] },
+    { "name": "A Stack AI plan import from a photo or PDF", "cells": ["One", "One", "Allowance", "Shared allowance"] },
+    { "name": "Your plan runs your day: targets and meal timing", "cells": ["", "", "✓", "✓"] },
+    { "name": "IronStack tells MealStack when you lift, and the day moves with it", "cells": ["", "", "✓", "✓"] },
+    { "name": "Log food in seconds: search, favorites, barcodes", "cells": ["", "", "✓", "✓"] },
+    { "name": "Fueling against training", "cells": ["", "", "", "✓"] }
+  ],
+  "competitors": [
+    { "name": "Hevy Pro", "price": "$23.99/yr", "checked": "2026-10-12" },
+    { "name": "Strong", "price": "$29.99/yr", "checked": "2026-10-12" },
+    { "name": "MacroFactor", "price": "$71.99/yr", "checked": "2026-10-12" },
+    { "name": "MacroFactor + Workouts", "price": "$89.99/yr", "checked": "2026-10-12" },
+    { "name": "Cronometer Gold", "price": "$59.99/yr", "checked": "2026-10-12" },
+    { "name": "Hevy Coach", "price": "$25 for 10, $50 for 25", "checked": "2026-10-12" },
+    { "name": "TrueCoach", "price": "$58 for 20", "checked": "2026-10-12" }
+  ],
+  "founding": {
+    "window_start": null,
+    "window_end": "2027-01-31",
+    "line": "Founding price for your first year. Renews at the regular price."
+  },
+  "questions": [
+    { "q": "Is there a free trial?", "a": "14 days on the monthly plans. And every new account gets a week of Stack AI." },
+    { "q": "Is there a lifetime plan?", "a": "Not at launch." },
+    { "q": "What happens if I stop paying?", "a": "You keep everything you built and logged." },
+    { "q": "Do I pay for the iPad, Mac or Apple TV?", "a": "No. MissionStack is included in every plan." },
+    { "q": "Android?", "a": "Not yet." },
+    { "q": "How do I cancel?", "a": "In your Apple ID's subscriptions." }
+  ]
+}

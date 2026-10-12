@@ -22,7 +22,9 @@ export default defineConfig({
   // and the release notes' version redirects (above).
   integrations: [mdx(), sitemap({
     filter: (page) => !page.endsWith('/404/') && !page.includes('/loadout/mealstack/privacy')
-      && !releaseRedirects.has(new URL(page).pathname),
+      && !releaseRedirects.has(new URL(page).pathname)
+      // /pricing is linkable from the soft launch but in the sitemap only from 1-1 (#44).
+      && (new URL(page).pathname !== '/pricing/' || String(process.env.PUBLIC_LAUNCH).toLowerCase() === 'true'),
   })],
   // Static output by default — the whole site can be a static export.
   output: 'static',
