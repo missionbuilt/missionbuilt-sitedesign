@@ -29,18 +29,20 @@ const paid = pricing.plans.filter((p) => p.monthly);
   <TopNav active="pricing" />
   <main class="pricing">
     <section class="hero">
+      <p class="eyebrow">Pricing</p>
       <h1>Free to lift. Pay for what runs your day.</h1>
       <p class="free-line">IronStack is free: unlimited logging, programs, history, the watch and the gym board.</p>
     </section>
 
     <section class="plans" aria-labelledby="plans-heading">
-      <h2 id="plans-heading" class="visually-hidden">Plans</h2>
-      <input type="radio" name="period" id="period-annual" class="period" checked />
-      <input type="radio" name="period" id="period-monthly" class="period" />
-      <div class="toggle" role="group" aria-label="Billing">
+      <h2 id="plans-heading" class="sr-only">Plans</h2>
+      <fieldset class="toggle">
+        <legend class="sr-only">Billing</legend>
+        <input type="radio" name="period" id="period-annual" class="period" checked />
         <label for="period-annual">Annual</label>
+        <input type="radio" name="period" id="period-monthly" class="period" />
         <label for="period-monthly">Monthly</label>
-      </div>
+      </fieldset>
       <div class="cards">
         {paid.map((p) => (
           <article class:list={['card', { recommended: p.recommended }]}>
@@ -49,14 +51,14 @@ const paid = pricing.plans.filter((p) => p.monthly);
             <p class="what">{p.what}</p>
             <p class="price annual">
               {founding && p.founding ? (
-                <><s>{p.annual}</s> <strong>{p.founding}</strong><span>/year</span></>
+                <><span class="sr-only">Regular price </span><s>{p.annual}</s> <span class="sr-only">Founding price </span><strong>{p.founding}</strong><span>/year</span></>
               ) : (
                 <><strong>{p.annual}</strong><span>/year</span></>
               )}
             </p>
             {founding && p.founding && <p class="founding annual">{pricing.founding.line}</p>}
             <p class="price monthly"><strong>{p.monthly}</strong><span>/month</span></p>
-            <p class="trial monthly">14 days free, then monthly.</p>
+            <p class="trial monthly">14 days free, then {p.monthly} a month.</p>
           </article>
         ))}
       </div>
@@ -64,11 +66,11 @@ const paid = pricing.plans.filter((p) => p.monthly);
 
     <section class="features" aria-labelledby="features-heading">
       <h2 id="features-heading">What each plan includes</h2>
-      <div class="table-wrap">
+      <div class="table-wrap" tabindex="0" role="region" aria-label="What each plan includes">
         <table>
           <thead>
             <tr>
-              <th scope="col"><span class="visually-hidden">Feature</span></th>
+              <th scope="col"><span class="sr-only">Feature</span></th>
               {pricing.featureColumns.map((c) => <th scope="col">{c}</th>)}
             </tr>
           </thead>
@@ -78,8 +80,8 @@ const paid = pricing.plans.filter((p) => p.monthly);
                 <th scope="row">{f.name}</th>
                 {f.cells.map((cell, i) => (
                   <td>
-                    {cell === '✓' ? <><span aria-hidden="true">✓</span><span class="visually-hidden">Included in {pricing.featureColumns[i]}</span></>
-                      : cell === '' ? <span class="visually-hidden">Not in {pricing.featureColumns[i]}</span>
+                    {cell === '✓' ? <><span aria-hidden="true">✓</span><span class="sr-only">Included in {pricing.featureColumns[i]}</span></>
+                      : cell === '' ? <span class="sr-only">Not in {pricing.featureColumns[i]}</span>
                       : cell}
                   </td>
                 ))}
@@ -130,22 +132,20 @@ const paid = pricing.plans.filter((p) => p.monthly);
 </BaseLayout>
 
 <style>
-  .pricing { max-width: 1040px; margin: 0 auto; padding: 48px 20px 80px; color: var(--color-chalk); }
-  .hero h1 { font-family: var(--font-display); font-size: clamp(2rem, 6vw, 3.4rem); line-height: 1.05; margin: 0 0 16px; }
+  .pricing { max-width: 1040px; margin: 0 auto; padding: 56px var(--pad-page-x) 80px; color: var(--color-chalk); }
+  .eyebrow { margin: 0 0 14px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.24em; color: var(--color-chalk-dim); text-transform: uppercase; }
+  .hero h1 { font-family: var(--font-display); font-weight: 600; font-size: clamp(34px, 5vw, 52px); line-height: 1.0; letter-spacing: -0.01em; text-transform: uppercase; margin: 0 0 14px; }
   .free-line { color: var(--color-chalk-dim); font-size: var(--fs-body); max-width: 40em; }
   h2 { font-family: var(--font-display); font-size: 1.5rem; margin: 56px 0 16px; }
-  .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   .period { position: absolute; opacity: 0; pointer-events: none; }
-  .toggle { display: inline-flex; border: var(--border-thin); border-radius: 999px; margin: 32px 0 20px; }
-  .toggle label { padding: 10px 18px; min-height: 44px; display: inline-flex; align-items: center; cursor: pointer; color: var(--color-chalk-dim); border-radius: 999px; }
-  #period-annual:checked ~ .toggle label[for='period-annual'],
-  #period-monthly:checked ~ .toggle label[for='period-monthly'] { background: var(--color-chalk); color: var(--color-bg); }
-  #period-annual:focus-visible ~ .toggle label[for='period-annual'],
-  #period-monthly:focus-visible ~ .toggle label[for='period-monthly'] { outline: 2px solid var(--color-blood-bright); outline-offset: 2px; }
-  #period-annual:checked ~ .cards .monthly { display: none; }
-  #period-monthly:checked ~ .cards .annual { display: none; }
+  .toggle { display: inline-flex; border: var(--border-thin); margin: 32px 0 20px; padding: 0; }
+  .toggle label { padding: 10px 18px; min-height: 44px; display: inline-flex; align-items: center; cursor: pointer; color: var(--color-chalk-dim); }
+  #period-annual:checked + label, #period-monthly:checked + label { background: var(--color-chalk); color: var(--color-bg); }
+  .period:focus-visible + label { outline: 2px solid var(--color-blood-text); outline-offset: 2px; }
+  .plans:has(#period-annual:checked) .monthly { display: none; }
+  .plans:has(#period-monthly:checked) .annual { display: none; }
   .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
-  .card { background: var(--color-panel); border: var(--border-thin); border-radius: 12px; padding: 22px; }
+  .card { background: var(--color-panel); border: var(--border-thin); padding: 22px; }
   .card.recommended { border-color: var(--color-blood-bright); }
   .badge { font-family: var(--font-mono); font-size: var(--fs-kicker); text-transform: uppercase; color: var(--color-blood-text); margin: 0 0 8px; }
   .card h3, .tier h3 { margin: 0 0 6px; font-size: 1.25rem; }
@@ -159,10 +159,12 @@ const paid = pricing.plans.filter((p) => p.monthly);
   table { width: 100%; border-collapse: collapse; min-width: 560px; }
   th, td { padding: 10px 8px; border-bottom: 1px solid var(--color-rule-soft); text-align: center; }
   tbody th { text-align: left; font-weight: normal; }
+  /* The feature names stay on screen while a phone scrolls the plans sideways. */
+  tbody th, thead th:first-child { position: sticky; left: 0; background: var(--color-bg); }
   thead th { font-size: 0.95rem; color: var(--color-chalk-dim); }
   .note { color: var(--color-chalk-dim); margin-top: 12px; }
   .tiers { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
-  .tier { background: var(--color-panel); border: var(--border-thin); border-radius: 12px; padding: 20px; }
+  .tier { background: var(--color-panel); border: var(--border-thin); padding: 20px; }
   .compared ul { list-style: none; padding: 0; margin: 0; }
   .compared li { display: flex; flex-wrap: wrap; gap: 4px 12px; padding: 10px 0; border-bottom: 1px solid var(--color-rule-soft); }
   .compared .name { flex: 1 1 12em; }
