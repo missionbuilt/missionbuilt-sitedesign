@@ -1,0 +1,172 @@
+---
+/**
+ * /pricing (#44; briefs/launch/pricing-page-spec.md). Rendered only from src/data/pricing.json.
+ *
+ * A dynamic route so the page can be left out of the build entirely: with both flags off,
+ * `getStaticPaths` returns nothing and there is no /pricing. `PUBLIC_PRICING` builds it with
+ * `noindex`, out of the nav and sitemap; `PUBLIC_LAUNCH` makes it public (src/data/pricing.ts).
+ * While either is on, a stale or "[verify]" price fails the build.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import TopNav from '../components/TopNav.astro';
+import { pricing, pricingFlags, assertPricingFresh, inFoundingWindow, checkedLabel } from '../data/pricing';
+
+export function getStaticPaths() {
+  return pricingFlags().pricing ? [{ params: { pricing: 'pricing' } }] : [];
+}
+
+const { launch } = pricingFlags();
+assertPricingFresh();
+const founding = inFoundingWindow();
+const paid = pricing.plans.filter((p) => p.monthly);
+---
+<BaseLayout
+  title="Pricing · IronStack, MealStack and The Stack"
+  description="IronStack is free. Pay for what runs your day: IronStack Pro, MealStack, or The Stack with both."
+  noindex={!launch}
+>
+  <TopNav active="pricing" />
+  <main class="pricing">
+    <section class="hero">
+      <h1>Free to lift. Pay for what runs your day.</h1>
+      <p class="free-line">IronStack is free: unlimited logging, programs, history, the watch and the gym board.</p>
+    </section>
+
+    <section class="plans" aria-labelledby="plans-heading">
+      <h2 id="plans-heading" class="visually-hidden">Plans</h2>
+      <input type="radio" name="period" id="period-annual" class="period" checked />
+      <input type="radio" name="period" id="period-monthly" class="period" />
+      <div class="toggle" role="group" aria-label="Billing">
+        <label for="period-annual">Annual</label>
+        <label for="period-monthly">Monthly</label>
+      </div>
+      <div class="cards">
+        {paid.map((p) => (
+          <article class:list={['card', { recommended: p.recommended }]}>
+            {p.recommended && <p class="badge">Recommended</p>}
+            <h3>{p.name}</h3>
+            <p class="what">{p.what}</p>
+            <p class="price annual">
+              {founding && p.founding ? (
+                <><s>{p.annual}</s> <strong>{p.founding}</strong><span>/year</span></>
+              ) : (
+                <><strong>{p.annual}</strong><span>/year</span></>
+              )}
+            </p>
+            {founding && p.founding && <p class="founding annual">{pricing.founding.line}</p>}
+            <p class="price monthly"><strong>{p.monthly}</strong><span>/month</span></p>
+            <p class="trial monthly">14 days free, then monthly.</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="features" aria-labelledby="features-heading">
+      <h2 id="features-heading">What each plan includes</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col"><span class="visually-hidden">Feature</span></th>
+              {pricing.featureColumns.map((c) => <th scope="col">{c}</th>)}
+            </tr>
+          </thead>
+          <tbody>
+            {pricing.features.map((f) => (
+              <tr>
+                <th scope="row">{f.name}</th>
+                {f.cells.map((cell, i) => (
+                  <td>
+                    {cell === '✓' ? <><span aria-hidden="true">✓</span><span class="visually-hidden">Included in {pricing.featureColumns[i]}</span></>
+                      : cell === '' ? <span class="visually-hidden">Not in {pricing.featureColumns[i]}</span>
+                      : cell}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="note">MissionStack, for iPad, Mac and Apple TV, is included in every plan.</p>
+    </section>
+
+    <section class="coaches" aria-labelledby="coaches-heading">
+      <h2 id="coaches-heading">Coaches</h2>
+      <p>{pricing.coach.line}</p>
+      <div class="tiers">
+        {pricing.coach.tiers.map((t) => (
+          <article class="tier">
+            <h3>{t.name}</h3>
+            <p class="lifters">Up to {t.lifters} lifters</p>
+            {t.monthly ? (
+              <p class="price"><strong>{t.monthly}</strong><span>/month</span>{t.annual && <> or <strong>{t.annual}</strong><span>/year</span></>}</p>
+            ) : (
+              <p class="price"><strong>Free</strong></p>
+            )}
+            {t.firstMonthFree && <p class="trial">First month free.</p>}
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="compared" aria-labelledby="compared-heading">
+      <h2 id="compared-heading">What the same costs elsewhere</h2>
+      <ul>
+        {pricing.competitors.map((c) => (
+          <li><span class="name">{c.name}</span> <span class="cost">{c.price}</span> <span class="checked">{checkedLabel(c.checked)}</span></li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="questions" aria-labelledby="questions-heading">
+      <h2 id="questions-heading">Questions</h2>
+      <dl>
+        {pricing.questions.map((q) => (<><dt>{q.q}</dt><dd>{q.a}</dd></>))}
+      </dl>
+    </section>
+  </main>
+  <SiteFooter />
+</BaseLayout>
+
+<style>
+  .pricing { max-width: 1040px; margin: 0 auto; padding: 48px 20px 80px; color: var(--color-chalk); }
+  .hero h1 { font-family: var(--font-display); font-size: clamp(2rem, 6vw, 3.4rem); line-height: 1.05; margin: 0 0 16px; }
+  .free-line { color: var(--color-chalk-dim); font-size: var(--fs-body); max-width: 40em; }
+  h2 { font-family: var(--font-display); font-size: 1.5rem; margin: 56px 0 16px; }
+  .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .period { position: absolute; opacity: 0; pointer-events: none; }
+  .toggle { display: inline-flex; border: var(--border-thin); border-radius: 999px; margin: 32px 0 20px; }
+  .toggle label { padding: 10px 18px; min-height: 44px; display: inline-flex; align-items: center; cursor: pointer; color: var(--color-chalk-dim); border-radius: 999px; }
+  #period-annual:checked ~ .toggle label[for='period-annual'],
+  #period-monthly:checked ~ .toggle label[for='period-monthly'] { background: var(--color-chalk); color: var(--color-bg); }
+  #period-annual:focus-visible ~ .toggle label[for='period-annual'],
+  #period-monthly:focus-visible ~ .toggle label[for='period-monthly'] { outline: 2px solid var(--color-blood-bright); outline-offset: 2px; }
+  #period-annual:checked ~ .cards .monthly { display: none; }
+  #period-monthly:checked ~ .cards .annual { display: none; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+  .card { background: var(--color-panel); border: var(--border-thin); border-radius: 12px; padding: 22px; }
+  .card.recommended { border-color: var(--color-blood-bright); }
+  .badge { font-family: var(--font-mono); font-size: var(--fs-kicker); text-transform: uppercase; color: var(--color-blood-text); margin: 0 0 8px; }
+  .card h3, .tier h3 { margin: 0 0 6px; font-size: 1.25rem; }
+  .what, .lifters { color: var(--color-chalk-dim); margin: 0 0 16px; }
+  .price { margin: 0; font-size: 1.1rem; }
+  .price strong { font-size: 1.8rem; font-family: var(--font-display); }
+  .price span { color: var(--color-chalk-dim); }
+  .price s { color: var(--color-chalk-faint); }
+  .founding, .trial { color: var(--color-chalk-dim); font-size: 0.95rem; margin: 6px 0 0; }
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; min-width: 560px; }
+  th, td { padding: 10px 8px; border-bottom: 1px solid var(--color-rule-soft); text-align: center; }
+  tbody th { text-align: left; font-weight: normal; }
+  thead th { font-size: 0.95rem; color: var(--color-chalk-dim); }
+  .note { color: var(--color-chalk-dim); margin-top: 12px; }
+  .tiers { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+  .tier { background: var(--color-panel); border: var(--border-thin); border-radius: 12px; padding: 20px; }
+  .compared ul { list-style: none; padding: 0; margin: 0; }
+  .compared li { display: flex; flex-wrap: wrap; gap: 4px 12px; padding: 10px 0; border-bottom: 1px solid var(--color-rule-soft); }
+  .compared .name { flex: 1 1 12em; }
+  .compared .checked { color: var(--color-chalk-faint); font-size: 0.9rem; }
+  dt { font-weight: 600; margin-top: 18px; }
+  dd { margin: 4px 0 0; color: var(--color-chalk-dim); }
+</style>
