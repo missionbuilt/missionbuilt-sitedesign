@@ -14,6 +14,8 @@
  * the server data"): the app no longer offers it, the Stack AI server takes no copy from any
  * build, and every copy earlier builds made is erased (POST /admin/capture/erase-all,
  * ironstack/stackai-proxy README).
+ * Oct 16, 2026 for heart rate keeping its last reading during a workout, dimmed after ten
+ * seconds and marked lost after a minute (#155, HeartRateRule in app/WatchWire/WatchRuntime.swift).
  *
  * GOES LIVE ONLY AFTER: both Stack AI Workers (ironstack-stackai and ironstack-coach) run the
  * code that answers the old push 410 (until then an older build's copy is still stored, so
