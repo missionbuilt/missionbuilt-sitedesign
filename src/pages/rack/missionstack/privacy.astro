@@ -23,6 +23,9 @@
  * TLS-PSK listener and ITSAppUsesNonExemptEncryption = NO; private CloudKit counted
  * as "not collected" (when sync ships). Draft for review by a lawyer before public launch.
  *
+ * The heart rate lines (#157: Show my heart rate on the board) go live only with the first IronStack
+ * and MissionStack builds that carry #157.
+ *
  * Color discipline: oxblood for the hero period, section labels and the one
  * emphasised word. No army green on this page.
  */
@@ -45,8 +48,8 @@ type Keep = { what: string; how: string };
 const keeps: Keep[] = [
   { what: 'Your plan and settings', how: 'On this iPad or Mac until you delete them, or delete the app. Included in your device backup like any other app data.' },
   { what: 'Phones the board remembers', how: 'The name each phone sent and a pairing key, in this device\'s Keychain (iPad, Mac or Apple TV). They stay after you delete the app. Delete all data, or Settings › Board › Forget all phones, clears them; on Apple TV, Forget all phones on the board\'s home screen.' },
-  { what: 'A Team lift', how: 'Held in memory while it runs: the board names, colours and handles of who joined, and the team\'s totals. Gone when the Team lift closes.' },
-  { what: 'The board on your own', how: 'Held in memory only, with the clock voice your phone sent. Gone when its celebration closes, when you close the board, or 45 minutes after the phone goes quiet.' },
+  { what: 'A Team lift', how: 'Held in memory while it runs: the board names, colours and handles of who joined, and the team\'s totals. Gone when the Team lift closes. A heart rate is held in memory only, never saved or replayed, and is gone the moment the lifter turns it off, leaves, or the workout ends.' },
+  { what: 'The board on your own', how: 'Held in memory only, with the clock voice your phone sent. Gone when its celebration closes, when you close the board, or 45 minutes after the phone goes quiet. A heart rate is held in memory only, never saved or replayed, and is gone the moment the lifter turns it off, leaves, or the workout ends.' },
   { what: 'Anything on Mission Built\'s servers', how: 'Nothing. MissionStack doesn\'t talk to them.' },
 ];
 ---
@@ -125,7 +128,7 @@ const keeps: Keep[] = [
           <p class="k">Local network only</p>
           <p class="v">Between this device and the phones you let in.</p>
           <p class="body">The board shows a workout from an iPhone on the same Wi-Fi. iPhone and iPad ask for permission to use the local network, and the board uses it only after you say yes. Apple TV doesn't ask: there, the board uses the local network only while the board is open, and stops when you close it or leave the app. On a Mac, the board uses it only after you say yes where the Mac asks, and keeps using it while the board is open, even minimised or behind another app, until you close it or quit the app. The link between the phone and the board is encrypted with a key from the code on the board's screen, nothing passes through the internet, and nothing reaches Mission Built. The board announces itself on the network under a random name, never yours.</p>
-          <p class="body"><strong>On your own,</strong> everything your phone sends is on the screen for the room: the workout, each set with its weight, and the name your phone sent. The phone also sends the clock voice you picked in IronStack, Male or Female, and the board speaks in it.</p>
+          <p class="body"><strong>On your own,</strong> everything your phone sends is on the screen for the room: the workout, each set with its weight, and the name your phone sent. The phone also sends the clock voice you picked in IronStack, Male or Female, and the board speaks in it. If the lifter leaves Show my heart rate on the board on in IronStack, the phone also sends their live heart rate from Apple Watch and its zone, and the board shows it, with the zones of the last five minutes on an interval block. Never their age.</p>
           <p class="body"><strong>Phones the board remembers.</strong> If you turn on Remember this iPhone when you pair, the board keeps the name the phone sent and a pairing key, on this iPad, Mac or Apple TV. They stay after you delete the app. Delete all data, or Settings › Board › Forget all phones, clears them. On Apple TV, use Forget all phones on the board's home screen.</p>
           <p class="body"><strong>Delete all IronStack data on your iPhone can't reach someone else's board.</strong> If your phone is remembered there, the board's owner has to forget it.</p>
         </div>
@@ -139,7 +142,7 @@ const keeps: Keep[] = [
             <li>RPE targets, prep sets, and the rest or EMOM clock</li>
           </ul>
           <p class="body"><strong>Never in the copy:</strong> weights, loads or notes. An exercise from the library goes by its library name. One you added yourself goes as you named it.</p>
-          <p class="body">During the lift each phone sends the board its sets. Weights show on the screen only for lifters who leave Show my numbers on; with it off, the board drops them. Every phone in the room sees the others' board names and colours, and a handle when that lifter shares it. At the end each phone gets the team's totals, and a total is left out unless at least two other lifters added to it. The celebration shows every lifter's card to the room.</p>
+          <p class="body">During the lift each phone sends the board its sets. Weights show on the screen only for lifters who leave Show my numbers on; with it off, the board drops them. Every phone in the room sees the others' board names and colours, and a handle when that lifter shares it. At the end each phone gets the team's totals, and a total is left out unless at least two other lifters added to it. The celebration shows every lifter's card to the room. A lifter's heart rate shows only if their own switch is on and they leave Show my numbers on, and only from their own phone. It is never sent to another phone.</p>
           <p class="body">Who joined is held in memory while the Team lift runs and wiped when it closes.</p>
         </div>
       </div>
