@@ -13,7 +13,9 @@
  * 0.9.1 (Health read, calendar, automatic travel, the IronStack shelf, Stack AI files and
  * web search), updated Sept 30, 2026 for Stack AI's permission screen, and Oct 3, 2026 when PostHog was
  * removed (usage data now stays in Mission Built's own record on Cloudflare) and for the
- * fueling summary IronStack's Coach mode can send (fueling-summary-mealstack.json). The Stack AI
+ * fueling summary IronStack's Coach mode can send (fueling-summary-mealstack.json), and Oct 13, 2026
+ * for build 90: barcode lookups (Mission Built's server, then Open Food Facts), a workout's start time
+ * from IronStack moving today's session, and Apple's rating prompt. The Stack AI
  * cell says what that screen says, in the same order. /loadout/mealstack/privacy renders this page too. Draft for review by a
  * lawyer before public launch. MealStack is 18+.
  *
@@ -24,7 +26,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import SiteFooter from '../../../components/SiteFooter.astro';
 import TopNav from '../../../components/TopNav.astro';
 
-const EFFECTIVE = 'October 16, 2026';
+const EFFECTIVE = 'October 13, 2026';
 const ASK = 'mailto:support@missionbuilt.io?subject=MealStack%20data%20request';
 
 const stats = [
@@ -39,7 +41,7 @@ const parties: Party[] = [
   { who: 'Cloudflare', role: 'Runs the Stack AI server', what: 'Sees each Stack AI request in transit and keeps the device record, the allowance counters, an answer for 10 minutes in case your connection drops, and the ninety-day accounting record. Keeps a lookup count for two days and never the barcode. Discards your IP address.', where: 'Global edge, US account' },
   { who: 'Anthropic', role: 'Runs the Claude model behind Stack AI', what: 'Receives what the app sends when you ask Stack AI something, after you turn Stack AI on, and produces the answer; runs the web searches Stack AI writes from your question. Deletes it within 30 days and does not train its models on it; keeps it longer (up to 2 years) only if a request is flagged for breaking its usage policy. Stack AI is an AI and can be wrong; it isn\'t medical advice. Handles it under its Data Processing Addendum.', where: 'United States' },
   { who: 'Open Food Facts', role: 'Public food database, asked from your phone', what: 'The barcode number, your phone\'s IP address, and the app\'s name and version, when our server doesn\'t know a barcode and you\'ve turned on barcode lookups. Its own privacy policy applies; Mission Built sends it nothing else and writes nothing back.', where: 'France (Open Food Facts association)' },
-  { who: 'Apple', role: 'Health, TestFlight, the App Store', what: 'Health receives the macros of meals you log, and gives the app food from other apps and your weight, each only if you allow it. Apple\'s own privacy terms cover TestFlight and the App Store.', where: 'Per Apple' },
+  { who: 'Apple', role: 'Health, TestFlight, the App Store', what: 'Health receives the macros of meals you log, and gives the app food from other apps and your weight, each only if you allow it. Now and then the app may show Apple\'s own rating prompt; it never asks in a test build. A rating or review goes to Apple under Apple\'s terms. A written review is public on the App Store, where Mission Built can read it and reply. The phone keeps only the date and app version of the last ask, and Delete all removes it. Apple\'s own privacy terms cover TestFlight and the App Store.', where: 'Per Apple' },
 ];
 
 type Keep = { what: string; how: string };
