@@ -2,11 +2,11 @@
 /**
  * MissionStack — privacy.
  *
- * DRAFT (#118, Chalkboard, Oct 9, 2026): the facts are checked against the code
- * (missionstack/privacy/data-inventory-2026-10-09.md, §12–14 override); the words are
- * XO's to rewrite and Mike's to approve. Not linked from the Rack, the nav or the
- * sitemap, and noindex, until Mike says the name is cleared and the page goes live
- * with the first external TestFlight build (promise 8: it describes what is live).
+ * In effect October 16, 2026, with the first MissionStack TestFlight build (#118, Chalkboard;
+ * release/missionstack 49fef57). The facts are checked against that code
+ * (missionstack/privacy/data-inventory-2026-10-09.md, §12–14 override; privacy review 2026-10-13).
+ * Not linked from the Rack, the nav or the sitemap, and noindex, until Mike says the name is
+ * cleared (promise 8: it describes what is live).
  *
  * It describes the MVP build (feat/missionstack-mvp): the plan on the iPad or Mac,
  * the board inside the app, Delete all, export and import. iCloud sync is built but
@@ -19,12 +19,13 @@
  * the ASC label is filled in as Data Not Collected; check the Mac clause by trashing the app.
  *
  * For the lawyer, as on the other two pages: is an 18+ statement enough with no in-app
- * age check (only the Team lift join asks), and must the App Store age rating match; the
- * TLS-PSK listener and ITSAppUsesNonExemptEncryption = NO; private CloudKit counted
- * as "not collected" (when sync ships). Draft for review by a lawyer before public launch.
+ * age check (only the Team lift join asks, once Team lifts ship), and must the App Store age
+ * rating match; the TLS-PSK listener and ITSAppUsesNonExemptEncryption = NO; private CloudKit
+ * counted as "not collected" (when sync ships). For a lawyer's review before public launch.
  *
- * The heart rate lines (#157: Show my heart rate on the board) go live only with the first IronStack
- * and MissionStack builds that carry #157.
+ * Not in this build, so not on this page: heart rate on the board (BoardFlags.heartRate = false;
+ * #157) and Team lifts (BoardPage.teamLiftShown is false in release; the Apple TV's Team board is
+ * behind the debug -teamDemo launch). Each comes back here with the build that turns it on.
  *
  * Color discipline: oxblood for the hero period, section labels and the one
  * emphasised word. No army green on this page.
@@ -33,8 +34,8 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import SiteFooter from '../../../components/SiteFooter.astro';
 import TopNav from '../../../components/TopNav.astro';
 
-const DRAFT = true;
-const EFFECTIVE = 'DRAFT';  // a date, e.g. 'October 17, 2026', at go-live
+const DRAFT = false;
+const EFFECTIVE = 'October 16, 2026';
 const ASK = 'mailto:support@missionbuilt.io?subject=MissionStack%20data%20request';
 
 const stats = [
@@ -47,9 +48,8 @@ const stats = [
 type Keep = { what: string; how: string };
 const keeps: Keep[] = [
   { what: 'Your plan and settings', how: 'On this iPad or Mac until you delete them, or delete the app. Included in your device backup like any other app data.' },
-  { what: 'Phones the board remembers', how: 'The name each phone sent and a pairing key, in this device\'s Keychain (iPad, Mac or Apple TV). They stay after you delete the app. Delete all data, or Settings › Board › Forget all phones, clears them; on Apple TV, Forget all phones on the board\'s home screen.' },
-  { what: 'A Team lift', how: 'Held in memory while it runs: the board names, colours and handles of who joined, and the team\'s totals. Gone when the Team lift closes. A heart rate is held in memory only, never saved or replayed, and is gone the moment the lifter turns it off, leaves, or the workout ends.' },
-  { what: 'The board on your own', how: 'Held in memory only, with the clock voice your phone sent. Gone when its celebration closes, when you close the board, or 45 minutes after the phone goes quiet. A heart rate is held in memory only, never saved or replayed, and is gone the moment the lifter turns it off, leaves, or the workout ends.' },
+  { what: 'Phones the board remembers', how: 'The name each phone sent and a pairing key, in this device\'s Keychain (iPad, Mac or Apple TV). They stay after you delete the app. Delete all data, or Settings › Board › Forget all phones, clears them; on Apple TV, Forget all phones on the board\'s home screen. To forget one phone, open the board and choose Pair iPhone: each remembered phone has Forget this iPhone, beside Forget all phones.' },
+  { what: 'The board on your own', how: 'Held in memory only, with the clock voice your phone sent. Gone when its celebration closes, when you close the board, or 45 minutes after the phone goes quiet.' },
   { what: 'Anything on Mission Built\'s servers', how: 'Nothing. MissionStack doesn\'t talk to them.' },
 ];
 ---
@@ -128,22 +128,13 @@ const keeps: Keep[] = [
           <p class="k">Local network only</p>
           <p class="v">Between this device and the phones you let in.</p>
           <p class="body">The board shows a workout from an iPhone on the same Wi-Fi. iPhone and iPad ask for permission to use the local network, and the board uses it only after you say yes. Apple TV doesn't ask: there, the board uses the local network only while the board is open, and stops when you close it or leave the app. On a Mac, the board uses it only after you say yes where the Mac asks, and keeps using it while the board is open, even minimised or behind another app, until you close it or quit the app. The link between the phone and the board is encrypted with a key from the code on the board's screen, nothing passes through the internet, and nothing reaches Mission Built. The board announces itself on the network under a random name, never yours.</p>
-          <p class="body"><strong>On your own,</strong> everything your phone sends is on the screen for the room: the workout, each set with its weight, and the name your phone sent. The phone also sends the clock voice you picked in IronStack, Male or Female, and the board speaks in it. If you leave Show my heart rate on the board on in IronStack, your phone also sends your live heart rate from Apple Watch and its zone, and the board shows it, with the zones of the last five minutes on an interval block. Never your age.</p>
-          <p class="body"><strong>Phones the board remembers.</strong> If you turn on Remember this iPhone when you pair, the board keeps the name the phone sent and a pairing key, on this iPad, Mac or Apple TV. They stay after you delete the app. Delete all data, or Settings › Board › Forget all phones, clears them. On Apple TV, use Forget all phones on the board's home screen.</p>
+          <p class="body"><strong>On your own,</strong> everything your phone sends is on the screen for the room: the workout, each set with its weight, and the name your phone sent. The phone also sends the clock voice you picked in IronStack, Male or Female, and the board speaks in it. Never your age.</p>
+          <p class="body"><strong>Phones the board remembers.</strong> If you turn on Remember this iPhone when you pair, the board keeps the name the phone sent and a pairing key, on this iPad, Mac or Apple TV. They stay after you delete the app. Delete all data, or Settings › Board › Forget all phones, clears them. On Apple TV, use Forget all phones on the board's home screen. To forget one phone, open the board and choose Pair iPhone: each remembered phone has Forget this iPhone, beside Forget all phones.</p>
           <p class="body"><strong>Delete all IronStack data on your iPhone can't reach someone else's board.</strong> If your phone is remembered there, the board's owner has to forget it.</p>
         </div>
         <div class="cell">
           <p class="k">Team lifts</p>
-          <p class="v">The workout copy carries no weights.</p>
-          <p class="body">Every phone that joins a Team lift gets a copy of the workout:</p>
-          <ul class="list">
-            <li>its name and date, exercise names, order and groups</li>
-            <li>sets, and reps, time or distance</li>
-            <li>RPE targets, prep sets, and the rest or EMOM clock</li>
-          </ul>
-          <p class="body"><strong>Never in the copy:</strong> weights, loads or notes. An exercise from the library goes by its library name. One you added yourself goes as you named it.</p>
-          <p class="body">During the lift each phone sends the board its sets. Weights show on the screen only for lifters who leave Show my numbers on; with it off, the board drops them. Every phone in the room sees the others' board names and colours, and a handle when that lifter shares it. At the end each phone gets the team's totals, and a total is left out unless at least two other lifters added to it. The celebration shows every lifter's card to the room. A lifter's heart rate shows only if their own switch is on and they leave Show my numbers on, and only from their own phone. It is never sent to another phone.</p>
-          <p class="body">Who joined is held in memory while the Team lift runs and wiped when it closes.</p>
+          <p class="body">Team lifts aren't in this version. When they come, this page says what they share first.</p>
         </div>
       </div>
 
@@ -176,7 +167,7 @@ const keeps: Keep[] = [
       <p class="section-label">Your data</p>
       <h2 class="section-h2">Export it, or delete it, from Settings.</h2>
       <div class="prose-block">
-        <p><strong>Settings › Your data › Export</strong> saves your plan and your appearance setting to a file you keep. <strong>Settings › Your data › Import</strong> brings that file back. It replaces the plan and appearance setting on this iPad or Mac, and shows you what it replaces before anything changes.</p>
+        <p><strong>Settings › Your data › Export</strong> saves your plan and your settings for appearance and units to a file you keep. <strong>Settings › Your data › Import</strong> brings that file back. It replaces the plan and those settings on this iPad or Mac, and shows you what it replaces before anything changes.</p>
         <p><strong>Settings › Your data › Delete all data</strong> closes the board, forgets every phone the board remembers, and removes every file and setting MissionStack keeps on this device. It doesn't reach an export you saved elsewhere, or a backup already made. If something couldn't be deleted, the app says so, and <strong>Settings › Board › Forget all phones</strong> clears it.</p>
         <p><strong>Deleting the app is not the same.</strong> On an iPad, deleting the app removes your plan and settings. On a Mac, its files can stay behind. Either way, phones the board remembers stay in the Keychain. Run Delete all data first.</p>
         <p>Anything else about your data, email <a href={ASK}>support@missionbuilt.io</a>. Mission Built will confirm within ten days and finish within thirty.</p>
@@ -201,7 +192,7 @@ const keeps: Keep[] = [
       <div class="two">
         <div class="cell">
           <p class="k">Age</p>
-          <p class="body">MissionStack is for adults, 18 and over. The app doesn't ask your age. A phone joining a Team lift has to confirm its lifter is 18 or over, and the board doesn't keep that answer.</p>
+          <p class="body">MissionStack is for adults, 18 and over. The app doesn't ask your age.</p>
         </div>
         <div class="cell">
           <p class="k">Apple</p>
