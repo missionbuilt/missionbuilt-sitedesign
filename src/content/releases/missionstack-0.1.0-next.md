@@ -11,7 +11,7 @@ status: in-progress
 
 - **MissionStack is on TestFlight for the first time.** It runs on iPad, on an Apple silicon Mac (as an iPad app), and on Apple TV, where it is the board only.
 - **Everything you do here is saved on this iPad or Mac.** Nothing syncs with your iPhone in this build: the sidebar's foot says "Saved on this iPad." (or Mac) and "Sync is not set up yet."
-- **The first time you open it, Welcome asks where you want to start.** In this build only See starters works. Bring it over and Start empty show, but are off for now.
+- **The first time you open it, Welcome asks where you want to start.** See starters and Start empty work in this build; Bring it over shows, but is off for now.
 - **The sidebar has Home, Social, Insights, Plan and Food, then Board, Settings and Stack AI.** Social, Insights, Food and Stack AI say what they will be, marked "Not built yet".
 - **Hide the sidebar for more room with its button, or ⌘0 with a keyboard.** It stays the way you left it.
 
@@ -39,7 +39,7 @@ status: in-progress
 
 ### Plan
 
-- **Plan is where your program lives, one workout at a time, with the week's days beside it.** In this build a plan comes in only from a MissionStack export file (Settings › Your data › Import); a new one can't be started here yet.
+- **Plan is where your program lives, one workout at a time, with the week's days beside it.** Start empty on Welcome gives you an empty week to build; a MissionStack export file (Settings › Your data › Import) brings one back.
 - **Add an exercise by typing it, like "front squat 3x5 @7", which fills in the sets, reps and RPE.** There are 1,159 exercises to pick from.
 - **Open an exercise to change its sets, reps, load and RPE, with minus and plus beside the load.** Set by set shows each set on its own row, and "Use set 2 for all 3 sets" copies one set to the rest.
 - **Every exercise has one menu: Swap, Duplicate, Copy to, Move to, Add a Note and Remove.** Swap keeps the sets and the note.
