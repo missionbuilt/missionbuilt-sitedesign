@@ -7,6 +7,20 @@ groups: [{"title": "Getting started", "slug": "getting-started", "leads": ["Miss
 status: in-progress
 ---
 
+**Your workout on the big screen.**
+
+**NEW: MissionStack.** The third Mission Built app, made for the big screens: iPad, Mac and Apple TV. IronStack and MealStack run your day from your phone; MissionStack is where you'll see and plan it on a screen your size. This first build has two things: the gym board and workout planning.
+
+**NEW: The gym board.** Your live workout on an iPad, a Mac or an Apple TV. Choose Start on my own, scan the code with your iPhone's Camera, and the set you're on, the load, the rest clock and your records show big enough to read across the room. You still log on your iPhone or watch; the board only shows. When you finish it says Stacked with your time, volume and records, then keeps nothing: your workout is saved on your iPhone. On Apple TV the Siri Remote pauses the clock. Pairing needs IronStack's TestFlight build from today.
+
+**TESTING: Plan your training on iPad and Mac.** Start empty, type "front squat 3x5 @7" and the sets, reps and RPE fill in. Drag workouts between days, make a superset, swap a lift, copy a week forward. Every change can be undone, and a keyboard makes it faster. For now your plan stays on this iPad or Mac; it doesn't reach your iPhone yet.
+
+**Coming soon:** sync with IronStack, so a week planned here is on your phone at the gym; meal planning with MealStack; starter programs; Team lifts on the board; Stack AI. They're in the sidebar marked "Not built yet" so you can see where they'll go.
+
+**Try this:** pair your iPhone with the board and run one real workout start to finish. Tell us anything the board showed that didn't match your phone, and how far away you could still read it. Then plan next week on the iPad and tell us what felt slower than it should.
+
+## Every change in this build
+
 ### Getting started
 
 - **MissionStack is on TestFlight for the first time.** It runs on iPad, on an Apple silicon Mac (as an iPad app), and on Apple TV, where it is the board only.
