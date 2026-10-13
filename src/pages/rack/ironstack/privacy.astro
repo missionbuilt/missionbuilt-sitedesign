@@ -14,6 +14,8 @@
  * the server data"): the app no longer offers it, the Stack AI server takes no copy from any
  * build, and every copy earlier builds made is erased (POST /admin/capture/erase-all,
  * ironstack/stackai-proxy README).
+ * Oct 16, 2026 for heart rate keeping its last reading during a workout, dimmed after ten
+ * seconds and marked lost after a minute (#155, HeartRateRule in app/WatchWire/WatchRuntime.swift).
  *
  * #126 (Oct 10, 2026, branch feat/ironstack-privacy-history): the recent window's words and
  * the lifetime summary, as the app's Stack AI sheet version 2 says them (Mike approved the
@@ -45,7 +47,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import SiteFooter from '../../../components/SiteFooter.astro';
 import TopNav from '../../../components/TopNav.astro';
 
-const EFFECTIVE = 'October 12, 2026';
+const EFFECTIVE = 'October 16, 2026';
 // The day POST /admin/capture/erase-all answered "done": true (Mike, 2026-10-05, 13:12 EDT).
 const COPIES_ERASED = 'October 5, 2026';
 const ASK = 'mailto:support@missionbuilt.io?subject=IronStack%20data%20request';
@@ -69,7 +71,7 @@ const keeps: Keep[] = [
   { what: 'Your training log, plan, notes, equipment and gear, profile', how: 'On your phone until you delete them or delete the app. Included in your iPhone backup like any other app data.' },
   { what: 'Your Stack AI chats', how: 'On your phone until you delete them. Not synced anywhere.' },
   { what: 'On your Apple Watch: the workout on screen, your last finished workout, taps waiting for the phone', how: 'On the watch. Each is replaced by the next one the phone sends; a tap is gone once the phone has it. Removed by Delete all IronStack data, or when you delete IronStack from the watch.' },
-  { what: 'Your heart rate and active energy during a workout', how: 'Not kept by IronStack. Your heart rate is shown while it is under ten seconds old, then gone; active energy is not shown. The workout the watch saves to Health keeps both there until you delete it in the Health app. With Save my workouts to Health off, the readings taken during the workout still stay in Health.' },
+  { what: 'Your heart rate and active energy during a workout', how: 'Not kept by IronStack. During a workout the last reading is shown, dimmed once it is more than ten seconds old and marked lost after a minute, and it is gone when the workout ends; active energy is not shown. The workout the watch saves to Health keeps both there until you delete it in the Health app. With Save my workouts to Health off, the readings taken during the workout still stay in Health.' },
   { what: 'What you send Stack AI, including photos and files', how: 'Mission Built never keeps what you said. The answer is held on the server for 10 minutes in case your connection drops, then deleted. Anthropic deletes what you sent within 30 days and doesn\'t train its models on it. It keeps it longer (up to 2 years) only if a request is flagged for breaking its usage policy.' },
   { what: 'The Stack AI device record (App Attest key id, public key, receipt, timestamps)', how: 'Deleted when you delete your data in the app, or on request. Otherwise it goes on its own about 400 days after your phone last reached the Stack AI server. After a delete, the server keeps a short note for one day: the key id, when the record was made and deleted, and how many entries of an old log copy were erased. Nothing you sent. If a request your phone sent just before the delete arrives late, the note lets the server remove what it left, then the note is cleared. One number stays under the key id with no end date: a counter of your phone\'s requests, so an old one can\'t be sent again.' },
   { what: 'Stack AI allowance counters', how: 'Today\'s and this month\'s counts. Nothing resets them on a schedule. Last month\'s counts are replaced the first time your phone asks Stack AI in a new month. If it never asks again, they stay until you delete your data in the app, or with no end date if the app is gone.' },
