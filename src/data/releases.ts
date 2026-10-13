@@ -1,6 +1,6 @@
 /**
- * Releases — shared helpers for the MealStack and IronStack release notes pages.
- * The content comes from scripts/sync_mealstack_changelog.py (`--app ironstack`).
+ * Releases — shared helpers for the MealStack, IronStack and MissionStack release notes pages.
+ * The content comes from scripts/sync_mealstack_changelog.py (`--app ironstack`, `--app missionstack`).
  *
  * One entry per build: a weekly update keeps the version and bumps the build, so
  * 0.9.1 can be both "build 86" (shipped) and "next build" (in progress). URLs:
