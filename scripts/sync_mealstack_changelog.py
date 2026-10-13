@@ -21,8 +21,11 @@ Files for sections no longer in the CHANGELOG are removed.
 Run from the site root:
     python3 scripts/sync_mealstack_changelog.py [path/to/CHANGELOG.md]
     python3 scripts/sync_mealstack_changelog.py --app ironstack [path/to/CHANGELOG.md]
+    python3 scripts/sync_mealstack_changelog.py --app missionstack [--changelog path/to/CHANGELOG.md]
 
-IronStack's CHANGELOG.md sits at the root of ../ironstack and follows the same rules.
+IronStack's CHANGELOG.md sits at the root of ../ironstack, and MissionStack's at the root of
+../missionstack; both follow the same rules. From a worktree, name the CHANGELOG, either as
+the last argument or with --changelog.
 """
 from __future__ import annotations  # the Mac's system Python is 3.9
 import json
@@ -35,6 +38,7 @@ ROOT = Path(__file__).resolve().parent.parent
 SOURCES = {
     "mealstack": ROOT.parent / "mealstack" / "MealStack" / "CHANGELOG.md",
     "ironstack": ROOT.parent / "ironstack" / "CHANGELOG.md",
+    "missionstack": ROOT.parent / "missionstack" / "CHANGELOG.md",
 }
 APP = "mealstack"
 OUT = ROOT / "src" / "content" / "releases"
@@ -193,6 +197,8 @@ def main() -> int:
     args = sys.argv[1:]
     if args[:1] == ["--app"]:
         APP, args = args[1], args[2:]
+    if args[:1] == ["--changelog"]:
+        args = args[1:]
     if APP not in SOURCES:
         print(f"Unknown app {APP!r}; expected one of {sorted(SOURCES)}", file=sys.stderr)
         return 1

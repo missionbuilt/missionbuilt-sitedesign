@@ -77,14 +77,14 @@ const logs = defineCollection({
  * {app}-{version}-next.md for the one in progress, {app}-{version}.md for a section
  * with no build (a date, or in review). Generated, not hand-written:
  * scripts/sync_mealstack_changelog.py splits an app repo's CHANGELOG.md into one
- * file per section (`--app ironstack` for IronStack). /rack/{app}/changelog lists
+ * file per section (`--app ironstack` for IronStack, `--app missionstack` for MissionStack). /rack/{app}/changelog lists
  * them newest first (src/data/releases.ts `byOrder`); each has its own page, see
  * `releaseSlug` there for the URL.
  */
 const releases = defineCollection({
   type: 'content',
   schema: z.object({
-    app: z.enum(['mealstack', 'ironstack']),
+    app: z.enum(['mealstack', 'ironstack', 'missionstack']),
     /** "0.9", "0.8.1". */
     version: z.string(),
     /** Sort key: major * 1e6 + minor * 1e3 + patch. */
