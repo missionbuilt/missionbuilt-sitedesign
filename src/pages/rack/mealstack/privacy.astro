@@ -53,6 +53,7 @@ const keeps: Keep[] = [
   { what: 'The device record (App Attest key id, public key, receipt, timestamps)', how: 'Kept while the install exists. Removed the moment you delete your data in the app, or on request.' },
   { what: 'Stack AI allowance counters', how: 'Wiped at the start of each month.' },
   { what: 'Accounting record of Stack AI use (Cloudflare)', how: 'About ninety days, then gone.' },
+  { what: 'Daily totals for the whole app (Mission Built)', how: 'How many Stack AI requests there were in a day, the tokens, the cost and the refusals, added up for everyone with no install key. Kept by Mission Built for its accounts, with no end date.' },
   { what: 'Usage data', how: 'In Mission Built\'s own record on Cloudflare, about ninety days, then gone. Deleting your data in the app doesn\'t remove them sooner, but nothing in them can be matched to you once the install\'s key is gone.' },
 ];
 ---
