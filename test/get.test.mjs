@@ -36,3 +36,16 @@ test('a 302 with no-store and Vary, any query ignored, nothing but GET and HEAD'
   const post = onRequest({ request: new Request('https://missionbuilt.io/get', { method: 'POST' }), env: {} });
   assert.equal(post.status, 405);
 });
+
+test('a URL that tries to change the host or add a header is never followed', () => {
+  for (const bad of ['https://apps.apple.com@evil.example/x', 'https://apps.apple.com/x\r\nSet-Cookie: a=b', 'https://apps.apple.com/x?y=1']) {
+    assert.equal(destination(IPHONE, { IRONSTACK_APP_STORE_URL: bad }), '/rack/', bad);
+  }
+});
+
+test('HEAD gets the same 302; a non-Apple device never gets an App Store URL', () => {
+  const head = onRequest({ request: new Request('https://missionbuilt.io/get', { method: 'HEAD', headers: { 'user-agent': IPHONE } }), env });
+  assert.equal(head.status, 302);
+  assert.equal(head.headers.get('location'), env.IRONSTACK_APP_STORE_URL);
+  assert.equal(destination(ANDROID, env), '/rack/');
+});

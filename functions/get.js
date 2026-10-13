@@ -28,12 +28,16 @@ export function destination(userAgent, env) {
 
 export function onRequest({ request, env }) {
   if (request.method !== 'GET' && request.method !== 'HEAD') {
-    return new Response('Method not allowed', { status: 405, headers: { allow: 'GET, HEAD' } });
+    return new Response('Method not allowed', { status: 405, headers: { allow: 'GET, HEAD', 'cache-control': 'no-store' } });
   }
   const to = destination(request.headers.get('user-agent'), env || {});
   const location = to.startsWith('/') ? new URL(to, request.url).toString() : to;
   return new Response(null, {
     status: 302,
-    headers: { location, 'cache-control': 'no-store', vary: 'User-Agent', 'referrer-policy': 'no-referrer' },
+    headers: {
+      location, 'cache-control': 'no-store', vary: 'User-Agent', 'referrer-policy': 'no-referrer',
+      // _headers doesn't reach a Function's response, so HSTS is set here too (security review).
+      'strict-transport-security': 'max-age=31536000; includeSubDomains',
+    },
   });
 }
