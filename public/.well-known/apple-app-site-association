@@ -1,0 +1,13 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["B2U3ZHL8JV.io.missionbuilt.Ironstack"],
+        "components": [
+          { "/": "/join", "#": "MB1.*", "comment": "A board's QR (#133): opens IronStack to pair, only with a board code in the fragment, which never reaches this site." },
+          { "/": "/join/", "#": "MB1.*" }
+        ]
+      }
+    ]
+  }
+}

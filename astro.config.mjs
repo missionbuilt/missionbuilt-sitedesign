@@ -19,10 +19,12 @@ export default defineConfig({
   site: 'https://missionbuilt.io',
   // The sitemap leaves out the 404 page, the old MealStack privacy address, which
   // only serves installed builds and App Review (its canonical is /rack/mealstack/privacy),
-  // and the release notes' version redirects (above).
+  // the release notes' version redirects (above), MissionStack's draft privacy page until
+  // MissionStack is announced (#118), and /join, a board QR's landing page (#133).
   integrations: [mdx(), sitemap({
     filter: (page) => !page.endsWith('/404/') && !page.includes('/loadout/mealstack/privacy')
-      && !releaseRedirects.has(new URL(page).pathname),
+      && !page.includes('/rack/missionstack/')
+      && !releaseRedirects.has(new URL(page).pathname) && new URL(page).pathname !== '/join/',
   })],
   // Static output by default — the whole site can be a static export.
   output: 'static',
