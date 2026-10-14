@@ -6,7 +6,17 @@
  *
  * The "You choose" and "Sharing less later" paragraphs are #140's privacy text (missionbuilt-site
  * feat/coach-for-everyone 4028f41), true from IronStack build 75 with Social 0.6.0; this page
- * can't go up before both are out, and must change with them if they change.
+ * can't go up before both are out, and must change with them if they change. IronStack's b75
+ * privacy page (feat/ironstack-privacy-b75) must be live first or at the same time.
+ *
+ * After the design and privacy reviews (2026-10-14): "Where it goes", "The read", "Ending it"
+ * and "Coach notes" are the b75 privacy page's approved Coach mode paragraphs (a6c3c48), word
+ * for word, so a lifter reads here everything the app says before Accept.
+ *
+ * HOLD for #164 (a coach logging a workout for a lifter): when it ships, this page gains, under
+ * "After that", the two sentences listed in /coach's header (it goes through Mission Built's
+ * Social server and is held only until your phone fetches it; you can turn it off in
+ * Settings › Coach mode), checked then against data-flow.md and the privacy page's #164 text.
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
@@ -45,21 +55,21 @@ import TopNav from '../../components/TopNav.astro';
       <ol class="steps">
         <li>
           <div>
-            <p class="v">Install IronStack</p>
-            <p class="body">IronStack is in a TestFlight beta. Sign up with your Apple ID email and say your coach invited you. The invite comes from Apple.</p>
-            <a class="cta" href="/rack/ironstack#beta">Join the IronStack beta</a>
+            <h3 class="v">Install IronStack</h3>
+            <p class="body">IronStack is in a TestFlight beta. Sign up with your Apple ID email and mention in the note that your coach invited you; you don't need to name them. The invite comes from Apple.</p>
+            <a class="cta" href="/rack/ironstack#beta">Join the IronStack beta →</a>
           </div>
         </li>
         <li>
           <div>
-            <p class="v">Sign in to Social</p>
+            <h3 class="v">Sign in to Social</h3>
             <p class="body">Coach mode uses your Social sign-in. Pick a handle and give it to your coach. Your coach asks by your handle.</p>
           </div>
         </li>
         <li>
           <div>
-            <p class="v">Say yes</p>
-            <p class="body">Nothing is shared until you say yes. You choose what your coach sees before anything is sent. Accepting shares every set (always, since that is the point) and your notes and how you felt; your sleep and bodyweight and your MealStack fueling summary are off unless you turn them on under Customize. You choose how far back: from today (the default), 30, 60 or 90 days, or all your history. You can change all of this later in Settings › Coach mode.</p>
+            <h3 class="v">Say yes</h3>
+            <p class="body">Nothing is shared until you say yes. You choose what your coach sees before anything is sent. Accepting shares every set (always, since that is the point) and your notes and how you felt; your sleep and bodyweight and your MealStack fueling summary are off unless you turn them on under Customize. You choose how far back: from today (the default), 30, 60 or 90 days, or all your history (earlier versions offer 12 weeks). You can change all of this later in Settings › Coach mode.</p>
           </div>
         </li>
       </ol>
@@ -70,8 +80,11 @@ import TopNav from '../../components/TopNav.astro';
       <h2 class="section-h2">Your plan, your call.</h2>
       <p class="prose">Their plan arrives as a suggestion; accept it and change anything you like. You lift, and they see every set against the plan: weight, reps, RPE, what you swapped or skipped.</p>
       <div class="fine">
+        <p><strong>Where it goes.</strong> When a workout ends, it is sent to Mission Built's Social server at social.missionbuilt.io, on Cloudflare, stored in its database, and passed to your coach's phone. If you share your notes, the server checks them for words like “pain” or “tweak” so it can tell your coach a workout needs a look. We don't use your shared workouts for anything else, and we don't sell them. Edits and deletes follow. Plans your coach sends you, and the short note with them, come the same way, and stay suggestions until you accept them. Coach mode may send you or your coach a notification, through Apple, never between 9 PM and 7 AM unless you change the quiet hours.</p>
+        <p><strong>The read.</strong> Your coach can ask Stack AI to sum up a week of your training, this week or an earlier one. That sends Anthropic your handle, the week's shared workouts (seven days, at most 21 workouts) and a few figures your coach's phone works out from everything you've shared: how each lift's estimated max has moved, which lifts have stalled, and, if you share sleep, how hard your sets felt after nights under 7 hours. Your plan isn't sent, only where the week differed from it. The request comes from your coach's phone and runs on your coach's Stack AI allowance. Mission Built's server passes it on and keeps none of it. You can't turn The read off; ending the link stops it.</p>
         <p><strong>Sharing less later.</strong> If you share less later, the server deletes the workouts and details you stopped sharing from your coach's copy, and your coach's phone deletes them when it next checks in. Server backups drop them within 30 days. We can't take back what your coach already saw, or a week already summed up with Stack AI.</p>
-        <p><strong>Ending it.</strong> Either of you can end it, and their copy goes with it.</p>
+        <p><strong>Ending it.</strong> Either of you can end the link at any time. Ending it, blocking each other, or deleting either Social account deletes your coach's copy on the server (the workouts and the plans), and your coach's phone deletes its copy as soon as it sees the link is gone. Until then, the server keeps each workout until the link ends or you delete that workout in the app. Server backups drop it within 30 days.</p>
+        <p><strong>Coach notes.</strong> A coach can keep a private note about each lifter. It stays on the coach's phone (and in that phone's own backup), is never sent to us, the lifter or Stack AI, and is deleted when the link ends, on sign-out, or with Delete all.</p>
         <p>Every detail is on <a href="/rack/ironstack/privacy#coach-mode">IronStack's privacy page</a>.</p>
       </div>
     </section>
@@ -105,13 +118,6 @@ import TopNav from '../../components/TopNav.astro';
   }
   .display .dot { color: var(--color-blood-bright); }
   .subtitle { margin: 22px auto 0; max-width: 820px; font-family: var(--font-display); font-size: clamp(16px, 2.4vw, 24px); font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-chalk); }
-  .meta-strip {
-    margin: 28px var(--pad-page-x) 0; padding: 14px 0;
-    border-top: var(--border-thin); border-bottom: var(--border-thin);
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; text-align: left;
-  }
-  .stat-key { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); margin-bottom: 8px; }
-  .stat-value { font-family: var(--font-display); font-weight: 500; font-size: 20px; line-height: 1.1; letter-spacing: 0.02em; text-transform: uppercase; color: var(--color-chalk); }
   .block { padding: 56px var(--pad-page-x) 0; max-width: 1180px; }
   .section-label { margin: 0 0 14px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.24em; color: var(--color-blood-text); text-transform: uppercase; }
   .section-h2 { margin: 0 0 18px; max-width: 30ch; font-family: var(--font-display); font-weight: 600; font-size: 36px; line-height: 1.05; letter-spacing: 0.02em; color: var(--color-chalk); text-transform: uppercase; }
@@ -119,13 +125,6 @@ import TopNav from '../../components/TopNav.astro';
   .prose a, .fine a { color: var(--color-chalk); border-bottom: 1px solid var(--color-chalk-ghost); text-decoration: none; }
   .prose a:hover, .fine a:hover { border-bottom-color: var(--color-blood); }
   .k { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); margin: 0; }
-  .two { display: grid; grid-template-columns: 1fr 1fr; margin-top: 28px; border: var(--border-thin); background: var(--color-panel); }
-  .cell { padding: 22px 24px 20px; border-right: var(--border-thin); }
-  .cell:last-child { border-right: 0; }
-  .cell .k { margin-bottom: 10px; }
-  .cell .v { margin: 0 0 12px; font-family: var(--font-display); font-weight: 500; font-size: 21px; line-height: 1.1; text-transform: uppercase; letter-spacing: 0.01em; color: var(--color-chalk); }
-  .cell .body { margin: 0; font-family: var(--font-serif); font-size: 14.5px; line-height: 1.6; color: var(--color-chalk-dim); }
-  .tag { display: inline-block; margin-left: 8px; padding: 1px 6px; border: var(--border-thin); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; color: var(--color-blood-text); vertical-align: middle; }
   .fine { margin-top: 18px; background: var(--color-panel); border: var(--border-thin); padding: 22px 26px; }
   .fine .k { margin-bottom: 10px; }
   .fine p:not(.k) { margin: 0 0 10px; max-width: 70ch; font-family: var(--font-serif); font-size: 14px; line-height: 1.6; color: var(--color-chalk-dim); }
@@ -139,16 +138,9 @@ import TopNav from '../../components/TopNav.astro';
   .cta { display: inline-block; margin-top: 8px; padding: 12px 18px; border: 1px solid var(--color-blood); font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk); text-decoration: none; }
   .cta:hover { background: var(--color-blood); }
   .tail { height: 72px; }
-  @media (max-width: 1099px) {
-    .meta-strip { grid-template-columns: repeat(2, 1fr); gap: 18px; }
-    .two { grid-template-columns: 1fr; }
-    .cell { border-right: 0; border-bottom: var(--border-thin); }
-    .cell:last-child { border-bottom: 0; }
-  }
   @media (max-width: 720px) {
     .breadcrumb { padding: 18px var(--pad-page-x-mobile) 0; }
     .hero { padding: 28px var(--pad-page-x-mobile) 20px; }
-    .meta-strip { margin: 24px var(--pad-page-x-mobile) 0; grid-template-columns: 1fr; gap: 14px; }
     .block { padding: 40px var(--pad-page-x-mobile) 0; }
     .section-h2 { font-size: 28px; }
     .steps li { grid-template-columns: 40px 1fr; }

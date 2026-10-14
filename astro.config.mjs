@@ -21,7 +21,8 @@ export default defineConfig({
   // only serves installed builds and App Review (its canonical is /rack/mealstack/privacy),
   // and the release notes' version redirects (above).
   integrations: [mdx(), sitemap({
-    filter: (page) => !page.endsWith('/404/') && !page.includes('/loadout/mealstack/privacy')
+    // HOLD #143: /coach is a noindex draft; take this clause out when it's approved.
+    filter: (page) => !page.endsWith('/404/') && !page.includes('/loadout/mealstack/privacy') && !page.includes('/coach/')
       && !releaseRedirects.has(new URL(page).pathname),
   })],
   // Static output by default — the whole site can be a static export.
