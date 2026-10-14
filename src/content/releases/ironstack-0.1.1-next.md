@@ -15,6 +15,10 @@ status: in-progress
 
 **TESTING: Exercise demos.** We're testing how you'll learn a lift in IronStack with 4 lifts: squat, bench press, deadlift and bent-over row. Swipe right on one and tap Info: a looping demo, what to set up, what you should feel, and the common miss. Squat, bench and deadlift have a male and a female demo; their pause, tempo and other versions use the same one. Every other lift shows a "Search this lift" link for now. The full library is coming: licensed animations for every lift, plus videos Mike films himself for the most common ones.
 
+**FIXED: Adding your own exercise.** Type a name that isn't in the library and "Add … as your own exercise" is now the first row, everywhere you pick an exercise. Before, it sat under the matches, behind the keyboard.
+
+**FIXED: The watch at the end of a workout.** After your last planned set, the watch shows Every set logged and Finish, and "Finishing on your iPhone" while your phone asks to end. Before, it stayed on the last round.
+
 **Faster answers that never leave your phone.** Ask Stack AI your best squat, this week's total or how to load 140 kg, and the answer comes back instantly from your own log. Nothing is sent anywhere, it works with no signal, and it works with Stack AI off.
 
 **Also:** a program's next workout follows where you are, not the top of the list. Rows, runs and sled pushes read in their own units. 16 more lifts in the library. A dumbbell lift's estimated max is per dumbbell. Heart rate on the watch keeps its last number and shows when it's old.
