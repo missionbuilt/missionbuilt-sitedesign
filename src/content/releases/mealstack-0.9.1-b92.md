@@ -4,7 +4,8 @@ version: "0.9.1"
 order: 9001
 changes: 8
 groups: [{"title": "Today", "slug": "today", "leads": ["In History, open a day and tap \"Have it again today\" on a meal to put it on today's plate in the same spot...", "\"Same as yesterday\" on a meal still to eat today puts what you logged in that spot yesterday on today's plate.", "Repeat this day, on a day in History, puts that day's meals on today's plates in one tap, with one Undo."]}, {"title": "Foods", "slug": "foods", "leads": ["Scan barcode is now one tap away in three places: Stack AI's bar, the food picker and Add a snack.", "From Stack AI, a scanned food is saved to your foods and \"Where does it fit today?\" goes in the box for you...", "On Add a snack, a scan fills in the name and the protein, carbs and fat of the serving its card shows.", "In the food picker, once you type, the add button names what you typed (Add “oat bran”), even when close..."]}, {"title": "Stack AI", "slug": "stack-ai", "leads": ["Photos and files are under + in Stack AI's bar, beside the camera and Scan barcode."]}]
-status: in-progress
+status: shipped
+build: 92
 ---
 
 **Eat it again in one tap.**
