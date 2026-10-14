@@ -37,7 +37,17 @@
  * Delete all name the lifters and the notes. The desk's Report and Block (#180, Social) and its
  * sign-in come back here with the build that wires them. For the lawyer (#42's list): a coach's
  * note may hold injury details about a third person, kept in iCloud's encrypted fields, end to end
- * only with Advanced Data Protection; and "The person never sees it".
+ * only with Advanced Data Protection; and "The person never sees it"; whether the coach is the
+ * controller of a third person's data; whether the label and PrivacyInfo change for data kept only
+ * in the user's own iCloud.
+ * Before go-live (privacy review 10-14): the sync section must replace "This version doesn't sync"
+ * in the same push; the app's Delete all words (Copy.YourData) name the lifters and the notes in
+ * the same release; confirm in the kit that clearing a note keeps its earlier versions (else drop
+ * that sentence); Logbook confirms what IronStack keeps of clients/<id>/ after a zone delete from
+ * another device. If claim invites ship with the desk, add: "If someone you added joins IronStack
+ * through your invite, they leave this list, but what you kept about them stays in your iCloud,
+ * out of sight, until Delete all data." and the invite's own marker. Revisit "Mission Built never
+ * has a copy" when #165 phase 2 (the move to the lifter's account) ships.
  *
  * Color discipline: oxblood for the hero period, section labels and the one
  * emphasised word. No army green on this page.
@@ -63,7 +73,7 @@ const keeps: Keep[] = [
   { what: 'Your plan and settings', how: 'On this iPad or Mac until you delete them, or delete the app. Included in your device backup like any other app data.' },
   { what: 'Phones the board remembers', how: 'The name each phone sent, a pairing key and the date it last joined, in this device\'s Keychain (iPad, Mac or Apple TV). They stay after you delete the app. Delete all data, or Settings › Board › Forget all phones, clears them; on Apple TV, Forget all phones on the board\'s home screen. To forget one phone, open the board and choose Pair iPhone: each remembered phone has Forget this iPhone, beside Forget all phones.' },
   { what: 'The board on your own', how: 'Held in memory only, with the clock voice your phone sent. Gone when its celebration closes, when you close the board, or 45 minutes after the phone goes quiet.' },
-  { what: 'Lifters without the app (if you coach)', how: 'Their name, units and your note on them, in your own iCloud, until you remove them or choose Delete all data. An earlier version of a name or note is kept for 90 days, or the last 20 changes.' },
+  { what: 'Lifters without the app (if you coach)', how: 'Their name and units, the plan you set them, the workouts you logged for them and your note on them, in your own iCloud and on each of your devices that syncs, until you remove them or choose Delete all data. Turning sync off on a device keeps its copy there until sync is back on. When a name, note or plan is changed on two devices at once, the copy that lost is kept so you can restore it: the newest 20 for each, plus any from the last 90 days. Removing the person deletes them.' },
   { what: 'Anything on Mission Built\'s servers', how: 'Nothing. MissionStack doesn\'t talk to them.' },
 ];
 ---
@@ -165,11 +175,11 @@ const keeps: Keep[] = [
       <p class="section-label">If you coach</p>
       <h2 class="section-h2">Lifters without the app.</h2>
       <div class="prose-block">
-        <p>On the coach desk you can add someone who doesn't use IronStack: you type their name and units, and you can write a private note about them. The workouts you log for them on your iPhone show here too.</p>
-        <p><strong>They're kept in your own iCloud</strong>, with the rest of what MissionStack syncs, so your iPhone, iPad and Mac show the same list. Mission Built never has a copy, and nothing about them is sent to Mission Built or anyone else.</p>
-        <p><strong>Names and notes go in iCloud's encrypted fields.</strong> Apple holds the keys unless you turn on Advanced Data Protection for iCloud; then only your devices can read them.</p>
-        <p><strong>Your note is yours.</strong> The person never sees it. Write only what you need to coach them: a note can hold anything you type, health details included.</p>
-        <p><strong>Remove</strong> takes them off every device: their name, your note, their plan and the earlier versions are deleted from your iCloud. The workouts you logged for them go the next time your iPhone syncs. A marker with a random id and the time stays, so your other devices know to remove them too. It holds no name and no note.</p>
+        <p>On the coach desk you can add someone who doesn't use IronStack: you type their name and units, and you can write a private note about them. The plan you set them and the workouts you log for them on your iPhone show on the desk too.</p>
+        <p><strong>They're kept in your own iCloud</strong>, with the rest of what MissionStack syncs, so your iPhone, iPad and Mac show the same list. Mission Built never has a copy: nothing about them is sent to Mission Built's servers. Apple stores them as part of your iCloud.</p>
+        <p><strong>Names, notes, plans and workouts go in iCloud's encrypted fields.</strong> Apple holds the keys unless you turn on Advanced Data Protection for iCloud; then only your devices can read them.</p>
+        <p><strong>Your note is yours.</strong> The person never sees it. Write only what you need to coach them: a note can hold anything you type, health details included. Clearing a note doesn't delete earlier versions of it; removing the person does.</p>
+        <p><strong>Remove</strong> takes them off every device: their name, your note, their plan and the earlier versions of those are deleted from your iCloud. The workouts you logged for them are deleted from your iCloud and your iPhone the next time IronStack on your iPhone syncs. Until then they stay in your iCloud; if your iPhone doesn't sync again, Delete all data removes them. A small marker stays, holding only a random code and the time, so your other devices know to remove them too. It holds no name and no note.</p>
       </div>
     </section>
 
@@ -197,7 +207,7 @@ const keeps: Keep[] = [
       <h2 class="section-h2">Export it, or delete it, from Settings.</h2>
       <div class="prose-block">
         <p><strong>Settings › Your data › Export</strong> saves your plan and your settings for appearance and units to a file you keep. <strong>Settings › Your data › Import</strong> brings that file back. It replaces the plan and those settings on this iPad or Mac, and shows you what it replaces before anything changes.</p>
-        <p><strong>Settings › Your data › Delete all data</strong> closes the board, forgets every phone the board remembers, and removes every file and setting MissionStack keeps on this device. If you coach, that includes the lifters without the app you added, your notes on them and the workouts you logged for them, from this device and from your iCloud. It doesn't reach an export you saved elsewhere, or a backup already made. If something couldn't be deleted, the app says so, and <strong>Settings › Board › Forget all phones</strong> clears it.</p>
+        <p><strong>Settings › Your data › Delete all data</strong> closes the board, forgets every phone the board remembers, and removes every file and setting MissionStack keeps on this device. If you coach, it also deletes the lifters without the app you added, your notes on them, their plans and the workouts you logged for them, from this device and from your iCloud, along with everything else IronStack syncs there. Your iPhone keeps what IronStack holds on it until you delete it there. It doesn't reach an export you saved elsewhere, or a backup already made. If something couldn't be deleted, the app says so, and <strong>Settings › Board › Forget all phones</strong> clears it.</p>
         <p><strong>Deleting the app is not the same.</strong> On an iPad, deleting the app removes your plan and settings. On a Mac, its files can stay behind. Either way, phones the board remembers stay in the Keychain. Run Delete all data first.</p>
         <p>Anything else about your data, email <a href={ASK}>support@missionbuilt.io</a>. Mission Built will confirm within ten days and finish within thirty.</p>
       </div>
