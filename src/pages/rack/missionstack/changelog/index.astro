@@ -18,6 +18,7 @@
  */
 import { getCollection } from 'astro:content';
 import ToolNoteLayout from '../../../../layouts/ToolNoteLayout.astro';
+import { MISSIONSTACK_ANNOUNCED } from '../../../../data/missionstack-gate.mjs';
 import { longDate, isoDay } from '../../../../data/logs';
 import { byOrder, releaseUrl, releaseAnchor, releaseLabel, versionHeads, versionSlug, when, plural, type Release } from '../../../../data/releases';
 
@@ -34,6 +35,7 @@ const rowWhen = (r: Release) => (r.data.status === 'shipped' && r.data.build && 
 const buildLine = (r: Release) => (r.data.status === 'in-progress' ? 'next build' : r.data.build ? `build ${r.data.build}` : '');
 ---
 <ToolNoteLayout
+  noindex={!MISSIONSTACK_ANNOUNCED}
   title="Release notes · MissionStack · Mission Built"
   description="What changed in each MissionStack build, written for the people testing it. Newest first."
   crumbs={[{ label: 'MissionStack' }, { label: 'Release notes' }]}

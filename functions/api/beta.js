@@ -40,6 +40,7 @@ function wantsJson(request) {
 const RETURN_PAGES = new Set([
   '/rack/mealstack',
   '/rack/ironstack',
+  '/rack/missionstack',
   '/rack',
 ]);
 

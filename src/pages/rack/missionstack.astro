@@ -1,0 +1,106 @@
+---
+/**
+ * MissionStack landing page (/rack/missionstack), #193. Mirrors /rack/ironstack and
+ * /rack/mealstack through AppLanding, with an iPad and an Apple TV in place of the phones.
+ *
+ * Words: hq/briefs/site/three-apps-pages.md §4 (product lead, 10-14 20:52). Every string marked
+ * COPY is a draft for Mike's yes; the promise is his approved notes headline (10-13) and the
+ * accent the launch ad's line 6 (approved 10-12). The sub is in Mike's voice, his to change.
+ *
+ * Gates: the MissionStack name isn't cleared, so the page is noindex and out of the sitemap
+ * (one switch, src/data/missionstack-gate.mjs). Only what's live (promise 8): one lifter on the
+ * board, no heart rate, no Team lifts, no sync yet, no Starters tile until the ten starters are
+ * in a build testers have. No prices, no competitor named, so no "Most apps:" lines.
+ *
+ * Screens: Chalkboard captures them from the 0.1.0 release build in screenshot mode (Fri 10-16).
+ * Until each file is in public/images/missionstack/, its frame shows a "Screen to capture" slot
+ * with the file name (hasScreen). The files, at these sizes:
+ *   board-ipad.webp   1180 × 820   the board on iPad mid-set (one lifter)
+ *   board-tv.webp      960 × 540   the same board on Apple TV
+ *   pair-ipad.webp    1180 × 820   the pairing sheet (Start on my own, the code)
+ *   stacked-ipad.webp 1180 × 820   Stacked: time, volume, records
+ *   plan-ipad.webp    1180 × 820   Plan with a typed line ("front squat 3x5 @7")
+ *   og.jpg            1200 × 630   share card (until then the Rack's)
+ */
+import AppLanding from '../../components/AppLanding.astro';
+import { MISSIONSTACK_ANNOUNCED } from '../../data/missionstack-gate.mjs';
+import { existsSync } from 'node:fs';
+
+const IMG = '/images/missionstack/';
+const pad = (f: string, alt: string) => ({ src: `${IMG}${f}.webp`, w: 1180, h: 820, alt });
+const tvShot = (f: string, alt: string) => ({ src: `${IMG}${f}.webp`, w: 960, h: 540, alt });
+
+const title = 'MissionStack: plan on iPad and Mac, train live on the big screen · Mission Built'; // COPY
+const description = 'MissionStack puts your live IronStack workout on an iPad, a Mac or an Apple TV, big enough to read from the platform, and lets you plan your training on iPad or Mac: type a line and the sets fill in. No account, nothing sent to us. Free during the TestFlight beta.'; // COPY
+
+const ld = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'MissionStack',
+  url: 'https://missionbuilt.io/rack/missionstack',
+  applicationCategory: 'HealthApplication',
+  operatingSystem: 'iPadOS 26, macOS 26, tvOS 26',
+  description,
+  author: { '@type': 'Person', name: 'Mike Nichols', url: 'https://missionbuilt.io/about' },
+  publisher: { '@type': 'Organization', name: 'Mission Built', url: 'https://missionbuilt.io' },
+};
+
+const boardIpad = pad('board-ipad', 'The MissionStack board on iPad mid-set: one lifter\'s exercise, the set they are on, the load and the rest clock, big enough to read across the room.'); // COPY (alt; rewrite from the real screen)
+const boardTv = tvShot('board-tv', 'The same board on Apple TV.'); // COPY (alt)
+const og = existsSync(`public${IMG}og.jpg`) ? `${IMG}og.jpg` : '/images/rack-og.jpg';
+---
+<AppLanding
+  app="missionstack"
+  name="MissionStack"
+  title={title}
+  description={description}
+  noindex={!MISSIONSTACK_ANNOUNCED}
+  ogImage={og}
+  ogImageAlt="MissionStack. Your workout on the big screen. Live in the gym. Plan on iPad and Mac, by Mission Built."
+  ld={ld}
+  eyebrow="Private beta · iPad, Mac + Apple TV"
+  promise="Your workout on the big screen."
+  promiseAccent="Live in the gym."
+  sub="I wanted my workout on the biggest screen in the gym, and a place to plan the weeks that isn't a phone. MissionStack does both. Put the live workout on an iPad, a Mac or an Apple TV, big enough to read from the platform, while you log on your iPhone or Apple Watch as always. And plan your training on iPad or Mac: type a line and the sets fill in."
+  subShort="Your live workout on an iPad, Mac or Apple TV. Plan your weeks on iPad or Mac."
+  trust={['Free during the beta', 'iPad, Mac + Apple TV', 'No account', 'Nothing sent to us']}
+  heroTablet={boardIpad}
+  heroTv={boardTv}
+  soft={{ label: 'Already on IronStack? Pair in one scan →', href: '/rack/missionstack/details#pair' }}
+  diffLabel="Why MissionStack"
+  diffH2="The big screen, built for training."
+  diffs={[
+    { claim: 'Read it from the platform.', body: 'The set you\'re on, the load, the rest clock and your records, big enough to read across the room. You still log on your iPhone or watch; the board only shows. Finish and it says Stacked with your time, volume and records, then keeps nothing: your workout is saved on your iPhone.' },
+    { claim: 'One scan to pair.', body: 'Choose Start on my own, scan the code with your iPhone\'s Camera, tap Pair. It talks to your phone over your own Wi-Fi, encrypted, and nowhere else. On Apple TV the Siri Remote pauses the clock.' },
+    { claim: 'Plan the way you write it.', body: 'Type "front squat 3x5 @7" and the sets, reps and effort fill in. Drag workouts between days, make a superset, swap a lift, copy a week forward. Every change can be undone, and a keyboard makes it faster.' },
+    { claim: 'Nothing to sign up for.', body: 'No account. MissionStack sends nothing to us and keeps your plan on your iPad or Mac.' },
+  ]}
+  featH2="Real screens from the first build."
+  features={[
+    { ...boardIpad, tablet: true, k: 'The board', title: 'Read it across the room.', body: 'The set, the load, the rest clock and your records, while you log on your phone or watch.' },
+    { ...boardTv, tv: true, k: 'Apple TV', title: 'On the biggest screen.', body: 'The same board on Apple TV. The Siri Remote pauses the clock.' },
+    { ...pad('pair-ipad', 'MissionStack\'s pairing screen on iPad: Start on my own, and the code to scan with your iPhone\'s Camera.'), tablet: true, k: 'Pair', title: 'One scan.', body: 'Start on my own, scan the code with your iPhone\'s Camera, tap Pair. Your own Wi-Fi, encrypted.' },
+    { ...pad('stacked-ipad', 'Stacked on the MissionStack board: the workout\'s time, volume and records.'), tablet: true, k: 'Stacked', title: 'Finish big.', body: 'Your time, volume and records, then the board keeps nothing. Your workout is saved on your iPhone.' },
+    { ...pad('plan-ipad', 'MissionStack\'s Plan on iPad with a typed line, front squat 3x5 @7, filled in as three sets of five at RPE 7.'), tablet: true, k: 'Plan', title: 'Type a line.', body: 'The sets, reps and effort fill in. Drag, superset, swap, copy a week forward, and undo any of it.' },
+  ]}
+  featNote="Real screens from the October 15 build, in the iPad and Apple TV Simulators."
+  steps={[
+    { title: 'Leave your Apple ID email.', body: 'Testers come in small batches, added by hand. Lifting with the board? Say so in the note.' },
+    { title: 'Install from TestFlight.', body: 'MissionStack runs on iPad, on a Mac with Apple silicon and on Apple TV. To pair the board you also need IronStack\'s beta, which comes with the same invite.' },
+    { title: 'Put it on the big screen.', body: 'Start on my own, scan, Pair, lift.' },
+  ]}
+  noteLabel="What screen is in your gym?"
+  notePlaceholder="A TV in the garage · an iPad on the rack"
+  details={[
+    { label: 'Questions', body: 'Do you need IronStack, which devices, sync, several lifters, cost.', href: '/rack/missionstack/details#faq' },
+    { label: 'Coming soon', body: 'Sync with IronStack, meal planning with MealStack, and more on the board.', href: '/rack/missionstack/details#soon' },
+    { label: 'Privacy', body: 'No account and nothing sent to us. What the board shares on your Wi-Fi.', href: '/rack/missionstack/privacy' },
+    { label: 'Release notes', body: 'What changed in each build.', href: '/rack/missionstack/changelog' },
+    { label: 'Better with IronStack', body: 'Log on your phone or watch; the board shows it.', href: '/rack/missionstack/details#board' },
+  ]}
+  closer={{ four: 'Plan it · Put it up · Lift it', line: 'Stacked.' }}
+  footLinks={[{ label: 'The details', href: '/rack/missionstack/details' }, { label: 'Release notes', href: '/rack/missionstack/changelog' }, { label: 'Privacy', href: '/rack/missionstack/privacy' }, { label: 'Terms', href: '/rack/missionstack/terms' }, { label: 'Support', href: '/rack/support' }]}
+/>
+{/* COPY: every attribute string above (promise, sub, trust, diffs, features, steps, note, details,
+    closer) is a draft for Mike's yes (brief §4). Step 2's "comes with the same invite": check with
+    XO that one TestFlight invite covers both groups; if not, "Ask for IronStack in the note." */}

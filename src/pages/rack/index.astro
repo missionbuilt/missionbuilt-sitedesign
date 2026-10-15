@@ -16,12 +16,22 @@ import { SHOW_APP_SCREENS } from '../../data/screens';
  * Join buttons. "Better together" claims only what is live (both write to Apple Health);
  * both write to Apple Health, share one travel switch and keep today's session time in step (Sept 29, 2026).
  * Oct 1, 2026: IronStack's card shows one phone and its Apple Watch screen on the same set.
+ *
+ * Oct 15, 2026 (#193, hq/briefs/site/three-apps-pages.md §1–2): three apps, one mission. The
+ * launch ad's approved lines (Mike, 10-12) in the ad's order: hero (lines 1–2), "Three apps. One
+ * mission." over the three cards (line 9), the four-tile strip (lines 3–8). Strings marked COPY
+ * are drafts for Mike's yes. Only what's live: the board tile is one lifter, no heart rate; the
+ * coach tile says only what testers have (no "log for a client" until #164 ships). This branch
+ * merges only after Mike says the MissionStack name is cleared (its own pages stay noindex until
+ * then: src/data/missionstack-gate.mjs). The "Get in first" band waits for /first.
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
 import TopNav from '../../components/TopNav.astro';
 import PhoneFrame from '../../components/PhoneFrame.astro';
 import WatchFrame from '../../components/WatchFrame.astro';
+import TabletFrame from '../../components/TabletFrame.astro';
+import TvFrame from '../../components/TvFrame.astro';
 
 type Shot = { src: string; w: number; h: number; alt: string };
 interface App {
@@ -31,9 +41,12 @@ interface App {
   accent: string;
   sub: string;
   points: string[];
-  /** One phone with a watch, or two phones (front, back). */
-  shots: [Shot] | [Shot, Shot];
+  /** One phone with a watch, or two phones (front, back). Left out for a tablet (`tablet`). */
+  shots?: [Shot] | [Shot, Shot];
   watch?: Shot;
+  /** An iPad in front with an Apple TV behind (MissionStack). */
+  tablet?: Shot;
+  tv?: Shot;
 }
 
 const apps: App[] = [
@@ -61,13 +74,39 @@ const apps: App[] = [
       { src: '/images/mealstack/session-moved.webp', w: 540, h: 1174, alt: 'MealStack after the session moved to 6:30 PM: one line says the carb surge moved to 5:00 PM, the after-session shake to 7:30 PM and dinner to 9:00 PM, with an Undo.' },
     ],
   },
+  {
+    name: 'MissionStack',
+    href: '/rack/missionstack',
+    promise: 'Your workout on the big screen.', // Mike's approved notes headline (10-13)
+    accent: 'Live in the gym.', // the ad's line 6 (approved)
+    sub: 'The big-screen side of IronStack. Plan your training on iPad or Mac, and put your live workout on a board on iPad, Mac or Apple TV.', // COPY (Beta App Description, lightly cut)
+    points: ['Read it across the room', 'Pair with one scan', 'Type a line, the sets fill in', 'No account, nothing collected'], // COPY
+    // Screens: Chalkboard, Fri 10-16 (slots until then)
+    tablet: { src: '/images/missionstack/board-ipad.webp', w: 1180, h: 820, alt: 'The MissionStack board on iPad mid-set: one lifter\'s exercise, the set, the load and the rest clock.' }, // COPY (alt)
+    tv: { src: '/images/missionstack/board-tv.webp', w: 960, h: 540, alt: '' },
+  },
+];
+
+// The ad's lines 3–8: "Solo or side by side." / "Now your whole stack is on the mission." and four
+// tiles, each a real screen and the ad's line. COPY: the body lines.
+type Tile = { line: string; body: string; href: string; shot: Shot; device: 'watch' | 'phone' | 'tablet' };
+const tiles: Tile[] = [
+  { line: 'Every set, on your wrist.', body: 'Log the set and run the clock from your Apple Watch.', href: '/rack/ironstack',
+    device: 'watch', shot: { src: '/images/ironstack/watch-set.webp', w: 422, h: 514, alt: 'IronStack on Apple Watch: Box squat, 275 lb for 3 reps, the rest clock and Log set.' } },
+  { line: 'Live in the gym.', body: 'Your set, the load and the rest clock, big enough to read from the platform.', href: '/rack/missionstack',
+    device: 'tablet', shot: { src: '/images/missionstack/board-ipad.webp', w: 1180, h: 820, alt: 'The MissionStack board on iPad mid-set, one lifter.' } },
+  // "A trainer can log for a client" joins this line once #164 is in testers' hands (brief §2).
+  { line: 'Coach them from the floor.', body: 'A coach sends the plan and sees every set.', href: '/rack/ironstack/details',
+    device: 'phone', shot: { src: '/images/ironstack/coach-plan.webp', w: 540, h: 1174, alt: 'Coach mode in IronStack, the lifter\'s side: Today tagged Coach\'s plan with the planned sets and Start workout.' } },
+  { line: 'Fuel and plans that keep up.', body: 'Move your session and the day\'s meals move with it.', href: '/rack/mealstack',
+    device: 'phone', shot: { src: '/images/mealstack/session-moved.webp', w: 540, h: 1174, alt: 'MealStack after the session moved: the carb surge, the after-session shake and dinner move with it, with an Undo.' } },
 ];
 ---
 <BaseLayout
   title="The Rack · Mission Built"
   ogImage="/images/rack-og.jpg"
-  ogImageAlt="The Rack. IronStack and MealStack, two iPhone apps for people who train, by Mission Built, with a real screen from each."
-  description="Two iPhone apps for people who train, from Mission Built. IronStack, for iPhone and Apple Watch: log fast, see progress, a coach in your corner. MealStack: meal timing built around your training session. Both free during the private beta."
+  ogImageAlt="The Rack. IronStack, MealStack and MissionStack, three apps for people who train, by Mission Built."
+  description="Three apps for people who train, from Mission Built. IronStack logs every set on iPhone and Apple Watch. MealStack times your meals around your training. MissionStack plans your weeks on iPad and Mac and puts your live workout on the big screen. All free during the private beta."
   active="rack"
 >
   <TopNav active="rack" />
@@ -76,26 +115,35 @@ const apps: App[] = [
     <section class="hero">
       <p class="eyebrow">
         <span class="dots" aria-hidden="true">▮▮▮</span>
-        <span>Tools for the barbell, from Mission Built</span>
+        <span>The Rack · tools for the barbell, from Mission Built</span>
         <span class="dots" aria-hidden="true">▮▮▮</span>
       </p>
-      <h1 class="display">The Rack<span class="dot">.</span></h1>
-      <p class="subtitle">Two iPhone apps for people who train: one for the lifting, one for the eating around it.</p>
+      {/* The ad's lines 1 and 2 (approved). */}
+      <h1 class="display">Every lift is a mission<span class="dot">.</span></h1>
+      <p class="subtitle"><em>To lift yourself. To lift others. To rise together.</em></p>
+      {/* COPY */}
       <ul class="trust" aria-label="The short version">
-        <li>Private beta</li><li>Free during the beta</li><li>iPhone, iOS 26+</li><li>Your data stays yours</li>
+        <li>Private beta</li><li>Free during the beta</li><li>iPhone, Apple Watch, iPad, Mac, Apple TV</li><li>Your data stays yours</li>
       </ul>
     </section>
 
+    {/* The ad's line 9 (approved). */}
+    <p class="section-label apps-label">Three apps. One mission.</p>
     <section class="apps" aria-label="The apps">
       {apps.map((a) => (
         <article class="app">
-          {SHOW_APP_SCREENS && <a class:list={['shots', a.watch && 'with-watch']} href={a.href} tabindex="-1" aria-hidden="true">
-            {a.watch ? (
+          {SHOW_APP_SCREENS && <a class:list={['shots', a.watch && 'with-watch', a.tablet && 'with-tablet']} href={a.href} tabindex="-1" aria-hidden="true">
+            {a.tablet ? (
+              <div class="board">
+                {a.tv && <div class="board-tv"><TvFrame shot={a.tv} fill /></div>}
+                <div class="board-tablet"><TabletFrame shot={a.tablet} lazy={false} fill /></div>
+              </div>
+            ) : a.watch && a.shots ? (
               <div class="pair" style={`--ar:${a.shots[0].h / a.shots[0].w}`}>
                 <div class="ph front"><PhoneFrame shot={a.shots[0]} lazy={false} /></div>
                 <div class="pair-watch"><WatchFrame shot={a.watch} /></div>
               </div>
-            ) : (
+            ) : a.shots && (
               <>
                 {a.shots[1] && <div class="ph back"><PhoneFrame shot={{ ...a.shots[1], alt: '' }} /></div>}
                 <div class="ph front"><PhoneFrame shot={a.shots[0]} lazy={false} /></div>
@@ -118,9 +166,31 @@ const apps: App[] = [
       ))}
     </section>
 
+    <section class="block strip" aria-labelledby="strip-h">
+      {/* The ad's lines 3 and 4 (approved). */}
+      <p class="section-label">Solo or side by side.</p>
+      <h2 class="strip-h" id="strip-h">Now your whole stack is on the mission.</h2>
+      <ul class="tiles">
+        {tiles.map((t) => (
+          <li class="tile">
+            <a href={t.href}>
+              {SHOW_APP_SCREENS && <div class:list={['tile-shot', t.device]}>
+                {t.device === 'watch' ? <WatchFrame shot={t.shot} />
+                  : t.device === 'tablet' ? <TabletFrame shot={t.shot} fill />
+                  : <PhoneFrame shot={t.shot} fill />}
+              </div>}
+              <span class="tile-line">{t.line}</span>
+              <span class="tile-body">{t.body}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+
     <section class="block together">
       <p class="section-label">Better together</p>
-      <p class="line">Each stands on its own. Both write to Apple Health, share one travel switch, and keep today's training time in step.</p>
+      {/* COPY: only what's live */}
+      <p class="line">Each stands on its own. IronStack and MealStack share your training time, one travel switch and Apple Health. Your iPhone puts the workout on MissionStack's board over your Wi-Fi. Sync between your phone and your iPad or Mac comes later.</p>
       <a class="soft" href="/rack/mealstack/details#better-together">What they share today →</a>
     </section>
 
@@ -129,7 +199,7 @@ const apps: App[] = [
       <p class="prose">
         The first edition of the book was subtitled <em>Lessons from the Barbell and the Boardroom</em>, and that split still holds. The Loadout is the boardroom
         half: skills for product leaders. The Rack is the barbell half: the tools I train with. I built them
-        for one lifter, in a home gym, during a meet prep, because nothing I tried did the whole job. Both keep your data on your phone,
+        for one lifter, in a home gym, during a meet prep, because nothing I tried did the whole job. All three keep your data on your devices,
         in files you can export and bring back, and nothing leaves it unless you switch something on.
         For the boardroom, see <a class="inline-link" href="/loadout">the Loadout</a>.
       </p>
@@ -152,8 +222,9 @@ const apps: App[] = [
   .trust { list-style: none; margin: 16px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 18px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; color: var(--color-chalk-dim); }
   .trust li::before { content: '✓'; margin-right: 7px; color: var(--color-army); }
 
-  /* the two apps */
-  .apps { margin: 40px var(--pad-page-x) 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: var(--border-thin); border-left: var(--border-thin); }
+  /* the three apps */
+  .section-label.apps-label { margin: 40px var(--pad-page-x) 14px; }
+  .apps { margin: 0 var(--pad-page-x); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: var(--border-thin); border-left: var(--border-thin); }
   .app { min-width: 0; border-right: var(--border-thin); border-bottom: var(--border-thin); display: grid; grid-template-rows: auto 1fr; }
   /* The panel crops the phones at its foot: the crop is on .shots, around each whole PhoneFrame,
      so the frame and the screen are cut together. A PhoneFrame is 15 em wide, so each font-size
@@ -168,6 +239,11 @@ const apps: App[] = [
   .pair .ph.front { width: var(--pw); font-size: calc(var(--pw) / 15); margin: 0 0 0 auto; }
   /* The framed phone is --pw x (0.88 x ar + 0.12) tall; the watch case's top sits at 20% of it. */
   .pair-watch { position: absolute; left: 0; font-size: calc(var(--pw) * 0.075); top: calc(var(--pw) * (0.88 * var(--ar) + 0.12) * 0.2 - 3.2em); }
+  /* MissionStack: the iPad in front, the Apple TV behind it up and to the right. */
+  .shots.with-tablet { display: block; padding: 36px 20px 0; }
+  .board { position: relative; max-width: 420px; margin: 0 auto; }
+  .board .board-tv { width: 70%; margin-left: auto; opacity: 0.9; }
+  .board .board-tablet { position: relative; z-index: 2; width: 88%; margin-top: -24%; }
   .app-body { padding: 28px 32px 32px; display: grid; gap: 14px; align-content: start; }
   .app-name { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 22px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-chalk); }
   .promise { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3vw, 40px); line-height: 1; letter-spacing: -0.01em; text-transform: uppercase; color: var(--color-chalk); }
@@ -181,6 +257,20 @@ const apps: App[] = [
   .cta:hover { background: var(--color-blood-bright); }
   .soft { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-dim); border-bottom: 1px solid var(--color-chalk-ghost); padding-bottom: 2px; }
   .soft:hover { color: var(--color-chalk); border-bottom-color: var(--color-chalk); }
+
+  /* the ad's strip: four tiles, a screen and a line each */
+  .strip-h { margin: 0 0 24px; max-width: 26ch; font-family: var(--font-display); font-weight: 600; font-size: clamp(26px, 3.2vw, 38px); line-height: 1.05; text-transform: uppercase; color: var(--color-chalk); }
+  .tiles { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: var(--border-thin); border-left: var(--border-thin); }
+  .tile { min-width: 0; border-right: var(--border-thin); border-bottom: var(--border-thin); }
+  .tile a { display: grid; grid-template-rows: auto auto 1fr; gap: 8px; height: 100%; padding: 0 0 20px; transition: background 120ms ease-out; }
+  .tile a:hover { background: var(--color-panel); }
+  .tile-shot { height: 220px; overflow: hidden; display: flex; justify-content: center; align-items: flex-start; padding: 24px 16px 0; background: var(--color-panel); border-bottom: var(--border-thin); margin-bottom: 8px; }
+  .tile-shot.phone > :global(*) { width: 62%; }
+  .tile-shot.tablet { align-items: center; padding-top: 0; }
+  .tile-shot.tablet > :global(*) { width: 100%; }
+  .tile-shot.watch { font-size: 11px; padding-top: 8px; }
+  .tile-line { padding: 0 18px; font-family: var(--font-display); font-weight: 600; font-size: 20px; line-height: 1.1; text-transform: uppercase; color: var(--color-chalk); }
+  .tile-body { padding: 0 18px; font-family: var(--font-serif); font-size: 14.5px; line-height: 1.55; color: var(--color-chalk-dim); }
 
   /* below the fold */
   .block { padding: 56px var(--pad-page-x) 0; }
@@ -196,13 +286,18 @@ const apps: App[] = [
 
   @media (max-width: 1099px) {
     .hero, .block, .closer { padding-left: var(--pad-page-x-mid); padding-right: var(--pad-page-x-mid); }
-    .apps { margin-left: var(--pad-page-x-mid); margin-right: var(--pad-page-x-mid); grid-template-columns: minmax(0, 1fr); }
+    .apps, .section-label.apps-label { margin-left: var(--pad-page-x-mid); margin-right: var(--pad-page-x-mid); }
+    .apps { grid-template-columns: minmax(0, 1fr); }
+    .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
   @media (max-width: 720px) {
     .hero, .block, .closer { padding-left: var(--pad-page-x-mobile); padding-right: var(--pad-page-x-mobile); }
     .hero { padding-top: 32px; }
     .subtitle { font-size: 17px; }
-    .apps { margin: 28px var(--pad-page-x-mobile) 0; }
+    .section-label.apps-label { margin: 28px var(--pad-page-x-mobile) 12px; }
+    .apps { margin: 0 var(--pad-page-x-mobile); }
+    .tiles { grid-template-columns: minmax(0, 1fr); }
+    .tile-shot { height: 200px; }
     .shots { height: 260px; padding-top: 24px; }
     .app-body { padding: 22px 20px 26px; }
     .points { grid-template-columns: minmax(0, 1fr); }

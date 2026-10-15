@@ -1,7 +1,8 @@
 ---
 import { SHOW_APP_SCREENS } from '../data/screens';
 /**
- * AppLanding.astro — the short landing page shared by /rack/ironstack and /rack/mealstack.
+ * AppLanding.astro — the short landing page shared by /rack/ironstack, /rack/mealstack and
+ * /rack/missionstack (#193: an iPad with an Apple TV behind it in place of the phones).
  *
  * Sept 20, 2026 design review: the app pages had grown to 15+ sections and the only
  * signup form sat eleven sections down. A Hevy user (or a macro-tracker user) decides
@@ -20,16 +21,19 @@ import SiteFooter from './SiteFooter.astro';
 import TopNav from './TopNav.astro';
 import PhoneFrame from './PhoneFrame.astro';
 import WatchFrame from './WatchFrame.astro';
+import TabletFrame from './TabletFrame.astro';
+import TvFrame from './TvFrame.astro';
 
 type Shot = { src: string; w: number; h: number; alt: string };
 type Diff = { claim: string; body: string; them?: string };
-/** `watch: true` draws the shot inside a WatchFrame (an Apple Watch screenshot). */
-type Feature = Shot & { k: string; title: string; body: string; watch?: boolean };
+/** `watch: true` draws the shot inside a WatchFrame (an Apple Watch screenshot); `tablet` in a
+ *  TabletFrame (an iPad, landscape); `tv` in a TvFrame (Apple TV). */
+type Feature = Shot & { k: string; title: string; body: string; watch?: boolean; tablet?: boolean; tv?: boolean };
 type Step = { title: string; body: string };
 type Detail = { label: string; body: string; href: string };
 
 interface Props {
-  app: 'ironstack' | 'mealstack';
+  app: 'ironstack' | 'mealstack' | 'missionstack';
   name: string;
   title: string;
   description: string;
@@ -44,15 +48,20 @@ interface Props {
   /** The phone-width subhead: one or two lines, so the app peek and the Join button both fit on the first screen. */
   subShort?: string;
   trust: string[];
-  /** One phone, or two (front, back). */
-  hero: [Shot] | [Shot, Shot];
+  /** One phone, or two (front, back). Left out when the hero is a tablet (`heroTablet`). */
+  hero?: [Shot] | [Shot, Shot];
+  /** An iPad screen, landscape (MissionStack). When set, the hero is this iPad, with `heroTv`
+   *  behind it to its upper right, in place of the phones. */
+  heroTablet?: Shot;
+  heroTv?: Shot;
   /** An Apple Watch screen. When set, the hero is the phone (hero[0]) with this watch in front of
    *  its lower left, drawn in a WatchFrame. IronStack only; MealStack keeps its two phones. */
   heroWatch?: Shot;
   soft: { label: string; href: string };
   diffLabel: string;
   diffH2: string;
-  themLabel: string;
+  /** The "Most apps:" label on a difference; left out where nothing honest compares. */
+  themLabel?: string;
   diffs: Diff[];
   featH2: string;
   features: Feature[];
@@ -63,14 +72,20 @@ interface Props {
   details: Detail[];
   closer: { four: string; line: string };
   footLinks: { label: string; href: string }[];
+  /** Kept out of search (MissionStack until its name is cleared). */
+  noindex?: boolean;
+  /** The share card; `/images/<app>/og.jpg` when left out. */
+  ogImage?: string;
 }
 const p = Astro.props;
 const page = `/rack/${p.app}`;
-const [front, back] = p.hero;
+const [front, back] = p.hero ?? [];
+const tablet = p.heroTablet;
+const tv = p.heroTv;
 const watch = p.heroWatch;
 const MAILTO = `mailto:support@missionbuilt.io?subject=${encodeURIComponent(p.name + ' beta')}&body=Apple%20ID%20email%3A%20`;
 ---
-<BaseLayout title={p.title} description={p.description} ogImage={`/images/${p.app}/og.jpg`} ogImageAlt={p.ogImageAlt} active="rack">
+<BaseLayout title={p.title} description={p.description} ogImage={p.ogImage ?? `/images/${p.app}/og.jpg`} ogImageAlt={p.ogImageAlt} active="rack" noindex={p.noindex}>
   <script is:inline slot="head" type="application/ld+json" set:html={JSON.stringify(p.ld)} />
   <TopNav active="rack" />
 
@@ -91,7 +106,10 @@ const MAILTO = `mailto:support@missionbuilt.io?subject=${encodeURIComponent(p.na
         <h1 class="promise">{p.promise}{p.promiseAccent && <> <span class="accent">{p.promiseAccent}</span></>}</h1>
         {/* Phones only: a strip of the two hero screens right under the headline, so the
             first screen shows the app and not only words about it. */}
-        {SHOW_APP_SCREENS && <div class:list={['hero-peek', watch && 'with-watch']} aria-hidden="true">
+        {SHOW_APP_SCREENS && tablet && <div class="hero-peek tablet-peek" aria-hidden="true">
+          <TabletFrame shot={{ ...tablet, alt: '' }} lazy={false} fill />
+        </div>}
+        {SHOW_APP_SCREENS && front && <div class:list={['hero-peek', watch && 'with-watch']} aria-hidden="true">
           <div class="peek-phone"><PhoneFrame shot={{ ...front, alt: '' }} lazy={false} fill /></div>
           {watch
             ? <div class="peek-watch"><WatchFrame shot={{ ...watch, alt: '' }} lazy={false} /></div>
@@ -117,13 +135,17 @@ const MAILTO = `mailto:support@missionbuilt.io?subject=${encodeURIComponent(p.na
         </ul>
         <a class="soft" href={p.soft.href}>{p.soft.label}</a>
       </div>
-      {SHOW_APP_SCREENS && watch && <div class="hero-phones with-watch">
+      {SHOW_APP_SCREENS && tablet && <div class="hero-phones hero-board">
+        {tv && <div class="board-tv"><TvFrame shot={tv} lazy={false} fill /></div>}
+        <div class="board-tablet"><TabletFrame shot={tablet} lazy={false} priority fill /></div>
+      </div>}
+      {SHOW_APP_SCREENS && front && watch && <div class="hero-phones with-watch">
         <div class="pair" style={`--ar:${front.h / front.w}`}>
           <div class="ph front"><PhoneFrame shot={front} lazy={false} priority /></div>
           <div class="hero-watch"><WatchFrame shot={watch} lazy={false} /></div>
         </div>
       </div>}
-      {SHOW_APP_SCREENS && !watch && <div class="hero-phones">
+      {SHOW_APP_SCREENS && front && !watch && <div class="hero-phones">
         {back && <div class="ph back"><PhoneFrame shot={back} lazy={false} /></div>}
         <div class="ph front"><PhoneFrame shot={front} lazy={false} priority /></div>
       </div>}
@@ -139,7 +161,7 @@ const MAILTO = `mailto:support@missionbuilt.io?subject=${encodeURIComponent(p.na
             <span class="num">0{i + 1}</span>
             <h3>{d.claim}</h3>
             <p class="body">{d.body}</p>
-            {d.them && <p class="them"><b>{p.themLabel}</b> {d.them}</p>}
+            {d.them && p.themLabel && <p class="them"><b>{p.themLabel}</b> {d.them}</p>}
           </li>
         ))}
       </ol>
@@ -149,12 +171,16 @@ const MAILTO = `mailto:support@missionbuilt.io?subject=${encodeURIComponent(p.na
     <section class="block" id="features">
       <p class="section-label">In the app</p>
       <h2 class="section-h2">{p.featH2}</h2>
-      <div class="feats">
+      <div class:list={['feats', p.features.some((f) => f.tablet || f.tv) && 'wide-feats']}>
         {p.features.map((f) => (
-          <figure class="feat">
+          <figure class:list={['feat', (f.tablet || f.tv) && 'wide']}>
             {SHOW_APP_SCREENS && (f.watch
               ? <div class="feat-watch"><WatchFrame shot={f} /></div>
-              : <div class="feat-phone"><PhoneFrame shot={f} fill /></div>)}
+              : f.tablet
+                ? <div class="feat-wide"><TabletFrame shot={f} fill /></div>
+                : f.tv
+                  ? <div class="feat-wide"><TvFrame shot={f} fill /></div>
+                  : <div class="feat-phone"><PhoneFrame shot={f} fill /></div>)}
             <figcaption>
               <span class="k">{f.k}</span>
               <span class="t">{f.title}</span>
@@ -306,6 +332,12 @@ const MAILTO = `mailto:support@missionbuilt.io?subject=${encodeURIComponent(p.na
      --pw x (0.88 x ar + 0.12); the watch case's top sits at 54% of that. */
   .hero-watch { position: absolute; left: 0; font-size: calc(var(--pw) * 0.075); top: calc(var(--pw) * (0.88 * var(--ar) + 0.12) * 0.54 - 3.2em); }
 
+  /* One iPad and an Apple TV (MissionStack): the TV behind, up and to the right; the iPad in
+     front, lower left, most of the column wide. */
+  .hero-phones.hero-board { display: block; position: relative; padding: 0 0 8% 0; }
+  .board-tv { width: 62%; margin-left: auto; opacity: 0.92; }
+  .board-tablet { position: relative; z-index: 2; width: 82%; margin-top: -22%; }
+
   /* ---------- BLOCKS ---------- */
   .block { padding: 72px var(--pad-page-x) 0; }
   .section-label { margin: 0 0 14px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.24em; color: var(--color-blood-text); text-transform: uppercase; }
@@ -328,7 +360,13 @@ const MAILTO = `mailto:support@missionbuilt.io?subject=${encodeURIComponent(p.na
      row gap is device-to-caption; the caption's bottom padding makes up the 56px between rows. */
   .feats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px 40px; }
   .feat { margin: 0; min-width: 0; display: grid; grid-row: span 2; grid-template-rows: subgrid; }
-  .feat > .feat-phone, .feat > .feat-watch { align-self: end; }
+  .feat > .feat-phone, .feat > .feat-watch, .feat > .feat-wide { align-self: end; }
+  /* An iPad or a TV takes two of the three columns, so its screen reads at the size a phone's does. */
+  .feat.wide { grid-column: span 2; }
+  /* A page of iPad and TV screens (MissionStack): two columns, one device each. */
+  .feats.wide-feats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .feats.wide-feats .feat.wide { grid-column: auto; }
+  .feat-wide { width: 100%; max-width: 560px; }
   .feat figcaption { padding-bottom: 36px; }
   .feat-phone { width: 100%; max-width: 248px; }
   /* The watch cell: the drawn watch about as tall as a phone cell's screen sits wide. */
@@ -371,6 +409,7 @@ const MAILTO = `mailto:support@missionbuilt.io?subject=${encodeURIComponent(p.na
     .hero { grid-template-columns: minmax(0, 1fr); gap: 36px; }
     .hero-phones { max-width: 560px; }
     .feats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .hero-phones.hero-board { max-width: 620px; }
     .diffs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .diffs li:nth-child(2n) { border-right: none; margin-right: 0; }
     .diffs li:nth-child(n+3) { border-top: 1px dashed var(--color-rule); }
@@ -381,7 +420,9 @@ const MAILTO = `mailto:support@missionbuilt.io?subject=${encodeURIComponent(p.na
   }
   @media (max-width: 720px) {
     .hero { padding-top: 24px; }
-    .hero-phones, .hero-phones.with-watch { display: none; }
+    .hero-phones, .hero-phones.with-watch, .hero-phones.hero-board { display: none; }
+    /* The iPad alone, whole, under the headline: a tablet is wide, so nothing needs cutting. */
+    .hero-peek.tablet-peek { display: block; height: auto; -webkit-mask-image: none; mask-image: none; }
     /* The crop is on the strip around the whole PhoneFrame, so frame and screen are cut together;
        sideways it stays open for the side buttons. */
     .hero-peek { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 20px 0 0; height: 210px; overflow-x: visible; overflow-y: clip;
@@ -406,6 +447,8 @@ const MAILTO = `mailto:support@missionbuilt.io?subject=${encodeURIComponent(p.na
     .feat { grid-row: auto; grid-template-rows: none; grid-template-columns: minmax(0, 1fr); gap: 18px; }
     .feat > .feat-phone { max-width: 300px; justify-self: center; align-self: start; }
     .feat > .feat-watch { font-size: 21px; justify-self: center; align-self: start; }
+    .feat.wide { grid-column: auto; }
+    .feat > .feat-wide { justify-self: center; align-self: start; }
     .feat figcaption { padding-bottom: 0; }
     .breadcrumb, .hero, .block, .closer { padding-left: var(--pad-page-x-mobile); padding-right: var(--pad-page-x-mobile); }
     .eyebrow { gap: 10px; letter-spacing: 0.18em; }
