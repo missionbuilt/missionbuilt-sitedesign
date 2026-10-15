@@ -26,7 +26,9 @@ export default defineConfig({
     // HOLD #143: /coach is a noindex draft; take the /coach/ clause out when it's approved.
     filter: (page) => !page.endsWith('/404/') && !page.includes('/loadout/mealstack/privacy') && !page.includes('/coach/')
       && (MISSIONSTACK_ANNOUNCED || !page.includes('/rack/missionstack'))
-      && !releaseRedirects.has(new URL(page).pathname) && new URL(page).pathname !== '/join/',
+      && !releaseRedirects.has(new URL(page).pathname) && new URL(page).pathname !== '/join/'
+      // /first (#194) stays out until Mike's go (first.astro's LIVE).
+      && new URL(page).pathname !== '/first/',
   })],
   // Static output by default — the whole site can be a static export.
   output: 'static',

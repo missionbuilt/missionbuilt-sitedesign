@@ -97,6 +97,12 @@ Stack AI is an AI (Claude, by Anthropic). It's off until you turn it on from its
 
 The Join the beta form on each app page keeps your email address, the note you add, which app page you signed up from, your country (from the network, not your address), when you signed up and whether you've been invited. It's kept in Mission Built's storage on Cloudflare and used for one thing: sending your TestFlight invite. It's never shared or used for marketing. Email support@missionbuilt.io and it's deleted.
 
+<!-- COPY: draft for Mike's yes (#194); the date is Mike's call. -->
+
+## The Get in first list
+
+The Get in first form at missionbuilt.io/first asks for your email address and nothing else. It's for one thing: launch news and a short series through January 31, four to six emails from Mike. Your address goes straight to Buttondown, the service that sends those emails for us ([its privacy policy](https://buttondown.com/legal/privacy)); Mission Built keeps no copy of its own. Buttondown first sends one email asking you to confirm; when you open that link, Buttondown sees your IP address and browser, as any website does. To stop repeated tries, the form uses your IP address as a scrambled code kept for one hour, and nothing else. Open and click tracking are off, so we don't see whether you opened an email or what you clicked. Every email has a one-click unsubscribe, and unsubscribing stops the emails at once. Your address is deleted after the series, by [DATE TO SET], or sooner if you ask at support@missionbuilt.io. It's never sold, never shared beyond Buttondown, and never used for anything else.
+
 ---
 
 ## The fine print
