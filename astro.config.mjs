@@ -24,7 +24,9 @@ export default defineConfig({
   integrations: [mdx(), sitemap({
     filter: (page) => !page.endsWith('/404/') && !page.includes('/loadout/mealstack/privacy')
       && !page.includes('/rack/missionstack/')
-      && !releaseRedirects.has(new URL(page).pathname) && new URL(page).pathname !== '/join/',
+      && !releaseRedirects.has(new URL(page).pathname) && new URL(page).pathname !== '/join/'
+      // /first (#194) stays out until Mike's go (first.astro's LIVE).
+      && new URL(page).pathname !== '/first/',
   })],
   // Static output by default — the whole site can be a static export.
   output: 'static',

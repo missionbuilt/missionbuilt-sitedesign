@@ -1,0 +1,152 @@
+---
+/**
+ * /first: the launch ad's QR page (#194). A fixed path, forever: the ad's QR and end card point here.
+ *
+ * One field, email. It posts to our own Pages Function (functions/api/first.js), which hands the
+ * address to Buttondown server-side; no third-party script, pixel or font loads on this page.
+ * Words: hq/briefs/site/three-apps-pages.md §3, drafts for Mike's yes (every line marked COPY).
+ *
+ * Gates (Mike):
+ *  - LIVE stays false until Mike's go: the page is noindex, out of the sitemap (astro.config.mjs),
+ *    and not linked from /rack or the nav. Turning it on is one line here and one in the config.
+ *  - Until the BUTTONDOWN_API_KEY secret is set, the function answers "not open yet" and the
+ *    page says so; nothing is sent or stored.
+ *  - SHOW_MISSIONSTACK stays false until the MissionStack name is cleared; when #193
+ *    (feat/site-three-apps) merges, switch it to that branch's MISSIONSTACK_ANNOUNCED gate.
+ *
+ * No prices anywhere on it (Mike 10-12: nothing extra on price).
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TopNav from '../components/TopNav.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+
+const LIVE = false;
+const SHOW_MISSIONSTACK = false;
+
+// COPY: the three apps, each in its card's own promise (/rack).
+const apps = [
+  { name: 'IronStack', line: 'Log fast. See progress.', href: '/rack/ironstack' },
+  { name: 'MealStack', line: 'Your tracker says what you ate. This says when.', href: '/rack/mealstack' },
+  ...(SHOW_MISSIONSTACK ? [{ name: 'MissionStack', line: 'Your workout on the big screen. Live in the gym.', href: '/rack/missionstack' }] : []),
+];
+---
+<BaseLayout
+  title="Get in first · Mission Built"
+  description="Get in first: the App Store link in mid-December, about two weeks before everyone else, and the founding price from your first day."
+  noindex={!LIVE}
+>
+  <TopNav />
+  <main class="first" id="first">
+    <section class="hero">
+      {/* COPY */}
+      <p class="eyebrow">Mission Built · The Rack</p>
+      <h1>Get in first. <span class="accent">Lock in the founders advantage.</span></h1>
+      <p class="ad">Every lift is a mission. To lift yourself. To lift others. To rise together.</p>
+
+      <form class="signup" method="post" action="/api/first" novalidate data-first>
+        <label class="sr" for="first-email">Email</label>
+        <div class="row">
+          <input type="email" name="email" id="first-email" required autocomplete="email" inputmode="email" placeholder="Your email" maxlength="254" />
+          <button class="cta" type="submit">Get in first →</button>
+        </div>
+        <div class="hp" aria-hidden="true"><label>Website<input type="text" name="website" tabindex="-1" autocomplete="off" /></label></div>
+        <input type="hidden" name="t" value="" data-t />
+        <p class="status" role="status" aria-live="polite" data-status></p>
+        {/* COPY */}
+        <p class="fine">Launch news and a short series through January 31: four to six emails, from Mike. Every one has a one-click unsubscribe. Nothing else, and never sold. <a href="/rack/support#the-get-in-first-list">How your email is kept</a>.</p>
+      </form>
+    </section>
+
+    <section class="block">
+      {/* COPY */}
+      <h2>What the founders advantage is</h2>
+      <p>Two things. The App Store link in mid-December, about two weeks before everyone else. And the founding price, from your first day: keep it as long as you stay.</p>
+    </section>
+
+    <section class="block">
+      {/* COPY */}
+      <h2>What you get in on</h2>
+      <ul class="apps">
+        {apps.map((a) => <li><a href={a.href}><b>{a.name}</b><span>{a.line}</span></a></li>)}
+      </ul>
+    </section>
+  </main>
+  <SiteFooter links={[{ label: 'The Rack', href: '/rack' }, { label: 'Support', href: '/rack/support' }]} />
+</BaseLayout>
+
+<script>
+  // Posts to /api/first. Without JS the form still posts and the function redirects back
+  // with ?first=ok|err|closed.
+  // COPY: the status lines.
+  const OK = 'Almost in. Check your inbox for one email to confirm, then you are on the list.';
+  const ERR = 'That did not go through. Check the address and try again.';
+  const CLOSED = 'The list opens soon. Come back in a few days.';
+  const form = document.querySelector<HTMLFormElement>('form[data-first]');
+  if (form) {
+    const status = form.querySelector<HTMLElement>('[data-status]');
+    const t = form.querySelector<HTMLInputElement>('[data-t]');
+    const btn = form.querySelector<HTMLButtonElement>('button[type=submit]');
+    if (t) t.value = String(Date.now());
+    const say = (msg: string, tone: '' | 'ok' | 'err') => { if (status) { status.textContent = msg; status.className = 'status' + (tone ? ' ' + tone : ''); } };
+    const q = new URLSearchParams(location.search).get('first');
+    if (q === 'ok') say(OK, 'ok');
+    if (q === 'err') say(ERR, 'err');
+    if (q === 'closed') say(CLOSED, '');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = (form.querySelector<HTMLInputElement>('input[name=email]')?.value || '').trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { say('That does not look like an email address.', 'err'); return; }
+      if (btn) btn.disabled = true;
+      say('Adding you…', '');
+      try {
+        const res = await fetch('/api/first', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(Object.fromEntries(new FormData(form).entries())) });
+        const data = await res.json().catch(() => ({}));
+        if (res.ok && data.ok) { say(OK, 'ok'); form.reset(); if (t) t.value = String(Date.now()); }
+        else if (res.status === 503 || data.closed) say(CLOSED, '');
+        else say(data.error || ERR, 'err');
+      } catch { say(ERR, 'err'); }
+      finally { if (btn) btn.disabled = false; }
+    });
+  }
+</script>
+
+<style>
+  .first { max-width: 880px; margin: 0 auto; padding: 48px var(--pad-page-x) 72px; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .eyebrow { margin: 0 0 18px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.24em; text-transform: uppercase; color: var(--color-chalk-dim); }
+  h1 { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(36px, 6vw, 72px); line-height: 0.98; letter-spacing: -0.01em; text-transform: uppercase; color: var(--color-chalk); overflow-wrap: anywhere; }
+  h1 .accent { display: block; color: var(--color-blood-bright); }
+  .ad { margin: 22px 0 0; font-family: var(--font-serif); font-size: var(--fs-hero-sub); line-height: 1.45; color: var(--color-chalk-dim); }
+  .signup { margin-top: 32px; max-width: 560px; }
+  .row { display: flex; }
+  input[type=email] { flex: 1 1 auto; min-width: 0; padding: 13px 14px; background: var(--color-panel); border: 1px solid var(--color-rule); border-right: none; color: var(--color-chalk); font-family: var(--font-mono); font-size: 14px; }
+  input::placeholder { color: var(--color-chalk-faint); }
+  input:focus { border-color: var(--color-chalk-faint); outline: none; }
+  input:focus-visible { outline: 2px solid var(--color-blood-text); outline-offset: 2px; }
+  .cta { display: inline-flex; align-items: center; justify-content: center; padding: 14px 22px; background: var(--color-blood); color: var(--color-chalk); border: none; cursor: pointer; font-family: var(--font-display); font-weight: 600; font-size: 16px; letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap; }
+  .cta:hover { background: var(--color-blood-bright); }
+  .cta:disabled { opacity: 0.6; cursor: default; }
+  .cta:focus-visible { outline: 2px solid var(--color-blood-text); outline-offset: 2px; }
+  .status { margin: 10px 0 0; font-family: var(--font-mono); font-size: 12px; line-height: 1.5; color: var(--color-chalk-faint); }
+  .status:empty { margin: 0; }
+  .status.ok { color: var(--color-army); }
+  .status.err { color: var(--color-blood-text); }
+  .fine { margin: 14px 0 0; font-size: 14px; line-height: 1.55; color: var(--color-chalk-dim); }
+  .fine a, .apps a:hover b { color: var(--color-blood-text); }
+  .block { margin-top: 56px; padding-top: 28px; border-top: var(--border-thin); }
+  .block h2 { margin: 0 0 12px; font-family: var(--font-display); font-weight: 600; font-size: 24px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--color-chalk); }
+  .block p { margin: 0; font-size: var(--fs-body); line-height: 1.6; color: var(--color-chalk-dim); max-width: 62ch; }
+  .apps { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; border-top: var(--border-thin); }
+  .apps li { border-bottom: var(--border-thin); }
+  .apps a { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: baseline; padding: 16px 0; text-decoration: none; }
+  .apps b { font-family: var(--font-display); font-weight: 600; font-size: 18px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-chalk); }
+  .apps span { font-size: 15px; color: var(--color-chalk-dim); }
+  @media (max-width: 720px) {
+    .first { padding: 32px var(--pad-page-x-mobile) 56px; }
+    .row { flex-direction: column; gap: 10px; }
+    input[type=email] { border-right: 1px solid var(--color-rule); }
+    .cta { width: 100%; }
+    .ad { font-size: 18px; }
+  }
+</style>
