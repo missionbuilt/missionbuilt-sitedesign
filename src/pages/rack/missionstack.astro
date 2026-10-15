@@ -15,11 +15,11 @@
  * Screens: Chalkboard captures them from the 0.1.0 release build in screenshot mode (Fri 10-16).
  * Until each file is in public/images/missionstack/, its frame shows a "Screen to capture" slot
  * with the file name (hasScreen). The files, at these sizes:
- *   board-ipad.webp   1180 × 820   the board on iPad mid-set (one lifter)
+ *   board-ipad.webp   1080 × 751   the board on iPad mid-set (one lifter)
  *   board-tv.webp      960 × 540   the same board on Apple TV
- *   pair-ipad.webp    1180 × 820   the pairing sheet (Start on my own, the code)
- *   stacked-ipad.webp 1180 × 820   Stacked: time, volume, records
- *   plan-ipad.webp    1180 × 820   Plan with a typed line ("front squat 3x5 @7")
+ *   pair-ipad.webp    1080 × 751   the pairing sheet (Start on my own, the code)
+ *   stacked-ipad.webp 1080 × 751   Stacked: time, volume, records
+ *   plan-ipad.webp    1080 × 751   Plan with a typed line ("front squat 3x5 @7")
  *   og.jpg            1200 × 630   share card (until then the Rack's)
  */
 import AppLanding from '../../components/AppLanding.astro';
@@ -27,7 +27,7 @@ import { MISSIONSTACK_ANNOUNCED } from '../../data/missionstack-gate.mjs';
 import { existsSync } from 'node:fs';
 
 const IMG = '/images/missionstack/';
-const pad = (f: string, alt: string) => ({ src: `${IMG}${f}.webp`, w: 1180, h: 820, alt });
+const pad = (f: string, alt: string) => ({ src: `${IMG}${f}.webp`, w: 1080, h: 751, alt });
 const tvShot = (f: string, alt: string) => ({ src: `${IMG}${f}.webp`, w: 960, h: 540, alt });
 
 const title = 'MissionStack: plan on iPad and Mac, train live on the big screen · Mission Built'; // COPY
@@ -45,7 +45,7 @@ const ld = {
   publisher: { '@type': 'Organization', name: 'Mission Built', url: 'https://missionbuilt.io' },
 };
 
-const boardIpad = pad('board-ipad', 'The MissionStack board on iPad mid-set: one lifter\'s exercise, the set they are on, the load and the rest clock, big enough to read across the room.'); // COPY (alt; rewrite from the real screen)
+const boardIpad = pad('board-ipad', 'The MissionStack board mid-workout on an iPad: Lower A, Romanian deadlift 3 × 8, a 1:38 rest clock, then set 3. Two sets of 245 × 8 done and the third ready; 5 of 9 exercises, 3 of 3 sets.'); // COPY (alt, from Chalkboard's capture README)
 const boardTv = tvShot('board-tv', 'The same board on Apple TV.'); // COPY (alt)
 const og = existsSync(`public${IMG}og.jpg`) ? `${IMG}og.jpg` : '/images/rack-og.jpg';
 ---
@@ -79,9 +79,9 @@ const og = existsSync(`public${IMG}og.jpg`) ? `${IMG}og.jpg` : '/images/rack-og.
   features={[
     { ...boardIpad, tablet: true, k: 'The board', title: 'Read it across the room.', body: 'The set, the load, the rest clock and your records, while you log on your phone or watch.' },
     { ...boardTv, tv: true, k: 'Apple TV', title: 'On the biggest screen.', body: 'The same board on Apple TV. The Siri Remote pauses the clock.' },
-    { ...pad('pair-ipad', 'MissionStack\'s pairing screen on iPad: Start on my own, and the code to scan with your iPhone\'s Camera.'), tablet: true, k: 'Pair', title: 'One scan.', body: 'Start on my own, scan the code with your iPhone\'s Camera, tap Pair. Your own Wi-Fi, encrypted.' },
-    { ...pad('stacked-ipad', 'Stacked on the MissionStack board: the workout\'s time, volume and records.'), tablet: true, k: 'Stacked', title: 'Finish big.', body: 'Your time, volume and records, then the board keeps nothing. Your workout is saved on your iPhone.' },
-    { ...pad('plan-ipad', 'MissionStack\'s Plan on iPad with a typed line, front squat 3x5 @7, filled in as three sets of five at RPE 7.'), tablet: true, k: 'Plan', title: 'Type a line.', body: 'The sets, reps and effort fill in. Drag, superset, swap, copy a week forward, and undo any of it.' },
+    { ...pad('pair-ipad', 'The board\'s pairing card: "Scan with your iPhone camera" over a QR code, with a Remember this iPhone switch and Done.'), tablet: true, k: 'Pair', title: 'One scan.', body: 'Start on my own, scan the code with your iPhone\'s Camera, tap Pair. Your own Wi-Fi, encrypted.' },
+    { ...pad('stacked-ipad', 'The board at the end of a workout: Stacked. Lower A, 52:14, 31 of 31 sets, 48,015 lb, one record: back squat 275 × 6, a rep record. "Your workout is saved on your iPhone."'), tablet: true, k: 'Stacked', title: 'Finish big.', body: 'Your time, volume and records, then the board keeps nothing. Your workout is saved on your iPhone.' },
+    { ...pad('plan-ipad', 'Plan on an iPad: Monday\'s squat workout, with Front squat just added from the typed line "front squat 3x5 @7", its sets, reps and RPE filled in: 3, 5, 7.'), tablet: true, k: 'Plan', title: 'Type a line.', body: 'The sets, reps and effort fill in. Drag, superset, swap, copy a week forward, and undo any of it.' },
   ]}
   featNote="Real screens from the October 15 build, in the iPad and Apple TV Simulators."
   steps={[
