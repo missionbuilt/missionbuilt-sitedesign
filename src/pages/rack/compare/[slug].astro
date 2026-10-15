@@ -1,0 +1,140 @@
+---
+/**
+ * /rack/compare/hevy-strong, /macrofactor, /truecoach (plan §8). Every competitor cell is sourced
+ * in src/data/compare.ts; rows with an unverified cell wait in `pending` and never render, and the
+ * data file refuses to build if "[verify]" would publish. noindex and out of the sitemap until
+ * Mike's word yes on the launch preview.
+ */
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import TopNav from '../../../components/TopNav.astro';
+import SiteFooter from '../../../components/SiteFooter.astro';
+import { COMPARE_PAGES, CHECKED, CHECKED_ISO, hasExcerpt, type ComparePage } from '../../../data/compare';
+
+export function getStaticPaths() {
+  return COMPARE_PAGES.map((page) => ({ params: { slug: page.slug }, props: { page } }));
+}
+
+const { page } = Astro.props as { page: ComparePage };
+const host = (u: string) => new URL(u).hostname.replace(/^www\./, '');
+const others = COMPARE_PAGES.filter((p) => p.slug !== page.slug);
+---
+<BaseLayout title={page.title} description={page.description} noindex={true}>
+  <TopNav active="rack" />
+  <main id="main" class="page">
+    <section class="hero">
+      <p class="eyebrow"><span class="dots" aria-hidden="true">▮▮▮</span><span>{page.eyebrow}</span><span class="dots" aria-hidden="true">▮▮▮</span></p>
+      <h1 class="display">{page.h1}</h1>
+      <p class="subtitle">{page.sub} Checked against their own pages, <time datetime={CHECKED_ISO}>{CHECKED}</time>. Pricing coming soon.</p>
+    </section>
+
+    <section class="block intro">
+      {page.intro.map((p) => <p>{p}</p>)}
+    </section>
+
+    <section class="block">
+      <p class="section-label">Line by line</p>
+      <div class="scroller" tabindex="0" role="region" aria-label={`${page.usName} compared, line by line`}>
+        <table>
+          <thead>
+            <tr>
+              <th scope="col" class="k"><span class="sr">Feature</span></th>
+              <th scope="col" class="us">{page.usName}</th>
+              {page.competitors.map((c) => <th scope="col">{c.name}</th>)}
+            </tr>
+          </thead>
+          <tbody>
+            {page.rows.map((r) => (
+              <tr>
+                <th scope="row" class="k">{r.label}</th>
+                <td class="us">
+                  <p>{r.ours.text}</p>
+                  {r.ours.soon && <p class="soon"><span class="tag">Coming soon</span> {r.ours.soon}</p>}
+                  {r.ours.later && <p class="soon"><span class="tag">Coming later</span> {r.ours.later}</p>}
+                </td>
+                {page.competitors.map((c) => {
+                  const cell = r.them[c.key];
+                  return (
+                    <td data-excerpt={hasExcerpt(cell) ? 'true' : undefined}>
+                      <p>{cell.text}</p>
+                      <p class="src">
+                        {cell.sources.map((x, i) => <>{i > 0 && ' · '}<a href={x.url} rel="noopener noreferrer nofollow" target="_blank">{host(x.url)}</a></>)}
+                      </p>
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="note">Their cells quote or sum up their own website, help center or App Store page, linked in each cell. App Store privacy labels are each developer's own declarations. Where their pages don't say, we leave the row out rather than guess.</p>
+    </section>
+
+    {page.placeholder && (
+      <section class="block placeholder" id="another-tracker">
+        <p class="section-label">{page.placeholder.title}</p>
+        <p class="prose">{page.placeholder.body}</p>
+      </section>
+    )}
+
+    <section class="block">
+      <p class="section-label">What they do better</p>
+      <ul class="better">
+        {page.better.map((b) => <li data-excerpt={b.source.excerpt ? 'true' : undefined}>{b.text} <a class="src-inline" href={b.source.url} rel="noopener noreferrer nofollow" target="_blank">{host(b.source.url)}</a></li>)}
+      </ul>
+    </section>
+
+    <section class="block more">
+      <p class="section-label">More comparisons</p>
+      <ul class="links">
+        <li><a href="/rack/compare">All comparisons</a></li>
+        {others.map((o) => <li><a href={`/rack/compare/${o.slug}`}>{o.h1.replace(/\.$/, '')}</a></li>)}
+      </ul>
+    </section>
+  </main>
+  <SiteFooter links={[{ label: 'The apps', href: '/rack' }, { label: 'Compare', href: '/rack/compare' }, { label: 'Support', href: '/rack/support' }]} />
+</BaseLayout>
+
+<style>
+  .page { padding-bottom: 72px; }
+  .hero { padding: 48px var(--pad-page-x) 8px; }
+  .eyebrow { display: inline-flex; align-items: center; gap: 14px; margin: 0 0 18px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.22em; color: var(--color-chalk-dim); text-transform: uppercase; }
+  .eyebrow .dots { letter-spacing: 0.04em; color: var(--color-blood-bright); }
+  .display { margin: 0; max-width: 22ch; font-family: var(--font-display); font-weight: 700; font-size: clamp(36px, 6vw, 64px); line-height: 0.98; letter-spacing: -0.01em; text-transform: uppercase; color: var(--color-chalk); overflow-wrap: anywhere; }
+  .subtitle { margin: 18px 0 0; max-width: 60ch; font-family: var(--font-serif); font-size: 17px; line-height: 1.6; color: var(--color-chalk-dim); }
+  .block { margin: 48px var(--pad-page-x) 0; padding-top: 24px; border-top: var(--border-thin); min-width: 0; }
+  .intro p, .prose { margin: 0 0 12px; max-width: 68ch; font-family: var(--font-serif); font-size: 16px; line-height: 1.65; color: var(--color-chalk-dim); }
+  .section-label { margin: 0 0 16px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-blood-text); }
+  .scroller { overflow-x: auto; max-width: 100%; border: var(--border-thin); }
+  .scroller:focus-visible { outline: 2px solid var(--color-blood-text); outline-offset: 2px; }
+  table { width: 100%; min-width: 760px; border-collapse: collapse; }
+  th, td { vertical-align: top; text-align: left; padding: 14px 16px; border-bottom: var(--border-thin); border-right: var(--border-thin); }
+  tr > :last-child { border-right: none; }
+  tbody tr:last-child > * { border-bottom: none; }
+  thead th { font-family: var(--font-display); font-weight: 600; font-size: 16px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-chalk); background: var(--color-panel); }
+  th.k { width: 150px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-chalk-faint); }
+  td p { margin: 0; font-family: var(--font-serif); font-size: 14.5px; line-height: 1.55; color: var(--color-chalk-dim); }
+  td.us p { color: var(--color-chalk); }
+  td p + p { margin-top: 8px; }
+  td.us p.soon { color: var(--color-chalk-dim); }
+  .tag { display: inline-block; margin-right: 6px; padding: 2px 6px; border: 1px solid var(--color-chalk-faint); font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-chalk-dim); }
+  td p.src { font-family: var(--font-mono); font-size: 12px; color: var(--color-chalk-faint); overflow-wrap: anywhere; }
+  .src a, .src-inline { color: var(--color-chalk-faint); border-bottom: 1px solid var(--color-chalk-ghost); text-decoration: none; }
+  .src a:hover, .src-inline:hover { color: var(--color-blood-text); }
+  .src-inline { margin-left: 4px; font-family: var(--font-mono); font-size: 12px; }
+  .note { margin: 12px 0 0; max-width: 72ch; font-size: 13px; line-height: 1.55; color: var(--color-chalk-faint); }
+  .placeholder { border-top-style: dashed; }
+  .better { margin: 0; padding-left: 20px; display: grid; gap: 10px; max-width: 72ch; font-family: var(--font-serif); font-size: 15.5px; line-height: 1.6; color: var(--color-chalk-dim); }
+  .links { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px 24px; }
+  .links a { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-chalk-dim); border-bottom: 1px solid var(--color-chalk-ghost); padding-bottom: 2px; }
+  .links a:hover { color: var(--color-chalk); border-bottom-color: var(--color-chalk); }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  @media (max-width: 1099px) {
+    .hero { padding-left: var(--pad-page-x-mid); padding-right: var(--pad-page-x-mid); }
+    .block { margin-left: var(--pad-page-x-mid); margin-right: var(--pad-page-x-mid); }
+  }
+  @media (max-width: 720px) {
+    .hero { padding: 32px var(--pad-page-x-mobile) 8px; }
+    .block { margin-left: var(--pad-page-x-mobile); margin-right: var(--pad-page-x-mobile); }
+  }
+</style>
