@@ -13,6 +13,8 @@ status: in-progress
 
 **NEW: Coach mode, for working with a coach or coaching someone.** A coach sees the workouts you log, sends you programs and leaves notes on your lifts. Open Coach mode and pick Coach someone or Get coached. Accepting a coach is one switch, and you choose how far back they see: today, 30, 60 or 90 days, or everything. Narrow it later and the older workouts leave your coach's copy. Coaches can keep their own notes on each lifter and copy a week forward with a small bump.
 
+**NEW: Starter programs.** Ten programs to start from, in Starters: powerlifting, strongman, bodybuilding, two for general fitness, conditioning, basketball, lacrosse, Pilates and yoga. Each says what it's based on, with its source, and every week is written out. You choose the weights.
+
 **TESTING: Exercise demos.** We're testing how you'll learn a lift in IronStack with 4 lifts: squat, bench press, deadlift and bent-over row. Swipe right on one and tap Info: a looping demo, what to set up, what you should feel, and the common miss. Squat, bench and deadlift have a male and a female demo; their pause, tempo and other versions use the same one. Every other lift shows a "Search this lift" link for now. The full library is coming: licensed animations for every lift, plus videos Mike films himself for the most common ones.
 
 **FIXED: Adding your own exercise.** Type a name that isn't in the library and "Add … as your own exercise" is now the first row, everywhere you pick an exercise. Before, it sat under the matches, behind the keyboard.
