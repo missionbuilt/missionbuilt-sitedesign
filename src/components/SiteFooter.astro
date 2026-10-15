@@ -17,9 +17,12 @@ interface FootLink {
 
 interface Props {
   links?: FootLink[];
+  /** Leave the email address out. Cloudflare's Email Address Obfuscation (on, Mike 2026-10-11)
+   * injects a script into any page with an address, and /join must run none (#133). */
+  noEmail?: boolean;
 }
 
-const { links = [] } = Astro.props;
+const { links = [], noEmail = false } = Astro.props;
 
 const site: FootLink[] = [
   { label: 'Chapters', href: '/chapters' },
@@ -46,7 +49,7 @@ const site: FootLink[] = [
     <p class="sf-tag">Real strength is lifting others</p>
     <nav class="sf-site" aria-label="Site">
       {site.map((l) => <a href={l.href}>{l.label}</a>)}
-      <a href="mailto:mike@missionbuilt.io" class="sf-mail">mike@missionbuilt.io</a>
+      {!noEmail && <a href="mailto:mike@missionbuilt.io" class="sf-mail">mike@missionbuilt.io</a>}
     </nav>
   </div>
 

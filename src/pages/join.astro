@@ -1,0 +1,53 @@
+---
+/**
+ * /join: where a board's QR lands when the iPhone has no IronStack that can pair (#133).
+ *
+ * The board (MissionStack on a Mac, an iPad or an Apple TV) shows a QR,
+ * `https://missionbuilt.io/join#MB1.<board id>.<secret>`. Pointed at it, the iPhone's Camera
+ * opens IronStack straight to pairing (Mike, 2026-10-10, M34 3A); the app link is
+ * public/.well-known/apple-app-site-association. Without IronStack, Safari opens this page.
+ *
+ * The secret is in the fragment, which a browser never sends, so it never reaches this site.
+ * This page must never read it: no script, nothing fetched, no referrer (public/_headers locks
+ * that in), and it is kept out of search and the sitemap. No email address anywhere on it, footer
+ * included (`noEmail`): Cloudflare's Email Address Obfuscation stays on (Mike, 2026-10-11) and
+ * would inject its decode script into a page that has one.
+ *
+ * Goes live together with the first IronStack build that can pair, and with that build's
+ * privacy section (/rack/ironstack/privacy#board), which this page links to.
+ *
+ * The heart rate lines (#157: Show my heart rate on the board) go live only with the first IronStack
+ * and MissionStack builds that carry #157.
+ */
+import ToolNoteLayout from '../layouts/ToolNoteLayout.astro';
+---
+<ToolNoteLayout
+  title="Put your workout on the board · IronStack · Mission Built"
+  description="This code pairs an iPhone running IronStack with the board in front of you."
+  crumbs={[{ label: 'IronStack', href: '/rack/ironstack' }, { label: 'The board' }]}
+  eyebrow="IronStack · The board"
+  heading="Your workout, on the board."
+  accent="board"
+  standfirst="This code pairs an iPhone running IronStack with the board in front of you, so your sets and your clock show on the big screen."
+  tool="ironstack"
+  back={{ label: 'IronStack', href: '/rack/ironstack' }}
+  footLinks={[{ label: 'Privacy', href: '/rack/ironstack/privacy#board' }, { label: 'Support', href: '/rack/support' }]}
+  noindex
+  noEmail
+>
+  {/* The header's Referrer-Policy is joined with the site-wide one by Cloudflare, so the
+      meta tag is what makes it no-referrer (privacy review, 2026-10-11). */}
+  <meta slot="head" name="referrer" content="no-referrer" />
+  <Fragment slot="byline">Opened this page by scanning a board? Here's what to do next.</Fragment>
+
+  <h2>Have IronStack?</h2>
+  <p>Update it to the newest build in TestFlight, then point your iPhone's Camera at the code on the board again. IronStack opens and asks before it pairs with the board. Already on the newest build? Open IronStack once, then scan the code again.</p>
+
+  <h2>New to IronStack?</h2>
+  <p>IronStack is a lifting log for iPhone and Apple Watch, free during the TestFlight beta. <a href="/rack/ironstack">Sign up for the beta</a>; Apple emails you an invite. Once IronStack is installed, scan the code on the board again.</p>
+
+  <h2>What the board gets</h2>
+  <p>Your live workout while IronStack is open: the workout and exercise names, your sets, planned and done, with weight, reps and RPE, the clock and when the workout started, your volume, your records as they happen, and the clock voice you picked. Also your live heart rate from Apple Watch and its zone, while Show my heart rate on the board is on (Settings › Board). It starts on unless the age in your profile is under 18. Never your bodyweight, sleep, notes or name. It shows on a screen the room can see. Your iPhone sends it over the local Wi-Fi, encrypted, never through Mission Built.</p>
+  <p>To stop, choose <strong>Forget boards</strong> in IronStack's <strong>Settings › Board</strong>. The board keeps this iPhone until the board forgets it: <strong>Forget this iPhone</strong> under Pair iPhone on the board, or <strong>Forget all phones</strong>.</p>
+  <p>This page never reads the code's secret, and your browser never sends it to Mission Built. <a href="/rack/ironstack/privacy#board">More in IronStack's privacy page</a>.</p>
+</ToolNoteLayout>

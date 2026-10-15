@@ -33,9 +33,13 @@ interface Props {
   toolKicker?: string;
   back: { label: string; href: string };
   footLinks?: { label: string; href: string }[];
+  /** Kept out of search (BaseLayout's robots tag), e.g. /join. */
+  noindex?: boolean;
+  /** No email address in the footer (SiteFooter's `noEmail`), e.g. /join. */
+  noEmail?: boolean;
 }
 
-const { title, description, crumbs, section = 'rack', eyebrow, heading, accent, standfirst, tool: toolKey, toolKicker = 'The app', back, footLinks = [] } = Astro.props;
+const { title, description, crumbs, section = 'rack', eyebrow, heading, accent, standfirst, tool: toolKey, toolKicker = 'The app', back, footLinks = [], noindex = false, noEmail = false } = Astro.props;
 const root = section === 'loadout' ? { label: 'The Loadout', href: '/loadout' } : { label: 'The Rack', href: '/rack' };
 const i = accent ? heading.indexOf(accent) : -1;
 const hBefore = i >= 0 ? heading.slice(0, i) : heading;
@@ -50,7 +54,7 @@ const shareCard =
       ? { ogImage: '/images/rack-og.jpg', ogImageAlt: 'The Rack. IronStack and MealStack, two iPhone apps for people who train, by Mission Built.' }
       : {};
 ---
-<BaseLayout title={title} description={description} active={section} {...shareCard}>
+<BaseLayout title={title} description={description} active={section} noindex={noindex} {...shareCard}>
   <slot name="head" slot="head" />
   <TopNav active={section} />
 
@@ -93,7 +97,7 @@ const shareCard =
     </article>
 
   </main>
-  <SiteFooter links={footLinks} />
+  <SiteFooter links={footLinks} noEmail={noEmail} />
 </BaseLayout>
 
 <style>
