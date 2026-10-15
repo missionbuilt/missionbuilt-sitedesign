@@ -23,7 +23,8 @@ export default defineConfig({
   // the release notes' version redirects (above), MissionStack's draft privacy page until
   // MissionStack is announced (#118; every MissionStack page, one switch: src/data/missionstack-gate.mjs), and /join, a board QR's landing page (#133).
   integrations: [mdx(), sitemap({
-    filter: (page) => !page.endsWith('/404/') && !page.includes('/loadout/mealstack/privacy')
+    // HOLD #143: /coach is a noindex draft; take the /coach/ clause out when it's approved.
+    filter: (page) => !page.endsWith('/404/') && !page.includes('/loadout/mealstack/privacy') && !page.includes('/coach/')
       && (MISSIONSTACK_ANNOUNCED || !page.includes('/rack/missionstack'))
       && !releaseRedirects.has(new URL(page).pathname) && new URL(page).pathname !== '/join/',
   })],

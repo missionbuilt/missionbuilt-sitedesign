@@ -1,0 +1,210 @@
+---
+/**
+ * HOLD: DRAFT, NOT FOR main. #143, the coach page (Logbook, 2026-10-14, branch feat/site-coach-page).
+ * Words go to the product lead and Mike before this merges; design and privacy reviews next.
+ * noindex and out of TopNav until approved.
+ *
+ * Every sentence must be true of the build that is live when this goes up. Lines marked
+ * "Coming" describe work that is built but not shipped: MissionStack's desk (Chalkboard, behind
+ * CoachDeskFlags), logging for a lifter (#164, needs Social #176) and lifters without the app
+ * (#165, behind SyncFlags.offlineClients). The lifter controls (30/60/90 days, sharing less,
+ * coach notes) are true from IronStack build 75 with Social 0.6.0 (#140); this page can't go
+ * up before both are out, and IronStack's b75 privacy page (feat/ironstack-privacy-b75) must be
+ * live first or at the same time: both pages link to its #coach-mode section. Checked against
+ * hq/security/data-flow.md and /rack/ironstack/privacy#coach-mode.
+ *
+ * After the design and privacy reviews (2026-10-14): the "Where it goes" paragraphs follow the
+ * b75 privacy page's approved Coach mode text (a6c3c48), turned to speak to the coach.
+ *
+ * HOLD for #164 (logging a lifter's workout, "Coming" below): when it ships, this page and
+ * /coach/invited each gain two sentences, checked then against data-flow.md (#164/#176) and the
+ * privacy page's #164 text: (1) a workout a coach logs for a lifter goes through Mission Built's
+ * Social server and is held there only until the lifter's phone fetches it (at most 14 days; a
+ * record of whether it was delivered stays 30 days); (2) the lifter can turn it off ("Your coach
+ * can log a workout for you; turn that off in Settings › Coach mode", the switch's place to be
+ * confirmed in the app). Until then the tile stays under "Coming, not in the app yet".
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import TopNav from '../components/TopNav.astro';
+
+const stats = [
+  { key: 'Where it runs',          value: 'Inside IronStack' },
+  { key: 'What you see',           value: 'Every set against your plan' },
+  { key: 'What your lifter picks', value: 'What you see, and how far back' },
+  { key: 'Price',                  value: 'Free in the beta' },
+];
+
+const live = [
+  { k: 'On the floor', v: 'Your iPhone', body: 'Coach mode lives inside IronStack. Your lifters, each lifter\'s week, and every set they log against the plan you sent.' },
+  { k: 'Plan vs actual', v: 'Every change marked', body: 'Plan in, workouts out. Every change from the plan is marked in place: weight, reps, RPE, swaps and skips.' },
+  { k: 'Ask Stack AI', v: 'Sum up a week', body: 'Ask Stack AI to sum up a lifter\'s week: what moved, what stalled, and where it differed from your plan. It runs on your Stack AI allowance.' },
+];
+
+// Built, not shipped. Written as what will come, never as what the app does today.
+const coming = [
+  { k: 'At the desk', v: 'iPad and Mac', body: 'MissionStack will let you build blocks and read the week on a bigger screen.' },
+  // HOLD #164: see the header for the sentences this needs when it ships.
+  { k: 'Logging for them', v: 'Log a lifter\'s workout', body: 'You\'ll be able to run a lifter\'s workout from your phone when theirs is in a locker. It will land in their history, marked as logged by you.' },
+  { k: 'Lifters without the app', v: 'Add them by name', body: 'You\'ll be able to add someone you log workouts for. They\'ll be kept in your iCloud, not on our servers.' },
+];
+---
+<BaseLayout
+  title="Coach mode · Mission Built"
+  description="Coach mode in IronStack: send your plan, see every set against it, and let your lifter choose what you see. Free in the beta."
+  active="rack"
+  noindex={true}
+>
+  <TopNav active="rack" />
+
+  <main id="main" class="page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/rack">The Rack</a>
+      <span aria-hidden="true"> / </span>
+      <a href="/rack/ironstack">IronStack</a>
+      <span aria-hidden="true"> / </span>
+      <span class="here">Coach mode</span>
+    </nav>
+
+    <section class="hero">
+      <p class="eyebrow">
+        <span class="dots" aria-hidden="true">▮▮▮</span>
+        <span>For coaches</span>
+        <span class="dots" aria-hidden="true">▮▮▮</span>
+      </p>
+      <h1 class="display"><span>Coach mode</span><span class="dot">.</span></h1>
+      <p class="subtitle">You send the plan. They lift. You see every set.</p>
+    </section>
+
+    <section class="meta-strip" aria-label="Coach mode at a glance">
+      {stats.map((s) => (
+        <div><div class="stat-key">{s.key}</div><div class="stat-value">{s.value}</div></div>
+      ))}
+    </section>
+
+    <section class="block" id="what">
+      <p class="section-label">What it does</p>
+      <h2 class="section-h2">A coach in your corner.</h2>
+      <p class="prose">Train with a real coach who uses IronStack. Their plan arrives as a suggestion; accept it and change anything you like. You lift, and they see every set against the plan: weight, reps, RPE, what you swapped or skipped. Only what you chose to share, and either of you can end it.</p>
+      <p class="prose">That's how your lifters read it. For you: write the plan once, send it, and read back what really happened.</p>
+      <div class="cards">
+        {live.map((c) => (
+          <div class="cell"><p class="k">{c.k}</p><h3 class="v">{c.v}</h3><p class="body">{c.body}</p></div>
+        ))}
+      </div>
+    </section>
+
+    <section class="block" id="coming">
+      <p class="section-label">Coming, not in the app yet</p>
+      <h2 class="section-h2">Built, and on the way.</h2>
+      <div class="cards coming">
+        {coming.map((c) => (
+          <div class="cell"><p class="k">{c.k}{' '}<span class="tag" aria-hidden="true">Coming</span><span class="sr-only">, coming soon</span></p><h3 class="v">{c.v}</h3><p class="body">{c.body}</p></div>
+        ))}
+      </div>
+    </section>
+
+    <section class="block" id="lifter">
+      <p class="section-label">What your lifter controls</p>
+      <h2 class="section-h2">They say yes first.</h2>
+      <div class="fine">
+        <p>Nothing is shared until your lifter says yes. Accepting shares every set, and their notes and how they felt. Sleep, bodyweight and MealStack fueling stay off unless they turn them on.</p>
+        <p>They choose how far back you see: from today, 30, 60 or 90 days, or all their history (earlier versions offer 12 weeks). They can share less later, and what they stop sharing is deleted from your copy. Server backups drop it within 30 days. We can't take back what you already saw, or a week already summed up with Stack AI.</p>
+        <p>Either of you can end the link at any time. Ending it, blocking each other, or deleting either Social account deletes your copy on the server, and your phone deletes its copy as soon as it sees the link is gone. Server backups drop it within 30 days.</p>
+      </div>
+    </section>
+
+    <section class="block" id="server">
+      <p class="section-label">Where it goes</p>
+      <h2 class="section-h2">Our server holds it. Nobody buys it.</h2>
+      <div class="fine">
+        <p>When your lifter finishes a workout, it is sent to Mission Built's Social server at social.missionbuilt.io, on Cloudflare, stored in its database, and passed to your phone. If they share their notes, the server checks them for words like “pain” or “tweak” so it can tell you a workout needs a look. We don't use shared workouts for anything else, and we don't sell them. Plans you send, and the short note with them, go the same way, and stay suggestions until your lifter accepts them.</p>
+        <p>The server keeps each workout until the link ends or your lifter deletes that workout in the app. Server backups drop it within 30 days.</p>
+        <p><strong>Your notes.</strong> A private note you keep about a linked lifter stays on your phone (and in that phone's own backup). It's never sent to us, to the lifter or to Stack AI, and it's deleted when the link ends, on sign-out, or with Delete all.</p>
+        <p><strong>Sum up a week.</strong> That sends Anthropic, which answers for Stack AI, your lifter's handle, the week's shared workouts (seven days, at most 21 workouts) and a few figures your phone works out from everything they've shared: how each lift's estimated max has moved, which lifts have stalled, and, if they share sleep, how hard their sets felt after nights under 7 hours. Your plan isn't sent, only where the week differed from it. It runs on your Stack AI allowance. Mission Built's server passes it on and keeps none of it. Your lifter can't turn it off; ending the link stops it.</p>
+        <p><strong>Lifters without the app</strong>{' '}<span class="tag" aria-hidden="true">Coming</span><span class="sr-only">, coming soon:</span> When this comes, their name, your note, their plan and the workouts you log for them will be kept in your iCloud, not on our servers.</p>
+        <p>Every detail is on <a href="/rack/ironstack/privacy#coach-mode">IronStack's privacy page</a>.</p>
+      </div>
+    </section>
+
+    <section class="block" id="join">
+      <p class="section-label">Join the beta</p>
+      <h2 class="section-h2">Free while it's in the beta.</h2>
+      <p class="prose">Coach mode opens to a few coaches and their lifters at a time. Sign up for the IronStack beta and mention that you coach. Coach plans will have a price when IronStack launches, and the people testing it hear first.</p>
+      <a class="cta" href="/rack/ironstack#beta">Join the IronStack beta →</a>
+      <p class="prose after-cta">Send your lifters <a href="/coach/invited">missionbuilt.io/coach/invited</a>. It says what to install and what they share.</p>
+    </section>
+
+    <div class="tail"></div>
+  </main>
+
+  <SiteFooter links={[{ label: 'IronStack', href: '/rack/ironstack' }, { label: 'For your lifters', href: '/coach/invited' }, { label: 'IronStack privacy', href: '/rack/ironstack/privacy' }, { label: 'Support', href: '/rack/support' }]} />
+</BaseLayout>
+
+<style>
+  .page { max-width: 1280px; margin: 0 auto; }
+  .breadcrumb {
+    padding: 18px var(--pad-page-x) 0;
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--color-chalk-faint);
+  }
+  .breadcrumb a { color: var(--color-chalk-dim); transition: color 120ms ease-out; }
+  .breadcrumb a:hover { color: var(--color-chalk); }
+  .hero { padding: 40px var(--pad-page-x) 28px; text-align: center; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 14px; margin: 0 0 18px;
+    font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.24em;
+    color: var(--color-chalk-dim); text-transform: uppercase;
+  }
+  .eyebrow .dots { letter-spacing: 0.04em; color: var(--color-blood-bright); }
+  .display {
+    margin: 0; font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(48px, 10vw, 96px); line-height: 0.95; letter-spacing: -0.02em;
+    color: var(--color-chalk); text-transform: uppercase;
+  }
+  .display .dot { color: var(--color-blood-bright); }
+  .subtitle { margin: 22px auto 0; max-width: 820px; font-family: var(--font-display); font-size: clamp(16px, 2.4vw, 24px); font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-chalk); }
+  .meta-strip {
+    margin: 28px var(--pad-page-x) 0; padding: 14px 0;
+    border-top: var(--border-thin); border-bottom: var(--border-thin);
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; text-align: left;
+  }
+  .stat-key { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); margin-bottom: 8px; }
+  .stat-value { font-family: var(--font-display); font-weight: 500; font-size: 20px; line-height: 1.1; letter-spacing: 0.02em; text-transform: uppercase; color: var(--color-chalk); }
+  .block { padding: 56px var(--pad-page-x) 0; max-width: 1180px; }
+  .section-label { margin: 0 0 14px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.24em; color: var(--color-blood-text); text-transform: uppercase; }
+  .section-h2 { margin: 0 0 18px; max-width: 30ch; font-family: var(--font-display); font-weight: 600; font-size: 36px; line-height: 1.05; letter-spacing: 0.02em; color: var(--color-chalk); text-transform: uppercase; }
+  .prose { margin: 0 0 16px; max-width: 70ch; font-family: var(--font-serif); font-weight: 300; font-size: 17px; line-height: 1.65; color: var(--color-chalk-dim); }
+  .prose a, .fine a { color: var(--color-chalk); border-bottom: 1px solid var(--color-chalk-ghost); text-decoration: none; }
+  .prose a:hover, .fine a:hover { border-bottom-color: var(--color-blood); }
+  .k { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); margin: 0; }
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 28px; border: var(--border-thin); background: var(--color-panel); }
+  .cell { padding: 22px 24px 20px; border-right: var(--border-thin); }
+  .cell:last-child { border-right: 0; }
+  .cell .k { margin-bottom: 10px; }
+  .cell .v { margin: 0 0 12px; font-family: var(--font-display); font-weight: 500; font-size: 21px; line-height: 1.1; text-transform: uppercase; letter-spacing: 0.01em; color: var(--color-chalk); }
+  .cell .body { margin: 0; font-family: var(--font-serif); font-size: 14.5px; line-height: 1.6; color: var(--color-chalk-dim); }
+  .tag { display: inline-block; margin-left: 8px; padding: 1px 6px; border: var(--border-thin); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; color: var(--color-blood-text); vertical-align: middle; }
+  .fine { margin-top: 18px; background: var(--color-panel); border: var(--border-thin); padding: 22px 26px; }
+  .fine .k { margin-bottom: 10px; }
+  .fine p:not(.k) { margin: 0 0 10px; max-width: 70ch; font-family: var(--font-serif); font-size: 14px; line-height: 1.6; color: var(--color-chalk-dim); }
+  .fine p:last-child { margin-bottom: 0; }
+  .fine strong { color: var(--color-chalk); font-weight: 700; }
+  .cta { display: inline-block; margin-top: 8px; padding: 12px 18px; border: 1px solid var(--color-blood); font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk); text-decoration: none; }
+  .cta:hover { background: var(--color-blood); }
+  .after-cta { margin-top: 28px; }
+  .tail { height: 72px; }
+  @media (max-width: 1099px) {
+    .meta-strip { grid-template-columns: repeat(2, 1fr); gap: 18px; }
+    .cards { grid-template-columns: 1fr; }
+    .cell { border-right: 0; border-bottom: var(--border-thin); }
+    .cell:last-child { border-bottom: 0; }
+  }
+  @media (max-width: 720px) {
+    .breadcrumb { padding: 18px var(--pad-page-x-mobile) 0; }
+    .hero { padding: 28px var(--pad-page-x-mobile) 20px; }
+    .meta-strip { margin: 24px var(--pad-page-x-mobile) 0; grid-template-columns: 1fr; gap: 14px; }
+    .block { padding: 40px var(--pad-page-x-mobile) 0; }
+    .section-h2 { font-size: 28px; }
+  }
+</style>
