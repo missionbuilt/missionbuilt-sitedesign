@@ -28,7 +28,9 @@ export default defineConfig({
       && (MISSIONSTACK_ANNOUNCED || !page.includes('/rack/missionstack'))
       && !releaseRedirects.has(new URL(page).pathname) && new URL(page).pathname !== '/join/'
       // /first (#194) stays out until Mike's go (first.astro's LIVE).
-      && new URL(page).pathname !== '/first/',
+      && new URL(page).pathname !== '/first/'
+      // The compare pages (plan §8) stay out until Mike's word yes on the launch preview.
+      && !new URL(page).pathname.startsWith('/rack/compare/'),
   })],
   // Static output by default — the whole site can be a static export.
   output: 'static',
