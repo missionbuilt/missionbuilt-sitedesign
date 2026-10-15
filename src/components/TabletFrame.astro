@@ -32,7 +32,7 @@ const ready = hasScreen(shot.src);
         <span class="cam" aria-hidden="true"></span>
         {ready
           ? <img src={shot.src} width={shot.w} height={shot.h} alt={shot.alt} loading={lazy ? 'lazy' : 'eager'} decoding="async" fetchpriority={priority ? 'high' : undefined} />
-          : <div class="screen-slot" role="img" aria-label={shot.alt} style={`aspect-ratio:${shot.w}/${shot.h}`}><b>Screen to capture</b><span>{slotName(shot.src)}</span></div>}
+          : <div class="screen-slot" role="img" aria-label={`Screen to capture: ${shot.alt}`} style={`aspect-ratio:${shot.w}/${shot.h}`}><b>Screen to capture</b><span>{slotName(shot.src)}</span></div>}
       </div>
     </div>
   </div>

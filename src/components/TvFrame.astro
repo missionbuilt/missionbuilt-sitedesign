@@ -26,7 +26,7 @@ const ready = hasScreen(shot.src);
     <div class="panel">
       {ready
         ? <img src={shot.src} width={shot.w} height={shot.h} alt={shot.alt} loading={lazy ? 'lazy' : 'eager'} decoding="async" fetchpriority={priority ? 'high' : undefined} />
-        : <div class="screen-slot" role="img" aria-label={shot.alt} style={`aspect-ratio:${shot.w}/${shot.h}`}><b>Screen to capture</b><span>{slotName(shot.src)}</span></div>}
+        : <div class="screen-slot" role="img" aria-label={`Screen to capture: ${shot.alt}`} style={`aspect-ratio:${shot.w}/${shot.h}`}><b>Screen to capture</b><span>{slotName(shot.src)}</span></div>}
     </div>
     <span class="neck" aria-hidden="true"></span>
     <span class="foot" aria-hidden="true"></span>
