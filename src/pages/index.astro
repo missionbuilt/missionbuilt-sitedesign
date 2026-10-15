@@ -39,11 +39,12 @@ const hero = {
   board: { src: '/images/missionstack/board-ipad.webp', w: 1080, h: 751, alt: 'The same workout on the gym board, on iPad: the exercise, the set, the load and the rest clock, big enough to read across the gym.' },
 };
 
-// COPY: one line each, to the compare pages.
+// COPY: one line each, to the compare pages. No competitor is named on the home (plan §0); the
+// compare pages carry the names. (The marketing chat's 19:24 lines.)
 const switching = [
-  { line: 'Coming from Hevy or Strong? Bring your history with you.', href: '/rack/compare/hevy-strong' },
+  { line: 'Coming from another lifting app? Bring your history with you.', href: '/rack/compare/hevy-strong' },
   { line: 'Already tracking food? MealStack adds the when.', href: '/rack/compare/macrofactor' },
-  { line: 'Coaching on TrueCoach? See Coach mode.', href: '/rack/compare/truecoach' },
+  { line: 'Coaching from a laptop app? See Coach mode.', href: '/rack/compare/truecoach' },
 ];
 
 const jsonLd = [
@@ -203,12 +204,15 @@ const jsonLd = [
     <section class="band story" aria-labelledby="story-h">
       <p class="kicker">Where the mission started.</p>
       <h2 id="story-h" class="band-title">The apps came out of a book.</h2>
-      {/* COPY */}
-      <p class="prose">Mission Built started as a field guide to building things that matter, from the barbell and the boardroom. The apps are the barbell half: built for one lifter in a home gym, now for anyone who trains.</p>
+      <div class="byline">
+        {/* No photo on the site yet; the initials block from the old home until Mike picks one. */}
+        <div class="avatar" aria-hidden="true">MN</div>
+        {/* COPY: Mike's voice, first person (the marketing chat's 19:24 draft). */}
+        <p class="prose">I wrote the book first: a field guide to building things that matter, from the barbell and the boardroom. The apps are the barbell half. I built them for my own garage gym, and now they're for anyone who trains. <a class="sig" href="/about">Mike Nichols</a></p>
+      </div>
       <ul class="story-links">
-        <li><a href="/chapters"><span class="k">The Book</span><span class="t">Read it free, start to finish.</span><span class="c" aria-hidden="true">→</span></a></li>
+        <li><a href="/chapters"><span class="k">Read the book</span><span class="t">Mission Built, start to finish.</span><span class="c" aria-hidden="true">→</span></a></li>
         <li><a href="/logs"><span class="k">Logs</span><span class="t">The build, in public.</span><span class="c" aria-hidden="true">→</span></a></li>
-        <li><a href="/loadout"><span class="k">The Loadout</span><span class="t">For product leaders: open-source Claude skills.</span><span class="c" aria-hidden="true">→</span></a></li>
       </ul>
     </section>
 
@@ -305,7 +309,10 @@ const jsonLd = [
   .coming b { color: var(--color-chalk); font-weight: 700; }
 
   /* the story */
-  .story-links { list-style: none; margin: 24px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 28px; }
+  .byline { display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 20px; align-items: start; }
+  .avatar { width: 56px; height: 56px; display: grid; place-items: center; border: var(--border-thin); background: var(--color-panel); font-family: var(--font-display); font-size: 18px; color: var(--color-chalk-dim); }
+  .sig { display: inline-block; margin-left: 6px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-chalk); border-bottom: 1px solid var(--color-chalk-ghost); }
+  .story-links { list-style: none; margin: 24px 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 28px; max-width: 760px; }
   .story-links a { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; padding: 16px 0; border-top: 1px dashed var(--color-rule); }
   .story-links .k { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk); }
   .story-links .t { grid-column: 1; font-family: var(--font-serif); font-size: 15px; line-height: 1.5; color: var(--color-chalk-dim); }

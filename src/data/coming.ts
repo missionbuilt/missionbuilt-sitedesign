@@ -47,7 +47,7 @@ export const COMING: ComingItem[] = [
     id: 'ask-any-lift',
     app: 'ironstack',
     when: 'january',
-    title: 'Ask Stack AI about any lift, from any year of your log.',
+    title: 'Ask Stack AI about any workout, from any year of your log.',
   },
   {
     id: 'coach-logs-for-lifter',

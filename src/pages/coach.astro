@@ -1,105 +1,188 @@
 ---
 /**
- * HOLD: DRAFT, NOT FOR main. #143, the coach page (Logbook, 2026-10-14, branch feat/site-coach-page).
- * Words go to the product lead and Mike before this merges; design and privacy reviews next.
- * noindex and out of TopNav until approved.
+ * /coach: the coach's home (#143, widened 2026-10-15). Words: hq/briefs/site/coach-page.md (the
+ * product lead, 18:50) and the launch-preview plan §6, with Mike's 19:06 answers (18+, no price
+ * words) and Logbook's b75 fact check (19:26: setup steps 2 and 3 corrected; "The read" and sending
+ * a program brought in from a PDF or photo are live in b75). Strings marked COPY are drafts for
+ * Mike's yes; every claim is live in b75 (+ Social 0.6.0), b92 or MissionStack 0.1.0, or tagged
+ * Coming soon / Coming later.
  *
- * Every sentence must be true of the build that is live when this goes up. Lines marked
- * "Coming" describe work that is built but not shipped: MissionStack's desk (Chalkboard, behind
- * CoachDeskFlags), logging for a lifter (#164, needs Social #176) and lifters without the app
- * (#165, behind SyncFlags.offlineClients). The lifter controls (30/60/90 days, sharing less,
- * coach notes) are true from IronStack build 75 with Social 0.6.0 (#140); this page can't go
- * up before both are out, and IronStack's b75 privacy page (feat/ironstack-privacy-b75) must be
- * live first or at the same time: both pages link to its #coach-mode section. Checked against
- * hq/security/data-flow.md and /rack/ironstack/privacy#coach-mode.
+ * Kept from Logbook's 10-14 draft as written: "What your lifter controls" and "Where it goes",
+ * which follow the b75 privacy page's approved Coach mode text (design and privacy reviewed).
  *
- * After the design and privacy reviews (2026-10-14): the "Where it goes" paragraphs follow the
- * b75 privacy page's approved Coach mode text (a6c3c48), turned to speak to the coach.
- *
- * HOLD for #164 (logging a lifter's workout, "Coming" below): when it ships, this page and
+ * HOLD for #164 (logging a lifter's workout, "Coming soon" below): when it ships, this page and
  * /coach/invited each gain two sentences, checked then against data-flow.md (#164/#176) and the
  * privacy page's #164 text: (1) a workout a coach logs for a lifter goes through Mission Built's
  * Social server and is held there only until the lifter's phone fetches it (at most 14 days; a
- * record of whether it was delivered stays 30 days); (2) the lifter can turn it off ("Your coach
- * can log a workout for you; turn that off in Settings › Coach mode", the switch's place to be
- * confirmed in the app). Until then the tile stays under "Coming, not in the app yet".
+ * record of whether it was delivered stays 30 days); (2) the lifter can turn it off.
+ *
+ * No competitor is named here (plan §0): the compare page carries the names. MissionStack is named
+ * only once MISSIONSTACK_ANNOUNCED. noindex and out of the sitemap until Mike's yes.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import TopNav from '../components/TopNav.astro';
+import PhoneFrame from '../components/PhoneFrame.astro';
+import TabletFrame from '../components/TabletFrame.astro';
+import { SHOW_APP_SCREENS } from '../data/screens';
+import { MISSIONSTACK_ANNOUNCED } from '../data/missionstack-gate.mjs';
+import { STACK } from '../data/apps';
 
-const stats = [
-  { key: 'Where it runs',          value: 'Inside IronStack' },
-  { key: 'What you see',           value: 'Every set against your plan' },
-  { key: 'What your lifter picks', value: 'What you see, and how far back' },
-  { key: 'Price',                  value: 'Free in the beta' },
+const MS = MISSIONSTACK_ANNOUNCED;
+const icon = (key: string) => STACK.find((a) => a.key === key)!.icon;
+
+type Shot = { src: string; w: number; h: number; alt: string };
+interface Block {
+  key: 'ironstack' | 'mealstack' | 'missionstack';
+  app: string;
+  title: string;
+  live: string[];
+  soon?: string[];
+  later?: string[];
+  shot?: Shot;
+  device?: 'phone' | 'tablet';
+}
+
+// COPY: the stack for a coach (coach-page.md), one block per app.
+const blocks: Block[] = [
+  {
+    key: 'ironstack', app: 'IronStack · Coach mode', title: 'Plan in, workouts out.',
+    live: [
+      'Send a program. It arrives as a suggestion; your lifter accepts it and can change anything. You see Accepted or Passed.',
+      'See every set against your plan. Every change is marked in place: weight, reps, RPE, swaps and skips.',
+      'Leave a note on a lift. Keep a private note on each lifter that only you see.',
+      'Copy a week forward with a small bump.',
+      'Bring a program you already have, as a PDF or a photo. Stack AI writes it into Plan, and you send it.',
+      'Ask Stack AI for the read on a lifter\'s week: what moved, what stalled, and where it differed from your plan.',
+    ],
+    soon: ['Log a lifter\'s workout from your phone when theirs is in a locker.', 'Add lifters who don\'t have the app.'],
+    device: 'phone',
+    shot: { src: '/images/ironstack/coach-plan.webp', w: 540, h: 1174, alt: 'Coach mode in IronStack, the lifter\'s side: Today tagged Coach\'s plan with the planned sets and Start workout.' },
+  },
+  {
+    key: 'missionstack', app: MS ? 'MissionStack · the gym board' : 'The gym board', title: 'Live in the gym.',
+    live: [
+      'Put the live workout on a TV, an iPad or a Mac. The set, the load, the rest clock and records, big enough to read across the gym.',
+      'Your lifter logs on their iPhone or Apple Watch as always; the board only shows. Pair in one scan.',
+      'On Apple TV, the Siri Remote pauses the rest clock.',
+      'One lifter on the board at a time today.',
+    ],
+    soon: ['Supersets and circuits shown as one group.', 'Heart rate on the board.'],
+    later: ['Several lifters on one board.'],
+    device: 'tablet',
+    shot: { src: '/images/missionstack/board-ipad.webp', w: 1080, h: 751, alt: 'The gym board on iPad mid-set, one lifter: the exercise, the set, the load and the rest clock.' },
+  },
+  {
+    key: 'missionstack', app: MS ? 'MissionStack · the program builder' : 'The program builder', title: 'Write it like you\'d say it.',
+    live: [
+      'Build programs on an iPad or a Mac: type "front squat 3x5 @7" and the sets fill in. Drag workouts between days, make a superset, copy a week forward.',
+      'Start from one of ten starter programs, from powerlifting to yoga, every week written out.',
+      'For now a plan stays on that iPad or Mac.',
+    ],
+    soon: ['Send it to your lifter\'s iPhone, and read every lifter\'s workouts at your desk.'],
+    device: 'tablet',
+    shot: { src: '/images/missionstack/plan-ipad.webp', w: 1080, h: 751, alt: 'The program builder on iPad: a week of workouts with a typed line filling in its sets.' },
+  },
+  {
+    key: 'mealstack', app: 'MealStack · fueling around training', title: 'Your tracker says what you ate. This says when.',
+    live: [
+      'Meals timed backward from the training session. Move the workout and the day re-flows; the pre-workout meal still lands before they train.',
+      'Scan a barcode to log a food.',
+      'A lifter shares fueling with you only if they turn it on.',
+    ],
+    soon: ['The day sized to how long they really train.'],
+    device: 'phone',
+    shot: { src: '/images/mealstack/today-training.webp', w: 540, h: 1174, alt: 'MealStack Today on a training day with the session at 6:30 PM: yogurt and whey logged late at 11:40, lunch next at 2:40 PM.' },
+  },
 ];
 
-const live = [
-  { k: 'On the floor', v: 'Your iPhone', body: 'Coach mode lives inside IronStack. Your lifters, each lifter\'s week, and every set they log against the plan you sent.' },
-  { k: 'Plan vs actual', v: 'Every change marked', body: 'Plan in, workouts out. Every change from the plan is marked in place: weight, reps, RPE, swaps and skips.' },
-  { k: 'Ask Stack AI', v: 'Sum up a week', body: 'Ask Stack AI to sum up a lifter\'s week: what moved, what stalled, and where it differed from your plan. It runs on your Stack AI allowance.' },
+// COPY: setup, checked against b75 word for word by Logbook (19:26).
+const setupCoach = [
+  { t: 'Install IronStack.', b: 'It\'s in a TestFlight beta now: join the beta below and say you coach. At launch it\'s on the App Store.' },
+  { t: 'Turn on Coach mode.', b: 'In Settings, open Coach mode. Sign in with Apple, pick a handle, then tap Coach someone.' },
+  { t: 'Invite your lifter.', b: 'Send them your invite link by text or email, or have them scan the code. Know their handle? Type it instead.' },
+  { t: 'They say yes.', b: 'One switch, and they pick how far back you see: from today, or 30, 60 or 90 days, or everything.' },
+  { t: 'Send the plan.', b: 'Open a program in Plan and tap Send to. They accept it, and their workouts come back as they finish them.' },
+];
+const setupBoard = [
+  { t: MS ? 'Install MissionStack' : 'Install the board app', b: 'on an iPad, a Mac with Apple silicon or an Apple TV. Choose Start on my own.' },
+  { t: 'Pair.', b: 'Scan the code with the iPhone\'s Camera and tap Pair. The phone and the board need the same Wi-Fi.' },
+  { t: 'Lift.', b: 'The board follows the workout; the phone still logs it.' },
 ];
 
-// Built, not shipped. Written as what will come, never as what the app does today.
-const coming = [
-  { k: 'At the desk', v: 'iPad and Mac', body: 'MissionStack will let you build blocks and read the week on a bigger screen.' },
-  // HOLD #164: see the header for the sentences this needs when it ships.
-  { k: 'Logging for them', v: 'Log a lifter\'s workout', body: 'You\'ll be able to run a lifter\'s workout from your phone when theirs is in a locker. It will land in their history, marked as logged by you.' },
-  { k: 'Lifters without the app', v: 'Add them by name', body: 'You\'ll be able to add someone you log workouts for. They\'ll be kept in your iCloud, not on our servers.' },
+// COPY: coach FAQ (plan §6, Mike 19:06 on age; no prices).
+const faq = [
+  { q: 'Can my lifters use Android?', a: 'Not to log, yet. Once lifters without the app come in January, you can log for them from your phone.' },
+  { q: 'Can I build programs on Windows or the web?', a: 'No. You build on an iPhone, an iPad or a Mac with Apple silicon.' },
+  { q: 'How many lifters can I coach?', a: 'By plan: Coach for up to 5 lifters, Coach Pro for 10 or 25. Pricing coming soon.' },
+  { q: 'Can I coach lifters under 18?', a: 'No. IronStack is for lifters 18 and over.' },
+  { q: 'I\'m moving from another coaching app. What about my programs?', a: 'Build them with the typed line, or bring a PDF or a photo and Stack AI writes it into Plan. Stack AI has to be on, and it uses your Stack AI allowance.', link: { href: '/rack/compare/truecoach', label: 'How Coach mode compares' } },
 ];
 ---
 <BaseLayout
-  title="Coach mode · Mission Built"
-  description="Coach mode in IronStack: send your plan, see every set against it, and let your lifter choose what you see. Free in the beta."
-  active="rack"
+  title="Coach app for personal trainers on iPhone · IronStack"
+  description="Coach mode in IronStack: send the plan, see every set against it, and put the workout on the gym TV. Your lifter says yes first. In a private beta now; on the App Store January 1."
+  active="coach"
   noindex={true}
 >
-  <TopNav active="rack" />
+  <TopNav active="coach" />
 
   <main id="main" class="page">
-    <nav class="breadcrumb" aria-label="Breadcrumb">
-      <a href="/rack">The Rack</a>
-      <span aria-hidden="true"> / </span>
-      <a href="/rack/ironstack">IronStack</a>
-      <span aria-hidden="true"> / </span>
-      <span class="here">Coach mode</span>
-    </nav>
-
     <section class="hero">
-      <p class="eyebrow">
-        <span class="dots" aria-hidden="true">▮▮▮</span>
-        <span>For coaches</span>
-        <span class="dots" aria-hidden="true">▮▮▮</span>
-      </p>
-      <h1 class="display"><span>Coach mode</span><span class="dot">.</span></h1>
-      <p class="subtitle">You send the plan. They lift. You see every set.</p>
+      <div class="hero-text">
+        <p class="eyebrow">
+          <span class="dots" aria-hidden="true">▮▮▮</span>
+          <span>For coaches and trainers</span>
+          <span class="dots" aria-hidden="true">▮▮▮</span>
+        </p>
+        {/* The ad's line 7 (approved). */}
+        <h1 class="display">Coach them from the floor<span class="dot">.</span></h1>
+        {/* COPY */}
+        <p class="subtitle">Send the plan. They lift. You see every set. In person or from across the country.</p>
+        <ul class="trust" aria-label="The short version">
+          <li>iPhone, Apple Watch, iPad, Mac, Apple TV</li><li>Your lifter says yes first</li><li>Nothing sold</li>
+        </ul>
+        <a class="cta solid" href="#join">Join the beta →</a>
+      </div>
+      {SHOW_APP_SCREENS && (
+        <div class="hero-shot" role="img" aria-label="A lifter's plan in IronStack beside the same workout on the gym board">
+          <div class="hs-board"><TabletFrame shot={{ src: '/images/missionstack/board-ipad.webp', w: 1080, h: 751, alt: '' }} lazy={false} fill /></div>
+          <div class="hs-phone"><PhoneFrame shot={{ src: '/images/ironstack/coach-plan.webp', w: 540, h: 1174, alt: '' }} lazy={false} /></div>
+        </div>
+      )}
     </section>
 
-    <section class="meta-strip" aria-label="Coach mode at a glance">
-      {stats.map((s) => (
-        <div><div class="stat-key">{s.key}</div><div class="stat-value">{s.value}</div></div>
-      ))}
-    </section>
-
-    <section class="block" id="what">
-      <p class="section-label">What it does</p>
-      <h2 class="section-h2">A coach in your corner.</h2>
-      <p class="prose">Train with a real coach who uses IronStack. Their plan arrives as a suggestion; accept it and change anything you like. You lift, and they see every set against the plan: weight, reps, RPE, what you swapped or skipped. Only what you chose to share, and either of you can end it.</p>
-      <p class="prose">That's how your lifters read it. For you: write the plan once, send it, and read back what really happened.</p>
-      <div class="cards">
-        {live.map((c) => (
-          <div class="cell"><p class="k">{c.k}</p><h3 class="v">{c.v}</h3><p class="body">{c.body}</p></div>
-        ))}
+    <section class="block" aria-labelledby="who-h">
+      <div class="who">
+        <p class="section-label" id="who-h">Who it works for today</p>
+        <ul>
+          <li>Your lifters log on iPhone.</li>
+          <li>You build on an iPhone, an iPad or a Mac with Apple silicon.</li>
+          <li>Logging for a lifter, and lifters without the app: <span class="tag">Coming in January</span></li>
+          <li>Android, Windows and a web builder: not planned for January.</li>
+        </ul>
       </div>
     </section>
 
-    <section class="block" id="coming">
-      <p class="section-label">Coming, not in the app yet</p>
-      <h2 class="section-h2">Built, and on the way.</h2>
-      <div class="cards coming">
-        {coming.map((c) => (
-          <div class="cell"><p class="k">{c.k}{' '}<span class="tag" aria-hidden="true">Coming</span><span class="sr-only">, coming soon</span></p><h3 class="v">{c.v}</h3><p class="body">{c.body}</p></div>
+    <section class="block" aria-labelledby="stack-h">
+      <p class="section-label">The stack for a coach</p>
+      <h2 class="section-h2" id="stack-h">Three apps. One mission.</h2>
+      <div class="blocks">
+        {blocks.map((b, i) => (
+          <article class:list={['blk', i % 2 === 1 && 'flip']}>
+            {SHOW_APP_SCREENS && b.shot && (
+              <div class:list={['blk-shot', b.device]}>
+                {b.device === 'tablet' ? <TabletFrame shot={b.shot} fill /> : <PhoneFrame shot={b.shot} />}
+              </div>
+            )}
+            <div class="blk-body">
+              <p class="k"><img class="app-icon" src={icon(b.key).src} width="28" height="28" alt="" loading="lazy" />{b.app}</p>
+              <h3 class="v">{b.title}</h3>
+              <ul class="pts">{b.live.map((l) => <li>{l}</li>)}</ul>
+              {b.soon && <ul class="pts soon">{b.soon.map((l) => <li><span class="tag">Coming soon</span> {l}</li>)}</ul>}
+              {b.later && <ul class="pts soon">{b.later.map((l) => <li><span class="tag">Coming later</span> {l}</li>)}</ul>}
+            </div>
+          </article>
         ))}
       </div>
     </section>
@@ -127,18 +210,42 @@ const coming = [
       </div>
     </section>
 
+    <section class="block" id="setup" aria-labelledby="setup-h">
+      <p class="section-label">Get set up</p>
+      <h2 class="section-h2" id="setup-h">Five steps, then lift.</h2>
+      <div class="setup">
+        <div>
+          <p class="k">Coach mode</p>
+          <ol class="steps">{setupCoach.map((s) => <li><b>{s.t}</b> {s.b}</li>)}</ol>
+        </div>
+        <div>
+          <p class="k">The gym board</p>
+          <ol class="steps" start="6">{setupBoard.map((s) => <li><b>{s.t}</b> {s.b}</li>)}</ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="faq" aria-labelledby="faq-h">
+      <p class="section-label">Questions coaches ask</p>
+      <h2 class="section-h2" id="faq-h">Before you switch.</h2>
+      <dl class="faq">
+        {faq.map((f) => <div><dt>{f.q}</dt><dd>{f.a}{f.link && <> <a href={f.link.href}>{f.link.label} →</a></>}</dd></div>)}
+      </dl>
+    </section>
+
     <section class="block" id="join">
       <p class="section-label">Join the beta</p>
-      <h2 class="section-h2">Free while it's in the beta.</h2>
-      <p class="prose">Coach mode opens to a few coaches and their lifters at a time. Sign up for the IronStack beta and mention that you coach. Coach plans will have a price when IronStack launches, and the people testing it hear first.</p>
-      <a class="cta" href="/rack/ironstack#beta">Join the IronStack beta →</a>
+      {/* COPY: no price words (Mike 18:41). */}
+      <h2 class="section-h2">Coach on it now.</h2>
+      <p class="prose">Coach mode is open to everyone in the IronStack beta. Join it and tell us you coach, for example "I coach · 6 lifters, in person and remote".</p>
+      <a class="cta solid" href="/rack/ironstack#beta">Join the IronStack beta →</a>
       <p class="prose after-cta">Send your lifters <a href="/coach/invited">missionbuilt.io/coach/invited</a>. It says what to install and what they share.</p>
     </section>
 
     <div class="tail"></div>
   </main>
 
-  <SiteFooter links={[{ label: 'IronStack', href: '/rack/ironstack' }, { label: 'For your lifters', href: '/coach/invited' }, { label: 'IronStack privacy', href: '/rack/ironstack/privacy' }, { label: 'Support', href: '/rack/support' }]} />
+  <SiteFooter links={[{ label: 'IronStack', href: '/rack/ironstack' }, { label: 'For your lifters', href: '/coach/invited' }, { label: 'IronStack privacy', href: '/rack/ironstack/privacy' }, { label: 'Compare', href: '/rack/compare/truecoach' }]} />
 </BaseLayout>
 
 <style>
@@ -150,7 +257,34 @@ const coming = [
   }
   .breadcrumb a { color: var(--color-chalk-dim); transition: color 120ms ease-out; }
   .breadcrumb a:hover { color: var(--color-chalk); }
-  .hero { padding: 40px var(--pad-page-x) 28px; text-align: center; }
+  .hero { padding: 48px var(--pad-page-x) 12px; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 48px; align-items: center; }
+  .trust { list-style: none; margin: 18px 0 24px; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 18px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; color: var(--color-chalk-dim); }
+  .trust li::before { content: '✓'; margin-right: 7px; color: var(--color-army); }
+  .hero-shot { position: relative; container-type: inline-size; }
+  .hs-board { width: 86%; margin-left: auto; }
+  .hs-phone { position: absolute; left: 0; top: 14%; width: 32%; font-size: calc(32cqi / 15); }
+  .who { border: var(--border-thin); background: var(--color-panel); padding: 22px 26px; }
+  .who ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; font-family: var(--font-serif); font-size: 16px; line-height: 1.55; color: var(--color-chalk); }
+  .blocks { display: grid; gap: 0; border-top: var(--border-thin); }
+  .blk { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 40px; align-items: center; padding: 36px 0; border-bottom: var(--border-thin); }
+  .blk.flip .blk-shot { order: 2; }
+  .blk-shot { display: flex; justify-content: center; max-height: 380px; overflow: hidden; }
+  .blk-shot.phone > :global(*) { width: 220px; }
+  .blk-shot.tablet > :global(*) { width: 100%; }
+  .blk-body .k { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .app-icon { width: 28px; height: 28px; border-radius: 22.37%; border: 1px solid var(--color-rule); }
+  .blk-body .v { margin: 0 0 14px; font-family: var(--font-display); font-weight: 600; font-size: 26px; line-height: 1.05; text-transform: uppercase; color: var(--color-chalk); }
+  .pts { margin: 0; padding-left: 18px; display: grid; gap: 8px; font-family: var(--font-serif); font-size: 15px; line-height: 1.55; color: var(--color-chalk-dim); }
+  .pts.soon { margin-top: 12px; list-style: none; padding-left: 0; }
+  .setup { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; }
+  .steps { margin: 12px 0 0; padding-left: 22px; display: grid; gap: 10px; font-family: var(--font-serif); font-size: 15.5px; line-height: 1.6; color: var(--color-chalk-dim); }
+  .steps b { color: var(--color-chalk); }
+  .faq { margin: 0; display: grid; gap: 18px; max-width: 76ch; }
+  .faq dt { font-family: var(--font-display); font-weight: 500; font-size: 18px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--color-chalk); }
+  .faq dd { margin: 4px 0 0; font-family: var(--font-serif); font-size: 15.5px; line-height: 1.6; color: var(--color-chalk-dim); }
+  .faq a { color: var(--color-chalk); border-bottom: 1px solid var(--color-chalk-ghost); }
+  .cta.solid { background: var(--color-blood); border-color: var(--color-blood); }
+  .cta.solid:hover { background: var(--color-blood-bright); }
   .eyebrow {
     display: inline-flex; align-items: center; gap: 14px; margin: 0 0 18px;
     font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.24em;
@@ -197,6 +331,11 @@ const coming = [
   @media (max-width: 1099px) {
     .meta-strip { grid-template-columns: repeat(2, 1fr); gap: 18px; }
     .cards { grid-template-columns: 1fr; }
+    .hero { grid-template-columns: minmax(0, 1fr); }
+    .hero-shot { max-width: 520px; }
+    .blk { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+    .blk.flip .blk-shot { order: 0; }
+    .setup { grid-template-columns: minmax(0, 1fr); }
     .cell { border-right: 0; border-bottom: var(--border-thin); }
     .cell:last-child { border-bottom: 0; }
   }

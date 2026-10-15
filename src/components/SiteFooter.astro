@@ -4,7 +4,7 @@
  *
  * Row 1 (optional): links for the page you're on (a repo, release notes).
  * Row 2: the tagline left, site links right. Source and Download live here
- * so the TopNav can stay at five links.
+ * so the TopNav can stay short.
  *
  * Place it after </main> so it reads as the page's contentinfo landmark.
  */
@@ -25,11 +25,17 @@ interface Props {
 const { links = [], noEmail = false } = Astro.props;
 
 const site: FootLink[] = [
+  // Launch preview (plan §2): Compare · Support · Press · Get in first, then the book's and the
+  // Loadout's links (the Loadout left the top nav).
+  { label: 'Compare', href: '/rack/compare' },
+  { label: 'Support', href: '/rack/support' },
+  { label: 'Press', href: '/press' },
+  { label: 'Get in first', href: '/first' },
+  { label: 'The Loadout', href: '/loadout' },
   { label: 'Chapters', href: '/chapters' },
   { label: 'Download', href: '/download' },
   { label: 'Source',   href: '/source' },
   { label: 'RSS',      href: '/logs/rss.xml' },
-  { label: 'App support', href: '/rack/support' },
 ];
 ---
 <footer class="site-foot">
