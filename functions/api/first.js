@@ -1,7 +1,12 @@
 /**
  * /api/first — the launch list behind missionbuilt.io/first (#194, the launch ad's QR page).
  *
- * POST  JSON {email, website?, t?} or a form post of the same fields.
+ * POST  JSON {email, website?, t?, via?, founder?, founder_name?} or a form post of the same fields.
+ *       `via` is which link brought the person (the QR's ?via=li, ?via=poster): a short slug,
+ *       anything else is dropped (Mike 19:06: counted by our own function, no script, no cookie).
+ *       `founder` + `founder_name` is the opt-in for the founders acknowledgements page (Mike
+ *       19:06): the name or handle they want shown, kept with the sign-up only when the box is
+ *       ticked. Both go to Buttondown with the address, and nowhere else.
  *       Hands the address to Buttondown (our processor for the launch emails) server-side, so
  *       no Buttondown script, pixel or font ever loads on our page. Buttondown sends its own
  *       confirmation email first (double opt-in); open and click tracking are off in its
@@ -27,7 +32,26 @@ const RATE_WINDOW = 3600;      // seconds
 const MIN_AGE_MS = 2000;       // form must be at least this old
 const BUTTONDOWN = 'https://api.buttondown.com/v1/subscribers';
 const TIMEOUT_MS = 8000;
-const MAX_BODY = 4096;         // bytes; the form is one email field
+const MAX_BODY = 4096;         // bytes; the form is an email, a slug and a short name
+const VIA = /^[a-z0-9-]{1,24}$/;
+const FOUNDER_MAX = 40;        // characters shown on the founders page
+
+/** The link slug, or '' if it isn't one. */
+export function cleanVia(v) {
+  const s = String(v || '').trim().toLowerCase();
+  return VIA.test(s) ? s : '';
+}
+
+/** The founder name as it would be shown: printable, single spaces, at most 40 characters. */
+export function cleanFounderName(v) {
+  return String(v || '')
+    .normalize('NFC')
+    .replace(/[\p{C}<>]/gu, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, FOUNDER_MAX)
+    .trim();
+}
 
 function json(body, status = 200) {
   return new Response(JSON.stringify(body), {
@@ -106,6 +130,9 @@ export async function onRequestPost({ request, env }, deps = {}) {
   const email = String(body.email || '').trim().toLowerCase();
   const honeypot = String(body.website || '').trim();
   const t = parseInt(String(body.t || ''), 10);
+  const via = cleanVia(body.via);
+  const founderOn = ['on', 'yes', 'true', '1'].includes(String(body.founder || '').toLowerCase());
+  const founderName = founderOn ? cleanFounderName(body.founder_name) : '';
 
   // Bots: say yes, send and store nothing. The page always sends when it was drawn, so a
   // post without it, or too soon after, is a bot.
@@ -126,14 +153,21 @@ export async function onRequestPost({ request, env }, deps = {}) {
     await env.BETA_KV.put(key, String(used + 1), { expirationTtl: RATE_WINDOW });
   }
 
-  // Hand it over. Only the address and one tag; no IP, no referrer, no metadata.
+  // Hand it over: the address, the tags, and only the two fields the person gave us on purpose
+  // (which link they came from; the founder name they asked to have shown). No IP, no referrer.
+  const tags = ['first'];
+  if (via) tags.push('via-' + via);
+  if (founderName) tags.push('founder');
+  const metadata = {};
+  if (via) metadata.via = via;
+  if (founderName) metadata.founder_name = founderName;
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
   try {
     const res = await fetchFn(BUTTONDOWN, {
       method: 'POST',
       headers: { authorization: `Token ${env.BUTTONDOWN_API_KEY}`, 'content-type': 'application/json' },
-      body: JSON.stringify({ email_address: email, tags: ['first'] }),
+      body: JSON.stringify({ email_address: email, tags, ...(Object.keys(metadata).length ? { metadata } : {}) }),
       signal: controller.signal,
     });
     if (res.ok) return answer('ok', 200);

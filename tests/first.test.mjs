@@ -2,7 +2,7 @@
 // make a test file a route.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { onRequestPost, onRequest } from '../functions/api/first.js';
+import { onRequestPost, onRequest, cleanVia, cleanFounderName } from '../functions/api/first.js';
 
 const KEY = 'bd-test-key';
 const OLD = String(Date.now() - 10_000);
@@ -169,4 +169,44 @@ test('the counter key holds no IP and the salt is not the API key', async () => 
   assert.ok(keys.some((k) => k.startsWith('first-salt:')));
   assert.ok(keys.every((k) => !k.includes('203.0.113.7')));
   assert.ok([...store.m.values()].every((v) => v !== KEY));
+});
+
+// ?via= and the founders page opt-in (Mike, 2026-10-15 19:06).
+
+test('via: a short slug goes with the sign-up as a tag and metadata; anything else is dropped', async () => {
+  const bd = buttondown(201);
+  await onRequestPost({ request: post({ email: 'a@b.co', t: OLD, via: 'LI' }), env: { BETA_KV: kv(), BUTTONDOWN_API_KEY: KEY } }, bd);
+  assert.deepEqual(JSON.parse(bd.calls[0].init.body), { email_address: 'a@b.co', tags: ['first', 'via-li'], metadata: { via: 'li' } });
+  for (const bad of ['', 'a b', '<script>', 'x'.repeat(25), 'li?x=1', 'ünï']) assert.equal(cleanVia(bad), '', bad);
+  assert.equal(cleanVia('poster-2'), 'poster-2');
+});
+
+test('founder name: sent only when the box is ticked, cleaned and capped at 40', async () => {
+  const bd = buttondown(201);
+  await onRequestPost({ request: post({ email: 'a@b.co', t: OLD, founder: 'on', founder_name: '  Iron\u0000  <b>Mike</b>  ' }), env: { BETA_KV: kv(), BUTTONDOWN_API_KEY: KEY } }, bd);
+  assert.deepEqual(JSON.parse(bd.calls[0].init.body), { email_address: 'a@b.co', tags: ['first', 'founder'], metadata: { founder_name: 'Iron bMike/b' } });
+
+  const bd2 = buttondown(201);
+  await onRequestPost({ request: post({ email: 'a@b.co', t: OLD, founder_name: 'Not ticked' }), env: { BETA_KV: kv(), BUTTONDOWN_API_KEY: KEY } }, bd2);
+  assert.deepEqual(JSON.parse(bd2.calls[0].init.body), { email_address: 'a@b.co', tags: ['first'] });
+
+  assert.equal(cleanFounderName('x'.repeat(60)).length, 40);
+  assert.equal(cleanFounderName('   '), '');
+});
+
+test('founder box ticked with an empty name sends no founder tag', async () => {
+  const bd = buttondown(201);
+  await onRequestPost({ request: post({ email: 'a@b.co', t: OLD, founder: 'on', founder_name: '  ' }, { json: false }), env: { BETA_KV: kv(), BUTTONDOWN_API_KEY: KEY } }, bd);
+  assert.deepEqual(JSON.parse(bd.calls[0].init.body), { email_address: 'a@b.co', tags: ['first'] });
+});
+
+test('neither field ever appears in a log line or the answer', async () => {
+  const logs = []; const orig = console.log; console.log = (...a) => logs.push(a.join(' '));
+  try {
+    const bd = buttondown(500);
+    const res = await onRequestPost({ request: post({ email: 'a@b.co', t: OLD, via: 'li', founder: 'on', founder_name: 'Secret Name' }), env: { BETA_KV: kv(), BUTTONDOWN_API_KEY: KEY } }, bd);
+    const text = await res.text();
+    assert.ok(!text.includes('Secret') && !text.includes('via'));
+  } finally { console.log = orig; }
+  assert.ok(logs.every((l) => !l.includes('Secret') && !l.includes('via')));
 });

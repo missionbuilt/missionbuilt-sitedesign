@@ -2,76 +2,113 @@
 /**
  * /first: the launch ad's QR page (#194). A fixed path, forever: the ad's QR and end card point here.
  *
- * One field, email. It posts to our own Pages Function (functions/api/first.js), which hands the
- * address to Buttondown server-side; no third-party script, pixel or font loads on this page.
- * Words: hq/briefs/site/three-apps-pages.md §3, drafts for Mike's yes (every line marked COPY).
+ * One email field, plus two things the person chooses: their name or handle on the founders page
+ * (opt-in), and, silently, which link brought them (?via=li, ?via=poster; Mike 2026-10-15 19:06).
+ * It posts to our own Pages Function (functions/api/first.js), which hands it to Buttondown
+ * server-side; no third-party script, pixel or font loads on this page.
+ * Words: hq/briefs/site/site-launch-preview-plan.md §9 and Mike's 19:06 answers; drafts for
+ * Mike's yes (every line marked COPY).
  *
  * Gates (Mike):
  *  - LIVE stays false until Mike's go: the page is noindex, out of the sitemap (astro.config.mjs),
- *    and not linked from /rack or the nav. Turning it on is one line here and one in the config.
- *  - Until the BUTTONDOWN_API_KEY secret is set, the function answers "not open yet" and the
- *    page says so; nothing is sent or stored.
- *  - SHOW_MISSIONSTACK stays false until the MissionStack name is cleared; when #193
- *    (feat/site-three-apps) merges, switch it to that branch's MISSIONSTACK_ANNOUNCED gate.
+ *    and not linked from the nav. Turning it on is one line here and one in the config.
+ *  - Until the BUTTONDOWN_API_KEY secret is set, the function answers "closed". The page then
+ *    signs the person up for the beta instead (/api/beta, the form every app page uses), with the
+ *    email and the link slug only: never the founder name, which waits for the list (the beta
+ *    list keeps records with no expiry yet, findings M2). So no QR visitor hits "opens soon".
+ *  - MissionStack is named only once MISSIONSTACK_ANNOUNCED (src/data/missionstack-gate.mjs).
  *
- * No prices anywhere on it (Mike 10-12: nothing extra on price).
+ * No prices and no founding price (Mike 10-15 18:41; 19:06 allows only "Every app has a free way
+ * in, plus paid plans").
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import TopNav from '../components/TopNav.astro';
 import SiteFooter from '../components/SiteFooter.astro';
+import { MISSIONSTACK_ANNOUNCED } from '../data/missionstack-gate.mjs';
 
 const LIVE = false;
-const SHOW_MISSIONSTACK = false;
 
-// COPY: the three apps, each in its card's own promise (/rack).
+// COPY: the three apps, each in its card's own promise (/rack). Before the name clears, the third
+// is the gym board, unnamed and unlinked.
 const apps = [
   { name: 'IronStack', line: 'Log fast. See progress.', href: '/rack/ironstack' },
   { name: 'MealStack', line: 'Your tracker says what you ate. This says when.', href: '/rack/mealstack' },
-  ...(SHOW_MISSIONSTACK ? [{ name: 'MissionStack', line: 'Your workout on the big screen. Live in the gym.', href: '/rack/missionstack' }] : []),
+  MISSIONSTACK_ANNOUNCED
+    ? { name: 'MissionStack', line: 'Your workout on the big screen. Live in the gym.', href: '/rack/missionstack' }
+    : { name: 'The gym board', line: 'Your workout on the big screen. Live in the gym.', href: '' },
+];
+
+// COPY: the short pre-launch FAQ (plan §9).
+const faq = [
+  { q: 'What is the beta?', a: 'The apps run in TestFlight, Apple\'s app for trying apps before they reach the App Store. We send the invite to the email you give us, so use the one on your Apple ID.' },
+  { q: 'When can anyone get them?', a: 'January 1, on the App Store. You get the link in mid-December, about two weeks before everyone else.' },
+  { q: 'What does it cost?', a: 'Pricing coming soon. Every app has a free way in, plus paid plans.' },
+  { q: 'Is there an Android version?', a: 'Not for January. The apps run on iPhone, Apple Watch, iPad, Mac and Apple TV.' },
+  { q: 'Who is it for?', a: 'Lifters 18 and over.' },
 ];
 ---
 <BaseLayout
   title="Get in first · Mission Built"
-  description="Get in first: the App Store link in mid-December, about two weeks before everyone else, and the founding price from your first day."
+  description="Train on it now in the beta, get the App Store link in mid-December, about two weeks before everyone else, and a direct line to the founder."
   noindex={!LIVE}
 >
   <TopNav />
-  <main class="first" id="first">
-    <section class="hero">
+  <main class="first" id="main">
+    <section class="hero" id="first">
       {/* COPY */}
-      <p class="eyebrow">Mission Built · The Rack</p>
+      <p class="eyebrow"><span class="dots" aria-hidden="true">▮▮▮</span> <span>Every lift is a mission</span> <span class="dots" aria-hidden="true">▮▮▮</span></p>
       <h1>Get in first. <span class="accent">Lock in the founders advantage.</span></h1>
-      <p class="ad">Every lift is a mission. To lift yourself. To lift others. To rise together.</p>
+      <p class="ad">To lift yourself. To lift others. To rise together.</p>
 
       <form class="signup" method="post" action="/api/first" novalidate data-first>
         <label class="sr" for="first-email">Email</label>
         <div class="row">
-          <input type="email" name="email" id="first-email" required autocomplete="email" inputmode="email" placeholder="Your email" maxlength="254" />
+          <input type="email" name="email" id="first-email" required autocomplete="email" inputmode="email" placeholder="Your email (the one on your Apple ID)" maxlength="254" />
           <button class="cta" type="submit">Get in first →</button>
+        </div>
+        <div class="founder">
+          <label class="check"><input type="checkbox" name="founder" value="on" data-founder /> <span>Put my name on the founders page</span></label>
+          <label class="name" data-founder-name>
+            <span class="sr">Name or handle for the founders page</span>
+            <input type="text" name="founder_name" maxlength="40" autocomplete="nickname" placeholder="Your name or a handle" />
+          </label>
         </div>
         <div class="hp" aria-hidden="true"><label>Website<input type="text" name="website" tabindex="-1" autocomplete="off" /></label></div>
         <input type="hidden" name="t" value="" data-t />
+        <input type="hidden" name="via" value="" data-via />
         <p class="status" role="status" aria-live="polite" data-status></p>
         {/* COPY */}
-        <p class="fine">Launch news and a short series through January 31: four to six emails, from Mike. Every one has a one-click unsubscribe. Nothing else, and never sold. <a href="/rack/support#the-get-in-first-list">How your email is kept</a>.</p>
+        <p class="fine">Launch news and a short series through January 31: four to six emails from Mike. Every one has a one-click unsubscribe. We note which link you came from. Nothing else, and never sold. <a href="/rack/support#the-get-in-first-list">How your email is kept</a>.</p>
       </form>
     </section>
 
     <section class="block">
-      {/* COPY */}
+      {/* COPY: Mike 19:06, the four things. No founding price until prices are allowed. */}
       <h2>What the founders advantage is</h2>
-      <p>Two things. The App Store link in mid-December, about two weeks before everyone else. And the founding price, from your first day: keep it as long as you stay.</p>
+      <ol class="adv">
+        <li><b>Train on it now.</b> The apps are in a private beta. We send you the invite.</li>
+        <li><b>The App Store link in mid-December,</b> about two weeks before everyone else.</li>
+        <li><b>A direct line.</b> “Reply to any email and it reaches me.” Mike</li>
+        <li><b>Your name on the founders page,</b> if you want it. Your real name or a handle. Change it or come off any time.</li>
+      </ol>
     </section>
 
     <section class="block">
       {/* COPY */}
       <h2>What you get in on</h2>
       <ul class="apps">
-        {apps.map((a) => <li><a href={a.href}><b>{a.name}</b><span>{a.line}</span></a></li>)}
+        {apps.map((a) => <li>{a.href ? <a href={a.href}><b>{a.name}</b><span>{a.line}</span></a> : <div class="row-static"><b>{a.name}</b><span>{a.line}</span></div>}</li>)}
       </ul>
     </section>
+
+    <section class="block">
+      <h2>Before you sign up</h2>
+      <dl class="faq">
+        {faq.map((f) => <div><dt>{f.q}</dt><dd>{f.a}</dd></div>)}
+      </dl>
+    </section>
   </main>
-  <SiteFooter links={[{ label: 'The Rack', href: '/rack' }, { label: 'Support', href: '/rack/support' }]} />
+  <SiteFooter links={[{ label: 'The apps', href: '/rack' }, { label: 'Support', href: '/rack/support' }]} />
 </BaseLayout>
 
 <script>
@@ -80,6 +117,7 @@ const apps = [
   // COPY: the status lines.
   const OK = 'Almost in. Check your inbox for one email to confirm, then you are on the list.';
   const ERR = 'That did not go through. Check the address and try again.';
+  const BETA_OK = 'You are on the beta list. We will send a TestFlight invite to this address. The founders page opens with the email list; tick the box again then.';
   const CLOSED = 'The list opens soon. Come back in a few days.';
   const form = document.querySelector<HTMLFormElement>('form[data-first]');
   if (form) {
@@ -87,6 +125,15 @@ const apps = [
     const t = form.querySelector<HTMLInputElement>('[data-t]');
     const btn = form.querySelector<HTMLButtonElement>('button[type=submit]');
     if (t) t.value = String(Date.now());
+    // Which link brought them: a short slug from ?via=, nothing else (the function checks it again).
+    const viaIn = form.querySelector<HTMLInputElement>('[data-via]');
+    const via = (new URLSearchParams(location.search).get('via') || '').toLowerCase();
+    if (viaIn && /^[a-z0-9-]{1,24}$/.test(via)) viaIn.value = via;
+    // The name field shows only once the box is ticked (without JS it always shows).
+    const box = form.querySelector<HTMLInputElement>('[data-founder]');
+    const nameRow = form.querySelector<HTMLElement>('[data-founder-name]');
+    const syncName = () => { if (nameRow && box) nameRow.hidden = !box.checked; };
+    box?.addEventListener('change', syncName); syncName();
     const say = (msg: string, tone: '' | 'ok' | 'err') => { if (status) { status.textContent = msg; status.className = 'status' + (tone ? ' ' + tone : ''); } };
     const q = new URLSearchParams(location.search).get('first');
     if (q === 'ok') say(OK, 'ok');
@@ -101,8 +148,15 @@ const apps = [
       try {
         const res = await fetch('/api/first', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(Object.fromEntries(new FormData(form).entries())) });
         const data = await res.json().catch(() => ({}));
-        if (res.ok && data.ok) { say(OK, 'ok'); form.reset(); if (t) t.value = String(Date.now()); }
-        else if (res.status === 503 || data.closed) say(CLOSED, '');
+        if (res.ok && data.ok) { say(OK, 'ok'); form.reset(); syncName(); if (t) t.value = String(Date.now()); }
+        else if (res.status === 503 || data.closed) {
+          // The email list isn't open yet: sign them up for the beta instead, email and link only.
+          const note = 'Get in first' + (viaIn && viaIn.value ? ' · via ' + viaIn.value : '');
+          const beta = await fetch('/api/beta', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify({ email, note, page: '/rack', t: t ? t.value : '' }) });
+          const bd = await beta.json().catch(() => ({}));
+          if (beta.ok && bd.ok) { say(BETA_OK, 'ok'); form.reset(); syncName(); if (t) t.value = String(Date.now()); }
+          else say(CLOSED, '');
+        }
         else say(data.error || ERR, 'err');
       } catch { say(ERR, 'err'); }
       finally { if (btn) btn.disabled = false; }
@@ -114,6 +168,7 @@ const apps = [
   .first { max-width: 880px; margin: 0 auto; padding: 48px var(--pad-page-x) 72px; }
   .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .eyebrow .dots { color: var(--color-blood-bright); letter-spacing: 0; }
   .eyebrow { margin: 0 0 18px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.24em; text-transform: uppercase; color: var(--color-chalk-dim); }
   h1 { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(36px, 6vw, 72px); line-height: 0.98; letter-spacing: -0.01em; text-transform: uppercase; color: var(--color-chalk); overflow-wrap: anywhere; }
   h1 .accent { display: block; color: var(--color-blood-bright); }
@@ -134,6 +189,17 @@ const apps = [
   .status.err { color: var(--color-blood-text); }
   .fine { margin: 14px 0 0; font-size: 14px; line-height: 1.55; color: var(--color-chalk-dim); }
   .fine a, .apps a:hover b { color: var(--color-blood-text); }
+  .founder { margin-top: 12px; display: grid; gap: 8px; }
+  .check { display: flex; gap: 10px; align-items: center; font-size: 14px; color: var(--color-chalk-dim); cursor: pointer; }
+  .check input { width: 16px; height: 16px; accent-color: var(--color-blood); }
+  .name input { width: 100%; padding: 11px 14px; background: var(--color-panel); border: 1px solid var(--color-rule); color: var(--color-chalk); font-family: var(--font-mono); font-size: 14px; }
+  .name[hidden] { display: none; }
+  .adv { margin: 0; padding-left: 22px; display: grid; gap: 10px; max-width: 62ch; color: var(--color-chalk-dim); line-height: 1.6; }
+  .adv b { color: var(--color-chalk); font-weight: 700; }
+  .row-static { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: baseline; padding: 16px 0; }
+  .faq { margin: 0; display: grid; gap: 18px; }
+  .faq dt { font-family: var(--font-display); font-weight: 500; font-size: 17px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--color-chalk); }
+  .faq dd { margin: 4px 0 0; color: var(--color-chalk-dim); line-height: 1.6; max-width: 68ch; }
   .block { margin-top: 56px; padding-top: 28px; border-top: var(--border-thin); }
   .block h2 { margin: 0 0 12px; font-family: var(--font-display); font-weight: 600; font-size: 24px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--color-chalk); }
   .block p { margin: 0; font-size: var(--fs-body); line-height: 1.6; color: var(--color-chalk-dim); max-width: 62ch; }
