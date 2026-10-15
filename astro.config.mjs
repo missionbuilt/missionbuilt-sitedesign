@@ -28,7 +28,9 @@ export default defineConfig({
       && (MISSIONSTACK_ANNOUNCED || !page.includes('/rack/missionstack'))
       && !releaseRedirects.has(new URL(page).pathname) && new URL(page).pathname !== '/join/'
       // /first (#194) stays out until Mike's go (first.astro's LIVE).
-      && new URL(page).pathname !== '/first/',
+      && new URL(page).pathname !== '/first/'
+      // /rack/plans stays out until Mike's yes on the words (noindex on the page too).
+      && new URL(page).pathname !== '/rack/plans/',
   })],
   // Static output by default — the whole site can be a static export.
   output: 'static',
