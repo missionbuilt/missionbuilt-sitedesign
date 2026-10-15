@@ -1,0 +1,177 @@
+---
+/**
+ * /rack/plans: what each plan includes (plan §7, hq/briefs/site/site-launch-preview-plan.md).
+ *
+ * No prices: every card and the table say "Pricing coming soon" (Mike 10-15 18:41; the free lines
+ * are exactly the ones he allowed at 19:06). Data: src/data/plans.ts, whose assertNoPrices() stops
+ * the build if a price, trial or founding line gets in. noindex and out of the sitemap until Mike's
+ * yes (astro.config.mjs). MissionStack is named only once MISSIONSTACK_ANNOUNCED. Strings are drafts
+ * for Mike's yes.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import TopNav from '../../components/TopNav.astro';
+import { MISSIONSTACK_ANNOUNCED } from '../../data/missionstack-gate.mjs';
+import { PRICING_LINE, principles, plans, coach, featureColumns, features, assertNoPrices } from '../../data/plans';
+
+const announced = MISSIONSTACK_ANNOUNCED;
+assertNoPrices(announced);
+
+const title = announced
+  ? 'Plans for IronStack, MealStack and MissionStack'
+  : 'Plans for IronStack and MealStack · Mission Built';
+const description = 'What each plan includes, for IronStack, MealStack and The Stack, and for coaches. Pricing coming soon.';
+const rows = features(announced);
+---
+<BaseLayout title={title} description={description} noindex>
+  <TopNav active="rack" />
+
+  <main id="main" class="page">
+    <section class="hero">
+      <p class="eyebrow">
+        <span class="dots" aria-hidden="true">▮▮▮</span>
+        <span>The plans</span>
+        <span class="dots" aria-hidden="true">▮▮▮</span>
+      </p>
+      {/* COPY */}
+      <h1 class="display">One mission. Pick your plan<span class="dot">.</span></h1>
+      <p class="subtitle">Pricing coming soon. It lands here before it lands in the App Store.</p>
+    </section>
+
+    <section class="block" aria-labelledby="principles-h">
+      <h2 class="section-label" id="principles-h">What every plan keeps</h2>
+      <ul class="principles">
+        {principles(announced).map((p) => <li>{p}</li>)}
+      </ul>
+    </section>
+
+    <section class="block" aria-labelledby="plans-h">
+      <h2 class="section-label" id="plans-h">The plans</h2>
+      <div class="cards">
+        {plans(announced).map((p) => (
+          <article class="card">
+            <h3 class="card-name">{p.name}</h3>
+            <p class="card-line">{p.line}</p>
+            <p class="pricing">{PRICING_LINE}</p>
+            <ul class="includes">
+              {p.includes.map((i) => <li>{i.text}{i.soon && <span class="soon">Coming soon</span>}</li>)}
+            </ul>
+          </article>
+        ))}
+      </div>
+      {/* COPY */}
+      <p class="every">{announced ? 'MissionStack, on iPad, Mac and Apple TV, comes with every plan.' : 'The gym board comes with every plan.'}</p>
+    </section>
+
+    <section class="block" aria-labelledby="coach-h">
+      <h2 class="section-label" id="coach-h">For coaches</h2>
+      <p class="coach-line">{coach.line}</p>
+      <div class="cards coach-cards">
+        {coach.tiers.map((t) => (
+          <article class="card">
+            <h3 class="card-name">{t.name}</h3>
+            <p class="card-line">{t.lifters}</p>
+            <p class="pricing">{PRICING_LINE}</p>
+          </article>
+        ))}
+      </div>
+      <p class="more"><a class="soft" href="/coach">Coach mode, for coaches →</a></p>
+    </section>
+
+    <section class="block" aria-labelledby="table-h">
+      <h2 class="section-label" id="table-h">Plan by plan</h2>
+      <p class="table-note">{PRICING_LINE}.</p>
+      <div class="table-wrap" tabindex="0" role="region" aria-labelledby="table-h">
+        <table class="features">
+          <thead>
+            <tr>
+              <th scope="col" class="feat">What you get</th>
+              {featureColumns.map((c) => <th scope="col">{c}</th>)}
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((r) => (
+              <tr>
+                <th scope="row" class="feat">{r.name}{r.soon && <span class="soon">Coming soon</span>}</th>
+                {r.cells.map((c, i) => (
+                  <td>{c === '✓' ? <span aria-label="Included">✓</span> : c ? c : <span aria-label="Not included" class="none">·</span>}</td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="block closer">
+      {/* COPY */}
+      <h2 class="closer-h">Train on it now.</h2>
+      <p class="subtitle">The apps are in a private beta. Get in first and get the App Store link before January 1.</p>
+      <a class="cta" href="/first">Get in first →</a>
+    </section>
+  </main>
+
+  <SiteFooter links={[{ label: 'The apps', href: '/rack' }, { label: 'Support', href: '/rack/support' }]} />
+</BaseLayout>
+
+<style>
+  .page { padding-bottom: 72px; }
+  .hero { padding: 48px var(--pad-page-x) 8px; }
+  .eyebrow { display: inline-flex; align-items: center; gap: 14px; margin: 0 0 18px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.24em; color: var(--color-chalk-dim); text-transform: uppercase; }
+  .eyebrow .dots { letter-spacing: 0.04em; color: var(--color-blood-bright); }
+  .display { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(40px, 7vw, 84px); line-height: 0.95; letter-spacing: -0.02em; text-transform: uppercase; color: var(--color-chalk); }
+  .dot { color: var(--color-blood-bright); }
+  .subtitle { margin: 18px 0 0; max-width: 60ch; font-family: var(--font-serif); font-size: 18px; line-height: 1.6; color: var(--color-chalk-dim); }
+
+  .block { margin: 56px var(--pad-page-x) 0; padding-top: 28px; border-top: var(--border-thin); }
+  .section-label { margin: 0 0 18px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--color-chalk-dim); }
+
+  .principles { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px 28px; }
+  .principles li { position: relative; padding-left: 22px; font-family: var(--font-serif); font-size: 16px; line-height: 1.55; color: var(--color-chalk); }
+  .principles li::before { content: '✓'; position: absolute; left: 0; color: var(--color-army); font-family: var(--font-mono); }
+
+  .cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: var(--border-thin); border-left: var(--border-thin); }
+  .coach-cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .card { min-width: 0; padding: 24px 24px 28px; border-right: var(--border-thin); border-bottom: var(--border-thin); display: grid; gap: 10px; align-content: start; }
+  .card-name { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 24px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-chalk); }
+  .card-line { margin: 0; font-family: var(--font-serif); font-size: 15px; line-height: 1.55; color: var(--color-chalk-dim); }
+  .pricing { margin: 0; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-chalk-faint); }
+  .includes { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 8px; font-size: 14px; line-height: 1.5; color: var(--color-chalk-dim); }
+  .includes li { position: relative; padding-left: 16px; }
+  .includes li::before { content: ''; position: absolute; left: 0; top: 7px; width: 6px; height: 6px; border: 1px solid var(--color-chalk-faint); }
+  .soon { display: inline-block; margin-left: 8px; padding: 1px 6px; border: 1px solid var(--color-chalk-faint); font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-chalk-faint); white-space: nowrap; }
+  .every, .coach-line, .table-note { margin: 18px 0 0; max-width: 68ch; font-family: var(--font-serif); font-size: 16px; line-height: 1.6; color: var(--color-chalk-dim); }
+  .coach-line { margin: 0 0 18px; }
+  .table-note { margin: 0 0 14px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-chalk-faint); }
+  .more { margin: 18px 0 0; }
+  .soft { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-dim); border-bottom: 1px solid var(--color-chalk-ghost); padding-bottom: 2px; }
+  .soft:hover { color: var(--color-chalk); border-bottom-color: var(--color-chalk); }
+
+  /* The table scrolls inside its own box; the feature column stays put, so a phone never side-scrolls the page. */
+  .table-wrap { max-width: 100%; overflow-x: auto; border: var(--border-thin); }
+  .features { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 14px; }
+  .features th, .features td { padding: 12px 14px; border-bottom: var(--border-thin); text-align: center; color: var(--color-chalk-dim); vertical-align: top; }
+  .features thead th { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-chalk); }
+  .features .feat { position: sticky; left: 0; z-index: 1; min-width: 220px; max-width: 320px; text-align: left; background: var(--color-bg); border-right: var(--border-thin); font-family: var(--font-serif); font-weight: 400; color: var(--color-chalk); }
+  .features thead .feat { font-family: var(--font-mono); }
+  .features td span[aria-label='Included'] { color: var(--color-chalk); }
+  .none { color: var(--color-chalk-faint); }
+
+  .closer { padding-bottom: 8px; }
+  .closer-h { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 4vw, 44px); text-transform: uppercase; color: var(--color-chalk); }
+  .cta { display: inline-flex; margin-top: 22px; padding: 13px 20px; background: var(--color-blood); color: var(--color-chalk); font-family: var(--font-display); font-weight: 600; font-size: 15px; letter-spacing: 0.04em; text-transform: uppercase; transition: background 120ms ease-out; }
+  .cta:hover { background: var(--color-blood-bright); }
+
+  @media (max-width: 1099px) {
+    .hero { padding: 40px var(--pad-page-x-mid) 8px; }
+    .block { margin: 48px var(--pad-page-x-mid) 0; }
+    .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .principles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 720px) {
+    .hero { padding: 32px var(--pad-page-x-mobile) 8px; }
+    .block { margin: 40px var(--pad-page-x-mobile) 0; }
+    .cards, .coach-cards, .principles { grid-template-columns: minmax(0, 1fr); }
+    .features .feat { min-width: 160px; max-width: 200px; }
+  }
+</style>
