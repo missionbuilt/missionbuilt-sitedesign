@@ -1,4 +1,5 @@
 ---
+import { BOOK_META } from '../data/book-meta';
 /**
  * Source — disambiguation page for "open source." MissionBuilt is open
  * in three places: the book content (chapters, edits), the Loadout skills,
@@ -42,7 +43,7 @@ const repos = [
   },
 ];
 ---
-<BaseLayout
+<BaseLayout ogImage={BOOK_META.ogImage} ogImageAlt={BOOK_META.ogImageAlt}
   title="Source · Mission Built"
   description="MissionBuilt is open across the ecosystem: the book, the Loadout skills and the site. The repos live on GitHub. The iPhone apps are closed; their data formats are published."
   active="source"

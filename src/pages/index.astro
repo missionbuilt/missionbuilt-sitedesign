@@ -1,124 +1,219 @@
 ---
-import { SHOW_APP_SCREENS } from '../data/screens';
 /**
- * Home — landing page.
+ * Home: the front door (launch preview, hq/briefs/site/site-launch-preview-plan.md §3 and §3a;
+ * Mike 18:47–19:09, 2026-10-15).
  *
- * Rebuilt Sept 20, 2026 (focus pass, same as the app landing pages). The old home
- * gave the book, the Loadout, the Rack and Logs equal weight in four card bands plus
- * a stat strip, and nothing told a visitor where to go. Mike's call: the book and the
- * two iPhone apps are the goals; the Loadout skills are great but niche.
+ * The apps lead; the book is the story behind them (Mike 18:49). A stranger from a QR should know
+ * what this is in five seconds, so the H1 says what the apps do (Mike 19:09: "lean into the
+ * mission, but not as the headline") and "Every lift is a mission." (the ad's line 1) is the
+ * eyebrow and the closing line. "Mission" is used three times only: the eyebrow, "Join the mission
+ * early." and "Where the mission started.".
  *
- *   1. Hero: the book. One primary button (Start reading), Download beside it,
- *      the facts as one mono line, the author.
- *   2. The apps: IronStack and MealStack, each with a real screen, its promise and
- *      Join the beta. IronStack's card lays its Apple Watch screen over the phone (Oct 1, 2026). Chalk only here: oxblood stays with "Built." and Start reading.
- *   3. More: one quiet row with the Loadout (for product leaders) and the latest log.
+ * Order: hero (one button: Get in first) → the Stack (icons and the threes) → the ad's strip (lines
+ * 3–8) → coming from another app → for coaches → Get in first (the starred Coming January 1 items)
+ * → the story behind it (the book, Logs, the Loadout) → closer.
  *
- * Ambient: a fixed radial gradient overlay (chalk-dust top-left, oxblood bottom-right).
+ * MissionStack is named only once MISSIONSTACK_ANNOUNCED; until then the third app is "The gym
+ * board" (src/data/apps.ts). Only what's live is said as live; the rest reads "Coming soon"
+ * (src/data/coming.ts). No prices. Strings marked COPY are drafts for Mike's yes.
+ *
+ * Oxblood: the eyebrow marks and the one button. Ambient: the home's radial overlay, as before.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import TopNav from '../components/TopNav.astro';
 import PhoneFrame from '../components/PhoneFrame.astro';
 import WatchFrame from '../components/WatchFrame.astro';
-import { getCollection } from 'astro:content';
-import { MB, TOTAL_CHAPTERS, totalReadTime, sectionUrl } from '../data/book.ts';
-import { byNewest, logUrl } from '../data/logs';
+import TabletFrame from '../components/TabletFrame.astro';
+import { SHOW_APP_SCREENS } from '../data/screens';
+import { MISSIONSTACK_ANNOUNCED } from '../data/missionstack-gate.mjs';
+import { STACK, TILES, TOGETHER_LIVE, TOGETHER_SOON } from '../data/apps';
+import { comingFor } from '../data/coming';
 
-const latestLog = (await getCollection('logs', ({ data }) => !data.draft)).sort(byNewest)[0];
+const SITE = 'https://missionbuilt.io';
+const starred = comingFor({ announced: MISSIONSTACK_ANNOUNCED, when: 'january', star: true });
 
-const apps = [
+const hero = {
+  phone: { src: '/images/ironstack/hero-session.webp', w: 540, h: 1174, alt: 'IronStack on iPhone mid-workout on a coach\'s plan: Box Squat, set 1 of 5, 275 for 3, with Log lit.' },
+  watch: { src: '/images/ironstack/watch-set.webp', w: 422, h: 514, alt: 'The same set on Apple Watch: Box squat, 275 lb for 3, the rest clock and Log set.' },
+  board: { src: '/images/missionstack/board-ipad.webp', w: 1080, h: 751, alt: 'The same workout on the gym board, on iPad: the exercise, the set, the load and the rest clock, big enough to read across the gym.' },
+};
+
+// COPY: one line each, to the compare pages.
+const switching = [
+  { line: 'Coming from Hevy or Strong? Bring your history with you.', href: '/rack/compare/hevy-strong' },
+  { line: 'Already tracking food? MealStack adds the when.', href: '/rack/compare/macrofactor' },
+  { line: 'Coaching on TrueCoach? See Coach mode.', href: '/rack/compare/truecoach' },
+];
+
+const jsonLd = [
   {
-    name: 'IronStack', href: '/rack/ironstack',
-    tag: 'Private beta · iPhone + Apple Watch',
-    promise: 'Log fast. See progress. A coach in your corner.',
-    line: 'A lifting log for your phone and your wrist, with big timers, insights, a real coach who sends your plan, and Stack AI, which picks your next weight from your own sets.',
-    shot: { src: '/images/ironstack/hero-session.webp', w: 540, h: 1174, alt: 'IronStack on iPhone mid-workout on a coach\'s plan: Box Squat, set 1 of 5, 275 for 3, with Log lit.' },
-    watch: { src: '/images/ironstack/watch-set.webp', w: 422, h: 514, alt: 'The same set on Apple Watch: Box squat, 275 lb for 3, the rest clock at 2:00, and Log set.' },
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Mission Built',
+    url: SITE,
+    logo: `${SITE}/icon-512.png`,
+    email: 'support@missionbuilt.io',
+    founder: { '@type': 'Person', name: 'Mike Nichols', url: `${SITE}/about` },
   },
   {
-    name: 'MealStack', href: '/rack/mealstack',
-    tag: 'Private beta · iPhone',
-    promise: 'Your tracker says what you ate. This says when.',
-    line: 'Meal timing built backward from your training session. Eat late and the day re-flows; your pre-workout meal still lands.',
-    shot: { src: '/images/mealstack/today-training.webp', w: 540, h: 1174, alt: 'MealStack Today on a training day with the session at 6:30 PM: yogurt and whey logged late at 11:40, lunch next at 2:40 PM, the Home travel chip, and Eating out? Send Stack AI the menu.' },
-    watch: undefined,
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Mission Built',
+    url: SITE,
   },
 ];
 ---
-<BaseLayout title="Mission Built · A Field Guide for Building Things That Matter" active="book">
+<BaseLayout active="home">
+  <script is:inline slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   <div class="ambient" aria-hidden="true"></div>
-  <TopNav active="book" />
+  <TopNav />
 
   <main id="main" class="page">
-    {/* ---------- 1. THE BOOK ---------- */}
+    {/* ---------- 1. HERO ---------- */}
     <section class="hero">
-      <div class="hero-head">
+      <div class="hero-text">
         <p class="eyebrow">
           <span class="dots" aria-hidden="true">▮▮▮</span>
-          <span>An open-source book by Mike Nichols</span>
+          <span>Every lift is a mission</span>
           <span class="dots" aria-hidden="true">▮▮▮</span>
         </p>
-        <h1 class="display"><span class="line">Mission</span><span class="line built">Built.</span></h1>
-        <p class="subtitle">A field guide for building things that matter.</p>
-      </div>
-
-      <div class="hero-side">
-        <p class="blurb">{MB.blurbLong}</p>
+        {/* COPY: the product lead's 19:09 H1, with Billboard's "every workout" for "it". */}
+        <h1 class="display">Log every set. Time every meal. Put every workout on the big screen.</h1>
+        {/* The ad's line 2 (approved). */}
+        <p class="people"><em>To lift yourself. To lift others. To rise together.</em></p>
         <div class="buttons">
-          <a href={sectionUrl(MB.prologue.n, MB.prologue.title)} class="btn primary">Start reading <span aria-hidden="true">→</span></a>
-          <a href="/download" class="btn ghost"><span aria-hidden="true">↓</span> Download</a>
+          <a href="/first" class="btn primary">Get in first <span aria-hidden="true">→</span></a>
+          <a href="/rack" class="text-link">See the apps <span aria-hidden="true">→</span></a>
         </div>
-        <p class="facts">{TOTAL_CHAPTERS} chapters · {totalReadTime()} · free to read · <a href="/chapters">All chapters →</a></p>
-        <div class="author">
-          <div class="avatar" aria-hidden="true">MN</div>
-          <div class="author-meta">
-            <a href="/about" class="author-name">{MB.author}</a>
-            <div class="author-tag">{MB.authorTagline}</div>
-          </div>
+        {/* COPY */}
+        <ul class="trust" aria-label="The short version">
+          <li>Private beta now</li><li>On the App Store January 1</li><li>iPhone, Apple Watch, iPad, Mac, Apple TV</li><li>Your log lives on your devices</li>
+        </ul>
+      </div>
+      {SHOW_APP_SCREENS && (
+        <div class="hero-shot" aria-label="The same set on the phone, the watch and the gym board" role="img">
+          <div class="hs-board"><TabletFrame shot={{ ...hero.board }} lazy={false} fill /></div>
+          <div class="hs-phone"><PhoneFrame shot={hero.phone} lazy={false} /></div>
+          <div class="hs-watch"><WatchFrame shot={hero.watch} /></div>
         </div>
-      </div>
-    </section>
-
-    {/* ---------- 2. THE APPS ---------- */}
-    <section class="band" aria-labelledby="apps-h">
-      <div class="band-head">
-        <h2 id="apps-h" class="band-title">The apps. <span class="band-sub">Two iPhone apps for people who train.</span></h2>
-        <a href="/rack" class="band-link">The Rack <span aria-hidden="true">→</span></a>
-      </div>
-      <div class="apps">
-        {apps.map((a) => (
-          <a class:list={['app', a.watch && 'has-watch']} href={a.href}>
-            {SHOW_APP_SCREENS && <div class:list={['shot', a.watch && 'with-watch']}>
-              <div class="shot-phone"><PhoneFrame shot={a.shot} fill /></div>
-              {a.watch && <div class="shot-watch"><WatchFrame shot={a.watch} /></div>}
-            </div>}
-            <div class="app-body">
-              <p class="tag"><span class="sq" aria-hidden="true"></span>{a.tag}</p>
-              <h3 class="app-name">{a.name}</h3>
-              <p class="promise">{a.promise}</p>
-              <p class="app-line">{a.line}</p>
-              <span class="app-cta">Join the beta →</span>
-            </div>
-          </a>
-        ))}
-      </div>
-    </section>
-
-    {/* ---------- 3. MORE ---------- */}
-    <section class="band more" aria-label="More from Mission Built">
-      <a class="more-item" href="/loadout">
-        <span class="k">The Loadout</span>
-        <span class="t">For product leaders: open-source Claude skills for the boardroom half of the book.</span>
-        <span class="c" aria-hidden="true">→</span>
-      </a>
-      {latestLog && (
-        <a class="more-item" href={logUrl(latestLog)}>
-          <span class="k">Latest log</span>
-          <span class="t">{latestLog.data.title}</span>
-          <span class="c" aria-hidden="true">→</span>
-        </a>
       )}
+    </section>
+
+    {/* ---------- 2. THE STACK (plan §3a) ---------- */}
+    <section class="band" aria-labelledby="stack-h">
+      <p class="kicker">The Stack</p>
+      {/* The ad's line 9 (approved). */}
+      <h2 id="stack-h" class="band-title">Three apps. One mission.</h2>
+      <ul class="icons" aria-label="The three app icons">
+        {STACK.map((a) => (
+          <li><img src={a.icon.src} srcset={`${a.icon.src} 1x, ${a.icon.src2x} 2x`} width="96" height="96" alt={a.icon.alt} loading="lazy" /></li>
+        ))}
+      </ul>
+      <div class="threes" role="table" aria-label="Three apps, three jobs, three surfaces">
+        <div class="t-row t-head" role="row">
+          <span role="columnheader" class="t-key"><span class="sr">The app</span></span>
+          {STACK.map((a) => <span role="columnheader" class="t-app">{a.href ? <a href={a.href}>{a.name}</a> : a.name}</span>)}
+        </div>
+        <div class="t-row" role="row">
+          <span role="rowheader" class="t-key">The job</span>
+          {STACK.map((a) => <span role="cell" class="t-big" data-app={a.name}>{a.job}</span>)}
+        </div>
+        <div class="t-row" role="row">
+          <span role="rowheader" class="t-key">The screen</span>
+          {STACK.map((a) => <span role="cell" data-app={a.name}>{a.surface}</span>)}
+        </div>
+        <div class="t-row" role="row">
+          <span role="rowheader" class="t-key">What it does</span>
+          {STACK.map((a) => <span role="cell" data-app={a.name}>{a.does}</span>)}
+        </div>
+      </div>
+      <div class="as-one">
+        {/* COPY: the people line, said truthfully (one lifter on the board today). */}
+        <p class="people-line">You, your coach on the floor, and your training partners on the board, one at a time today.</p>
+        <ul class="together">
+          {TOGETHER_LIVE.map((l) => <li>{l}</li>)}
+          {TOGETHER_SOON.map((l) => <li class="soon"><span class="tag">Coming soon</span> {l}</li>)}
+        </ul>
+      </div>
+    </section>
+
+    {/* ---------- 3. THE AD'S STRIP (lines 3–8, approved) ---------- */}
+    <section class="band" aria-labelledby="strip-h">
+      <p class="kicker">Solo or side by side.</p>
+      <h2 class="band-title" id="strip-h">Now your whole stack is on the mission.</h2>
+      <ul class="tiles">
+        {TILES.map((t) => (
+          <li class="tile">
+            <a href={t.href}>
+              {SHOW_APP_SCREENS && <div class:list={['tile-shot', t.device]}>
+                {t.device === 'watch' ? <WatchFrame shot={t.shot} />
+                  : t.device === 'tablet' ? <TabletFrame shot={t.shot} fill />
+                  : <PhoneFrame shot={t.shot} fill />}
+              </div>}
+              <span class="tile-line">{t.line}</span>
+              <span class="tile-body">{t.body}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    {/* ---------- 4. COMING FROM ANOTHER APP ---------- */}
+    <section class="band split">
+      <div>
+        <p class="kicker">Coming from another app?</p>
+        <ul class="switch">
+          {switching.map((s) => <li><a href={s.href}>{s.line} <span aria-hidden="true">→</span></a></li>)}
+        </ul>
+        <a class="text-link small" href="/rack/compare">How they compare, line by line <span aria-hidden="true">→</span></a>
+      </div>
+
+      {/* ---------- 5. FOR COACHES ---------- */}
+      <div class="coaches">
+        <p class="kicker">For coaches</p>
+        {/* The ad's line 7 (approved) over a COPY line. */}
+        <h2 class="band-title">Coach them from the floor.</h2>
+        <p class="lede">Send the plan, see every set against it, and put the workout on the gym TV.</p>
+        <a class="text-link" href="/coach">Coach mode <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+    {/* ---------- 6. GET IN FIRST ---------- */}
+    <section class="band" aria-labelledby="first-h">
+      <div class="first">
+        <div class="first-text">
+          <p class="kicker">Join the mission early.</p>
+          <h2 id="first-h" class="band-title">Get in first.</h2>
+          {/* COPY: Mike's 19:06 promises, short. */}
+          <p class="lede">Train on it now in the beta. Get the App Store link in mid-December, about two weeks before everyone else. And reply to any email: it reaches Mike.</p>
+          <a href="/first" class="btn ghost">Get in first <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="first-list">
+          <p class="mini">Coming January 1</p>
+          <ul class="coming">
+            {starred.map((c) => <li><b>{c.title}</b>{c.detail ? " " + c.detail : ""}</li>)}
+          </ul>
+          <a class="text-link small" href="/rack#coming">Everything coming January 1 <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </section>
+
+    {/* ---------- 7. THE STORY BEHIND IT ---------- */}
+    <section class="band story" aria-labelledby="story-h">
+      <p class="kicker">Where the mission started.</p>
+      <h2 id="story-h" class="band-title">The apps came out of a book.</h2>
+      {/* COPY */}
+      <p class="prose">Mission Built started as a field guide to building things that matter, from the barbell and the boardroom. The apps are the barbell half: built for one lifter in a home gym, now for anyone who trains.</p>
+      <ul class="story-links">
+        <li><a href="/chapters"><span class="k">The Book</span><span class="t">Read it free, start to finish.</span><span class="c" aria-hidden="true">→</span></a></li>
+        <li><a href="/logs"><span class="k">Logs</span><span class="t">The build, in public.</span><span class="c" aria-hidden="true">→</span></a></li>
+        <li><a href="/loadout"><span class="k">The Loadout</span><span class="t">For product leaders: open-source Claude skills.</span><span class="c" aria-hidden="true">→</span></a></li>
+      </ul>
+    </section>
+
+    <section class="closer">
+      <p>Every lift is a mission.</p>
     </section>
   </main>
   <SiteFooter />
@@ -129,91 +224,120 @@ const apps = [
     background: radial-gradient(1200px 600px at 20% -10%, rgba(255,250,235,.04), transparent 60%),
                 radial-gradient(800px 500px at 110% 110%, rgba(168,33,26,.10), transparent 60%); }
   .page { position: relative; z-index: 1; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
   /* HERO */
-  .hero { padding: 64px var(--pad-page-x) 8px; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 56px; align-items: end; }
+  .hero { padding: 56px var(--pad-page-x) 8px; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 48px; align-items: center; }
   .eyebrow { display: inline-flex; align-items: center; gap: 14px; margin: 0 0 20px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.24em; color: var(--color-chalk-dim); text-transform: uppercase; }
   .eyebrow .dots { letter-spacing: 0.04em; color: var(--color-blood-bright); }
-  .display { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(56px, 11vw, 132px); line-height: 0.88; letter-spacing: -0.02em; text-transform: uppercase; color: var(--color-chalk); }
-  .display .line { display: block; }
-  .display .built { color: var(--color-blood-bright); }
-  .subtitle { margin: 22px 0 0; font-family: var(--font-display); font-weight: 400; font-size: 22px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-chalk-dim); }
-  .blurb { margin: 0; max-width: 52ch; font-family: var(--font-serif); font-size: 18px; line-height: 1.6; color: var(--color-chalk); }
-  .buttons { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 12px; }
+  .display { margin: 0; max-width: 16ch; font-family: var(--font-display); font-weight: 700; font-size: clamp(38px, 5.4vw, 64px); line-height: 0.98; letter-spacing: -0.015em; text-transform: uppercase; color: var(--color-chalk); }
+  .people { margin: 20px 0 0; font-family: var(--font-serif); font-size: 18px; line-height: 1.55; color: var(--color-chalk-dim); }
+  .buttons { margin-top: 28px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px 26px; }
   .btn { display: inline-flex; align-items: center; gap: 8px; padding: 15px 24px; font-family: var(--font-display); font-weight: 600; font-size: 15px; letter-spacing: 0.06em; text-transform: uppercase; border: 1px solid var(--color-rule); color: var(--color-chalk); transition: background 120ms ease-out; }
   .btn.primary { background: var(--color-blood); border-color: var(--color-blood); }
   .btn.primary:hover { background: var(--color-blood-bright); }
+  .btn.ghost { border-color: var(--color-chalk-dim); }
   .btn.ghost:hover { background: var(--color-panel); }
-  .facts { margin: 16px 0 0; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-chalk-faint); }
-  .facts a { color: var(--color-chalk-dim); border-bottom: 1px solid var(--color-chalk-ghost); }
-  .facts a:hover { color: var(--color-chalk); }
-  .author { margin-top: 26px; padding-top: 18px; border-top: 1px dashed var(--color-rule); display: flex; gap: 14px; align-items: center; }
-  .avatar { width: 40px; height: 40px; display: grid; place-items: center; border: var(--border-thin); background: var(--color-panel); font-family: var(--font-display); font-size: 15px; color: var(--color-chalk-dim); }
-  .author-name { font-family: var(--font-display); font-size: 15px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-chalk); }
-  .author-tag { margin-top: 2px; font-family: var(--font-serif); font-size: 13px; color: var(--color-chalk-faint); }
+  .text-link { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-dim); border-bottom: 1px solid var(--color-chalk-ghost); padding-bottom: 2px; }
+  .text-link:hover { color: var(--color-chalk); border-bottom-color: var(--color-chalk); }
+  .text-link.small { display: inline-block; margin-top: 18px; }
+  .trust { list-style: none; margin: 24px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 18px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; color: var(--color-chalk-dim); }
+  .trust li::before { content: '✓'; margin-right: 7px; color: var(--color-army); }
+
+  /* the hero's devices: the board behind, the phone in front, the watch at the phone's left */
+  .hero-shot { position: relative; min-height: 420px; container-type: inline-size; }
+  .hs-board { width: 88%; margin-left: auto; opacity: 0.95; }
+  .hs-phone { position: absolute; left: 14%; top: 18%; width: 30%; font-size: calc(30cqi / 15); z-index: 2; }
+  .hs-watch { position: absolute; left: 0; top: 46%; font-size: calc(11cqi / 6); z-index: 3; }
 
   /* BANDS */
-  .band { padding: 80px var(--pad-page-x) 0; }
-  .band-head { display: flex; justify-content: space-between; align-items: baseline; gap: 24px; margin-bottom: 24px; }
-  .band-title { margin: 0; font-family: var(--font-display); font-weight: 500; font-size: 26px; letter-spacing: 0.03em; text-transform: uppercase; color: var(--color-chalk); }
-  .band-sub { color: var(--color-chalk-dim); }
-  .band-link { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-dim); border-bottom: 1px solid var(--color-chalk-ghost); padding-bottom: 2px; white-space: nowrap; }
-  .band-link:hover { color: var(--color-chalk); }
+  .band { padding: 88px var(--pad-page-x) 0; }
+  .kicker { margin: 0 0 12px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.24em; color: var(--color-blood-text); text-transform: uppercase; }
+  .band-title { margin: 0 0 24px; font-family: var(--font-display); font-weight: 600; font-size: clamp(26px, 3.2vw, 38px); line-height: 1.05; letter-spacing: 0.01em; text-transform: uppercase; color: var(--color-chalk); }
+  .lede { margin: 0 0 18px; max-width: 56ch; font-family: var(--font-serif); font-size: 17px; line-height: 1.6; color: var(--color-chalk-dim); }
+  .prose { margin: 0; max-width: 68ch; font-family: var(--font-serif); font-size: 17px; line-height: 1.65; color: var(--color-chalk-dim); }
 
-  /* APPS */
-  .apps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: var(--border-thin); border-left: var(--border-thin); }
-  .app { min-width: 0; display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 28px; padding: 28px 28px 0; border-right: var(--border-thin); border-bottom: var(--border-thin); transition: background 120ms ease-out; }
-  .app:hover { background: var(--color-panel); }
-  /* The card crops the phone at its foot: the crop is on .shot, around the whole PhoneFrame, so
-     the frame and the screen are cut together. Sideways it stays open for the side buttons. */
-  .shot { height: 250px; overflow-x: visible; overflow-y: clip; align-self: end; }
-  /* IronStack: a 200px column, the phone 160px pushed right, the watch in front of it at the left,
-     its case about 118px down. --s scales the group on phones. */
-  .app.has-watch { grid-template-columns: 200px minmax(0, 1fr); }
-  .shot.with-watch { --s: 1; position: relative; }
-  .shot.with-watch .shot-phone { position: relative; z-index: 2; width: calc(160px * var(--s)); margin-left: auto; }
-  .shot-watch { position: absolute; left: 0; top: calc(80px * var(--s)); font-size: calc(11px * var(--s)); }
-  .app-body { padding-bottom: 28px; display: grid; gap: 10px; align-content: start; }
-  .tag { margin: 0; display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-chalk-dim); }
-  .tag .sq { width: 7px; height: 7px; border: 1px solid var(--color-chalk-dim); }
-  .app-name { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 28px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-chalk); }
-  .promise { margin: 0; font-family: var(--font-display); font-weight: 500; font-size: 18px; line-height: 1.2; text-transform: uppercase; letter-spacing: 0.02em; color: var(--color-chalk); }
-  .app-line { margin: 0; font-family: var(--font-serif); font-size: 15px; line-height: 1.55; color: var(--color-chalk-dim); }
-  .app-cta { margin-top: 6px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk); }
-  .app:hover .app-cta { color: var(--color-blood-text); }
+  /* the Stack */
+  .icons { list-style: none; margin: 0 0 28px; padding: 0; display: flex; gap: 18px; }
+  /* App icons keep Apple's rounded mask: the one place on the site with rounded corners, because
+     it's the app's own mark as people will see it on their phone. */
+  .icons img { display: block; width: 96px; height: 96px; border-radius: 22.37%; border: 1px solid var(--color-rule); }
+  .threes { border-top: var(--border-thin); }
+  .t-row { display: grid; grid-template-columns: 150px repeat(3, minmax(0, 1fr)); gap: 0 28px; padding: 14px 0; border-bottom: var(--border-thin); font-family: var(--font-serif); font-size: 15px; line-height: 1.5; color: var(--color-chalk-dim); }
+  .t-key { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-chalk-faint); padding-top: 3px; }
+  .t-head .t-app { font-family: var(--font-display); font-weight: 700; font-size: 18px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-chalk); }
+  .t-head a { color: var(--color-chalk); border-bottom: 1px solid var(--color-chalk-ghost); }
+  .t-head a:hover { border-bottom-color: var(--color-chalk); }
+  .t-big { font-family: var(--font-display); font-weight: 500; font-size: 20px; text-transform: uppercase; letter-spacing: 0.02em; color: var(--color-chalk); }
+  .as-one { margin-top: 28px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; }
+  .people-line { margin: 0; font-family: var(--font-serif); font-style: italic; font-size: 17px; line-height: 1.6; color: var(--color-chalk); }
+  .together { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; font-family: var(--font-serif); font-size: 15px; line-height: 1.55; color: var(--color-chalk-dim); }
+  .together li { padding-left: 16px; position: relative; }
+  .together li::before { content: ''; position: absolute; left: 0; top: 8px; width: 6px; height: 6px; border: 1px solid var(--color-chalk-faint); }
+  .tag { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-chalk-faint); margin-right: 4px; }
 
-  /* MORE */
-  .more { padding-top: 56px; padding-bottom: 72px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; }
-  .more-item { display: grid; grid-template-columns: 130px minmax(0, 1fr) auto; gap: 18px; align-items: baseline; padding: 18px 0; border-top: 1px dashed var(--color-rule); margin-right: 28px; }
-  .more-item .k { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-faint); }
-  .more-item .t { font-family: var(--font-serif); font-size: 15px; line-height: 1.5; color: var(--color-chalk-dim); }
-  .more-item .c { font-family: var(--font-mono); color: var(--color-chalk-faint); }
-  .more-item:hover .t, .more-item:hover .c { color: var(--color-chalk); }
+  /* the ad's strip */
+  .tiles { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: var(--border-thin); border-left: var(--border-thin); }
+  .tile { min-width: 0; border-right: var(--border-thin); border-bottom: var(--border-thin); }
+  .tile a { display: grid; grid-template-rows: auto auto 1fr; gap: 8px; height: 100%; padding: 0 0 20px; transition: background 120ms ease-out; }
+  .tile a:hover { background: var(--color-panel); }
+  .tile-shot { height: 220px; overflow: hidden; display: flex; justify-content: center; align-items: flex-start; padding: 24px 16px 0; background: var(--color-panel); border-bottom: var(--border-thin); margin-bottom: 8px; }
+  .tile-shot.phone > :global(*) { width: 62%; }
+  .tile-shot.tablet { align-items: center; padding-top: 0; }
+  .tile-shot.tablet > :global(*) { width: 100%; }
+  .tile-shot.watch { font-size: 11px; padding-top: 8px; }
+  .tile-line { padding: 0 18px; font-family: var(--font-display); font-weight: 600; font-size: 20px; line-height: 1.1; text-transform: uppercase; color: var(--color-chalk); }
+  .tile-body { padding: 0 18px; font-family: var(--font-serif); font-size: 14.5px; line-height: 1.55; color: var(--color-chalk-dim); }
+
+  /* switching + coaches */
+  .split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 56px; }
+  .switch { list-style: none; margin: 0; padding: 0; border-top: var(--border-thin); }
+  .switch li { border-bottom: var(--border-thin); }
+  .switch a { display: flex; justify-content: space-between; gap: 18px; padding: 16px 0; font-family: var(--font-serif); font-size: 16px; line-height: 1.5; color: var(--color-chalk); }
+  .switch a span { font-family: var(--font-mono); color: var(--color-chalk-faint); }
+  .switch a:hover span { color: var(--color-chalk); }
+  .coaches { padding-left: 56px; border-left: var(--border-thin); }
+
+  /* get in first */
+  .first { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 56px; padding: 36px; border: var(--border-thin); background: var(--color-panel); }
+  .mini { margin: 0 0 12px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); }
+  .coming { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; font-family: var(--font-serif); font-size: 15px; line-height: 1.5; color: var(--color-chalk-dim); }
+  .coming b { color: var(--color-chalk); font-weight: 700; }
+
+  /* the story */
+  .story-links { list-style: none; margin: 24px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 28px; }
+  .story-links a { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; padding: 16px 0; border-top: 1px dashed var(--color-rule); }
+  .story-links .k { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk); }
+  .story-links .t { grid-column: 1; font-family: var(--font-serif); font-size: 15px; line-height: 1.5; color: var(--color-chalk-dim); }
+  .story-links .c { grid-row: 1; grid-column: 2; font-family: var(--font-mono); color: var(--color-chalk-faint); }
+  .story-links a:hover .t, .story-links a:hover .c { color: var(--color-chalk); }
+
+  .closer { margin-top: 88px; padding: 44px var(--pad-page-x); border-top: var(--border-thin); text-align: center; }
+  .closer p { margin: 0; font-family: var(--font-display); font-weight: 500; font-size: 22px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-chalk); }
 
   @media (max-width: 1099px) {
-    .hero, .band { padding-left: var(--pad-page-x-mid); padding-right: var(--pad-page-x-mid); }
-    .hero { grid-template-columns: minmax(0, 1fr); gap: 32px; align-items: start; }
-    .apps { grid-template-columns: minmax(0, 1fr); }
-    .more { grid-template-columns: minmax(0, 1fr); }
-    .more-item { margin-right: 0; }
+    .hero, .band, .closer { padding-left: var(--pad-page-x-mid); padding-right: var(--pad-page-x-mid); }
+    .hero { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+    .hero-shot { max-width: 560px; min-height: 0; }
+    .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .split, .first, .as-one { grid-template-columns: minmax(0, 1fr); }
+    .coaches { padding-left: 0; border-left: none; padding-top: 40px; border-top: var(--border-thin); }
   }
   @media (max-width: 720px) {
-    .hero, .band { padding-left: var(--pad-page-x-mobile); padding-right: var(--pad-page-x-mobile); }
-    .hero { padding-top: 36px; }
-    .subtitle { font-size: 17px; }
-    .blurb { font-size: 17px; }
-    .btn { flex: 1 1 auto; justify-content: center; padding: 14px 16px; }
-    .band { padding-top: 56px; }
-    .band-head { flex-direction: column; gap: 10px; }
-    .band-title { font-size: 21px; }
-    .app { grid-template-columns: 112px minmax(0, 1fr); gap: 18px; padding: 22px 18px 0; }
-    .shot { height: 190px; }
-    .app.has-watch { grid-template-columns: 124px minmax(0, 1fr); }
-    .shot.with-watch { --s: 0.62; }
-    .app-name { font-size: 22px; }
-    .promise { font-size: 15px; }
-    .app-line { display: none; }
-    .more-item { grid-template-columns: minmax(0, 1fr) auto; }
-    .more-item .k { grid-column: 1 / -1; }
+    .hero, .band, .closer { padding-left: var(--pad-page-x-mobile); padding-right: var(--pad-page-x-mobile); }
+    .hero { padding-top: 32px; }
+    .people { font-size: 17px; }
+    .btn { flex: 1 1 100%; justify-content: center; }
+    .band { padding-top: 64px; }
+    .icons img { width: 72px; height: 72px; }
+    .t-row { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+    .t-head { display: none; }
+    .t-row .t-key { margin-bottom: 2px; }
+    .t-row span[role=cell]::before { content: attr(data-app) ': '; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-chalk-faint); }
+    .tiles { grid-template-columns: minmax(0, 1fr); }
+    .tile-shot { height: 200px; }
+    .first { padding: 24px 20px; }
+    .story-links { grid-template-columns: minmax(0, 1fr); }
+    .closer p { font-size: 18px; }
   }
 </style>

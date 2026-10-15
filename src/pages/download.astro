@@ -1,4 +1,5 @@
 ---
+import { BOOK_META } from '../data/book-meta';
 /**
  * Download — formats of the book a reader can take offline.
  *
@@ -43,7 +44,7 @@ const formats = [
   },
 ];
 ---
-<BaseLayout
+<BaseLayout ogImage={BOOK_META.ogImage} ogImageAlt={BOOK_META.ogImageAlt}
   title="Download · Mission Built"
   description="Download Mission Built as PDF or Markdown. Free. CC BY-NC-SA 4.0."
 >

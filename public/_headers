@@ -26,6 +26,10 @@
 
 /og-image.jpg
   Cache-Control: public, max-age=86400, must-revalidate
+/images/og-brand.jpg
+  Cache-Control: public, max-age=86400, must-revalidate
+/images/icons/*
+  Cache-Control: public, max-age=86400, must-revalidate
 
 /site.webmanifest
   Cache-Control: public, max-age=3600, must-revalidate
