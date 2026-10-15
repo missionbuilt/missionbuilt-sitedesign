@@ -27,6 +27,7 @@ const RATE_WINDOW = 3600;      // seconds
 const MIN_AGE_MS = 2000;       // form must be at least this old
 const BUTTONDOWN = 'https://api.buttondown.com/v1/subscribers';
 const TIMEOUT_MS = 8000;
+const MAX_BODY = 4096;         // bytes; the form is one email field
 
 function json(body, status = 200) {
   return new Response(JSON.stringify(body), {
@@ -60,7 +61,19 @@ async function readBody(request) {
   } catch { return {}; }
 }
 
-// The counter's key: a hash of the IP with a secret-derived salt, so KV never holds an IP.
+// Today's salt: random, made once a day and kept two days in KV, so a counter's key can't be
+// turned back into an IP and the salt shares nothing with any secret (security review).
+async function todaysSalt(kv) {
+  const key = 'first-salt:' + new Date().toISOString().slice(0, 10);
+  let salt = await kv.get(key);
+  if (!salt) {
+    salt = [...crypto.getRandomValues(new Uint8Array(16))].map((b) => b.toString(16).padStart(2, '0')).join('');
+    await kv.put(key, salt, { expirationTtl: 2 * 24 * 3600 });
+  }
+  return salt;
+}
+
+// The counter's key: a hash of the IP with today's salt, so KV never holds an IP.
 async function ipKey(ip, salt) {
   const data = new TextEncoder().encode(`${salt}|${ip}`);
   const digest = new Uint8Array(await crypto.subtle.digest('SHA-256', data));
@@ -80,23 +93,34 @@ export async function onRequestPost({ request, env }, deps = {}) {
   const fetchFn = deps.fetch || fetch;
   const asJson = wantsJson(request);
   const answer = (kind, status) => (asJson ? json(SAY[kind], status) : back(request, kind === 'ok' ? 'ok' : kind === 'closed' ? 'closed' : 'err'));
+
+  // Only our own page posts here: another site's form can't sign someone else up (and send
+  // them a confirmation email) through a visitor's browser (security review).
+  const origin = request.headers.get('origin');
+  if (origin && origin !== new URL(request.url).origin) return answer('bad', 403);
+  // A form with one email field is small; a big body is refused before it's read.
+  if (parseInt(request.headers.get('content-length') || '0', 10) > MAX_BODY) return answer('bad', 413);
+
   const body = await readBody(request);
 
   const email = String(body.email || '').trim().toLowerCase();
   const honeypot = String(body.website || '').trim();
-  const t = parseInt(String(body.t || '0'), 10);
+  const t = parseInt(String(body.t || ''), 10);
 
-  // Bots: say yes, send and store nothing.
-  if (honeypot || (t && Date.now() - t < MIN_AGE_MS)) return answer('ok', 200);
+  // Bots: say yes, send and store nothing. The page always sends when it was drawn, so a
+  // post without it, or too soon after, is a bot.
+  if (honeypot || !Number.isFinite(t) || Date.now() - t < MIN_AGE_MS) return answer('ok', 200);
 
   // Not open until Mike sets the Buttondown key: nothing is sent or stored.
   if (!env.BUTTONDOWN_API_KEY) return answer('closed', 503);
 
   if (!EMAIL.test(email)) return answer('bad', 400);
 
-  if (env.BETA_KV) {
+  // No counter store, no sign-ups: the limit never skips itself.
+  if (!env.BETA_KV) return answer('closed', 503);
+  {
     const ip = request.headers.get('cf-connecting-ip') || 'unknown';
-    const key = await ipKey(ip, env.BUTTONDOWN_API_KEY);
+    const key = await ipKey(ip, await todaysSalt(env.BETA_KV));
     const used = parseInt((await env.BETA_KV.get(key)) || '0', 10);
     if (used >= RATE_LIMIT) return answer('busy', 429);
     await env.BETA_KV.put(key, String(used + 1), { expirationTtl: RATE_WINDOW });
