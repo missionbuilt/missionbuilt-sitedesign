@@ -1,0 +1,80 @@
+---
+/**
+ * MissionStack (/rack/missionstack): the rebuild (Mike 2026-10-16 08:27 fix 11, 08:30 name cleared,
+ * 08:32 less is more). A real product page: planning on iPad and Mac, the gym board, starter
+ * programs and meal planning (both Coming soon), and how it works with IronStack and MealStack.
+ * One idea per screen (hq/briefs/site/apple-duo-reference.md). Tagline: "MissionStack by Mission
+ * Built". The product lead's MissionStack brief lands today; this is the first cut to it.
+ *
+ * Only what's in 0.1.0 is said as live. Said once, plainly (the panel 10-16): one lifter on the
+ * board at a time, each lifter logs on an iPhone with IronStack, and a plan made on the iPad stays
+ * there for now. COPY strings are drafts for Mike's yes.
+ */
+import ProductPage from '../../components/ProductPage.astro';
+import BetaForm from '../../components/BetaForm.astro';
+import { STACK } from '../../data/apps';
+import { MISSIONSTACK_ANNOUNCED } from '../../data/missionstack-gate.mjs';
+
+const IMG = '/images/missionstack/';
+const pad = (f: string, alt: string) => ({ kind: 'tablet' as const, shot: { src: `${IMG}${f}.webp`, w: 1080, h: 751, alt } });
+const [iron, meal] = STACK;
+
+const description = 'MissionStack by Mission Built: plan your training on iPad or Mac, and put your live IronStack workout on the gym TV, an iPad or a Mac, big enough to read from the platform. No account. In a private beta; on the App Store January 1.';
+const ld = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'MissionStack',
+  url: 'https://missionbuilt.io/rack/missionstack',
+  applicationCategory: 'HealthApplication',
+  operatingSystem: 'iPadOS 26, macOS 26, tvOS 26',
+  description,
+  author: { '@type': 'Person', name: 'Mike Nichols', url: 'https://missionbuilt.io/about' },
+  publisher: { '@type': 'Organization', name: 'Mission Built LLC', url: 'https://missionbuilt.io' },
+};
+---
+<ProductPage
+  title="MissionStack: plan on iPad and Mac, lift on the big screen · Mission Built"
+  description={description}
+  ogImageAlt="MissionStack by Mission Built: your workout on the big screen."
+  ld={ld}
+  noindex={!MISSIONSTACK_ANNOUNCED}
+  name="MissionStack"
+  icon={STACK[2].icon}
+  line="Your workout on the big screen."
+  sub="Plan the weeks on your iPad or Mac. Put the live workout on the gym TV."
+  hero={[
+    { kind: 'tv', shot: { src: `${IMG}board-tv-cast.webp`, w: 1920, h: 1080, alt: 'The MissionStack board on an Apple TV mid-workout: Squat and press, Axle strict press, a 1:12 rest clock, then set 2; 185 × 3 at an effort of 8 done; exercise 2 of 4, set 2 of 5.' } },
+  ]}
+  cta={{ label: 'Join the beta', href: '#join' }}
+  ctaNote="The gym board is free in MissionStack."
+  heroFacts={['iPad, Mac and Apple TV', 'Needs IronStack on each iPhone', 'One lifter at a time today']}
+  chapters={[
+    { title: 'Read it from the platform.', line: 'Your set, the load and the rest clock, big enough to read across the gym. You log on your iPhone or Apple Watch; the board shows it.',
+      devices: [pad('board-ipad-cast', 'The same moment on an iPad: Axle strict press, a 1:12 rest clock, the next set of 185 × 3 ready, then Pendlay row and suitcase carry.')] },
+    { title: 'Pair in one scan.', line: 'Scan the code with your iPhone\'s camera and your workout is on the board. Same Wi-Fi, no account.',
+      devices: [pad('pair-ipad', 'The pairing card on the board: Scan with your iPhone camera, over a QR code, with Remember this iPhone.')] },
+    { title: 'Plan the week.', line: 'Lay out the week on an iPad or a Mac. Type "front squat 3x5 @7" and the sets, reps and effort fill in. Drag workouts between days, make a superset, repeat a week.',
+      devices: [pad('plan-ipad', 'Plan on an iPad: Monday\'s squat workout in a week of workouts, with Front squat just added from the typed line "front squat 3x5 @7", its 3 sets of 5 at an effort of 7 filled in.')] },
+    { soon: 'Coming January 1', title: 'Next on the big screen.', line: 'A week planned on the iPad or Mac, waiting on your iPhone. Meals planned beside the training. Starter programs to build from. For now, a plan stays where you made it.', devices: [] },
+  ]}
+  family={{ title: 'Better as a stack.', items: [
+    { name: iron.name, line: 'Each lifter logs on an iPhone with IronStack. The board shows what they log.', href: iron.href, icon: iron.icon },
+    { name: meal.name, line: 'Times your meals around the workouts you plan.', href: meal.href, icon: meal.icon },
+  ] }}
+  promise={{ title: 'Nothing to sign up for.', line: 'No account. The board talks to your iPhone over your own Wi-Fi, encrypted. It keeps no workout, and a phone you ask it to remember stays until you forget it.', href: '/rack/missionstack/privacy' }}
+  closer={{ title: 'Plan it. Put it up. Lift it.', line: 'On iPad (iPadOS 26), a Mac with Apple silicon (macOS 26) and Apple TV (tvOS 26). The board needs IronStack on your iPhone.' }}
+  more={[
+    { label: 'Details', href: '/rack/missionstack/details' },
+    { label: 'Privacy', href: '/rack/missionstack/privacy' },
+    { label: 'Release notes', href: '/rack/missionstack/changelog' },
+    { label: 'Support', href: '/rack/support' },
+  ]}
+>
+  <BetaForm slot="join" page="/rack/missionstack" name="MissionStack" noteLabel="What screen is in your gym?" notePlaceholder="a TV on the wall" />
+  <p slot="after" class="first-alt">The board needs IronStack, which is for lifters 18 and over. The invite brings IronStack's beta too. Not ready for a beta? <a href="/first">Get the App Store link first</a>.</p>
+</ProductPage>
+
+<style>
+  .first-alt { margin: 18px auto 0; max-width: 460px; font-family: var(--font-serif); font-size: 15px; line-height: 1.55; color: var(--color-chalk-dim); }
+  .first-alt a { color: var(--color-chalk); border-bottom: 1px solid var(--color-chalk-ghost); white-space: nowrap; }
+</style>

@@ -1,0 +1,85 @@
+---
+/**
+ * /founders: the founders acknowledgements page (Mike 2026-10-15 19:06; built 10-16 for the private
+ * test site). People who got in first and ticked "Put my name on the founders page" on /first, with
+ * the name or handle they chose. Rules: hq/briefs/site/founders-page-rules.md.
+ *
+ * - Names come from /api/founders (KV FOUNDERS_KV, key `approved`): a list Mike approves by hand,
+ *   kept outside the site's public code, never read live from Buttondown.
+ * - Each name is set with textContent, never as HTML; a line can't grow taller than one name.
+ * - Coming off: a reply to any email or support@missionbuilt.io; the name leaves the list.
+ * - LIVE false: noindex, out of the sitemap and nav until Mike's go. Words are drafts for his yes.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TopNav from '../components/TopNav.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+
+const LIVE = false;
+---
+<BaseLayout
+  title="Founders · Mission Built"
+  description="The people who got in first. Thank you."
+  noindex={!LIVE}
+>
+  <TopNav />
+  <main id="main" class="page">
+    <section class="hero">
+      <p class="eyebrow"><span class="dots" aria-hidden="true">▮▮▮</span> <span>Founders</span> <span class="dots" aria-hidden="true">▮▮▮</span></p>
+      {/* COPY */}
+      <h1 class="display">They got in first.</h1>
+      <p class="sub">The people who got in first, and asked to be named. Thank you.</p>
+    </section>
+
+    <section class="block" aria-labelledby="names-h">
+      <h2 class="sr" id="names-h">Founders</h2>
+      <ul class="names" data-names aria-live="polite"></ul>
+      {/* COPY */}
+      <p class="empty" data-empty>The first names go up when the apps reach the App Store in December.</p>
+      <noscript><p class="empty">Turn on JavaScript to see the names.</p></noscript>
+    </section>
+
+    <section class="block small">
+      {/* COPY */}
+      <p class="fine">Want your name here? <a href="/first">Get in first</a> and tick the box. Want it taken off? Reply to any email from Mike, or write to <a href="mailto:support@missionbuilt.io">support@missionbuilt.io</a>, and it comes off within a few days. Each name is read by Mike before it goes up. Taking a name off removes it from this page; we can't recall copies others have made.</p>
+    </section>
+    <div class="tail"></div>
+  </main>
+  <SiteFooter />
+</BaseLayout>
+
+<script>
+  // Names are text, never HTML: textContent only (founders-page-rules.md §2).
+  const list = document.querySelector<HTMLUListElement>('[data-names]');
+  const empty = document.querySelector<HTMLElement>('[data-empty]');
+  fetch('/api/founders', { headers: { Accept: 'application/json' } })
+    .then((r) => (r.ok ? r.json() : []))
+    .then((names: unknown) => {
+      if (!list || !Array.isArray(names) || names.length === 0) return;
+      for (const n of names) {
+        if (typeof n !== 'string') continue;
+        const li = document.createElement('li');
+        li.textContent = n;
+        list.appendChild(li);
+      }
+      if (empty && list.children.length) empty.hidden = true;
+    })
+    .catch(() => {});
+</script>
+
+<style>
+  .hero { padding: 48px var(--pad-page-x) 8px; }
+  .eyebrow { margin: 0 0 18px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.24em; text-transform: uppercase; color: var(--color-chalk-dim); }
+  .eyebrow .dots { color: var(--color-chalk-faint); }
+  .display { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(44px, 7vw, 80px); line-height: 0.95; letter-spacing: -0.02em; text-transform: uppercase; color: var(--color-chalk); }
+  .sub { margin: 18px 0 0; max-width: 60ch; font-family: var(--font-serif); font-size: 18px; line-height: 1.6; color: var(--color-chalk-dim); }
+  .block { padding: 40px var(--pad-page-x) 0; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .names { list-style: none; margin: 0; padding: 0; columns: 3 220px; column-gap: 32px; border-top: var(--border-thin); padding-top: 18px; }
+  /* One line per name, its height capped, so no name can draw over another (rules §3). */
+  .names li { break-inside: avoid; height: 1.6em; line-height: 1.6em; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-family: var(--font-serif); font-size: 16px; color: var(--color-chalk); }
+  .empty { margin: 0; font-family: var(--font-serif); font-size: 16px; color: var(--color-chalk-dim); }
+  .fine { margin: 0; max-width: 68ch; font-family: var(--font-serif); font-size: 15px; line-height: 1.6; color: var(--color-chalk-dim); }
+  .fine a { color: var(--color-chalk); border-bottom: 1px solid var(--color-chalk-ghost); }
+  .tail { height: 72px; }
+  @media (max-width: 720px) { .hero, .block { padding-left: var(--pad-page-x-mobile); padding-right: var(--pad-page-x-mobile); } }
+</style>

@@ -12,7 +12,7 @@
  *
  * The page has one job: someone who has never heard of the app learns why it
  * exists, what it does differently, how you use it, and how to get it. In
- * order: hero → try it (the click-through demo, /demos/mealstack.html) →
+ * order (the click-through demo and the live rule left 2026-10-16, Mike 08:32: "less is more"): hero →
  * why (the four pillars, linking to the Log) → the rule (live cascade)
  * → what it does differently → how you use it → side by side → fine print →
  * join the beta (form → /api/beta) → the kit (release notes, schema,
@@ -36,7 +36,6 @@ import SiteFooter from '../../../components/SiteFooter.astro';
 import { getCollection as getReleases } from 'astro:content';
 import { newestBuild, releaseUrl, when } from '../../../data/releases';
 import TopNav from '../../../components/TopNav.astro';
-import DemoEmbed from '../../../components/DemoEmbed.astro';
 import BetterTogether from '../../../components/BetterTogether.astro';
 import { getCollection } from 'astro:content';
 import { byNewest, logUrl } from '../../../data/logs';
@@ -83,12 +82,12 @@ const versus: Versus[] = [
   { k: 'On the road', them: 'One schedule, and it assumes you are home.', us: 'Home or Away in one tap, or automatic.' },
   { k: 'Eating out', them: 'Search the database, guess the portion.', us: 'Stack AI reads the menu against this meal\'s numbers.' },
   { k: 'Your data', them: 'Their servers, your account.', us: 'Your phone. Nothing goes to Anthropic until you turn Stack AI on, and then only when you ask; usage data only if you say yes.' },
-  { k: 'Best at', them: 'A database of a million foods and a barcode scanner.', us: 'Timing. Keep the other app for the barcode if you like.', honest: true },
+  { k: 'Best at', them: 'A database of a million foods.', us: 'Timing. MealStack scans barcodes too; keep the other app for its database if you like.', honest: true },
 ];
 
 type Faq = { q: string; a: string };
 const faqs: Faq[] = [
-  { q: 'Is it free?', a: 'During the TestFlight beta, yes. Stack AI runs on a monthly allowance per phone. The launch price is not settled. The fine print above says why, and the answer lands on this page before it lands in the store.' },
+  { q: 'Is it free?', a: 'Every app has a free way in, plus paid plans. Stack AI runs on a monthly allowance. Pricing coming soon: it lands on this page before it lands in the store.' },
   { q: 'Does it need an account?', a: 'No. There is nothing to sign up for. Your plan, your log and your history are files on your phone. Delete all MealStack data, under Start over in Settings, wipes them, and the little the server holds for Stack AI along with them.' },
   { q: 'What leaves my phone?', a: 'What you send Stack AI. Stack AI is off until you turn it on. Nothing goes to Anthropic until you do, and then only when you ask. Turn it off any time in Settings › Stack AI. What you type, photograph or attach goes to a server I run, which passes it to Anthropic. Usage data goes to Mission Built only if you say yes when the app asks, and stays there. The privacy page says exactly what, where and for how long.' },
   { q: 'Is Stack AI a doctor?', a: 'No. It is an AI, and it can be wrong. Its targets come from a formula you can read, its meal ideas are estimates, and it declines questions about medical conditions, medication, pregnancy and supplement doses. Nothing it proposes changes your plan until you tap.' },
@@ -96,9 +95,11 @@ const faqs: Faq[] = [
   { q: 'Can I keep my macro tracker?', a: 'Yes, and if you lean on a barcode scanner you should. MealStack is the timing layer. It knows the plate, weighs macros from it, and writes them to Apple Health at the time you ate, so the two live side by side.' },
   { q: 'Does it have streaks?', a: 'Yes, for full days: every meal logged or skipped on purpose. A skip you chose is a decision, not a miss, so there is nothing to fudge. Only good habits earn badges, and nothing is taken away. History still scores the week on what actually landed.' },
   { q: 'How old do I have to be?', a: 'Eighteen. MealStack sets targets, plans cuts and reads your weight, and that is for adults.' },
-  { q: 'Android, iPad, watch?', a: 'iPhone only, iOS 26 and up. No Android, no iPad layout, no watch app, and none planned for 1.0. The Lock Screen, the widgets and the notifications are where the app lives when it is not open.' },
+  // COPY: plan §1.6 and §9, the facts from Logbook's b92 check (2026-10-15 19:26).
+  { q: 'Can I use it with another tracker?', a: 'Yes, without counting anything twice. MealStack asks once whether to write the meals you log to Apple Health (protein, carbohydrates, fat and calories, at the time you ate), and whether to read food and weight from other apps. If you say yes to reading, what another app logged today shows under Today\'s totals as "Logged in other apps. Not added to MealStack\'s totals." It reads totals only, never food names. If your other tracker also writes meals to Apple Health, log each meal in one app, or turn off MealStack\'s "Write the meals you log" switch, so Health doesn\'t count a meal twice.' },
+  { q: 'Android, iPad, watch?', a: 'iPhone only, iOS 26 and up. No Android and no iPad layout. MealStack on Apple Watch is coming soon: your next meal on the watch face, an alert before it, Log it from your wrist. The Lock Screen, the widgets and the notifications are where the app lives when it is not open.' },
   { q: 'Is the code open?', a: 'No. MealStack is a closed app. Your plan is yours: plan files are documented JSON (the MealStack Schema), and they go out and come back in. The name and the marks stay with Mission Built.' },
-  { q: 'When is 1.0?', a: 'When the beta has proven it on phones that are not mine. The date lands on this page before it lands in the store.' },
+  { q: 'When is 1.0?', a: 'Coming soon, planned for January.' },
 ];
 
 /** Tester quotes. Empty until there are real ones; the section does not render while empty. */
@@ -141,7 +142,7 @@ const ld = {
   <main id="main" class="page">
     {/* ---------- BREADCRUMB ---------- */}
     <nav class="breadcrumb" aria-label="Breadcrumb">
-      <a href="/rack">The Rack</a>
+      <a href="/rack">The apps</a>
       <span aria-hidden="true"> / </span>
       <a href="/rack/mealstack">MealStack</a>
       <span aria-hidden="true"> / </span>
@@ -152,7 +153,7 @@ const ld = {
     <section class="hero">
       <p class="eyebrow">
         <span class="dots" aria-hidden="true">▮▮▮</span>
-        <span>An iPhone app from the Rack</span>
+        <span>An iPhone app by Mission Built</span>
         <span class="dots" aria-hidden="true">▮▮▮</span>
       </p>
 
@@ -175,7 +176,6 @@ const ld = {
 
       <div class="hero-ctas">
         <a class="cta" href="#beta">Join the beta →</a>
-        <a class="cta-soft" href="#demo">See how it works ↓</a>
       </div>
     </section>
 
@@ -188,25 +188,6 @@ const ld = {
         </div>
       ))}
     </section>
-
-    {/* ---------- TRY IT: click-through demo ---------- */}
-    <section class="block" id="demo">
-      <p class="section-label">Try it</p>
-      <h2 class="section-h2">The four pillars, in about a minute.</h2>
-      <p class="prose">
-        Real screens from the app, not a video, shot in the iPhone Simulator with the clock set for
-        each step. The tour follows the four pillars: protect the protein, the session, the day and
-        the record, a few screens each. Tap where it's ringed, or let it drive.
-      </p>
-      <DemoEmbed
-        src="/demos/mealstack.html"
-        title="MealStack click-through demo"
-        caption="Click-through demo · real screens from MealStack 0.9.1 · four pillars"
-        mobileHeight={900}
-      />
-    </section>
-
-    <hr class="dashed" />
 
     {/* ---------- WHY ---------- */}
     <section class="block" id="why">
@@ -243,30 +224,6 @@ const ld = {
 
     <hr class="dashed" />
 
-    {/* ---------- THE RULE: live cascade ---------- */}
-    <section class="block" id="rule">
-      <p class="section-label">The rule</p>
-      <h2 class="section-h2">Breakfast was late. Your carb surge shouldn't be.</h2>
-      <p class="prose">
-        Two kinds of meal. The morning meals follow on from the time you actually ate.
-        The carb surge, your pre-workout meal, stays where the session puts it, and so does everything
-        after it. Drag breakfast late and watch which ones move.
-      </p>
-
-      <div class="demo" id="cascade">
-        <div class="demo-top">
-          <span><span class="k">Logged breakfast at</span><br /><span class="val" id="d-m1">7:00 AM</span></span>
-          <span><span class="k">Session</span><br /><span class="val">6:00 PM</span></span>
-        </div>
-        <input type="range" id="d-slider" min="420" max="720" step="15" value="420" aria-label="Breakfast time" />
-        <div class="demo-rows" id="d-rows"></div>
-        <p class="demo-foot" id="d-foot"></p>
-      </div>
-      <p class="note">The morning is meant to finish two hours before the carb surge. When a late breakfast won't allow that, the gaps tighten evenly, rounded to five minutes, and never below two hours; past that point lunch simply lands closer to the carb surge. The carb surge never moves for a late morning, and never past the start of the session: still not eaten when you start training, it's marked "Session started without it" and waits for you to log it or skip it. Move the session itself and everything tied to it moves with it.</p>
-    </section>
-
-    <hr class="dashed" />
-
     {/* ---------- WHAT IT DOES DIFFERENTLY ---------- */}
     <section class="block" id="different">
       <p class="section-label">What it does differently</p>
@@ -289,7 +246,7 @@ const ld = {
     {/* ---------- HOW YOU USE IT ---------- */}
     <section class="block" id="how">
       <p class="section-label">How you use it</p>
-      <h2 class="section-h2">Two questions, then get on with your day.</h2>
+      <h2 class="section-h2">Three steps, then get on with your day.</h2>
 
       <ol class="steps">
         {steps.map((s) => (
@@ -346,8 +303,8 @@ const ld = {
         </div>
         <div class="lic-cell">
           <p class="k">Price</p>
-          <p class="v">Not settled yet. Here is why.</p>
-          <p class="body">Every Stack AI question runs on a server I pay for. I want Stack AI in the app, and I am not willing to lose money keeping it there, so the launch price is an open question: free with Stack AI on an allowance, a one-time price, or Stack AI as the paid part of a free app. The answer lands here before it lands in the store.</p>
+          <p class="v">Pricing coming soon.</p>
+          <p class="body">Every app has a free way in, plus paid plans. Every Stack AI question runs on a server I pay for, so Stack AI is part of what the paid plans cover. The prices land here before they land in the store.</p>
         </div>
         <div class="lic-cell">
           <p class="k">Your data</p>
@@ -373,7 +330,7 @@ const ld = {
           <h3>On TestFlight now, with outside testers</h3>
           {build && <p class="build-line">Newest build: <a class="inline-link" href={releaseUrl(build)}>MealStack {build.data.version}</a> · {when(build.data, true)}</p>}
           <p>MealStack runs my own day, every day, and a small group of outside testers is on it with me. I add testers by hand, in small batches, from the email on your Apple ID. You get an invite from Apple, a link to install, a choice of how to start, and a short list of things I would like you to break.</p>
-          <p>Builds expire every ninety days and you get the next one. The address is used for the invite and nothing else; you can leave from the invite email at any time.</p>
+          <p>Each beta build lasts ninety days, and the next one arrives before it runs out. The address is used for the invite and nothing else; you can leave from the invite email at any time.</p>
 
           <form class="beta-form" id="beta-form" method="post" action="/api/beta" novalidate>
             <label class="field">
@@ -382,14 +339,14 @@ const ld = {
             </label>
             <label class="field">
               <span class="field-k">What do you train for? <em>optional</em></span>
-              <input type="text" name="note" id="beta-note" autocomplete="off" placeholder="powerlifting, a marathon, a wedding, getting off the couch" maxlength="200" />
+              <input type="text" name="note" id="beta-note" autocomplete="off" placeholder="lifting, a race, the couch" maxlength="200" />
             </label>
             <div class="hp" aria-hidden="true"><label>Website<input type="text" name="website" tabindex="-1" autocomplete="off" /></label></div>
             <input type="hidden" name="t" id="beta-t" value="" />
             <input type="hidden" name="page" value="/rack/mealstack" />
             <div class="form-row">
               <button class="cta" type="submit" id="beta-submit">Join the beta →</button>
-              <p class="cta-note" id="beta-status" role="status" aria-live="polite">iPhone only · iOS 26 and up · no account · 18 and over</p>
+              <p class="cta-note" id="beta-status" role="status" aria-live="polite">iPhone only · iOS&nbsp;26 and up · no&nbsp;account · 18 and over</p>
             </div>
           </form>
           <p class="cta-note" id="beta-fallback" hidden>The form is not taking names right now. Email <a href={MAILTO}>support@missionbuilt.io</a> with the address on your Apple ID and I will add you by hand.</p>
@@ -498,81 +455,6 @@ const ld = {
 </BaseLayout>
 
 <script>
-  // ── The cascade rule on fictional data ──
-  // The app's rule, on one training day: the meals before the
-  // carb surge chain off the logged breakfast in three-hour gaps and must finish
-  // two hours before the carb surge; when they can't, the gaps shrink evenly
-  // (rounded to 5 minutes) and never below two hours. The carb surge is pinned
-  // 90 minutes before the session.
-  const SESSION = 18 * 60;
-  const SURGE = SESSION - 90;
-  const FLOOR = 120;
-  const GAP = 180;
-  const slider = document.getElementById('d-slider') as HTMLInputElement | null;
-  const rows = document.getElementById('d-rows');
-  const foot = document.getElementById('d-foot');
-  const m1lab = document.getElementById('d-m1');
-  const names = [
-    { code: 'M1', name: 'Breakfast', sub: 'logged' },
-    { code: 'M2', name: 'Mid-morning', sub: 'moves with you' },
-    { code: 'M3', name: 'Lunch', sub: 'moves with you' },
-    { code: 'M4', name: 'Carb surge', sub: 'stays put · 90 min before the session' },
-  ];
-  const planned = [420, 600, 780, SURGE];
-
-  function fmt(m: number): string {
-    let h = Math.floor(m / 60);
-    const mm = m % 60;
-    const ap = h >= 12 ? 'PM' : 'AM';
-    h = h % 12;
-    if (h === 0) h = 12;
-    return h + ':' + (mm < 10 ? '0' : '') + mm + ' ' + ap;
-  }
-  // Spans the way the app writes them: "1 hr 30 min", "45 min", "3 hr".
-  function span(m: number): string {
-    const h = Math.floor(m / 60);
-    const mm = m % 60;
-    return [h ? h + ' hr' : '', mm ? mm + ' min' : ''].filter(Boolean).join(' ') || '0 min';
-  }
-  function r5(x: number): number { return Math.round(x / 5) * 5; }
-
-  function build(m1: number): void {
-    if (!rows || !foot || !m1lab) return;
-    const ceiling = SURGE - FLOOR;
-    const gap = Math.max(FLOOR, Math.min(GAP, r5((ceiling - m1) / 2)));
-    const t = [m1, m1 + gap, m1 + 2 * gap, SURGE];
-    let html = '';
-    for (let i = 0; i < 4; i++) {
-      const locked = i === 3;
-      const shifted = !locked && i > 0 && t[i] !== planned[i];
-      const sub = i === 0 ? (m1 === planned[0] ? 'logged on time' : 'logged ' + span(m1 - planned[0]) + ' late')
-        : shifted ? 'moves · ' + span(gap) + ' gap' : names[i].sub;
-      html += '<div class="drow' + (locked ? ' locked' : '') + '">'
-        + '<span class="code">' + names[i].code + '</span>'
-        + '<span class="name">' + names[i].name + '<small>' + sub + '</small></span>'
-        + '<span class="time">' + (shifted ? '<s>' + fmt(planned[i]) + '</s>' : '') + fmt(t[i]) + '</span>'
-        + '</div>';
-    }
-    rows.innerHTML = html;
-    m1lab.textContent = fmt(m1);
-    const late = m1 - planned[0];
-    const running = ' Today says: "Running late. The gaps tightened so the carb surge still lands before your session."';
-    if (late === 0) {
-      foot.innerHTML = 'Nothing late. Three-hour gaps as planned. <b>Carb surge at ' + fmt(SURGE) + '.</b>';
-    } else if (gap === GAP) {
-      foot.innerHTML = 'Breakfast ' + span(late) + ' late. The morning moves with it and still fits. <b>The carb surge holds at ' + fmt(SURGE) + '.</b>';
-    } else if (gap > FLOOR) {
-      foot.innerHTML = 'Breakfast ' + span(late) + ' late. The gaps tighten evenly to ' + span(gap) + '.' + running + ' <b>The carb surge holds at ' + fmt(SURGE) + '.</b>';
-    } else {
-      foot.innerHTML = 'At the two-hour floor: lunch is now ' + span(SURGE - t[2]) + ' before the carb surge.' + running + ' <b>The carb surge still holds at ' + fmt(SURGE) + '. The session is what we protect.</b>';
-    }
-  }
-
-  if (slider) {
-    slider.addEventListener('input', () => build(parseInt(slider.value, 10)));
-    build(420);
-  }
-
   // ── Join the beta ──
   // Posts to the Pages Function at /api/beta. Without JS the form still posts
   // and the function answers with a redirect back to this page.
@@ -919,5 +801,76 @@ const ld = {
     .dashed { margin: 36px var(--pad-page-x-mobile) 0; }
     .closer { padding: 36px var(--pad-page-x-mobile); }
     .closer p { font-size: 18px; }
+  }
+
+  /* ============ QA pass 2026-10-16 (Mike 09:41): one centred column, aligned cards, no orphans ============ */
+  .page { --content-max: 1180px; max-width: calc(var(--content-max) + 2 * var(--pad-page-x)); margin-inline: auto; }
+  .block, .install-block { max-width: none; }
+  .faq { max-width: none; }
+  .faq dd { max-width: 70ch; }
+  .faq-item { grid-template-columns: minmax(220px, 1fr) 2fr; }
+  .section-h2 { max-width: 32ch; text-wrap: balance; }
+  td, th { text-wrap: pretty; }
+  /* The marker on the first card only: off, so every card matches. */
+  .feat.mark, .card.mark { background: transparent; }
+  .feat.mark .verdict::before, .card.mark .verdict::before { display: none; }
+  /* Rows of cards share their tracks, so labels, headings and the "Other apps" rule line up. */
+  @supports (grid-template-rows: subgrid) {
+    .cards { grid-auto-rows: auto; }
+    .card { grid-row: span 4; grid-template-rows: subgrid; row-gap: 10px; min-height: 0; }
+  }
+  .card .them, .feat .them { align-self: end; }
+  /* The four ideas: equal columns and padding; two across on a tablet, one on a phone. */
+  .pillars { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .pillars li { padding: 22px 20px; margin-right: 0; border-right: 1px dashed var(--color-rule); border-bottom: 0; }
+  .pillars li:last-child { border-right: none; }
+  .pillars .label { text-wrap: balance; }
+  /* A block that already ends on a rule doesn't get a second one. */
+  .block:has(> :last-child:is(.pillars, .faq, .cards, .feats, .lic, .fine, .steps, .phones)) + .dashed { display: none; }
+  /* Hero: each meta item stays whole; the stat subs sit on their own line. */
+  .testing-tag { flex-wrap: wrap; justify-content: center; row-gap: 6px; }
+  .testing-tag > span { white-space: nowrap; }
+  .stat-value { line-height: 1.2; }
+  .stat-sub { display: block; margin: 4px 0 0; line-height: 1.3; }
+  /* Beta panel: one width for the copy, the form and the status rows. */
+  .status-copy p { max-width: none; }
+  .status-panel { align-items: start; }
+  .field-k em { white-space: nowrap; }
+  @media (max-width: 1099px) {
+    .breadcrumb, .hero, .block, .install-block { padding-left: var(--pad-page-x-mid); padding-right: var(--pad-page-x-mid); }
+    .meta-strip, .dashed { margin-left: var(--pad-page-x-mid); margin-right: var(--pad-page-x-mid); }
+    .lic-cell { border-right: 0; border-bottom: var(--border-thin); }
+    .lic-cell:last-child { border-bottom: 0; }
+  }
+  @media (max-width: 960px) {
+    .pillars { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .pillars li:nth-child(2n) { border-right: none; }
+    .pillars li:nth-child(-n+2) { border-bottom: 1px dashed var(--color-rule); }
+  }
+  @media (max-width: 720px) {
+    .breadcrumb, .hero, .block, .install-block { padding-left: var(--pad-page-x-mobile); padding-right: var(--pad-page-x-mobile); }
+    .meta-strip, .dashed { margin-left: var(--pad-page-x-mobile); margin-right: var(--pad-page-x-mobile); }
+    .faq-item { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 480px) {
+    .pillars { grid-template-columns: 1fr; }
+    .pillars li { border-right: none; border-bottom: 1px dashed var(--color-rule); padding-left: 0; padding-right: 0; }
+    .pillars li:last-child { border-bottom: none; }
+    .eyebrow .dots { display: none; }
+    .breadcrumb { letter-spacing: 0.12em; }
+  }
+
+  /* The drop letter that never got a drop cap: plain, like IronStack's story. */
+  .story p:first-child::first-letter { font-family: inherit; font-weight: inherit; }
+  .vr.honest span:last-child { font-style: normal; }
+  .kit-links { margin-top: 24px; word-spacing: 0.15em; }
+  @media (max-width: 720px) {
+    .vr span:nth-child(n+2) { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0 8px; align-items: baseline; }
+    .related-card { margin-left: 0; }
+  }
+  /* QA recheck 10-16: headings in a row of cards keep two lines' room, so bodies and the
+     "Other apps" rule start level whether a heading takes one line or two. */
+  @media (min-width: 961px) {
+    .feat .verdict, .card .verdict, .step h3 { min-height: 2lh; }
   }
 </style>

@@ -10,6 +10,7 @@
  */
 import { getCollection } from 'astro:content';
 import ToolNoteLayout from '../../../../layouts/ToolNoteLayout.astro';
+import { MISSIONSTACK_ANNOUNCED } from '../../../../data/missionstack-gate.mjs';
 import { longDate, isoDay } from '../../../../data/logs';
 import { byOrder, releaseUrl, releaseSlug, releaseLabel, versionHeads, versionSlug, when, plural, changelogFor, type Release } from '../../../../data/releases';
 
@@ -38,6 +39,7 @@ const label = releaseLabel(d);
 const standfirst = `${when(d)} ${plural(d.changes, 'change')}${titled.length > 1 ? `, grouped by where you'll notice them` : ''}.`;
 ---
 <ToolNoteLayout
+  noindex={!MISSIONSTACK_ANNOUNCED}
   title={`MissionStack ${label} · Release notes · Mission Built`}
   description={`What changed in MissionStack ${label}: ${d.groups.flatMap((g) => g.leads).slice(0, 3).join(' ')}`}
   crumbs={[{ label: 'MissionStack' }, { label: 'Release notes', href: CHANGELOG }, { label }]}

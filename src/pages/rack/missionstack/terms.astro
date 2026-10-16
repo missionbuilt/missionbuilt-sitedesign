@@ -1,0 +1,31 @@
+---
+/**
+ * MissionStack — Terms of Use. /rack/missionstack/terms (#193)
+ *
+ * Adapted from IronStack's (src/data/legal/terms-missionstack.md): no Stack AI and no Social,
+ * the board added (a screen others in the gym can see, the local network). "Draft, not yet in
+ * force" until Mike's lawyer review, like the other two: set DRAFT to false then. Noindex and
+ * out of the sitemap until the MissionStack name is cleared (src/data/missionstack-gate.mjs).
+ */
+import ToolNoteLayout from '../../../layouts/ToolNoteLayout.astro';
+import LegalProse from '../../../components/LegalProse.astro';
+import { Content } from '../../../data/legal/terms-missionstack.md';
+import { MISSIONSTACK_ANNOUNCED } from '../../../data/missionstack-gate.mjs';
+const DRAFT = true;
+---
+<ToolNoteLayout
+  noindex={!MISSIONSTACK_ANNOUNCED}
+  title="Terms of Use · MissionStack · Mission Built"
+  description="The terms for using MissionStack: your plan, the board, training and your health, and Apple's part. Draft, under review."
+  crumbs={[{ label: 'MissionStack', href: '/rack/missionstack' }, { label: 'Terms' }]}
+  eyebrow="MissionStack terms of use"
+  heading="Terms of use"
+  accent="use"
+  standfirst="The rules for using MissionStack, in plain words. Apple's Standard EULA is your licence to the app; these terms cover the rest."
+  back={{ label: 'MissionStack', href: '/rack/missionstack' }}
+  footLinks={[{ label: 'Privacy', href: '/rack/missionstack/privacy' }, { label: 'Support', href: '/rack/support' }, { label: 'Acknowledgements', href: '/rack/acknowledgements' }]}
+>
+  {/* COPY: description, standfirst and the whole terms text are drafts (brief §6). */}
+  <Fragment slot="byline">Mission Built, which is Mike Nichols · Pittsburgh, PA · {DRAFT ? 'Draft, not yet in force' : 'In force'}</Fragment>
+  <LegalProse draft={DRAFT} apps="MissionStack reaches"><Content /></LegalProse>
+</ToolNoteLayout>

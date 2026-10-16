@@ -13,7 +13,7 @@ interface Props {
   /** Alt text for the og:image. */
   ogImageAlt?: string;
   /** Active top-nav link key: 'book' | 'chapters' | 'loadout' | 'rack' | 'logs' | 'about' | 'source' */
-  active?: 'book' | 'chapters' | 'loadout' | 'rack' | 'logs' | 'about' | 'source' | undefined;
+  active?: 'home' | 'book' | 'chapters' | 'loadout' | 'rack' | 'coach' | 'plans' | 'logs' | 'about' | 'source' | undefined;
   /** The page's one address, when it is served at more than one (a path, e.g. '/rack/mealstack/privacy/'). */
   canonical?: string;
   /** Keep the page out of search: no canonical, no og:url (the 404 page). */
@@ -22,12 +22,14 @@ interface Props {
 
 const SITE = 'https://missionbuilt.io';
 
+// The defaults are the brand's (launch preview, plan §9, 2026-10-15): the apps lead. The book's
+// pages pass BOOK_META (src/data/book-meta.ts) to keep the book's title, line and share card.
 const {
-  title = 'Mission Built · A Field Guide for Building Things That Matter',
-  description = "An open-source philosophy forged through reps in the gym and lessons from the field. By Mike Nichols.",
+  title = 'Lifting, meal timing and gym TV apps · Mission Built',
+  description = 'Log every set on iPhone and Apple Watch, time meals around your training, and put the workout on the gym TV. Three apps, launching January 1.',
   ogType = 'website',
-  ogImage = '/og-image.jpg',
-  ogImageAlt = "Mission Built: a field guide for building things that matter, by Mike Nichols. Second edition, revised, 2026.",
+  ogImage = '/images/og-brand.jpg',
+  ogImageAlt = 'Mission Built. Log every set. Time every meal. Put every workout on the big screen. Three apps, launching January 1.',
   canonical,
   noindex = false,
 } = Astro.props;
@@ -67,13 +69,10 @@ const absoluteOgImage = ogImage.startsWith('http') ? ogImage : new URL(ogImage, 
     {/* Theme color — match charcoal bg so mobile chrome blends */}
     <meta name="theme-color" content="#171513" />
 
-    {/* Fonts: Oswald (display), Merriweather (serif body), JetBrains Mono (mono) */}
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=JetBrains+Mono:wght@400;500;600&display=swap"
-      rel="stylesheet"
-    />
+    {/* Fonts: Oswald (display), Merriweather (serif body), JetBrains Mono (mono), self-hosted from
+        /fonts since 2026-10-15 (src/styles/fonts.css, imported by global.css): no visitor's IP goes to
+        Google for a font (privacy review of the launch preview). */}
+    <link rel="preload" href="/fonts/oswald-normal-latin.woff2" as="font" type="font/woff2" crossorigin />
 
     {/* Favicon set: barbell mark — oxblood plates, chalk bar, charcoal canvas.
         The ?v=2 cache-buster forces browsers to re-fetch when the icon changes;

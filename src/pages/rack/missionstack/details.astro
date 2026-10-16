@@ -1,0 +1,180 @@
+---
+/**
+ * MissionStack — the details (/rack/missionstack/details), #193.
+ *
+ * Mirrors IronStack's and MealStack's details pages, minus the comparison table (nothing honest
+ * to compare against). Sections from hq/briefs/site/three-apps-pages.md §5: how the board works,
+ * planning on iPad and Mac, coming soon, questions, your data.
+ *
+ * Every string marked COPY is a draft for Mike's yes. Only what's live (promise 8): one lifter on
+ * the board, no heart rate, no Team lifts (listed only under Coming soon), no sync yet. The typed
+ * lines are ones MissionStack's own tests parse (release/missionstack). Device versions: from the
+ * project's deployment targets (iPadOS and tvOS 26); confirm the Mac line with Chalkboard.
+ *
+ * Noindex and out of the sitemap until the MissionStack name is cleared
+ * (src/data/missionstack-gate.mjs).
+ */
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import SiteFooter from '../../../components/SiteFooter.astro';
+import TopNav from '../../../components/TopNav.astro';
+import { MISSIONSTACK_ANNOUNCED } from '../../../data/missionstack-gate.mjs';
+
+type Item = { title: string; body: string };
+
+// COPY: how the board works
+const board: Item[] = [
+  { title: 'Start on my own', body: 'Open MissionStack on an iPad, a Mac or an Apple TV and choose Start on my own. The board shows a code.' },
+  { title: 'Pair in one scan', body: 'Point your iPhone\'s Camera at the code and tap Pair. The board and your phone talk over your own Wi-Fi, encrypted, and nowhere else. Next time, the board remembers your phone.' },
+  { title: 'What it shows', body: 'The exercise, the set you\'re on ("5 OF 9", "3 OF 3"), the load, the rest clock and your records, big enough to read across the room. You keep logging on your iPhone or Apple Watch; the board only shows.' },
+  { title: 'Voice cues', body: 'The rest clock calls time out loud. On iPad and Apple TV your music dips under the cue; on a Mac the cue plays over it. On Apple TV the Siri Remote pauses the clock.' },
+  { title: 'Stacked', body: 'Finish the workout and the board says Stacked with your time, volume and records.' },
+  { title: 'What it keeps', body: 'Nothing. When the celebration closes, the workout is gone from the board; it\'s saved on your iPhone. To stop a board knowing your phone, choose Forget this iPhone.' },
+];
+
+// COPY: typed lines (each one MissionStack's tests parse)
+const lines = [
+  'front squat 3x5 @7',
+  'bench 3x5 225',
+  'squat 5x5 100kg @7.5',
+  'romanian deadlift 3x8',
+  'bench 3x5 rpe8',
+  'leg press 3x10 1,000',
+];
+
+// COPY: coming soon (from the approved 0.1.0 notes)
+const soon: Item[] = [
+  { title: 'Sync with IronStack', body: 'A week you plan on your iPad or Mac, on your phone at the gym.' },
+  { title: 'Meal planning with MealStack', body: 'Plan your meals beside your training.' },
+  { title: 'Starter programs', body: 'Programs to start from, in Plan.' },
+  { title: 'Team lifts', body: 'More than one lifter on the board.' },
+  { title: 'Stack AI', body: 'The same Stack AI as IronStack and MealStack.' },
+];
+
+// COPY: questions
+const faq: Item[] = [
+  { title: 'Do I need IronStack?', body: 'For the board, yes: you log on IronStack and the board shows it. Planning works on its own.' },
+  { title: 'Which devices?', body: 'iPad with iPadOS 26, a Mac with Apple silicon, and Apple TV with tvOS 26.' },
+  { title: 'Does it sync with my phone?', body: 'Not yet. Sync with IronStack is coming.' },
+  { title: 'Several lifters on one board?', body: 'Not yet. Team lifts are coming.' },
+  { title: 'Android, or a smart TV?', body: 'No. MissionStack is for iPad, Mac and Apple TV.' },
+  { title: 'What does it cost?', body: 'The gym board is free in MissionStack. Every app has a free way in, plus paid plans. Pricing coming soon.' },
+];
+---
+<BaseLayout
+  title="The details · MissionStack · Mission Built"
+  description="How MissionStack's board works, how planning on iPad and Mac works, what's coming, questions and your data."
+  active="rack"
+  noindex={!MISSIONSTACK_ANNOUNCED}
+  ogImage="/images/rack-og.jpg"
+  ogImageAlt="The Rack, by Mission Built."
+>
+  <TopNav active="rack" />
+
+  <main id="main" class="page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/rack">The apps</a><span aria-hidden="true"> / </span><a href="/rack/missionstack">MissionStack</a><span aria-hidden="true"> / </span><span class="here">The details</span>
+    </nav>
+
+    <header class="head">
+      <p class="eyebrow">MissionStack · the details</p>
+      {/* COPY */}
+      <h1 class="h1">The big screen, <span class="accent">built for training.</span></h1>
+      <p class="stand">How the board works, how planning works, what's coming, and what happens to your data.</p>
+    </header>
+
+    <section class="sec" id="board">
+      <p class="label">How the board works</p>
+      <h2 class="h2">Log on your phone. Read it on the board.</h2>
+      <dl class="items">
+        {board.map((b, i) => (
+          <div class="item" id={i === 1 ? 'pair' : undefined}><dt>{b.title}</dt><dd>{b.body}</dd></div>
+        ))}
+      </dl>
+    </section>
+
+    <section class="sec" id="plan">
+      <p class="label">Planning on iPad and Mac</p>
+      <h2 class="h2">Type a line. The sets fill in.</h2>
+      <p class="prose">Type the exercise, sets by reps, then a weight, an effort or both. MissionStack fills in the sets, reps and effort. Drag workouts between days, make a superset, swap a lift, repeat a week. Every change can be undone, and a keyboard makes it faster.</p>
+      <ul class="lines" aria-label="Lines you can type">
+        {lines.map((l) => <li><code>{l}</code></li>)}
+      </ul>
+    </section>
+
+    <section class="sec" id="soon">
+      <p class="label">Coming soon</p>
+      <h2 class="h2">Not in this build yet.</h2>
+      <dl class="items">
+        {soon.map((b) => <div class="item"><dt>{b.title}</dt><dd>{b.body}</dd></div>)}
+      </dl>
+    </section>
+
+    <section class="sec" id="faq">
+      <p class="label">Questions</p>
+      <h2 class="h2">The short answers.</h2>
+      <dl class="items">
+        {faq.map((b) => <div class="item"><dt>{b.title}</dt><dd>{b.body}</dd></div>)}
+      </dl>
+    </section>
+
+    <section class="sec" id="data">
+      <p class="label">Your data</p>
+      <h2 class="h2">No account. Nothing sent to us.</h2>
+      <p class="prose">MissionStack has no sign-up and sends nothing to Mission Built. Your plan stays on your iPad or Mac; export it and import it in the Mission Built Schema, and Delete all data clears everything, the phones the board remembers included. <a class="inline-link" href="/rack/missionstack/privacy">The privacy page</a> has every detail.</p>
+    </section>
+
+    <section class="closer">
+      <a class="cta" href="/rack/missionstack#beta">Join the beta →</a>
+    </section>
+  </main>
+  <SiteFooter links={[{ label: 'MissionStack', href: '/rack/missionstack' }, { label: 'Release notes', href: '/rack/missionstack/changelog' }, { label: 'Privacy', href: '/rack/missionstack/privacy' }, { label: 'Terms', href: '/rack/missionstack/terms' }, { label: 'Support', href: '/rack/support' }]} />
+</BaseLayout>
+
+<style>
+  .breadcrumb { padding: 18px var(--pad-page-x) 0; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-faint); }
+  .breadcrumb a { color: var(--color-chalk-dim); }
+  .breadcrumb a:hover { color: var(--color-chalk); }
+  .head { padding: 36px var(--pad-page-x) 0; max-width: 900px; }
+  .eyebrow { margin: 0 0 16px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.24em; text-transform: uppercase; color: var(--color-chalk-dim); }
+  .h1 { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(36px, 5.4vw, 64px); line-height: 1; letter-spacing: -0.01em; text-transform: uppercase; color: var(--color-chalk); }
+  .h1 .accent { color: var(--color-blood-bright); }
+  .stand { margin: 18px 0 0; max-width: 60ch; font-family: var(--font-serif); font-size: 18px; line-height: 1.6; color: var(--color-chalk-dim); }
+  .sec { padding: 64px var(--pad-page-x) 0; }
+  .label { margin: 0 0 12px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.24em; text-transform: uppercase; color: var(--color-blood-text); }
+  .h2 { margin: 0 0 24px; max-width: 26ch; font-family: var(--font-display); font-weight: 600; font-size: clamp(26px, 3.2vw, 36px); line-height: 1.05; text-transform: uppercase; color: var(--color-chalk); }
+  .items { margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: var(--border-thin); }
+  .item { min-width: 0; padding: 18px 24px 18px 0; border-bottom: var(--border-thin); }
+  .item:nth-child(odd) { border-right: 1px dashed var(--color-rule); }
+  .item:nth-child(even) { padding-left: 24px; padding-right: 0; }
+  .item dt { margin: 0 0 6px; font-family: var(--font-display); font-weight: 500; font-size: 20px; line-height: 1.1; text-transform: uppercase; color: var(--color-chalk); }
+  .item dd { margin: 0; font-family: var(--font-serif); font-size: 15px; line-height: 1.6; color: var(--color-chalk-dim); }
+  .prose { margin: 0; max-width: 68ch; font-family: var(--font-serif); font-size: 16px; line-height: 1.65; color: var(--color-chalk-dim); }
+  .inline-link { color: var(--color-chalk); border-bottom: 1px solid var(--color-chalk-ghost); }
+  .inline-link:hover { border-bottom-color: var(--color-chalk); }
+  /* Six typed lines as an even grid, never one chip alone on a row (QA 10-16). */
+  .lines { list-style: none; margin: 20px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; max-width: 760px; }
+  .lines code { width: 100%; }
+  @media (max-width: 720px) { .lines { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .lines code { display: inline-block; padding: 8px 12px; background: var(--color-panel); border: var(--border-thin); font-family: var(--font-mono); font-size: 14px; color: var(--color-chalk); overflow-wrap: anywhere; }
+  .closer { margin-top: 64px; padding: 44px var(--pad-page-x); border-top: var(--border-thin); text-align: center; }
+  .cta { display: inline-flex; padding: 14px 22px; background: var(--color-blood); color: var(--color-chalk); font-family: var(--font-display); font-weight: 600; font-size: 16px; letter-spacing: 0.04em; text-transform: uppercase; transition: background 120ms ease-out; }
+  .cta:hover { background: var(--color-blood-bright); }
+
+  @media (max-width: 1099px) {
+    .breadcrumb, .head, .sec, .closer { padding-left: var(--pad-page-x-mid); padding-right: var(--pad-page-x-mid); }
+  }
+  @media (max-width: 720px) {
+    .breadcrumb, .head, .sec, .closer { padding-left: var(--pad-page-x-mobile); padding-right: var(--pad-page-x-mobile); }
+    .items { grid-template-columns: minmax(0, 1fr); }
+    .item, .item:nth-child(even) { padding: 16px 0; border-right: none; }
+    .item:nth-child(odd) { border-right: none; }
+    .sec { padding-top: 48px; }
+    .stand { font-size: 17px; }
+  }
+
+  /* QA pass 2026-10-16: one centred column like the other details pages; no orphan in a two-column grid. */
+  .page { max-width: calc(1180px + 2 * var(--pad-page-x)); margin-inline: auto; }
+  .items > :last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .h2 { text-wrap: balance; }
+  @media (max-width: 480px) { .breadcrumb { letter-spacing: 0.1em; } }
+</style>

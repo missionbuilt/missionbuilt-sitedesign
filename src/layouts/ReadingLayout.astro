@@ -1,4 +1,5 @@
 ---
+import { BOOK_META } from '../data/book-meta';
 /**
  * ReadingLayout — the two-column reading experience shell.
  *
@@ -56,7 +57,7 @@ const {
 const chapterLabel = kicker ?? `Chapter ${chapterN}`;
 
 ---
-<BaseLayout
+<BaseLayout ogImage={BOOK_META.ogImage} ogImageAlt={BOOK_META.ogImageAlt}
   title={`§${sectionN} ${sectionTitle} · Mission Built`}
   description={`Chapter ${chapterN}: ${chapterTitle} · ${sectionTitle}`}
   ogType="book"

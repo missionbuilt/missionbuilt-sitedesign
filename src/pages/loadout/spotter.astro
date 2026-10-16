@@ -1,4 +1,5 @@
 ---
+import { BOOK_META } from '../../data/book-meta';
 /**
  * The Spotter — standalone page.
  *
@@ -80,7 +81,7 @@ const legend: { label: string; pips: Pip[]; copy: string }[] = [
   { label: 'No-lift',   pips: ['r','r','r'], copy: 'The area needs work. The worksheet keeps it open until you close it.' },
 ];
 ---
-<BaseLayout
+<BaseLayout ogImage={BOOK_META.ogImage} ogImageAlt={BOOK_META.ogImageAlt}
   title="The Spotter · The Loadout · Mission Built"
   description="A second pair of eyes on your product epic, from blank page to final review. Open-source, MIT-licensed, MCP-compatible."
   active="loadout"

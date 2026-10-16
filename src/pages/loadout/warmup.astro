@@ -1,4 +1,5 @@
 ---
+import { BOOK_META } from '../../data/book-meta';
 /**
  * The Warmup — standalone page.
  *
@@ -90,7 +91,7 @@ const safetyVerdicts: SafetyVerdict[] = [
   },
 ];
 ---
-<BaseLayout
+<BaseLayout ogImage={BOOK_META.ogImage} ogImageAlt={BOOK_META.ogImageAlt}
   title="The Warmup · The Loadout · Mission Built"
   description="A daily intelligence brief for your first coffee. Know what moved before you open your inbox. Open-source, MIT-licensed, MCP-compatible."
   active="loadout"

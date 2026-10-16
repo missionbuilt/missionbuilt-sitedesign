@@ -37,7 +37,7 @@ const stats = [
   { key: 'Runs on',           value: 'iPhone',  sub: '+ Apple Watch · iOS 26 and up', army: false },
   { key: 'From any app',      value: 'Bring it', sub: 'supersets, prep sets',     army: false },
   { key: 'Account to log',    value: 'None',    sub: 'Social is optional',        army: false },
-  { key: 'During the beta',   value: 'Free',    sub: 'Stack AI included',            army: true  },
+  { key: 'Logging',           value: 'One tap', sub: 'Logging in IronStack is free.',          army: true  },
 ];
 
 /** Real screens, from Mike's own log; Social from the app's signed-out sample feed. */
@@ -89,10 +89,10 @@ const versus: Versus[] = [
   { k: 'Logging a set', them: 'Tap the numbers in, or check off last time\'s.', us: 'The same, plus type 225x8 in one field, or say it.' },
   { k: 'Rest', them: 'A timer that buzzes.', us: 'Starts itself, calls "Thirty seconds", "Five seconds" and "Get to work" in your earbuds, and fills the screen at the end.' },
   { k: 'A new exercise', them: 'Make a custom one first; the free tier allows seven.', us: 'Say or type any name. It is kept exactly as you said it. Match it later, or never.' },
-  { k: 'What is free', them: 'Every workout, but four routines and three months of graphs.', us: 'Every workout you log, every saved workout, every chart, free in the beta. The launch price is not set; the fine print says why.' },
+  { k: 'What is free', them: 'Every workout, but four routines and three months of graphs.', us: 'Logging in IronStack is free. Every app has a free way in, plus paid plans. Pricing coming soon.' },
   { k: 'Social', them: 'Followers, strangers, likes and comments.', us: 'Only partners you invite. Support, no comments, on purpose.' },
-  { k: 'Coaching', them: 'Hevy Coach, a separate app for trainers; clients log in Hevy.', us: 'Coach mode, inside IronStack: the plan comes in as a suggestion, workouts go out, every change from the plan is marked. In the beta, a few coaches and their lifters at a time.' },
-  { k: 'Best at', them: 'Android and exercise videos.', us: 'Neither yet. Keep the other app for them; nothing here needs you to quit it.', honest: true },
+  { k: 'Coaching', them: 'Hevy Coach, a separate app for trainers; clients log in Hevy.', us: 'Coach mode, inside IronStack: the plan comes in as a suggestion, workouts go out, every change from the plan is marked. Open to everyone in the beta.' },
+  { k: 'Best at', them: 'Android and exercise videos.', us: 'No Android. Demos are testing on 4 lifts now, with every lift by January. Keep the other app if you like; nothing here needs you to quit it.', honest: true },
 ];
 
 type Faq = { q: string; a: string; link?: { label: string; href: string } };
@@ -100,19 +100,19 @@ const faqs: Faq[] = [
   { q: 'Do I have to quit Hevy or Strong?', a: 'No. IronStack reads a file you export; it never signs in there or changes anything. Run both for a couple of weeks. If you go back, your app is exactly as you left it. One honest limit: IronStack exports your log as a documented JSON file, not a Hevy or Strong CSV, so workouts you log here will not load into them on their own. If an unbroken Hevy history matters to you, log in both while you try it.' },
   { q: 'What comes over from Hevy?', a: 'Workouts and routines (routines come in as saved workouts), with supersets paired the way Hevy paired them, warm-ups as prep sets and drop sets tagged as what they were, and your custom exercise names kept exactly. The preview shows what it found, and any names it wants you to check, before anything is saved. In Hevy: Settings, Export & Import Data.' },
   { q: 'What is TestFlight?', a: 'Apple\'s own app for beta testing. I add your Apple ID email, Apple sends you an invite, and TestFlight installs IronStack like an App Store app. Updates arrive through it until 1.0 lands in the store.' },
-  { q: 'Is it free?', a: 'During the TestFlight beta, yes. Stack AI runs on a monthly allowance per phone, because every Stack AI question runs on a server I pay for. The launch price is not set, and it lands on this page before it lands in the store.' },
+  { q: 'Is it free?', a: 'Logging in IronStack is free. Every app has a free way in, plus paid plans. Stack AI runs on a monthly allowance, because every Stack AI question runs on a server I pay for. Pricing coming soon: it lands on this page before it lands in the store.' },
   { q: 'Does it need an account?', a: 'Not to log. Everything you log is a file on your phone. Social is the one part that needs you to be someone, and it uses Sign in with Apple without asking for your name or email. Skip Social and there is nothing to sign up for.' },
   { q: 'What leaves my phone?', a: 'Nothing goes to Anthropic until you turn Stack AI on, and then only what you send it, when you ask. The cards you choose to share with your spotters, if you use Social. Nothing else unless you switch it on. The privacy page says exactly what, where, and for how long.' },
   { q: 'Can I bring my history?', a: 'Yes. Hevy and Strong exports bring history and routines; JuggernautAI and any spreadsheet you kept bring history, with a preview to match the columns. Imported workouts count in your records, Insights and "last time", are labelled as imported, and never go on a card. Bringing the same file twice adds nothing.' },
   { q: 'Pounds or kilos?', a: 'Both. Pick one for the app, and switch any single exercise the other way, because the dumbbells at a hotel gym do not care where you live. The keypad shows the other unit under every number, and one tap types in it.' },
   { q: 'Streaks and badges?', a: 'A weekly streak on Insights and badges that take years to finish: Road Warrior for training on the road, Dawn patrol, a thousand feet of carries, In their corner for supporting others. Earned, never shamed. Miss a week and nothing scolds you.' },
   { q: 'Is Stack AI a doctor?', a: 'No. It is an AI, and it can be wrong. It answers from your own sets, never names a weight above a ceiling it can show you, and points any question about pain or injury to a qualified person. Nothing it suggests changes your log until you tap.' },
-  { q: 'Apple Watch, Android, iPad?', a: 'Apple Watch, yes. The watch app comes with the iPhone app (watchOS 26 and up), and it is a remote for the workout on your phone: start on either one, and both show the same set. The watch shows the set you are on and the clock, a swipe apart: tap the weight, reps or RPE and turn the Crown to change it, tap Log set to log, and tap the clock to pause the rest. A timed set runs its timer there too, and after the last set you finish from your wrist. The whole workout lands in Health as one, with heart rate. Keep your phone nearby, in a bag or on the bench; if the watch loses it, the clock keeps running and what you logged is sent when it reconnects. No Android and no iPad layout yet.' },
-  { q: 'What is Coach mode?', a: 'Training with a real person who also uses IronStack. Your coach asks by your handle; nothing is shared until you say yes, and you choose what they see: every set always, your notes unless you turn them off, and sleep, bodyweight and MealStack fueling only if you switch them on. Their plans arrive as suggestions. Either of you can end it, and their copy goes with it. In the beta it opens to a few coaches and their lifters at a time; if you train with a coach, say so when you sign up.', link: { label: 'What Coach mode shares →', href: '/rack/ironstack/privacy#coach-mode' } },
+  { q: 'Apple Watch, Android, iPad?', a: 'Apple Watch, yes. The watch app comes with the iPhone app (watchOS 26 and up), and it is a remote for the workout on your phone: start on either one, and both show the same set. The watch shows the set you are on and the clock, a swipe apart: tap the weight, reps or RPE and turn the Crown to change it, tap Log set to log, and tap the clock to pause the rest. A timed set runs its timer there too, and after the last set you finish from your wrist. The whole workout lands in Health as one, with heart rate. Keep your phone nearby, in a bag or on the bench; if the watch loses it, the clock keeps running and what you logged is sent when it reconnects. Coming soon: the watch runs the whole workout even when your phone is out of range. No Android and no iPad layout yet.' },
+  { q: 'What is Coach mode?', a: 'Training with a real person who also uses IronStack. Your coach invites you with a link or a code; nothing is shared until you say yes, and you choose what they see: every set always, your notes unless you turn them off, and sleep, bodyweight and MealStack fueling only if you switch them on. Their plans arrive as suggestions. Either of you can end it, and their copy goes with it. Coach mode is open to everyone in the beta; if you train with a coach, say so when you sign up.', link: { label: 'What Coach mode shares →', href: '/rack/ironstack/privacy#coach-mode' } },
   { q: 'Is Stack AI my coach?', a: 'No. Coach means a person. Stack AI is the AI: it picks weights from your own sets under a ceiling, writes down a program you already have, and builds a workout or a program when you ask. On a coach\'s plan, a new program is only ever a suggestion for your coach.' },
   { q: 'How old do I have to be?', a: 'Eighteen, the same as MealStack. IronStack, Stack AI and Social are for adults.' },
   { q: 'Is the code open?', a: 'No. IronStack is a closed app. Your data is open: one tap exports everything in the Mission Built Schema, and it imports back. The IronStack name and marks stay with Mission Built.' },
-  { q: 'When is 1.0?', a: 'When a fresh install has been proven on phones that are not mine, and two lifters who are not me have used Social against each other. The date lands on this page before it lands in the store.' },
+  { q: 'When is 1.0?', a: 'Coming soon, planned for January.' },
 ];
 
 const title = 'IronStack, the details: log fast, see progress, a coach in your corner · Mission Built';
@@ -147,7 +147,7 @@ const ld = {
 
   <main id="main" class="page">
     <nav class="breadcrumb" aria-label="Breadcrumb">
-      <a href="/rack">The Rack</a>
+      <a href="/rack">The apps</a>
       <span aria-hidden="true"> / </span>
       <a href="/rack/ironstack">IronStack</a>
       <span aria-hidden="true"> / </span>
@@ -158,7 +158,7 @@ const ld = {
     <section class="hero">
       <p class="eyebrow">
         <span class="dots" aria-hidden="true">▮▮▮</span>
-        <span>An iPhone app from the Rack</span>
+        <span>An iPhone app by Mission Built</span>
         <span class="dots" aria-hidden="true">▮▮▮</span>
       </p>
       <h1 class="display"><span>IronStack</span><span class="dot">.</span></h1>
@@ -177,7 +177,7 @@ const ld = {
         <a class="cta" href="#beta">Join the beta →</a>
         <a class="cta-soft" href="#from-hevy">Coming from Hevy or Strong? ↓</a>
       </div>
-      <p class="hero-note">Free during the beta · Keep the app you use now · Your whole log exports any time</p>
+      <p class="hero-note">Logging in IronStack is free · Keep the app you use now · Your whole log exports any time</p>
     </section>
 
     <section class="meta-strip" aria-label="IronStack at a glance">
@@ -237,7 +237,6 @@ const ld = {
           </figure>
         ))}
       </div>}
-      {SHOW_APP_SCREENS && <p class="note">Screens from the October 3 build of IronStack 0.1.1 in the iPhone Simulator, loaded with my own training log. The Social screen is the sample feed the app shows before you sign in.</p>}
     </section>
 
     <hr class="dashed" />
@@ -256,39 +255,6 @@ const ld = {
         <li><span class="num">03</span><span class="label">You against you</span><span class="say">Every number is measured against your own log. No leaderboards, no strangers, no one else's PR.</span></li>
         <li><span class="num">04</span><span class="label">Lift each other up</span><span class="say">Only the people you invite. Cards carry no comments, and a name you type is checked before it goes. The one thing you can give is support.</span></li>
       </ol>
-    </section>
-
-    <hr class="dashed" />
-
-    {/* ---------- TRY IT: voice card + clock ---------- */}
-    <section class="block" id="try">
-      <p class="section-label">Try it</p>
-      <h2 class="section-h2">Say it the way you would say it to a partner.</h2>
-      <p class="prose">Voice is optional; typing the same words works too. These are the examples on the app's own voice card. Tap one to see what it writes down. Then start a rest and watch the end of it.</p>
-      <div class="try">
-        <div class="voice" id="voice">
-          <p class="k">You say</p>
-          <div class="chips" role="group" aria-label="Voice examples">
-            <button type="button" class="chip on" data-said="two twenty five for eight at seven" data-parse="225x8 @7" data-means="225 lb for 8 reps at RPE 7, on the lift you are doing.">"two twenty five for eight at seven"</button>
-            <button type="button" class="chip" data-said="same again" data-parse="225x8 @7" data-means="The same set again. The rest clock restarts.">"same again"</button>
-            <button type="button" class="chip" data-said="four oh five for three with two in the tank" data-parse="405x3 @8" data-means="Two reps in the tank is RPE 8. &quot;Oh&quot; is zero.">"four oh five for three with two in the tank"</button>
-            <button type="button" class="chip" data-said="three fifteen for three with chains" data-parse="315x3 +chains" data-means="The chains ride on the set, so it never counts against a straight-bar best.">"three fifteen for three with chains"</button>
-            <button type="button" class="chip" data-said="switch to hack squat" data-parse="→ Hack Squat" data-means="What you log next goes there.">"switch to hack squat"</button>
-            <button type="button" class="chip" data-said="note, lower back aware" data-parse="note · lower back aware" data-means="Kept in your own words, on this lift.">"note, lower back aware"</button>
-          </div>
-          <p class="k">IronStack writes</p>
-          <p class="parse" id="v-parse" aria-live="polite">225x8 @7</p>
-          <p class="means" id="v-means">225 lb for 8 reps at RPE 7, on the lift you are doing.</p>
-        </div>
-        <div class="clockdemo" id="clockdemo">
-          <p class="k">Rest</p>
-          <p class="cd-time" id="cd-time" aria-live="off">0:20</p>
-          <div class="cd-bar"><i id="cd-bar"></i></div>
-          <p class="cd-note" id="cd-note">Twenty seconds here; three minutes in the gym. Watch the last ten.</p>
-          <button type="button" class="cta small" id="cd-go">Start rest</button>
-        </div>
-      </div>
-      <p class="note">Speech becomes text on the phone, offline, and only while you hold the button. Weight comes before reps, the way lifters say it; RPE is how hard it was on a scale to 10, and the app explains it wherever you rate a set. The rest clock is the length your program asked for. The app never records what you actually rested, because it does not know.</p>
     </section>
 
     <hr class="dashed" />
@@ -340,8 +306,8 @@ const ld = {
         </div>
         <div class="lic-cell">
           <p class="k">Price</p>
-          <p class="v">Not settled yet. Here is why.</p>
-          <p class="body">Every Stack AI question runs on a server I pay for. I want Stack AI in the app and I am not willing to lose money keeping it there, so the launch price is open: free with Stack AI on an allowance, a one-time price, or Stack AI as the paid part of a free app. What is settled: logging, the clock, your whole history and Social will not be what you pay for.</p>
+          <p class="v">Pricing coming soon.</p>
+          <p class="body">Logging in IronStack is free. Every app has a free way in, plus paid plans. Every Stack AI question runs on a server I pay for, so Stack AI is where the paid plans come in. The prices land on this page before they land in the store.</p>
         </div>
         <div class="lic-cell" id="your-data">
           <p class="k">Your data</p>
@@ -382,7 +348,7 @@ const ld = {
             <input type="hidden" name="page" value="/rack/ironstack" />
             <div class="form-row">
               <button class="cta" type="submit" id="beta-submit">Join the beta →</button>
-              <p class="cta-note" id="beta-status" role="status" aria-live="polite">Free during the beta · iPhone, iOS 26 and up · 18 and over · keep your app</p>
+              <p class="cta-note" id="beta-status" role="status" aria-live="polite">Private beta · iPhone, iOS 26 and up · 18 and over · keep your app</p>
             </div>
           </form>
           <p class="cta-note" id="beta-fallback" hidden>The form is not taking names right now. Email <a href={MAILTO}>support@missionbuilt.io</a> with the address on your Apple ID and I will add you by hand.</p>
@@ -474,53 +440,6 @@ const ld = {
 </BaseLayout>
 
 <script>
-  // ── The voice card: the app's own examples ──
-  const chips = document.querySelectorAll<HTMLButtonElement>('#voice .chip');
-  const vParse = document.getElementById('v-parse');
-  const vMeans = document.getElementById('v-means');
-  chips.forEach((c) => c.addEventListener('click', () => {
-    chips.forEach((x) => x.classList.toggle('on', x === c));
-    if (vParse) vParse.textContent = c.dataset.parse || '';
-    if (vMeans) vMeans.textContent = c.dataset.means || '';
-  }));
-
-  // ── The rest clock: the app's stages ──
-  // 10 to 4 seconds left: oxblood numerals and a wash. 3 to 1: solid panel, beating.
-  const LEN = 20;
-  const box = document.getElementById('clockdemo');
-  const tEl = document.getElementById('cd-time');
-  const bar = document.getElementById('cd-bar') as HTMLElement | null;
-  const note = document.getElementById('cd-note');
-  const go = document.getElementById('cd-go') as HTMLButtonElement | null;
-  let timer: number | undefined;
-  function show(left: number): void {
-    if (!box || !tEl || !bar) return;
-    tEl.textContent = '0:' + String(left).padStart(2, '0');
-    bar.style.width = ((LEN - left) / LEN * 100) + '%';
-    box.classList.toggle('closing', left <= 10 && left > 3);
-    box.classList.toggle('final', left <= 3 && left > 0);
-  }
-  if (go) go.addEventListener('click', () => {
-    if (timer) window.clearInterval(timer);
-    let left = LEN;
-    show(left);
-    if (note) note.textContent = 'Rest started itself when the set was logged.';
-    go.textContent = 'Restart';
-    timer = window.setInterval(() => {
-      left -= 1;
-      show(Math.max(left, 0));
-      if (left === 10 && note) note.textContent = 'Ten seconds. In the gym, your earbuds heard "Thirty seconds" twenty seconds ago.';
-      if (left === 3 && note) note.textContent = 'Three. At zero it says "Get to work".';
-      if (left <= 0) {
-        window.clearInterval(timer);
-        timer = undefined;
-        if (tEl) tEl.textContent = 'Go';
-        box?.classList.remove('closing', 'final');
-        if (note) note.textContent = 'Next set: Bench Press 205x5. Say it when it is done.';
-      }
-    }, 1000);
-  });
-
   // ── Join the beta (same endpoint and behaviour as MealStack's form) ──
   const form = document.getElementById('beta-form') as HTMLFormElement | null;
   const status = document.getElementById('beta-status');
@@ -804,5 +723,79 @@ const ld = {
     .closer { padding: 36px var(--pad-page-x-mobile); }
     .parse { font-size: 28px; }
     .cd-time { font-size: 72px; }
+  }
+
+  /* ============ QA pass 2026-10-16 (Mike 09:41): one centred column, aligned cards, no orphans ============ */
+  .page { --content-max: 1180px; max-width: calc(var(--content-max) + 2 * var(--pad-page-x)); margin-inline: auto; }
+  .block, .install-block { max-width: none; }
+  .faq { max-width: none; }
+  .faq dd { max-width: 70ch; }
+  .faq-item { grid-template-columns: minmax(220px, 1fr) 2fr; }
+  .section-h2 { max-width: 32ch; text-wrap: balance; }
+  td, th { text-wrap: pretty; }
+  /* The marker on the first card only: off, so every card matches. */
+  .feat.mark, .card.mark { background: transparent; }
+  .feat.mark .verdict::before, .card.mark .verdict::before { display: none; }
+  /* Rows of cards share their tracks, so labels, headings and the "Other apps" rule line up. */
+  @supports (grid-template-rows: subgrid) {
+    .cards { grid-auto-rows: auto; }
+    .card { grid-row: span 4; grid-template-rows: subgrid; row-gap: 10px; min-height: 0; }
+  }
+  .card .them, .feat .them { align-self: end; }
+  /* The four ideas: equal columns and padding; two across on a tablet, one on a phone. */
+  .pillars { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .pillars li { padding: 22px 20px; margin-right: 0; border-right: 1px dashed var(--color-rule); border-bottom: 0; }
+  .pillars li:last-child { border-right: none; }
+  .pillars .label { text-wrap: balance; }
+  /* A block that already ends on a rule doesn't get a second one. */
+  .block:has(> :last-child:is(.pillars, .faq, .cards, .feats, .lic, .fine, .steps, .phones)) + .dashed { display: none; }
+  /* Hero: each meta item stays whole; the stat subs sit on their own line. */
+  .testing-tag { flex-wrap: wrap; justify-content: center; row-gap: 6px; }
+  .testing-tag > span { white-space: nowrap; }
+  .stat-value { line-height: 1.2; }
+  .stat-sub { display: block; margin: 4px 0 0; line-height: 1.3; }
+  /* Beta panel: one width for the copy, the form and the status rows. */
+  .status-copy p { max-width: none; }
+  .status-panel { align-items: start; }
+  .field-k em { white-space: nowrap; }
+  @media (max-width: 1099px) {
+    .breadcrumb, .hero, .block, .install-block { padding-left: var(--pad-page-x-mid); padding-right: var(--pad-page-x-mid); }
+    .meta-strip, .dashed { margin-left: var(--pad-page-x-mid); margin-right: var(--pad-page-x-mid); }
+    .lic-cell { border-right: 0; border-bottom: var(--border-thin); }
+    .lic-cell:last-child { border-bottom: 0; }
+  }
+  @media (max-width: 960px) {
+    .pillars { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .pillars li:nth-child(2n) { border-right: none; }
+    .pillars li:nth-child(-n+2) { border-bottom: 1px dashed var(--color-rule); }
+  }
+  @media (max-width: 720px) {
+    .breadcrumb, .hero, .block, .install-block { padding-left: var(--pad-page-x-mobile); padding-right: var(--pad-page-x-mobile); }
+    .meta-strip, .dashed { margin-left: var(--pad-page-x-mobile); margin-right: var(--pad-page-x-mobile); }
+    .faq-item { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 480px) {
+    .pillars { grid-template-columns: 1fr; }
+    .pillars li { border-right: none; border-bottom: 1px dashed var(--color-rule); padding-left: 0; padding-right: 0; }
+    .pillars li:last-child { border-bottom: none; }
+    .eyebrow .dots { display: none; }
+    .breadcrumb { letter-spacing: 0.12em; }
+  }
+
+  @supports (grid-template-rows: subgrid) {
+    .feats { grid-auto-rows: auto; }
+    .feat { grid-row: span 5; grid-template-rows: subgrid; row-gap: 0; }
+    .feat-phone { margin-bottom: 20px; }
+    .feat-body { grid-row: span 4; grid-template-rows: subgrid; row-gap: 10px; }
+  }
+  /* More of the app: the strip runs to the screen edges so the next card reads as a peek, with a fade. */
+  .phones { margin-inline: calc(-1 * var(--pad-page-x)); padding-inline: var(--pad-page-x); scroll-padding-inline: var(--pad-page-x);
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 64px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 64px), transparent); }
+  @media (max-width: 1099px) { .phones { margin-inline: calc(-1 * var(--pad-page-x-mid)); padding-inline: var(--pad-page-x-mid); scroll-padding-inline: var(--pad-page-x-mid); } }
+  @media (max-width: 720px) { .phones { margin-inline: calc(-1 * var(--pad-page-x-mobile)); padding-inline: var(--pad-page-x-mobile); scroll-padding-inline: var(--pad-page-x-mobile); } }
+  /* QA recheck 10-16: headings in a row of cards keep two lines' room, so bodies and the
+     "Other apps" rule start level whether a heading takes one line or two. */
+  @media (min-width: 961px) {
+    .feat .verdict, .card .verdict, .step h3 { min-height: 2lh; }
   }
 </style>

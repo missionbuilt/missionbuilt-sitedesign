@@ -33,6 +33,7 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import SiteFooter from '../../../components/SiteFooter.astro';
 import TopNav from '../../../components/TopNav.astro';
+import { MISSIONSTACK_ANNOUNCED } from '../../../data/missionstack-gate.mjs';
 
 const DRAFT = false;
 const EFFECTIVE = 'October 15, 2026';
@@ -58,7 +59,7 @@ const keeps: Keep[] = [
   title="Privacy · MissionStack · Mission Built"
   description="What MissionStack keeps on your iPad or Mac, what the board shares on your Wi-Fi, and how to make it all go away."
   active="rack"
-  noindex
+  noindex={!MISSIONSTACK_ANNOUNCED}
 >
   <TopNav active="rack" />
 

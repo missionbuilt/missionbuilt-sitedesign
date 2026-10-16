@@ -1,0 +1,222 @@
+---
+/**
+ * /first: the launch ad's QR page (#194). A fixed path, forever: the ad's QR and end card point here.
+ *
+ * One email field, plus two things the person chooses: their name or handle on the founders page
+ * (opt-in), and, silently, which link brought them (?via=li, ?via=poster; Mike 2026-10-15 19:06).
+ * It posts to our own Pages Function (functions/api/first.js), which hands it to Buttondown
+ * server-side; no third-party script or pixel loads on this page, and the fonts are self-hosted.
+ * Words: hq/briefs/site/site-launch-preview-plan.md §9 and Mike's 19:06 answers; drafts for
+ * Mike's yes (every line marked COPY).
+ *
+ * Gates (Mike):
+ *  - LIVE stays false until Mike's go: the page is noindex, out of the sitemap (astro.config.mjs),
+ *    and not linked from the nav. Turning it on is one line here and one in the config.
+ *  - Until the BUTTONDOWN_API_KEY secret is set, the function answers "closed", nothing is sent or
+ *    stored, and the page says "The list opens soon. Want in now? Join the beta →" (plan §12: no
+ *    post to the beta form, whose store keeps addresses with no expiry).
+ *  - MissionStack is named only once MISSIONSTACK_ANNOUNCED (src/data/missionstack-gate.mjs).
+ *
+ * No prices and no founding price (Mike 10-15 18:41; 19:06 allows only "Every app has a free way
+ * in, plus paid plans").
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TopNav from '../components/TopNav.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import { MISSIONSTACK_ANNOUNCED } from '../data/missionstack-gate.mjs';
+
+const LIVE = false;
+
+// COPY: the three apps, each in its card's own promise (/rack). Before the name clears, the third
+// is the gym board, unnamed and unlinked.
+const apps = [
+  { name: 'IronStack', line: 'Log fast. See progress.', href: '/rack/ironstack' },
+  { name: 'MealStack', line: 'Your tracker says what you ate. This says when.', href: '/rack/mealstack' },
+  MISSIONSTACK_ANNOUNCED
+    ? { name: 'MissionStack', line: 'Your workout on the big screen. Live in the gym.', href: '/rack/missionstack' }
+    : { name: 'The gym board', line: 'Your workout on the big screen. Live in the gym.', href: '' },
+];
+
+// COPY: the short pre-launch FAQ (plan §9).
+const faq = [
+  { q: 'What is the beta?', a: 'The apps run in TestFlight, Apple\'s app for trying apps before they reach the App Store. Join from any app\'s page and we send the invite to the email you give there, so use the one on your Apple ID.' },
+  { q: 'When can anyone get them?', a: 'January 1, on the App Store. You get the link in mid-December, about two weeks before everyone else.' },
+  { q: 'What does it cost?', a: 'Pricing coming soon. Every app has a free way in, plus paid plans.' },
+  { q: 'Is there an Android version?', a: 'Not for January. IronStack runs on iPhone and Apple Watch, MealStack on iPhone, and MissionStack on iPad, Mac and Apple TV.' },
+  { q: 'Who is it for?', a: 'Lifters 18 and over.' },
+];
+---
+<BaseLayout
+  title="Get in first · Mission Built"
+  description="Train on it now in the beta, get the App Store link in mid-December, about two weeks before everyone else, and a direct line to the founder."
+  noindex={!LIVE}
+>
+  <TopNav />
+  <main class="first" id="main">
+    <section class="hero" id="first">
+      {/* COPY */}
+      <p class="eyebrow"><span class="dots" aria-hidden="true">▮▮▮</span> <span>Every lift is a mission</span> <span class="dots" aria-hidden="true">▮▮▮</span></p>
+      <h1>Get in first.</h1>
+      <p class="ad">To lift yourself. To lift others. To rise together.</p>
+
+      <form class="signup" method="post" action="/api/first" novalidate data-first>
+        <label class="sr" for="first-email">Email</label>
+        <div class="row">
+          <input type="email" name="email" id="first-email" required autocomplete="email" inputmode="email" placeholder="Your email" maxlength="254" />
+          <button class="cta" type="submit">Get in first →</button>
+        </div>
+        <div class="founder">
+          <label class="check"><input type="checkbox" name="founder" value="on" data-founder /> <span>Put my name on the founders page</span></label>
+          <label class="name" data-founder-name>
+            <span class="sr">Name or handle for the founders page</span>
+            <input type="text" name="founder_name" maxlength="40" autocomplete="nickname" placeholder="Your name or a handle" />
+          </label>
+        </div>
+        <div class="hp" aria-hidden="true"><label>Website<input type="text" name="website" tabindex="-1" autocomplete="off" /></label></div>
+        <input type="hidden" name="t" value="" data-t />
+        <input type="hidden" name="via" value="" data-via />
+        <p class="status" role="status" aria-live="polite" data-status></p>
+        {/* COPY (plan §12) */}
+        <p class="status closed" data-closed hidden>The list opens soon. Want in now? <a href="/rack/ironstack#beta">Join the beta →</a></p>
+        {/* COPY */}
+        <p class="fine">Launch news and a short series through January 31: four to six emails from Mike. Every one has a one-click unsubscribe. We note which link you came from. Your name goes on the founders page only if you tick the box; change it or come off any time. Never sold. <a href="/rack/support#the-get-in-first-list">How your email is kept</a>.</p>
+      </form>
+    </section>
+
+    <section class="block">
+      {/* COPY: Mike 19:06, the four things. No founding price until prices are allowed. */}
+      <h2>What getting in first means</h2>
+      <ol class="adv">
+        <li><b>Train on it now.</b> The apps are in a private beta. <a href="/rack/ironstack#beta">Join it</a> and we send you the invite.</li>
+        <li><b>The App Store link in mid-December,</b> about two weeks before everyone else.</li>
+        <li><b>A direct line.</b> “Reply to any email and it reaches me.” Mike</li>
+        <li><b>Your name on <a href="/founders">the founders page</a>,</b> if you want it. Your real name or a handle. Change it or come off any time.</li>
+      </ol>
+    </section>
+
+    <section class="block">
+      {/* COPY */}
+      <h2>What you get in on</h2>
+      <ul class="apps">
+        {apps.map((a) => <li>{a.href ? <a href={a.href}><b>{a.name}</b><span>{a.line}</span></a> : <div class="row-static"><b>{a.name}</b><span>{a.line}</span></div>}</li>)}
+      </ul>
+    </section>
+
+    <section class="block">
+      <h2>Before you sign up</h2>
+      <dl class="faq">
+        {faq.map((f) => <div><dt>{f.q}</dt><dd>{f.a}</dd></div>)}
+      </dl>
+    </section>
+  </main>
+  <SiteFooter links={[{ label: 'The apps', href: '/rack' }, { label: 'Support', href: '/rack/support' }]} />
+</BaseLayout>
+
+<script>
+  // Posts to /api/first. Without JS the form still posts and the function redirects back
+  // with ?first=ok|err|closed.
+  // COPY: the status lines.
+  const OK = 'Almost in. Check your inbox for one email to confirm, then you are on the list.';
+  const ERR = 'That did not go through. Check the address and try again.';
+  const CLOSED = 'The list opens soon. Come back in a few days.';
+  const form = document.querySelector<HTMLFormElement>('form[data-first]');
+  if (form) {
+    const status = form.querySelector<HTMLElement>('[data-status]');
+    const t = form.querySelector<HTMLInputElement>('[data-t]');
+    const btn = form.querySelector<HTMLButtonElement>('button[type=submit]');
+    if (t) t.value = String(Date.now());
+    // Which link brought them: a short slug from ?via=, nothing else (the function checks it again).
+    const viaIn = form.querySelector<HTMLInputElement>('[data-via]');
+    const via = (new URLSearchParams(location.search).get('via') || '').toLowerCase();
+    // The campaigns we count (functions/api/first.js KNOWN_VIA); anything else is dropped.
+    if (viaIn && ['li', 'poster', 'blog', 'board', 'ad', 'card'].includes(via)) viaIn.value = via;
+    // The name field shows only once the box is ticked (without JS it always shows).
+    const box = form.querySelector<HTMLInputElement>('[data-founder]');
+    const nameRow = form.querySelector<HTMLElement>('[data-founder-name]');
+    const syncName = () => { if (nameRow && box) nameRow.hidden = !box.checked; };
+    box?.addEventListener('change', syncName); syncName();
+    const say = (msg: string, tone: '' | 'ok' | 'err') => { if (status) { status.textContent = msg; status.className = 'status' + (tone ? ' ' + tone : ''); } };
+    const q = new URLSearchParams(location.search).get('first');
+    if (q === 'ok') say(OK, 'ok');
+    if (q === 'err') say(ERR, 'err');
+    // Until Buttondown is set up the list is closed and nothing is sent anywhere (plan §12): the page
+    // points to the IronStack beta form, which has its own privacy text.
+    const closedNote = document.querySelector<HTMLElement>('[data-closed]');
+    const showClosed = () => { if (closedNote) closedNote.hidden = false; };
+    if (q === 'closed') showClosed();
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = (form.querySelector<HTMLInputElement>('input[name=email]')?.value || '').trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { say('That does not look like an email address.', 'err'); return; }
+      if (btn) btn.disabled = true;
+      say('Adding you…', '');
+      try {
+        const res = await fetch('/api/first', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(Object.fromEntries(new FormData(form).entries())) });
+        const data = await res.json().catch(() => ({}));
+        if (res.ok && data.ok) { say(OK, 'ok'); form.reset(); syncName(); if (t) t.value = String(Date.now()); }
+        else if (res.status === 503 || data.closed) { say('', ''); showClosed(); }
+        else say(data.error || ERR, 'err');
+      } catch { say(ERR, 'err'); }
+      finally { if (btn) btn.disabled = false; }
+    });
+  }
+</script>
+
+<style>
+  .first { max-width: 880px; margin: 0 auto; padding: 48px var(--pad-page-x) 72px; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .eyebrow .dots { color: var(--color-chalk-faint); letter-spacing: 0; }
+  .eyebrow { margin: 0 0 18px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.24em; text-transform: uppercase; color: var(--color-chalk-dim); }
+  h1 { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(36px, 6vw, 72px); line-height: 0.98; letter-spacing: -0.01em; text-transform: uppercase; color: var(--color-chalk); overflow-wrap: anywhere; }
+  h1 .accent { display: block; color: var(--color-chalk-dim); }
+  .ad { margin: 22px 0 0; font-family: var(--font-serif); font-size: var(--fs-hero-sub); line-height: 1.45; color: var(--color-chalk-dim); }
+  .signup { margin-top: 32px; max-width: 560px; }
+  .row { display: flex; }
+  input[type=email] { flex: 1 1 auto; min-width: 0; padding: 13px 14px; background: var(--color-panel); border: 1px solid var(--color-rule); border-right: none; color: var(--color-chalk); font-family: var(--font-mono); font-size: 14px; }
+  input::placeholder { color: var(--color-chalk-faint); }
+  input:focus { border-color: var(--color-chalk-faint); outline: none; }
+  input:focus-visible { outline: 2px solid var(--color-blood-text); outline-offset: 2px; }
+  .cta { display: inline-flex; align-items: center; justify-content: center; padding: 14px 22px; background: var(--color-blood); color: var(--color-chalk); border: none; cursor: pointer; font-family: var(--font-display); font-weight: 600; font-size: 16px; letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap; }
+  .cta:hover { background: var(--color-blood-bright); }
+  .cta:disabled { opacity: 0.6; cursor: default; }
+  .cta:focus-visible { outline: 2px solid var(--color-blood-text); outline-offset: 2px; }
+  .status { margin: 10px 0 0; font-family: var(--font-mono); font-size: 12px; line-height: 1.5; color: var(--color-chalk-faint); }
+  .status:empty { margin: 0; }
+  .status.ok { color: var(--color-army); }
+  .status.err { color: var(--color-blood-text); }
+  .status.closed a { color: var(--color-chalk); border-bottom: 1px solid var(--color-chalk-ghost); }
+  .fine { margin: 14px 0 0; font-size: 14px; line-height: 1.55; color: var(--color-chalk-dim); }
+  .fine a { color: var(--color-chalk); border-bottom: 1px solid var(--color-chalk-ghost); }
+  .apps a:hover b { color: var(--color-chalk-dim); }
+  .founder { margin-top: 12px; display: grid; gap: 8px; }
+  .check { display: flex; gap: 10px; align-items: center; font-size: 14px; color: var(--color-chalk-dim); cursor: pointer; }
+  .check input { width: 16px; height: 16px; accent-color: var(--color-blood); }
+  .name input { width: 100%; padding: 11px 14px; background: var(--color-panel); border: 1px solid var(--color-rule); color: var(--color-chalk); font-family: var(--font-mono); font-size: 14px; }
+  .name[hidden] { display: none; }
+  .adv { margin: 0; padding-left: 22px; display: grid; gap: 10px; max-width: 62ch; color: var(--color-chalk-dim); line-height: 1.6; }
+  .adv b { color: var(--color-chalk); font-weight: 700; }
+  .adv a { color: var(--color-chalk); border-bottom: 1px solid var(--color-chalk-ghost); }
+  .row-static { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: baseline; padding: 16px 0; }
+  .faq { margin: 0; display: grid; gap: 18px; }
+  .faq dt { font-family: var(--font-display); font-weight: 500; font-size: 17px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--color-chalk); }
+  .faq dd { margin: 4px 0 0; color: var(--color-chalk-dim); line-height: 1.6; max-width: 68ch; }
+  .block { margin-top: 56px; padding-top: 28px; border-top: var(--border-thin); }
+  .block h2 { margin: 0 0 12px; font-family: var(--font-display); font-weight: 600; font-size: 24px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--color-chalk); }
+  .block p { margin: 0; font-size: var(--fs-body); line-height: 1.6; color: var(--color-chalk-dim); max-width: 62ch; }
+  .apps { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; border-top: var(--border-thin); }
+  .apps li { border-bottom: var(--border-thin); }
+  .apps li:last-child { border-bottom: 0; }
+  /* Names in one column, lines in another (QA 10-16). */
+  .apps a, .row-static { display: grid !important; grid-template-columns: 160px minmax(0, 1fr); gap: 6px 16px; align-items: baseline; padding: 16px 0; text-decoration: none; }
+  @media (max-width: 520px) { .apps a, .row-static { grid-template-columns: minmax(0, 1fr); } }
+  .apps b { font-family: var(--font-display); font-weight: 600; font-size: 18px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-chalk); }
+  .apps span { font-size: 15px; color: var(--color-chalk-dim); }
+  @media (max-width: 720px) {
+    .first { padding: 32px var(--pad-page-x-mobile) 56px; }
+    .row { flex-direction: column; gap: 10px; }
+    input[type=email] { border-right: 1px solid var(--color-rule); }
+    .cta { width: 100%; }
+    .ad { font-size: 18px; }
+  }
+</style>

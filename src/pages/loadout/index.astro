@@ -1,4 +1,5 @@
 ---
+import { BOOK_META } from '../../data/book-meta';
 /**
  * The Loadout — overview page (/loadout).
  *
@@ -26,7 +27,7 @@ const skills = [
 ];
 const URL_SSE = 'https://mcp.missionbuilt.io/sse';
 ---
-<BaseLayout
+<BaseLayout ogImage={BOOK_META.ogImage} ogImageAlt={BOOK_META.ogImageAlt}
   title="The Loadout · Mission Built"
   description="Three open-source Claude skills for product leaders: the Warmup, the Approach and the Spotter. One MCP connection, MIT licensed."
   active="loadout"

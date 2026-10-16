@@ -2,6 +2,7 @@ import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import { readdirSync } from 'node:fs';
+import { MISSIONSTACK_ANNOUNCED } from './src/data/missionstack-gate.mjs';
 
 // Release notes are one page per build; the version alone (/rack/mealstack/changelog/0-9-1)
 // is a redirect page to its newest build, for old links (src/data/releases.ts). The
@@ -20,11 +21,22 @@ export default defineConfig({
   // The sitemap leaves out the 404 page, the old MealStack privacy address, which
   // only serves installed builds and App Review (its canonical is /rack/mealstack/privacy),
   // the release notes' version redirects (above), MissionStack's draft privacy page until
-  // MissionStack is announced (#118), and /join, a board QR's landing page (#133).
+  // MissionStack is announced (#118; every MissionStack page, one switch: src/data/missionstack-gate.mjs), and /join, a board QR's landing page (#133).
   integrations: [mdx(), sitemap({
-    filter: (page) => !page.endsWith('/404/') && !page.includes('/loadout/mealstack/privacy')
-      && !page.includes('/rack/missionstack/')
-      && !releaseRedirects.has(new URL(page).pathname) && new URL(page).pathname !== '/join/',
+    // HOLD #143: /coach is a noindex draft; take the /coach/ clause out when it's approved.
+    filter: (page) => !page.endsWith('/404/') && !page.includes('/loadout/mealstack/privacy') && !page.includes('/coach/')
+      && (MISSIONSTACK_ANNOUNCED || !page.includes('/rack/missionstack'))
+      && !releaseRedirects.has(new URL(page).pathname) && new URL(page).pathname !== '/join/'
+      // /first (#194) stays out until Mike's go (first.astro's LIVE).
+      && new URL(page).pathname !== '/first/'
+      // /rack/plans stays out until Mike's yes on the words (noindex on the page too).
+      && new URL(page).pathname !== '/rack/plans/'
+      // The compare pages (plan §8) stay out until Mike's word yes on the launch preview.
+      && !new URL(page).pathname.startsWith('/rack/compare/')
+      // /press waits for Mike's yes on the launch preview.
+      && new URL(page).pathname !== '/press/'
+      // /founders waits for Mike's go (founders.astro's LIVE).
+      && new URL(page).pathname !== '/founders/',
   })],
   // Static output by default — the whole site can be a static export.
   output: 'static',

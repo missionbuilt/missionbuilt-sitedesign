@@ -1,4 +1,5 @@
 ---
+import { BOOK_META } from '../data/book-meta';
 /**
  * About — the person behind Mission Built, plus the project's own
  * mission. Long-form narrative prose. Single column, max-width 720,
@@ -12,7 +13,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import TopNav from '../components/TopNav.astro';
 ---
-<BaseLayout
+<BaseLayout ogImage={BOOK_META.ogImage} ogImageAlt={BOOK_META.ogImageAlt}
   title="About · Mission Built"
   description="The person behind Mission Built. Mike Nichols. Product leader by trade, powerlifter by obsession, father before all else."
   active="about"

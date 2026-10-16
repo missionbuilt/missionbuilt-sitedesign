@@ -1,219 +1,257 @@
 ---
-import { SHOW_APP_SCREENS } from '../data/screens';
 /**
- * Home — landing page.
+ * Home: the rebuild (Mike 2026-10-16 08:27, 08:32 and 08:34). Apple-simple (iPhone Duo,
+ * hq/briefs/site/apple-duo-reference.md): one idea per screen, few words, real screens.
  *
- * Rebuilt Sept 20, 2026 (focus pass, same as the app landing pages). The old home
- * gave the book, the Loadout, the Rack and Logs equal weight in four card bands plus
- * a stat strip, and nothing told a visitor where to go. Mike's call: the book and the
- * two iPhone apps are the goals; the Loadout skills are great but niche.
+ * Purpose first (Mike 08:34: "We exist to help people be better, not to sell apps."): the opening
+ * says why Mission Built exists before the apps sell, and the close says it again. The H1 still
+ * says what the apps do (Mike 10-15 19:09). Mike is visible in one band, in his voice, with the
+ * book and the Logs linked (08:34); initials until he picks a photo. Any sentence about him goes
+ * to him before it's live: veteran yes, no unit, no employer, no role there.
  *
- *   1. Hero: the book. One primary button (Start reading), Download beside it,
- *      the facts as one mono line, the author.
- *   2. The apps: IronStack and MealStack, each with a real screen, its promise and
- *      Join the beta. IronStack's card lays its Apple Watch screen over the phone (Oct 1, 2026). Chalk only here: oxblood stays with "Built." and Start reading.
- *   3. More: one quiet row with the Loadout (for product leaders) and the latest log.
+ * Order: hero → the three apps (one each, a real screen, a link) → Mike → coaches → get in first
+ * → closer. Cut (Mike 08:32, the panel 10-16): the three-column table, the four-tile strip (it
+ * repeated on /rack), the switching list, the Coming January list (it lives on /rack#coming).
  *
- * Ambient: a fixed radial gradient overlay (chalk-dust top-left, oxblood bottom-right).
+ * Oxblood: the one button. Motion: our own CSS, reveal on scroll, off under reduced motion.
+ * COPY strings are drafts for Mike's yes.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import TopNav from '../components/TopNav.astro';
 import PhoneFrame from '../components/PhoneFrame.astro';
 import WatchFrame from '../components/WatchFrame.astro';
-import { getCollection } from 'astro:content';
-import { MB, TOTAL_CHAPTERS, totalReadTime, sectionUrl } from '../data/book.ts';
-import { byNewest, logUrl } from '../data/logs';
+import TabletFrame from '../components/TabletFrame.astro';
+import { STACK } from '../data/apps';
+import StackAIMark from '../components/StackAIMark.astro';
 
-const latestLog = (await getCollection('logs', ({ data }) => !data.draft)).sort(byNewest)[0];
+const SITE = 'https://missionbuilt.io';
+const [iron, meal, mission] = STACK;
 
+const shots = {
+  phone: { src: '/images/ironstack/hero-session.webp', w: 540, h: 1174, alt: 'IronStack on iPhone mid-workout: Box Squat, set 1 of 5, 275 for 3, with Log lit.' },
+  watch: { src: '/images/ironstack/watch-set.webp', w: 422, h: 514, alt: 'The same set on Apple Watch: Box squat, 275 lb for 3, the rest clock and Log set.' },
+  board: { src: '/images/missionstack/board-ipad.webp', w: 1080, h: 751, alt: 'The same workout on the MissionStack board, on iPad: the set, the load and a 1:38 rest clock, big enough to read across the gym.' },
+  meal: { src: '/images/mealstack/today-training.webp', w: 540, h: 1174, alt: 'MealStack on a training day with the workout at 6:30 PM: lunch at 2:40 PM is next.' },
+  coach: { src: '/images/ironstack/coach-plan.webp', w: 540, h: 1174, alt: 'A coach\'s plan in IronStack: Max Effort Lower, Box Squat 5 sets of 275 for 3, and Start workout.' },
+};
+
+// COPY: one line each.
 const apps = [
+  { a: iron, line: 'Log every set.', body: 'On your iPhone or your Apple Watch, with the people you train with.', device: 'phone' as const, shot: shots.phone },
+  { a: meal, line: 'Meals timed to your workout.', body: 'The meal before you train, the shake after, and the day around it.', device: 'phone' as const, shot: shots.meal },
+  { a: mission, line: 'Your workout on the big screen.', body: 'Plan the weeks on iPad or Mac. Put the live workout on the gym TV.', device: 'tablet' as const, shot: shots.board },
+];
+
+const jsonLd = [
   {
-    name: 'IronStack', href: '/rack/ironstack',
-    tag: 'Private beta · iPhone + Apple Watch',
-    promise: 'Log fast. See progress. A coach in your corner.',
-    line: 'A lifting log for your phone and your wrist, with big timers, insights, a real coach who sends your plan, and Stack AI, which picks your next weight from your own sets.',
-    shot: { src: '/images/ironstack/hero-session.webp', w: 540, h: 1174, alt: 'IronStack on iPhone mid-workout on a coach\'s plan: Box Squat, set 1 of 5, 275 for 3, with Log lit.' },
-    watch: { src: '/images/ironstack/watch-set.webp', w: 422, h: 514, alt: 'The same set on Apple Watch: Box squat, 275 lb for 3, the rest clock at 2:00, and Log set.' },
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Mission Built',
+    legalName: 'Mission Built LLC',
+    url: SITE,
+    logo: `${SITE}/icon-512.png`,
+    email: 'support@missionbuilt.io',
+    founder: { '@type': 'Person', name: 'Mike Nichols', url: `${SITE}/about` },
   },
-  {
-    name: 'MealStack', href: '/rack/mealstack',
-    tag: 'Private beta · iPhone',
-    promise: 'Your tracker says what you ate. This says when.',
-    line: 'Meal timing built backward from your training session. Eat late and the day re-flows; your pre-workout meal still lands.',
-    shot: { src: '/images/mealstack/today-training.webp', w: 540, h: 1174, alt: 'MealStack Today on a training day with the session at 6:30 PM: yogurt and whey logged late at 11:40, lunch next at 2:40 PM, the Home travel chip, and Eating out? Send Stack AI the menu.' },
-    watch: undefined,
-  },
+  { '@context': 'https://schema.org', '@type': 'WebSite', name: 'Mission Built', url: SITE },
 ];
 ---
-<BaseLayout title="Mission Built · A Field Guide for Building Things That Matter" active="book">
-  <div class="ambient" aria-hidden="true"></div>
-  <TopNav active="book" />
+<BaseLayout active="home">
+  <script is:inline slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <TopNav />
 
-  <main id="main" class="page">
-    {/* ---------- 1. THE BOOK ---------- */}
+  <main id="main" class="home">
+    {/* ---------- 1. HERO: the why, then what it does ---------- */}
     <section class="hero">
-      <div class="hero-head">
-        <p class="eyebrow">
-          <span class="dots" aria-hidden="true">▮▮▮</span>
-          <span>An open-source book by Mike Nichols</span>
-          <span class="dots" aria-hidden="true">▮▮▮</span>
-        </p>
-        <h1 class="display"><span class="line">Mission</span><span class="line built">Built.</span></h1>
-        <p class="subtitle">A field guide for building things that matter.</p>
+      <p class="eyebrow"><span class="dots" aria-hidden="true">▮▮▮</span> <span>Every lift is a mission</span> <span class="dots" aria-hidden="true">▮▮▮</span></p>
+      <h1 class="display">Log every set. Time every meal. Put every workout on the big screen.</h1>
+      {/* COPY: Mike 08:34, nearly verbatim. */}
+      <p class="why">Mission Built exists to help people be better. These apps are how.</p>
+      <div class="buttons">
+        <a href="/first" class="btn primary">Get in first <span aria-hidden="true">→</span></a>
+        <a href="/rack" class="text-link">See the apps <span aria-hidden="true">→</span></a>
       </div>
+      <p class="note">In a private beta now. On the App Store January 1.</p>
+      <div class="stage" role="img" aria-label="The same set on the iPhone, the Apple Watch and the gym board on iPad">
+        <div class="st-board"><TabletFrame shot={shots.board} lazy={false} priority fill /></div>
+        <div class="st-phone"><PhoneFrame shot={shots.phone} lazy={false} fill /></div>
+        <div class="st-watch"><WatchFrame shot={shots.watch} lazy={false} /></div>
+      </div>
+    </section>
 
-      <div class="hero-side">
-        <p class="blurb">{MB.blurbLong}</p>
-        <div class="buttons">
-          <a href={sectionUrl(MB.prologue.n, MB.prologue.title)} class="btn primary">Start reading <span aria-hidden="true">→</span></a>
-          <a href="/download" class="btn ghost"><span aria-hidden="true">↓</span> Download</a>
-        </div>
-        <p class="facts">{TOTAL_CHAPTERS} chapters · {totalReadTime()} · free to read · <a href="/chapters">All chapters →</a></p>
-        <div class="author">
+    {/* ---------- 2. THE THREE APPS: one screen each ---------- */}
+    <section class="apps" aria-labelledby="apps-h">
+      <h2 id="apps-h" class="title reveal">Three apps. One mission.</h2>
+      {apps.map(({ a, line, body, device, shot }) => (
+        <article class:list={['app', device]}>
+          <div class="app-text reveal">
+            <img class="icon" src={a.icon.src} srcset={`${a.icon.src} 1x, ${a.icon.src2x} 2x`} width="64" height="64" alt={a.icon.alt} loading="lazy" />
+            <h3 class="app-name">{a.name}</h3>
+            <p class="app-line">{line}</p>
+            <p class="app-body">{body}</p>
+            {a.href && <a class="text-link" href={a.href}>Meet {a.name} <span aria-hidden="true">→</span></a>}
+          </div>
+          <div class="app-shot zoom">
+            {device === 'tablet' ? <TabletFrame shot={shot} fill /> : <PhoneFrame shot={shot} fill />}
+          </div>
+        </article>
+      ))}
+      {/* The Full Stack's mark (Mike 10-16 17:09): the Stack AI bubble, one line. COPY */}
+      <div class="stackband reveal">
+        <StackAIMark size={80} />
+        <p class="sb-line">Three apps. One stack.</p>
+        <p class="together">IronStack tells MealStack when you train, and your phone puts the workout on MissionStack's gym board in one scan.</p>
+        <a class="text-link" href="/rack/plans">The Full Stack <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+    {/* ---------- 3. MIKE: one band (Mike 08:34) ---------- */}
+    <section class="mike" aria-labelledby="mike-h">
+      <div class="mike-in reveal">
+        <p class="kicker">Who's behind it</p>
+        <div class="byline">
+          {/* Initials until Mike picks a photo (his call, 10-15 22:5x). */}
           <div class="avatar" aria-hidden="true">MN</div>
-          <div class="author-meta">
-            <a href="/about" class="author-name">{MB.author}</a>
-            <div class="author-tag">{MB.authorTagline}</div>
+          <div>
+            {/* COPY: Mike's voice, first person. Goes to Mike before it's live. */}
+            <h2 id="mike-h" class="mike-h">Built by one lifter.</h2>
+            <p class="prose">I'm Mike. I'm a veteran, a lifter and a builder, and I make these apps myself. I wrote a book on building things that matter, from the barbell to the boardroom, and I write the Logs as I build.</p>
+            <p class="prose">I'm not here to sell you an app. I'm here to help you get better. The apps are how.</p>
+            <p class="sig">Mike Nichols</p>
           </div>
         </div>
+        <ul class="mike-links">
+          <li><a href="/chapters"><span class="k">Read the book</span><span class="t">Mission Built, start to finish.</span></a></li>
+          <li><a href="/logs"><span class="k">Read the Logs</span><span class="t">Why I built it, as I build it.</span></a></li>
+          <li><a href="/about"><span class="k">About me</span><span class="t">The longer story.</span></a></li>
+        </ul>
       </div>
     </section>
 
-    {/* ---------- 2. THE APPS ---------- */}
-    <section class="band" aria-labelledby="apps-h">
-      <div class="band-head">
-        <h2 id="apps-h" class="band-title">The apps. <span class="band-sub">Two iPhone apps for people who train.</span></h2>
-        <a href="/rack" class="band-link">The Rack <span aria-hidden="true">→</span></a>
+    {/* ---------- 4. COACHES ---------- */}
+    <section class="coaches">
+      <div class="co-text reveal">
+        <p class="kicker">For coaches</p>
+        <h2 class="title">Coach them from the floor.</h2>
+        <p class="lede">Send the plan, see every set against it, and put the workout on the gym TV.</p>
+        <a class="text-link" href="/coach">Coach mode <span aria-hidden="true">→</span></a>
       </div>
-      <div class="apps">
-        {apps.map((a) => (
-          <a class:list={['app', a.watch && 'has-watch']} href={a.href}>
-            {SHOW_APP_SCREENS && <div class:list={['shot', a.watch && 'with-watch']}>
-              <div class="shot-phone"><PhoneFrame shot={a.shot} fill /></div>
-              {a.watch && <div class="shot-watch"><WatchFrame shot={a.watch} /></div>}
-            </div>}
-            <div class="app-body">
-              <p class="tag"><span class="sq" aria-hidden="true"></span>{a.tag}</p>
-              <h3 class="app-name">{a.name}</h3>
-              <p class="promise">{a.promise}</p>
-              <p class="app-line">{a.line}</p>
-              <span class="app-cta">Join the beta →</span>
-            </div>
-          </a>
-        ))}
-      </div>
+      <div class="co-shot zoom"><PhoneFrame shot={shots.coach} fill /></div>
     </section>
 
-    {/* ---------- 3. MORE ---------- */}
-    <section class="band more" aria-label="More from Mission Built">
-      <a class="more-item" href="/loadout">
-        <span class="k">The Loadout</span>
-        <span class="t">For product leaders: open-source Claude skills for the boardroom half of the book.</span>
-        <span class="c" aria-hidden="true">→</span>
-      </a>
-      {latestLog && (
-        <a class="more-item" href={logUrl(latestLog)}>
-          <span class="k">Latest log</span>
-          <span class="t">{latestLog.data.title}</span>
-          <span class="c" aria-hidden="true">→</span>
-        </a>
-      )}
+    {/* ---------- 5. GET IN FIRST ---------- */}
+    <section class="first reveal" aria-labelledby="first-h">
+      <h2 id="first-h" class="title">Get in first.</h2>
+      {/* COPY: Mike's 19:06 promises, short. */}
+      <p class="lede">Train on it now in the beta. Get the App Store link in mid-December, about two weeks early. And reply to any email: it reaches Mike.</p>
+      <a href="/first" class="btn primary">Get in first <span aria-hidden="true">→</span></a>
+    </section>
+
+    {/* ---------- CLOSER: the why again ---------- */}
+    <section class="closer">
+      <p class="c1">Every lift is a mission.</p>
+      <p class="c2">To lift yourself. To lift others. To rise together.</p>
     </section>
   </main>
   <SiteFooter />
 </BaseLayout>
 
 <style>
-  .ambient { position: fixed; inset: 0; pointer-events: none; opacity: 0.55; z-index: 0;
-    background: radial-gradient(1200px 600px at 20% -10%, rgba(255,250,235,.04), transparent 60%),
-                radial-gradient(800px 500px at 110% 110%, rgba(168,33,26,.10), transparent 60%); }
-  .page { position: relative; z-index: 1; }
-
-  /* HERO */
-  .hero { padding: 64px var(--pad-page-x) 8px; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 56px; align-items: end; }
-  .eyebrow { display: inline-flex; align-items: center; gap: 14px; margin: 0 0 20px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.24em; color: var(--color-chalk-dim); text-transform: uppercase; }
-  .eyebrow .dots { letter-spacing: 0.04em; color: var(--color-blood-bright); }
-  .display { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(56px, 11vw, 132px); line-height: 0.88; letter-spacing: -0.02em; text-transform: uppercase; color: var(--color-chalk); }
-  .display .line { display: block; }
-  .display .built { color: var(--color-blood-bright); }
-  .subtitle { margin: 22px 0 0; font-family: var(--font-display); font-weight: 400; font-size: 22px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-chalk-dim); }
-  .blurb { margin: 0; max-width: 52ch; font-family: var(--font-serif); font-size: 18px; line-height: 1.6; color: var(--color-chalk); }
-  .buttons { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 12px; }
-  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 15px 24px; font-family: var(--font-display); font-weight: 600; font-size: 15px; letter-spacing: 0.06em; text-transform: uppercase; border: 1px solid var(--color-rule); color: var(--color-chalk); transition: background 120ms ease-out; }
+  .home { overflow-x: clip; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 15px 26px; font-family: var(--font-display); font-weight: 600; font-size: 15px; letter-spacing: 0.06em; text-transform: uppercase; border: 1px solid var(--color-rule); color: var(--color-chalk); }
   .btn.primary { background: var(--color-blood); border-color: var(--color-blood); }
   .btn.primary:hover { background: var(--color-blood-bright); }
-  .btn.ghost:hover { background: var(--color-panel); }
-  .facts { margin: 16px 0 0; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-chalk-faint); }
-  .facts a { color: var(--color-chalk-dim); border-bottom: 1px solid var(--color-chalk-ghost); }
-  .facts a:hover { color: var(--color-chalk); }
-  .author { margin-top: 26px; padding-top: 18px; border-top: 1px dashed var(--color-rule); display: flex; gap: 14px; align-items: center; }
-  .avatar { width: 40px; height: 40px; display: grid; place-items: center; border: var(--border-thin); background: var(--color-panel); font-family: var(--font-display); font-size: 15px; color: var(--color-chalk-dim); }
-  .author-name { font-family: var(--font-display); font-size: 15px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-chalk); }
-  .author-tag { margin-top: 2px; font-family: var(--font-serif); font-size: 13px; color: var(--color-chalk-faint); }
+  .text-link { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk); border-bottom: 1px solid var(--color-chalk-ghost); padding-bottom: 2px; }
+  .text-link:hover { border-bottom-color: var(--color-chalk); }
+  .kicker { margin: 0 0 14px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.24em; color: var(--color-chalk-faint); text-transform: uppercase; }
+  .title { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(40px, 6.4vw, 76px); line-height: 0.98; letter-spacing: -0.015em; text-transform: uppercase; color: var(--color-chalk); }
+  .lede { margin: 18px 0 0; max-width: 40ch; font-family: var(--font-serif); font-size: clamp(18px, 2vw, 21px); line-height: 1.55; color: var(--color-chalk-dim); }
+  .prose { margin: 14px 0 0; max-width: 54ch; font-family: var(--font-serif); font-size: 18px; line-height: 1.65; color: var(--color-chalk-dim); }
 
-  /* BANDS */
-  .band { padding: 80px var(--pad-page-x) 0; }
-  .band-head { display: flex; justify-content: space-between; align-items: baseline; gap: 24px; margin-bottom: 24px; }
-  .band-title { margin: 0; font-family: var(--font-display); font-weight: 500; font-size: 26px; letter-spacing: 0.03em; text-transform: uppercase; color: var(--color-chalk); }
-  .band-sub { color: var(--color-chalk-dim); }
-  .band-link { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-dim); border-bottom: 1px solid var(--color-chalk-ghost); padding-bottom: 2px; white-space: nowrap; }
-  .band-link:hover { color: var(--color-chalk); }
+  /* HERO */
+  .hero { padding: 72px var(--pad-page-x) 24px; text-align: center; }
+  .eyebrow { display: inline-flex; align-items: center; gap: 14px; margin: 0 0 22px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.24em; color: var(--color-chalk-dim); text-transform: uppercase; }
+  .eyebrow .dots { letter-spacing: 0.04em; color: var(--color-chalk-faint); }
+  .display { margin: 0 auto; max-width: 18ch; font-family: var(--font-display); font-weight: 700; font-size: clamp(40px, 6.6vw, 84px); line-height: 0.96; letter-spacing: -0.02em; text-transform: uppercase; color: var(--color-chalk); }
+  .why { margin: 22px auto 0; max-width: 32ch; font-family: var(--font-serif); font-size: clamp(19px, 2.2vw, 24px); line-height: 1.5; color: var(--color-chalk); }
+  .buttons { margin-top: 30px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 14px 28px; }
+  .note { margin: 16px 0 0; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; color: var(--color-chalk-faint); }
+  /* The board leads (the panel: it was hidden behind the phone); the phone and watch sit in front of its lower corners. */
+  .stage { position: relative; margin: 56px auto 0; max-width: 980px; padding-bottom: 80px; container-type: inline-size; }
+  .st-board { width: 86%; margin: 0 auto; }
+  .st-phone { position: absolute; right: -4%; bottom: -9%; width: 18%; z-index: 2; }
+  .st-watch { position: absolute; left: -1%; bottom: 2%; font-size: calc(14cqi / 10.5); z-index: 3; }
 
-  /* APPS */
-  .apps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: var(--border-thin); border-left: var(--border-thin); }
-  .app { min-width: 0; display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 28px; padding: 28px 28px 0; border-right: var(--border-thin); border-bottom: var(--border-thin); transition: background 120ms ease-out; }
-  .app:hover { background: var(--color-panel); }
-  /* The card crops the phone at its foot: the crop is on .shot, around the whole PhoneFrame, so
-     the frame and the screen are cut together. Sideways it stays open for the side buttons. */
-  .shot { height: 250px; overflow-x: visible; overflow-y: clip; align-self: end; }
-  /* IronStack: a 200px column, the phone 160px pushed right, the watch in front of it at the left,
-     its case about 118px down. --s scales the group on phones. */
-  .app.has-watch { grid-template-columns: 200px minmax(0, 1fr); }
-  .shot.with-watch { --s: 1; position: relative; }
-  .shot.with-watch .shot-phone { position: relative; z-index: 2; width: calc(160px * var(--s)); margin-left: auto; }
-  .shot-watch { position: absolute; left: 0; top: calc(80px * var(--s)); font-size: calc(11px * var(--s)); }
-  .app-body { padding-bottom: 28px; display: grid; gap: 10px; align-content: start; }
-  .tag { margin: 0; display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-chalk-dim); }
-  .tag .sq { width: 7px; height: 7px; border: 1px solid var(--color-chalk-dim); }
-  .app-name { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 28px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-chalk); }
-  .promise { margin: 0; font-family: var(--font-display); font-weight: 500; font-size: 18px; line-height: 1.2; text-transform: uppercase; letter-spacing: 0.02em; color: var(--color-chalk); }
-  .app-line { margin: 0; font-family: var(--font-serif); font-size: 15px; line-height: 1.55; color: var(--color-chalk-dim); }
-  .app-cta { margin-top: 6px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk); }
-  .app:hover .app-cta { color: var(--color-blood-text); }
+  /* THE APPS */
+  .apps { padding: 120px var(--pad-page-x) 40px; border-top: var(--border-thin); }
+  .apps > .title { text-align: center; }
+  .app { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 56px; align-items: center; max-width: 1100px; margin: 96px auto 0; }
+  .app:nth-of-type(even) .app-text { order: 2; }
+  .icon { display: block; margin-bottom: 18px; border-radius: 22.37%; }
+  .app-name { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(36px, 4.6vw, 56px); line-height: 1; letter-spacing: 0.01em; text-transform: uppercase; color: var(--color-chalk); }
+  .app-line { margin: 10px 0 0; font-family: var(--font-display); font-weight: 500; font-size: clamp(22px, 2.6vw, 30px); line-height: 1.1; color: var(--color-chalk); }
+  .app-body { margin: 14px 0 22px; max-width: 34ch; font-family: var(--font-serif); font-size: 18px; line-height: 1.55; color: var(--color-chalk-dim); }
+  .app.phone .app-shot { width: min(300px, 70%); margin: 0 auto; }
+  .stackband { margin: 112px auto 0; text-align: center; display: grid; justify-items: center; gap: 18px; }
+  .sb-line { margin: 4px 0 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(32px, 4.6vw, 52px); line-height: 1; text-transform: uppercase; color: var(--color-chalk); }
+  .stackband .together { margin: 0 auto; }
+  .together { margin: 96px auto 0; max-width: 48ch; text-align: center; font-family: var(--font-serif); font-size: 18px; line-height: 1.6; color: var(--color-chalk-dim); }
 
-  /* MORE */
-  .more { padding-top: 56px; padding-bottom: 72px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; }
-  .more-item { display: grid; grid-template-columns: 130px minmax(0, 1fr) auto; gap: 18px; align-items: baseline; padding: 18px 0; border-top: 1px dashed var(--color-rule); margin-right: 28px; }
-  .more-item .k { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-faint); }
-  .more-item .t { font-family: var(--font-serif); font-size: 15px; line-height: 1.5; color: var(--color-chalk-dim); }
-  .more-item .c { font-family: var(--font-mono); color: var(--color-chalk-faint); }
-  .more-item:hover .t, .more-item:hover .c { color: var(--color-chalk); }
+  /* MIKE */
+  .mike { margin-top: 80px; padding: 96px var(--pad-page-x); background: var(--color-panel); border-top: var(--border-thin); border-bottom: var(--border-thin); }
+  .mike-in { max-width: 1100px; margin: 0 auto; }
+  .byline { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 28px; align-items: start; }
+  .avatar { width: 72px; height: 72px; display: grid; place-items: center; border: var(--border-thin); background: var(--color-bg); font-family: var(--font-display); font-size: 24px; color: var(--color-chalk); }
+  .mike-h { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(34px, 4.6vw, 54px); line-height: 1; text-transform: uppercase; color: var(--color-chalk); }
+  .sig { margin: 18px 0 0; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk); }
+  .mike-links { list-style: none; margin: 40px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 28px; }
+  .mike-links a { display: grid; gap: 4px; padding: 16px 0; border-top: 1px dashed var(--color-rule); }
+  .mike-links .k { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk); }
+  .mike-links .t { font-family: var(--font-serif); font-size: 15px; line-height: 1.5; color: var(--color-chalk-dim); }
+  .mike-links a:hover .t { color: var(--color-chalk); }
 
-  @media (max-width: 1099px) {
-    .hero, .band { padding-left: var(--pad-page-x-mid); padding-right: var(--pad-page-x-mid); }
-    .hero { grid-template-columns: minmax(0, 1fr); gap: 32px; align-items: start; }
-    .apps { grid-template-columns: minmax(0, 1fr); }
-    .more { grid-template-columns: minmax(0, 1fr); }
-    .more-item { margin-right: 0; }
+  /* COACHES */
+  /* Same two columns and edges as the app rows above (QA 10-16). */
+  .coaches { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 56px; align-items: center; max-width: calc(1100px + 2 * var(--pad-page-x)); margin: 0 auto; padding: 120px var(--pad-page-x) 40px; }
+  .co-shot { width: min(300px, 70%); margin: 0 auto; }
+  .coaches .text-link { display: inline-block; margin-top: 24px; }
+
+  /* GET IN FIRST */
+  .first { margin: 80px var(--pad-page-x) 0; padding: 88px 32px; text-align: center; border-top: var(--border-thin); }
+  .first .lede { margin-left: auto; margin-right: auto; }
+  .first .btn { margin-top: 30px; }
+
+  .closer { margin-top: 88px; padding: 64px var(--pad-page-x); border-top: var(--border-thin); text-align: center; }
+  .c1 { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 4vw, 44px); letter-spacing: 0.02em; text-transform: uppercase; color: var(--color-chalk); }
+  .c2 { margin: 14px 0 0; text-wrap: balance; font-family: var(--font-serif); font-style: italic; font-size: 18px; color: var(--color-chalk-dim); }
+
+  /* Motion: our own CSS only, where the browser has it and the person hasn't asked for less. */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .reveal { animation: rise linear both; animation-timeline: view(); animation-range: entry 5% cover 30%; }
+      .zoom { animation: zoomin linear both; animation-timeline: view(); animation-range: entry 0% cover 40%; }
+    }
   }
-  @media (max-width: 720px) {
-    .hero, .band { padding-left: var(--pad-page-x-mobile); padding-right: var(--pad-page-x-mobile); }
-    .hero { padding-top: 36px; }
-    .subtitle { font-size: 17px; }
-    .blurb { font-size: 17px; }
-    .btn { flex: 1 1 auto; justify-content: center; padding: 14px 16px; }
-    .band { padding-top: 56px; }
-    .band-head { flex-direction: column; gap: 10px; }
-    .band-title { font-size: 21px; }
-    .app { grid-template-columns: 112px minmax(0, 1fr); gap: 18px; padding: 22px 18px 0; }
-    .shot { height: 190px; }
-    .app.has-watch { grid-template-columns: 124px minmax(0, 1fr); }
-    .shot.with-watch { --s: 0.62; }
-    .app-name { font-size: 22px; }
-    .promise { font-size: 15px; }
-    .app-line { display: none; }
-    .more-item { grid-template-columns: minmax(0, 1fr) auto; }
-    .more-item .k { grid-column: 1 / -1; }
+  @keyframes rise { from { opacity: 0; transform: translateY(36px); } to { opacity: 1; transform: none; } }
+  @keyframes zoomin { from { opacity: 0.2; transform: scale(0.88); } to { opacity: 1; transform: none; } }
+
+  @media (max-width: 1000px) {
+    .hero, .apps, .mike, .coaches, .closer { padding-left: var(--pad-page-x-mid); padding-right: var(--pad-page-x-mid); }
+    .first { margin-left: var(--pad-page-x-mid); margin-right: var(--pad-page-x-mid); }
+  }
+  @media (max-width: 760px) {
+    .hero, .apps, .mike, .coaches, .closer { padding-left: var(--pad-page-x-mobile); padding-right: var(--pad-page-x-mobile); }
+    .first { margin-left: var(--pad-page-x-mobile); margin-right: var(--pad-page-x-mobile); padding: 64px 0; }
+    .hero { padding-top: 40px; }
+    .btn { flex: 1 1 100%; justify-content: center; }
+    .app, .app.tablet, .coaches { grid-template-columns: minmax(0, 1fr); gap: 32px; margin-top: 72px; text-align: center; }
+    .app:nth-of-type(even) .app-text { order: 0; }
+    .icon { margin-left: auto; margin-right: auto; }
+    .app-body, .lede { margin-left: auto; margin-right: auto; }
+    .byline { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+    .mike-links { grid-template-columns: minmax(0, 1fr); }
+    .apps, .coaches { padding-top: 56px; }
+    .mike { margin-top: 56px; padding-top: 64px; padding-bottom: 64px; }
   }
 </style>

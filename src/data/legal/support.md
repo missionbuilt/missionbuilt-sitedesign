@@ -95,7 +95,20 @@ Stack AI is an AI (Claude, by Anthropic). It's off until you turn it on from its
 
 ## The beta sign-up form
 
-The Join the beta form on each app page keeps your email address, the note you add, which app page you signed up from, your country (from the network, not your address), when you signed up and whether you've been invited. It's kept in Mission Built's storage on Cloudflare and used for one thing: sending your TestFlight invite. It's never shared or used for marketing. Email support@missionbuilt.io and it's deleted.
+The Join the beta form on each app page keeps your email address, the note you add, which app page you signed up from, your country (from the network, not your address), when you signed up and whether you've been invited. It's kept in Mission Built's storage on Cloudflare and used for one thing: sending your TestFlight invite. To stop repeated tries, the form also uses your IP address as a scrambled code kept for one hour. It's never shared or used for marketing. Email support@missionbuilt.io and it's deleted.
+
+<!-- COPY: draft for Mike's yes (#194); the date is Mike's call. -->
+
+## The Get in first list
+
+The Get in first form at missionbuilt.io/first asks for your email address. It's for one thing: launch news and a short series through January 31, four to six emails from Mike. Two more things go with your address, and only these two:
+
+- **Which link you came from**, such as the QR code on a poster or a link from LinkedIn. It's a short word in the link itself (like `via=li`), not a cookie or a script. We use it to count which links bring people in.
+- **Your name or a handle for the founders page, only if you tick the box.** We show that name on the page and nothing else about you. Change it or take it off any time by replying to any email or writing to support@missionbuilt.io.
+
+Your address goes straight to Buttondown, the service that sends those emails for us ([its privacy policy](https://buttondown.com/legal/privacy)); Mission Built keeps no copy of its own. Buttondown first sends one email asking you to confirm; when you open that link, Buttondown sees your IP address and browser, as any website does. To stop repeated tries, the form uses your IP address as a scrambled code kept for one hour, and nothing else. Open and click tracking are off, so we don't see whether you opened an email or what you clicked. Every email has a one-click unsubscribe, and unsubscribing stops the emails at once. Your address is deleted after the series, by [DATE TO SET], or sooner if you ask at support@missionbuilt.io. A founders page name is kept apart from your address, in Mission Built's own storage on Cloudflare and not in the site's public code. Mike reads each name before it goes up, and before it does, an email tells you the name and the date so you can change it or leave it off. It stays on the page until you ask (reply to any email while the series runs, or write to support@missionbuilt.io at any time), and comes off within a few days. Unsubscribing stops the emails; your founders page name stays up until you ask. Taking a name off removes it from our page; we can't recall copies others have made. If you reply to an email, your reply reaches Mike's mailbox and is kept like any email there; ask and it's deleted. None of it is ever sold, shared beyond Buttondown (and Cloudflare, which holds the founders page list), or used for anything else, except the name you asked us to show on the founders page.
+
+Until the email list opens, the form sends nothing anywhere; it points you to the beta form instead.
 
 ---
 

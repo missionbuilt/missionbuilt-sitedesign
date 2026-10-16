@@ -167,7 +167,7 @@ IronStack relies on Apple (the App Store, Health, Sign in with Apple, notificati
 
 The app, its design, text, recordings, badges and code belong to Mission Built or its licensors. Open-source parts are under their own licences, listed in the app under Settings › Acknowledgements and on [the acknowledgements page](/rack/acknowledgements).
 
-**Mission Built**, **IronStack**, **MealStack** and the app icons are trademarks of Mission Built LLC. You may not use them without written permission, except to refer to the apps by name.
+**Mission Built**, **IronStack**, **MealStack**, **MissionStack** and the app icons are trademarks of Mission Built LLC. You may not use them without written permission, except to refer to the apps by name.
 
 The Mission Built Schema, the file format, is documented so anything can read and write it. Writing a file in that format doesn't give you rights to the marks above.
 

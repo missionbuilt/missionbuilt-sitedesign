@@ -5,13 +5,17 @@
  * and is written from the drafts in the private briefs; the page adds the header and the
  * draft banner. `draft` shows "Draft, not yet in force" until Mike says it's reviewed.
  */
-interface Props { draft?: boolean }
-const { draft = false } = Astro.props;
+interface Props {
+  draft?: boolean;
+  /** Who the draft banner names; IronStack and MealStack's pages leave it out. */
+  apps?: string;
+}
+const { draft = false, apps = 'IronStack and MealStack reach' } = Astro.props;
 ---
 {draft && (
   <aside class="draft" role="note">
     <p class="k">Draft, not yet in force</p>
-    <p>These terms are being reviewed by a lawyer before IronStack and MealStack reach the App Store. Until then, this page shows where they are going; the privacy pages are in force now.</p>
+    <p>These terms are being reviewed by a lawyer before {apps} the App Store. Until then, this page shows where they are going; the privacy pages are in force now.</p>
   </aside>
 )}
 <div class="legal"><slot /></div>

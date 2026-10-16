@@ -16,58 +16,118 @@ import { SHOW_APP_SCREENS } from '../../data/screens';
  * Join buttons. "Better together" claims only what is live (both write to Apple Health);
  * both write to Apple Health, share one travel switch and keep today's session time in step (Sept 29, 2026).
  * Oct 1, 2026: IronStack's card shows one phone and its Apple Watch screen on the same set.
+ *
+ * Oct 15, 2026 (#193, hq/briefs/site/three-apps-pages.md §1–2): three apps, one mission. The
+ * launch ad's approved lines (Mike, 10-12) in the ad's order: hero (lines 1–2), "Three apps. One
+ * mission." over the three cards (line 9), the four-tile strip (lines 3–8). Strings marked COPY
+ * are drafts for Mike's yes. Only what's live: the board tile is one lifter, no heart rate; the
+ * coach tile says only what testers have (no "log for a client" until #164 ships). This branch
+ * merges only after Mike says the MissionStack name is cleared (its own pages stay noindex until
+ * then: src/data/missionstack-gate.mjs). The "Get in first" band waits for /first.
+ *
+ * Oct 15, 2026 evening (launch preview, plan §4): H1 "The apps." (the home has its own H1 now);
+ * the app icons on each card; Coming January 1 by app (src/data/coming.ts); plans, coaches and
+ * compare. MissionStack is named and linked only once MISSIONSTACK_ANNOUNCED; until then its card
+ * is "The gym board" and points to Get in first. No prices: "Pricing coming soon".
+ *
+ * Oct 16, 2026 (Mike 08:27/08:32, the panel): the four-tile strip (it repeated the home), better
+ * together and the Loadout paragraph are cut; "The Rack" leaves the eyebrow; MissionStack is named
+ * (cleared 08:30). Shorter subs and points.
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
 import TopNav from '../../components/TopNav.astro';
 import PhoneFrame from '../../components/PhoneFrame.astro';
 import WatchFrame from '../../components/WatchFrame.astro';
+import TabletFrame from '../../components/TabletFrame.astro';
+import TvFrame from '../../components/TvFrame.astro';
+import { MISSIONSTACK_ANNOUNCED } from '../../data/missionstack-gate.mjs';
+import { STACK, TILES } from '../../data/apps';
+import { comingFor } from '../../data/coming';
+import StackAIMark from '../../components/StackAIMark.astro';
+
+const MS = MISSIONSTACK_ANNOUNCED;
+const icon = (key: string) => STACK.find((a) => a.key === key)!.icon;
 
 type Shot = { src: string; w: number; h: number; alt: string };
 interface App {
+  key: 'ironstack' | 'mealstack' | 'missionstack';
   name: string;
   href: string;
   promise: string;
   accent: string;
   sub: string;
   points: string[];
-  /** One phone with a watch, or two phones (front, back). */
-  shots: [Shot] | [Shot, Shot];
+  /** One phone with a watch, or two phones (front, back). Left out for a tablet (`tablet`). */
+  shots?: [Shot] | [Shot, Shot];
   watch?: Shot;
+  /** An iPad in front with an Apple TV behind (MissionStack). */
+  tablet?: Shot;
+  tv?: Shot;
 }
 
 const apps: App[] = [
   {
+    key: 'ironstack',
     name: 'IronStack',
     href: '/rack/ironstack',
     promise: 'Log fast. See progress.',
     accent: 'A coach in your corner.',
-    sub: 'A lifting log for iPhone and Apple Watch. Every lifting app I used was missing something; this one puts it in one place.',
-    points: ['Tap, type or say the set', 'Log from your Apple Watch', 'Your coach sees every set', 'Stack AI picks your next weight'],
+    sub: 'A lifting log for iPhone and Apple Watch, with the people you train with.',
+    points: ['One tap a set', 'Apple Watch logging', 'Train with friends', 'Coach sees every set'],
     shots: [
       { src: '/images/ironstack/hero-session.webp', w: 540, h: 1174, alt: 'IronStack on iPhone mid-workout on a coach\'s plan: Box Squat, set 1 of 5, 275 for 3, with Log lit.' },
     ],
     watch: { src: '/images/ironstack/watch-set.webp', w: 422, h: 514, alt: 'The same set on Apple Watch: Box squat, 275 lb for 3 reps, the rest clock and Log set.' },
   },
   {
+    key: 'mealstack',
     name: 'MealStack',
     href: '/rack/mealstack',
     promise: 'Your tracker says what you ate.',
     accent: 'This says when.',
-    sub: 'Meal timing for iPhone, built backward from your training session. Eat late and the day re-flows; your pre-workout meal still lands before you train.',
-    points: ['Anchored to your session', 'Log when you actually ate', 'Holds up on the road', 'Stack AI builds your plan or reads a menu'],
+    sub: 'Meal timing for iPhone, built around your workout. Eat late and the rest of the day moves with you.',
+    points: ['Built around your workout', 'Log when you ate', 'A week of real plates', 'Works on the road'],
     shots: [
-      { src: '/images/mealstack/today-training.webp', w: 540, h: 1174, alt: 'MealStack Today on a training day with the session at 6:30 PM: yogurt and whey logged late at 11:40, lunch next at 2:40 PM, the Home travel chip, and Eating out? Send Stack AI the menu.' },
-      { src: '/images/mealstack/session-moved.webp', w: 540, h: 1174, alt: 'MealStack after the session moved to 6:30 PM: one line says the carb surge moved to 5:00 PM, the after-session shake to 7:30 PM and dinner to 9:00 PM, with an Undo.' },
+      { src: '/images/mealstack/today-training.webp', w: 540, h: 1174, alt: 'MealStack Today on a training day with the workout at 6:30 PM: yogurt and whey logged late at 11:40, lunch next at 2:40 PM, the Home travel chip, and Eating out? Send Stack AI the menu.' },
+      { src: '/images/mealstack/session-moved.webp', w: 540, h: 1174, alt: 'MealStack after the workout moved to 6:30 PM: one line says the carb surge moved to 5:00 PM, the after-workout shake to 7:30 PM and dinner to 9:00 PM, with an Undo.' },
     ],
   },
+  {
+    key: 'missionstack',
+    name: MS ? 'MissionStack' : 'The gym board',
+    href: MS ? '/rack/missionstack' : '',
+    promise: 'Your workout on the big screen.', // Mike's approved notes headline (10-13)
+    accent: 'Live in the gym.', // the ad's line 6 (approved)
+    sub: 'Plan the weeks on iPad or Mac, and put your live workout on the gym TV, an iPad or a Mac.', // COPY (Beta App Description, lightly cut; plan §9 one-lifter line)
+    points: ['Readable across the room', 'Pair in one scan', 'Plan the week', 'No account'], // COPY
+    // Screens: Chalkboard, Fri 10-16 (slots until then)
+    tablet: { src: '/images/missionstack/board-ipad.webp', w: 1080, h: 751, alt: `${MS ? 'The MissionStack board' : 'The gym board'} on iPad mid-set: one lifter's exercise, the set, the load and the rest clock.` }, // COPY (alt)
+    tv: { src: '/images/missionstack/board-tv.webp', w: 960, h: 540, alt: 'The same board on an Apple TV mid-workout: Lower A, Romanian deadlift 3 × 8, a 1:38 rest clock, then set 3.' },
+  },
 ];
+
+// The ad's lines 3–8: the four tiles (src/data/apps.ts, shared with the home).
+const tiles = TILES;
+
+// Coming January 1, by app (plan §5).
+const comingGroups = [
+  { name: 'IronStack', items: comingFor({ announced: MS, app: 'ironstack', when: 'january' }) },
+  { name: 'MealStack', items: comingFor({ announced: MS, app: 'mealstack', when: 'january' }) },
+  { name: MS ? 'MissionStack' : 'The gym board', items: comingFor({ announced: MS, app: 'missionstack', when: 'january' }) },
+].filter((g) => g.items.length);
+const comingLater = comingFor({ announced: true, when: 'later' });
+// Together is one line: a full-width row under the grid, like Coming later (QA 10-16).
+const comingTogether = comingFor({ announced: MS, app: 'together', when: 'january' });
+
+const title = MS ? 'IronStack, MealStack and MissionStack · The apps · Mission Built' : 'IronStack, MealStack and the gym board · The apps · Mission Built';
+const description = MS
+  ? 'Three apps for people who train. IronStack logs every set on iPhone and Apple Watch. MealStack times your meals around your training. MissionStack plans your weeks on iPad and Mac and puts the workout on the gym TV. In a private beta now; on the App Store January 1.'
+  : 'Apps for people who train. IronStack logs every set on iPhone and Apple Watch. MealStack times your meals around your training. The gym board puts the workout on the TV. In a private beta now; on the App Store January 1.';
 ---
 <BaseLayout
-  title="The Rack · Mission Built"
-  ogImage="/images/rack-og.jpg"
-  ogImageAlt="The Rack. IronStack and MealStack, two iPhone apps for people who train, by Mission Built, with a real screen from each."
-  description="Two iPhone apps for people who train, from Mission Built. IronStack, for iPhone and Apple Watch: log fast, see progress, a coach in your corner. MealStack: meal timing built around your training session. Both free during the private beta."
+  title={title}
+  description={description}
   active="rack"
 >
   <TopNav active="rack" />
@@ -76,26 +136,29 @@ const apps: App[] = [
     <section class="hero">
       <p class="eyebrow">
         <span class="dots" aria-hidden="true">▮▮▮</span>
-        <span>Tools for the barbell, from Mission Built</span>
+        <span>Three apps · one mission</span>
         <span class="dots" aria-hidden="true">▮▮▮</span>
       </p>
-      <h1 class="display">The Rack<span class="dot">.</span></h1>
-      <p class="subtitle">Two iPhone apps for people who train: one for the lifting, one for the eating around it.</p>
-      <ul class="trust" aria-label="The short version">
-        <li>Private beta</li><li>Free during the beta</li><li>iPhone, iOS 26+</li><li>Your data stays yours</li>
-      </ul>
+      {/* COPY (plan §4): the home has the ad's H1 thread; this page is the shelf. */}
+      <h1 class="display">The apps<span class="dot">.</span></h1>
+      <p class="subtitle">One for the lift, one for the food around it, one for the big screen. In a private beta now; on the App Store January 1.</p>
     </section>
 
     <section class="apps" aria-label="The apps">
       {apps.map((a) => (
         <article class="app">
-          {SHOW_APP_SCREENS && <a class:list={['shots', a.watch && 'with-watch']} href={a.href} tabindex="-1" aria-hidden="true">
-            {a.watch ? (
+          {SHOW_APP_SCREENS && <a class:list={['shots', a.watch && 'with-watch', a.tablet && 'with-tablet']} href={a.href || '/first'} tabindex="-1" aria-hidden="true">
+            {a.tablet ? (
+              <div class="board">
+                {a.tv && <div class="board-tv"><TvFrame shot={a.tv} fill /></div>}
+                <div class="board-tablet"><TabletFrame shot={a.tablet} lazy={false} fill /></div>
+              </div>
+            ) : a.watch && a.shots ? (
               <div class="pair" style={`--ar:${a.shots[0].h / a.shots[0].w}`}>
                 <div class="ph front"><PhoneFrame shot={a.shots[0]} lazy={false} /></div>
                 <div class="pair-watch"><WatchFrame shot={a.watch} /></div>
               </div>
-            ) : (
+            ) : a.shots && (
               <>
                 {a.shots[1] && <div class="ph back"><PhoneFrame shot={{ ...a.shots[1], alt: '' }} /></div>}
                 <div class="ph front"><PhoneFrame shot={a.shots[0]} lazy={false} /></div>
@@ -103,40 +166,71 @@ const apps: App[] = [
             )}
           </a>}
           <div class="app-body">
-            <p class="app-name">{a.name}<span class="dot">.</span></p>
+            <p class="app-name"><img class="app-icon" src={icon(a.key).src} srcset={`${icon(a.key).src} 1x, ${icon(a.key).src2x} 2x`} width="44" height="44" alt="" loading="lazy" />{a.name}<span class="dot">.</span></p>
             <h2 class="promise">{a.promise} <span class="accent">{a.accent}</span></h2>
             <p class="sub">{a.sub}</p>
             <ul class="points">
               {a.points.map((pt) => <li>{pt}</li>)}
             </ul>
             <div class="ctas">
-              <a class="cta" href={`${a.href}#beta`}>Join the beta →</a>
-              <a class="soft" href={a.href}>See {a.name} →</a>
+              {a.href ? (
+                <>
+                  <a class="cta" href={`${a.href}#beta`}>Join the beta →</a>
+                  <a class="soft" href={a.href}>See {a.name} →</a>
+                </>
+              ) : (
+                <a class="cta" href="/first">Get in first →</a>
+              )}
             </div>
           </div>
         </article>
       ))}
     </section>
 
-    <section class="block together">
-      <p class="section-label">Better together</p>
-      <p class="line">Each stands on its own. Both write to Apple Health, share one travel switch, and keep today's training time in step.</p>
-      <a class="soft" href="/rack/mealstack/details#better-together">What they share today →</a>
+    {/* The Full Stack's mark (Mike 10-16 17:09). COPY */}
+    <section class="stackband" aria-label="The Full Stack">
+      <StackAIMark size={72} />
+      <p class="sb-line">Three apps. One stack.</p>
+      <a class="soft" href="/rack/plans">The Full Stack →</a>
     </section>
 
-    <section class="block why">
-      <p class="section-label">Why these exist</p>
-      <p class="prose">
-        The first edition of the book was subtitled <em>Lessons from the Barbell and the Boardroom</em>, and that split still holds. The Loadout is the boardroom
-        half: skills for product leaders. The Rack is the barbell half: the tools I train with. I built them
-        for one lifter, in a home gym, during a meet prep, because nothing I tried did the whole job. Both keep your data on your phone,
-        in files you can export and bring back, and nothing leaves it unless you switch something on.
-        For the boardroom, see <a class="inline-link" href="/loadout">the Loadout</a>.
-      </p>
+    <section class="block coming" id="coming" aria-labelledby="coming-h">
+      <p class="section-label">Coming January 1</p>
+      {/* COPY (plan §5): one list, src/data/coming.ts. Each item comes off with the build that ships it. */}
+      <h2 class="strip-h" id="coming-h">What's next.</h2>
+      <div class="coming-grid">
+        {comingGroups.map((g) => (
+          <div class="coming-col">
+            <p class="coming-app">{g.name}</p>
+            <ul>{g.items.map((c) => <li><b>{c.title}</b>{c.detail ? ' ' + c.detail : ''}</li>)}</ul>
+          </div>
+        ))}
+      </div>
+      {comingTogether.length > 0 && <p class="later"><span class="tag">All three</span> {comingTogether.map((c) => c.title + (c.detail ? ' ' + c.detail : '')).join(' ')}</p>}
+      <p class="later"><span class="tag">Coming later</span> {comingLater.map((c) => c.title).join(' ')}</p>
+    </section>
+
+    <section class="block three-up">
+      <div>
+        <p class="section-label">Plans</p>
+        {/* COPY (plan §4, Mike 19:06) */}
+        <p class="line-sm">Pick a plan for one app, or The Full Stack for all three. Every app has a free way in, plus paid plans. The big screen comes with every plan. Pricing coming soon.</p>
+        <a class="soft" href="/rack/plans">See the plans →</a>
+      </div>
+      <div>
+        <p class="section-label">For coaches</p>
+        <p class="line-sm">Send the plan, see every set against it, and put the workout on the gym TV.</p>
+        <a class="soft" href="/coach">Coach mode →</a>
+      </div>
+      <div>
+        <p class="section-label">Compare</p>
+        <p class="line-sm">Line by line against the apps you know, including what they do better.</p>
+        <a class="soft" href="/rack/compare">How they compare →</a>
+      </div>
     </section>
 
     <section class="closer">
-      <p>The book is the plan. <strong>The Rack is the work.</strong></p>
+      <p>Every lift is a mission.</p>
     </section>
   </main>
   <SiteFooter />
@@ -152,8 +246,9 @@ const apps: App[] = [
   .trust { list-style: none; margin: 16px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 18px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; color: var(--color-chalk-dim); }
   .trust li::before { content: '✓'; margin-right: 7px; color: var(--color-army); }
 
-  /* the two apps */
-  .apps { margin: 40px var(--pad-page-x) 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: var(--border-thin); border-left: var(--border-thin); }
+  /* the three apps */
+  .section-label.apps-label { margin: 40px var(--pad-page-x) 14px; }
+  .apps { margin: 0 var(--pad-page-x); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: var(--border-thin); border-left: var(--border-thin); }
   .app { min-width: 0; border-right: var(--border-thin); border-bottom: var(--border-thin); display: grid; grid-template-rows: auto 1fr; }
   /* The panel crops the phones at its foot: the crop is on .shots, around each whole PhoneFrame,
      so the frame and the screen are cut together. A PhoneFrame is 15 em wide, so each font-size
@@ -168,19 +263,68 @@ const apps: App[] = [
   .pair .ph.front { width: var(--pw); font-size: calc(var(--pw) / 15); margin: 0 0 0 auto; }
   /* The framed phone is --pw x (0.88 x ar + 0.12) tall; the watch case's top sits at 20% of it. */
   .pair-watch { position: absolute; left: 0; font-size: calc(var(--pw) * 0.075); top: calc(var(--pw) * (0.88 * var(--ar) + 0.12) * 0.2 - 3.2em); }
-  .app-body { padding: 28px 32px 32px; display: grid; gap: 14px; align-content: start; }
+  /* MissionStack: the iPad in front, the Apple TV behind it up and to the right. */
+  .shots.with-tablet { display: block; padding: 36px 20px 0; }
+  .board { position: relative; max-width: 420px; margin: 0 auto; }
+  .board .board-tv { width: 70%; margin-left: auto; opacity: 0.9; }
+  .board .board-tablet { position: relative; z-index: 2; width: 88%; margin-top: -24%; }
+  /* Equal cards (Mike 10-16 09:41): the body fills the card and the buttons sit on its floor. */
+  .app-body { padding: 28px 32px 32px; display: flex; flex-direction: column; gap: 14px; }
   .app-name { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 22px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-chalk); }
   .promise { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3vw, 40px); line-height: 1; letter-spacing: -0.01em; text-transform: uppercase; color: var(--color-chalk); }
   .promise .accent { color: var(--color-blood-bright); }
   .sub { margin: 0; max-width: 52ch; font-family: var(--font-serif); font-size: 16px; line-height: 1.6; color: var(--color-chalk-dim); }
-  .points { list-style: none; margin: 4px 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 18px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em; color: var(--color-chalk-dim); }
-  .points li { padding-left: 16px; position: relative; }
+  .points { list-style: none; margin: 4px 0 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px 18px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em; color: var(--color-chalk-dim); }
+  .points li { padding-left: 16px; position: relative; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  /* Side by side, each row of the three cards lines up (QA 10-16): the cards share one grid through
+     subgrid, so the headings, subs, bullets and buttons start at the same height in all three. */
+  @media (min-width: 1100px) {
+    @supports (grid-template-rows: subgrid) {
+      .apps { grid-template-rows: auto auto auto auto 1fr auto; }
+      .app { grid-row: span 6; grid-template-rows: subgrid; row-gap: 0; }
+      .app-body { grid-row: 2 / span 5; display: grid; grid-template-rows: subgrid; row-gap: 14px; }
+      .app-body .ctas { margin-top: 0; align-self: end; }
+    }
+  }
   .points li::before { content: ''; position: absolute; left: 0; top: 6px; width: 6px; height: 6px; border: 1px solid var(--color-chalk-faint); }
-  .ctas { margin-top: 10px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 22px; }
+  .ctas { margin-top: auto; padding-top: 10px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 22px; }
   .cta { display: inline-flex; padding: 13px 20px; background: var(--color-blood); color: var(--color-chalk); font-family: var(--font-display); font-weight: 600; font-size: 15px; letter-spacing: 0.04em; text-transform: uppercase; transition: background 120ms ease-out; }
   .cta:hover { background: var(--color-blood-bright); }
   .soft { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-dim); border-bottom: 1px solid var(--color-chalk-ghost); padding-bottom: 2px; }
   .soft:hover { color: var(--color-chalk); border-bottom-color: var(--color-chalk); }
+  /* App icons keep Apple's rounded mask (the app's own mark). */
+  .app-icon { width: 44px; height: 44px; border-radius: 22.37%; border: 1px solid var(--color-rule); vertical-align: middle; margin-right: 14px; }
+  .app-name { display: flex; align-items: center; }
+
+  /* Coming January 1 */
+  .coming-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 28px; border-top: var(--border-thin); }
+  .coming-col { padding-top: 16px; }
+  .coming-app { margin: 0 0 10px; font-family: var(--font-display); font-weight: 700; font-size: 18px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-chalk); }
+  .coming-col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; font-family: var(--font-serif); font-size: 15px; line-height: 1.55; color: var(--color-chalk-dim); }
+  .coming-col b { color: var(--color-chalk); }
+  .later { margin: 22px 0 0; display: grid; grid-template-columns: 9.5rem minmax(0, 1fr); gap: 10px; align-items: baseline; font-family: var(--font-serif); font-size: 15px; color: var(--color-chalk-dim); }
+  @media (max-width: 480px) { .later { grid-template-columns: minmax(0, 1fr); gap: 4px; } }
+  .tag { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-chalk-faint); margin-right: 6px; }
+  .stackband { margin: 72px var(--pad-page-x) 0; display: grid; justify-items: center; gap: 16px; text-align: center; }
+  .sb-line { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(30px, 4vw, 46px); line-height: 1; text-transform: uppercase; color: var(--color-chalk); }
+  .three-up { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
+  .three-up > div { display: flex; flex-direction: column; align-items: flex-start; }
+  .three-up .soft { margin-top: auto; }
+  .line-sm { margin: 0 0 14px; max-width: 44ch; font-family: var(--font-serif); font-size: 16px; line-height: 1.6; color: var(--color-chalk-dim); }
+
+  /* the ad's strip: four tiles, a screen and a line each */
+  .strip-h { margin: 0 0 24px; max-width: 26ch; font-family: var(--font-display); font-weight: 600; font-size: clamp(26px, 3.2vw, 38px); line-height: 1.05; text-transform: uppercase; color: var(--color-chalk); }
+  .tiles { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: var(--border-thin); border-left: var(--border-thin); }
+  .tile { min-width: 0; border-right: var(--border-thin); border-bottom: var(--border-thin); }
+  .tile a { display: grid; grid-template-rows: auto auto 1fr; gap: 8px; height: 100%; padding: 0 0 20px; transition: background 120ms ease-out; }
+  .tile a:hover { background: var(--color-panel); }
+  .tile-shot { height: 220px; overflow: hidden; display: flex; justify-content: center; align-items: flex-start; padding: 24px 16px 0; background: var(--color-panel); border-bottom: var(--border-thin); margin-bottom: 8px; }
+  .tile-shot.phone > :global(*) { width: 62%; }
+  .tile-shot.tablet { align-items: center; padding-top: 0; }
+  .tile-shot.tablet > :global(*) { width: 100%; }
+  .tile-shot.watch { font-size: 11px; padding-top: 8px; }
+  .tile-line { padding: 0 18px; font-family: var(--font-display); font-weight: 600; font-size: 20px; line-height: 1.1; text-transform: uppercase; color: var(--color-chalk); }
+  .tile-body { padding: 0 18px; font-family: var(--font-serif); font-size: 14.5px; line-height: 1.55; color: var(--color-chalk-dim); }
 
   /* below the fold */
   .block { padding: 56px var(--pad-page-x) 0; }
@@ -196,13 +340,21 @@ const apps: App[] = [
 
   @media (max-width: 1099px) {
     .hero, .block, .closer { padding-left: var(--pad-page-x-mid); padding-right: var(--pad-page-x-mid); }
-    .apps { margin-left: var(--pad-page-x-mid); margin-right: var(--pad-page-x-mid); grid-template-columns: minmax(0, 1fr); }
+    .apps, .section-label.apps-label { margin-left: var(--pad-page-x-mid); margin-right: var(--pad-page-x-mid); }
+    .apps { grid-template-columns: minmax(0, 1fr); }
+    .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .coming-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .three-up { grid-template-columns: minmax(0, 1fr); }
   }
   @media (max-width: 720px) {
     .hero, .block, .closer { padding-left: var(--pad-page-x-mobile); padding-right: var(--pad-page-x-mobile); }
     .hero { padding-top: 32px; }
     .subtitle { font-size: 17px; }
-    .apps { margin: 28px var(--pad-page-x-mobile) 0; }
+    .section-label.apps-label { margin: 28px var(--pad-page-x-mobile) 12px; }
+    .apps { margin: 0 var(--pad-page-x-mobile); }
+    .tiles { grid-template-columns: minmax(0, 1fr); }
+    .coming-grid { grid-template-columns: minmax(0, 1fr); }
+    .tile-shot { height: 200px; }
     .shots { height: 260px; padding-top: 24px; }
     .app-body { padding: 22px 20px 26px; }
     .points { grid-template-columns: minmax(0, 1fr); }
