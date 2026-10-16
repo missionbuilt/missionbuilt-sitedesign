@@ -328,7 +328,7 @@ const ld = {
       <div class="status-panel">
         <div class="status-copy">
           <h3>On TestFlight now, with outside testers</h3>
-          {build && <p class="build-line">Newest build: <a class="inline-link" href={releaseUrl(build)}>MealStack {build.data.version}</a> · {when(build.data, true)}</p>}
+          {build && <p class="build-line">Newest build: <a class="inline-link" href={releaseUrl(build)}>MealStack {build.data.version}</a> · {when(build.data, true)}</p>}
           <p>MealStack runs my own day, every day, and a small group of outside testers is on it with me. I add testers by hand, in small batches, from the email on your Apple ID. You get an invite from Apple, a link to install, a choice of how to start, and a short list of things I would like you to break.</p>
           <p>Each beta build lasts ninety days, and the next one arrives before it runs out. The address is used for the invite and nothing else; you can leave from the invite email at any time.</p>
 
@@ -885,4 +885,18 @@ const ld = {
     .step { grid-template-columns: minmax(0, 1fr); gap: 6px; padding: 20px; }
   }
   .diff-cell .body, .evidence { font-size: 15px; }
+  .note { font-size: 14px; }
+  /* iPhone recheck 10-16: names, versions and labels stay whole; door cards stack on phones; small links tappable. */
+  .inline-link, .field-k em { white-space: nowrap; }
+  .kit-links { line-height: 2.4; }
+  .meta-strip span, .hero-note span { white-space: nowrap; }
+  .note { font-size: 14px; color: var(--color-chalk-dim); }
+  .card-link, .related-card a { display: inline-flex; align-items: center; min-height: 44px; }
+  @media (max-width: 520px) {
+    .door { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+    .door .s { justify-self: start; }
+  }
+  /* Breadcrumb underline on the words, not the 44 pt box; no stacked rules after the last comparison row (iPhone recheck 10-16). */
+  .breadcrumb a { border-bottom: 0; text-decoration: underline; text-decoration-color: var(--color-chalk-ghost); text-underline-offset: 4px; }
+  .vr:last-child { border-bottom: 0; }
 </style>

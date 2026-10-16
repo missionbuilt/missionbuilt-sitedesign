@@ -173,7 +173,7 @@ const hasJoin = Astro.slots.has('join');
   .localbar { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px var(--pad-page-x); background: rgba(23, 21, 19, 0.96); -webkit-backdrop-filter: saturate(1.4) blur(14px); backdrop-filter: saturate(1.4) blur(14px); border-bottom: var(--border-thin); }
   .lb-name { font-family: var(--font-display); font-weight: 600; font-size: 18px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-chalk); }
   .lb-links { display: flex; align-items: center; gap: 22px; }
-  .lb-links a { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-chalk-dim); border: 0; }
+  .lb-links a { display: inline-flex; align-items: center; min-height: 44px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-chalk-dim); border: 0; }
   .lb-links a:hover { color: var(--color-chalk); }
   .lb-links a.lb-cta { display: inline-flex; align-items: center; min-height: 44px; padding: 8px 14px; background: var(--color-blood); color: var(--color-chalk); font-family: var(--font-display); font-weight: 600; font-size: 13px; letter-spacing: 0.06em; }
 
@@ -267,7 +267,7 @@ const hasJoin = Astro.slots.has('join');
     .n2 .dev.watch { margin-left: -40px; }
     .n3 { gap: 10px; }
     .pp-facts { flex-direction: column; align-items: flex-start; gap: 4px; }
-    .pp-more { gap: 12px 22px; }
+    .pp-more { display: grid; grid-template-columns: repeat(3, max-content); justify-content: center; gap: 0 20px; }
     .text-link { letter-spacing: 0.1em; }
   }
   /* iPhone landscape and other short, wide screens (iPhone QA 10-16): the hero and every device fit the height. */
@@ -279,6 +279,7 @@ const hasJoin = Astro.slots.has('join');
     .pp-line { margin-top: 8px; }
     .pp-ch { min-height: 0; padding-top: 48px; padding-bottom: 24px; }
     .pp-family, .pp-promise, .pp-closer { padding-top: 56px; }
+    .pp-closer { padding-bottom: 24px; }
     .dev.phone, .n2 .dev.phone, .n3 .dev.phone { width: min(150px, 30vw); }
     .n2 .dev.tablet + .dev.phone { width: 120px; }
     .dev.tablet { width: min(460px, 100%); }

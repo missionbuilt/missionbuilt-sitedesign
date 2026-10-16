@@ -330,7 +330,7 @@ const ld = {
       <div class="status-panel">
         <div class="status-copy">
           <h3>On TestFlight now, with outside testers</h3>
-          {build && <p class="build-line">Newest build: <a class="inline-link" href={releaseUrl(build)}>IronStack {build.data.version}</a> · {when(build.data, true)}</p>}
+          {build && <p class="build-line">Newest build: <a class="inline-link" href={releaseUrl(build)}>IronStack {build.data.version}</a> · {when(build.data, true)}</p>}
           <p>IronStack logs every workout I do, and a small group of outside testers is on it with me. New testers come in small batches, added by hand from the email on your Apple ID, and I would especially like people coming from Hevy or Strong, and training partners who want to try Social together.</p>
           <p>You get an email from TestFlight, Apple's own app for trying apps before they reach the App Store: install TestFlight, tap the link, and IronStack installs like any other app. Keep Hevy or Strong on your phone the whole time. The address is used for the invite and nothing else.</p>
           <p>Training with someone? Sign up together and put their name in the note, and I will add you in the same batch.</p>
@@ -341,7 +341,7 @@ const ld = {
             </label>
             <label class="field">
               <span class="field-k">What do you log in now? <em>optional</em></span>
-              <input type="text" name="note" id="beta-note" autocomplete="off" placeholder="Hevy, Strong, a notebook · signing up with my partner" maxlength="200" />
+              <input type="text" name="note" id="beta-note" autocomplete="off" placeholder="a notebook, another app" maxlength="200" />
             </label>
             <div class="hp" aria-hidden="true"><label>Website<input type="text" name="website" tabindex="-1" autocomplete="off" /></label></div>
             <input type="hidden" name="t" id="beta-t" value="" />
@@ -403,7 +403,7 @@ const ld = {
           <span class="related-cta">Read →</span>
         </a>
       </div>
-      <p class="kit-links"><a class="inline-link" href="/rack/ironstack/terms">Terms of use</a> (a draft, under review) · <a class="inline-link" href="/rack/ironstack/privacy">Privacy</a> · <a class="inline-link" href="/rack/support">Support</a> · <a class="inline-link" href="/rack/acknowledgements">Acknowledgements</a></p>
+      <p class="kit-links"><a class="inline-link" href="/rack/ironstack/terms">Terms of use</a> (a draft, under review) · <a class="inline-link" href="/rack/ironstack/privacy">Privacy</a> · <a class="inline-link" href="/rack/support">Support</a> · <a class="inline-link" href="/rack/acknowledgements">Acknowledgements</a></p>
     </section>
 
     <hr class="dashed" />
@@ -810,4 +810,17 @@ const ld = {
     .step { grid-template-columns: minmax(0, 1fr); gap: 6px; padding: 20px; }
   }
   .diff-cell .body, .evidence { font-size: 15px; }
+  /* iPhone recheck 10-16: names, versions and labels stay whole; door cards stack on phones; small links tappable. */
+  .inline-link, .field-k em { white-space: nowrap; }
+  .kit-links { line-height: 2.4; }
+  .meta-strip span, .hero-note span { white-space: nowrap; }
+  .note { font-size: 14px; color: var(--color-chalk-dim); }
+  .card-link, .related-card a { display: inline-flex; align-items: center; min-height: 44px; }
+  @media (max-width: 520px) {
+    .door { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+    .door .s { justify-self: start; }
+  }
+  /* Breadcrumb underline on the words, not the 44 pt box; no stacked rules after the last comparison row (iPhone recheck 10-16). */
+  .breadcrumb a { border-bottom: 0; text-decoration: underline; text-decoration-color: var(--color-chalk-ghost); text-underline-offset: 4px; }
+  .vr:last-child { border-bottom: 0; }
 </style>

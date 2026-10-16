@@ -95,4 +95,5 @@ const shots = [
   /* QA pass 2026-10-16: every shot fills its tile the same way; boards in a row the same size. */
   .shots img { height: 300px; padding: 16px; }
   @media (max-width: 720px) { .icons { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; } .icons img { width: 100%; height: auto; } .shots img { height: auto; max-height: min(420px, 60vh); } }
+  @media (max-width: 720px) { .shots img { height: min(340px, 48vh) !important; max-height: none; } }
 </style>
