@@ -34,23 +34,26 @@ const BUTTONDOWN = 'https://api.buttondown.com/v1/subscribers';
 const TIMEOUT_MS = 8000;
 const MAX_BODY = 4096;         // bytes; the form is an email, a slug and a short name
 const VIA = /^[a-z0-9-]{1,24}$/;
+// Which links we count: campaigns, never people (security review 10-15). Add a slug here when a new
+// QR or link goes out; anything else is dropped.
+export const KNOWN_VIA = new Set(['li', 'poster', 'blog', 'board', 'ad', 'card']);
 const FOUNDER_MAX = 40;        // characters shown on the founders page
 
 /** The link slug, or '' if it isn't one. */
 export function cleanVia(v) {
   const s = String(v || '').trim().toLowerCase();
-  return VIA.test(s) ? s : '';
+  return VIA.test(s) && KNOWN_VIA.has(s) ? s : '';
 }
 
 /** The founder name as it would be shown: printable, single spaces, at most 40 characters. */
 export function cleanFounderName(v) {
-  return String(v || '')
+  const out = String(v || '')
     .normalize('NFC')
     .replace(/[\p{C}<>]/gu, '')
     .replace(/\s+/g, ' ')
-    .trim()
-    .slice(0, FOUNDER_MAX)
     .trim();
+  // Cut by characters, not UTF-16 units, so an emoji is never split in half.
+  return Array.from(out).slice(0, FOUNDER_MAX).join('').trim();
 }
 
 function json(body, status = 200) {

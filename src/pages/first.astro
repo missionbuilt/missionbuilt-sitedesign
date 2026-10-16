@@ -128,7 +128,8 @@ const faq = [
     // Which link brought them: a short slug from ?via=, nothing else (the function checks it again).
     const viaIn = form.querySelector<HTMLInputElement>('[data-via]');
     const via = (new URLSearchParams(location.search).get('via') || '').toLowerCase();
-    if (viaIn && /^[a-z0-9-]{1,24}$/.test(via)) viaIn.value = via;
+    // The campaigns we count (functions/api/first.js KNOWN_VIA); anything else is dropped.
+    if (viaIn && ['li', 'poster', 'blog', 'board', 'ad', 'card'].includes(via)) viaIn.value = via;
     // The name field shows only once the box is ticked (without JS it always shows).
     const box = form.querySelector<HTMLInputElement>('[data-founder]');
     const nameRow = form.querySelector<HTMLElement>('[data-founder-name]');

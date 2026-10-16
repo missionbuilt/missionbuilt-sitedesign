@@ -178,7 +178,8 @@ test('via: a short slug goes with the sign-up as a tag and metadata; anything el
   await onRequestPost({ request: post({ email: 'a@b.co', t: OLD, via: 'LI' }), env: { BETA_KV: kv(), BUTTONDOWN_API_KEY: KEY } }, bd);
   assert.deepEqual(JSON.parse(bd.calls[0].init.body), { email_address: 'a@b.co', tags: ['first', 'via-li'], metadata: { via: 'li' } });
   for (const bad of ['', 'a b', '<script>', 'x'.repeat(25), 'li?x=1', 'ünï']) assert.equal(cleanVia(bad), '', bad);
-  assert.equal(cleanVia('poster-2'), 'poster-2');
+  assert.equal(cleanVia('poster'), 'poster');
+  assert.equal(cleanVia('jane-doe'), '', 'a slug we did not hand out is dropped');
 });
 
 test('founder name: sent only when the box is ticked, cleaned and capped at 40', async () => {
@@ -191,6 +192,8 @@ test('founder name: sent only when the box is ticked, cleaned and capped at 40',
   assert.deepEqual(JSON.parse(bd2.calls[0].init.body), { email_address: 'a@b.co', tags: ['first'] });
 
   assert.equal(cleanFounderName('x'.repeat(60)).length, 40);
+  assert.equal(Array.from(cleanFounderName('💪'.repeat(41))).length, 40, 'cut by characters');
+  assert.equal(cleanFounderName('a'.repeat(39) + '💪💪'), 'a'.repeat(39) + '💪', 'no emoji split in half')
   assert.equal(cleanFounderName('   '), '');
 });
 

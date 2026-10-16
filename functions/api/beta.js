@@ -10,6 +10,11 @@
  * GET   ?key=<BETA_ADMIN_KEY> lists every signup as tab-separated lines
  *       (when\temail\tnote\tcountry). Anything else is a 404.
  *
+ * Hardened 2026-10-15 to /api/first's standard before the launch QR can send traffic here (security
+ * review of #194's fallback): only our own pages may post (Origin), a body over 4 KB is refused,
+ * a post without the page's time is a bot, and the per-IP counter's key is a hash of the IP with a
+ * daily random salt, so KV never holds an IP.
+ *
  * Bindings (wrangler.jsonc): BETA_KV (KV namespace), BETA_ADMIN_KEY (secret).
  * If BETA_KV is not bound yet the function answers 503 {ok:false, fallback:true}
  * and the page shows the email fallback instead of an error.
@@ -19,6 +24,23 @@ const EMAIL = /^[^\s@]{1,64}@[^\s@]{1,190}\.[^\s@]{2,24}$/;
 const RATE_LIMIT = 5;          // posts per IP per window
 const RATE_WINDOW = 3600;      // seconds
 const MIN_AGE_MS = 2000;       // form must be at least this old
+const MAX_BODY = 4096;         // bytes; an email, a short note and a few fields
+
+// Today's salt, random and kept two days, so a counter key can't be turned back into an IP.
+async function todaysSalt(kv) {
+  const key = 'beta-salt:' + new Date().toISOString().slice(0, 10);
+  let salt = await kv.get(key);
+  if (!salt) {
+    salt = [...crypto.getRandomValues(new Uint8Array(16))].map((b) => b.toString(16).padStart(2, '0')).join('');
+    await kv.put(key, salt, { expirationTtl: 2 * 24 * 3600 });
+  }
+  return salt;
+}
+
+async function ipKey(ip, salt) {
+  const digest = new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(`${salt}|${ip}`)));
+  return 'rl:' + [...digest.slice(0, 12)].map((b) => b.toString(16).padStart(2, '0')).join('');
+}
 
 function json(body, status = 200, extra = {}) {
   return new Response(JSON.stringify(body), {
@@ -65,6 +87,16 @@ async function readBody(request) {
 
 export async function onRequestPost({ request, env }) {
   const asJson = wantsJson(request);
+
+  // Only our own pages post here: another site can't sign someone up through a visitor's browser.
+  const origin = request.headers.get('origin');
+  if (origin && origin !== new URL(request.url).origin) {
+    return asJson ? json({ ok: false, error: 'That did not go through.' }, 403) : back(request, '/rack/mealstack', 'err');
+  }
+  if (parseInt(request.headers.get('content-length') || '0', 10) > MAX_BODY) {
+    return asJson ? json({ ok: false, error: 'That did not go through.' }, 413) : back(request, '/rack/mealstack', 'err');
+  }
+
   const body = await readBody(request);
   const page = typeof body.page === 'string' ? body.page : '/rack/mealstack';
 
@@ -75,10 +107,11 @@ export async function onRequestPost({ request, env }) {
   const email = String(body.email || '').trim().toLowerCase();
   const note = String(body.note || '').trim().slice(0, 200);
   const honeypot = String(body.website || '').trim();
-  const t = parseInt(String(body.t || '0'), 10);
+  const t = parseInt(String(body.t || ''), 10);
 
-  // Bots: say yes, store nothing.
-  if (honeypot || (t && Date.now() - t < MIN_AGE_MS)) {
+  // Bots: say yes, store nothing. Every form sends when it was drawn, so a post without it, or too
+  // soon after, is a bot.
+  if (honeypot || !Number.isFinite(t) || Date.now() - t < MIN_AGE_MS) {
     return asJson ? json({ ok: true }) : back(request, page, 'ok');
   }
 
@@ -88,7 +121,7 @@ export async function onRequestPost({ request, env }) {
 
   // Rate limit by IP.
   const ip = request.headers.get('cf-connecting-ip') || 'unknown';
-  const rlKey = 'rl:' + ip;
+  const rlKey = await ipKey(ip, await todaysSalt(env.BETA_KV));
   const used = parseInt((await env.BETA_KV.get(rlKey)) || '0', 10);
   if (used >= RATE_LIMIT) {
     return asJson ? json({ ok: false, error: 'Too many tries from here. Give it an hour.' }, 429) : back(request, page, 'err');
