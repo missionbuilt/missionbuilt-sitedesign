@@ -69,13 +69,10 @@ const absoluteOgImage = ogImage.startsWith('http') ? ogImage : new URL(ogImage, 
     {/* Theme color — match charcoal bg so mobile chrome blends */}
     <meta name="theme-color" content="#171513" />
 
-    {/* Fonts: Oswald (display), Merriweather (serif body), JetBrains Mono (mono) */}
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=JetBrains+Mono:wght@400;500;600&display=swap"
-      rel="stylesheet"
-    />
+    {/* Fonts: Oswald (display), Merriweather (serif body), JetBrains Mono (mono), self-hosted from
+        /fonts since 2026-10-15 (src/styles/fonts.css, imported by global.css): no visitor's IP goes to
+        Google for a font (privacy review of the launch preview). */}
+    <link rel="preload" href="/fonts/oswald-latin-TK3IWkUHHAIjg75cFRf3bXL8LICs1_Fv40pKlN4NNSeSASz7FmlWHYjMdZwl.woff2" as="font" type="font/woff2" crossorigin />
 
     {/* Favicon set: barbell mark — oxblood plates, chalk bar, charcoal canvas.
         The ?v=2 cache-buster forces browsers to re-fetch when the icon changes;

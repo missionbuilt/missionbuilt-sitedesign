@@ -5,7 +5,7 @@
  * One email field, plus two things the person chooses: their name or handle on the founders page
  * (opt-in), and, silently, which link brought them (?via=li, ?via=poster; Mike 2026-10-15 19:06).
  * It posts to our own Pages Function (functions/api/first.js), which hands it to Buttondown
- * server-side; no third-party script, pixel or font loads on this page.
+ * server-side; no third-party script or pixel loads on this page, and the fonts are self-hosted.
  * Words: hq/briefs/site/site-launch-preview-plan.md §9 and Mike's 19:06 answers; drafts for
  * Mike's yes (every line marked COPY).
  *
@@ -78,7 +78,7 @@ const faq = [
         <input type="hidden" name="via" value="" data-via />
         <p class="status" role="status" aria-live="polite" data-status></p>
         {/* COPY */}
-        <p class="fine">Launch news and a short series through January 31: four to six emails from Mike. Every one has a one-click unsubscribe. We note which link you came from. Nothing else, and never sold. <a href="/rack/support#the-get-in-first-list">How your email is kept</a>.</p>
+        <p class="fine">Launch news and a short series through January 31: four to six emails from Mike. Every one has a one-click unsubscribe. We note which link you came from. Your name goes on the founders page only if you tick the box; change it or come off any time. Until the list opens, this signs you up for the beta instead. Never sold. <a href="/rack/support#the-get-in-first-list">How your email is kept</a>.</p>
       </form>
     </section>
 

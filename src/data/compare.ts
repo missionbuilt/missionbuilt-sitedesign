@@ -156,7 +156,7 @@ const ironstack: ComparePage = {
     {
       key: 'privacy',
       label: 'Privacy',
-      ours: { text: 'Not on the App Store yet, so there is no label to quote. Everything you log is a file on your phone. Nothing goes to Anthropic until you turn Stack AI on. Usage data only if you say yes, and never anything you typed.' },
+      ours: { text: 'Not on the App Store yet, so there is no label to quote. Everything you log is a file on your phone. Nothing goes to Anthropic until you turn Stack AI on. IronStack sends no usage data at all.' },
       them: {
         hevy: { text: 'App Store label: no "Data Used to Track You" section shown. Linked to you: purchases, usage data (analytics), email, name, contacts. Not linked: user ID, sensitive info, diagnostics.', sources: [s(HEVY_APPSTORE)] },
         strong: { text: 'App Store label: no "Data Used to Track You" section shown. Linked to you (app functionality): health and fitness, purchases, email, user ID, device ID, crash data, other data.', sources: [s(STRONG_APPSTORE)] },

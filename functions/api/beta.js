@@ -133,7 +133,9 @@ export async function onRequestPost({ request, env }) {
   const existing = await env.BETA_KV.get(key, 'json');
   const record = {
     email,
-    note: note || (existing && existing.note) || '',
+    // A newer note is added to an earlier one, never written over it (a tester's "my coach invited
+    // me" survives a later Get in first sign-up).
+    note: [...new Set([existing && existing.note, note].filter(Boolean))].join(' · ').slice(0, 200),
     at: (existing && existing.at) || new Date().toISOString(),
     updated: new Date().toISOString(),
     country: request.headers.get('cf-ipcountry') || '',

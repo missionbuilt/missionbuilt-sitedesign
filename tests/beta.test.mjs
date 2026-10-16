@@ -53,3 +53,10 @@ test('the rate-limit key holds no IP', async () => {
   assert.ok(keys.every((k) => !k.includes('203.0.113.7')));
   assert.ok(keys.some((k) => /^rl:[0-9a-f]{24}$/.test(k)));
 });
+
+test('a later note is added to an earlier one, not written over it', async () => {
+  const store = kv();
+  await onRequestPost({ request: post({ email: 'a@b.co', t: OLD, note: 'my coach invited me' }), env: { BETA_KV: store } });
+  await onRequestPost({ request: post({ email: 'a@b.co', t: OLD, note: 'Get in first · via li' }), env: { BETA_KV: store } });
+  assert.equal(JSON.parse(store.m.get('signup:a@b.co')).note, 'my coach invited me · Get in first · via li');
+});
