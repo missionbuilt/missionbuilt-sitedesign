@@ -63,6 +63,6 @@ Hevy, Strong, JuggernautAI, MacroFactor and MyFitnessPal are trademarks of their
 
 ## Trademarks
 
-**IronStack**, **MealStack**, **Mission Built**, **MISSION ▪ BUILT**, the barbell mark, the oxblood-square mark and the IronStack and MealStack app icons are trademarks of Mission Built (Mike Nichols). They may not be used without written permission, except to refer to the apps or the book by name. Saying what something works with or was derived from is fine; presenting something as IronStack, MealStack or a Mission Built product is not.
+**IronStack**, **MealStack** and the IronStack and MealStack app icons are trademarks of Mission Built LLC, a Pennsylvania limited liability company. **Mission Built**, **MISSION ▪ BUILT**, the barbell mark and the oxblood-square mark are trademarks of Mike Nichols. They may not be used without written permission, except to refer to the apps or the book by name. Saying what something works with or was derived from is fine; presenting something as IronStack, MealStack or a Mission Built product is not.
 
 Apple, the Apple logo, iPhone, Apple Health, HealthKit, Sign in with Apple, TestFlight and App Store are trademarks of Apple Inc. Claude and Anthropic are trademarks of Anthropic, PBC. Cloudflare is a trademark of Cloudflare, Inc. Other names belong to their owners.
