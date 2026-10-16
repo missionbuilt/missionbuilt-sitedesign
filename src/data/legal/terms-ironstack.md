@@ -13,7 +13,7 @@
 
 ## 1. Who we are
 
-IronStack is made by Mission Built LLC ("Mission Built", "we", "us"), a Pennsylvania limited liability company in Pittsburgh, Pennsylvania, USA. On October 15, 2026, Mission Built became Mission Built LLC. Nothing about your data or your rights changed. Until our App Store account moves to Mission Built LLC, the App Store may show Mike Nichols as the seller.
+IronStack is made by Mission Built LLC ("Mission Built", "we", "us"), a Pennsylvania limited liability company in Pittsburgh, Pennsylvania, USA. On October 15, 2026, Mission Built became Mission Built LLC. Nothing about what we collect, where it goes, how long we keep it or what you can ask us for changed. Until our App Store account moves to Mission Built LLC, the App Store may show Mike Nichols as the seller.
 
 Email: support@missionbuilt.io.
 
@@ -167,7 +167,7 @@ IronStack relies on Apple (the App Store, Health, Sign in with Apple, notificati
 
 The app, its design, text, recordings, badges and code belong to Mission Built or its licensors. Open-source parts are under their own licences, listed in the app under Settings › Acknowledgements and on [the acknowledgements page](/rack/acknowledgements).
 
-**IronStack**, **MealStack** and the app icons are trademarks of Mission Built LLC. **Mission Built**, **MISSION ▪ BUILT**, the barbell mark and the oxblood-square mark are trademarks of Mission Built (Mike Nichols). You may not use them without written permission, except to refer to the apps by name.
+**IronStack**, **MealStack** and the app icons are trademarks of Mission Built LLC. You may not use them without written permission, except to refer to the apps by name.
 
 The Mission Built Schema, the file format, is documented so anything can read and write it. Writing a file in that format doesn't give you rights to the marks above.
 
