@@ -12,7 +12,7 @@
  *
  * The page has one job: someone who has never heard of the app learns why it
  * exists, what it does differently, how you use it, and how to get it. In
- * order: hero → try it (the click-through demo, /demos/mealstack.html) →
+ * order (the click-through demo and the live rule left 2026-10-16, Mike 08:32: "less is more"): hero →
  * why (the four pillars, linking to the Log) → the rule (live cascade)
  * → what it does differently → how you use it → side by side → fine print →
  * join the beta (form → /api/beta) → the kit (release notes, schema,
@@ -36,7 +36,6 @@ import SiteFooter from '../../../components/SiteFooter.astro';
 import { getCollection as getReleases } from 'astro:content';
 import { newestBuild, releaseUrl, when } from '../../../data/releases';
 import TopNav from '../../../components/TopNav.astro';
-import DemoEmbed from '../../../components/DemoEmbed.astro';
 import BetterTogether from '../../../components/BetterTogether.astro';
 import { getCollection } from 'astro:content';
 import { byNewest, logUrl } from '../../../data/logs';
@@ -177,7 +176,6 @@ const ld = {
 
       <div class="hero-ctas">
         <a class="cta" href="#beta">Join the beta →</a>
-        <a class="cta-soft" href="#demo">See how it works ↓</a>
       </div>
     </section>
 
@@ -190,25 +188,6 @@ const ld = {
         </div>
       ))}
     </section>
-
-    {/* ---------- TRY IT: click-through demo ---------- */}
-    <section class="block" id="demo">
-      <p class="section-label">Try it</p>
-      <h2 class="section-h2">The four pillars, in about a minute.</h2>
-      <p class="prose">
-        Real screens from the app, not a video, shot in the iPhone Simulator with the clock set for
-        each step. The tour follows the four pillars: protect the protein, the session, the day and
-        the record, a few screens each. Tap where it's ringed, or let it drive.
-      </p>
-      <DemoEmbed
-        src="/demos/mealstack.html"
-        title="MealStack click-through demo"
-        caption="Click-through demo · real screens from MealStack 0.9.1 · four pillars"
-        mobileHeight={900}
-      />
-    </section>
-
-    <hr class="dashed" />
 
     {/* ---------- WHY ---------- */}
     <section class="block" id="why">
@@ -241,30 +220,6 @@ const ld = {
           </ul>
         </div>
       )}
-    </section>
-
-    <hr class="dashed" />
-
-    {/* ---------- THE RULE: live cascade ---------- */}
-    <section class="block" id="rule">
-      <p class="section-label">The rule</p>
-      <h2 class="section-h2">Breakfast was late. Your carb surge shouldn't be.</h2>
-      <p class="prose">
-        Two kinds of meal. The morning meals follow on from the time you actually ate.
-        The carb surge, your pre-workout meal, stays where the session puts it, and so does everything
-        after it. Drag breakfast late and watch which ones move.
-      </p>
-
-      <div class="demo" id="cascade">
-        <div class="demo-top">
-          <span><span class="k">Logged breakfast at</span><br /><span class="val" id="d-m1">7:00 AM</span></span>
-          <span><span class="k">Session</span><br /><span class="val">6:00 PM</span></span>
-        </div>
-        <input type="range" id="d-slider" min="420" max="720" step="15" value="420" aria-label="Breakfast time" />
-        <div class="demo-rows" id="d-rows"></div>
-        <p class="demo-foot" id="d-foot"></p>
-      </div>
-      <p class="note">The morning is meant to finish two hours before the carb surge. When a late breakfast won't allow that, the gaps tighten evenly, rounded to five minutes, and never below two hours; past that point lunch simply lands closer to the carb surge. The carb surge never moves for a late morning, and never past the start of the session: still not eaten when you start training, it's marked "Session started without it" and waits for you to log it or skip it. Move the session itself and everything tied to it moves with it.</p>
     </section>
 
     <hr class="dashed" />
@@ -375,7 +330,7 @@ const ld = {
           <h3>On TestFlight now, with outside testers</h3>
           {build && <p class="build-line">Newest build: <a class="inline-link" href={releaseUrl(build)}>MealStack {build.data.version}</a> · {when(build.data, true)}</p>}
           <p>MealStack runs my own day, every day, and a small group of outside testers is on it with me. I add testers by hand, in small batches, from the email on your Apple ID. You get an invite from Apple, a link to install, a choice of how to start, and a short list of things I would like you to break.</p>
-          <p>Builds expire every ninety days and you get the next one. The address is used for the invite and nothing else; you can leave from the invite email at any time.</p>
+          <p>Each beta build lasts ninety days, and the next one arrives before it runs out. The address is used for the invite and nothing else; you can leave from the invite email at any time.</p>
 
           <form class="beta-form" id="beta-form" method="post" action="/api/beta" novalidate>
             <label class="field">
@@ -500,81 +455,6 @@ const ld = {
 </BaseLayout>
 
 <script>
-  // ── The cascade rule on fictional data ──
-  // The app's rule, on one training day: the meals before the
-  // carb surge chain off the logged breakfast in three-hour gaps and must finish
-  // two hours before the carb surge; when they can't, the gaps shrink evenly
-  // (rounded to 5 minutes) and never below two hours. The carb surge is pinned
-  // 90 minutes before the session.
-  const SESSION = 18 * 60;
-  const SURGE = SESSION - 90;
-  const FLOOR = 120;
-  const GAP = 180;
-  const slider = document.getElementById('d-slider') as HTMLInputElement | null;
-  const rows = document.getElementById('d-rows');
-  const foot = document.getElementById('d-foot');
-  const m1lab = document.getElementById('d-m1');
-  const names = [
-    { code: 'M1', name: 'Breakfast', sub: 'logged' },
-    { code: 'M2', name: 'Mid-morning', sub: 'moves with you' },
-    { code: 'M3', name: 'Lunch', sub: 'moves with you' },
-    { code: 'M4', name: 'Carb surge', sub: 'stays put · 90 min before the session' },
-  ];
-  const planned = [420, 600, 780, SURGE];
-
-  function fmt(m: number): string {
-    let h = Math.floor(m / 60);
-    const mm = m % 60;
-    const ap = h >= 12 ? 'PM' : 'AM';
-    h = h % 12;
-    if (h === 0) h = 12;
-    return h + ':' + (mm < 10 ? '0' : '') + mm + ' ' + ap;
-  }
-  // Spans the way the app writes them: "1 hr 30 min", "45 min", "3 hr".
-  function span(m: number): string {
-    const h = Math.floor(m / 60);
-    const mm = m % 60;
-    return [h ? h + ' hr' : '', mm ? mm + ' min' : ''].filter(Boolean).join(' ') || '0 min';
-  }
-  function r5(x: number): number { return Math.round(x / 5) * 5; }
-
-  function build(m1: number): void {
-    if (!rows || !foot || !m1lab) return;
-    const ceiling = SURGE - FLOOR;
-    const gap = Math.max(FLOOR, Math.min(GAP, r5((ceiling - m1) / 2)));
-    const t = [m1, m1 + gap, m1 + 2 * gap, SURGE];
-    let html = '';
-    for (let i = 0; i < 4; i++) {
-      const locked = i === 3;
-      const shifted = !locked && i > 0 && t[i] !== planned[i];
-      const sub = i === 0 ? (m1 === planned[0] ? 'logged on time' : 'logged ' + span(m1 - planned[0]) + ' late')
-        : shifted ? 'moves · ' + span(gap) + ' gap' : names[i].sub;
-      html += '<div class="drow' + (locked ? ' locked' : '') + '">'
-        + '<span class="code">' + names[i].code + '</span>'
-        + '<span class="name">' + names[i].name + '<small>' + sub + '</small></span>'
-        + '<span class="time">' + (shifted ? '<s>' + fmt(planned[i]) + '</s>' : '') + fmt(t[i]) + '</span>'
-        + '</div>';
-    }
-    rows.innerHTML = html;
-    m1lab.textContent = fmt(m1);
-    const late = m1 - planned[0];
-    const running = ' Today says: "Running late. The gaps tightened so the carb surge still lands before your session."';
-    if (late === 0) {
-      foot.innerHTML = 'Nothing late. Three-hour gaps as planned. <b>Carb surge at ' + fmt(SURGE) + '.</b>';
-    } else if (gap === GAP) {
-      foot.innerHTML = 'Breakfast ' + span(late) + ' late. The morning moves with it and still fits. <b>The carb surge holds at ' + fmt(SURGE) + '.</b>';
-    } else if (gap > FLOOR) {
-      foot.innerHTML = 'Breakfast ' + span(late) + ' late. The gaps tighten evenly to ' + span(gap) + '.' + running + ' <b>The carb surge holds at ' + fmt(SURGE) + '.</b>';
-    } else {
-      foot.innerHTML = 'At the two-hour floor: lunch is now ' + span(SURGE - t[2]) + ' before the carb surge.' + running + ' <b>The carb surge still holds at ' + fmt(SURGE) + '. The session is what we protect.</b>';
-    }
-  }
-
-  if (slider) {
-    slider.addEventListener('input', () => build(parseInt(slider.value, 10)));
-    build(420);
-  }
-
   // ── Join the beta ──
   // Posts to the Pages Function at /api/beta. Without JS the form still posts
   // and the function answers with a redirect back to this page.

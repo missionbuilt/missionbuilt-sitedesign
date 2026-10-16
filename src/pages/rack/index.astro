@@ -29,6 +29,10 @@ import { SHOW_APP_SCREENS } from '../../data/screens';
  * the app icons on each card; Coming January 1 by app (src/data/coming.ts); plans, coaches and
  * compare. MissionStack is named and linked only once MISSIONSTACK_ANNOUNCED; until then its card
  * is "The gym board" and points to Get in first. No prices: "Pricing coming soon".
+ *
+ * Oct 16, 2026 (Mike 08:27/08:32, the panel): the four-tile strip (it repeated the home), better
+ * together and the Loadout paragraph are cut; "The Rack" leaves the eyebrow; MissionStack is named
+ * (cleared 08:30). Shorter subs and points.
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
@@ -68,8 +72,8 @@ const apps: App[] = [
     href: '/rack/ironstack',
     promise: 'Log fast. See progress.',
     accent: 'A coach in your corner.',
-    sub: 'A lifting log for iPhone and Apple Watch. Every lifting app I used was missing something; this one puts it in one place.',
-    points: ['Tap, type or say the set', 'Log from your Apple Watch', 'Your coach sees every set', 'Stack AI picks your next weight'],
+    sub: 'A lifting log for iPhone and Apple Watch, with the people you train with.',
+    points: ['One tap a set', 'Log from your Apple Watch', 'Train with friends', 'Your coach sees every set'],
     shots: [
       { src: '/images/ironstack/hero-session.webp', w: 540, h: 1174, alt: 'IronStack on iPhone mid-workout on a coach\'s plan: Box Squat, set 1 of 5, 275 for 3, with Log lit.' },
     ],
@@ -81,8 +85,8 @@ const apps: App[] = [
     href: '/rack/mealstack',
     promise: 'Your tracker says what you ate.',
     accent: 'This says when.',
-    sub: 'Meal timing for iPhone, built backward from your workout. Eat late and the day re-flows; your pre-workout meal still lands before you train.',
-    points: ['Anchored to your workout', 'Log when you actually ate', 'Holds up on the road', 'Stack AI builds your plan or reads a menu'],
+    sub: 'Meal timing for iPhone, built around your workout. Eat late and the rest of the day moves with you.',
+    points: ['Built around your workout', 'Log when you actually ate', 'A week of real plates'],
     shots: [
       { src: '/images/mealstack/today-training.webp', w: 540, h: 1174, alt: 'MealStack Today on a training day with the session at 6:30 PM: yogurt and whey logged late at 11:40, lunch next at 2:40 PM, the Home travel chip, and Eating out? Send Stack AI the menu.' },
       { src: '/images/mealstack/session-moved.webp', w: 540, h: 1174, alt: 'MealStack after the session moved to 6:30 PM: one line says the carb surge moved to 5:00 PM, the after-session shake to 7:30 PM and dinner to 9:00 PM, with an Undo.' },
@@ -94,8 +98,8 @@ const apps: App[] = [
     href: MS ? '/rack/missionstack' : '',
     promise: 'Your workout on the big screen.', // Mike's approved notes headline (10-13)
     accent: 'Live in the gym.', // the ad's line 6 (approved)
-    sub: 'The big-screen side of IronStack. Plan your training on iPad or Mac, and put your live workout on a board on iPad, Mac or Apple TV. One lifter on the board today.', // COPY (Beta App Description, lightly cut; plan §9 one-lifter line)
-    points: ['Read it across the room', 'Pair with one scan', 'Type a line, the sets fill in', 'No account, nothing collected'], // COPY
+    sub: 'Plan the weeks on iPad or Mac, and put your live workout on the gym TV, an iPad or a Mac.', // COPY (Beta App Description, lightly cut; plan §9 one-lifter line)
+    points: ['Read it across the room', 'Pair in one scan', 'Plan the week', 'No account'], // COPY
     // Screens: Chalkboard, Fri 10-16 (slots until then)
     tablet: { src: '/images/missionstack/board-ipad.webp', w: 1080, h: 751, alt: `${MS ? 'The MissionStack board' : 'The gym board'} on iPad mid-set: one lifter's exercise, the set, the load and the rest clock.` }, // COPY (alt)
     tv: { src: '/images/missionstack/board-tv.webp', w: 960, h: 540, alt: 'The same board on an Apple TV mid-workout: Lower A, Romanian deadlift 3 × 8, a 1:38 rest clock, then set 3.' },
@@ -130,20 +134,14 @@ const description = MS
     <section class="hero">
       <p class="eyebrow">
         <span class="dots" aria-hidden="true">▮▮▮</span>
-        <span>The Rack · three apps, one mission</span>
+        <span>Three apps · one mission</span>
         <span class="dots" aria-hidden="true">▮▮▮</span>
       </p>
       {/* COPY (plan §4): the home has the ad's H1 thread; this page is the shelf. */}
       <h1 class="display">The apps<span class="dot">.</span></h1>
       <p class="subtitle">One for the lift, one for the food around it, one for the big screen. In a private beta now; on the App Store January 1.</p>
-      {/* COPY */}
-      <ul class="trust" aria-label="The short version">
-        <li>Private beta</li><li>iPhone, Apple Watch, iPad, Mac, Apple TV</li><li>Your log lives on your devices</li><li>Launching January 1</li>
-      </ul>
     </section>
 
-    {/* The ad's line 9 (approved). */}
-    <p class="section-label apps-label">Three apps. One mission.</p>
     <section class="apps" aria-label="The apps">
       {apps.map((a) => (
         <article class="app">
@@ -187,31 +185,10 @@ const description = MS
       ))}
     </section>
 
-    <section class="block strip" aria-labelledby="strip-h">
-      {/* The ad's lines 3 and 4 (approved). */}
-      <p class="section-label">Solo or side by side.</p>
-      <h2 class="strip-h" id="strip-h">Now your whole stack is on the mission.</h2>
-      <ul class="tiles">
-        {tiles.map((t) => (
-          <li class="tile">
-            <a href={t.href}>
-              {SHOW_APP_SCREENS && <div class:list={['tile-shot', t.device]}>
-                {t.device === 'watch' ? <WatchFrame shot={t.shot} />
-                  : t.device === 'tablet' ? <TabletFrame shot={t.shot} fill />
-                  : <PhoneFrame shot={t.shot} fill />}
-              </div>}
-              <span class="tile-line">{t.line}</span>
-              <span class="tile-body">{t.body}</span>
-            </a>
-          </li>
-        ))}
-      </ul>
-    </section>
-
     <section class="block coming" id="coming" aria-labelledby="coming-h">
       <p class="section-label">Coming January 1</p>
       {/* COPY (plan §5): one list, src/data/coming.ts. Each item comes off with the build that ships it. */}
-      <h2 class="strip-h" id="coming-h">What lands before launch.</h2>
+      <h2 class="strip-h" id="coming-h">What's next.</h2>
       <div class="coming-grid">
         {comingGroups.map((g) => (
           <div class="coming-col">
@@ -242,26 +219,8 @@ const description = MS
       </div>
     </section>
 
-    <section class="block together">
-      <p class="section-label">Better together</p>
-      {/* COPY (plan §4): only what's live */}
-      <p class="line">The apps share your training day. IronStack tells MealStack when you train, and your phone puts the workout on the board. Sync between your phone and your iPad or Mac is coming soon.</p>
-      <a class="soft" href="/rack/mealstack/details#better-together">What they share today →</a>
-    </section>
-
-    <section class="block why">
-      <p class="section-label">Why these exist</p>
-      <p class="prose">
-        The first edition of the book was subtitled <em>Lessons from the Barbell and the Boardroom</em>, and that split still holds. The Loadout is the boardroom
-        half: skills for product leaders. The Rack is the barbell half: the tools I train with. I built them
-        for one lifter, in a home gym, during a meet prep, because nothing I tried did the whole job. All three keep your data on your devices,
-        in files you can export and bring back, and nothing leaves it unless you switch something on.
-        For the boardroom, see <a class="inline-link" href="/loadout">the Loadout</a>.
-      </p>
-    </section>
-
     <section class="closer">
-      <p>The book is the plan. <strong>The Rack is the work.</strong></p>
+      <p>Every lift is a mission.</p>
     </section>
   </main>
   <SiteFooter />

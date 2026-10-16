@@ -1,0 +1,89 @@
+---
+/**
+ * The beta join, one per product page (the rebuild, 2026-10-16). The same form and script as
+ * AppLanding's: it posts to /api/beta (Pages Function); without JS it still posts and the function
+ * redirects back with ?beta=ok|err. The panel (10-16) read "Apple ID email" with no reason given as
+ * a phishing ask, so the reason sits right under the field.
+ */
+interface Props {
+  /** /rack/<app>: the `page` field says which beta. */
+  page: string;
+  name: string;
+  noteLabel: string;
+  notePlaceholder: string;
+}
+const p = Astro.props;
+const MAILTO = `mailto:support@missionbuilt.io?subject=${encodeURIComponent(p.name + ' beta')}&body=Apple%20ID%20email%3A%20`;
+---
+<form class="beta-form" method="post" action="/api/beta" novalidate data-beta>
+  <label class="field">
+    <span class="field-k">Apple ID email</span>
+    <input type="email" name="email" required autocomplete="email" inputmode="email" placeholder="the address on your Apple ID" maxlength="254" />
+  </label>
+  {/* COPY */}
+  <p class="why">Apple sends the invite through TestFlight, its app for betas. We use the address for that and nothing else.</p>
+  <label class="field">
+    <span class="field-k">{p.noteLabel} <em>optional</em></span>
+    <input type="text" name="note" autocomplete="off" placeholder={p.notePlaceholder} maxlength="200" />
+  </label>
+  <div class="hp" aria-hidden="true"><label>Website<input type="text" name="website" tabindex="-1" autocomplete="off" /></label></div>
+  <input type="hidden" name="t" value="" data-t />
+  <input type="hidden" name="page" value={p.page} />
+  <button class="cta" type="submit">Join the beta <span aria-hidden="true">→</span></button>
+  <p class="status" role="status" aria-live="polite" data-status></p>
+  <p class="status" hidden data-fallback>The form is not taking names right now. Email <a href={MAILTO}>support@missionbuilt.io</a> with the address on your Apple ID and I will add you by hand.</p>
+</form>
+
+<script>
+  const OK = 'You are on the list. Watch for an email from Apple; it can take a few days.';
+  const ERR = 'That did not go through. Check the address and try again.';
+  const forms = document.querySelectorAll<HTMLFormElement>('form[data-beta]');
+  const q = new URLSearchParams(location.search).get('beta');
+  forms.forEach((form, i) => {
+    const status = form.querySelector<HTMLElement>('[data-status]');
+    const fallback = form.querySelector<HTMLElement>('[data-fallback]');
+    const t = form.querySelector<HTMLInputElement>('[data-t]');
+    const btn = form.querySelector<HTMLButtonElement>('button[type=submit]');
+    if (t) t.value = String(Date.now());
+    const say = (msg: string, tone: '' | 'ok' | 'err') => { if (status) { status.textContent = msg; status.className = 'status' + (tone ? ' ' + tone : ''); } };
+    if (i === 0 && q === 'ok') say(OK, 'ok');
+    if (i === 0 && q === 'err') say(ERR, 'err');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = (form.querySelector<HTMLInputElement>('input[name=email]')?.value || '').trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { say('That does not look like an email address.', 'err'); return; }
+      if (btn) btn.disabled = true;
+      say('Adding you…', '');
+      try {
+        const res = await fetch('/api/beta', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(Object.fromEntries(new FormData(form).entries())) });
+        const data = await res.json().catch(() => ({}));
+        if (res.ok && data.ok) { say(OK, 'ok'); form.reset(); if (t) t.value = String(Date.now()); }
+        else if (res.status === 503 || data.fallback) { if (fallback) fallback.hidden = false; say('', ''); }
+        else if (res.status === 429) say('Too many tries from here. Give it an hour.', 'err');
+        else say(data.error || ERR, 'err');
+      } catch { if (fallback) fallback.hidden = false; say('', ''); }
+      finally { if (btn) btn.disabled = false; }
+    });
+  });
+</script>
+
+<style>
+  .beta-form { margin: 36px auto 0; max-width: 460px; display: grid; gap: 14px; text-align: left; }
+  .field { display: grid; gap: 6px; }
+  .field-k { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); }
+  .field-k em { font-style: normal; letter-spacing: 0.1em; text-transform: none; margin-left: 6px; }
+  .why { margin: -4px 0 0; font-family: var(--font-serif); font-size: 14px; line-height: 1.5; color: var(--color-chalk-faint); }
+  input[type=email], input[type=text] { width: 100%; min-width: 0; padding: 14px; background: var(--color-panel); border: 1px solid var(--color-rule); color: var(--color-chalk); font-family: var(--font-mono); font-size: 16px; }
+  input::placeholder { color: var(--color-chalk-faint); }
+  input:focus { border-color: var(--color-chalk-faint); outline: none; }
+  input:focus-visible { outline: 2px solid var(--color-blood-text); outline-offset: 2px; }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .cta { justify-self: center; display: inline-flex; align-items: center; gap: 8px; padding: 15px 26px; background: var(--color-blood); color: var(--color-chalk); border: none; cursor: pointer; font-family: var(--font-display); font-weight: 600; font-size: 15px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .cta:hover { background: var(--color-blood-bright); }
+  .cta:disabled { opacity: 0.6; cursor: default; }
+  .status { margin: 0; text-align: center; font-family: var(--font-mono); font-size: 12px; line-height: 1.5; color: var(--color-chalk-faint); }
+  .status:empty { display: none; }
+  .status.ok { color: var(--color-army); }
+  .status.err { color: var(--color-blood-text); }
+  .status a { color: var(--color-chalk); border-bottom: 1px solid var(--color-chalk-ghost); }
+</style>

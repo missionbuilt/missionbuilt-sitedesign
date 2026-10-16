@@ -48,14 +48,12 @@ const blocks: Block[] = [
   {
     key: 'ironstack', app: 'IronStack · Coach mode', title: 'Plan in, workouts out.',
     live: [
-      'Send a program. It arrives as a suggestion; your lifter accepts it and can change anything. You see Accepted or Passed.',
-      'See every set against your plan. Every change is marked in place: weight, reps, RPE, swaps and skips.',
-      'Leave a note on a lift. Keep a private note on each lifter that only you see.',
+      'Send a program from IronStack on your iPhone. Your lifter accepts it and can change anything; you see Accepted, or Passed if they turn it down.',
+      'See every set against your plan, with every change marked: weight, reps, effort, swaps and skips.',
+      'If they share notes, you hear when one mentions pain or a tweak.',
       'Repeat last week\'s plan with a little more weight.',
-      'Bring a program you already have, as a PDF or a photo. Stack AI writes it into Plan, and you send it.',
-      'Ask Stack AI for the read on a lifter\'s week: what moved, what stalled, and where it differed from your plan.',
+      'Bring a program you already have, as a PDF or a photo, and Stack AI types it in for you to send.',
     ],
-    soon: ['Log a lifter\'s workout from your phone when theirs is in a locker.', 'Add lifters who don\'t have the app.'],
     device: 'phone',
     shot: { src: '/images/ironstack/coach-plan.webp', w: 540, h: 1174, alt: 'Coach mode in IronStack, the lifter\'s side: Today tagged Coach\'s plan with the planned sets and Start workout.' },
   },
@@ -75,19 +73,17 @@ const blocks: Block[] = [
   {
     key: 'missionstack', app: MS ? 'MissionStack · the program builder' : 'The program builder', title: 'Write it like you\'d say it.',
     live: [
-      'Build programs on an iPad or a Mac: type "front squat 3x5 @7" and the sets fill in. Drag workouts between days, make a superset, repeat a week.',
-      'Start from one of ten starter programs, from powerlifting to yoga, every week written out.',
-      'For now a plan stays on that iPad or Mac.',
+      'Lay out a week on an iPad or a Mac: type "front squat 3x5 @7" and the sets fill in. Drag workouts between days, make a superset, repeat a week.',
+      'For now a plan stays on that iPad or Mac; you send programs from your iPhone.',
     ],
-    soon: ['Send it to your lifter\'s iPhone, and read every lifter\'s workouts at your desk.'],
+    soon: ['Send a plan from the iPad or Mac straight to your lifter\'s iPhone.', 'Starter programs to build from.'],
     device: 'tablet',
     shot: { src: '/images/missionstack/plan-ipad.webp', w: 1080, h: 751, alt: 'The program builder on iPad: a week of workouts with a typed line filling in its sets.' },
   },
   {
     key: 'mealstack', app: 'MealStack · fueling around training', title: 'Your tracker says what you ate. This says when.',
     live: [
-      'Meals timed backward from the workout. Move the workout and the day re-flows; the pre-workout meal still lands before they train.',
-      'Scan a barcode to log a food.',
+      'Meals timed around the workout. Move the workout and the day moves with it; the meal before training still lands before they train.',
       'A lifter shares fueling with you only if they turn it on.',
     ],
     soon: ['The day sized to how long they really train.'],
@@ -102,7 +98,7 @@ const setupCoach = [
   { t: 'Turn on Coach mode.', b: 'In Settings, open Coach mode. Sign in with Apple, pick a handle, then tap Coach someone.' },
   { t: 'Invite your lifter.', b: 'Send them your invite link by text or email, or have them scan the code. Know their handle? Type it instead.' },
   { t: 'They say yes.', b: 'One switch, and they pick how far back you see: from today, or 30, 60 or 90 days, or everything.' },
-  { t: 'Send the plan.', b: 'Send it from Plan. Your lifter accepts it; you see Accepted or Passed. Their workouts come back as they finish them.' },
+  { t: 'Send the plan.', b: 'Send it from Plan in IronStack. Your lifter accepts it, and their workouts come back as they finish them.' },
 ];
 const setupBoard = [
   { t: MS ? 'Install MissionStack' : 'Install the board app', b: 'on an iPad, a Mac with Apple silicon or an Apple TV. Choose Start on my own.' },
@@ -113,8 +109,7 @@ const setupBoard = [
 // COPY: coach FAQ (plan §6, Mike 19:06 on age; no prices).
 const faq = [
   { q: 'Can my lifters use Android?', a: 'Not to log, yet. Once lifters without the app come in January, you can log for them from your phone.' },
-  { q: 'Can I build programs on Windows or the web?', a: 'No. You build on an iPhone, an iPad or a Mac with Apple silicon.' },
-  { q: 'How many lifters can I coach?', a: 'Coach: up to 5 lifters. Coach Pro 10: up to 10. Coach Pro 25: up to 25. Pricing coming soon.' },
+    { q: 'How many lifters can I coach?', a: 'Coach: up to 5 lifters. Coach Pro 10: up to 10. Coach Pro 25: up to 25. Pricing coming soon.' },
   { q: 'Can I coach lifters under 18?', a: 'No. IronStack is for lifters 18 and over.' },
   { q: 'I\'m moving from another coaching app. What about my programs?', a: 'Build them with the typed line, or bring a PDF or a photo and Stack AI writes it into Plan. Stack AI has to be on, and it uses your Stack AI allowance.', link: { href: '/rack/compare/truecoach', label: 'How Coach mode compares' } },
 ];
@@ -140,7 +135,7 @@ const faq = [
         {/* COPY */}
         <p class="subtitle">Send the plan. They lift. You see every set. In person or from across the country.</p>
         <ul class="trust" aria-label="The short version">
-          <li>iPhone, Apple Watch, iPad, Mac, Apple TV</li><li>Your lifter says yes first</li><li>Nothing sold</li>
+          <li>iPhone, Apple Watch, iPad, Mac, Apple TV</li><li>Your lifter says yes first</li><li>Their data is never sold</li>
         </ul>
         <a class="cta solid" href="#join">Join the beta →</a>
       </div>
@@ -157,7 +152,7 @@ const faq = [
         <p class="section-label" id="who-h">Who it works for today</p>
         <ul>
           <li>Your lifters log on iPhone.</li>
-          <li>You build on an iPhone, an iPad or a Mac with Apple silicon.</li>
+          <li>You send programs from your iPhone, and plan on an iPad or a Mac with Apple silicon.</li>
           <li>Logging for a lifter, and lifters without the app: <span class="tag">Coming in January</span></li>
         </ul>
       </div>
@@ -190,36 +185,24 @@ const faq = [
       <p class="section-label">What your lifter controls</p>
       <h2 class="section-h2">They say yes first.</h2>
       <div class="fine">
-        <p>Nothing is shared until your lifter says yes. Accepting shares every set, and their notes and how they felt. Sleep, bodyweight and MealStack fueling stay off unless they turn them on.</p>
-        <p>They choose how far back you see: from today, 30, 60 or 90 days, or all their history. They can share less later, and what they stop sharing is deleted from your copy. Server backups drop it within 30 days. We can't take back what you already saw, or a week already summed up with Stack AI.</p>
-        <p>Either of you can end the link at any time. Ending it, blocking each other, or deleting either Social account deletes your copy on the server, and your phone deletes its copy as soon as it sees the link is gone. Server backups drop it within 30 days.</p>
-      </div>
-    </section>
-
-    <section class="block" id="server">
-      <p class="section-label">Where it goes</p>
-      <h2 class="section-h2">Our server holds it. Nobody buys it.</h2>
-      <div class="fine">
-        <p>When your lifter finishes a workout, it is sent to Mission Built's Social server at social.missionbuilt.io, on Cloudflare, stored in its database, and passed to your phone. If they share their notes, the server checks them for words like “pain” or “tweak” so it can tell you a workout needs a look. We don't use shared workouts for anything else, and we don't sell them. Plans you send, and the short note with them, go the same way, and stay suggestions until your lifter accepts them.</p>
-        <p>The server keeps each workout until the link ends or your lifter deletes that workout in the app. Server backups drop it within 30 days.</p>
-        <p><strong>Your notes.</strong> A private note you keep about a linked lifter stays on your phone (and in that phone's own backup). It's never sent to us, to the lifter or to Stack AI, and it's deleted when the link ends, on sign-out, or with Delete all.</p>
-        <p><strong>Sum up a week.</strong> That sends Anthropic, which answers for Stack AI, your lifter's handle, the week's shared workouts (seven days, at most 21 workouts) and a few figures your phone works out from everything they've shared: how each lift's estimated max has moved, which lifts have stalled, and, if they share sleep, how hard their sets felt after nights under 7 hours. Your plan isn't sent, only where the week differed from it. It runs on your Stack AI allowance. Mission Built's server passes it on and keeps none of it. Your lifter can't turn it off; ending the link stops it.</p>
-        <p><strong>Lifters without the app</strong>{' '}<span class="tag" aria-hidden="true">Coming</span><span class="sr-only">, coming soon:</span> When this comes, their name, your note, their plan and the workouts you log for them will be kept in your iCloud, not on our servers.</p>
-        <p>Every detail is on <a href="/rack/ironstack/privacy#coach-mode">IronStack's privacy page</a>.</p>
+        {/* COPY: the short version; the full account is on IronStack's privacy page. */}
+        <p>Nothing is shared until your lifter says yes, and they choose how far back you see. Either of you can end the link at any time, and ending it deletes your copy.</p>
+        <p>Shared workouts sit on Mission Built's own server, only to pass them between you. We don't use them for anything else, and we never sell them. A private note you keep on a lifter stays on your phone.</p>
+        <p>Every detail, including what Stack AI sees when you sum up a week, is on <a href="/rack/ironstack/privacy#coach-mode">IronStack's privacy page</a>.</p>
       </div>
     </section>
 
     <section class="block" id="setup" aria-labelledby="setup-h">
       <p class="section-label">Get set up</p>
-      <h2 class="section-h2" id="setup-h">Five steps, then lift.</h2>
+      <h2 class="section-h2" id="setup-h">Set up, then lift.</h2>
       <div class="setup">
         <div>
           <p class="k">Coach mode</p>
           <ol class="steps">{setupCoach.map((s) => <li><b>{s.t}</b> {s.b}</li>)}</ol>
         </div>
         <div>
-          <p class="k">The gym board</p>
-          <ol class="steps" start="6">{setupBoard.map((s) => <li><b>{s.t}</b> {s.b}</li>)}</ol>
+          <p class="k">{MS ? 'MissionStack, for the gym board' : 'The gym board'}</p>
+          <ol class="steps">{setupBoard.map((s) => <li><b>{s.t}</b> {s.b}</li>)}</ol>
         </div>
       </div>
     </section>

@@ -237,7 +237,6 @@ const ld = {
           </figure>
         ))}
       </div>}
-      {SHOW_APP_SCREENS && <p class="note">Screens from the October 3 build of IronStack 0.1.1 in the iPhone Simulator, loaded with my own training log. The Social screen is the sample feed the app shows before you sign in.</p>}
     </section>
 
     <hr class="dashed" />
@@ -256,39 +255,6 @@ const ld = {
         <li><span class="num">03</span><span class="label">You against you</span><span class="say">Every number is measured against your own log. No leaderboards, no strangers, no one else's PR.</span></li>
         <li><span class="num">04</span><span class="label">Lift each other up</span><span class="say">Only the people you invite. Cards carry no comments, and a name you type is checked before it goes. The one thing you can give is support.</span></li>
       </ol>
-    </section>
-
-    <hr class="dashed" />
-
-    {/* ---------- TRY IT: voice card + clock ---------- */}
-    <section class="block" id="try">
-      <p class="section-label">Try it</p>
-      <h2 class="section-h2">Say it the way you would say it to a partner.</h2>
-      <p class="prose">Voice is optional; typing the same words works too. These are the examples on the app's own voice card. Tap one to see what it writes down. Then start a rest and watch the end of it.</p>
-      <div class="try">
-        <div class="voice" id="voice">
-          <p class="k">You say</p>
-          <div class="chips" role="group" aria-label="Voice examples">
-            <button type="button" class="chip on" data-said="two twenty five for eight at seven" data-parse="225x8 @7" data-means="225 lb for 8 reps at RPE 7, on the lift you are doing.">"two twenty five for eight at seven"</button>
-            <button type="button" class="chip" data-said="same again" data-parse="225x8 @7" data-means="The same set again. The rest clock restarts.">"same again"</button>
-            <button type="button" class="chip" data-said="four oh five for three with two in the tank" data-parse="405x3 @8" data-means="Two reps in the tank is RPE 8. &quot;Oh&quot; is zero.">"four oh five for three with two in the tank"</button>
-            <button type="button" class="chip" data-said="three fifteen for three with chains" data-parse="315x3 +chains" data-means="The chains ride on the set, so it never counts against a straight-bar best.">"three fifteen for three with chains"</button>
-            <button type="button" class="chip" data-said="switch to hack squat" data-parse="→ Hack Squat" data-means="What you log next goes there.">"switch to hack squat"</button>
-            <button type="button" class="chip" data-said="note, lower back aware" data-parse="note · lower back aware" data-means="Kept in your own words, on this lift.">"note, lower back aware"</button>
-          </div>
-          <p class="k">IronStack writes</p>
-          <p class="parse" id="v-parse" aria-live="polite">225x8 @7</p>
-          <p class="means" id="v-means">225 lb for 8 reps at RPE 7, on the lift you are doing.</p>
-        </div>
-        <div class="clockdemo" id="clockdemo">
-          <p class="k">Rest</p>
-          <p class="cd-time" id="cd-time" aria-live="off">0:20</p>
-          <div class="cd-bar"><i id="cd-bar"></i></div>
-          <p class="cd-note" id="cd-note">Twenty seconds here; three minutes in the gym. Watch the last ten.</p>
-          <button type="button" class="cta small" id="cd-go">Start rest</button>
-        </div>
-      </div>
-      <p class="note">Speech becomes text on the phone, offline, and only while you hold the button. Weight comes before reps, the way lifters say it; RPE is how hard it was on a scale to 10, and the app explains it wherever you rate a set. The rest clock is the length your program asked for. The app never records what you actually rested, because it does not know.</p>
     </section>
 
     <hr class="dashed" />
@@ -474,53 +440,6 @@ const ld = {
 </BaseLayout>
 
 <script>
-  // ── The voice card: the app's own examples ──
-  const chips = document.querySelectorAll<HTMLButtonElement>('#voice .chip');
-  const vParse = document.getElementById('v-parse');
-  const vMeans = document.getElementById('v-means');
-  chips.forEach((c) => c.addEventListener('click', () => {
-    chips.forEach((x) => x.classList.toggle('on', x === c));
-    if (vParse) vParse.textContent = c.dataset.parse || '';
-    if (vMeans) vMeans.textContent = c.dataset.means || '';
-  }));
-
-  // ── The rest clock: the app's stages ──
-  // 10 to 4 seconds left: oxblood numerals and a wash. 3 to 1: solid panel, beating.
-  const LEN = 20;
-  const box = document.getElementById('clockdemo');
-  const tEl = document.getElementById('cd-time');
-  const bar = document.getElementById('cd-bar') as HTMLElement | null;
-  const note = document.getElementById('cd-note');
-  const go = document.getElementById('cd-go') as HTMLButtonElement | null;
-  let timer: number | undefined;
-  function show(left: number): void {
-    if (!box || !tEl || !bar) return;
-    tEl.textContent = '0:' + String(left).padStart(2, '0');
-    bar.style.width = ((LEN - left) / LEN * 100) + '%';
-    box.classList.toggle('closing', left <= 10 && left > 3);
-    box.classList.toggle('final', left <= 3 && left > 0);
-  }
-  if (go) go.addEventListener('click', () => {
-    if (timer) window.clearInterval(timer);
-    let left = LEN;
-    show(left);
-    if (note) note.textContent = 'Rest started itself when the set was logged.';
-    go.textContent = 'Restart';
-    timer = window.setInterval(() => {
-      left -= 1;
-      show(Math.max(left, 0));
-      if (left === 10 && note) note.textContent = 'Ten seconds. In the gym, your earbuds heard "Thirty seconds" twenty seconds ago.';
-      if (left === 3 && note) note.textContent = 'Three. At zero it says "Get to work".';
-      if (left <= 0) {
-        window.clearInterval(timer);
-        timer = undefined;
-        if (tEl) tEl.textContent = 'Go';
-        box?.classList.remove('closing', 'final');
-        if (note) note.textContent = 'Next set: Bench Press 205x5. Say it when it is done.';
-      }
-    }, 1000);
-  });
-
   // ── Join the beta (same endpoint and behaviour as MealStack's form) ──
   const form = document.getElementById('beta-form') as HTMLFormElement | null;
   const status = document.getElementById('beta-status');

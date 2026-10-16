@@ -27,12 +27,15 @@ const { links = [], noEmail = false } = Astro.props;
 const site: FootLink[] = [
   // Launch preview (plan §2): Compare · Support · Press · Get in first, then the book's and the
   // Loadout's links (the Loadout left the top nav).
+  // Mike 2026-10-16 08:34: the book and the Logs stay the story behind the apps, linked here.
+  { label: 'The book', href: '/chapters' },
+  { label: 'Logs', href: '/logs' },
+  { label: 'About Mike', href: '/about' },
+  { label: 'Get in first', href: '/first' },
   { label: 'Compare', href: '/rack/compare' },
   { label: 'Support', href: '/rack/support' },
   { label: 'Press', href: '/press' },
-  { label: 'Get in first', href: '/first' },
   { label: 'The Loadout', href: '/loadout' },
-  { label: 'Chapters', href: '/chapters' },
   { label: 'Download', href: '/download' },
   { label: 'Source',   href: '/source' },
   { label: 'RSS',      href: '/logs/rss.xml' },

@@ -1,24 +1,24 @@
 ---
 /**
- * MealStack landing page (/rack/mealstack). Short on purpose: what is different,
- * the key features with real screens, how to get it. Everything else (the click-through
- * tour, the live rule, side by side, fine print, the kit, FAQ, Better Together) is on
- * /rack/mealstack/details. See AppLanding.astro.
+ * MealStack (/rack/mealstack): the rebuild (Mike 2026-10-16 08:27 and 08:32). One page whose only
+ * job is the beta join, one idea per screen, a real screen each (hq/briefs/site/apple-duo-reference.md).
+ * The whole day around the workout leads (Mike 08:27, fix 10: "the point is the training session
+ * itself"). No tour, simulated logging or live rule; those leave the site. Detail lives on
+ * /rack/mealstack/details.
  *
- * Language from the Log "Fueling is training": meals are plates, the meal before the
- * session is the carb surge, fuel is never a meal. Not a nutrition app.
- * Screens are the tour's real Simulator captures (public/demos/mealstack, MealStack 0.9.1).
- * Stack AI is a key highlight: in the sub, the trust row, the second hero screen and diff #2.
- * The tagline "Fueling is training." is the hero eyebrow, above the fold.
+ * Words: workout (not session) except the app's own labels; no barcode line until the product lead
+ * settles it (panel 10-16); nothing says what MealStack's free offering is (Mike 10-15 19:06).
+ * COPY strings are drafts for Mike's yes.
  */
-import AppLanding from '../../components/AppLanding.astro';
+import ProductPage from '../../components/ProductPage.astro';
+import BetaForm from '../../components/BetaForm.astro';
+import { STACK } from '../../data/apps';
 
 const IMG = '/images/mealstack/';
-const s = (f: string, alt: string) => ({ src: `${IMG}${f}.webp`, w: 540, h: 1174, alt });
+const phone = (f: string, alt: string) => ({ kind: 'phone' as const, shot: { src: `${IMG}${f}.webp`, w: 540, h: 1174, alt } });
+const [iron, , mission] = STACK;
 
-const title = 'MealStack: Fueling is training · Mission Built';
-const description = 'Fueling is training. MealStack is a meal timing app for iPhone, built backward from your training session. Log when you actually ate and the day re-flows while your carb surge holds. Stack AI builds the plan, brings in your coach\'s plan from a photo or PDF, and fits a restaurant menu to the meal. No account. In a private TestFlight beta.';
-
+const description = 'MealStack times your meals around your workout on iPhone: the meal before you train, the shake after, and the rest of the day around it. Log when you actually ate and the day moves with you. In a private beta; on the App Store January 1.';
 const ld = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
@@ -31,58 +31,60 @@ const ld = {
   publisher: { '@type': 'Organization', name: 'Mission Built LLC', url: 'https://missionbuilt.io' },
 };
 ---
-<AppLanding
-  app="mealstack"
-  name="MealStack"
-  title={title}
+<ProductPage
+  title="MealStack: meals timed to your workout · Mission Built"
   description={description}
-  ogImageAlt="MealStack. Fueling is training. A meal timing tracker for people who train, on iPhone, by Mission Built."
+  ogImageAlt="MealStack, meals timed to your workout, by Mission Built."
   ld={ld}
-  eyebrow="Fueling is training · Private beta · iPhone"
-  promise="Your tracker says what you ate."
-  promiseAccent="This says when."
-  sub="Tell it when you train and the day builds backward from the session: the meal before it, the fuel around it, the shake after. Breakfast ran late? Log it when you actually ate; the rest of the day re-flows and your carb surge still lands before you train. Stack AI builds the plan with you, brings in your coach's plan from a photo or PDF, and fits a restaurant menu to the meal. Keep your tracker for the barcode. MealStack does the timing."
-  subShort="Tell it when you train. Eat late and the day re-flows; your carb surge still lands before the session. Stack AI builds the plan."
-  trust={['Stack AI built in', 'Private beta', 'iPhone, iOS 26+', 'No account']}
+  name="MealStack"
+  icon={STACK[1].icon}
+  line="Meals timed to your workout."
+  sub="Your tracker says what you ate. MealStack says when: open it and the next meal is the screen."
   hero={[
-    { src: '/images/mealstack/today-training.webp', w: 540, h: 1174, alt: 'MealStack Today on a training day with the session at 6:30 PM: yogurt and whey logged late at 11:40, lunch next at 2:40 PM, the Home travel chip, and Eating out? Send Stack AI the menu.' },
-    { src: '/images/mealstack/stackai-eating-out.webp', w: 540, h: 1174, alt: 'Stack AI in MealStack, eating out in place of lunch: the Eating out · Lunch chip, photo, camera and file buttons, Snap the menu, and under it Stack AI is an AI and can be wrong.' },
+    phone('today-training', 'MealStack Today on a training day with the workout at 6:30 PM: lunch at 2:40 PM is next, 6 oz chicken, rice and broccoli, with Log.'),
   ]}
-  soft={{ label: 'Take the one-minute tour →', href: '/rack/mealstack/details#demo' }}
-  diffLabel="Why it is different"
-  diffH2="Your session doesn't move. Your meals do."
-  themLabel="Other apps:"
-  diffs={[
-    { claim: 'Anchored to the session.', body: 'The carb surge (the carb-heavy meal before you train), the fuel around the session and the meals after it are set from the session, not the clock. Move the session and they move with it.', them: 'Alarms every few hours, or routines that roll a late morning into the session.' },
-    { claim: 'Knows your training.', body: 'Let Stack AI build the plan, or send it your coach\'s plan as a photo or PDF and it brings it in. Eating out, hand it up to five menu photos, a link or a restaurant name and it fits an order to this meal\'s numbers. Targets come from a fixed formula, not the model. Nothing changes until you tap.', them: 'A chatbot that talks, or an AI that edits your plan without asking.' },
-    { claim: 'Log when you ate.', body: 'Now, 30 minutes ago, or an hour ago, with what every remaining meal does shown before you commit. A late morning tightens the gaps. The carb surge holds.', them: '"Done" means now, so the day keys off the wrong number.' },
-    { claim: 'Holds up on the road.', body: 'Home or Away in one tap, shared with IronStack, or automatic when you are far from home. Skip a meal and it stays a decision, not a miss. History compares home days to travel days.', them: 'One schedule, and it assumes you are home.' },
+  cta={{ label: 'Join the beta', href: '#join' }}
+  ctaNote="Every app has a free way in, plus paid plans."
+  chapters={[
+    { title: 'Built around your workout.', line: 'Tell it when you train, and the day builds around the workout: the carb meal before it, the shake after it, dinner when you get home.',
+      day: [
+        { time: '7:00 AM', label: 'Breakfast' },
+        { time: '10:06 AM', label: 'Yogurt and whey' },
+        { time: '1:06 PM', label: 'Lunch' },
+        { time: '5:00 PM', label: 'Carb surge' },
+        { time: '6:30 PM', label: 'Your workout', workout: true },
+        { time: '7:30 PM', label: 'The shake' },
+        { time: '9:00 PM', label: 'Dinner' },
+      ],
+      devices: [] },
+    { title: 'Workout moved? So does the day.', line: 'Change the time and every meal around it moves with it. One tap undoes it.',
+      devices: [phone('session-moved', 'MealStack with the workout at 6:30 PM: one line says the carb surge is at 5:00 PM, the after-workout shake at 7:30 PM and dinner at 9:00 PM, with Undo.')] },
+    { title: 'Ate late? Just log it.', line: 'Log when you actually ate. The rest of the day moves, and the meal before your workout holds.',
+      devices: [phone('log-late', 'Logging the 10:06 AM yogurt and whey at 11:40: lunch moves from 1:06 to 2:40 PM and the carb surge holds at 5:00 PM.')] },
+    { title: 'A week of real plates.', line: 'Plan the week with meals you like, and see each day\'s protein, carbs and fat before you shop.',
+      devices: [phone('stack', 'This week\'s plan: training day totals of 201 g protein, 268 g carbs, 45 g fat and 2,280 kcal, and every plate with its ingredients.')] },
+    { title: 'Scored on what landed.', line: 'A day counts when the meals landed on time. Nothing scolds you for the ones that didn\'t.',
+      devices: [phone('history', 'MealStack History: four full days in a row, and the last seven days on protein and on time.')] },
   ]}
-  featH2="Real screens, from the app."
-  features={[
-    { ...s('log-late', 'MealStack log sheet for the 10:06 AM yogurt and whey, logged at 11:40: lunch moves from 1:06 to 2:40 PM, and the carb surge holds at 5:00 PM.'), k: 'Log', title: 'When did you eat it?', body: 'Now, 30 minutes ago, an hour ago. See what the rest of the day does before you commit.' },
-    { ...s('session-moved', 'MealStack after the session moved to 6:30 PM: one line says the carb surge moved to 5:00 PM, the after-session shake to 7:30 PM and dinner to 9:00 PM, with an Undo.'), k: 'Session', title: 'Move the session. Meals follow.', body: 'Gym at 6:30 instead of 6? Everything tied to the session moves with it, and one tap undoes it.' },
-    { src: '/images/mealstack/stackai-eating-out.webp', w: 540, h: 1174, alt: 'Stack AI in MealStack, eating out in place of lunch: the Eating out · Lunch chip, photo, camera and file buttons, Snap the menu, and under it Stack AI is an AI and can be wrong.', k: 'Stack AI', title: 'Eating out? Send the menu.', body: 'Tap Eating out and Stack AI opens on this meal. Add up to five menu photos, a link or the place\'s name, and it fits an order to the meal\'s numbers. It says it\'s an AI and can be wrong, and nothing changes until you tap.' },
-    { ...s('stack', 'MealStack Stack 1, this week\'s stack, with its Training and Recovery toggle: training day totals of 201 g protein, 268 g carbs, 45 g fat and 2,280 kcal, all on target, and every plate with its ingredients.'), k: 'Plan', title: 'A week of plates.', body: 'Training days and recovery days, each with its own plates and totals. Drop a saved meal on any plate.' },
-    { ...s('meal-editor', 'MealStack meal editor for a paprika chicken box: 7 oz chicken breast, 225 g jasmine rice, 150 g broccoli and half a tablespoon of olive oil, with the macros each one brings, and Use this meal.'), k: 'Macros', title: 'Weighed from the plate.', body: 'A meal is ingredients and grams, so the numbers come from the food and move when the portion does.' },
-    { ...s('history', 'MealStack History: a streak of four full days (best 11), one badge earned with the next one up, and the last seven days on protein and on time.'), k: 'History', title: 'Scored on what landed.', body: 'Your streak of full days, your badges, and what actually landed: on time, protein, home days against travel days. Only good habits earn anything.' },
+  family={{ title: 'Better as a stack.', items: [
+    { name: iron.name, line: 'Tells MealStack when you train, and your day moves with it.', href: iron.href, icon: iron.icon },
+    { name: mission.name, line: 'Plan your weeks on the big screen. Meal planning there is coming soon.', href: mission.href || undefined, icon: mission.icon },
+  ] }}
+  promise={{ title: 'No account. Nothing sold.', line: 'Your plan lives on your phone. Usage data only if you say yes, and never anything you typed.', href: '/rack/mealstack/privacy' }}
+  closer={{ title: 'Fueling is training.', line: 'Join the beta and eat on it now. It reaches the App Store January 1.' }}
+  more={[
+    { label: 'Details', href: '/rack/mealstack/details' },
+    { label: 'Compare', href: '/rack/compare/macrofactor' },
+    { label: 'Privacy', href: '/rack/mealstack/privacy' },
+    { label: 'Release notes', href: '/rack/mealstack/changelog' },
+    { label: 'Support', href: '/rack/support' },
   ]}
-  featNote="Real screens from MealStack 0.9.1: a debug build in the iPhone Simulator on the sample plan with four weeks of sample history, Oct 3, 2026. The Stack AI screen is the composer before anything is sent; the Simulator doesn't reach Stack AI, so no answer is shown."
-  steps={[
-    { title: 'Leave your Apple ID email.', body: 'Testers come in small batches, added by hand. The address is used for the invite and nothing else.' },
-    { title: 'Install from TestFlight.', body: 'Apple emails you an invite. TestFlight is Apple\'s own app for betas; MealStack installs like any other app.' },
-    { title: 'Pick how to start.', body: 'Just the times, your coach\'s plan, let Stack AI build it, or build it yourself. Or see a finished day first.' },
-  ]}
-  noteLabel="What do you train for?"
-  notePlaceholder="powerlifting, a marathon, a wedding, getting off the couch"
-  details={[
-    { label: 'The one-minute tour', body: 'Real screens, click through the four pillars.', href: '/rack/mealstack/details#demo' },
-    { label: 'The rule, live', body: 'Drag breakfast late and watch which meals move.', href: '/rack/mealstack/details#rule' },
-    { label: 'Side by side', body: 'Against meal timers and macro trackers, including what they do better.', href: '/rack/mealstack/details#compare' },
-    { label: 'Questions', body: 'Price, accounts, what leaves your phone, keeping your tracker.', href: '/rack/mealstack/details#faq' },
-    { label: 'Price and your data', body: 'Pricing coming soon, and how your data comes with you.', href: '/rack/mealstack/details#fine-print' },
-    { label: 'Better with IronStack', body: 'The lifting log. What the two share today, and what is next.', href: '/rack/mealstack/details#better-together' },
-  ]}
-  closer={{ four: 'Protein · Session · Day · Record', line: 'Fueling is training.' }}
-  footLinks={[{ label: 'The details', href: '/rack/mealstack/details' }, { label: 'Release notes', href: '/rack/mealstack/changelog' }, { label: 'Schema', href: '/rack/mealstack/schema' }, { label: 'Privacy', href: '/rack/mealstack/privacy' }, { label: 'Terms', href: '/rack/mealstack/terms' }, { label: 'Support', href: '/rack/support' }]}
-/>
+>
+  <BetaForm slot="join" page="/rack/mealstack" name="MealStack" noteLabel="What do you train for?" notePlaceholder="powerlifting, a marathon, getting off the couch" />
+  <p slot="after" class="first-alt">MealStack is for adults 18 and over who train. It isn't medical or dietary advice. Not ready for a beta? <a href="/first">Get the App Store link first</a>.</p>
+</ProductPage>
+
+<style>
+  .first-alt { margin: 18px auto 0; max-width: 46ch; font-family: var(--font-serif); font-size: 15px; line-height: 1.55; color: var(--color-chalk-dim); }
+  .first-alt a { color: var(--color-chalk); border-bottom: 1px solid var(--color-chalk-ghost); }
+</style>
