@@ -175,7 +175,7 @@ const hasJoin = Astro.slots.has('join');
   .lb-links { display: flex; align-items: center; gap: 22px; }
   .lb-links a { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-chalk-dim); border: 0; }
   .lb-links a:hover { color: var(--color-chalk); }
-  .lb-links a.lb-cta { padding: 8px 14px; background: var(--color-blood); color: var(--color-chalk); font-family: var(--font-display); font-weight: 600; font-size: 13px; letter-spacing: 0.06em; }
+  .lb-links a.lb-cta { display: inline-flex; align-items: center; min-height: 44px; padding: 8px 14px; background: var(--color-blood); color: var(--color-chalk); font-family: var(--font-display); font-weight: 600; font-size: 13px; letter-spacing: 0.06em; }
 
   .pp { overflow-x: clip; }
   .pp-hero { padding: 72px var(--pad-page-x) 24px; text-align: center; }
@@ -215,7 +215,7 @@ const hasJoin = Astro.slots.has('join');
   .ch-link { display: inline-block; margin-top: 22px; }
   .pp-facts { list-style: none; margin: 22px auto 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; width: fit-content; gap: 6px 22px; max-width: 760px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em; color: var(--color-chalk-dim); }
   .pp-facts li::before { content: '·'; margin-right: 8px; color: var(--color-chalk-faint); }
-  .soon { display: inline-block; margin: 0 0 14px; padding: 4px 10px; border: 1px dashed var(--color-chalk-ghost); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-dim); }
+  .soon { display: inline-block; margin: 0 0 14px; padding: 4px 10px; font-size: 12px !important; border: 1px dashed var(--color-chalk-ghost); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-dim); }
   .ch-title { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(40px, 6.4vw, 76px); line-height: 0.98; letter-spacing: -0.015em; text-transform: uppercase; color: var(--color-chalk); }
   .ch-line { margin: 18px auto 0; max-width: 36ch; text-wrap: balance; font-family: var(--font-serif); font-size: clamp(18px, 2vw, 21px); line-height: 1.55; color: var(--color-chalk-dim); }
 
@@ -242,13 +242,13 @@ const hasJoin = Astro.slots.has('join');
   .pp-closer .btn { margin-top: 30px; }
   .pp-closer .pp-note { margin-top: 12px; }
   .pp-more { list-style: none; margin: 40px 0 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 28px; }
-  .pp-more a { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-chalk-dim); }
+  .pp-more a { display: inline-flex; align-items: center; min-height: 44px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-chalk-dim); }
 
   /* Motion: our own CSS, only where the browser has it and the person hasn't asked for less. */
   @supports (animation-timeline: view()) {
     @media (prefers-reduced-motion: no-preference) {
-      .reveal { animation: rise linear both; animation-timeline: view(); animation-range: entry 5% cover 30%; }
-      .zoom { animation: zoomin linear both; animation-timeline: view(); animation-range: entry 0% cover 45%; transform-origin: 50% 80%; }
+      .reveal { animation: rise linear both; animation-timeline: view(); animation-range: entry 0% entry 70%; }
+      .zoom { animation: zoomin linear both; animation-timeline: view(); animation-range: entry 0% entry 80%; transform-origin: 50% 80%; }
       .hero { animation: recede linear both; animation-timeline: view(); animation-range: exit 0% exit 100%; }
     }
   }
@@ -263,10 +263,27 @@ const hasJoin = Astro.slots.has('join');
     .localbar, .pp-hero, .pp-ch, .pp-family, .pp-promise, .pp-closer { padding-left: var(--pad-page-x-mobile); padding-right: var(--pad-page-x-mobile); }
     .lb-links a:not(.lb-cta) { display: none; }
     .pp-ch { min-height: 0; padding-top: 72px; }
+    .pp-closer { padding-bottom: 32px; }
     .n2 .dev.watch { margin-left: -40px; }
     .n3 { gap: 10px; }
     .pp-facts { flex-direction: column; align-items: flex-start; gap: 4px; }
     .pp-more { gap: 12px 22px; }
     .text-link { letter-spacing: 0.1em; }
+  }
+  /* iPhone landscape and other short, wide screens (iPhone QA 10-16): the hero and every device fit the height. */
+  @media (orientation: landscape) and (max-height: 500px) {
+    .localbar { padding-top: 4px; padding-bottom: 4px; }
+    .pp-hero { padding-top: 24px; }
+    .pp-icon { display: none; }
+    .pp-name { font-size: clamp(40px, 14svh, 72px); }
+    .pp-line { margin-top: 8px; }
+    .pp-ch { min-height: 0; padding-top: 48px; padding-bottom: 24px; }
+    .pp-family, .pp-promise, .pp-closer { padding-top: 56px; }
+    .dev.phone, .n2 .dev.phone, .n3 .dev.phone { width: min(150px, 30vw); }
+    .n2 .dev.tablet + .dev.phone { width: 120px; }
+    .dev.tablet { width: min(460px, 100%); }
+    .dev.tv { width: min(520px, 100%); }
+    .dev.watch { font-size: 12px; }
+    .zoom.n1 .dev.watch { font-size: 14px; }
   }
 </style>

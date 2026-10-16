@@ -43,7 +43,7 @@ const shots = [
       <p class="label">App icons</p>
       <ul class="icons">
         {STACK.map((a) => (
-          <li><a href={a.icon.src2x} download><img src={a.icon.src} width="96" height="96" alt={a.icon.alt} /><span>{a.name} · 512 px PNG</span></a></li>
+          <li><a href={a.icon.src2x} download><img src={a.icon.src} width="96" height="96" alt={a.icon.alt} /><span>{a.name}<br />512 px PNG</span></a></li>
         ))}
       </ul>
     </section>
@@ -87,12 +87,12 @@ const shots = [
   /* App icons keep Apple's rounded mask (the app's own mark). */
   .icons img { width: 96px; height: 96px; border-radius: 22.37%; border: 1px solid var(--color-rule); }
   .shots { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
-  .shots img { width: 100%; height: 220px; object-fit: contain; background: var(--color-panel); border: var(--border-thin); padding: 12px; }
+  .shots img { width: 100%; height: 260px; object-fit: contain; background: var(--color-panel); border: var(--border-thin); padding: 12px; }
   .tail { height: 72px; }
   @media (max-width: 1099px) { .hero, .block { padding-left: var(--pad-page-x-mid); padding-right: var(--pad-page-x-mid); } .shots { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  @media (max-width: 720px) { .hero, .block { padding-left: var(--pad-page-x-mobile); padding-right: var(--pad-page-x-mobile); } .shots { grid-template-columns: minmax(0, 1fr); } }
+  @media (max-width: 720px) { .hero, .block { padding-left: var(--pad-page-x-mobile); padding-right: var(--pad-page-x-mobile); } .shots { grid-template-columns: minmax(0, 1fr); } .shots img { height: auto; max-height: min(420px, 60vh); } }
 
   /* QA pass 2026-10-16: every shot fills its tile the same way; boards in a row the same size. */
   .shots img { height: 300px; padding: 16px; }
-  @media (max-width: 720px) { .icons { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; } .icons img { width: 100%; height: auto; } .shots img { height: min(420px, 60vh); } }
+  @media (max-width: 720px) { .icons { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; } .icons img { width: 100%; height: auto; } .shots img { height: auto; max-height: min(420px, 60vh); } }
 </style>

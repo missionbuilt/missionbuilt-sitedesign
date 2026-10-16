@@ -62,7 +62,7 @@ const cards: Card[] = [
   { label: 'Macros', pillar: 'Protect the protein', verdict: 'Weighed from the plate, or typed. Never both.', evidence: 'A meal is a list of ingredients and quantities, so the numbers come from the ingredients and editing a portion moves them. The daily target lives apart from the plan, so the editor can say "this plate puts the day 40 g of carbs over" while you are still building it.', them: 'A food database and a total. No plan to measure the plate against.' },
   { label: 'Logging', pillar: 'Protect the record', verdict: 'Log when you eat, not when it was due.', evidence: 'The sheet opens on now with 15, 30 and 60 minutes ago one tap away, and shows what every remaining meal does at that time before you commit. Move today\'s session from the Today screen and the meals tied to it move with it.', them: '"Done" means now, so the day keys off the wrong number.' },
   { label: 'Travel', pillar: 'Protect the day', verdict: 'Home or Away, in one tap.', evidence: 'Flip Travel on Today, or let the app do it when you are far from home. With IronStack on the phone, it is one switch for both apps. Skip a meal and it stays a decision, not a miss. History compares home days to travel days.', them: 'One schedule, and it assumes you are home.' },
-  { label: 'Surfaces', pillar: 'Protect the protein', verdict: 'You should rarely have to open it.', evidence: 'Notifications carry the plate and two actions: "Ate it now" and "Not yet · 20 min". Home and Lock Screen widgets with a live countdown. A card on the Lock Screen from an hour before each meal to thirty minutes after, with a Log button on it and at the top of the screen.', them: 'A badge, and a screen you unlock to answer it.' },
+  { label: 'Surfaces', pillar: 'Protect the protein', verdict: 'You should rarely have to open it.', evidence: 'Notifications carry the plate and two actions: "Ate it now" and "Not yet · 20 min". Home and Lock Screen widgets with a live countdown. A card on the Lock Screen from an hour before each meal to thirty minutes after, with a Log button on it and at the top of the screen.', them: 'A badge, and a screen you unlock to answer it.' },
   { label: 'Stack AI', pillar: 'Protect the day', verdict: 'An AI that proposes. You decide.', evidence: 'Turn it on and let Stack AI build the plan, or send it the plan your coach wrote, as a photo or a PDF, and it brings it in for you to review. Ask for targets and a fixed formula does the arithmetic, not the model. Eating out, hand it up to five menu photos, a link or a restaurant name, and it fits options to this meal\'s numbers. Nothing changes until you tap a card. Not a doctor, and it says so before you ask.', them: 'A chatbot that talks, or an AI that edits your plan without asking.' },
 ];
 
@@ -346,7 +346,7 @@ const ld = {
             <input type="hidden" name="page" value="/rack/mealstack" />
             <div class="form-row">
               <button class="cta" type="submit" id="beta-submit">Join the beta →</button>
-              <p class="cta-note" id="beta-status" role="status" aria-live="polite">iPhone only · iOS&nbsp;26 and up · no&nbsp;account · 18 and over</p>
+              <p class="cta-note" id="beta-status" role="status" aria-live="polite">iPhone only · iOS&nbsp;26 and up · no&nbsp;account · 18 and over</p>
             </div>
           </form>
           <p class="cta-note" id="beta-fallback" hidden>The form is not taking names right now. Email <a href={MAILTO}>support@missionbuilt.io</a> with the address on your Apple ID and I will add you by hand.</p>
@@ -382,7 +382,7 @@ const ld = {
           <span class="related-cta">Read →</span>
         </a>
       </div>
-      <p class="kit-links"><a class="inline-link" href="/rack/mealstack/terms">Terms of use</a> (a draft, under review) · <a class="inline-link" href="/rack/mealstack/privacy">Privacy</a> · <a class="inline-link" href="/rack/support">Support</a> · <a class="inline-link" href="/rack/acknowledgements">Acknowledgements</a></p>
+      <p class="kit-links"><a class="inline-link" href="/rack/mealstack/terms">Terms of use</a> (a draft, under review) · <a class="inline-link" href="/rack/mealstack/privacy">Privacy</a> · <a class="inline-link" href="/rack/support">Support</a> · <a class="inline-link" href="/rack/acknowledgements">Acknowledgements</a></p>
     </section>
 
     <hr class="dashed" />
@@ -873,4 +873,16 @@ const ld = {
   @media (min-width: 961px) {
     .feat .verdict, .card .verdict, .step h3 { min-height: 2lh; }
   }
+  /* iPhone QA 10-16: inputs at 16px so iOS doesn't zoom; small print readable. */
+  .field input, .field textarea { font-size: 16px; }
+  .card .them, .feat .them { font-size: 13px; color: var(--color-chalk-dim); }
+  .stat-sub { font-size: 13px; }
+  /* iPhone QA round 2 (10-16): readable small print, 44 pt links, step cards one column on phones. */
+  .pillars .say { font-size: 15px; }
+  .card .them, .feat .them, .note { font-size: 14px; }
+  .breadcrumb a { display: inline-flex; align-items: center; min-height: 44px; }
+  @media (max-width: 720px) {
+    .step { grid-template-columns: minmax(0, 1fr); gap: 6px; padding: 20px; }
+  }
+  .diff-cell .body, .evidence { font-size: 15px; }
 </style>

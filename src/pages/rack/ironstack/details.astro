@@ -798,4 +798,16 @@ const ld = {
   @media (min-width: 961px) {
     .feat .verdict, .card .verdict, .step h3 { min-height: 2lh; }
   }
+  /* iPhone QA 10-16: inputs at 16px so iOS doesn't zoom; small print readable. */
+  .field input, .field textarea { font-size: 16px; }
+  .card .them, .feat .them { font-size: 13px; color: var(--color-chalk-dim); }
+  .stat-sub { font-size: 13px; }
+  /* iPhone QA round 2 (10-16): readable small print, 44 pt links, step cards one column on phones. */
+  .pillars .say { font-size: 15px; }
+  .card .them, .feat .them, .note { font-size: 14px; }
+  .breadcrumb a { display: inline-flex; align-items: center; min-height: 44px; }
+  @media (max-width: 720px) {
+    .step { grid-template-columns: minmax(0, 1fr); gap: 6px; padding: 20px; }
+  }
+  .diff-cell .body, .evidence { font-size: 15px; }
 </style>

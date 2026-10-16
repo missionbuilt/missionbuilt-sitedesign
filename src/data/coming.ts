@@ -31,7 +31,7 @@ export const COMING: ComingItem[] = [
     app: 'ironstack',
     when: 'january',
     star: true,
-    title: 'A demo and coaching cues for every lift.',
+    title: 'A demo and coaching cues for every lift.',
     detail:
       'Tap Info on any lift: a looping demo, what to set up, what you should feel, the common miss. (Testing now on 4 lifts.)',
   },
