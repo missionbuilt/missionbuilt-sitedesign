@@ -120,7 +120,7 @@ MealStack relies on Apple (the App Store, Health, notifications, widgets, Locati
 
 The app, its design, text, built-in meals and ingredients, badges and code belong to Mission Built or its licensors. Open-source and third-party parts are under their own licences, listed on [the acknowledgements page](/rack/acknowledgements).
 
-**MealStack**, **IronStack** and the app icons are trademarks of Mission Built LLC. You may not use them without written permission, except to refer to the apps by name.
+**Mission Built**, **MealStack**, **IronStack** and the app icons are trademarks of Mission Built LLC. You may not use them without written permission, except to refer to the apps by name.
 
 The `.mealstack` plan format is documented publicly in [the MealStack Schema](/rack/mealstack/schema), and the Mission Built Schema is documented for anything that reads or writes it.
 
