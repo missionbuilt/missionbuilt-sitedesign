@@ -12,7 +12,7 @@
 
 ## 1. Who we are
 
-MealStack is made by Mission Built LLC ("Mission Built", "we", "us"), a Pennsylvania limited liability company in Pittsburgh, Pennsylvania, USA. On October 15, 2026, Mission Built became Mission Built LLC. Nothing about what we collect, where it goes, how long we keep it or what you can ask us for changed. Until our App Store account moves to Mission Built LLC, the App Store may show Mike Nichols as the seller.
+MealStack is made by Mission Built LLC ("Mission Built", "we", "us"), a Pennsylvania limited liability company in Pittsburgh, Pennsylvania, USA. Mission Built LLC was formed on October 15, 2026. Nothing about what we collect, where it goes, how long we keep it or what you can ask us for changed. Until our App Store account moves to Mission Built LLC, the App Store may show Mike Nichols as the seller.
 
 Email: support@missionbuilt.io.
 
