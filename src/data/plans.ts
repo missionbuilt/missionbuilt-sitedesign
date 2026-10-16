@@ -35,7 +35,9 @@ export const PRICES: Record<'ironstack_pro' | 'mealstack_pro' | 'full_stack' | '
 /** COPY (draft for Mike): what a price slot says until the numbers land. */
 export const PRICE_SLOT = 'Pricing coming soon';
 /** COPY (draft for Mike): the line under The Full Stack's slot, no savings figure. */
-export const FULL_STACK_SLOT = 'One subscription for all three. The best price on this page when pricing lands.';
+export const FULL_STACK_SLOT = 'The best price on this page when pricing lands.';
+/** COPY (draft for Mike): what the apps do together, the reason for the bundle. */
+export const FULL_STACK_TOGETHER = 'They work as one: IronStack tells MealStack when you train, and your phone puts the workout on the gym board in one scan.';
 /** COPY (draft for Mike): the page's one line about prices. */
 export const PRICING_LINE = 'Pricing lands here before it lands in the App Store.';
 
@@ -50,13 +52,15 @@ export type Tier = {
   items: Item[];
   price?: keyof typeof PRICES;
 };
-export type Row = { app: 'ironstack' | 'mealstack' | 'missionstack'; name: string; tiers: Tier[]; note?: string };
+export type Row = { app: 'ironstack' | 'mealstack' | 'missionstack'; name: string; href: string; tiers: Tier[]; note?: string };
 
 // COPY: every string below is a draft for Mike's yes.
 export const rows: Row[] = [
   {
     app: 'ironstack',
     name: 'IronStack',
+    href: '/rack/ironstack',
+    note: 'Free to log. Pro for your whole history.',
     tiers: [
       {
         id: 'ironstack_free', name: 'IronStack Free', kind: 'free', tag: 'Free',
@@ -76,7 +80,7 @@ export const rows: Row[] = [
         items: [
           { text: 'Insights on your whole history' },
           { text: 'Next weights from your sets' },
-          { text: 'Bring in any program' },
+          { text: 'Programs from a photo or PDF' },
           { text: 'Ask Stack AI about your training' },
         ],
       },
@@ -85,6 +89,7 @@ export const rows: Row[] = [
   {
     app: 'mealstack',
     name: 'MealStack',
+    href: '/rack/mealstack',
     note: 'Try it free. Everyday use is MealStack Pro.',
     tiers: [
       {
@@ -100,7 +105,7 @@ export const rows: Row[] = [
         line: 'Meals timed to your workout, every day.',
         items: [
           { text: 'Log food, hit your targets' },
-          { text: 'A week of real plates' },
+          { text: 'Plan a week of meals' },
           { text: 'Scan a barcode' },
           { text: 'Stack AI plans and reads menus' },
           { text: 'MealStack on Apple Watch', soon: true },
@@ -111,6 +116,8 @@ export const rows: Row[] = [
   {
     app: 'missionstack',
     name: 'MissionStack',
+    href: '/rack/missionstack',
+    note: 'Free, with every plan.',
     tiers: [
       {
         id: 'missionstack_free', name: 'MissionStack Free', kind: 'free', tag: 'Free',
@@ -134,7 +141,7 @@ export const fullStack = {
     { text: 'IronStack Pro' },
     { text: 'MealStack Pro' },
     { text: 'MissionStack' },
-    { text: 'One Stack AI allowance' },
+    { text: 'Stack AI across all three' },
   ] as Item[],
   price: 'full_stack' as keyof typeof PRICES,
 };
@@ -143,17 +150,20 @@ export const principles = [
   'Everything you build or log stays yours, even if a plan ends.',
   'No ads. Nothing sold.',
   "Lifters never pay for their coach's plan.",
-  'Logging in IronStack is free.',
-  'The gym board is free in MissionStack.',
 ];
 
+/** The free coach level's size (Mike 10-16 17:11: "coach mode (first level) is missing Free"). The product lead's rework may change it; change it here. */
+export const COACH_FREE_LIFTERS = 5;
+
+// COPY: the coach levels. The paid ones are add-ons to The Full Stack (Mike 09:41), no prices.
 export const coach = {
   line: "Your lifters never pay. Lifters on Coach Pro 10 and 25 get IronStack Pro while they're linked.",
-  tiers: [
-    { id: 'coach', name: 'Coach', lifters: 'Up to 5 lifters', price: undefined as keyof typeof PRICES | undefined },
-    { id: 'coach_10', name: 'Coach Pro 10', lifters: 'Up to 10 lifters', price: 'coach_10' as keyof typeof PRICES },
-    { id: 'coach_25', name: 'Coach Pro 25', lifters: 'Up to 25 lifters', price: 'coach_25' as keyof typeof PRICES },
+  free: { id: 'coach_free', name: 'Coach Free', tag: 'Free', lifters: `Coach up to ${COACH_FREE_LIFTERS} lifters`, line: 'Send plans and see every set, in Coach mode in IronStack.' },
+  addons: [
+    { id: 'coach_10', name: 'Coach Pro\u00a010', lifters: 'Up to 10 lifters', price: 'coach_10' as keyof typeof PRICES },
+    { id: 'coach_25', name: 'Coach Pro\u00a025', lifters: 'Up to 25 lifters', price: 'coach_25' as keyof typeof PRICES },
   ],
+  addonLine: 'Add-ons to The Full Stack, for coaches with more lifters.',
 };
 
 /** What a slot shows: the price once public, the draft line until then. */

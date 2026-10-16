@@ -1,4 +1,5 @@
 ---
+import { COACH_FREE_LIFTERS } from '../data/plans';
 /**
  * /coach: the coach's home (#143, widened 2026-10-15). Words: hq/briefs/site/coach-page.md (the
  * product lead, 18:50) and the launch-preview plan §6, with Mike's 19:06 answers (18+, no price
@@ -71,7 +72,7 @@ const blocks: Block[] = [
     shot: { src: '/images/missionstack/board-ipad.webp', w: 1080, h: 751, alt: 'The gym board on iPad mid-set, one lifter: the exercise, the set, the load and the rest clock.' },
   },
   {
-    key: 'missionstack', app: MS ? 'MissionStack · the program builder' : 'The program builder', title: 'Type it like you say it.',
+    key: 'missionstack', app: MS ? 'MissionStack · planning' : 'The program builder', title: 'Type it like you say it.',
     live: [
       'Lay out a week on an iPad or a Mac: type "front squat 3x5 @7" and the sets fill in. Drag workouts between days, make a superset, repeat a week.',
       'For now a plan stays on that iPad or Mac; you send programs from your iPhone.',
@@ -81,7 +82,7 @@ const blocks: Block[] = [
     shot: { src: '/images/missionstack/plan-ipad.webp', w: 1080, h: 751, alt: 'The program builder on iPad: a week of workouts with a typed line filling in its sets.' },
   },
   {
-    key: 'mealstack', app: 'MealStack · fueling around training', title: 'Your tracker says what you ate. This says when.',
+    key: 'mealstack', app: 'MealStack · fueling', title: 'Your tracker says what you ate. This says when.',
     live: [
       'Meals timed around the workout. Move the workout and the day moves with it; the meal before training still lands before they train.',
       'A lifter shares fueling with you only if they turn it on.',
@@ -109,7 +110,7 @@ const setupBoard = [
 // COPY: coach FAQ (plan §6, Mike 19:06 on age; no prices).
 const faq = [
   { q: 'Can my lifters use Android?', a: 'Not to log, yet. From January 1 you can add lifters without the app and log their sets for them on your phone.' },
-    { q: 'How many lifters can I coach?', a: 'Coach: up to 5 lifters. Coach Pro 10: up to 10. Coach Pro 25: up to 25. Pricing coming soon.' },
+    { q: 'How many lifters can I coach?', a: `Coach Free: up to ${COACH_FREE_LIFTERS} lifters, free. Coach Pro\u00a010 and Coach Pro\u00a025, for up to 10 or 25 lifters, are add-ons to The Full Stack. Pricing coming soon.` },
   { q: 'Can I coach lifters under 18?', a: 'No. IronStack is for lifters 18 and over.' },
   { q: 'I\'m moving from another coaching app. What about my programs?', a: 'Build them with the typed line, or bring a PDF or a photo and Stack AI writes it into Plan. Stack AI has to be on, and it uses your Stack AI allowance.', link: { href: '/rack/compare/truecoach', label: 'How Coach mode compares' } },
 ];

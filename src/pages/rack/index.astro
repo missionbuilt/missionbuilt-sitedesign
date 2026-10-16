@@ -44,7 +44,7 @@ import TvFrame from '../../components/TvFrame.astro';
 import { MISSIONSTACK_ANNOUNCED } from '../../data/missionstack-gate.mjs';
 import { STACK, TILES } from '../../data/apps';
 import { comingFor } from '../../data/coming';
-import StackMark from '../../components/StackMark.astro';
+import StackAIMark from '../../components/StackAIMark.astro';
 
 const MS = MISSIONSTACK_ANNOUNCED;
 const icon = (key: string) => STACK.find((a) => a.key === key)!.icon;
@@ -187,11 +187,11 @@ const description = MS
       ))}
     </section>
 
-    {/* The Stack mark (plan §3a, Mike 10-16 15:22). COPY */}
+    {/* The Full Stack's mark (Mike 10-16 17:09). COPY */}
     <section class="stackband" aria-label="The Full Stack">
-      <StackMark size={72} tight />
+      <StackAIMark size={72} />
       <p class="sb-line">Three apps. One stack.</p>
-      <a class="soft" href="/rack/plans">The Full Stack, all three on one plan →</a>
+      <a class="soft" href="/rack/plans">The Full Stack →</a>
     </section>
 
     <section class="block coming" id="coming" aria-labelledby="coming-h">

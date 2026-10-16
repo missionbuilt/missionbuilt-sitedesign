@@ -23,7 +23,7 @@ import PhoneFrame from '../components/PhoneFrame.astro';
 import WatchFrame from '../components/WatchFrame.astro';
 import TabletFrame from '../components/TabletFrame.astro';
 import { STACK } from '../data/apps';
-import StackMark from '../components/StackMark.astro';
+import StackAIMark from '../components/StackAIMark.astro';
 
 const SITE = 'https://missionbuilt.io';
 const [iron, meal, mission] = STACK;
@@ -97,9 +97,9 @@ const jsonLd = [
           </div>
         </article>
       ))}
-      {/* The Stack mark (plan §3a, Mike 10-16 15:22): the three icons, one line. COPY */}
+      {/* The Full Stack's mark (Mike 10-16 17:09): the Stack AI bubble, one line. COPY */}
       <div class="stackband reveal">
-        <StackMark size={80} tight />
+        <StackAIMark size={80} />
         <p class="sb-line">Three apps. One stack.</p>
         <p class="together">IronStack tells MealStack when you train, and your phone puts the workout on MissionStack's gym board in one scan.</p>
         <a class="text-link" href="/rack/plans">The Full Stack <span aria-hidden="true">→</span></a>
@@ -180,7 +180,7 @@ const jsonLd = [
   /* The board leads (the panel: it was hidden behind the phone); the phone and watch sit in front of its lower corners. */
   .stage { position: relative; margin: 56px auto 0; max-width: 980px; padding-bottom: 80px; container-type: inline-size; }
   .st-board { width: 86%; margin: 0 auto; }
-  .st-phone { position: absolute; right: -2%; bottom: -4%; width: 20%; z-index: 2; }
+  .st-phone { position: absolute; right: -4%; bottom: -9%; width: 18%; z-index: 2; }
   .st-watch { position: absolute; left: -1%; bottom: 2%; font-size: calc(14cqi / 10.5); z-index: 3; }
 
   /* THE APPS */
@@ -251,6 +251,7 @@ const jsonLd = [
     .app-body, .lede { margin-left: auto; margin-right: auto; }
     .byline { grid-template-columns: minmax(0, 1fr); gap: 18px; }
     .mike-links { grid-template-columns: minmax(0, 1fr); }
-    .apps, .coaches { padding-top: 80px; }
+    .apps, .coaches { padding-top: 56px; }
+    .mike { margin-top: 56px; padding-top: 64px; padding-bottom: 64px; }
   }
 </style>

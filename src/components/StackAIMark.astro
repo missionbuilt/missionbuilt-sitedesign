@@ -1,0 +1,14 @@
+---
+/**
+ * The Full Stack's mark (Mike 2026-10-16 17:09: "use the Stack AI logo we use in the apps to
+ * represent the full stack"). The apps draw Stack AI with Apple's SF Symbol text.bubble, which the
+ * SF Symbols licence keeps out of logos and marketing, so this is an original Mission Built mark of
+ * the same idea: a speech bubble holding the stack (public/images/marks/stack-ai.svg).
+ */
+interface Props { size?: number; label?: string }
+const { size = 64, label = 'The Full Stack' } = Astro.props;
+---
+<img class="stackai-mark" src="/images/marks/stack-ai.svg" width={size} height={size} alt={label} loading="lazy" style={`width:${size}px;height:${size}px`} />
+<style>
+  .stackai-mark { display: block; max-width: none; }
+</style>

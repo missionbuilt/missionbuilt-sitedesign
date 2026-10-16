@@ -367,7 +367,7 @@ const coach: ComparePage = {
     {
       key: 'limits',
       label: 'Lifters per plan',
-      ours: { text: 'Coach: up to 5 lifters. Coach Pro 10: up to 10. Coach Pro 25: up to 25. Pricing coming soon.' },
+      ours: { text: 'Coach Free: up to 5 lifters. Coach Pro 10 and 25 are add-ons to The Full Stack. Pricing coming soon.' },
       them: {
         truecoach: { text: 'Starter up to 5, Standard up to 20, Pro up to 50. Custom above that.', sources: [s(TC_PRICING)] },
         hevycoach: { text: 'Client bands from 1–10 up to 501–1,000.', sources: [s('https://hevycoach.com/pricing/')] },

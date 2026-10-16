@@ -14,9 +14,9 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
 import TopNav from '../../components/TopNav.astro';
-import StackMark from '../../components/StackMark.astro';
+import StackAIMark from '../../components/StackAIMark.astro';
 import { STACK } from '../../data/apps';
-import { rows, fullStack, principles, coach, priceText, FULL_STACK_SLOT, PRICING_LINE, assertNoPrices } from '../../data/plans';
+import { rows, fullStack, principles, coach, priceText, FULL_STACK_SLOT, FULL_STACK_TOGETHER, PRICING_LINE, assertNoPrices } from '../../data/plans';
 
 assertNoPrices();
 const icon = (key: string) => STACK.find((a) => a.key === key)!.icon;
@@ -40,16 +40,19 @@ const icon = (key: string) => STACK.find((a) => a.key === key)!.icon;
     <section class="full" aria-labelledby="full-h">
       <div class="full-head">
         <span class="best">{fullStack.tag}</span>
-        <StackMark size={72} tight />
+        <StackAIMark size={72} />
         <h2 id="full-h" class="full-name">{fullStack.name}</h2>
         <p class="full-line">{fullStack.line}</p>
       </div>
       <ul class="checks full-items">
         {fullStack.items.map((i) => <li>{i.text}{i.soon && <span class="soon">Coming soon</span>}</li>)}
       </ul>
-      <div class="slot full-slot">
-        <p class="slot-price">{priceText(fullStack.price)}</p>
-        <p class="slot-note">{FULL_STACK_SLOT}</p>
+      <div class="full-side">
+        <p class="together">{FULL_STACK_TOGETHER}</p>
+        <div class="slot full-slot">
+          <p class="slot-price small">{priceText(fullStack.price)}</p>
+          <p class="slot-note">{FULL_STACK_SLOT}</p>
+        </div>
       </div>
     </section>
 
@@ -60,7 +63,7 @@ const icon = (key: string) => STACK.find((a) => a.key === key)!.icon;
         <article class:list={['row', `row-${r.app}`, r.tiers.length === 1 && 'single']}>
           <header class="row-head">
             <img src={icon(r.app).src} srcset={`${icon(r.app).src} 1x, ${icon(r.app).src2x} 2x`} width="48" height="48" alt="" loading="lazy" />
-            <h2 class="row-name">{r.name}</h2>
+            <h2 class="row-name"><a href={r.href}>{r.name}</a></h2>
             {r.note && <p class="row-note">{r.note}</p>}
           </header>
           <div class="tiers">
@@ -90,11 +93,21 @@ const icon = (key: string) => STACK.find((a) => a.key === key)!.icon;
     <section class="block" aria-labelledby="coach-h">
       <h2 class="section-label" id="coach-h">For coaches</h2>
       <p class="coach-line">{coach.line}</p>
-      <ul class="coach-tiers">
-        {coach.tiers.map((t) => (
-          <li><b>{t.name}</b><span>{t.lifters}</span>{t.price && <span class="slot-price small">{priceText(t.price)}</span>}</li>
-        ))}
-      </ul>
+      <div class="coach-grid">
+        <div class="tier free coach-free">
+          <span class="tag free">{coach.free.tag}</span>
+          <h3 class="tier-name">{coach.free.name}</h3>
+          <p class="tier-line">{coach.free.lifters}. {coach.free.line}</p>
+        </div>
+        <div class="coach-addons">
+          <p class="addon-line">{coach.addonLine}</p>
+          <ul class="coach-tiers">
+            {coach.addons.map((t) => (
+              <li><b>{t.name}</b><span>{t.lifters}</span><span class="slot-price small">{priceText(t.price)}</span></li>
+            ))}
+          </ul>
+        </div>
+      </div>
       <a class="soft" href="/coach">Coach mode, for coaches →</a>
     </section>
 
@@ -129,12 +142,17 @@ const icon = (key: string) => STACK.find((a) => a.key === key)!.icon;
   .full { position: relative; margin-top: 40px; padding: 40px 40px 36px; background: var(--color-panel); border: 1px solid var(--color-blood); box-shadow: inset 6px 0 0 var(--color-blood); display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); grid-template-areas: 'head slot' 'items slot'; gap: 24px 48px; }
   .full-head { grid-area: head; }
   .best { display: inline-block; margin-bottom: 18px; padding: 5px 10px; background: var(--color-blood); color: var(--color-chalk); font-family: var(--font-mono); font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; }
-  .full-head :global(.mark) { display: flex; margin-bottom: 18px; }
+  .full-head :global(.stackai-mark) { margin-bottom: 18px; }
   .full-name { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(40px, 5.4vw, 64px); line-height: 0.95; letter-spacing: -0.01em; text-transform: uppercase; color: var(--color-chalk); }
   .full-line { margin: 12px 0 0; font-family: var(--font-display); font-weight: 500; font-size: clamp(20px, 2.2vw, 26px); line-height: 1.2; color: var(--color-chalk); }
   .full-items { grid-area: items; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 24px; }
   .full-items li { font-size: 17px; }
-  .full-slot { grid-area: slot; align-self: center; }
+  .full-side { grid-area: slot; align-self: center; display: grid; gap: 18px; }
+  .together { margin: 0; font-family: var(--font-serif); font-size: 18px; line-height: 1.55; color: var(--color-chalk); }
+  .full-slot { padding: 16px 18px; }
+  .full-slot .slot-price.small { margin: 0; }
+  .row-name a { color: inherit; border-bottom: 1px solid var(--color-chalk-ghost); }
+  .row-name a:hover { border-bottom-color: var(--color-chalk); }
 
   /* Price slots: one look everywhere; the numbers drop in from src/data/plans.ts. */
   .slot { padding: 24px; border: 1px dashed var(--color-chalk-ghost); background: var(--color-bg); }
@@ -145,16 +163,15 @@ const icon = (key: string) => STACK.find((a) => a.key === key)!.icon;
   /* ONE ROW PER APP */
   .rows { margin-top: 64px; }
   .row { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 32px; padding: 32px 0; border-top: var(--border-thin); }
-  .row:last-child { border-bottom: var(--border-thin); }
   .row-head img { display: block; margin-bottom: 14px; border-radius: 22.37%; border: 1px solid var(--color-rule); }
   .row-name { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 28px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-chalk); }
   .row-note { margin: 10px 0 0; max-width: 24ch; font-family: var(--font-serif); font-size: 15px; line-height: 1.5; color: var(--color-chalk-dim); }
   .tiers { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 20px; align-items: stretch; }
-  .row-mealstack .tiers { grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.5fr); }
-  .single .tiers { grid-template-columns: minmax(0, 1fr); }
+  /* One column grid for every row: Free on the left, Pro on the right; MissionStack's Free takes the Free column (QA 10-16). */
+  .single .tier ul { grid-template-columns: minmax(0, 1fr) !important; }
+  .tier.try { align-self: start; }
   .tier { padding: 26px 26px 28px; border: var(--border-thin); }
   .tier.pro { background: var(--color-panel); border-color: var(--color-chalk-ghost); }
-  .tier.try { padding: 20px 20px 22px; }
   .tag { display: inline-block; margin-bottom: 14px; padding: 3px 9px; font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; }
   .tag.free { border: 1px solid var(--color-army); color: var(--color-army); }
   .tag.try { border: 1px dashed var(--color-chalk-ghost); color: var(--color-chalk-dim); }
@@ -165,12 +182,13 @@ const icon = (key: string) => STACK.find((a) => a.key === key)!.icon;
   .tier-line { margin: 8px 0 18px; font-family: var(--font-serif); font-size: 16px; line-height: 1.5; color: var(--color-chalk-dim); }
   .tier.pro .tier-line { margin-bottom: 0; font-size: 18px; color: var(--color-chalk); }
   .tier.try .tier-line { font-size: 15px; }
-  .single .tier ul { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 24px; }
 
   .block { margin-top: 56px; padding-top: 28px; border-top: var(--border-thin); }
   .keeps { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 32px; max-width: 900px; }
   .coach-line { margin: 0 0 18px; max-width: 60ch; font-family: var(--font-serif); font-size: 16px; line-height: 1.6; color: var(--color-chalk-dim); }
-  .coach-tiers { list-style: none; margin: 0 0 20px; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: var(--border-thin); border-left: var(--border-thin); }
+  .coach-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 20px; margin-bottom: 20px; }
+  .addon-line { margin: 0 0 12px; font-family: var(--font-serif); font-size: 15px; color: var(--color-chalk-dim); }
+  .coach-tiers { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: var(--border-thin); border-left: var(--border-thin); }
   .coach-tiers li { display: flex; flex-direction: column; gap: 6px; padding: 20px 22px; border-right: var(--border-thin); border-bottom: var(--border-thin); }
   .coach-tiers b { font-family: var(--font-display); font-weight: 600; font-size: 20px; letter-spacing: 0.03em; text-transform: uppercase; color: var(--color-chalk); }
   .coach-tiers span { font-family: var(--font-serif); font-size: 15px; color: var(--color-chalk-dim); }
@@ -193,8 +211,7 @@ const icon = (key: string) => STACK.find((a) => a.key === key)!.icon;
     .page { padding-left: var(--pad-page-x-mobile); padding-right: var(--pad-page-x-mobile); }
     .full { padding: 26px 20px; box-shadow: inset 4px 0 0 var(--color-blood); }
     .full-items, .single .tier ul, .keeps { grid-template-columns: minmax(0, 1fr); }
-    .tiers, .row-mealstack .tiers, .coach-tiers { grid-template-columns: minmax(0, 1fr); }
-    /* On a phone, MealStack Pro leads its row; the try-it tier follows, small. */
-    .row-mealstack .tier.pro { order: -1; }
+    .soon { display: block; width: fit-content; margin: 4px 0 0; }
+    .tiers, .coach-tiers, .coach-grid { grid-template-columns: minmax(0, 1fr); }
   }
 </style>
