@@ -1,9 +1,9 @@
 /**
  * The one switch for MissionStack's public pages (#193).
  *
- * The MissionStack name isn't cleared yet (question to Mike, 10-14 20:52). Until he says it is,
- * every page under /rack/missionstack is noindex and out of the sitemap. Flip this to true only
- * on Mike's word; the pages then index and the sitemap lists them. (A plain .mjs so
+ * Mike cleared the name 2026-10-16 08:30 ("Cleared."). True on feat/site-launch-preview, the branch
+ * that goes live; main stays false until Mike's site go. When true, the MissionStack pages index,
+ * the sitemap lists them and the third app is named MissionStack everywhere. (A plain .mjs so
  * astro.config.mjs can read it too.)
  */
-export const MISSIONSTACK_ANNOUNCED = false;
+export const MISSIONSTACK_ANNOUNCED = true;

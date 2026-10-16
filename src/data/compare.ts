@@ -15,9 +15,10 @@
  *    public (Billboard's check).
  *  - Our own cells say only what's in testers' hands (IronStack b75, MealStack b92, the board in
  *    0.1.0), or carry `soon` ("Coming soon", in January) or `later` ("Coming later", after launch).
- *  - No prices. The MissionStack name is never used here; "the gym board" until the name clears.
+ *  - No prices. MissionStack is named (Mike cleared the name 2026-10-16 08:30).
  *  - assertPublishable() throws at build time if any rendered text contains "[verify]".
  */
+import { MISSIONSTACK_ANNOUNCED } from './missionstack-gate.mjs';
 
 export type Source = { url: string; excerpt?: boolean };
 export type Cell = { text: string; sources: Source[]; trimmed?: string };
@@ -72,7 +73,7 @@ const ironstack: ComparePage = {
   ],
   intro: [
     'IronStack is a lifting log for iPhone and Apple Watch. You bring your history, log a set by tapping, typing or saying it, and the rest clock talks in your earbuds.',
-    'One thing that isn\'t a row below: the gym board puts the workout you\'re logging on a TV, an iPad or a Mac, one lifter at a time today.',
+    'One thing that isn\'t a row below: MissionStack puts the workout you\'re logging on a TV, an iPad or a Mac, one lifter at a time today.',
   ],
   rows: [
     {
@@ -323,7 +324,7 @@ const coach: ComparePage = {
     {
       key: 'plan-actual',
       label: 'Plan against actual',
-      ours: { text: 'Every set against your plan. Every change is marked in place: weight, reps, RPE, swaps and skips. Copy a week forward with a small bump.' },
+      ours: { text: 'Every set against your plan. Every change is marked in place: weight, reps, RPE, swaps and skips. Repeat last week\'s plan with a little more weight.' },
       them: {
         truecoach: { text: 'Compliance tracking (assigned exercises against completed) and compliance alerts.', sources: [s('https://truecoach.co/'), s(TC_FEATURES)], trimmed: 'whether there is a side-by-side set view' },
         hevycoach: { text: 'Adherence tracking, 7-day activity in the client list, and a consistency calendar.', sources: [s(HC_SITE), s(HC_VS_TH)], trimmed: 'whether there is a side-by-side set view' },
@@ -334,7 +335,7 @@ const coach: ComparePage = {
       key: 'builder',
       label: 'Where you build',
       ours: {
-        text: 'In IronStack on your phone, or on an iPad or a Mac with Apple silicon. For now a plan built on the iPad or Mac stays there. No web builder.',
+        text: 'In IronStack on your phone, or on an iPad or a Mac with Apple silicon. For now a plan built on the iPad or Mac stays there.',
         soon: 'Send an iPad-built program to your lifter, and read every lifter\'s week at your desk.',
       },
       them: {
@@ -366,7 +367,7 @@ const coach: ComparePage = {
     {
       key: 'limits',
       label: 'Lifters per plan',
-      ours: { text: 'Coach: up to 5 lifters. Coach Pro: 10 or 25. Pricing coming soon.' },
+      ours: { text: 'Coach: up to 5 lifters. Coach Pro 10: up to 10. Coach Pro 25: up to 25. Pricing coming soon.' },
       them: {
         truecoach: { text: 'Starter up to 5, Standard up to 20, Pro up to 50. Custom above that.', sources: [s(TC_PRICING)] },
         hevycoach: { text: 'Client bands from 1–10 up to 501–1,000.', sources: [s('https://hevycoach.com/pricing/')] },
@@ -414,7 +415,7 @@ export function assertPublishable(p: ComparePage): void {
   for (const t of renderedText(p)) {
     if (/\[verify\]/i.test(t)) throw new Error(`compare/${p.slug}: "[verify]" would be published: ${t}`);
     if (/[$€£]\s?\d/.test(t)) throw new Error(`compare/${p.slug}: a price would be published: ${t}`);
-    if (/MissionStack/.test(t)) throw new Error(`compare/${p.slug}: names MissionStack before it is cleared: ${t}`);
+    if (!MISSIONSTACK_ANNOUNCED && /MissionStack/.test(t)) throw new Error(`compare/${p.slug}: names MissionStack before it is cleared: ${t}`);
     if (/—/.test(t)) throw new Error(`compare/${p.slug}: an em dash: ${t}`);
   }
 }

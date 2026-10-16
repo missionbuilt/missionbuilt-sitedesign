@@ -51,7 +51,7 @@ const blocks: Block[] = [
       'Send a program. It arrives as a suggestion; your lifter accepts it and can change anything. You see Accepted or Passed.',
       'See every set against your plan. Every change is marked in place: weight, reps, RPE, swaps and skips.',
       'Leave a note on a lift. Keep a private note on each lifter that only you see.',
-      'Copy a week forward with a small bump.',
+      'Repeat last week\'s plan with a little more weight.',
       'Bring a program you already have, as a PDF or a photo. Stack AI writes it into Plan, and you send it.',
       'Ask Stack AI for the read on a lifter\'s week: what moved, what stalled, and where it differed from your plan.',
     ],
@@ -75,7 +75,7 @@ const blocks: Block[] = [
   {
     key: 'missionstack', app: MS ? 'MissionStack · the program builder' : 'The program builder', title: 'Write it like you\'d say it.',
     live: [
-      'Build programs on an iPad or a Mac: type "front squat 3x5 @7" and the sets fill in. Drag workouts between days, make a superset, copy a week forward.',
+      'Build programs on an iPad or a Mac: type "front squat 3x5 @7" and the sets fill in. Drag workouts between days, make a superset, repeat a week.',
       'Start from one of ten starter programs, from powerlifting to yoga, every week written out.',
       'For now a plan stays on that iPad or Mac.',
     ],
@@ -114,7 +114,7 @@ const setupBoard = [
 const faq = [
   { q: 'Can my lifters use Android?', a: 'Not to log, yet. Once lifters without the app come in January, you can log for them from your phone.' },
   { q: 'Can I build programs on Windows or the web?', a: 'No. You build on an iPhone, an iPad or a Mac with Apple silicon.' },
-  { q: 'How many lifters can I coach?', a: 'By plan: Coach for up to 5 lifters, Coach Pro for 10 or 25. Pricing coming soon.' },
+  { q: 'How many lifters can I coach?', a: 'Coach: up to 5 lifters. Coach Pro 10: up to 10. Coach Pro 25: up to 25. Pricing coming soon.' },
   { q: 'Can I coach lifters under 18?', a: 'No. IronStack is for lifters 18 and over.' },
   { q: 'I\'m moving from another coaching app. What about my programs?', a: 'Build them with the typed line, or bring a PDF or a photo and Stack AI writes it into Plan. Stack AI has to be on, and it uses your Stack AI allowance.', link: { href: '/rack/compare/truecoach', label: 'How Coach mode compares' } },
 ];
@@ -159,7 +159,6 @@ const faq = [
           <li>Your lifters log on iPhone.</li>
           <li>You build on an iPhone, an iPad or a Mac with Apple silicon.</li>
           <li>Logging for a lifter, and lifters without the app: <span class="tag">Coming in January</span></li>
-          <li>Android, Windows and a web builder: not planned for January.</li>
         </ul>
       </div>
     </section>
@@ -192,7 +191,7 @@ const faq = [
       <h2 class="section-h2">They say yes first.</h2>
       <div class="fine">
         <p>Nothing is shared until your lifter says yes. Accepting shares every set, and their notes and how they felt. Sleep, bodyweight and MealStack fueling stay off unless they turn them on.</p>
-        <p>They choose how far back you see: from today, 30, 60 or 90 days, or all their history (earlier versions offer 12 weeks). They can share less later, and what they stop sharing is deleted from your copy. Server backups drop it within 30 days. We can't take back what you already saw, or a week already summed up with Stack AI.</p>
+        <p>They choose how far back you see: from today, 30, 60 or 90 days, or all their history. They can share less later, and what they stop sharing is deleted from your copy. Server backups drop it within 30 days. We can't take back what you already saw, or a week already summed up with Stack AI.</p>
         <p>Either of you can end the link at any time. Ending it, blocking each other, or deleting either Social account deletes your copy on the server, and your phone deletes its copy as soon as it sees the link is gone. Server backups drop it within 30 days.</p>
       </div>
     </section>
