@@ -1,177 +1,200 @@
 ---
 /**
- * /rack/plans: what each plan includes (plan §7, hq/briefs/site/site-launch-preview-plan.md).
+ * /rack/plans: one row per app (Mike 2026-10-16 15:21 to 15:27; hq/inbox/marketing/2026-10-16-1525
+ * and -1530). The Full Stack leads as the best deal (the page's one oxblood accent, a Best deal tag,
+ * the three-icon mark). Then IronStack, MealStack and MissionStack, each on its own row reading free
+ * to paid for that app only. Free is marked green only where it is truly free to use (IronStack
+ * logging, the MissionStack gym board); MealStack's free tier is a small "Try free" tier and MealStack
+ * Pro carries that row. Pro is the hero of its row: more weight, the payoff, the price slot.
  *
- * No prices: every card and the table say "Pricing coming soon" (Mike 10-15 18:41; the free lines
- * are exactly the ones he allowed at 19:06). Data: src/data/plans.ts, whose assertNoPrices() stops
- * the build if a price, trial or founding line gets in. noindex and out of the sitemap until Mike's
- * yes (astro.config.mjs). MissionStack is named only once MISSIONSTACK_ANNOUNCED. Strings are drafts
- * for Mike's yes.
+ * No prices (Mike 15:27). Every slot reads from src/data/plans.ts (PRICES, null today), whose
+ * assertNoPrices() stops the build if a number slips in. noindex until Mike's yes. COPY strings are
+ * drafts for Mike.
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
 import TopNav from '../../components/TopNav.astro';
-import { MISSIONSTACK_ANNOUNCED } from '../../data/missionstack-gate.mjs';
-import { PRICING_LINE, principles, plans, coach, featureColumns, features, assertNoPrices } from '../../data/plans';
+import StackMark from '../../components/StackMark.astro';
+import { STACK } from '../../data/apps';
+import { rows, fullStack, principles, coach, priceText, FULL_STACK_SLOT, PRICING_LINE, assertNoPrices } from '../../data/plans';
 
-const announced = MISSIONSTACK_ANNOUNCED;
-assertNoPrices(announced);
-
-const title = announced
-  ? 'Plans for IronStack, MealStack and MissionStack'
-  : 'Plans for IronStack and MealStack · Mission Built';
-const description = 'What each plan includes, for IronStack, MealStack and The Stack, and for coaches. Pricing coming soon.';
-const rows = features(announced);
+assertNoPrices();
+const icon = (key: string) => STACK.find((a) => a.key === key)!.icon;
 ---
-<BaseLayout title={title} description={description} noindex>
+<BaseLayout
+  title="Plans for IronStack, MealStack and MissionStack · Mission Built"
+  description="One row per app: IronStack Free and Pro, MealStack Free and Pro, MissionStack Free, and The Full Stack for all three. Pricing coming soon."
+  noindex
+>
   <TopNav active="plans" />
 
   <main id="main" class="page">
     <section class="hero">
-      <p class="eyebrow">
-        <span class="dots" aria-hidden="true">▮▮▮</span>
-        <span>The plans</span>
-        <span class="dots" aria-hidden="true">▮▮▮</span>
-      </p>
+      <p class="eyebrow"><span class="dots" aria-hidden="true">▮▮▮</span> <span>The plans</span> <span class="dots" aria-hidden="true">▮▮▮</span></p>
       {/* COPY */}
-      <h1 class="display">One mission. Pick your plan<span class="dot">.</span></h1>
-      <p class="subtitle">Pricing coming soon. It lands here before it lands in the App Store.</p>
+      <h1 class="display">Pick your plan.</h1>
+      <p class="subtitle">{PRICING_LINE}</p>
     </section>
 
-    <section class="block" aria-labelledby="principles-h">
-      <h2 class="section-label" id="principles-h">What every plan keeps</h2>
-      <ul class="principles">
-        {principles(announced).map((p) => <li>{p}</li>)}
-      </ul>
-    </section>
-
-    <section class="block" aria-labelledby="plans-h">
-      <h2 class="section-label" id="plans-h">The plans</h2>
-      <div class="cards">
-        {plans(announced).map((p) => (
-          <article class="card">
-            <h3 class="card-name">{p.name}</h3>
-            <p class="card-line">{p.line}</p>
-            <p class="pricing">{PRICING_LINE}</p>
-            <ul class="includes">
-              {p.includes.map((i) => <li>{i.text}{i.soon && <span class="soon">Coming soon</span>}</li>)}
-            </ul>
-          </article>
-        ))}
+    {/* ---------- THE FULL STACK: the best deal, first ---------- */}
+    <section class="full" aria-labelledby="full-h">
+      <div class="full-head">
+        <span class="best">{fullStack.tag}</span>
+        <StackMark size={72} tight />
+        <h2 id="full-h" class="full-name">{fullStack.name}</h2>
+        <p class="full-line">{fullStack.line}</p>
       </div>
-      {/* COPY */}
-      <p class="every">{announced ? 'MissionStack, on iPad, Mac and Apple TV, comes with every plan.' : 'The gym board comes with every plan.'}</p>
+      <ul class="checks full-items">
+        {fullStack.items.map((i) => <li>{i.text}{i.soon && <span class="soon">Coming soon</span>}</li>)}
+      </ul>
+      <div class="slot full-slot">
+        <p class="slot-price">{priceText(fullStack.price)}</p>
+        <p class="slot-note">{FULL_STACK_SLOT}</p>
+      </div>
+    </section>
+
+    {/* ---------- ONE ROW PER APP ---------- */}
+    <section class="rows" aria-label="Or pick one app">
+      <p class="section-label">Or pick one app</p>
+      {rows.map((r) => (
+        <article class:list={['row', `row-${r.app}`, r.tiers.length === 1 && 'single']}>
+          <header class="row-head">
+            <img src={icon(r.app).src} srcset={`${icon(r.app).src} 1x, ${icon(r.app).src2x} 2x`} width="48" height="48" alt="" loading="lazy" />
+            <h2 class="row-name">{r.name}</h2>
+            {r.note && <p class="row-note">{r.note}</p>}
+          </header>
+          <div class="tiers">
+            {r.tiers.map((t) => (
+              <div class:list={['tier', t.kind]}>
+                {t.tag && <span class:list={['tag', t.kind]}>{t.tag}</span>}
+                <h3 class="tier-name">{t.name}</h3>
+                <p class="tier-line">{t.line}</p>
+                {t.kind === 'pro' && <p class="slot-price small">{priceText(t.price)}</p>}
+                <ul class:list={['checks', t.kind]}>
+                  {t.items.map((i) => <li>{i.text}{i.soon && <span class="soon">Coming soon</span>}</li>)}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </article>
+      ))}
+    </section>
+
+    <section class="block" aria-labelledby="keeps-h">
+      <h2 class="section-label" id="keeps-h">What every plan keeps</h2>
+      <ul class="checks keeps">
+        {principles.map((p) => <li>{p}</li>)}
+      </ul>
     </section>
 
     <section class="block" aria-labelledby="coach-h">
       <h2 class="section-label" id="coach-h">For coaches</h2>
       <p class="coach-line">{coach.line}</p>
-      <div class="cards coach-cards">
+      <ul class="coach-tiers">
         {coach.tiers.map((t) => (
-          <article class="card">
-            <h3 class="card-name">{t.name}</h3>
-            <p class="card-line">{t.lifters}</p>
-            <p class="pricing">{PRICING_LINE}</p>
-          </article>
+          <li><b>{t.name}</b><span>{t.lifters}</span>{t.price && <span class="slot-price small">{priceText(t.price)}</span>}</li>
         ))}
-      </div>
-      <p class="more"><a class="soft" href="/coach">Coach mode, for coaches →</a></p>
+      </ul>
+      <a class="soft" href="/coach">Coach mode, for coaches →</a>
     </section>
 
-    <section class="block" aria-labelledby="table-h">
-      <h2 class="section-label" id="table-h">Plan by plan</h2>
-      <p class="table-note">{PRICING_LINE}.</p>
-      <div class="table-wrap" tabindex="0" role="region" aria-labelledby="table-h">
-        <table class="features">
-          <thead>
-            <tr>
-              <th scope="col" class="feat">What you get</th>
-              {featureColumns.map((c) => <th scope="col">{c}</th>)}
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((r) => (
-              <tr>
-                <th scope="row" class="feat">{r.name}{r.soon && <span class="soon">Coming soon</span>}</th>
-                {r.cells.map((c, i) => (
-                  <td>{c === '✓' ? <span aria-label="Included">✓</span> : c ? c : <span aria-label="Not included" class="none">·</span>}</td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <section class="block closer">
+    <section class="block end">
       {/* COPY */}
-      <h2 class="closer-h">Train on it now.</h2>
-      <p class="subtitle">The apps are in a private beta. Get in first and get the App Store link before January 1.</p>
-      <a class="cta" href="/first">Get in first →</a>
+      <p class="end-line">Train on it now in the beta, and get the App Store link before January 1.</p>
+      <a class="btn" href="/first">Get in first →</a>
     </section>
   </main>
-
-  <SiteFooter links={[{ label: 'The apps', href: '/rack' }, { label: 'Support', href: '/rack/support' }]} />
+  <SiteFooter />
 </BaseLayout>
 
 <style>
-  .page { padding-bottom: 72px; }
-  .hero { padding: 48px var(--pad-page-x) 8px; }
+  .page { width: 100%; max-width: calc(1180px + 2 * var(--pad-page-x)); margin: 0 auto; padding: 0 var(--pad-page-x) 72px; }
+  .hero { padding: 56px 0 8px; }
   .eyebrow { display: inline-flex; align-items: center; gap: 14px; margin: 0 0 18px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.24em; color: var(--color-chalk-dim); text-transform: uppercase; }
-  .eyebrow .dots { letter-spacing: 0.04em; color: var(--color-blood-bright); }
-  .display { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(40px, 7vw, 84px); line-height: 0.95; letter-spacing: -0.02em; text-transform: uppercase; color: var(--color-chalk); }
-  .dot { color: var(--color-blood-bright); }
-  .subtitle { margin: 18px 0 0; max-width: 60ch; font-family: var(--font-serif); font-size: 18px; line-height: 1.6; color: var(--color-chalk-dim); }
-
-  .block { margin: 56px var(--pad-page-x) 0; padding-top: 28px; border-top: var(--border-thin); }
+  .eyebrow .dots { letter-spacing: 0.04em; color: var(--color-chalk-faint); }
+  .display { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(44px, 7vw, 84px); line-height: 0.95; letter-spacing: -0.02em; text-transform: uppercase; color: var(--color-chalk); }
+  .subtitle { margin: 16px 0 0; max-width: 60ch; font-family: var(--font-serif); font-size: 18px; line-height: 1.6; color: var(--color-chalk-dim); }
   .section-label { margin: 0 0 18px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--color-chalk-dim); }
 
-  .principles { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px 28px; }
-  .principles li { position: relative; padding-left: 22px; font-family: var(--font-serif); font-size: 16px; line-height: 1.55; color: var(--color-chalk); }
-  .principles li::before { content: '✓'; position: absolute; left: 0; color: var(--color-army); font-family: var(--font-mono); }
+  /* Checks: green where it's free to use; chalk for what Pro adds. */
+  .checks { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .checks li { position: relative; padding-left: 24px; font-family: var(--font-serif); font-size: 16px; line-height: 1.5; color: var(--color-chalk); }
+  .checks li::before { content: '✓'; position: absolute; left: 0; top: 0; font-family: var(--font-mono); color: var(--color-chalk); }
+  .checks.free li::before, .checks.keeps li::before { color: var(--color-army); }
+  .checks.try li { color: var(--color-chalk-dim); font-size: 15px; }
+  .checks.try li::before { color: var(--color-chalk-faint); }
+  .soon { display: inline-block; margin-left: 8px; padding: 1px 6px; border: 1px dashed var(--color-chalk-ghost); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-chalk-faint); vertical-align: 2px; }
 
-  .cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: var(--border-thin); border-left: var(--border-thin); }
-  .coach-cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .card { min-width: 0; padding: 24px 24px 28px; border-right: var(--border-thin); border-bottom: var(--border-thin); display: grid; gap: 10px; align-content: start; }
-  .card-name { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 24px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-chalk); }
-  .card-line { margin: 0; font-family: var(--font-serif); font-size: 15px; line-height: 1.55; color: var(--color-chalk-dim); }
-  .pricing { margin: 0; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-chalk-faint); }
-  .includes { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 8px; font-size: 14px; line-height: 1.5; color: var(--color-chalk-dim); }
-  .includes li { position: relative; padding-left: 16px; }
-  .includes li::before { content: ''; position: absolute; left: 0; top: 7px; width: 6px; height: 6px; border: 1px solid var(--color-chalk-faint); }
-  .soon { display: inline-block; margin-left: 8px; padding: 1px 6px; border: 1px solid var(--color-chalk-faint); font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-chalk-faint); white-space: nowrap; }
-  .every, .coach-line, .table-note { margin: 18px 0 0; max-width: 68ch; font-family: var(--font-serif); font-size: 16px; line-height: 1.6; color: var(--color-chalk-dim); }
-  .coach-line { margin: 0 0 18px; }
-  .table-note { margin: 0 0 14px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-chalk-faint); }
-  .more { margin: 18px 0 0; }
-  .soft { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-dim); border-bottom: 1px solid var(--color-chalk-ghost); padding-bottom: 2px; }
-  .soft:hover { color: var(--color-chalk); border-bottom-color: var(--color-chalk); }
+  /* THE FULL STACK: the one oxblood accent on the page. */
+  .full { position: relative; margin-top: 40px; padding: 40px 40px 36px; background: var(--color-panel); border: 1px solid var(--color-blood); box-shadow: inset 6px 0 0 var(--color-blood); display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); grid-template-areas: 'head slot' 'items slot'; gap: 24px 48px; }
+  .full-head { grid-area: head; }
+  .best { display: inline-block; margin-bottom: 18px; padding: 5px 10px; background: var(--color-blood); color: var(--color-chalk); font-family: var(--font-mono); font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; }
+  .full-head :global(.mark) { display: flex; margin-bottom: 18px; }
+  .full-name { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(40px, 5.4vw, 64px); line-height: 0.95; letter-spacing: -0.01em; text-transform: uppercase; color: var(--color-chalk); }
+  .full-line { margin: 12px 0 0; font-family: var(--font-display); font-weight: 500; font-size: clamp(20px, 2.2vw, 26px); line-height: 1.2; color: var(--color-chalk); }
+  .full-items { grid-area: items; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 24px; }
+  .full-items li { font-size: 17px; }
+  .full-slot { grid-area: slot; align-self: center; }
 
-  /* The table scrolls inside its own box; the feature column stays put, so a phone never side-scrolls the page. */
-  .table-wrap { max-width: 100%; overflow-x: auto; border: var(--border-thin); }
-  .features { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 14px; }
-  .features th, .features td { padding: 12px 14px; border-bottom: var(--border-thin); text-align: center; color: var(--color-chalk-dim); vertical-align: top; }
-  .features thead th { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-chalk); }
-  .features .feat { position: sticky; left: 0; z-index: 1; min-width: 220px; max-width: 320px; text-align: left; background: var(--color-bg); border-right: var(--border-thin); font-family: var(--font-serif); font-weight: 400; color: var(--color-chalk); }
-  .features thead .feat { font-family: var(--font-mono); }
-  .features td span[aria-label='Included'] { color: var(--color-chalk); }
-  .none { color: var(--color-chalk-faint); }
+  /* Price slots: one look everywhere; the numbers drop in from src/data/plans.ts. */
+  .slot { padding: 24px; border: 1px dashed var(--color-chalk-ghost); background: var(--color-bg); }
+  .slot-price { margin: 0; font-family: var(--font-display); font-weight: 600; font-size: 26px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--color-chalk); }
+  .slot-price.small { margin: 12px 0 16px; font-size: 15px; letter-spacing: 0.08em; color: var(--color-chalk-dim); }
+  .slot-note { margin: 10px 0 0; font-family: var(--font-serif); font-size: 15px; line-height: 1.55; color: var(--color-chalk-dim); }
 
-  .closer { padding-bottom: 8px; }
-  .closer-h { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 4vw, 44px); text-transform: uppercase; color: var(--color-chalk); }
-  .cta { display: inline-flex; margin-top: 22px; padding: 13px 20px; background: var(--color-blood); color: var(--color-chalk); font-family: var(--font-display); font-weight: 600; font-size: 15px; letter-spacing: 0.04em; text-transform: uppercase; transition: background 120ms ease-out; }
-  .cta:hover { background: var(--color-blood-bright); }
+  /* ONE ROW PER APP */
+  .rows { margin-top: 64px; }
+  .row { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 32px; padding: 32px 0; border-top: var(--border-thin); }
+  .row:last-child { border-bottom: var(--border-thin); }
+  .row-head img { display: block; margin-bottom: 14px; border-radius: 22.37%; border: 1px solid var(--color-rule); }
+  .row-name { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 28px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-chalk); }
+  .row-note { margin: 10px 0 0; max-width: 24ch; font-family: var(--font-serif); font-size: 15px; line-height: 1.5; color: var(--color-chalk-dim); }
+  .tiers { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 20px; align-items: stretch; }
+  .row-mealstack .tiers { grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.5fr); }
+  .single .tiers { grid-template-columns: minmax(0, 1fr); }
+  .tier { padding: 26px 26px 28px; border: var(--border-thin); }
+  .tier.pro { background: var(--color-panel); border-color: var(--color-chalk-ghost); }
+  .tier.try { padding: 20px 20px 22px; }
+  .tag { display: inline-block; margin-bottom: 14px; padding: 3px 9px; font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; }
+  .tag.free { border: 1px solid var(--color-army); color: var(--color-army); }
+  .tag.try { border: 1px dashed var(--color-chalk-ghost); color: var(--color-chalk-dim); }
+  .tag.pro { background: var(--color-chalk); color: var(--color-bg); border: 1px solid var(--color-chalk); }
+  .tier-name { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 24px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--color-chalk); }
+  .tier.pro .tier-name { font-size: 30px; }
+  .tier.try .tier-name { font-size: 19px; color: var(--color-chalk-dim); }
+  .tier-line { margin: 8px 0 18px; font-family: var(--font-serif); font-size: 16px; line-height: 1.5; color: var(--color-chalk-dim); }
+  .tier.pro .tier-line { margin-bottom: 0; font-size: 18px; color: var(--color-chalk); }
+  .tier.try .tier-line { font-size: 15px; }
+  .single .tier ul { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 24px; }
 
-  @media (max-width: 1099px) {
-    .hero { padding: 40px var(--pad-page-x-mid) 8px; }
-    .block { margin: 48px var(--pad-page-x-mid) 0; }
-    .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .principles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .block { margin-top: 56px; padding-top: 28px; border-top: var(--border-thin); }
+  .keeps { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 32px; max-width: 900px; }
+  .coach-line { margin: 0 0 18px; max-width: 60ch; font-family: var(--font-serif); font-size: 16px; line-height: 1.6; color: var(--color-chalk-dim); }
+  .coach-tiers { list-style: none; margin: 0 0 20px; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: var(--border-thin); border-left: var(--border-thin); }
+  .coach-tiers li { display: flex; flex-direction: column; gap: 6px; padding: 20px 22px; border-right: var(--border-thin); border-bottom: var(--border-thin); }
+  .coach-tiers b { font-family: var(--font-display); font-weight: 600; font-size: 20px; letter-spacing: 0.03em; text-transform: uppercase; color: var(--color-chalk); }
+  .coach-tiers span { font-family: var(--font-serif); font-size: 15px; color: var(--color-chalk-dim); }
+  .coach-tiers .slot-price.small { margin: 6px 0 0; font-family: var(--font-display); }
+  .soft { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-dim); border-bottom: 1px solid var(--color-chalk-ghost); }
+  .end { text-align: center; padding-top: 48px; }
+  .end-line { margin: 0 auto 22px; max-width: 44ch; font-family: var(--font-serif); font-size: 18px; line-height: 1.55; color: var(--color-chalk); }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 15px 26px; border: 1px solid var(--color-chalk-dim); font-family: var(--font-display); font-weight: 600; font-size: 15px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-chalk); }
+  .btn:hover { background: var(--color-panel); }
+
+  @media (max-width: 1000px) {
+    .page { padding-left: var(--pad-page-x-mid); padding-right: var(--pad-page-x-mid); }
+    .full { grid-template-columns: minmax(0, 1fr); grid-template-areas: 'head' 'items' 'slot'; padding: 32px 28px; }
+    .row { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+    .row-head { display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 4px 16px; align-items: center; }
+    .row-head img { margin: 0; grid-row: span 2; }
+    .row-note { max-width: none; margin: 0; }
   }
   @media (max-width: 720px) {
-    .hero { padding: 32px var(--pad-page-x-mobile) 8px; }
-    .block { margin: 40px var(--pad-page-x-mobile) 0; }
-    .cards, .coach-cards, .principles { grid-template-columns: minmax(0, 1fr); }
-    .features .feat { min-width: 160px; max-width: 200px; }
+    .page { padding-left: var(--pad-page-x-mobile); padding-right: var(--pad-page-x-mobile); }
+    .full { padding: 26px 20px; box-shadow: inset 4px 0 0 var(--color-blood); }
+    .full-items, .single .tier ul, .keeps { grid-template-columns: minmax(0, 1fr); }
+    .tiers, .row-mealstack .tiers, .coach-tiers { grid-template-columns: minmax(0, 1fr); }
+    /* On a phone, MealStack Pro leads its row; the try-it tier follows, small. */
+    .row-mealstack .tier.pro { order: -1; }
   }
 </style>

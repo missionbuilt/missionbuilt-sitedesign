@@ -44,6 +44,7 @@ import TvFrame from '../../components/TvFrame.astro';
 import { MISSIONSTACK_ANNOUNCED } from '../../data/missionstack-gate.mjs';
 import { STACK, TILES } from '../../data/apps';
 import { comingFor } from '../../data/coming';
+import StackMark from '../../components/StackMark.astro';
 
 const MS = MISSIONSTACK_ANNOUNCED;
 const icon = (key: string) => STACK.find((a) => a.key === key)!.icon;
@@ -186,6 +187,13 @@ const description = MS
       ))}
     </section>
 
+    {/* The Stack mark (plan §3a, Mike 10-16 15:22). COPY */}
+    <section class="stackband" aria-label="The Full Stack">
+      <StackMark size={72} tight />
+      <p class="sb-line">Three apps. One stack.</p>
+      <a class="soft" href="/rack/plans">The Full Stack, all three on one plan →</a>
+    </section>
+
     <section class="block coming" id="coming" aria-labelledby="coming-h">
       <p class="section-label">Coming January 1</p>
       {/* COPY (plan §5): one list, src/data/coming.ts. Each item comes off with the build that ships it. */}
@@ -206,7 +214,7 @@ const description = MS
       <div>
         <p class="section-label">Plans</p>
         {/* COPY (plan §4, Mike 19:06) */}
-        <p class="line-sm">Pick a plan for one app, or The Stack for all three. Every app has a free way in, plus paid plans. The big screen comes with every plan. Pricing coming soon.</p>
+        <p class="line-sm">Pick a plan for one app, or The Full Stack for all three. Every app has a free way in, plus paid plans. The big screen comes with every plan. Pricing coming soon.</p>
         <a class="soft" href="/rack/plans">See the plans →</a>
       </div>
       <div>
@@ -297,6 +305,8 @@ const description = MS
   .later { margin: 22px 0 0; display: grid; grid-template-columns: 9.5rem minmax(0, 1fr); gap: 10px; align-items: baseline; font-family: var(--font-serif); font-size: 15px; color: var(--color-chalk-dim); }
   @media (max-width: 480px) { .later { grid-template-columns: minmax(0, 1fr); gap: 4px; } }
   .tag { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-chalk-faint); margin-right: 6px; }
+  .stackband { margin: 72px var(--pad-page-x) 0; display: grid; justify-items: center; gap: 16px; text-align: center; }
+  .sb-line { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(30px, 4vw, 46px); line-height: 1; text-transform: uppercase; color: var(--color-chalk); }
   .three-up { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
   .three-up > div { display: flex; flex-direction: column; align-items: flex-start; }
   .three-up .soft { margin-top: auto; }

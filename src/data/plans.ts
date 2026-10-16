@@ -1,141 +1,175 @@
 /**
- * /rack/plans: what each plan includes, with no prices (plan §7, hq/briefs/site/site-launch-preview-plan.md).
+ * /rack/plans: one row per app (Mike 2026-10-16 15:21 to 15:27, hq/inbox/marketing/2026-10-16-1525
+ * and -1530). Each row reads free to paid for that app only, so nothing looks like it stacks into the
+ * next app. Names match across the apps: IronStack Free | IronStack Pro, MealStack Free | MealStack
+ * Pro, MissionStack Free, and The Full Stack.
  *
- * Reworked from feat/pricing-page's pricing.json (#44, feature map #154) for the launch preview:
- * every price, founding price and trial is gone. Prices are private until Mike allows them; the
- * page says "Pricing coming soon". Mike 2026-10-15 19:06 allows exactly these free lines:
- * "Logging in IronStack is free.", "The gym board is free in MissionStack." and "Every app has a
- * free way in, plus paid plans." Nothing says what MealStack's free offering is (still being
- * decided), so MealStack has no free column and no free line.
+ * - Free is highlighted only where it is truly free to use: logging in IronStack and the gym board in
+ *   MissionStack. MealStack's free tier is a small try-it tier (Mike 15:26: "it is more free to try,
+ *   but real use needs paid"), decided 10-16 08:47 as the training-day timeline.
+ * - The Full Stack is the best deal: the page's one oxblood accent, a Best deal tag and the three-icon
+ *   mark. Until prices land, the claim rides on wording and design, with no savings figure.
+ * - **No prices anywhere** (Mike 15:27: "just remove prices and keep the rest of the design"). Every
+ *   price slot reads from PRICES below; each is null today and shows PRICE_SLOT. When Mike approves the
+ *   product lead's rework (due Wed 10-21), the numbers go in PRICES and nowhere else.
  *
- * Live means in testers' hands (IronStack b75, MealStack b92, MissionStack 0.1.0); anything else
- * carries `soon` and renders "Coming soon". Strings are drafts for Mike's yes.
- *
- * `assertNoPrices()` runs at build: a "$", a price, a trial or a founding line anywhere in this
- * file's data stops the build.
+ * Live means in testers' hands (IronStack b75, MealStack b92, MissionStack 0.1.0); `soon` renders
+ * "Coming soon". Strings are drafts for Mike's yes. assertNoPrices() stops the build if a price, trial
+ * or founding line gets into the words, or if PRICES holds a number while PRICES_PUBLIC is false.
  */
 
-export const PRICING_LINE = 'Pricing coming soon';
+/** Flip only on Mike's word that prices can be public. */
+export const PRICES_PUBLIC = false;
 
-export interface PlanCard {
+export type Price = { month: string | null; year: string | null; founding: string | null };
+
+/** The one place prices live. All null until Mike approves the rework. */
+export const PRICES: Record<'ironstack_pro' | 'mealstack_pro' | 'full_stack' | 'coach_10' | 'coach_25', Price> = {
+  ironstack_pro: { month: null, year: null, founding: null },
+  mealstack_pro: { month: null, year: null, founding: null },
+  full_stack: { month: null, year: null, founding: null },
+  coach_10: { month: null, year: null, founding: null },
+  coach_25: { month: null, year: null, founding: null },
+};
+
+/** COPY (draft for Mike): what a price slot says until the numbers land. */
+export const PRICE_SLOT = 'Pricing coming soon';
+/** COPY (draft for Mike): the line under The Full Stack's slot, no savings figure. */
+export const FULL_STACK_SLOT = 'One subscription for all three. The best price on this page when pricing lands.';
+/** COPY (draft for Mike): the page's one line about prices. */
+export const PRICING_LINE = 'Pricing lands here before it lands in the App Store.';
+
+export type Item = { text: string; soon?: boolean };
+export type Tier = {
   id: string;
   name: string;
+  /** 'free' = truly free to use (green tag); 'try' = a small try-it tier; 'pro' = the paid hero. */
+  kind: 'free' | 'try' | 'pro';
+  tag?: string;
   line: string;
-  includes: { text: string; soon?: boolean }[];
-  /** Shown only once MISSIONSTACK_ANNOUNCED. */
-  missionstackOnly?: boolean;
-}
+  items: Item[];
+  price?: keyof typeof PRICES;
+};
+export type Row = { app: 'ironstack' | 'mealstack' | 'missionstack'; name: string; tiers: Tier[]; note?: string };
 
-export const principles = (announced: boolean) => [
+// COPY: every string below is a draft for Mike's yes.
+export const rows: Row[] = [
+  {
+    app: 'ironstack',
+    name: 'IronStack',
+    tiers: [
+      {
+        id: 'ironstack_free', name: 'IronStack Free', kind: 'free', tag: 'Free',
+        line: 'Logging in IronStack is free. No caps.',
+        items: [
+          { text: 'Every set, program and exercise, with no caps' },
+          { text: 'Apple Watch and the rest clock' },
+          { text: 'Starter programs' },
+          { text: 'Social with the people you train with' },
+          { text: 'Train with a coach' },
+          { text: '30 days of insights' },
+        ],
+      },
+      {
+        id: 'ironstack_pro', name: 'IronStack Pro', kind: 'pro', tag: 'Pro', price: 'ironstack_pro',
+        line: 'Your whole history, and Stack AI on your own sets.',
+        items: [
+          { text: 'Insights across every workout you have logged' },
+          { text: 'Stack AI picks your next weight and a swap, from your own sets' },
+          { text: 'Bring any program in: a photo, a PDF or a link' },
+          { text: 'Ask Stack AI about your training' },
+        ],
+      },
+    ],
+  },
+  {
+    app: 'mealstack',
+    name: 'MealStack',
+    note: 'Try it free. Everyday use is MealStack Pro.',
+    tiers: [
+      {
+        id: 'mealstack_free', name: 'MealStack Free', kind: 'try', tag: 'Try free',
+        line: 'The training-day timeline: see when to eat.',
+        items: [
+          { text: 'Set your workout time, or let IronStack send it' },
+          { text: 'The day moves when the workout moves' },
+        ],
+      },
+      {
+        id: 'mealstack_pro', name: 'MealStack Pro', kind: 'pro', tag: 'Pro', price: 'mealstack_pro',
+        line: 'Meals timed to your workout, every day.',
+        items: [
+          { text: 'Log food and hit your targets' },
+          { text: 'A week of real plates' },
+          { text: 'Scan a barcode to log a food' },
+          { text: 'Stack AI builds your plan or reads a menu' },
+          { text: 'MealStack on Apple Watch', soon: true },
+        ],
+      },
+    ],
+  },
+  {
+    app: 'missionstack',
+    name: 'MissionStack',
+    tiers: [
+      {
+        id: 'missionstack_free', name: 'MissionStack Free', kind: 'free', tag: 'Free',
+        line: 'The gym board is free in MissionStack.',
+        items: [
+          { text: 'The gym board on a TV, an iPad or a Mac' },
+          { text: 'Plan your weeks on iPad or Mac' },
+          { text: 'Pair in one scan, no account' },
+          { text: 'Plan meals on the big screen', soon: true },
+        ],
+      },
+    ],
+  },
+];
+
+export const fullStack = {
+  name: 'The Full Stack',
+  tag: 'Best deal',
+  line: 'Every app at its best, on one subscription.',
+  items: [
+    { text: 'IronStack Pro' },
+    { text: 'MealStack Pro' },
+    { text: 'MissionStack' },
+    { text: 'One Stack AI allowance across all three' },
+  ] as Item[],
+  price: 'full_stack' as keyof typeof PRICES,
+};
+
+export const principles = [
   'Everything you build or log stays yours, even if a plan ends.',
-  announced ? 'The big screen comes with every plan.' : 'The gym board comes with every plan.',
   'No ads. Nothing sold.',
   "Lifters never pay for their coach's plan.",
   'Logging in IronStack is free.',
-  'Every app has a free way in, plus paid plans.',
-];
-
-export const plans = (announced: boolean): PlanCard[] => [
-  {
-    id: 'ironstack',
-    name: 'IronStack',
-    line: 'Logging in IronStack is free.',
-    includes: [
-      { text: 'Logging, programs, your own exercises and history, with no caps' },
-      { text: 'Apple Watch' },
-      { text: 'Rest clock and timers' },
-      { text: 'Starter programs' },
-      { text: 'Exercise Info: testing on 4 lifts, every lift coming soon' },
-      { text: 'Social and spotters' },
-      { text: 'Coach mode, for lifters with a coach' },
-      { text: 'The gym board' },
-      { text: '30 days of insights' },
-      { text: "Stack AI's answers from your log, on your phone" },
-    ],
-  },
-  {
-    id: 'ironstack_pro',
-    name: 'IronStack Pro',
-    line: 'Everything in IronStack, plus your whole history and Stack AI.',
-    includes: [
-      { text: 'Insights across your full history' },
-      { text: 'Stack AI brings in any program: a photo, a PDF, a spreadsheet or a link' },
-      { text: 'Ask Stack AI about your history' },
-      { text: 'Swaps and next weights from Stack AI' },
-    ],
-  },
-  {
-    id: 'mealstack',
-    name: 'MealStack',
-    line: 'Your meals, timed around your training.',
-    includes: [
-      { text: 'Meals timed to your training' },
-      { text: 'The day re-flows when your workout moves' },
-      { text: 'Scan a barcode to log a food' },
-      { text: 'Stack AI builds your plan or reads a menu' },
-      { text: 'MealStack on Apple Watch', soon: true },
-    ],
-  },
-  {
-    id: 'the_stack',
-    name: 'The Stack',
-    line: announced
-      ? 'IronStack Pro, MealStack and MissionStack, with one Stack AI allowance across all three.'
-      : 'IronStack Pro and MealStack, with the gym board, and one Stack AI allowance across all of them.',
-    includes: [
-      { text: 'Everything in IronStack Pro' },
-      { text: 'Everything in MealStack' },
-      { text: 'One Stack AI allowance, shared' },
-      { text: 'One subscription for all three apps', soon: true },
-    ],
-  },
+  'The gym board is free in MissionStack.',
 ];
 
 export const coach = {
   line: "Your lifters never pay. Lifters on Coach Pro 10 and 25 get IronStack Pro while they're linked.",
   tiers: [
-    { id: 'coach', name: 'Coach', lifters: 'Up to 5 lifters' },
-    { id: 'coach_10', name: 'Coach Pro 10', lifters: 'Up to 10 lifters' },
-    { id: 'coach_25', name: 'Coach Pro 25', lifters: 'Up to 25 lifters' },
+    { id: 'coach', name: 'Coach', lifters: 'Up to 5 lifters', price: undefined as keyof typeof PRICES | undefined },
+    { id: 'coach_10', name: 'Coach Pro 10', lifters: 'Up to 10 lifters', price: 'coach_10' as keyof typeof PRICES },
+    { id: 'coach_25', name: 'Coach Pro 25', lifters: 'Up to 25 lifters', price: 'coach_25' as keyof typeof PRICES },
   ],
 };
 
-export const featureColumns = ['IronStack', 'IronStack Pro', 'MealStack', 'The Stack'];
-
-export interface FeatureRow {
-  name: string;
-  cells: [string, string, string, string];
-  soon?: boolean;
+/** What a slot shows: the price once public, the draft line until then. */
+export function priceText(key?: keyof typeof PRICES): string {
+  if (!key) return '';
+  const p = PRICES[key];
+  if (!PRICES_PUBLIC || (!p.month && !p.year)) return PRICE_SLOT;
+  return [p.month && `${p.month} a month`, p.year && `${p.year} a year`].filter(Boolean).join(' or ');
 }
 
-const Y = '✓';
-
-export const features = (announced: boolean): FeatureRow[] => [
-  { name: 'Log fast: prefilled sets, plate math, prep sets for your bar', cells: [Y, Y, Y, Y] },
-  { name: 'Rest clock, Live Activity, logging from the Lock Screen', cells: [Y, Y, Y, Y] },
-  { name: 'Apple Watch, with heart rate', cells: [Y, Y, Y, Y] },
-  { name: 'The watch runs the workout when your phone is out of range', cells: [Y, Y, Y, Y], soon: true },
-  { name: 'Unlimited programs, workouts and your own exercises', cells: [Y, Y, Y, Y] },
-  { name: 'Starter programs',  cells: [Y, Y, Y, Y] },
-  { name: 'Bring your history from another lifting app or a spreadsheet', cells: [Y, Y, Y, Y] },
-  { name: 'Records, badges and the workout recap', cells: [Y, Y, Y, Y] },
-  { name: 'Insights: charts and estimated maxes', cells: ['30 days', 'Full history', '30 days', 'Full history'] },
-  { name: 'Share cards and spotters', cells: [Y, Y, Y, Y] },
-  { name: announced ? 'The gym board on iPad, Mac or Apple TV' : 'The gym board on a TV, an iPad or a Mac', cells: [Y, Y, Y, Y] },
-  { name: 'Train with a coach: share what you choose, get their plans', cells: [Y, Y, Y, Y] },
-  { name: 'Stack AI answers from your log, on your phone', cells: [Y, Y, Y, Y] },
-  { name: 'Stack AI: ask anything, swap a lift, write a workout or a program', cells: ['', 'Allowance', '', 'Shared allowance'] },
-  { name: 'Meals timed to your training', cells: ['', '', Y, Y] },
-  { name: 'IronStack tells MealStack when you train, and the day moves with it', cells: ['', '', Y, Y] },
-  { name: 'Log food: search, favorites and barcodes', cells: ['', '', Y, Y] },
-  { name: 'Stack AI in MealStack: builds your meal plan, reads a menu', cells: ['', '', 'Allowance', 'Shared allowance'] },
-  { name: 'MealStack on Apple Watch', cells: ['', '', Y, Y], soon: true },
-  { name: 'Sync with your iPad or Mac through your own iCloud', cells: [Y, Y, Y, Y], soon: true },
-];
-
-/** Stops the build if a price, trial or founding line slips into the page's data. */
-export function assertNoPrices(announced: boolean) {
-  const words = JSON.stringify([principles(announced), plans(announced), coach, features(announced)]);
-  const hits = [/\$/, /\bprice/i, /\btrial/i, /\bfounding/i, /\bper month\b/i, /\/mo\b/i, /\bfree week\b/i].filter((re) => re.test(words));
-  if (hits.length) throw new Error(`/rack/plans can't build: its data mentions a price (${hits.map(String).join(', ')}). No prices until Mike allows them.`);
+/** Stops the build if a price, trial or founding line slips into the words, or a number sits in PRICES while prices aren't public. */
+export function assertNoPrices() {
+  const words = JSON.stringify([rows, fullStack, principles, coach, PRICE_SLOT, FULL_STACK_SLOT, PRICING_LINE]);
+  const hits = [/\$\s?\d/, /\d+\.\d\d/, /\btrial/i, /\bfounding/i, /\bper month\b/i, /\/mo\b/i].filter((re) => re.test(words));
+  if (hits.length) throw new Error(`/rack/plans can't build: its words mention a price (${hits.map(String).join(', ')}). Prices go in PRICES only, on Mike's word.`);
+  if (!PRICES_PUBLIC && Object.values(PRICES).some((p) => p.month || p.year || p.founding)) {
+    throw new Error('/rack/plans can\'t build: PRICES holds a number while PRICES_PUBLIC is false.');
+  }
 }

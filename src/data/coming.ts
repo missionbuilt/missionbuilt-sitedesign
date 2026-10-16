@@ -120,7 +120,7 @@ export const COMING: ComingItem[] = [
     when: 'january',
     star: true,
     title: 'One subscription for all three apps',
-    detail: '(The Stack).',
+    detail: '(The Full Stack).',
   },
 
   // Coming later (after launch)
