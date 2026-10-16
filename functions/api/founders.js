@@ -18,7 +18,7 @@ function json(body, status = 200) {
     status,
     headers: {
       'content-type': 'application/json; charset=utf-8',
-      'cache-control': 'public, max-age=300',
+      'cache-control': 'public, max-age=60',
       'x-content-type-options': 'nosniff',
     },
   });
@@ -41,6 +41,12 @@ export async function onRequestGet({ env }) {
   return json(cleanList(raw));
 }
 
+// HEAD answers like GET without the body.
+export async function onRequestHead(ctx) {
+  const res = await onRequestGet(ctx);
+  return new Response(null, { status: res.status, headers: res.headers });
+}
+
 export async function onRequest() {
-  return new Response('Method not allowed', { status: 405, headers: { allow: 'GET' } });
+  return new Response('Method not allowed', { status: 405, headers: { allow: 'GET, HEAD', 'x-content-type-options': 'nosniff' } });
 }
