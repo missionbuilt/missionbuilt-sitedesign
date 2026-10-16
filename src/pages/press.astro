@@ -91,4 +91,8 @@ const shots = [
   .tail { height: 72px; }
   @media (max-width: 1099px) { .hero, .block { padding-left: var(--pad-page-x-mid); padding-right: var(--pad-page-x-mid); } .shots { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   @media (max-width: 720px) { .hero, .block { padding-left: var(--pad-page-x-mobile); padding-right: var(--pad-page-x-mobile); } .shots { grid-template-columns: minmax(0, 1fr); } }
+
+  /* QA pass 2026-10-16: every shot fills its tile the same way; boards in a row the same size. */
+  .shots img { height: 300px; padding: 16px; }
+  @media (max-width: 720px) { .icons { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; } .icons img { width: 100%; height: auto; } .shots img { height: min(420px, 60vh); } }
 </style>

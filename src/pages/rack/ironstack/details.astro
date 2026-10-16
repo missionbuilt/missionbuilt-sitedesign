@@ -158,7 +158,7 @@ const ld = {
     <section class="hero">
       <p class="eyebrow">
         <span class="dots" aria-hidden="true">▮▮▮</span>
-        <span>An iPhone app from the Rack</span>
+        <span>An iPhone app by Mission Built</span>
         <span class="dots" aria-hidden="true">▮▮▮</span>
       </p>
       <h1 class="display"><span>IronStack</span><span class="dot">.</span></h1>
@@ -724,4 +724,73 @@ const ld = {
     .parse { font-size: 28px; }
     .cd-time { font-size: 72px; }
   }
+
+  /* ============ QA pass 2026-10-16 (Mike 09:41): one centred column, aligned cards, no orphans ============ */
+  .page { --content-max: 1180px; max-width: calc(var(--content-max) + 2 * var(--pad-page-x)); margin-inline: auto; }
+  .block, .install-block { max-width: none; }
+  .faq { max-width: none; }
+  .faq dd { max-width: 70ch; }
+  .faq-item { grid-template-columns: minmax(220px, 1fr) 2fr; }
+  .section-h2 { max-width: 32ch; text-wrap: balance; }
+  td, th { text-wrap: pretty; }
+  /* The marker on the first card only: off, so every card matches. */
+  .feat.mark, .card.mark { background: transparent; }
+  .feat.mark .verdict::before, .card.mark .verdict::before { display: none; }
+  /* Rows of cards share their tracks, so labels, headings and the "Other apps" rule line up. */
+  @supports (grid-template-rows: subgrid) {
+    .cards { grid-auto-rows: auto; }
+    .card { grid-row: span 4; grid-template-rows: subgrid; row-gap: 10px; min-height: 0; }
+  }
+  .card .them, .feat .them { align-self: end; }
+  /* The four ideas: equal columns and padding; two across on a tablet, one on a phone. */
+  .pillars { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .pillars li { padding: 22px 20px; margin-right: 0; border-right: 1px dashed var(--color-rule); border-bottom: 0; }
+  .pillars li:last-child { border-right: none; }
+  .pillars .label { text-wrap: balance; }
+  /* A block that already ends on a rule doesn't get a second one. */
+  .block:has(> :last-child:is(.pillars, .faq, .cards, .feats, .lic, .fine, .steps, .phones)) + .dashed { display: none; }
+  /* Hero: each meta item stays whole; the stat subs sit on their own line. */
+  .testing-tag { flex-wrap: wrap; justify-content: center; row-gap: 6px; }
+  .testing-tag > span { white-space: nowrap; }
+  .stat-value { line-height: 1.2; }
+  .stat-sub { display: block; margin: 4px 0 0; line-height: 1.3; }
+  /* Beta panel: one width for the copy, the form and the status rows. */
+  .status-copy p { max-width: none; }
+  .status-panel { align-items: start; }
+  .field-k em { white-space: nowrap; }
+  @media (max-width: 1099px) {
+    .breadcrumb, .hero, .block, .install-block { padding-left: var(--pad-page-x-mid); padding-right: var(--pad-page-x-mid); }
+    .meta-strip, .dashed { margin-left: var(--pad-page-x-mid); margin-right: var(--pad-page-x-mid); }
+    .lic-cell { border-right: 0; border-bottom: var(--border-thin); }
+    .lic-cell:last-child { border-bottom: 0; }
+  }
+  @media (max-width: 960px) {
+    .pillars { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .pillars li:nth-child(2n) { border-right: none; }
+    .pillars li:nth-child(-n+2) { border-bottom: 1px dashed var(--color-rule); }
+  }
+  @media (max-width: 720px) {
+    .breadcrumb, .hero, .block, .install-block { padding-left: var(--pad-page-x-mobile); padding-right: var(--pad-page-x-mobile); }
+    .meta-strip, .dashed { margin-left: var(--pad-page-x-mobile); margin-right: var(--pad-page-x-mobile); }
+    .faq-item { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 480px) {
+    .pillars { grid-template-columns: 1fr; }
+    .pillars li { border-right: none; border-bottom: 1px dashed var(--color-rule); padding-left: 0; padding-right: 0; }
+    .pillars li:last-child { border-bottom: none; }
+    .eyebrow .dots { display: none; }
+    .breadcrumb { letter-spacing: 0.12em; }
+  }
+
+  @supports (grid-template-rows: subgrid) {
+    .feats { grid-auto-rows: auto; }
+    .feat { grid-row: span 5; grid-template-rows: subgrid; row-gap: 0; }
+    .feat-phone { margin-bottom: 20px; }
+    .feat-body { grid-row: span 4; grid-template-rows: subgrid; row-gap: 10px; }
+  }
+  /* More of the app: the strip runs to the screen edges so the next card reads as a peek, with a fade. */
+  .phones { margin-inline: calc(-1 * var(--pad-page-x)); padding-inline: var(--pad-page-x); scroll-padding-inline: var(--pad-page-x);
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 64px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 64px), transparent); }
+  @media (max-width: 1099px) { .phones { margin-inline: calc(-1 * var(--pad-page-x-mid)); padding-inline: var(--pad-page-x-mid); scroll-padding-inline: var(--pad-page-x-mid); } }
+  @media (max-width: 720px) { .phones { margin-inline: calc(-1 * var(--pad-page-x-mobile)); padding-inline: var(--pad-page-x-mobile); scroll-padding-inline: var(--pad-page-x-mobile); } }
 </style>

@@ -73,7 +73,7 @@ const apps: App[] = [
     promise: 'Log fast. See progress.',
     accent: 'A coach in your corner.',
     sub: 'A lifting log for iPhone and Apple Watch, with the people you train with.',
-    points: ['One tap a set', 'Log from your Apple Watch', 'Train with friends', 'Your coach sees every set'],
+    points: ['One tap a set', 'Apple Watch logging', 'Train with friends', 'Coach sees every set'],
     shots: [
       { src: '/images/ironstack/hero-session.webp', w: 540, h: 1174, alt: 'IronStack on iPhone mid-workout on a coach\'s plan: Box Squat, set 1 of 5, 275 for 3, with Log lit.' },
     ],
@@ -86,7 +86,7 @@ const apps: App[] = [
     promise: 'Your tracker says what you ate.',
     accent: 'This says when.',
     sub: 'Meal timing for iPhone, built around your workout. Eat late and the rest of the day moves with you.',
-    points: ['Built around your workout', 'Log when you actually ate', 'A week of real plates'],
+    points: ['Built around your workout', 'Log when you ate', 'A week of real plates', 'Works on the road'],
     shots: [
       { src: '/images/mealstack/today-training.webp', w: 540, h: 1174, alt: 'MealStack Today on a training day with the workout at 6:30 PM: yogurt and whey logged late at 11:40, lunch next at 2:40 PM, the Home travel chip, and Eating out? Send Stack AI the menu.' },
       { src: '/images/mealstack/session-moved.webp', w: 540, h: 1174, alt: 'MealStack after the workout moved to 6:30 PM: one line says the carb surge moved to 5:00 PM, the after-workout shake to 7:30 PM and dinner to 9:00 PM, with an Undo.' },
@@ -99,7 +99,7 @@ const apps: App[] = [
     promise: 'Your workout on the big screen.', // Mike's approved notes headline (10-13)
     accent: 'Live in the gym.', // the ad's line 6 (approved)
     sub: 'Plan the weeks on iPad or Mac, and put your live workout on the gym TV, an iPad or a Mac.', // COPY (Beta App Description, lightly cut; plan §9 one-lifter line)
-    points: ['Read it across the room', 'Pair in one scan', 'Plan the week', 'No account'], // COPY
+    points: ['Readable across the room', 'Pair in one scan', 'Plan the week', 'No account'], // COPY
     // Screens: Chalkboard, Fri 10-16 (slots until then)
     tablet: { src: '/images/missionstack/board-ipad.webp', w: 1080, h: 751, alt: `${MS ? 'The MissionStack board' : 'The gym board'} on iPad mid-set: one lifter's exercise, the set, the load and the rest clock.` }, // COPY (alt)
     tv: { src: '/images/missionstack/board-tv.webp', w: 960, h: 540, alt: 'The same board on an Apple TV mid-workout: Lower A, Romanian deadlift 3 × 8, a 1:38 rest clock, then set 3.' },
@@ -114,9 +114,10 @@ const comingGroups = [
   { name: 'IronStack', items: comingFor({ announced: MS, app: 'ironstack', when: 'january' }) },
   { name: 'MealStack', items: comingFor({ announced: MS, app: 'mealstack', when: 'january' }) },
   { name: MS ? 'MissionStack' : 'The gym board', items: comingFor({ announced: MS, app: 'missionstack', when: 'january' }) },
-  { name: 'Together', items: comingFor({ announced: MS, app: 'together', when: 'january' }) },
 ].filter((g) => g.items.length);
 const comingLater = comingFor({ announced: true, when: 'later' });
+// Together is one line: a full-width row under the grid, like Coming later (QA 10-16).
+const comingTogether = comingFor({ announced: MS, app: 'together', when: 'january' });
 
 const title = MS ? 'IronStack, MealStack and MissionStack · The apps · Mission Built' : 'IronStack, MealStack and the gym board · The apps · Mission Built';
 const description = MS
@@ -197,6 +198,7 @@ const description = MS
           </div>
         ))}
       </div>
+      {comingTogether.length > 0 && <p class="later"><span class="tag">All three</span> {comingTogether.map((c) => c.title + (c.detail ? ' ' + c.detail : '')).join(' ')}</p>}
       <p class="later"><span class="tag">Coming later</span> {comingLater.map((c) => c.title).join(' ')}</p>
     </section>
 
@@ -258,15 +260,26 @@ const description = MS
   .board { position: relative; max-width: 420px; margin: 0 auto; }
   .board .board-tv { width: 70%; margin-left: auto; opacity: 0.9; }
   .board .board-tablet { position: relative; z-index: 2; width: 88%; margin-top: -24%; }
-  .app-body { padding: 28px 32px 32px; display: grid; gap: 14px; align-content: start; }
+  /* Equal cards (Mike 10-16 09:41): the body fills the card and the buttons sit on its floor. */
+  .app-body { padding: 28px 32px 32px; display: flex; flex-direction: column; gap: 14px; }
   .app-name { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 22px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-chalk); }
   .promise { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3vw, 40px); line-height: 1; letter-spacing: -0.01em; text-transform: uppercase; color: var(--color-chalk); }
   .promise .accent { color: var(--color-blood-bright); }
   .sub { margin: 0; max-width: 52ch; font-family: var(--font-serif); font-size: 16px; line-height: 1.6; color: var(--color-chalk-dim); }
-  .points { list-style: none; margin: 4px 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 18px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em; color: var(--color-chalk-dim); }
-  .points li { padding-left: 16px; position: relative; }
+  .points { list-style: none; margin: 4px 0 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px 18px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em; color: var(--color-chalk-dim); }
+  .points li { padding-left: 16px; position: relative; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  /* Side by side, each row of the three cards lines up (QA 10-16): the cards share one grid through
+     subgrid, so the headings, subs, bullets and buttons start at the same height in all three. */
+  @media (min-width: 1100px) {
+    @supports (grid-template-rows: subgrid) {
+      .apps { grid-template-rows: auto auto auto auto 1fr auto; }
+      .app { grid-row: span 6; grid-template-rows: subgrid; row-gap: 0; }
+      .app-body { grid-row: 2 / span 5; display: grid; grid-template-rows: subgrid; row-gap: 14px; }
+      .app-body .ctas { margin-top: 0; align-self: end; }
+    }
+  }
   .points li::before { content: ''; position: absolute; left: 0; top: 6px; width: 6px; height: 6px; border: 1px solid var(--color-chalk-faint); }
-  .ctas { margin-top: 10px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 22px; }
+  .ctas { margin-top: auto; padding-top: 10px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 22px; }
   .cta { display: inline-flex; padding: 13px 20px; background: var(--color-blood); color: var(--color-chalk); font-family: var(--font-display); font-weight: 600; font-size: 15px; letter-spacing: 0.04em; text-transform: uppercase; transition: background 120ms ease-out; }
   .cta:hover { background: var(--color-blood-bright); }
   .soft { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-dim); border-bottom: 1px solid var(--color-chalk-ghost); padding-bottom: 2px; }
@@ -276,7 +289,7 @@ const description = MS
   .app-name { display: flex; align-items: center; }
 
   /* Coming January 1 */
-  .coming-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0 28px; border-top: var(--border-thin); }
+  .coming-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 28px; border-top: var(--border-thin); }
   .coming-col { padding-top: 16px; }
   .coming-app { margin: 0 0 10px; font-family: var(--font-display); font-weight: 700; font-size: 18px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-chalk); }
   .coming-col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; font-family: var(--font-serif); font-size: 15px; line-height: 1.55; color: var(--color-chalk-dim); }
@@ -284,6 +297,8 @@ const description = MS
   .later { margin: 22px 0 0; font-family: var(--font-serif); font-size: 15px; color: var(--color-chalk-dim); }
   .tag { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-chalk-faint); margin-right: 6px; }
   .three-up { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
+  .three-up > div { display: flex; flex-direction: column; align-items: flex-start; }
+  .three-up .soft { margin-top: auto; }
   .line-sm { margin: 0 0 14px; max-width: 44ch; font-family: var(--font-serif); font-size: 16px; line-height: 1.6; color: var(--color-chalk-dim); }
 
   /* the ad's strip: four tiles, a screen and a line each */

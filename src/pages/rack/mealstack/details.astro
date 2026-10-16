@@ -153,7 +153,7 @@ const ld = {
     <section class="hero">
       <p class="eyebrow">
         <span class="dots" aria-hidden="true">▮▮▮</span>
-        <span>An iPhone app from the Rack</span>
+        <span>An iPhone app by Mission Built</span>
         <span class="dots" aria-hidden="true">▮▮▮</span>
       </p>
 
@@ -339,14 +339,14 @@ const ld = {
             </label>
             <label class="field">
               <span class="field-k">What do you train for? <em>optional</em></span>
-              <input type="text" name="note" id="beta-note" autocomplete="off" placeholder="powerlifting, a marathon, a wedding, getting off the couch" maxlength="200" />
+              <input type="text" name="note" id="beta-note" autocomplete="off" placeholder="lifting, a race, the couch" maxlength="200" />
             </label>
             <div class="hp" aria-hidden="true"><label>Website<input type="text" name="website" tabindex="-1" autocomplete="off" /></label></div>
             <input type="hidden" name="t" id="beta-t" value="" />
             <input type="hidden" name="page" value="/rack/mealstack" />
             <div class="form-row">
               <button class="cta" type="submit" id="beta-submit">Join the beta →</button>
-              <p class="cta-note" id="beta-status" role="status" aria-live="polite">iPhone only · iOS 26 and up · no account · 18 and over</p>
+              <p class="cta-note" id="beta-status" role="status" aria-live="polite">iPhone only · iOS&nbsp;26 and up · no&nbsp;account · 18 and over</p>
             </div>
           </form>
           <p class="cta-note" id="beta-fallback" hidden>The form is not taking names right now. Email <a href={MAILTO}>support@missionbuilt.io</a> with the address on your Apple ID and I will add you by hand.</p>
@@ -801,5 +801,71 @@ const ld = {
     .dashed { margin: 36px var(--pad-page-x-mobile) 0; }
     .closer { padding: 36px var(--pad-page-x-mobile); }
     .closer p { font-size: 18px; }
+  }
+
+  /* ============ QA pass 2026-10-16 (Mike 09:41): one centred column, aligned cards, no orphans ============ */
+  .page { --content-max: 1180px; max-width: calc(var(--content-max) + 2 * var(--pad-page-x)); margin-inline: auto; }
+  .block, .install-block { max-width: none; }
+  .faq { max-width: none; }
+  .faq dd { max-width: 70ch; }
+  .faq-item { grid-template-columns: minmax(220px, 1fr) 2fr; }
+  .section-h2 { max-width: 32ch; text-wrap: balance; }
+  td, th { text-wrap: pretty; }
+  /* The marker on the first card only: off, so every card matches. */
+  .feat.mark, .card.mark { background: transparent; }
+  .feat.mark .verdict::before, .card.mark .verdict::before { display: none; }
+  /* Rows of cards share their tracks, so labels, headings and the "Other apps" rule line up. */
+  @supports (grid-template-rows: subgrid) {
+    .cards { grid-auto-rows: auto; }
+    .card { grid-row: span 4; grid-template-rows: subgrid; row-gap: 10px; min-height: 0; }
+  }
+  .card .them, .feat .them { align-self: end; }
+  /* The four ideas: equal columns and padding; two across on a tablet, one on a phone. */
+  .pillars { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .pillars li { padding: 22px 20px; margin-right: 0; border-right: 1px dashed var(--color-rule); border-bottom: 0; }
+  .pillars li:last-child { border-right: none; }
+  .pillars .label { text-wrap: balance; }
+  /* A block that already ends on a rule doesn't get a second one. */
+  .block:has(> :last-child:is(.pillars, .faq, .cards, .feats, .lic, .fine, .steps, .phones)) + .dashed { display: none; }
+  /* Hero: each meta item stays whole; the stat subs sit on their own line. */
+  .testing-tag { flex-wrap: wrap; justify-content: center; row-gap: 6px; }
+  .testing-tag > span { white-space: nowrap; }
+  .stat-value { line-height: 1.2; }
+  .stat-sub { display: block; margin: 4px 0 0; line-height: 1.3; }
+  /* Beta panel: one width for the copy, the form and the status rows. */
+  .status-copy p { max-width: none; }
+  .status-panel { align-items: start; }
+  .field-k em { white-space: nowrap; }
+  @media (max-width: 1099px) {
+    .breadcrumb, .hero, .block, .install-block { padding-left: var(--pad-page-x-mid); padding-right: var(--pad-page-x-mid); }
+    .meta-strip, .dashed { margin-left: var(--pad-page-x-mid); margin-right: var(--pad-page-x-mid); }
+    .lic-cell { border-right: 0; border-bottom: var(--border-thin); }
+    .lic-cell:last-child { border-bottom: 0; }
+  }
+  @media (max-width: 960px) {
+    .pillars { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .pillars li:nth-child(2n) { border-right: none; }
+    .pillars li:nth-child(-n+2) { border-bottom: 1px dashed var(--color-rule); }
+  }
+  @media (max-width: 720px) {
+    .breadcrumb, .hero, .block, .install-block { padding-left: var(--pad-page-x-mobile); padding-right: var(--pad-page-x-mobile); }
+    .meta-strip, .dashed { margin-left: var(--pad-page-x-mobile); margin-right: var(--pad-page-x-mobile); }
+    .faq-item { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 480px) {
+    .pillars { grid-template-columns: 1fr; }
+    .pillars li { border-right: none; border-bottom: 1px dashed var(--color-rule); padding-left: 0; padding-right: 0; }
+    .pillars li:last-child { border-bottom: none; }
+    .eyebrow .dots { display: none; }
+    .breadcrumb { letter-spacing: 0.12em; }
+  }
+
+  /* The drop letter that never got a drop cap: plain, like IronStack's story. */
+  .story p:first-child::first-letter { font-family: inherit; font-weight: inherit; }
+  .vr.honest span:last-child { font-style: normal; }
+  .kit-links { margin-top: 24px; word-spacing: 0.15em; }
+  @media (max-width: 720px) {
+    .vr span:nth-child(n+2) { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0 8px; align-items: baseline; }
+    .related-card { margin-left: 0; }
   }
 </style>

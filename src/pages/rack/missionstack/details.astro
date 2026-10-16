@@ -168,4 +168,10 @@ const faq: Item[] = [
     .sec { padding-top: 48px; }
     .stand { font-size: 17px; }
   }
+
+  /* QA pass 2026-10-16: one centred column like the other details pages; no orphan in a two-column grid. */
+  .page { max-width: calc(1180px + 2 * var(--pad-page-x)); margin-inline: auto; }
+  .items > :last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .h2 { text-wrap: balance; }
+  @media (max-width: 480px) { .breadcrumb { letter-spacing: 0.1em; } }
 </style>

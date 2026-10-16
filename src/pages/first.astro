@@ -206,7 +206,10 @@ const faq = [
   .block p { margin: 0; font-size: var(--fs-body); line-height: 1.6; color: var(--color-chalk-dim); max-width: 62ch; }
   .apps { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; border-top: var(--border-thin); }
   .apps li { border-bottom: var(--border-thin); }
-  .apps a { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: baseline; padding: 16px 0; text-decoration: none; }
+  .apps li:last-child { border-bottom: 0; }
+  /* Names in one column, lines in another (QA 10-16). */
+  .apps a, .row-static { display: grid !important; grid-template-columns: 160px minmax(0, 1fr); gap: 6px 16px; align-items: baseline; padding: 16px 0; text-decoration: none; }
+  @media (max-width: 520px) { .apps a, .row-static { grid-template-columns: minmax(0, 1fr); } }
   .apps b { font-family: var(--font-display); font-weight: 600; font-size: 18px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-chalk); }
   .apps span { font-size: 15px; color: var(--color-chalk-dim); }
   @media (max-width: 720px) {

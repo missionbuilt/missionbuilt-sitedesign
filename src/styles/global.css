@@ -131,3 +131,12 @@ main:has(> .closer:last-child) + .site-foot { margin-top: 0; }
   overflow-wrap: anywhere;
 }
 .screen-slot b { font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; }
+
+/* QA pass (Mike 2026-10-16 09:41): no one-word last lines. Headings balance their lines; body text
+   avoids a lone last word. Safari 17.5+ and Chrome 114+; older browsers just wrap as before. */
+h1, h2, h3, .display, .title, .ch-title, .band-title, .section-h2, .promise, .pp-line, .app-line { text-wrap: balance; }
+
+/* Short pages keep the footer at the bottom of the screen (QA 10-16). */
+body { min-height: 100dvh; display: flex; flex-direction: column; }
+body > main, body > #main { flex: 1 0 auto; width: 100%; }
+p.ch-line, .why, .lede, .together, .first-alt, .pp-sub, .app-body .sub { text-wrap: balance; }

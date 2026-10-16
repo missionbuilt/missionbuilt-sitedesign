@@ -133,7 +133,7 @@ const faq = [
         {/* The ad's line 7 (approved). */}
         <h1 class="display">Coach them from the floor<span class="dot">.</span></h1>
         {/* COPY */}
-        <p class="subtitle">Send the plan. They lift. You see every set. In person or from across the country.</p>
+        <p class="subtitle">Send the plan. They lift. You see every set. In person or from across the country.</p>
         <ul class="trust" aria-label="The short version">
           <li>iPhone, Apple Watch, iPad, Mac, Apple TV</li><li>Your lifter says yes first</li><li>Their data is never sold</li>
         </ul>
@@ -231,7 +231,7 @@ const faq = [
 </BaseLayout>
 
 <style>
-  .page { max-width: 1280px; margin: 0 auto; }
+  .page { width: 100%; }
   .breadcrumb {
     padding: 18px var(--pad-page-x) 0;
     font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;
@@ -239,25 +239,30 @@ const faq = [
   }
   .breadcrumb a { color: var(--color-chalk-dim); transition: color 120ms ease-out; }
   .breadcrumb a:hover { color: var(--color-chalk); }
-  .hero { padding: 48px var(--pad-page-x) 12px; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 48px; align-items: center; }
-  .trust { list-style: none; margin: 18px 0 24px; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 18px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; color: var(--color-chalk-dim); }
+  .hero { max-width: calc(1180px + 2 * var(--pad-page-x)); margin: 0 auto; padding: 48px var(--pad-page-x) 12px; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 48px; align-items: center; }
+  .trust { list-style: none; margin: 18px 0 24px; padding: 0; display: flex; flex-direction: column; gap: 6px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; color: var(--color-chalk-dim); }
   .trust li::before { content: '✓'; margin-right: 7px; color: var(--color-army); }
   .hero-shot { position: relative; container-type: inline-size; }
   .hs-board { width: 86%; margin-left: auto; }
-  .hs-phone { position: absolute; left: 0; top: 14%; width: 32%; font-size: calc(32cqi / 15); }
+  /* The phone sits off the board's lower-left corner so LOWER A and the clock stay readable (QA 10-16). */
+  .hs-board { margin-bottom: 18%; }
+  .hs-phone { position: absolute; left: -2%; bottom: -16%; width: 26%; font-size: calc(26cqi / 15); }
   .who { border: var(--border-thin); background: var(--color-panel); padding: 22px 26px; }
   .who ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; font-family: var(--font-serif); font-size: 16px; line-height: 1.55; color: var(--color-chalk); }
   .blocks { display: grid; gap: 0; border-top: var(--border-thin); }
   .blk { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 40px; align-items: center; padding: 36px 0; border-bottom: var(--border-thin); }
   .blk.flip .blk-shot { order: 2; }
-  .blk-shot { display: flex; justify-content: center; max-height: 380px; overflow: hidden; }
-  .blk-shot.phone > :global(*) { width: 220px; }
+  /* Whole devices, never cut flat (QA 10-16). */
+  .blk-shot { display: flex; justify-content: center; }
+  .blk-shot.phone > :global(*) { width: 200px; }
   .blk-shot.tablet > :global(*) { width: 100%; }
   .blk-body .k { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
   .app-icon { width: 28px; height: 28px; border-radius: 22.37%; border: 1px solid var(--color-rule); }
   .blk-body .v { margin: 0 0 14px; font-family: var(--font-display); font-weight: 600; font-size: 26px; line-height: 1.05; text-transform: uppercase; color: var(--color-chalk); }
   .pts { margin: 0; padding-left: 18px; display: grid; gap: 8px; font-family: var(--font-serif); font-size: 15px; line-height: 1.55; color: var(--color-chalk-dim); }
-  .pts.soon { margin-top: 12px; list-style: none; padding-left: 0; }
+  .pts.soon { margin-top: 12px; list-style: none; padding-left: 18px; }
+  /* The tag and its line as one row; a wrapped line hangs under the text, not the tag. */
+  .pts.soon li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 10px; align-items: baseline; }
   .setup { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; }
   .steps { margin: 12px 0 0; padding-left: 22px; display: grid; gap: 10px; font-family: var(--font-serif); font-size: 15.5px; line-height: 1.6; color: var(--color-chalk-dim); }
   .steps b { color: var(--color-chalk); }
@@ -287,7 +292,7 @@ const faq = [
   }
   .stat-key { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-faint); margin-bottom: 8px; }
   .stat-value { font-family: var(--font-display); font-weight: 500; font-size: 20px; line-height: 1.1; letter-spacing: 0.02em; text-transform: uppercase; color: var(--color-chalk); }
-  .block { padding: 56px var(--pad-page-x) 0; max-width: 1180px; }
+  .block { padding: 56px var(--pad-page-x) 0; max-width: calc(1180px + 2 * var(--pad-page-x)); margin: 0 auto; }
   .section-label { margin: 0 0 14px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.24em; color: var(--color-blood-text); text-transform: uppercase; }
   .section-h2 { margin: 0 0 18px; max-width: 30ch; font-family: var(--font-display); font-weight: 600; font-size: 36px; line-height: 1.05; letter-spacing: 0.02em; color: var(--color-chalk); text-transform: uppercase; }
   .prose { margin: 0 0 16px; max-width: 70ch; font-family: var(--font-serif); font-weight: 300; font-size: 17px; line-height: 1.65; color: var(--color-chalk-dim); }
@@ -301,12 +306,13 @@ const faq = [
   .cell .v { margin: 0 0 12px; font-family: var(--font-display); font-weight: 500; font-size: 21px; line-height: 1.1; text-transform: uppercase; letter-spacing: 0.01em; color: var(--color-chalk); }
   .cell .body { margin: 0; font-family: var(--font-serif); font-size: 14.5px; line-height: 1.6; color: var(--color-chalk-dim); }
   .tag { display: inline-block; margin-left: 8px; padding: 1px 6px; border: var(--border-thin); font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.16em; color: var(--color-blood-text); vertical-align: middle; }
-  .fine { margin-top: 18px; background: var(--color-panel); border: var(--border-thin); padding: 22px 26px; }
+  .fine { margin-top: 18px; max-width: 76ch; background: var(--color-panel); border: var(--border-thin); padding: 22px 26px; }
   .fine .k { margin-bottom: 10px; }
   .fine p:not(.k) { margin: 0 0 10px; max-width: 70ch; font-family: var(--font-serif); font-size: 14px; line-height: 1.6; color: var(--color-chalk-dim); }
   .fine p:last-child { margin-bottom: 0; }
   .fine strong { color: var(--color-chalk); font-weight: 700; }
-  .cta { display: inline-block; margin-top: 8px; padding: 12px 18px; border: 1px solid var(--color-blood); font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk); text-decoration: none; }
+  /* The site's one button (QA 10-16): Oswald, filled. */
+  .cta { display: inline-flex; align-items: center; gap: 8px; margin-top: 8px; padding: 15px 26px; background: var(--color-blood); border: 1px solid var(--color-blood); font-family: var(--font-display); font-weight: 600; font-size: 15px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-chalk); }
   .cta:hover { background: var(--color-blood); }
   .after-cta { margin-top: 28px; }
   .tail { height: 72px; }

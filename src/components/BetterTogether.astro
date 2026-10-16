@@ -140,7 +140,7 @@ const otherPitch = other === 'mealstack'
       </div>
       <div class="bt-lane">
         <span class="bt-arrow l" aria-hidden="true">← workout end</span>
-        <div class="bt-hub shelf"><p class="bt-k">Shelf on your phone</p><p class="bt-hub-v">Travel · session time · workout end</p></div>
+        <div class="bt-hub shelf"><p class="bt-k">Shelf on your phone</p><p class="bt-hub-v"><span>Travel</span> · <span>workout start</span> · <span>workout end</span></p></div>
         <span class="bt-arrow r" aria-hidden="true">travel, time ⇄</span>
       </div>
     </div>
@@ -279,4 +279,21 @@ const otherPitch = other === 'mealstack'
     .bt-beat { grid-template-columns: 1fr; gap: 4px; }
     .bt-rules dl { grid-template-columns: 1fr; }
   }
+
+  /* QA pass 2026-10-16: eight cards fill their rows (two across, four on a wide screen); each row shares
+     its tracks so the dashed rules line up; the day's labels stay on one line. */
+  .bt-flows { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  @media (min-width: 1280px) { .bt-flows { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  @supports (grid-template-rows: subgrid) {
+    .bt-flows { grid-auto-rows: auto; }
+    .bt-flow { grid-row: span 4; grid-template-rows: subgrid; row-gap: 10px; }
+  }
+  .bt-flow h3 { text-wrap: balance; }
+  .bt-gives { align-self: start; }
+  .bt-beat { grid-template-columns: 92px 180px 1fr; }
+  .bt-who { white-space: nowrap; }
+  .bt-map { grid-template-columns: 1fr minmax(260px, 1.5fr) 1fr; }
+  .bt-hub-v span { white-space: nowrap; }
+  @media (max-width: 1099px) { .bt-map { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 720px) { .bt-flows { grid-template-columns: minmax(0, 1fr); } .bt-map { grid-template-columns: 1fr; } .bt-beat { grid-template-columns: 1fr; } .bt-who { white-space: normal; } }
 </style>
