@@ -151,7 +151,10 @@ const faq: Item[] = [
   .prose { margin: 0; max-width: 68ch; font-family: var(--font-serif); font-size: 16px; line-height: 1.65; color: var(--color-chalk-dim); }
   .inline-link { color: var(--color-chalk); border-bottom: 1px solid var(--color-chalk-ghost); }
   .inline-link:hover { border-bottom-color: var(--color-chalk); }
-  .lines { list-style: none; margin: 20px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+  /* Six typed lines as an even grid, never one chip alone on a row (QA 10-16). */
+  .lines { list-style: none; margin: 20px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; max-width: 760px; }
+  .lines code { width: 100%; }
+  @media (max-width: 720px) { .lines { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   .lines code { display: inline-block; padding: 8px 12px; background: var(--color-panel); border: var(--border-thin); font-family: var(--font-mono); font-size: 14px; color: var(--color-chalk); overflow-wrap: anywhere; }
   .closer { margin-top: 64px; padding: 44px var(--pad-page-x); border-top: var(--border-thin); text-align: center; }
   .cta { display: inline-flex; padding: 14px 22px; background: var(--color-blood); color: var(--color-chalk); font-family: var(--font-display); font-weight: 600; font-size: 16px; letter-spacing: 0.04em; text-transform: uppercase; transition: background 120ms ease-out; }
