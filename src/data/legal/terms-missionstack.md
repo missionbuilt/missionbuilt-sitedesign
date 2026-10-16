@@ -96,7 +96,7 @@ MissionStack relies on Apple (the App Store, iPadOS, macOS, tvOS, and the networ
 
 The app, its design, text, sounds and code belong to Mission Built or its licensors. Open-source parts are under their own licences, listed on [the acknowledgements page](/rack/acknowledgements).
 
-**IronStack**, **MealStack**, **MissionStack**, **Mission Built**, **MISSION ▪ BUILT**, the barbell mark, the oxblood-square mark and the app icons are trademarks of Mission Built (Mike Nichols). You may not use them without written permission, except to refer to the apps by name.
+**IronStack**, **MealStack**, **MissionStack**, **Mission Built**, **MISSION ▪ BUILT**, the barbell mark, the oxblood-square mark and the app icons are trademarks of Mission Built LLC. You may not use them without written permission, except to refer to the apps by name.
 
 The Mission Built Schema, the file format, is documented so anything can read and write it. Writing a file in that format doesn't give you rights to the marks above.
 
