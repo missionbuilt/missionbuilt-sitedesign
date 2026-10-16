@@ -32,7 +32,9 @@ export default defineConfig({
       // /rack/plans stays out until Mike's yes on the words (noindex on the page too).
       && new URL(page).pathname !== '/rack/plans/'
       // The compare pages (plan §8) stay out until Mike's word yes on the launch preview.
-      && !new URL(page).pathname.startsWith('/rack/compare/'),
+      && !new URL(page).pathname.startsWith('/rack/compare/')
+      // /press waits for Mike's yes on the launch preview.
+      && new URL(page).pathname !== '/press/',
   })],
   // Static output by default — the whole site can be a static export.
   output: 'static',

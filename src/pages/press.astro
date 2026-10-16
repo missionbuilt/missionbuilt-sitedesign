@@ -1,0 +1,94 @@
+---
+/**
+ * /press: a small press kit (launch preview, plan §2 and §11 step 9). Icons, real screens, a short
+ * founder bio and one contact. Facts only from the About page; no employer named (role card rule).
+ * Strings marked COPY are drafts for Mike's yes. MissionStack is named only once
+ * MISSIONSTACK_ANNOUNCED. noindex until Mike's yes. No photo yet: Mike picks one.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import TopNav from '../components/TopNav.astro';
+import { STACK } from '../data/apps';
+
+const shots = [
+  { src: '/images/ironstack/hero-session.webp', label: 'IronStack on iPhone, mid-workout' },
+  { src: '/images/ironstack/watch-set.webp', label: 'IronStack on Apple Watch' },
+  { src: '/images/mealstack/today-training.webp', label: 'MealStack Today on a training day' },
+  { src: '/images/missionstack/board-ipad.webp', label: 'The gym board on iPad' },
+  { src: '/images/missionstack/board-tv.webp', label: 'The gym board on Apple TV' },
+  { src: '/images/missionstack/plan-ipad.webp', label: 'Planning a week on iPad' },
+];
+---
+<BaseLayout
+  title="Press · Mission Built"
+  description="Press kit for Mission Built's apps: app icons, real screens, a short founder bio and a contact."
+  noindex={true}
+>
+  <TopNav />
+  <main id="main" class="page">
+    <section class="hero">
+      <p class="eyebrow"><span class="dots" aria-hidden="true">▮▮▮</span> <span>Press</span> <span class="dots" aria-hidden="true">▮▮▮</span></p>
+      <h1 class="display">Press kit<span class="dot">.</span></h1>
+      {/* COPY */}
+      <p class="sub">Apps for people who train, on iPhone, Apple Watch, iPad, Mac and Apple TV. In a private beta now; on the App Store January 1.</p>
+    </section>
+
+    <section class="block">
+      <p class="label">The short version</p>
+      {/* COPY */}
+      <p class="prose">IronStack logs every set on iPhone and Apple Watch. MealStack times your meals around your training. The gym board puts the live workout on a TV, an iPad or a Mac. They work alone or together, and your log lives on your devices: no usage analytics, nothing sold.</p>
+    </section>
+
+    <section class="block">
+      <p class="label">App icons</p>
+      <ul class="icons">
+        {STACK.map((a) => (
+          <li><a href={a.icon.src2x} download><img src={a.icon.src} width="96" height="96" alt={a.icon.alt} /><span>{a.name} · 512 px PNG</span></a></li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="block">
+      <p class="label">Screens</p>
+      <p class="note">Real screens from the beta builds, in Apple's Simulators.</p>
+      <ul class="shots">
+        {shots.map((s) => <li><a href={s.src} download><img src={s.src} alt={s.label} loading="lazy" /><span>{s.label}</span></a></li>)}
+      </ul>
+    </section>
+
+    <section class="block">
+      <p class="label">The founder</p>
+      {/* COPY: facts from /about only. */}
+      <p class="prose">Mike Nichols builds the apps. He is a product leader by trade, a USAPL-certified powerlifting coach who trains in his own garage gym, and a U.S. Army intelligence veteran. He wrote <a href="/chapters">Mission Built</a>, an open-source book on building things that matter, from the barbell and the boardroom. The apps are its barbell half.</p>
+    </section>
+
+    <section class="block">
+      <p class="label">Contact</p>
+      <p class="prose"><a href="mailto:mike@missionbuilt.io">mike@missionbuilt.io</a>. Mike answers himself.</p>
+    </section>
+    <div class="tail"></div>
+  </main>
+  <SiteFooter />
+</BaseLayout>
+
+<style>
+  .hero { padding: 48px var(--pad-page-x) 8px; }
+  .eyebrow { margin: 0 0 18px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.24em; text-transform: uppercase; color: var(--color-chalk-dim); }
+  .eyebrow .dots, .dot { color: var(--color-blood-bright); }
+  .display { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(44px, 7vw, 80px); line-height: 0.95; letter-spacing: -0.02em; text-transform: uppercase; color: var(--color-chalk); }
+  .sub { margin: 18px 0 0; max-width: 60ch; font-family: var(--font-serif); font-size: 18px; line-height: 1.6; color: var(--color-chalk-dim); }
+  .block { padding: 48px var(--pad-page-x) 0; }
+  .label { margin: 0 0 14px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.24em; text-transform: uppercase; color: var(--color-blood-text); }
+  .prose { margin: 0; max-width: 68ch; font-family: var(--font-serif); font-size: 17px; line-height: 1.65; color: var(--color-chalk-dim); }
+  .prose a { color: var(--color-chalk); border-bottom: 1px solid var(--color-chalk-ghost); }
+  .note { margin: -6px 0 14px; font-family: var(--font-serif); font-size: 14px; color: var(--color-chalk-faint); }
+  .icons { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 28px; }
+  .icons a, .shots a { display: grid; gap: 8px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; color: var(--color-chalk-dim); }
+  /* App icons keep Apple's rounded mask (the app's own mark). */
+  .icons img { width: 96px; height: 96px; border-radius: 22.37%; border: 1px solid var(--color-rule); }
+  .shots { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+  .shots img { width: 100%; height: 220px; object-fit: contain; background: var(--color-panel); border: var(--border-thin); padding: 12px; }
+  .tail { height: 72px; }
+  @media (max-width: 1099px) { .hero, .block { padding-left: var(--pad-page-x-mid); padding-right: var(--pad-page-x-mid); } .shots { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 720px) { .hero, .block { padding-left: var(--pad-page-x-mobile); padding-right: var(--pad-page-x-mobile); } .shots { grid-template-columns: minmax(0, 1fr); } }
+</style>
