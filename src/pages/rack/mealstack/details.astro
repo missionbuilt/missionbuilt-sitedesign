@@ -83,12 +83,12 @@ const versus: Versus[] = [
   { k: 'On the road', them: 'One schedule, and it assumes you are home.', us: 'Home or Away in one tap, or automatic.' },
   { k: 'Eating out', them: 'Search the database, guess the portion.', us: 'Stack AI reads the menu against this meal\'s numbers.' },
   { k: 'Your data', them: 'Their servers, your account.', us: 'Your phone. Nothing goes to Anthropic until you turn Stack AI on, and then only when you ask; usage data only if you say yes.' },
-  { k: 'Best at', them: 'A database of a million foods and a barcode scanner.', us: 'Timing. Keep the other app for the barcode if you like.', honest: true },
+  { k: 'Best at', them: 'A database of a million foods.', us: 'Timing. MealStack scans barcodes too; keep the other app for its database if you like.', honest: true },
 ];
 
 type Faq = { q: string; a: string };
 const faqs: Faq[] = [
-  { q: 'Is it free?', a: 'During the TestFlight beta, yes. Stack AI runs on a monthly allowance per phone. The launch price is not settled. The fine print above says why, and the answer lands on this page before it lands in the store.' },
+  { q: 'Is it free?', a: 'Every app has a free way in, plus paid plans. Stack AI runs on a monthly allowance. Pricing coming soon: it lands on this page before it lands in the store.' },
   { q: 'Does it need an account?', a: 'No. There is nothing to sign up for. Your plan, your log and your history are files on your phone. Delete all MealStack data, under Start over in Settings, wipes them, and the little the server holds for Stack AI along with them.' },
   { q: 'What leaves my phone?', a: 'What you send Stack AI. Stack AI is off until you turn it on. Nothing goes to Anthropic until you do, and then only when you ask. Turn it off any time in Settings › Stack AI. What you type, photograph or attach goes to a server I run, which passes it to Anthropic. Usage data goes to Mission Built only if you say yes when the app asks, and stays there. The privacy page says exactly what, where and for how long.' },
   { q: 'Is Stack AI a doctor?', a: 'No. It is an AI, and it can be wrong. Its targets come from a formula you can read, its meal ideas are estimates, and it declines questions about medical conditions, medication, pregnancy and supplement doses. Nothing it proposes changes your plan until you tap.' },
@@ -96,7 +96,9 @@ const faqs: Faq[] = [
   { q: 'Can I keep my macro tracker?', a: 'Yes, and if you lean on a barcode scanner you should. MealStack is the timing layer. It knows the plate, weighs macros from it, and writes them to Apple Health at the time you ate, so the two live side by side.' },
   { q: 'Does it have streaks?', a: 'Yes, for full days: every meal logged or skipped on purpose. A skip you chose is a decision, not a miss, so there is nothing to fudge. Only good habits earn badges, and nothing is taken away. History still scores the week on what actually landed.' },
   { q: 'How old do I have to be?', a: 'Eighteen. MealStack sets targets, plans cuts and reads your weight, and that is for adults.' },
-  { q: 'Android, iPad, watch?', a: 'iPhone only, iOS 26 and up. No Android, no iPad layout, no watch app, and none planned for 1.0. The Lock Screen, the widgets and the notifications are where the app lives when it is not open.' },
+  // COPY: plan §1.6 and §9, the facts from Logbook's b92 check (2026-10-15 19:26).
+  { q: 'Can I use it with another tracker?', a: 'Yes, without counting anything twice. MealStack asks once whether to write the meals you log to Apple Health (protein, carbohydrates, fat and calories, at the time you ate), and whether to read food and weight from other apps. If you say yes to reading, what another app logged today shows under Today\'s totals as "Logged in other apps. Not added to MealStack\'s totals." It reads totals only, never food names. If your other tracker also writes meals to Apple Health, log each meal in one app, or turn off MealStack\'s "Write the meals you log" switch, so Health doesn\'t count a meal twice.' },
+  { q: 'Android, iPad, watch?', a: 'iPhone only, iOS 26 and up. No Android and no iPad layout. MealStack on Apple Watch is coming soon: your next meal on the watch face, an alert before it, Log it from your wrist. The Lock Screen, the widgets and the notifications are where the app lives when it is not open.' },
   { q: 'Is the code open?', a: 'No. MealStack is a closed app. Your plan is yours: plan files are documented JSON (the MealStack Schema), and they go out and come back in. The name and the marks stay with Mission Built.' },
   { q: 'When is 1.0?', a: 'When the beta has proven it on phones that are not mine. The date lands on this page before it lands in the store.' },
 ];
@@ -346,8 +348,8 @@ const ld = {
         </div>
         <div class="lic-cell">
           <p class="k">Price</p>
-          <p class="v">Not settled yet. Here is why.</p>
-          <p class="body">Every Stack AI question runs on a server I pay for. I want Stack AI in the app, and I am not willing to lose money keeping it there, so the launch price is an open question: free with Stack AI on an allowance, a one-time price, or Stack AI as the paid part of a free app. The answer lands here before it lands in the store.</p>
+          <p class="v">Pricing coming soon.</p>
+          <p class="body">Every app has a free way in, plus paid plans. Every Stack AI question runs on a server I pay for, so Stack AI is part of what the paid plans cover. The prices land here before they land in the store.</p>
         </div>
         <div class="lic-cell">
           <p class="k">Your data</p>

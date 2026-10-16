@@ -117,7 +117,7 @@ export const features = (announced: boolean): FeatureRow[] => [
   { name: 'The watch runs the workout when your phone is out of range', cells: [Y, Y, Y, Y], soon: true },
   { name: 'Unlimited programs, workouts and your own exercises', cells: [Y, Y, Y, Y] },
   { name: 'Starter programs, and cues for the lifts in the library', cells: [Y, Y, Y, Y] },
-  { name: 'Bring your history from Hevy, Strong or a spreadsheet', cells: [Y, Y, Y, Y] },
+  { name: 'Bring your history from another lifting app or a spreadsheet', cells: [Y, Y, Y, Y] },
   { name: 'Records, badges and the workout recap', cells: [Y, Y, Y, Y] },
   { name: 'Insights: charts and estimated maxes', cells: ['30 days', 'Full history', '30 days', 'Full history'] },
   { name: 'Share cards and spotters', cells: [Y, Y, Y, Y] },

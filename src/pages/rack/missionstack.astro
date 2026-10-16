@@ -42,7 +42,7 @@ const ld = {
   operatingSystem: 'iPadOS 26, macOS 26, tvOS 26',
   description,
   author: { '@type': 'Person', name: 'Mike Nichols', url: 'https://missionbuilt.io/about' },
-  publisher: { '@type': 'Organization', name: 'Mission Built', url: 'https://missionbuilt.io' },
+  publisher: { '@type': 'Organization', name: 'Mission Built LLC', url: 'https://missionbuilt.io' },
 };
 
 const boardIpad = pad('board-ipad', 'The MissionStack board mid-workout on an iPad: Lower A, Romanian deadlift 3 × 8, a 1:38 rest clock, then set 3. Two sets of 245 × 8 done and the third ready; 5 of 9 exercises, 3 of 3 sets.'); // COPY (alt, from Chalkboard's capture README)
@@ -61,9 +61,9 @@ const og = existsSync(`public${IMG}og.jpg`) ? `${IMG}og.jpg` : '/images/rack-og.
   eyebrow="Private beta · iPad, Mac + Apple TV"
   promise="Your workout on the big screen."
   promiseAccent="Live in the gym."
-  sub="I wanted my workout on the biggest screen in the gym, and a place to plan the weeks that isn't a phone. MissionStack does both. Put the live workout on an iPad, a Mac or an Apple TV, big enough to read from the platform, while you log on your iPhone or Apple Watch as always. And plan your training on iPad or Mac: type a line and the sets fill in."
+  sub="I wanted my workout on the biggest screen in the gym, and a place to plan the weeks that isn't a phone. MissionStack does both. Put the live workout on an iPad, a Mac or an Apple TV, big enough to read from the platform, while you log on your iPhone or Apple Watch as always. And plan your training on iPad or Mac: type a line and the sets fill in. One lifter on the board today; Team lifts are coming later."
   subShort="Your live workout on an iPad, Mac or Apple TV. Plan your weeks on iPad or Mac."
-  trust={['Free during the beta', 'iPad, Mac + Apple TV', 'No account', 'Nothing sent to us']}
+  trust={['Private beta', 'One lifter on the board today', 'iPad, Mac + Apple TV', 'Nothing sent to us']}
   heroTablet={boardIpad}
   heroTv={boardTv}
   soft={{ label: 'Already on IronStack? Pair in one scan →', href: '/rack/missionstack/details#pair' }}
@@ -71,6 +71,7 @@ const og = existsSync(`public${IMG}og.jpg`) ? `${IMG}og.jpg` : '/images/rack-og.
   diffH2="The big screen, built for training."
   diffs={[
     { claim: 'Read it from the platform.', body: 'The set you\'re on, the load, the rest clock and your records, big enough to read across the room. You still log on your iPhone or watch; the board only shows. Finish and it says Stacked with your time, volume and records, then keeps nothing: your workout is saved on your iPhone.' },
+    { claim: 'What your training partners need.', body: 'Each partner logs on their own iPhone with IronStack, and the board shows one lifter at a time today. Several lifters on one board, Team lifts, are coming later.' },
     { claim: 'One scan to pair.', body: 'Choose Start on my own, scan the code with your iPhone\'s Camera, tap Pair. It talks to your phone over your own Wi-Fi, encrypted, and nowhere else. On Apple TV the Siri Remote pauses the clock.' },
     { claim: 'Plan the way you write it.', body: 'Type "front squat 3x5 @7" and the sets, reps and effort fill in. Drag workouts between days, make a superset, swap a lift, copy a week forward. Every change can be undone, and a keyboard makes it faster.' },
     { claim: 'Nothing to sign up for.', body: 'No account. MissionStack sends nothing to us and keeps your plan on your iPad or Mac.' },

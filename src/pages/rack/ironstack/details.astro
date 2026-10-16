@@ -37,7 +37,7 @@ const stats = [
   { key: 'Runs on',           value: 'iPhone',  sub: '+ Apple Watch · iOS 26 and up', army: false },
   { key: 'From any app',      value: 'Bring it', sub: 'supersets, prep sets',     army: false },
   { key: 'Account to log',    value: 'None',    sub: 'Social is optional',        army: false },
-  { key: 'During the beta',   value: 'Free',    sub: 'Stack AI included',            army: true  },
+  { key: 'Logging',           value: 'Free',    sub: 'Pricing coming soon',          army: true  },
 ];
 
 /** Real screens, from Mike's own log; Social from the app's signed-out sample feed. */
@@ -89,10 +89,10 @@ const versus: Versus[] = [
   { k: 'Logging a set', them: 'Tap the numbers in, or check off last time\'s.', us: 'The same, plus type 225x8 in one field, or say it.' },
   { k: 'Rest', them: 'A timer that buzzes.', us: 'Starts itself, calls "Thirty seconds", "Five seconds" and "Get to work" in your earbuds, and fills the screen at the end.' },
   { k: 'A new exercise', them: 'Make a custom one first; the free tier allows seven.', us: 'Say or type any name. It is kept exactly as you said it. Match it later, or never.' },
-  { k: 'What is free', them: 'Every workout, but four routines and three months of graphs.', us: 'Every workout you log, every saved workout, every chart, free in the beta. The launch price is not set; the fine print says why.' },
+  { k: 'What is free', them: 'Every workout, but four routines and three months of graphs.', us: 'Logging in IronStack is free. Every app has a free way in, plus paid plans. Pricing coming soon.' },
   { k: 'Social', them: 'Followers, strangers, likes and comments.', us: 'Only partners you invite. Support, no comments, on purpose.' },
-  { k: 'Coaching', them: 'Hevy Coach, a separate app for trainers; clients log in Hevy.', us: 'Coach mode, inside IronStack: the plan comes in as a suggestion, workouts go out, every change from the plan is marked. In the beta, a few coaches and their lifters at a time.' },
-  { k: 'Best at', them: 'Android and exercise videos.', us: 'Neither yet. Keep the other app for them; nothing here needs you to quit it.', honest: true },
+  { k: 'Coaching', them: 'Hevy Coach, a separate app for trainers; clients log in Hevy.', us: 'Coach mode, inside IronStack: the plan comes in as a suggestion, workouts go out, every change from the plan is marked. Open to everyone in the beta.' },
+  { k: 'Best at', them: 'Android and exercise videos.', us: 'No Android. Demos are testing on 4 lifts now, with every lift by January. Keep the other app if you like; nothing here needs you to quit it.', honest: true },
 ];
 
 type Faq = { q: string; a: string; link?: { label: string; href: string } };
@@ -100,15 +100,15 @@ const faqs: Faq[] = [
   { q: 'Do I have to quit Hevy or Strong?', a: 'No. IronStack reads a file you export; it never signs in there or changes anything. Run both for a couple of weeks. If you go back, your app is exactly as you left it. One honest limit: IronStack exports your log as a documented JSON file, not a Hevy or Strong CSV, so workouts you log here will not load into them on their own. If an unbroken Hevy history matters to you, log in both while you try it.' },
   { q: 'What comes over from Hevy?', a: 'Workouts and routines (routines come in as saved workouts), with supersets paired the way Hevy paired them, warm-ups as prep sets and drop sets tagged as what they were, and your custom exercise names kept exactly. The preview shows what it found, and any names it wants you to check, before anything is saved. In Hevy: Settings, Export & Import Data.' },
   { q: 'What is TestFlight?', a: 'Apple\'s own app for beta testing. I add your Apple ID email, Apple sends you an invite, and TestFlight installs IronStack like an App Store app. Updates arrive through it until 1.0 lands in the store.' },
-  { q: 'Is it free?', a: 'During the TestFlight beta, yes. Stack AI runs on a monthly allowance per phone, because every Stack AI question runs on a server I pay for. The launch price is not set, and it lands on this page before it lands in the store.' },
+  { q: 'Is it free?', a: 'Logging in IronStack is free. Every app has a free way in, plus paid plans. Stack AI runs on a monthly allowance, because every Stack AI question runs on a server I pay for. Pricing coming soon: it lands on this page before it lands in the store.' },
   { q: 'Does it need an account?', a: 'Not to log. Everything you log is a file on your phone. Social is the one part that needs you to be someone, and it uses Sign in with Apple without asking for your name or email. Skip Social and there is nothing to sign up for.' },
   { q: 'What leaves my phone?', a: 'Nothing goes to Anthropic until you turn Stack AI on, and then only what you send it, when you ask. The cards you choose to share with your spotters, if you use Social. Nothing else unless you switch it on. The privacy page says exactly what, where, and for how long.' },
   { q: 'Can I bring my history?', a: 'Yes. Hevy and Strong exports bring history and routines; JuggernautAI and any spreadsheet you kept bring history, with a preview to match the columns. Imported workouts count in your records, Insights and "last time", are labelled as imported, and never go on a card. Bringing the same file twice adds nothing.' },
   { q: 'Pounds or kilos?', a: 'Both. Pick one for the app, and switch any single exercise the other way, because the dumbbells at a hotel gym do not care where you live. The keypad shows the other unit under every number, and one tap types in it.' },
   { q: 'Streaks and badges?', a: 'A weekly streak on Insights and badges that take years to finish: Road Warrior for training on the road, Dawn patrol, a thousand feet of carries, In their corner for supporting others. Earned, never shamed. Miss a week and nothing scolds you.' },
   { q: 'Is Stack AI a doctor?', a: 'No. It is an AI, and it can be wrong. It answers from your own sets, never names a weight above a ceiling it can show you, and points any question about pain or injury to a qualified person. Nothing it suggests changes your log until you tap.' },
-  { q: 'Apple Watch, Android, iPad?', a: 'Apple Watch, yes. The watch app comes with the iPhone app (watchOS 26 and up), and it is a remote for the workout on your phone: start on either one, and both show the same set. The watch shows the set you are on and the clock, a swipe apart: tap the weight, reps or RPE and turn the Crown to change it, tap Log set to log, and tap the clock to pause the rest. A timed set runs its timer there too, and after the last set you finish from your wrist. The whole workout lands in Health as one, with heart rate. Keep your phone nearby, in a bag or on the bench; if the watch loses it, the clock keeps running and what you logged is sent when it reconnects. No Android and no iPad layout yet.' },
-  { q: 'What is Coach mode?', a: 'Training with a real person who also uses IronStack. Your coach asks by your handle; nothing is shared until you say yes, and you choose what they see: every set always, your notes unless you turn them off, and sleep, bodyweight and MealStack fueling only if you switch them on. Their plans arrive as suggestions. Either of you can end it, and their copy goes with it. In the beta it opens to a few coaches and their lifters at a time; if you train with a coach, say so when you sign up.', link: { label: 'What Coach mode shares →', href: '/rack/ironstack/privacy#coach-mode' } },
+  { q: 'Apple Watch, Android, iPad?', a: 'Apple Watch, yes. The watch app comes with the iPhone app (watchOS 26 and up), and it is a remote for the workout on your phone: start on either one, and both show the same set. The watch shows the set you are on and the clock, a swipe apart: tap the weight, reps or RPE and turn the Crown to change it, tap Log set to log, and tap the clock to pause the rest. A timed set runs its timer there too, and after the last set you finish from your wrist. The whole workout lands in Health as one, with heart rate. Keep your phone nearby, in a bag or on the bench; if the watch loses it, the clock keeps running and what you logged is sent when it reconnects. Coming soon: the watch runs the whole workout even when your phone is out of range. No Android and no iPad layout yet.' },
+  { q: 'What is Coach mode?', a: 'Training with a real person who also uses IronStack. Your coach invites you with a link or a code; nothing is shared until you say yes, and you choose what they see: every set always, your notes unless you turn them off, and sleep, bodyweight and MealStack fueling only if you switch them on. Their plans arrive as suggestions. Either of you can end it, and their copy goes with it. Coach mode is open to everyone in the beta; if you train with a coach, say so when you sign up.', link: { label: 'What Coach mode shares →', href: '/rack/ironstack/privacy#coach-mode' } },
   { q: 'Is Stack AI my coach?', a: 'No. Coach means a person. Stack AI is the AI: it picks weights from your own sets under a ceiling, writes down a program you already have, and builds a workout or a program when you ask. On a coach\'s plan, a new program is only ever a suggestion for your coach.' },
   { q: 'How old do I have to be?', a: 'Eighteen, the same as MealStack. IronStack, Stack AI and Social are for adults.' },
   { q: 'Is the code open?', a: 'No. IronStack is a closed app. Your data is open: one tap exports everything in the Mission Built Schema, and it imports back. The IronStack name and marks stay with Mission Built.' },
@@ -177,7 +177,7 @@ const ld = {
         <a class="cta" href="#beta">Join the beta →</a>
         <a class="cta-soft" href="#from-hevy">Coming from Hevy or Strong? ↓</a>
       </div>
-      <p class="hero-note">Free during the beta · Keep the app you use now · Your whole log exports any time</p>
+      <p class="hero-note">Logging is free · Keep the app you use now · Your whole log exports any time</p>
     </section>
 
     <section class="meta-strip" aria-label="IronStack at a glance">
@@ -340,8 +340,8 @@ const ld = {
         </div>
         <div class="lic-cell">
           <p class="k">Price</p>
-          <p class="v">Not settled yet. Here is why.</p>
-          <p class="body">Every Stack AI question runs on a server I pay for. I want Stack AI in the app and I am not willing to lose money keeping it there, so the launch price is open: free with Stack AI on an allowance, a one-time price, or Stack AI as the paid part of a free app. What is settled: logging, the clock, your whole history and Social will not be what you pay for.</p>
+          <p class="v">Pricing coming soon.</p>
+          <p class="body">Logging in IronStack is free. Every app has a free way in, plus paid plans. Every Stack AI question runs on a server I pay for, so Stack AI is where the paid plans come in. The prices land on this page before they land in the store.</p>
         </div>
         <div class="lic-cell" id="your-data">
           <p class="k">Your data</p>
@@ -382,7 +382,7 @@ const ld = {
             <input type="hidden" name="page" value="/rack/ironstack" />
             <div class="form-row">
               <button class="cta" type="submit" id="beta-submit">Join the beta →</button>
-              <p class="cta-note" id="beta-status" role="status" aria-live="polite">Free during the beta · iPhone, iOS 26 and up · 18 and over · keep your app</p>
+              <p class="cta-note" id="beta-status" role="status" aria-live="polite">Private beta · iPhone, iOS 26 and up · 18 and over · keep your app</p>
             </div>
           </form>
           <p class="cta-note" id="beta-fallback" hidden>The form is not taking names right now. Email <a href={MAILTO}>support@missionbuilt.io</a> with the address on your Apple ID and I will add you by hand.</p>
