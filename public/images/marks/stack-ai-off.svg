@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" role="img" aria-label="Stack AI, off">
+  <!-- StackAIMark .off, dark appearance: all three plates outlined in inkDim 0xA8A094, a 1 pt line
+       drawn inside each plate (kept 1 pt at any size, as in the app). -->
+  <g fill="none" stroke="#A8A094" stroke-width="1" vector-effect="non-scaling-stroke">
+    <rect x="5.5" y="2.5" width="5" height="2"/>
+    <rect x="3.5" y="7" width="9" height="2"/>
+    <rect x="1.5" y="11.5" width="13" height="2"/>
+  </g>
+</svg>
