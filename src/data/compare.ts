@@ -63,7 +63,7 @@ const ironstack: ComparePage = {
   title: 'IronStack vs Hevy and Strong: line by line · Mission Built',
   description: `IronStack against Hevy and Strong, paid tiers included: importing your history, the watch, coaching, social, demos, programs, prep sets and privacy. Checked against their own pages, ${CHECKED}.`,
   eyebrow: 'Compare · IronStack',
-  h1: 'IronStack vs Hevy and Strong.',
+  h1: 'IronStack, line by line.',
   sub: 'Line by line, including what they do better.',
   usName: 'IronStack',
   competitors: [
@@ -191,7 +191,7 @@ const mealstack: ComparePage = {
   title: 'MealStack vs MacroFactor, Cronometer and MyFitnessPal · Mission Built',
   description: `Meals timed around your training, set against MacroFactor, Cronometer and MyFitnessPal line by line, with what they do better. Checked against their own pages, ${CHECKED}.`,
   eyebrow: 'Compare · MealStack',
-  h1: 'MealStack vs MacroFactor, Cronometer and MyFitnessPal.',
+  h1: 'MealStack, line by line.',
   sub: 'Line by line, including what they do better.',
   usName: 'MealStack',
   competitors: [
@@ -278,7 +278,8 @@ const mealstack: ComparePage = {
   ],
   placeholder: {
     title: 'Using it with another tracker',
-    body: 'What MealStack writes to Apple Health, what to log where, and what to switch off so nothing counts twice. This block waits on a fact check against the current build and goes up once it is done.',
+    // Logbook's b92 check (2026-10-15 19:26).
+    body: 'MealStack asks once whether to write the meals you log to Apple Health (protein, carbohydrates, fat and calories, at the time you ate), and whether to read food and weight from other apps. Say yes to reading, and what another app logged today shows under Today\'s totals as "Logged in other apps. Not added to MealStack\'s totals." It reads totals only, never food names. If your other tracker also writes meals to Apple Health, log each meal in one app, or turn off MealStack\'s "Write the meals you log" switch, so Health doesn\'t count a meal twice.',
   },
 };
 
@@ -296,7 +297,7 @@ const coach: ComparePage = {
   title: 'Coach mode vs TrueCoach, Hevy Coach and TrainHeroic · Mission Built',
   description: `IronStack's Coach mode against TrueCoach, Hevy Coach and TrainHeroic: logging on the floor, plan against actual, builders, clients and limits, with what they do better. Checked ${CHECKED}.`,
   eyebrow: 'Compare · Coach mode',
-  h1: 'Coach mode vs TrueCoach, Hevy Coach and TrainHeroic.',
+  h1: 'Coach mode, line by line.',
   sub: 'Line by line, including what they do better.',
   usName: 'Coach mode',
   competitors: [

@@ -44,12 +44,6 @@ export const COMING: ComingItem[] = [
     detail: 'in a locker or at home: the plan, the clock, the plates per side.',
   },
   {
-    id: 'ask-any-lift',
-    app: 'ironstack',
-    when: 'january',
-    title: 'Ask Stack AI about any workout, from any year of your log.',
-  },
-  {
     id: 'coach-logs-for-lifter',
     app: 'ironstack',
     when: 'january',

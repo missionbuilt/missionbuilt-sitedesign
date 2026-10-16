@@ -12,10 +12,9 @@
  * Gates (Mike):
  *  - LIVE stays false until Mike's go: the page is noindex, out of the sitemap (astro.config.mjs),
  *    and not linked from the nav. Turning it on is one line here and one in the config.
- *  - Until the BUTTONDOWN_API_KEY secret is set, the function answers "closed". The page then
- *    signs the person up for the beta instead (/api/beta, the form every app page uses), with the
- *    email and the link slug only: never the founder name, which waits for the list (the beta
- *    list keeps records with no expiry yet, findings M2). So no QR visitor hits "opens soon".
+ *  - Until the BUTTONDOWN_API_KEY secret is set, the function answers "closed", nothing is sent or
+ *    stored, and the page says "The list opens soon. Want in now? Join the beta →" (plan §12: no
+ *    post to the beta form, whose store keeps addresses with no expiry).
  *  - MissionStack is named only once MISSIONSTACK_ANNOUNCED (src/data/missionstack-gate.mjs).
  *
  * No prices and no founding price (Mike 10-15 18:41; 19:06 allows only "Every app has a free way
@@ -40,7 +39,7 @@ const apps = [
 
 // COPY: the short pre-launch FAQ (plan §9).
 const faq = [
-  { q: 'What is the beta?', a: 'The apps run in TestFlight, Apple\'s app for trying apps before they reach the App Store. We send the invite to the email you give us, so use the one on your Apple ID.' },
+  { q: 'What is the beta?', a: 'The apps run in TestFlight, Apple\'s app for trying apps before they reach the App Store. Join from any app\'s page and we send the invite to the email you give there, so use the one on your Apple ID.' },
   { q: 'When can anyone get them?', a: 'January 1, on the App Store. You get the link in mid-December, about two weeks before everyone else.' },
   { q: 'What does it cost?', a: 'Pricing coming soon. Every app has a free way in, plus paid plans.' },
   { q: 'Is there an Android version?', a: 'Not for January. The apps run on iPhone, Apple Watch, iPad, Mac and Apple TV.' },
@@ -63,7 +62,7 @@ const faq = [
       <form class="signup" method="post" action="/api/first" novalidate data-first>
         <label class="sr" for="first-email">Email</label>
         <div class="row">
-          <input type="email" name="email" id="first-email" required autocomplete="email" inputmode="email" placeholder="Your email (the one on your Apple ID)" maxlength="254" />
+          <input type="email" name="email" id="first-email" required autocomplete="email" inputmode="email" placeholder="Your email" maxlength="254" />
           <button class="cta" type="submit">Get in first →</button>
         </div>
         <div class="founder">
@@ -77,8 +76,10 @@ const faq = [
         <input type="hidden" name="t" value="" data-t />
         <input type="hidden" name="via" value="" data-via />
         <p class="status" role="status" aria-live="polite" data-status></p>
+        {/* COPY (plan §12) */}
+        <p class="status closed" data-closed hidden>The list opens soon. Want in now? <a href="/rack/ironstack#beta">Join the beta →</a></p>
         {/* COPY */}
-        <p class="fine">Launch news and a short series through January 31: four to six emails from Mike. Every one has a one-click unsubscribe. We note which link you came from. Your name goes on the founders page only if you tick the box; change it or come off any time. Until the list opens, this signs you up for the beta instead. Never sold. <a href="/rack/support#the-get-in-first-list">How your email is kept</a>.</p>
+        <p class="fine">Launch news and a short series through January 31: four to six emails from Mike. Every one has a one-click unsubscribe. We note which link you came from. Your name goes on the founders page only if you tick the box; change it or come off any time. Never sold. <a href="/rack/support#the-get-in-first-list">How your email is kept</a>.</p>
       </form>
     </section>
 
@@ -86,7 +87,7 @@ const faq = [
       {/* COPY: Mike 19:06, the four things. No founding price until prices are allowed. */}
       <h2>What the founders advantage is</h2>
       <ol class="adv">
-        <li><b>Train on it now.</b> The apps are in a private beta. We send you the invite.</li>
+        <li><b>Train on it now.</b> The apps are in a private beta. <a href="/rack/ironstack#beta">Join it</a> and we send you the invite.</li>
         <li><b>The App Store link in mid-December,</b> about two weeks before everyone else.</li>
         <li><b>A direct line.</b> “Reply to any email and it reaches me.” Mike</li>
         <li><b>Your name on the founders page,</b> if you want it. Your real name or a handle. Change it or come off any time.</li>
@@ -117,7 +118,6 @@ const faq = [
   // COPY: the status lines.
   const OK = 'Almost in. Check your inbox for one email to confirm, then you are on the list.';
   const ERR = 'That did not go through. Check the address and try again.';
-  const BETA_OK = 'You are on the beta list. We will send a TestFlight invite to this address. The founders page opens with the email list; tick the box again then.';
   const CLOSED = 'The list opens soon. Come back in a few days.';
   const form = document.querySelector<HTMLFormElement>('form[data-first]');
   if (form) {
@@ -139,7 +139,11 @@ const faq = [
     const q = new URLSearchParams(location.search).get('first');
     if (q === 'ok') say(OK, 'ok');
     if (q === 'err') say(ERR, 'err');
-    if (q === 'closed') say(CLOSED, '');
+    // Until Buttondown is set up the list is closed and nothing is sent anywhere (plan §12): the page
+    // points to the IronStack beta form, which has its own privacy text.
+    const closedNote = document.querySelector<HTMLElement>('[data-closed]');
+    const showClosed = () => { if (closedNote) closedNote.hidden = false; };
+    if (q === 'closed') showClosed();
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const email = (form.querySelector<HTMLInputElement>('input[name=email]')?.value || '').trim();
@@ -150,14 +154,7 @@ const faq = [
         const res = await fetch('/api/first', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(Object.fromEntries(new FormData(form).entries())) });
         const data = await res.json().catch(() => ({}));
         if (res.ok && data.ok) { say(OK, 'ok'); form.reset(); syncName(); if (t) t.value = String(Date.now()); }
-        else if (res.status === 503 || data.closed) {
-          // The email list isn't open yet: sign them up for the beta instead, email and link only.
-          const note = 'Get in first' + (viaIn && viaIn.value ? ' · via ' + viaIn.value : '');
-          const beta = await fetch('/api/beta', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify({ email, note, page: '/rack', t: t ? t.value : '' }) });
-          const bd = await beta.json().catch(() => ({}));
-          if (beta.ok && bd.ok) { say(BETA_OK, 'ok'); form.reset(); syncName(); if (t) t.value = String(Date.now()); }
-          else say(CLOSED, '');
-        }
+        else if (res.status === 503 || data.closed) { say('', ''); showClosed(); }
         else say(data.error || ERR, 'err');
       } catch { say(ERR, 'err'); }
       finally { if (btn) btn.disabled = false; }
@@ -188,6 +185,7 @@ const faq = [
   .status:empty { margin: 0; }
   .status.ok { color: var(--color-army); }
   .status.err { color: var(--color-blood-text); }
+  .status.closed a { color: var(--color-chalk); border-bottom: 1px solid var(--color-chalk-ghost); }
   .fine { margin: 14px 0 0; font-size: 14px; line-height: 1.55; color: var(--color-chalk-dim); }
   .fine a, .apps a:hover b { color: var(--color-blood-text); }
   .founder { margin-top: 12px; display: grid; gap: 8px; }
@@ -197,6 +195,7 @@ const faq = [
   .name[hidden] { display: none; }
   .adv { margin: 0; padding-left: 22px; display: grid; gap: 10px; max-width: 62ch; color: var(--color-chalk-dim); line-height: 1.6; }
   .adv b { color: var(--color-chalk); font-weight: 700; }
+  .adv a { color: var(--color-chalk); border-bottom: 1px solid var(--color-chalk-ghost); }
   .row-static { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: baseline; padding: 16px 0; }
   .faq { margin: 0; display: grid; gap: 18px; }
   .faq dt { font-family: var(--font-display); font-weight: 500; font-size: 17px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--color-chalk); }

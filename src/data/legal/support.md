@@ -108,7 +108,7 @@ The Get in first form at missionbuilt.io/first asks for your email address. It's
 
 Your address goes straight to Buttondown, the service that sends those emails for us ([its privacy policy](https://buttondown.com/legal/privacy)); Mission Built keeps no copy of its own. Buttondown first sends one email asking you to confirm; when you open that link, Buttondown sees your IP address and browser, as any website does. To stop repeated tries, the form uses your IP address as a scrambled code kept for one hour, and nothing else. Open and click tracking are off, so we don't see whether you opened an email or what you clicked. Every email has a one-click unsubscribe, and unsubscribing stops the emails at once. Your address is deleted after the series, by [DATE TO SET], or sooner if you ask at support@missionbuilt.io. A founders page name is kept apart from your address, in Mission Built's own storage and not in the site's public code, and stays on the page until you ask support@missionbuilt.io to take it off. Mike reads each name before it goes up. If you reply to an email, your reply reaches Mike's mailbox and is kept like any email there; ask and it's deleted. None of it is ever sold, shared beyond Buttondown, or used for anything else.
 
-Until the email list opens, the form signs you up for the beta instead: the same list as the beta form on each app's page, with your email and which link you came from, and not a founders page name. That list is kept as [the beta sign-up form](#the-beta-sign-up-form) section says.
+Until the email list opens, the form sends nothing anywhere; it points you to the beta form instead.
 
 ---
 

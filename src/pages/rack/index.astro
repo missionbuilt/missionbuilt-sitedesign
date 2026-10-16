@@ -81,8 +81,8 @@ const apps: App[] = [
     href: '/rack/mealstack',
     promise: 'Your tracker says what you ate.',
     accent: 'This says when.',
-    sub: 'Meal timing for iPhone, built backward from your training session. Eat late and the day re-flows; your pre-workout meal still lands before you train.',
-    points: ['Anchored to your session', 'Log when you actually ate', 'Holds up on the road', 'Stack AI builds your plan or reads a menu'],
+    sub: 'Meal timing for iPhone, built backward from your workout. Eat late and the day re-flows; your pre-workout meal still lands before you train.',
+    points: ['Anchored to your workout', 'Log when you actually ate', 'Holds up on the road', 'Stack AI builds your plan or reads a menu'],
     shots: [
       { src: '/images/mealstack/today-training.webp', w: 540, h: 1174, alt: 'MealStack Today on a training day with the session at 6:30 PM: yogurt and whey logged late at 11:40, lunch next at 2:40 PM, the Home travel chip, and Eating out? Send Stack AI the menu.' },
       { src: '/images/mealstack/session-moved.webp', w: 540, h: 1174, alt: 'MealStack after the session moved to 6:30 PM: one line says the carb surge moved to 5:00 PM, the after-session shake to 7:30 PM and dinner to 9:00 PM, with an Undo.' },
@@ -97,7 +97,7 @@ const apps: App[] = [
     sub: 'The big-screen side of IronStack. Plan your training on iPad or Mac, and put your live workout on a board on iPad, Mac or Apple TV. One lifter on the board today.', // COPY (Beta App Description, lightly cut; plan §9 one-lifter line)
     points: ['Read it across the room', 'Pair with one scan', 'Type a line, the sets fill in', 'No account, nothing collected'], // COPY
     // Screens: Chalkboard, Fri 10-16 (slots until then)
-    tablet: { src: '/images/missionstack/board-ipad.webp', w: 1080, h: 751, alt: 'The MissionStack board on iPad mid-set: one lifter\'s exercise, the set, the load and the rest clock.' }, // COPY (alt)
+    tablet: { src: '/images/missionstack/board-ipad.webp', w: 1080, h: 751, alt: `${MS ? 'The MissionStack board' : 'The gym board'} on iPad mid-set: one lifter's exercise, the set, the load and the rest clock.` }, // COPY (alt)
     tv: { src: '/images/missionstack/board-tv.webp', w: 960, h: 540, alt: 'The same board on an Apple TV mid-workout: Lower A, Romanian deadlift 3 × 8, a 1:38 rest clock, then set 3.' },
   },
 ];
