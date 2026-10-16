@@ -27,7 +27,7 @@
 /og-image.jpg
   Cache-Control: public, max-age=86400, must-revalidate
 /fonts/*
-  Cache-Control: public, max-age=31536000, immutable
+  Cache-Control: public, max-age=86400, must-revalidate
 /images/og-brand.jpg
   Cache-Control: public, max-age=86400, must-revalidate
 /images/icons/*
