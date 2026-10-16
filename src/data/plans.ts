@@ -123,7 +123,7 @@ export const rows: Row[] = [
         id: 'missionstack_free', name: 'MissionStack Free', kind: 'free', tag: 'Free',
         line: 'The gym board is free in MissionStack.',
         items: [
-          { text: 'The gym board on TV, iPad or Mac' },
+          { text: 'The gym board' },
           { text: 'Plan your weeks' },
           { text: 'Pair in one scan, no account' },
           { text: 'Meals on the big screen', soon: true },
