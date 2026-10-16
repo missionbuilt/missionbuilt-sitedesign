@@ -132,7 +132,7 @@ const faq: Item[] = [
 
 <style>
   .breadcrumb { padding: 18px var(--pad-page-x) 0; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-faint); }
-  .breadcrumb a { color: var(--color-chalk-dim); }
+  .breadcrumb a { display: inline-flex; align-items: center; min-height: 44px;  color: var(--color-chalk-dim); }
   .breadcrumb a:hover { color: var(--color-chalk); }
   .head { padding: 36px var(--pad-page-x) 0; max-width: 900px; }
   .eyebrow { margin: 0 0 16px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.24em; text-transform: uppercase; color: var(--color-chalk-dim); }
@@ -153,7 +153,9 @@ const faq: Item[] = [
   .inline-link:hover { border-bottom-color: var(--color-chalk); }
   /* Six typed lines as an even grid, never one chip alone on a row (QA 10-16). */
   .lines { list-style: none; margin: 20px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; max-width: 760px; }
-  .lines code { width: 100%; }
+  .lines code { width: 100%; height: 100%; }
+  .lines li { display: flex; }
+  @media (max-width: 460px) { .lines { grid-template-columns: minmax(0, 1fr); } }
   @media (max-width: 720px) { .lines { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   .lines code { display: inline-block; padding: 8px 12px; background: var(--color-panel); border: var(--border-thin); font-family: var(--font-mono); font-size: 14px; color: var(--color-chalk); overflow-wrap: anywhere; }
   .closer { margin-top: 64px; padding: 44px var(--pad-page-x); border-top: var(--border-thin); text-align: center; }
@@ -177,4 +179,7 @@ const faq: Item[] = [
   .items > :last-child:nth-child(odd) { grid-column: 1 / -1; }
   .h2 { text-wrap: balance; }
   @media (max-width: 480px) { .breadcrumb { letter-spacing: 0.1em; } }
+  /* Breadcrumb underline on the words, not the 44 pt box; no stacked rules after the last comparison row (iPhone recheck 10-16). */
+  .breadcrumb a { border-bottom: 0; text-decoration: underline; text-decoration-color: var(--color-chalk-ghost); text-underline-offset: 4px; }
+  .vr:last-child { border-bottom: 0; }
 </style>

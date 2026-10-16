@@ -110,7 +110,7 @@ const setupBoard = [
 // COPY: coach FAQ (plan §6, Mike 19:06 on age; no prices).
 const faq = [
   { q: 'Can my lifters use Android?', a: 'Not to log, yet. From January 1 you can add lifters without the app and log their sets for them on your phone.' },
-    { q: 'How many lifters can I coach?', a: `Coach Free: up to ${COACH_FREE_LIFTERS} lifters, free. Coach Pro\u00a010 and Coach Pro\u00a025, for up to 10 or 25 lifters, are add-ons to The Full Stack. Pricing coming soon.` },
+    { q: 'How many lifters can I coach?', a: `Coach Free: up to ${COACH_FREE_LIFTERS} lifters, free. Coach Pro\u00a010 and Coach Pro\u00a025, for up to 10 or 25 lifters, are add-ons to The Full Stack. Pricing coming soon.` },
   { q: 'Can I coach lifters under 18?', a: 'No. IronStack is for lifters 18 and over.' },
   { q: 'I\'m moving from another coaching app. What about my programs?', a: 'Build them with the typed line, or bring a PDF or a photo and Stack AI writes it into Plan. Stack AI has to be on, and it uses your Stack AI allowance.', link: { href: '/rack/compare/truecoach', label: 'How Coach mode compares' } },
 ];
@@ -136,7 +136,7 @@ const faq = [
         {/* COPY */}
         <p class="subtitle">Send the plan. They lift. You see every set. In person or from across the country.</p>
         <ul class="trust" aria-label="The short version">
-          <li>iPhone, Apple Watch, iPad, Mac, Apple TV</li><li>Your lifter says yes first</li><li>Their data is never sold</li>
+          <li>iPhone, Watch, iPad, Mac, Apple TV</li><li>Your lifter says yes first</li><li>Their data is never sold</li>
         </ul>
         <a class="cta solid" href="#join">Join the beta →</a>
       </div>
@@ -154,7 +154,7 @@ const faq = [
         <ul>
           <li>Your lifters log on iPhone.</li>
           <li>You send programs from your iPhone, and plan on an iPad or a Mac with Apple silicon.</li>
-          <li>Logging a lifter's sets for them on your phone, and lifters without the app: <span class="tag">Coming January 1</span></li>
+          <li>Logging a lifter's sets for them on your phone, and lifters without the app: <span class="tag">Coming January 1</span></li>
         </ul>
       </div>
     </section>
@@ -220,7 +220,7 @@ const faq = [
       <p class="section-label">Join the beta</p>
       {/* COPY: no price words (Mike 18:41). */}
       <h2 class="section-h2">Coach on it now.</h2>
-      <p class="prose">Coach mode is open to everyone in the IronStack beta. Join it and tell us you coach, for example "I coach · 6 lifters, in person and remote".</p>
+      <p class="prose">Coach mode is open to everyone in the IronStack beta. Join it and tell us you coach, for example "I coach 6 lifters, in person and remote".</p>
       <a class="cta solid" href="/rack/ironstack#beta">Join the IronStack beta →</a>
       <p class="prose after-cta">Send your lifters <a href="/coach/invited">missionbuilt.io/coach/invited</a>. It says what to install and what they share.</p>
     </section>
@@ -242,12 +242,15 @@ const faq = [
   .breadcrumb a:hover { color: var(--color-chalk); }
   .hero { max-width: calc(1180px + 2 * var(--pad-page-x)); margin: 0 auto; padding: 48px var(--pad-page-x) 12px; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 48px; align-items: center; }
   .trust { list-style: none; margin: 18px 0 24px; padding: 0; display: flex; flex-direction: column; gap: 6px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; color: var(--color-chalk-dim); }
-  .trust li::before { content: '✓'; margin-right: 7px; color: var(--color-army); }
+  .trust li { padding-left: 1.3em; text-indent: -1.3em; }
+  .trust li::before { content: '✓'; display: inline-block; width: 1.3em; text-indent: 0; color: var(--color-army); }
   .hero-shot { position: relative; container-type: inline-size; }
   .hs-board { width: 86%; margin-left: auto; }
   /* The phone sits off the board's lower-left corner so LOWER A and the clock stay readable (QA 10-16). */
   .hs-board { margin-bottom: 18%; }
   .hs-phone { position: absolute; left: -2%; bottom: -16%; width: 26%; font-size: calc(26cqi / 15); }
+  /* On a phone the hero shows the board alone (iPhone QA 10-16). */
+  @media (max-width: 720px) { .hs-phone { display: none; } .hs-board { width: 100%; margin-bottom: 0; } }
   .who { border: var(--border-thin); background: var(--color-panel); padding: 22px 26px; }
   .who ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; font-family: var(--font-serif); font-size: 16px; line-height: 1.55; color: var(--color-chalk); }
   .blocks { display: grid; gap: 0; border-top: var(--border-thin); }
@@ -264,7 +267,7 @@ const faq = [
   .pts.soon { margin-top: 12px; list-style: none; padding-left: 18px; }
   /* The tag and its line as one row; a wrapped line hangs under the text, not the tag. */
   .pts.soon li { display: grid; grid-template-columns: 10.5rem minmax(0, 1fr); gap: 10px; align-items: baseline; }
-  @media (max-width: 480px) { .pts.soon li { grid-template-columns: minmax(0, 1fr); gap: 4px; } }
+  @media (max-width: 480px) { .pts.soon li { grid-template-columns: minmax(0, 1fr); gap: 4px; } .pts.soon .tag { justify-self: start; } }
   .setup { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; }
   .steps { margin: 12px 0 0; padding-left: 22px; display: grid; gap: 10px; font-family: var(--font-serif); font-size: 15.5px; line-height: 1.6; color: var(--color-chalk-dim); }
   .steps b { color: var(--color-chalk); }

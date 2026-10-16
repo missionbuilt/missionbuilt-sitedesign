@@ -103,6 +103,10 @@ const links = [
     color: var(--color-chalk-dim);
     transition: color 120ms ease-out;
     white-space: nowrap;
+    /* 44 pt tap targets (iPhone QA 10-16). */
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
   }
   .nav-link:hover { color: var(--color-chalk); }
   /* Active: chalk plus a small oxblood square, so the state isn't carried
@@ -127,6 +131,11 @@ const links = [
     list-style: none;
     cursor: pointer;
     padding: 6px 4px;
+    /* 44 pt tap target (iPhone QA 10-16). */
+    min-width: 44px;
+    min-height: 44px;
+    display: grid;
+    place-items: center;
   }
   .mobile-menu summary::-webkit-details-marker { display: none; }
 

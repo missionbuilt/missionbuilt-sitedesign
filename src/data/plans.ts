@@ -38,6 +38,8 @@ export const PRICE_SLOT = 'Pricing coming soon';
 export const FULL_STACK_SLOT = 'The best price on this page when pricing lands.';
 /** COPY (draft for Mike): what the apps do together, the reason for the bundle. */
 export const FULL_STACK_TOGETHER = 'They work as one: IronStack tells MealStack when you train, and your phone puts the workout on the gym board in one scan.';
+/** COPY (draft for Mike): what Stack AI is, said once on the plans page. */
+export const STACK_AI_LINE = 'Stack AI is the AI in the apps: it reads what you have logged and answers from it.';
 /** COPY (draft for Mike): the page's one line about prices. */
 export const PRICING_LINE = 'Pricing lands here before it lands in the App Store.';
 
@@ -81,7 +83,7 @@ export const rows: Row[] = [
           { text: 'Insights on your whole history' },
           { text: 'Next weights from your sets' },
           { text: 'Programs from a photo or PDF' },
-          { text: 'Ask Stack AI about your training' },
+          { text: 'Ask Stack AI anything' },
         ],
       },
     ],
@@ -157,13 +159,13 @@ export const COACH_FREE_LIFTERS = 5;
 
 // COPY: the coach levels. The paid ones are add-ons to The Full Stack (Mike 09:41), no prices.
 export const coach = {
-  line: "Your lifters never pay. Lifters on Coach Pro 10 and 25 get IronStack Pro while they're linked.",
+  line: `Up to ${COACH_FREE_LIFTERS} lifters: Coach Free. More: The Full Stack plus Coach Pro 10 or 25. Your lifters never pay, and on Coach Pro they get IronStack Pro while they're linked.`,
   free: { id: 'coach_free', name: 'Coach Free', tag: 'Free', lifters: `Coach up to ${COACH_FREE_LIFTERS} lifters`, line: 'Send plans and see every set, in Coach mode in IronStack.' },
   addons: [
     { id: 'coach_10', name: 'Coach Pro\u00a010', lifters: 'Up to 10 lifters', price: 'coach_10' as keyof typeof PRICES },
     { id: 'coach_25', name: 'Coach Pro\u00a025', lifters: 'Up to 25 lifters', price: 'coach_25' as keyof typeof PRICES },
   ],
-  addonLine: 'Add-ons to The Full Stack, for coaches with more lifters.',
+  addonLine: 'Add-ons to The Full Stack, for coaches with more lifters.',
 };
 
 /** What a slot shows: the price once public, the draft line until then. */

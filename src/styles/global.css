@@ -142,3 +142,12 @@ main p, main li, main dd, main td, .sf-fine { text-wrap: pretty; }
 body { min-height: 100dvh; display: flex; flex-direction: column; }
 body > main, body > #main { flex: 1 0 auto; width: 100%; }
 p.ch-line, .why, .lede, .together, .first-alt, .pp-sub, .app-body .sub { text-wrap: balance; }
+
+/* iPhone landscape and other short, wide screens (iPhone QA recheck 10-16): the hero's button on the
+   first screen, and every device frame no taller than the screen. */
+@media (orientation: landscape) and (max-height: 500px) {
+  main h1 { font-size: clamp(30px, 11svh, 52px) !important; line-height: 1 !important; }
+  main .hero { padding-top: 16px !important; }
+  .phone-box { max-width: calc(80svh * 0.46); margin-left: auto; margin-right: auto; }
+  .tablet-box { max-width: calc(80svh * 1.4); margin-left: auto; margin-right: auto; }
+}

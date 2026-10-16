@@ -173,7 +173,7 @@ const faq = [
   .ad { margin: 22px 0 0; font-family: var(--font-serif); font-size: var(--fs-hero-sub); line-height: 1.45; color: var(--color-chalk-dim); }
   .signup { margin-top: 32px; max-width: 560px; }
   .row { display: flex; }
-  input[type=email] { flex: 1 1 auto; min-width: 0; padding: 13px 14px; background: var(--color-panel); border: 1px solid var(--color-rule); border-right: none; color: var(--color-chalk); font-family: var(--font-mono); font-size: 14px; }
+  input[type=email] { flex: 1 1 auto; min-width: 0; padding: 13px 14px; background: var(--color-panel); border: 1px solid var(--color-rule); border-right: none; color: var(--color-chalk); font-family: var(--font-mono); font-size: 16px; }
   input::placeholder { color: var(--color-chalk-faint); }
   input:focus { border-color: var(--color-chalk-faint); outline: none; }
   input:focus-visible { outline: 2px solid var(--color-blood-text); outline-offset: 2px; }
@@ -190,9 +190,10 @@ const faq = [
   .fine a { color: var(--color-chalk); border-bottom: 1px solid var(--color-chalk-ghost); }
   .apps a:hover b { color: var(--color-chalk-dim); }
   .founder { margin-top: 12px; display: grid; gap: 8px; }
-  .check { display: flex; gap: 10px; align-items: center; font-size: 14px; color: var(--color-chalk-dim); cursor: pointer; }
-  .check input { width: 16px; height: 16px; accent-color: var(--color-blood); }
-  .name input { width: 100%; padding: 11px 14px; background: var(--color-panel); border: 1px solid var(--color-rule); color: var(--color-chalk); font-family: var(--font-mono); font-size: 14px; }
+  /* The whole row is the tap target, at least 44 pt (iPhone QA 10-16). */
+  .check { display: flex; gap: 12px; align-items: center; min-height: 44px; font-size: 15px; color: var(--color-chalk-dim); cursor: pointer; }
+  .check input { width: 22px; height: 22px; accent-color: var(--color-blood); }
+  .name input { width: 100%; padding: 11px 14px; background: var(--color-panel); border: 1px solid var(--color-rule); color: var(--color-chalk); font-family: var(--font-mono); font-size: 16px; }
   .name[hidden] { display: none; }
   .adv { margin: 0; padding-left: 22px; display: grid; gap: 10px; max-width: 62ch; color: var(--color-chalk-dim); line-height: 1.6; }
   .adv b { color: var(--color-chalk); font-weight: 700; }
@@ -219,4 +220,5 @@ const faq = [
     .cta { width: 100%; }
     .ad { font-size: 18px; }
   }
+  .fine { font-size: 15px; }
 </style>

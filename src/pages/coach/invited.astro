@@ -63,7 +63,7 @@ import TopNav from '../../components/TopNav.astro';
         <li>
           <div>
             <h3 class="v">Sign in to Social</h3>
-            <p class="body">Coach mode uses your Social sign-in. Pick a handle and give it to your coach. Your coach asks by your handle.</p>
+            <p class="body">Coach mode uses your Social sign‑in. Pick a handle and give it to your coach. Your coach asks by your handle.</p>
           </div>
         </li>
         <li>
@@ -102,7 +102,7 @@ import TopNav from '../../components/TopNav.astro';
     font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;
     color: var(--color-chalk-faint);
   }
-  .breadcrumb a { color: var(--color-chalk-dim); transition: color 120ms ease-out; }
+  .breadcrumb a { display: inline-flex; align-items: center; min-height: 44px; color: var(--color-chalk-dim); transition: color 120ms ease-out; }
   .breadcrumb a:hover { color: var(--color-chalk); }
   .hero { padding: 40px var(--pad-page-x) 28px; text-align: center; }
   .eyebrow {
@@ -135,7 +135,8 @@ import TopNav from '../../components/TopNav.astro';
   .steps li::before { content: counter(step, decimal-leading-zero); font-family: var(--font-mono); font-size: 14px; letter-spacing: 0.1em; color: var(--color-blood-text); }
   .steps .v { margin: 0 0 6px; font-family: var(--font-display); font-weight: 500; font-size: 20px; text-transform: uppercase; color: var(--color-chalk); }
   .steps .body { margin: 0; max-width: 70ch; font-family: var(--font-serif); font-size: 15px; line-height: 1.6; color: var(--color-chalk-dim); }
-  .cta { display: inline-block; margin-top: 8px; padding: 12px 18px; border: 1px solid var(--color-blood); font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk); text-decoration: none; }
+  /* The site's one button (QA 10-16). */
+  .cta { display: inline-flex; align-items: center; min-height: 44px; margin-top: 8px; padding: 13px 22px; background: var(--color-blood); border: 1px solid var(--color-blood); font-family: var(--font-display); font-weight: 600; font-size: 15px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--color-chalk); white-space: nowrap; }
   .cta:hover { background: var(--color-blood); }
   .tail { height: 72px; }
   @media (max-width: 720px) {
@@ -148,4 +149,8 @@ import TopNav from '../../components/TopNav.astro';
 
   /* QA pass 2026-10-16: the box fits its text instead of leaving a strip of empty panel. */
   .fine { max-width: calc(70ch + 52px); }
+  .fine p { font-size: 15px; }
+  /* Breadcrumb underline on the words, not the 44 pt box; no stacked rules after the last comparison row (iPhone recheck 10-16). */
+  .breadcrumb a { border-bottom: 0; text-decoration: underline; text-decoration-color: var(--color-chalk-ghost); text-underline-offset: 4px; }
+  .vr:last-child { border-bottom: 0; }
 </style>

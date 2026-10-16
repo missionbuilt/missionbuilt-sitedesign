@@ -229,8 +229,8 @@ const jsonLd = [
   /* Motion: our own CSS only, where the browser has it and the person hasn't asked for less. */
   @supports (animation-timeline: view()) {
     @media (prefers-reduced-motion: no-preference) {
-      .reveal { animation: rise linear both; animation-timeline: view(); animation-range: entry 5% cover 30%; }
-      .zoom { animation: zoomin linear both; animation-timeline: view(); animation-range: entry 0% cover 40%; }
+      .reveal { animation: rise linear both; animation-timeline: view(); animation-range: entry 0% entry 70%; }
+      .zoom { animation: zoomin linear both; animation-timeline: view(); animation-range: entry 0% entry 80%; }
     }
   }
   @keyframes rise { from { opacity: 0; transform: translateY(36px); } to { opacity: 1; transform: none; } }
@@ -250,8 +250,24 @@ const jsonLd = [
     .icon { margin-left: auto; margin-right: auto; }
     .app-body, .lede { margin-left: auto; margin-right: auto; }
     .byline { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+    /* On a phone the hero is the board alone; the phone and watch at its corners were cut in half. */
+    .st-phone, .st-watch { display: none; }
+    .stage { padding-bottom: 0; }
+    .st-board { width: 100%; }
     .mike-links { grid-template-columns: minmax(0, 1fr); }
     .apps, .coaches { padding-top: 56px; }
     .mike { margin-top: 56px; padding-top: 64px; padding-bottom: 64px; }
+  }
+  /* iPhone landscape (iPhone QA 10-16). */
+  @media (orientation: landscape) and (max-height: 500px) {
+    .hero { padding-top: 24px; }
+    .display { font-size: clamp(30px, 9svh, 46px); }
+    .stage { max-width: 520px; margin-top: 28px; }
+    .apps, .coaches { padding-top: 56px; }
+    .app { margin-top: 48px; }
+    .app.phone .app-shot, .co-shot { width: 160px; }
+    .stackband { margin-top: 56px; }
+    .mike { margin-top: 48px; padding-top: 48px; padding-bottom: 48px; }
+    .first { margin-top: 40px; padding-top: 48px; padding-bottom: 48px; }
   }
 </style>

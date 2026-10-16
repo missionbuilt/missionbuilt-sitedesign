@@ -16,7 +16,7 @@ import SiteFooter from '../../components/SiteFooter.astro';
 import TopNav from '../../components/TopNav.astro';
 import StackAIMark from '../../components/StackAIMark.astro';
 import { STACK } from '../../data/apps';
-import { rows, fullStack, principles, coach, priceText, FULL_STACK_SLOT, FULL_STACK_TOGETHER, PRICING_LINE, assertNoPrices } from '../../data/plans';
+import { rows, fullStack, principles, coach, priceText, FULL_STACK_SLOT, FULL_STACK_TOGETHER, PRICING_LINE, STACK_AI_LINE, assertNoPrices } from '../../data/plans';
 
 assertNoPrices();
 const icon = (key: string) => STACK.find((a) => a.key === key)!.icon;
@@ -44,9 +44,12 @@ const icon = (key: string) => STACK.find((a) => a.key === key)!.icon;
         <h2 id="full-h" class="full-name">{fullStack.name}</h2>
         <p class="full-line">{fullStack.line}</p>
       </div>
-      <ul class="checks full-items">
-        {fullStack.items.map((i) => <li>{i.text}{i.soon && <span class="soon">Coming soon</span>}</li>)}
-      </ul>
+      <div class="full-items-wrap">
+        <ul class="checks full-items">
+          {fullStack.items.map((i) => <li>{i.text}{i.soon && <span class="soon">Coming soon</span>}</li>)}
+        </ul>
+        <p class="ai-line">{STACK_AI_LINE}</p>
+      </div>
       <div class="full-side">
         <p class="together">{FULL_STACK_TOGETHER}</p>
         <div class="slot full-slot">
@@ -136,7 +139,7 @@ const icon = (key: string) => STACK.find((a) => a.key === key)!.icon;
   .checks.free li::before, .checks.keeps li::before { color: var(--color-army); }
   .checks.try li { color: var(--color-chalk-dim); font-size: 15px; }
   .checks.try li::before { color: var(--color-chalk-faint); }
-  .soon { display: inline-block; margin-left: 8px; padding: 1px 6px; border: 1px dashed var(--color-chalk-ghost); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-chalk-faint); vertical-align: 2px; }
+  .soon { display: inline-block; margin-left: 8px; padding: 1px 6px; border: 1px dashed var(--color-chalk-ghost); font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-chalk-dim); vertical-align: 2px; }
 
   /* THE FULL STACK: the one oxblood accent on the page. */
   .full { position: relative; margin-top: 40px; padding: 40px 40px 36px; background: var(--color-panel); border: 1px solid var(--color-blood); box-shadow: inset 6px 0 0 var(--color-blood); display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); grid-template-areas: 'head slot' 'items slot'; gap: 24px 48px; }
@@ -145,7 +148,9 @@ const icon = (key: string) => STACK.find((a) => a.key === key)!.icon;
   .full-head :global(.stackai-mark) { margin-bottom: 18px; }
   .full-name { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(40px, 5.4vw, 64px); line-height: 0.95; letter-spacing: -0.01em; text-transform: uppercase; color: var(--color-chalk); }
   .full-line { margin: 12px 0 0; font-family: var(--font-display); font-weight: 500; font-size: clamp(20px, 2.2vw, 26px); line-height: 1.2; color: var(--color-chalk); }
-  .full-items { grid-area: items; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 24px; }
+  .full-items-wrap { grid-area: items; }
+  .ai-line { margin: 16px 0 0; max-width: 52ch; font-family: var(--font-serif); font-size: 15px; line-height: 1.55; color: var(--color-chalk-dim); }
+  .full-items { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 24px; }
   .full-items li { font-size: 17px; }
   .full-side { grid-area: slot; align-self: center; display: grid; gap: 18px; }
   .together { margin: 0; font-family: var(--font-serif); font-size: 18px; line-height: 1.55; color: var(--color-chalk); }
@@ -170,6 +175,7 @@ const icon = (key: string) => STACK.find((a) => a.key === key)!.icon;
   /* One column grid for every row: Free on the left, Pro on the right; MissionStack's Free takes the Free column (QA 10-16). */
   .single .tier ul { grid-template-columns: minmax(0, 1fr) !important; }
   .tier.try { align-self: start; }
+  @media (max-width: 1000px) { .single .tier { grid-column: 1 / -1; } }
   .tier { padding: 26px 26px 28px; border: var(--border-thin); }
   .tier.pro { background: var(--color-panel); border-color: var(--color-chalk-ghost); }
   .tag { display: inline-block; margin-bottom: 14px; padding: 3px 9px; font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; }
@@ -209,7 +215,9 @@ const icon = (key: string) => STACK.find((a) => a.key === key)!.icon;
   }
   @media (max-width: 720px) {
     .page { padding-left: var(--pad-page-x-mobile); padding-right: var(--pad-page-x-mobile); }
-    .full { padding: 26px 20px; box-shadow: inset 4px 0 0 var(--color-blood); }
+    .full { padding: 26px 20px; box-shadow: inset 4px 0 0 var(--color-blood); gap: 18px; }
+    .full-head :global(.stackai-mark) { width: 52px !important; height: 52px !important; margin-bottom: 12px; }
+    .full-items li { font-size: 15px; }
     .full-items, .single .tier ul, .keeps { grid-template-columns: minmax(0, 1fr); }
     .soon { display: block; width: fit-content; margin: 4px 0 0; }
     .tiers, .coach-tiers, .coach-grid { grid-template-columns: minmax(0, 1fr); }
