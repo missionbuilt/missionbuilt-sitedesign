@@ -129,11 +129,11 @@ The rest of the site has no environment variables and no runtime requirements, s
 
 ## License
 
-Site code is licensed under the [MIT License](LICENSE). Use it, fork it, learn from it.
+Site code is © 2026 Mission Built LLC (and © 2026 Mike Nichols for what came before the company), licensed under the [MIT License](LICENSE). Use it, fork it, learn from it.
 
-IronStack and MealStack are closed-source apps from Mission Built; their code is not in this repo. The app files the site hosts (`public/images/ironstack/`, `public/images/mealstack/`, `public/downloads/mealstack-plan.zip`, `public/downloads/mealstack/`, `public/demos/mealstack.html`, `public/demos/mealstack/`) are not covered by the MIT license. What is open about the apps is your data: the Mission Built Schema and the MealStack plan-file format are published so anything can read and write them.
+IronStack and MealStack are closed-source apps from Mission Built LLC; their code is not in this repo. The app files the site hosts (`public/images/ironstack/`, `public/images/mealstack/`, `public/downloads/mealstack-plan.zip`, `public/downloads/mealstack/`, `public/demos/mealstack.html`, `public/demos/mealstack/`) are not covered by the MIT license. What is open about the apps is your data: the Mission Built Schema and the MealStack plan-file format are published so anything can read and write them.
 
-The book content (the prose) lives in a separate repo and is licensed [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+The book content (the prose) is by Mike Nichols, lives in a separate repo and is licensed [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/). It is his, not the company's.
 
 ## Acknowledgments
 

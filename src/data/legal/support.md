@@ -2,7 +2,7 @@
 
 **support@missionbuilt.io**
 
-Mission Built, which is Mike Nichols · Pittsburgh, Pennsylvania, USA
+Mission Built LLC, a Pennsylvania limited liability company, Pittsburgh, Pennsylvania, USA
 
 ---
 

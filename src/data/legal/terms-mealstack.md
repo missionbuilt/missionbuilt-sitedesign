@@ -12,7 +12,7 @@
 
 ## 1. Who we are
 
-MealStack is made by Mission Built ("Mission Built", "we", "us"), which is Mike Nichols, in Pittsburgh, Pennsylvania, USA.
+MealStack is made by Mission Built LLC ("Mission Built", "we", "us"), a Pennsylvania limited liability company in Pittsburgh, Pennsylvania, USA. Mission Built LLC was formed on October 15, 2026. Nothing about what we collect, where it goes, how long we keep it or what you can ask us for changed. Until our App Store account moves to Mission Built LLC, the App Store may show Mike Nichols as the seller.
 
 Email: support@missionbuilt.io.
 
@@ -120,7 +120,7 @@ MealStack relies on Apple (the App Store, Health, notifications, widgets, Locati
 
 The app, its design, text, built-in meals and ingredients, badges and code belong to Mission Built or its licensors. Open-source and third-party parts are under their own licences, listed on [the acknowledgements page](/rack/acknowledgements).
 
-**MealStack**, **IronStack**, **Mission Built**, **MISSION ▪ BUILT**, the barbell mark, the oxblood-square mark and the app icons are trademarks of Mission Built (Mike Nichols). You may not use them without written permission, except to refer to the apps by name.
+**MealStack**, **IronStack** and the app icons are trademarks of Mission Built LLC. You may not use them without written permission, except to refer to the apps by name.
 
 The `.mealstack` plan format is documented publicly in [the MealStack Schema](/rack/mealstack/schema), and the Mission Built Schema is documented for anything that reads or writes it.
 
@@ -186,6 +186,6 @@ If we change these terms, we'll post the new version here with a new effective d
 
 ## 23. Contact
 
-Mission Built, which is Mike Nichols · Pittsburgh, Pennsylvania, USA
+Mission Built LLC, a Pennsylvania limited liability company, Pittsburgh, Pennsylvania, USA
 **support@missionbuilt.io**
 Support: [missionbuilt.io/rack/support](/rack/support)
