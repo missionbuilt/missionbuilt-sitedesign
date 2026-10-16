@@ -18,7 +18,7 @@ const phone = (f: string, alt: string) => ({ kind: 'phone' as const, shot: { src
 const watch = (f: string, alt: string) => ({ kind: 'watch' as const, shot: { src: `${IMG}${f}.webp`, w: 422, h: 514, alt } });
 const [, meal, mission] = STACK;
 
-const description = 'IronStack is a lifting log for iPhone and Apple Watch. Log a set in a tap, train with the people you lift with, follow a coach\'s plan and see yourself get stronger. Logging is free. In a private beta; on the App Store January 1.';
+const description = 'IronStack is a lifting log for iPhone and Apple Watch. Log a set in a tap, train with the people you lift with, follow a coach\'s plan and see yourself get stronger. Logging in IronStack is free. In a private beta; on the App Store January 1.';
 const ld = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
@@ -47,23 +47,23 @@ const ld = {
   cta={{ label: 'Join the beta', href: '#join' }}
   ctaNote="Logging in IronStack is free."
   chapters={[
-    { title: 'One tap a set.', line: 'Last time\'s numbers are already in the set, so most sets are one tap. Or type 225x8, or just say it.',
+    { title: 'One tap a set.', line: 'Last time\'s numbers are already in the set, so most sets are one tap. Or type 225x8 @7 (eight reps at an effort of 7 out of 10), or just say it.',
       devices: [phone('log-session', 'IronStack logging bench sets of 225 for 8, with the rest clock at the top and Log on the third set.')] },
     { title: 'Right on your wrist.', line: 'Log the set and run the rest clock from Apple Watch. Your phone can stay in your bag.',
       devices: [watch('watch-emom', 'IronStack on Apple Watch running an EMOM: the round, the clock and your heart rate.')] },
-    { title: 'Lift with your people.', line: 'Share a workout card with the friends you train with and back each other up. Only the people you invite.',
+    { title: 'Lift with your people.', line: 'Share your workout card with the friends you train with and back each other up. Only the people you invite, no strangers. Sign up together and you come in together.',
       devices: [phone('social', 'IronStack Social: a friend\'s Bench day card with a heaviest triple and two new badges, supported by training partners.')] },
     { title: 'Your coach, in your corner.', line: 'A coach sends the plan and sees every set against it. You say yes first.',
       devices: [phone('coach-plan', 'Today on a coach\'s plan: Max Effort Lower, Box Squat 5 sets of 275 for 3, and Start workout.')] },
     { title: 'You against you.', line: 'Every lift you log, charted. Records by name, and this month against last.',
       devices: [phone('progress', 'IronStack Progress: every exercise with its trend line, pullups up 60 percent.')] },
-    { title: 'Bring your history.', line: 'Bring your log from another app or a spreadsheet. Your old app is never touched.', devices: [] },
+    { title: 'Bring your history.', line: 'Bring your log from another lifting app or a spreadsheet, and keep the old app as long as you like.', link: { label: 'How to bring it over', href: '/rack/ironstack/details#from-hevy' }, devices: [] },
   ]}
   family={{ title: 'Better as a stack.', items: [
     { name: meal.name, line: 'Knows when you train, and times your meals around it.', href: meal.href, icon: meal.icon },
     { name: mission.name, line: 'Puts your live workout on the gym TV, an iPad or a Mac.', href: mission.href || undefined, icon: mission.icon },
   ] }}
-  promise={{ title: 'Your log stays yours.', line: 'It lives on your phone. No ads, nothing sold, and Stack AI stays off until you turn it on.', href: '/rack/ironstack/privacy' }}
+  promise={{ title: 'Your log stays yours.', line: 'It lives on your phone. No ads, nothing sold. Stack AI, the app\'s AI, stays off until you turn it on, and sees what you share with a coach only if that coach asks it to sum up your week.', href: '/rack/ironstack/privacy' }}
   closer={{ title: 'Every lift is a mission.', line: 'Join the beta and train on it now. It reaches the App Store January 1.' }}
   more={[
     { label: 'Details', href: '/rack/ironstack/details' },
@@ -73,8 +73,8 @@ const ld = {
     { label: 'Support', href: '/rack/support' },
   ]}
 >
-  <BetaForm slot="join" page="/rack/ironstack" name="IronStack" noteLabel="What do you log in now?" notePlaceholder="a notebook, another app · training with a friend" />
-  <p slot="after" class="first-alt">Not ready for a beta? <a href="/first">Get the App Store link first</a>.</p>
+  <BetaForm slot="join" page="/rack/ironstack" name="IronStack" noteLabel="What do you log in now?" notePlaceholder="a notebook · with a friend" />
+  <p slot="after" class="first-alt">IronStack is for lifters 18 and over. Not ready for a beta? <a href="/first">Get the App Store link first</a>.</p>
 </ProductPage>
 
 <style>

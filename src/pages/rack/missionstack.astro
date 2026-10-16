@@ -47,27 +47,21 @@ const ld = {
   ]}
   cta={{ label: 'Join the beta', href: '#join' }}
   ctaNote="The gym board is free in MissionStack."
+  heroFacts={['iPad, Mac with Apple silicon, Apple TV', 'The board needs IronStack on each lifter\'s iPhone', 'One lifter on the board at a time today']}
   chapters={[
-    { title: 'Read it from the platform.', line: 'Your set, the load and the rest clock, big enough to read across the gym. You log on your iPhone or Apple Watch; the board shows it. One lifter at a time today.',
+    { title: 'Read it from the platform.', line: 'Your set, the load and the rest clock, big enough to read across the gym. You log on your iPhone or Apple Watch; the board shows it.',
       devices: [pad('board-ipad', 'The board on an iPad mid-workout: Romanian deadlift 3 × 8, a 1:38 rest clock, two sets of 245 × 8 done and the third ready.')] },
     { title: 'Pair in one scan.', line: 'Scan the code with your iPhone\'s camera and your workout is on the board. Same Wi-Fi, no account.',
       devices: [pad('pair-ipad', 'The pairing card on the board: Scan with your iPhone camera, over a QR code, with Remember this iPhone.')] },
-    { title: 'Plan the week.', line: 'Lay out the whole week on an iPad or a Mac. Drag workouts between days, make a superset, swap a lift, repeat a week.',
-      devices: [{ kind: 'tablet', shot: { src: `${IMG}plan-week@2x.webp`, w: 1080, h: 751, alt: 'Plan on an iPad: a week of workouts down the side, with recovery days, and Monday\'s exercises with their sets, loads and effort.' } }] },
-    { title: 'Type it like you say it.', line: 'Type "front squat 3x5 @7" and the sets, reps and effort fill in.',
-      devices: [pad('plan-ipad', 'Plan on an iPad: Front squat just added from the typed line "front squat 3x5 @7", with 3 sets of 5 at an effort of 7 filled in.')] },
-    { title: 'Stacked.', line: 'Finish and the board shows your time, your volume and any record you set.',
-      devices: [pad('stacked-ipad', 'The board at the end of a workout: Stacked. Lower A, 52:14, 31 of 31 sets, 48,015 lb, and a rep record on back squat, 275 × 6.')] },
-    { soon: true, title: 'Plan here, lift from your phone.', line: 'A week planned on the iPad or Mac, waiting on your iPhone. For now a plan stays where you made it.', devices: [] },
-    { soon: true, title: 'Starter programs.', line: 'Start from a program with every week written out, then make it yours.',
-      devices: [{ kind: 'tablet', shot: { src: `${IMG}starter-page-ipad@2x.webp`, w: 1080, h: 751, alt: 'A starter program\'s page on an iPad: 3 days a week for 8 weeks, with About this program and Use this program.' } }] },
-    { soon: true, title: 'Meals on the big screen.', line: 'Plan the week\'s meals beside the week\'s training, with MealStack.', devices: [] },
+    { title: 'Plan the week.', line: 'Lay out the week on an iPad or a Mac. Type "front squat 3x5 @7" and the sets, reps and effort fill in. Drag workouts between days, make a superset, repeat a week.',
+      devices: [pad('plan-ipad', 'Plan on an iPad: Monday\'s squat workout in a week of workouts, with Front squat just added from the typed line "front squat 3x5 @7", its 3 sets of 5 at an effort of 7 filled in.')] },
+    { soon: 'Coming January 1', title: 'Next on the big screen.', line: 'A week planned on the iPad or Mac, waiting on your iPhone. Meals planned beside the training. Starter programs to build from. For now, a plan stays where you made it.', devices: [] },
   ]}
   family={{ title: 'Better as a stack.', items: [
     { name: iron.name, line: 'Each lifter logs on an iPhone with IronStack. The board shows what they log.', href: iron.href, icon: iron.icon },
     { name: meal.name, line: 'Times your meals around the workouts you plan.', href: meal.href, icon: meal.icon },
   ] }}
-  promise={{ title: 'Nothing to sign up for.', line: 'No account. The board talks to your iPhone over your own Wi-Fi, encrypted, and keeps nothing.', href: '/rack/missionstack/privacy' }}
+  promise={{ title: 'Nothing to sign up for.', line: 'No account. The board talks to your iPhone over your own Wi-Fi, encrypted. It keeps no workout, and a phone you ask it to remember stays until you forget it.', href: '/rack/missionstack/privacy' }}
   closer={{ title: 'Plan it. Put it up. Lift it.', line: 'On iPad (iPadOS 26), a Mac with Apple silicon (macOS 26) and Apple TV (tvOS 26). The board needs IronStack on your iPhone.' }}
   more={[
     { label: 'Details', href: '/rack/missionstack/details' },
@@ -76,8 +70,8 @@ const ld = {
     { label: 'Support', href: '/rack/support' },
   ]}
 >
-  <BetaForm slot="join" page="/rack/missionstack" name="MissionStack" noteLabel="What screen is in your gym?" notePlaceholder="a TV on the wall · an iPad on the rack" />
-  <p slot="after" class="first-alt">The invite brings IronStack's beta too. Not ready for a beta? <a href="/first">Get the App Store link first</a>.</p>
+  <BetaForm slot="join" page="/rack/missionstack" name="MissionStack" noteLabel="What screen is in your gym?" notePlaceholder="a TV on the wall" />
+  <p slot="after" class="first-alt">The board needs IronStack, which is for lifters 18 and over. The invite brings IronStack's beta too. Not ready for a beta? <a href="/first">Get the App Store link first</a>.</p>
 </ProductPage>
 
 <style>

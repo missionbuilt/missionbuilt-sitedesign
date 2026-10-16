@@ -71,12 +71,12 @@ const blocks: Block[] = [
     shot: { src: '/images/missionstack/board-ipad.webp', w: 1080, h: 751, alt: 'The gym board on iPad mid-set, one lifter: the exercise, the set, the load and the rest clock.' },
   },
   {
-    key: 'missionstack', app: MS ? 'MissionStack · the program builder' : 'The program builder', title: 'Write it like you\'d say it.',
+    key: 'missionstack', app: MS ? 'MissionStack · the program builder' : 'The program builder', title: 'Type it like you say it.',
     live: [
       'Lay out a week on an iPad or a Mac: type "front squat 3x5 @7" and the sets fill in. Drag workouts between days, make a superset, repeat a week.',
       'For now a plan stays on that iPad or Mac; you send programs from your iPhone.',
     ],
-    soon: ['Send a plan from the iPad or Mac straight to your lifter\'s iPhone.', 'Starter programs to build from.'],
+    soon: ['Send a plan from the iPad or Mac straight to your lifter\'s iPhone.'],
     device: 'tablet',
     shot: { src: '/images/missionstack/plan-ipad.webp', w: 1080, h: 751, alt: 'The program builder on iPad: a week of workouts with a typed line filling in its sets.' },
   },
@@ -88,7 +88,7 @@ const blocks: Block[] = [
     ],
     soon: ['The day sized to how long they really train.'],
     device: 'phone',
-    shot: { src: '/images/mealstack/today-training.webp', w: 540, h: 1174, alt: 'MealStack Today on a training day with the session at 6:30 PM: yogurt and whey logged late at 11:40, lunch next at 2:40 PM.' },
+    shot: { src: '/images/mealstack/today-training.webp', w: 540, h: 1174, alt: 'MealStack Today on a training day with the workout at 6:30 PM: yogurt and whey logged late at 11:40, lunch next at 2:40 PM.' },
   },
 ];
 
@@ -108,7 +108,7 @@ const setupBoard = [
 
 // COPY: coach FAQ (plan §6, Mike 19:06 on age; no prices).
 const faq = [
-  { q: 'Can my lifters use Android?', a: 'Not to log, yet. Once lifters without the app come in January, you can log for them from your phone.' },
+  { q: 'Can my lifters use Android?', a: 'Not to log, yet. From January 1 you can add lifters without the app and log their sets for them on your phone.' },
     { q: 'How many lifters can I coach?', a: 'Coach: up to 5 lifters. Coach Pro 10: up to 10. Coach Pro 25: up to 25. Pricing coming soon.' },
   { q: 'Can I coach lifters under 18?', a: 'No. IronStack is for lifters 18 and over.' },
   { q: 'I\'m moving from another coaching app. What about my programs?', a: 'Build them with the typed line, or bring a PDF or a photo and Stack AI writes it into Plan. Stack AI has to be on, and it uses your Stack AI allowance.', link: { href: '/rack/compare/truecoach', label: 'How Coach mode compares' } },
@@ -153,7 +153,7 @@ const faq = [
         <ul>
           <li>Your lifters log on iPhone.</li>
           <li>You send programs from your iPhone, and plan on an iPad or a Mac with Apple silicon.</li>
-          <li>Logging for a lifter, and lifters without the app: <span class="tag">Coming in January</span></li>
+          <li>Logging a lifter's sets for them on your phone, and lifters without the app: <span class="tag">Coming January 1</span></li>
         </ul>
       </div>
     </section>
@@ -173,7 +173,7 @@ const faq = [
               <p class="k"><img class="app-icon" src={icon(b.key).src} width="28" height="28" alt="" loading="lazy" />{b.app}</p>
               <h3 class="v">{b.title}</h3>
               <ul class="pts">{b.live.map((l) => <li>{l}</li>)}</ul>
-              {b.soon && <ul class="pts soon">{b.soon.map((l) => <li><span class="tag">Coming soon</span> {l}</li>)}</ul>}
+              {b.soon && <ul class="pts soon">{b.soon.map((l) => <li><span class="tag">Coming January 1</span> {l}</li>)}</ul>}
               {b.later && <ul class="pts soon">{b.later.map((l) => <li><span class="tag">Coming later</span> {l}</li>)}</ul>}
             </div>
           </article>
@@ -186,8 +186,8 @@ const faq = [
       <h2 class="section-h2">They say yes first.</h2>
       <div class="fine">
         {/* COPY: the short version; the full account is on IronStack's privacy page. */}
-        <p>Nothing is shared until your lifter says yes, and they choose how far back you see. Either of you can end the link at any time, and ending it deletes your copy.</p>
-        <p>Shared workouts sit on Mission Built's own server, only to pass them between you. We don't use them for anything else, and we never sell them. A private note you keep on a lifter stays on your phone.</p>
+        <p>Nothing is shared until your lifter says yes, and they choose how far back you see. Sleep, bodyweight and MealStack fueling stay off unless they turn them on. Either of you can end the link at any time, and ending it deletes your copy.</p>
+        <p>Shared workouts are kept on Mission Built's own server until the link ends. If your lifter shares notes, the server checks them for words like "pain" so it can flag a workout for you. We don't use them for anything else, and we never sell them. A private note you keep on a lifter stays on your phone.</p>
         <p>Every detail, including what Stack AI sees when you sum up a week, is on <a href="/rack/ironstack/privacy#coach-mode">IronStack's privacy page</a>.</p>
       </div>
     </section>

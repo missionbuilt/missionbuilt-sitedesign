@@ -39,56 +39,56 @@ const flows: Flow[] = [
     from: 'Both apps', to: 'Apple Health',
     carries: 'MealStack writes protein, carbs, fat and calories at the time you actually ate. IronStack writes the workout as strength training, if you switch it on.',
     gives: 'Food and training on one timeline in Health, from two apps that never had to know about each other.',
-    status: 'live', statusNote: 'Live in both',
+    status: 'live', statusNote: 'In both apps today',
   },
   {
     title: 'Travel, one switch',
     from: 'Either app', to: 'Both apps',
     carries: 'Home or Away, which app flipped it, and when the trip started. A few bytes in a shelf on the phone that only Mission Built apps can open.',
     gives: 'Land in Denver, flip it once, or let either app do it when you are far from home. MealStack plans the day for the road; IronStack counts the workout in a strange gym toward Road Warrior.',
-    status: 'live', statusNote: 'Live in both',
+    status: 'live', statusNote: 'In both apps today',
   },
   {
     title: 'One session time',
     from: 'Either app', to: 'Both apps',
     carries: 'Today\'s session time, when you move it in either app.',
     gives: 'Move today\'s workout in IronStack and MealStack says so the next time you open it: Sync to the new time, or Skip. It works the other way too. Neither moves the other by itself.',
-    status: 'live', statusNote: 'Live in both',
+    status: 'live', statusNote: 'In both apps today',
   },
   {
     title: 'Fuel follows the work',
     from: 'IronStack', to: 'MealStack',
     carries: 'When today\'s workout started and when it ended.',
     gives: 'The shake after the session is called when you finish, not at an hour picked in advance, and the meals after it re-time on the real end. Switch on "IronStack times my after-session meals" in MealStack.',
-    status: 'live', statusNote: 'Live in both',
+    status: 'live', statusNote: 'In both apps today',
   },
   {
     title: 'Badges that see both',
     from: 'Both apps', to: 'Both apps',
     carries: 'Whether you trained and ate to plan on the same day.',
     gives: 'Double Stacked in both apps, for the days both did their job. In MealStack, Fuelled and Stacked for a carb surge before a workout IronStack logged, and Straight off the bar for a shake on time after one.',
-    status: 'live', statusNote: 'Live in both',
+    status: 'live', statusNote: 'In both apps today',
   },
   {
     title: 'The carb surge knows when you train',
     from: 'IronStack', to: 'MealStack',
     carries: 'When your workouts usually start, by weekday, worked out from your own log.',
     gives: 'MealStack anchors the carb surge to the hour you really lift on a Saturday, without you typing it in.',
-    status: 'half', statusNote: 'IronStack ready · MealStack next',
+    status: 'half', statusNote: 'IronStack today · MealStack soon',
   },
   {
     title: 'One way to write it all down',
     from: 'Both apps', to: 'Your files',
     carries: 'The Mission Built Schema: one documented, versioned vocabulary. A workout reads like a meal, a program like a plan, a session like a day.',
     gives: 'Export from both and a single script or spreadsheet reads the lot. Your data outlives either app.',
-    status: 'half', statusNote: 'IronStack exports it · MealStack uses its words',
+    status: 'half', statusNote: 'IronStack today · MealStack soon',
   },
   {
     title: 'One About you for Stack AI',
     from: 'Either app', to: 'Stack AI in both',
     carries: 'Bodyweight, height, age and goal, the details Stack AI needs for a target.',
     gives: 'Tell Stack AI once, in either app. The other already knows.',
-    status: 'next', statusNote: 'Designed',
+    status: 'next', statusNote: 'Coming',
   },
 ];
 
@@ -227,7 +227,9 @@ const otherPitch = other === 'mealstack'
   .bt-flow { min-width: 0; padding: 22px 22px 20px; border-right: var(--border-thin); border-bottom: var(--border-thin); display: grid; grid-template-rows: auto auto 1fr auto; gap: 10px; }
   .bt-flow-top { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; }
   .bt-route { margin: 0; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-chalk-faint); }
-  .bt-status { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; padding: 2px 8px; border: 1px solid var(--color-chalk-ghost); color: var(--color-chalk-dim); white-space: nowrap; }
+  .bt-status { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; padding: 2px 8px; border: 1px solid var(--color-chalk-ghost); color: var(--color-chalk-dim); white-space: normal; max-width: 100%; }
+  /* Three columns overlapped their labels at iPad width (the panel 10-16): two there. */
+  @media (max-width: 1100px) { .bt-flows { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   .bt-status.live { border-color: var(--color-army); color: var(--color-army); }
   .bt-status.next { border-style: dashed; color: var(--color-chalk-faint); }
   .bt-flow h3 { margin: 0; font-family: var(--font-display); font-weight: 500; font-size: 21px; line-height: 1.1; text-transform: uppercase; color: var(--color-chalk); }

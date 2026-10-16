@@ -30,8 +30,10 @@ export type Chapter = {
   /** One sentence. */
   line: string;
   devices: Device[];
-  /** Not in testers' hands yet: shows "Coming soon". */
-  soon?: boolean;
+  /** Not in testers' hands yet: true shows "Coming soon"; a string shows that label (e.g. "Coming January 1"). */
+  soon?: boolean | string;
+  /** One link under the line (to the details page), when the idea needs one more step. */
+  link?: Link;
   /** A day drawn as a strip (MealStack): the workout is a row, not a label (the panel 10-16, Mike's fix 10). */
   day?: { time: string; label: string; workout?: boolean }[];
 };
@@ -55,6 +57,8 @@ interface Props {
   cta: Link;
   /** The line under the button (one of Mike's allowed free lines, or a date). */
   ctaNote?: string;
+  /** What it needs and runs on, said up front (the panel 10-16: Marcus). */
+  heroFacts?: string[];
   chapters: Chapter[];
   family?: { title: string; items: { name: string; line: string; href?: string; icon?: { src: string; src2x: string; alt: string } }[] };
   promise?: { title: string; line: string; href?: string };
@@ -87,6 +91,7 @@ const hasJoin = Astro.slots.has('join');
         <a class="btn primary" href={p.cta.href}>{p.cta.label} <span aria-hidden="true">→</span></a>
         {p.ctaNote && <p class="pp-note">{p.ctaNote}</p>}
       </div>
+      {p.heroFacts && <ul class="pp-facts">{p.heroFacts.map((f) => <li>{f}</li>)}</ul>}
       <div class:list={['pp-stage', 'hero', `n${p.hero.length}`]}>
         {p.hero.map((d, i) => (
           <div class:list={['dev', d.kind, `d${i}`]}>
@@ -100,11 +105,12 @@ const hasJoin = Astro.slots.has('join');
     </section>
 
     {p.chapters.map((c) => (
-      <section class="pp-ch">
+      <section class:list={['pp-ch', !c.devices.length && !c.day && 'bare']}>
         <div class="ch-text reveal">
-          {c.soon && <p class="soon">Coming soon</p>}
+          {c.soon && <p class="soon">{typeof c.soon === 'string' ? c.soon : 'Coming soon'}</p>}
           <h2 class="ch-title">{c.title}</h2>
           <p class="ch-line">{c.line}</p>
+          {c.link && <a class="text-link ch-link" href={c.link.href}>{c.link.label} <span aria-hidden="true">→</span></a>}
         </div>
         {c.day && (
           <ol class="day reveal" aria-label="One training day">
@@ -148,6 +154,8 @@ const hasJoin = Astro.slots.has('join');
     )}
 
     <section class="pp-closer reveal" id="join">
+      {/* /api/beta's no-JS redirect lands on #beta. */}
+      <span id="beta" aria-hidden="true"></span>
       <h2 class="ch-title">{p.closer.title}</h2>
       {p.closer.line && <p class="ch-line">{p.closer.line}</p>}
       {hasJoin ? <slot name="join" /> : <a class="btn primary" href={p.cta.href}>{p.cta.label} <span aria-hidden="true">→</span></a>}
@@ -172,7 +180,7 @@ const hasJoin = Astro.slots.has('join');
   .pp { overflow-x: clip; }
   .pp-hero { padding: 72px var(--pad-page-x) 24px; text-align: center; }
   .pp-icon { display: block; margin: 0 auto 22px; border-radius: 20px; }
-  .pp-name { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(56px, 10vw, 128px); line-height: 0.92; letter-spacing: -0.02em; text-transform: uppercase; color: var(--color-chalk); }
+  .pp-name { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(48px, 10vw, 128px); line-height: 0.92; letter-spacing: -0.02em; text-transform: uppercase; color: var(--color-chalk); }
   .pp-line { margin: 14px 0 0; font-family: var(--font-display); font-weight: 500; font-size: clamp(24px, 3.4vw, 40px); line-height: 1.1; letter-spacing: 0.01em; color: var(--color-chalk); }
   .pp-sub { margin: 18px auto 0; max-width: 34ch; font-family: var(--font-serif); font-size: 18px; line-height: 1.55; color: var(--color-chalk-dim); }
   .pp-cta { margin-top: 28px; display: grid; justify-items: center; gap: 10px; }
@@ -189,8 +197,8 @@ const hasJoin = Astro.slots.has('join');
   /* WatchFrame is sized in em: one font-size scales the whole watch. */
   .dev.watch { font-size: clamp(11px, 2.2vw, 16px); }
   .zoom.n1 .dev.watch { font-size: clamp(18px, 3.6vw, 27px); }
-  .dev.tablet { width: min(860px, 92vw); }
-  .dev.tv { width: min(980px, 94vw); }
+  .dev.tablet { width: min(860px, 100%); }
+  .dev.tv { width: min(980px, 100%); }
   .n2 .dev.phone { width: min(270px, 42vw); }
   .n3 .dev.phone { width: min(240px, 34vw); }
   /* A phone with a watch beside it (the hero): the watch sits low, overlapping. */
@@ -201,6 +209,11 @@ const hasJoin = Astro.slots.has('join');
 
   .pp-ch { min-height: min(92svh, 1100px); display: grid; align-content: center; padding: 96px var(--pad-page-x) 40px; text-align: center; border-top: var(--border-thin); }
   .ch-text { max-width: 760px; margin: 0 auto; }
+  /* A chapter with no picture is one short screen, not a tall empty one (the panel 10-16). */
+  .pp-ch.bare { min-height: 0; padding-top: 88px; padding-bottom: 88px; }
+  .ch-link { display: inline-block; margin-top: 22px; }
+  .pp-facts { list-style: none; margin: 22px auto 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 22px; max-width: 760px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em; color: var(--color-chalk-dim); }
+  .pp-facts li::before { content: '·'; margin-right: 8px; color: var(--color-chalk-faint); }
   .soon { display: inline-block; margin: 0 0 14px; padding: 4px 10px; border: 1px dashed var(--color-chalk-ghost); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-dim); }
   .ch-title { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(40px, 6.4vw, 76px); line-height: 0.98; letter-spacing: -0.015em; text-transform: uppercase; color: var(--color-chalk); }
   .ch-line { margin: 18px auto 0; max-width: 36ch; font-family: var(--font-serif); font-size: clamp(18px, 2vw, 21px); line-height: 1.55; color: var(--color-chalk-dim); }
@@ -212,7 +225,7 @@ const hasJoin = Astro.slots.has('join');
   .d-t { text-align: right; font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.06em; color: var(--color-chalk-faint); }
   .d-dot { justify-self: center; width: 10px; height: 10px; background: var(--color-chalk); position: relative; z-index: 1; }
   .d-l { font-family: var(--font-display); font-weight: 500; font-size: 20px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--color-chalk-dim); }
-  .day li.w { margin: 8px 0; padding: 16px 0; background: var(--color-panel); border: 1px solid var(--color-rule); }
+  .day li.w { margin: 8px 0; padding: 16px 16px 16px 0; background: var(--color-panel); border: 1px solid var(--color-rule); }
   .day li.w .d-dot { width: 14px; height: 14px; background: var(--color-blood); }
   .day li.w .d-t, .day li.w .d-l { color: var(--color-chalk); }
   .day li.w .d-l { font-weight: 700; font-size: 24px; }
@@ -222,7 +235,8 @@ const hasJoin = Astro.slots.has('join');
   .f-name { margin: 0; font-family: var(--font-display); font-weight: 600; font-size: 22px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-chalk); }
   .f-line { margin: 8px auto 0; max-width: 28ch; font-family: var(--font-serif); font-size: 16px; line-height: 1.55; color: var(--color-chalk-dim); }
   .pp-promise .text-link { display: inline-block; margin-top: 22px; }
-  .pp-closer { padding-bottom: 96px; }
+  .pp-closer { padding-bottom: 96px; scroll-margin-top: 72px; }
+  #beta { display: block; scroll-margin-top: 72px; }
   .pp-closer .btn { margin-top: 30px; }
   .pp-closer .pp-note { margin-top: 12px; }
   .pp-more { list-style: none; margin: 40px 0 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 28px; }

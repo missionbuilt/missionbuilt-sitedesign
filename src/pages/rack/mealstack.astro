@@ -46,18 +46,18 @@ const ld = {
   cta={{ label: 'Join the beta', href: '#join' }}
   ctaNote="Every app has a free way in, plus paid plans."
   chapters={[
-    { title: 'Built around your workout.', line: 'Tell it when you train, and the day builds around the workout: the carb meal before it, the shake after it, dinner when you get home.',
+    { title: 'Built around your workout.', line: 'Tell it when you train, and the day builds around the workout: the carb surge (the carb-heavy meal before you lift), the shake after it, dinner when you get home.',
       day: [
         { time: '7:00 AM', label: 'Breakfast' },
-        { time: '10:06 AM', label: 'Yogurt and whey' },
-        { time: '1:06 PM', label: 'Lunch' },
+        { time: '10:00 AM', label: 'Yogurt and whey' },
+        { time: '1:00 PM', label: 'Lunch' },
         { time: '5:00 PM', label: 'Carb surge' },
         { time: '6:30 PM', label: 'Your workout', workout: true },
         { time: '7:30 PM', label: 'The shake' },
         { time: '9:00 PM', label: 'Dinner' },
       ],
       devices: [] },
-    { title: 'Workout moved? So does the day.', line: 'Change the time and every meal around it moves with it. One tap undoes it.',
+    { title: 'Workout moved? So does the day.', line: 'Change the workout time and every meal around it moves with it. MealStack tells you where each one went, and one tap undoes it.',
       devices: [phone('session-moved', 'MealStack with the workout at 6:30 PM: one line says the carb surge is at 5:00 PM, the after-workout shake at 7:30 PM and dinner at 9:00 PM, with Undo.')] },
     { title: 'Ate late? Just log it.', line: 'Log when you actually ate. The rest of the day moves, and the meal before your workout holds.',
       devices: [phone('log-late', 'Logging the 10:06 AM yogurt and whey at 11:40: lunch moves from 1:06 to 2:40 PM and the carb surge holds at 5:00 PM.')] },
@@ -80,7 +80,7 @@ const ld = {
     { label: 'Support', href: '/rack/support' },
   ]}
 >
-  <BetaForm slot="join" page="/rack/mealstack" name="MealStack" noteLabel="What do you train for?" notePlaceholder="powerlifting, a marathon, getting off the couch" />
+  <BetaForm slot="join" page="/rack/mealstack" name="MealStack" noteLabel="What do you train for?" notePlaceholder="lifting, a race, the couch" />
   <p slot="after" class="first-alt">MealStack is for adults 18 and over who train. It isn't medical or dietary advice. Not ready for a beta? <a href="/first">Get the App Store link first</a>.</p>
 </ProductPage>
 
