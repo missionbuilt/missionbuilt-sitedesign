@@ -262,7 +262,8 @@ const faq = [
   .pts { margin: 0; padding-left: 18px; display: grid; gap: 8px; font-family: var(--font-serif); font-size: 15px; line-height: 1.55; color: var(--color-chalk-dim); }
   .pts.soon { margin-top: 12px; list-style: none; padding-left: 18px; }
   /* The tag and its line as one row; a wrapped line hangs under the text, not the tag. */
-  .pts.soon li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 10px; align-items: baseline; }
+  .pts.soon li { display: grid; grid-template-columns: 10.5rem minmax(0, 1fr); gap: 10px; align-items: baseline; }
+  @media (max-width: 480px) { .pts.soon li { grid-template-columns: minmax(0, 1fr); gap: 4px; } }
   .setup { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; }
   .steps { margin: 12px 0 0; padding-left: 22px; display: grid; gap: 10px; font-family: var(--font-serif); font-size: 15.5px; line-height: 1.6; color: var(--color-chalk-dim); }
   .steps b { color: var(--color-chalk); }

@@ -868,4 +868,9 @@ const ld = {
     .vr span:nth-child(n+2) { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0 8px; align-items: baseline; }
     .related-card { margin-left: 0; }
   }
+  /* QA recheck 10-16: headings in a row of cards keep two lines' room, so bodies and the
+     "Other apps" rule start level whether a heading takes one line or two. */
+  @media (min-width: 961px) {
+    .feat .verdict, .card .verdict, .step h3 { min-height: 2lh; }
+  }
 </style>

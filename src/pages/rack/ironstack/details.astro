@@ -793,4 +793,9 @@ const ld = {
     -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 64px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 64px), transparent); }
   @media (max-width: 1099px) { .phones { margin-inline: calc(-1 * var(--pad-page-x-mid)); padding-inline: var(--pad-page-x-mid); scroll-padding-inline: var(--pad-page-x-mid); } }
   @media (max-width: 720px) { .phones { margin-inline: calc(-1 * var(--pad-page-x-mobile)); padding-inline: var(--pad-page-x-mobile); scroll-padding-inline: var(--pad-page-x-mobile); } }
+  /* QA recheck 10-16: headings in a row of cards keep two lines' room, so bodies and the
+     "Other apps" rule start level whether a heading takes one line or two. */
+  @media (min-width: 961px) {
+    .feat .verdict, .card .verdict, .step h3 { min-height: 2lh; }
+  }
 </style>

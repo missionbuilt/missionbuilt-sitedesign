@@ -134,7 +134,9 @@ main:has(> .closer:last-child) + .site-foot { margin-top: 0; }
 
 /* QA pass (Mike 2026-10-16 09:41): no one-word last lines. Headings balance their lines; body text
    avoids a lone last word. Safari 17.5+ and Chrome 114+; older browsers just wrap as before. */
-h1, h2, h3, .display, .title, .ch-title, .band-title, .section-h2, .promise, .pp-line, .app-line { text-wrap: balance; }
+main h1, main h2, main h3, .display, .title, .ch-title, .band-title, .section-h2, .promise, .pp-line, .app-line, .eyebrow, .section-label, .k, .text-link, .f-line, .pp-note { text-wrap: balance; }
+/* Body text: no lone last word (Mike 10-16 09:41; both QA rechecks asked for it). */
+main p, main li, main dd, main td, .sf-fine { text-wrap: pretty; }
 
 /* Short pages keep the footer at the bottom of the screen (QA 10-16). */
 body { min-height: 100dvh; display: flex; flex-direction: column; }

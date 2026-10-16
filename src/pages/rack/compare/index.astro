@@ -54,8 +54,10 @@ const blurbs: Record<string, string> = {
   .pricing { margin: 10px 0 0; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-chalk-faint); }
   .cards { list-style: none; margin: 40px var(--pad-page-x) 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: var(--border-thin); border-left: var(--border-thin); }
   .cards li { min-width: 0; border-right: var(--border-thin); border-bottom: var(--border-thin); }
-  .cards a { display: grid; gap: 10px; height: 100%; padding: 24px 24px 28px; transition: background 120ms ease-out; }
+  /* A column, not a stretched grid: every card starts its heading at the same height (QA 10-16). */
+  .cards a { display: flex; flex-direction: column; gap: 10px; height: 100%; padding: 24px 24px 28px; transition: background 120ms ease-out; }
   .cards a:hover { background: var(--color-panel); }
+  .cards a > :last-child { margin-top: auto; }
   .k { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-faint); }
   .t { font-family: var(--font-display); font-weight: 600; font-size: 22px; line-height: 1.1; text-transform: uppercase; color: var(--color-chalk); }
   .b { font-family: var(--font-serif); font-size: 15px; line-height: 1.55; color: var(--color-chalk-dim); }

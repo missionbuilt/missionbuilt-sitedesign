@@ -294,7 +294,8 @@ const description = MS
   .coming-app { margin: 0 0 10px; font-family: var(--font-display); font-weight: 700; font-size: 18px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-chalk); }
   .coming-col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; font-family: var(--font-serif); font-size: 15px; line-height: 1.55; color: var(--color-chalk-dim); }
   .coming-col b { color: var(--color-chalk); }
-  .later { margin: 22px 0 0; font-family: var(--font-serif); font-size: 15px; color: var(--color-chalk-dim); }
+  .later { margin: 22px 0 0; display: grid; grid-template-columns: 9.5rem minmax(0, 1fr); gap: 10px; align-items: baseline; font-family: var(--font-serif); font-size: 15px; color: var(--color-chalk-dim); }
+  @media (max-width: 480px) { .later { grid-template-columns: minmax(0, 1fr); gap: 4px; } }
   .tag { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-chalk-faint); margin-right: 6px; }
   .three-up { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
   .three-up > div { display: flex; flex-direction: column; align-items: flex-start; }

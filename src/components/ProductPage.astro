@@ -213,7 +213,7 @@ const hasJoin = Astro.slots.has('join');
   /* A chapter with no picture is one short screen, not a tall empty one (the panel 10-16). */
   .pp-ch.bare { min-height: 0; padding-top: 88px; padding-bottom: 88px; }
   .ch-link { display: inline-block; margin-top: 22px; }
-  .pp-facts { list-style: none; margin: 22px auto 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 22px; max-width: 760px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em; color: var(--color-chalk-dim); }
+  .pp-facts { list-style: none; margin: 22px auto 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; width: fit-content; gap: 6px 22px; max-width: 760px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em; color: var(--color-chalk-dim); }
   .pp-facts li::before { content: '·'; margin-right: 8px; color: var(--color-chalk-faint); }
   .soon { display: inline-block; margin: 0 0 14px; padding: 4px 10px; border: 1px dashed var(--color-chalk-ghost); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-chalk-dim); }
   .ch-title { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(40px, 6.4vw, 76px); line-height: 0.98; letter-spacing: -0.015em; text-transform: uppercase; color: var(--color-chalk); }
@@ -236,6 +236,7 @@ const hasJoin = Astro.slots.has('join');
   .f-name { margin: 0; font-family: var(--font-display); font-weight: 600; font-size: 22px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-chalk); }
   .f-line { margin: 8px auto 0; max-width: 28ch; font-family: var(--font-serif); font-size: 16px; line-height: 1.55; color: var(--color-chalk-dim); }
   .pp-promise .text-link { display: inline-block; margin-top: 22px; }
+  .pp-promise { padding-bottom: 96px; }
   .pp-closer { padding-bottom: 64px; scroll-margin-top: 72px; }
   #beta { display: block; scroll-margin-top: 72px; }
   .pp-closer .btn { margin-top: 30px; }
@@ -264,6 +265,8 @@ const hasJoin = Astro.slots.has('join');
     .pp-ch { min-height: 0; padding-top: 72px; }
     .n2 .dev.watch { margin-left: -40px; }
     .n3 { gap: 10px; }
-    .pp-more { display: grid; grid-template-columns: repeat(2, auto); justify-content: center; }
+    .pp-facts { flex-direction: column; align-items: flex-start; gap: 4px; }
+    .pp-more { display: grid; grid-template-columns: repeat(2, max-content); justify-content: center; column-gap: 28px; justify-items: start; }
+    .text-link { letter-spacing: 0.1em; }
   }
 </style>
