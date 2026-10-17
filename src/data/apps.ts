@@ -76,7 +76,7 @@ export const TILES: Tile[] = [
 /** How they work as one: only what's live (plan §3a). COPY */
 export const TOGETHER_LIVE = [
   'IronStack tells MealStack when you train, and your day re-flows.',
-  'Your phone puts the workout on the board in one scan.',
+  'Your phone puts the workout on the board when you scan its code.',
 ];
 export const TOGETHER_SOON = [
   MS ? 'A week planned on the iPad is on your phone.' : 'A week planned on your iPad or Mac is on your phone.',

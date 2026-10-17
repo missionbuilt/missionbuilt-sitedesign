@@ -37,7 +37,7 @@ export const PRICE_SLOT = 'Pricing coming soon';
 /** COPY (draft for Mike): the line under The Full Stack's slot, no savings figure. */
 export const FULL_STACK_SLOT = 'The best price on this page when pricing lands.';
 /** COPY (draft for Mike): what the apps do together, the reason for the bundle. */
-export const FULL_STACK_TOGETHER = 'They work as one: IronStack tells MealStack when you train, and your phone puts the workout on the gym board in one scan.';
+export const FULL_STACK_TOGETHER = 'They work as one: IronStack tells MealStack when you train, and your phone puts the workout on the gym board when you scan its code.';
 /** COPY (draft for Mike): what Stack AI is, said once on the plans page. */
 export const STACK_AI_LINE = 'Stack AI is the AI in the apps: it reads what you have logged and answers from it.';
 /** COPY (draft for Mike): the page's one line about prices. */
@@ -127,7 +127,7 @@ export const rows: Row[] = [
         items: [
           { text: 'The gym board' },
           { text: 'Plan your weeks' },
-          { text: 'Pair in one scan, no account' },
+          { text: 'Scan to pair, no account' },
           { text: 'Meals on the big screen', soon: true },
         ],
       },
