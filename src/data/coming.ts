@@ -43,12 +43,13 @@ export const COMING: ComingItem[] = [
     title: 'Your watch runs the workout even when your phone is out of range,',
     detail: 'in a locker or at home: the plan, the clock, the plates per side.',
   },
+  // #164 (a coach logs a workout for a lifter who has IronStack) came off with b76; #165 stays.
   {
-    id: 'coach-logs-for-lifter',
+    id: 'coach-logs-no-app',
     app: 'ironstack',
     when: 'january',
     coach: true,
-    title: 'Coaches log for their lifters on the gym floor, even lifters without the app.',
+    title: 'Coaches log for lifters without the app, whatever phone they carry.',
   },
 
   // MealStack
@@ -99,12 +100,13 @@ export const COMING: ComingItem[] = [
     coach: true,
     title: "Every lifter's week, plan against actual, on an iPad or a Mac.",
   },
+  // Groups on the board (#186/#187) came off with MissionStack's 10-20 build; heart rate (#157) stays.
   {
-    id: 'board-hr-groups',
+    id: 'board-hr',
     app: 'missionstack',
     when: 'january',
     coach: true,
-    title: 'Heart rate on the board, and supersets shown as one group.',
+    title: 'Heart rate on the board.',
   },
   {
     id: 'ask-from-ipad',

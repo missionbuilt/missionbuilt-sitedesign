@@ -314,7 +314,7 @@ const coach: ComparePage = {
     {
       key: 'floor',
       label: 'Log for a lifter on the floor',
-      ours: { text: 'Not yet.', soon: 'Log a lifter\'s workout from your phone, even for lifters without the app.' },
+      ours: { text: 'Yes: log a lifter\'s workout on your phone, and it lands in their IronStack history.', soon: 'Log for lifters without the app.' },
       them: {
         truecoach: { text: 'Yes, for "in-person" and "dual" clients: the coach adds results and marks workouts complete.', sources: [s('https://help.truecoach.co/en/articles/2403903-adding-a-new-client')] },
         hevycoach: { text: 'Yes: the coach app logs "clients\' workouts on live sessions," set by set.', sources: [s(HC_SITE), s(HC_VS_TH)] },

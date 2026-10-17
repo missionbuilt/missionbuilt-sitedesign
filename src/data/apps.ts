@@ -66,8 +66,8 @@ export const TILES: Tile[] = [
     device: 'watch', shot: { src: '/images/ironstack/watch-set.webp', w: 422, h: 514, alt: 'IronStack on Apple Watch: Box squat, 275 lb for 3 reps, the rest clock and Log set.' } },
   { line: 'Live in the gym.', body: 'Your set, the load and the rest clock, big enough to read from the platform. One lifter on the board today.', href: MS ? '/rack/missionstack' : '/rack',
     device: 'tablet', shot: { src: '/images/missionstack/board-ipad.webp', w: 1080, h: 751, alt: 'The gym board on iPad mid-set, one lifter: the exercise, the set, the load and the rest clock.' } },
-  // "A trainer can log for a client" joins this line once #164 is in testers' hands.
-  { line: 'Coach them from the floor.', body: 'A coach sends the plan and sees every set.', href: '/coach',
+  // #164 (b76): a coach can log a workout for a lifter.
+  { line: 'Coach them from the floor.', body: 'A coach sends the plan, sees every set and can log a workout for their lifter.', href: '/coach',
     device: 'phone', shot: { src: '/images/ironstack/coach-plan.webp', w: 540, h: 1174, alt: 'Coach mode in IronStack, the lifter\'s side: Today tagged Coach\'s plan with the planned sets and Start workout.' } },
   { line: 'Fuel and plans that keep up.', body: 'Move your workout and the day\'s meals move with it.', href: '/rack/mealstack',
     device: 'phone', shot: { src: '/images/mealstack/session-moved.webp', w: 540, h: 1174, alt: 'MealStack after the workout moved: the carb surge before training, the shake after it and dinner move with it, with an Undo.' } },

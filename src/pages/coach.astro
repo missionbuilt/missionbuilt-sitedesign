@@ -11,11 +11,11 @@ import { COACH_FREE_LIFTERS } from '../data/plans';
  * Kept from Logbook's 10-14 draft as written: "What your lifter controls" and "Where it goes",
  * which follow the b75 privacy page's approved Coach mode text (design and privacy reviewed).
  *
- * HOLD for #164 (logging a lifter's workout, "Coming soon" below): when it ships, this page and
- * /coach/invited each gain two sentences, checked then against data-flow.md (#164/#176) and the
- * privacy page's #164 text: (1) a workout a coach logs for a lifter goes through Mission Built's
- * Social server and is held there only until the lifter's phone fetches it (at most 14 days; a
- * record of whether it was delivered stays 30 days); (2) the lifter can turn it off.
+ * Tuesday 10-20 (IronStack b76, MissionStack's 10-20 build): #164, a coach logging a workout for
+ * a lifter, is live, with its two sentences under "What your lifter controls", taken from the
+ * privacy page's #164 text (feat/ironstack-privacy-coach-logged, which goes live the same day);
+ * /coach/invited takes that page's #164 Coach mode paragraphs. #165 (lifters without the app)
+ * stays Coming January 1. Board groups (#186/#187) are live; heart rate (#157) stays Coming.
  *
  * No competitor is named here (plan §0): the compare page carries the names. MissionStack is named
  * only once MISSIONSTACK_ANNOUNCED. noindex and out of the sitemap until Mike's yes.
@@ -54,6 +54,7 @@ const blocks: Block[] = [
       'If they share notes, you hear when one mentions pain or a tweak.',
       'Repeat last week\'s plan with a little more weight.',
       'Start a lifter on one of ten starter programs.',
+      'Log a workout for your lifter on your phone when you train together. It lands in their history, marked as logged by you.',
       'Bring a program you already have, as a PDF or a photo, and Stack AI types it in for you to send.',
     ],
     device: 'phone',
@@ -65,9 +66,10 @@ const blocks: Block[] = [
       'Put the live workout on a TV, an iPad or a Mac. The set, the load, the rest clock and records, big enough to read across the gym.',
       'Your lifter logs on their iPhone or Apple Watch as always; the board only shows. Scan the board\'s code with your iPhone to pair.',
       'On Apple TV, the Siri Remote pauses the rest clock.',
+      'Supersets and circuits show as one group, with where you are in it.',
       'One lifter on the board at a time today.',
     ],
-    soon: ['Supersets and circuits shown as one group.', 'Heart rate on the board.'],
+    soon: ['Heart rate on the board.'],
     later: ['Several lifters on one board.'],
     device: 'tablet',
     shot: { src: '/images/missionstack/board-ipad.webp', w: 1080, h: 751, alt: 'The gym board on iPad mid-set, one lifter: the exercise, the set, the load and the rest clock.' },
@@ -110,7 +112,7 @@ const setupBoard = [
 
 // COPY: coach FAQ (plan §6, Mike 19:06 on age; no prices).
 const faq = [
-  { q: 'Can my lifters use Android?', a: 'Not to log, yet. From January 1 you can add lifters without the app and log their sets for them on your phone.' },
+  { q: 'Can my lifters use Android?', a: 'Not to log, yet. Today you can log a workout for a lifter who has IronStack on an iPhone. From January 1 you can add lifters without the app and log their sets for them on your phone.' },
     { q: 'How many lifters can I coach?', a: `Coach Free: up to ${COACH_FREE_LIFTERS} lifters, free. Coach Pro\u00a010 and Coach Pro\u00a025, for up to 10 or 25 lifters, are add-ons to The Full Stack. Pricing coming soon.` },
   { q: 'Can I coach lifters under 18?', a: 'No. IronStack is for lifters 18 and over.' },
   { q: 'I\'m moving from another coaching app. What about my programs?', a: 'Build them with the typed line, or bring a PDF or a photo and Stack AI writes it into Plan. Stack AI has to be on, and it uses your Stack AI allowance.', link: { href: '/rack/compare/truecoach', label: 'How Coach mode compares' } },
@@ -155,7 +157,8 @@ const faq = [
         <ul>
           <li>Your lifters log on iPhone.</li>
           <li>You send programs from your iPhone, and plan on an iPad or a Mac with Apple silicon.</li>
-          <li>Logging a lifter's sets for them on your phone, and lifters without the app: <span class="tag">Coming January 1</span></li>
+          <li>You can log a lifter's workout for them on your phone.</li>
+          <li>Lifters without the app: <span class="tag">Coming January 1</span></li>
         </ul>
       </div>
     </section>
@@ -190,6 +193,7 @@ const faq = [
         {/* COPY: the short version; the full account is on IronStack's privacy page. */}
         <p>Nothing is shared until your lifter says yes, and they choose how far back you see. Sleep, bodyweight and MealStack fueling stay off unless they turn them on. Either of you can end the link at any time, and ending it deletes your copy.</p>
         <p>Shared workouts are kept on Mission Built's own server until the link ends. If your lifter shares notes, the server checks them for words like "pain" so it can flag a workout for you. We don't use them for anything else, and we never sell them. A private note you keep on a lifter stays on your phone.</p>
+        <p>A workout you log for your lifter goes to Mission Built's Social server and waits there only until their phone fetches it, at most 14 days; a short record of whether it arrived stays 30 days. Your lifter can turn this off in Coach mode.</p>
         <p>Every detail, including what Stack AI sees when you sum up a week, is on <a href="/rack/ironstack/privacy#coach-mode">IronStack's privacy page</a>.</p>
       </div>
     </section>
