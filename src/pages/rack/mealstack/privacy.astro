@@ -48,6 +48,10 @@ type Keep = { what: string; how: string };
 const keeps: Keep[] = [
   { what: 'Barcode lookup count', how: 'Lookup counts for your phone expire on their own within two days. The barcode itself is never kept.' },
   { what: 'Your plan, logs, ingredients, meals, stacks, About you', how: 'On your phone until you delete them, or delete the app. Included in your iPhone backup like any other app data.' },
+  // HOLD (#25 D, Logbook 2026-10-18): live with the MealStack build that ships the picker's
+  // Favorites (app branch feat/food-filters-25d), not before (privacy promise 8). Wording is
+  // PROPOSED for the product lead, the same facts as the app's About, Your data line.
+  { what: 'Your favorite foods and Recent', how: 'The foods you star are kept on your phone only, at most 500. They are not sent to Stack AI or anywhere else, and not in a plan file you share. Included in your iPhone backup like the app\'s other files. Recent and Most used are worked out on the phone from the meals you logged; nothing new is kept for them. Delete all MealStack data removes your stars.' },
   { what: 'Your Stack AI chats', how: 'On your phone until you delete them. Not synced anywhere.' },
   { what: 'What you send Stack AI, including photos and files', how: 'Mission Built never keeps what you said. The answer is held on the server for 10 minutes in case your connection drops, then deleted. Anthropic deletes what you sent within 30 days and doesn\'t train its models on it. It keeps it longer (up to 2 years) only if a request is flagged for breaking its usage policy.' },
   { what: 'The device record (App Attest key id, public key, receipt, timestamps)', how: 'Removed when you delete your data in the app, or on request. Otherwise it goes on its own about 400 days after your phone last reached the Stack AI server. One number stays under the key id with no end date: a counter of your phone\'s requests, so an old one can\'t be sent again.' },
