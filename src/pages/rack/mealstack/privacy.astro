@@ -19,6 +19,13 @@
  * cell says what that screen says, in the same order. /loadout/mealstack/privacy renders this page too. Draft for review by a
  * lawyer before public launch. MealStack is 18+.
  *
+ * HOLD (Stack AI M1 "measure", Logbook 2026-10-21, branch feat/privacy-stackai-measure; reworked after
+ * the privacy review the same day): what the accounting record holds (stackai_request and the new
+ * stackai_turn) and the daily totals' kinds, cache reuse and spacing (mb-ops 0.2.0, worked out from
+ * stackai_request's timestamps; nothing stored per install) go live with the deploy of
+ * mealstack-coach and mealstack-stackai from mealstack feat/stackai-measure (stackai-proxy 0.9.0; a
+ * push to MealStack's main deploys both) and of mb-ops 0.2.0, not before; set EFFECTIVE to that day.
+ *
  * Color discipline: oxblood for the hero period, section labels and the one
  * emphasised word. No army green on this page.
  */
@@ -52,8 +59,8 @@ const keeps: Keep[] = [
   { what: 'What you send Stack AI, including photos and files', how: 'Mission Built never keeps what you said. The answer is held on the server for 10 minutes in case your connection drops, then deleted. Anthropic deletes what you sent within 30 days and doesn\'t train its models on it. It keeps it longer (up to 2 years) only if a request is flagged for breaking its usage policy.' },
   { what: 'The device record (App Attest key id, public key, receipt, timestamps)', how: 'Removed when you delete your data in the app, or on request. Otherwise it goes on its own about 400 days after your phone last reached the Stack AI server. One number stays under the key id with no end date: a counter of your phone\'s requests, so an old one can\'t be sent again.' },
   { what: 'Stack AI allowance counters', how: 'Today\'s and this month\'s counts. Nothing resets them on a schedule. Last month\'s counts are replaced the first time your phone asks Stack AI in a new month. If it never asks again, they stay until you delete your data in the app, or with no end date if the app is gone.' },
-  { what: 'Accounting record of Stack AI use (Cloudflare)', how: 'About ninety days, then gone.' },
-  { what: 'Daily totals for the whole app (Mission Built)', how: 'How many Stack AI requests there were in a day, the tokens, the cost and the refusals, added up for everyone with no install key. Kept by Mission Built for its accounts, with no end date.' },
+  { what: 'Accounting record of Stack AI use (Cloudflare)', how: 'Two lines per Stack AI question, filed under a one-way hash of the install key. The first: when, what kind of request, which model, how many tokens and web searches, roughly what it cost, and how much of the allowance is left. The second holds only counts: how many times Stack AI called the model, how many suggestions it made and how many the server\'s checks turned back, how much of the prompt was reused from earlier questions and how much was saved for the next 5 minutes or the next hour, and roughly how big each part of the prompt was (the instructions, the pantry, your foods, the conversation, today), to the nearest 500 tokens. No question, answer, food or plan. Written by the server whether or not you send usage data. About ninety days, then gone.' },
+  { what: 'Daily totals for the whole app (Mission Built)', how: 'How many Stack AI requests there were in a day, the tokens, the cost and the refusals, how many were each kind of request, how often the prompt could be reused, and how far apart questions came, worked out for these totals only from the times of each install\'s questions over two days and kept only as counts (under 5 minutes, up to an hour, up to a day, longer), added up for everyone with no install key. Kept by Mission Built for its accounts, with no end date.' },
   { what: 'Usage data', how: 'In Mission Built\'s own record on Cloudflare, about ninety days, then gone. Deleting your data in the app doesn\'t remove them sooner, but nothing in them can be matched to you once the install\'s key is gone.' },
 ];
 ---
