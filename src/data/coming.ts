@@ -61,14 +61,6 @@ export const COMING: ComingItem[] = [
     detail: 'It learns how long you train from IronStack.',
   },
   {
-    id: 'mealstack-watch',
-    app: 'mealstack',
-    when: 'january',
-    star: true,
-    title: 'MealStack on Apple Watch:',
-    detail: 'your next meal on the watch face, an alert before it, Log it from your wrist.',
-  },
-  {
     id: 'log-food-fast',
     app: 'mealstack',
     when: 'january',

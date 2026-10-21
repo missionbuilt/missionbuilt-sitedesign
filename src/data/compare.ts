@@ -238,7 +238,7 @@ const mealstack: ComparePage = {
     {
       key: 'watch',
       label: 'Apple Watch',
-      ours: { text: 'Not yet.', soon: 'Your next meal on the watch face, an alert before it, and Log it from your wrist.' },
+      ours: { text: 'Yes. Your next meal with Log it and Not yet · 20 min, the rest of today, and a complication with the next meal\'s time. Off until you turn it on in Settings › Apple Watch.' },
       them: {
         macrofactor: { text: 'Watch app: log food by hour, weight and water. Has complications.', sources: [s('https://help.macrofactorapp.com/en/articles/273-how-to-log-food-in-the-macrofactor-watch-app', true), s('https://help.macrofactorapp.com/en/articles/265-configuring-complications-for-the-watch-app', true)] },
         cronometer: { text: 'Watch app (watchOS 9 and up). Release notes mention logging food from the watch.', sources: [s(CR_APPSTORE)] },

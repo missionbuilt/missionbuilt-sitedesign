@@ -110,7 +110,7 @@ export const rows: Row[] = [
           { text: 'Plan a week of meals' },
           { text: 'Scan a barcode' },
           { text: 'Stack AI plans and reads menus' },
-          { text: 'MealStack on Apple Watch', soon: true },
+          { text: 'MealStack on Apple Watch' },
         ],
       },
     ],
