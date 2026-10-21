@@ -7,6 +7,22 @@ groups: [{"title": "Board", "slug": "board", "leads": ["With IronStack's next Te
 status: in-progress
 ---
 
+**Look before you lift.**
+
+**NEW: Starters you can read before you use them.** Plan › See starters opens each one as a program page: every week, every day ("Day 2 · Bench day"), every exercise. The first time you open a starter, its cautions show once. Copy one workout or one exercise into your plan, or use the whole program. Use this program asks which week to start, says what it replaces, and lists the cautions.
+
+**NEW: Basketball and lacrosse with drill days.** Both are now "off-season training": six workouts a week, with easy drill days (shooting or stick work, footwork, an easy run) between the hard days. The other eight starters are updated too.
+
+**Plan reads cleaner.** Your week shows each workout's day number, and a lift's last result reads "Last time:".
+
+**On the board:** with this week's IronStack build, supersets, circuits and PAP pairs show together with their kind, and a load in each hand reads "60 ea × 8". If your iPhone locks or drops off, the board picks it up again within 5 minutes. A long workout name on Stacked no longer runs into the date.
+
+**Also:** on Apple TV, Pair iPhone, Pause and Close sit at the left, clear of Apple TV's notices. At the largest text sizes, the sidebar puts each symbol above its name.
+
+**Try this:** open Plan › See starters › Strongman: getting started and read week 3 before you use it. Then copy one workout into your plan.
+
+## Every change in this build
+
 ### Board
 
 - **With IronStack's next TestFlight build, the board lists a superset, circuit or PAP pair together.** Its kind shows beside where you are ("2 OF 3   SUPERSET"), a group you haven't started yet has a dim line down its side, and a load in each hand reads "60 ea × 8", as on your iPhone.
