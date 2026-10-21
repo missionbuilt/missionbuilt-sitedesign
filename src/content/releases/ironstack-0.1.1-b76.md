@@ -28,7 +28,7 @@ build: 76
 - On the watch, the timer's Digital Crown keeps the time you turned to, in steps you can feel.
 - When you usually train, in Settings, can also share how long your workouts run, so MealStack can time your after-workout meal.
 
-**Try this:** dial a squat's weight down past the bar and read the line under it. Open Starters › Strongman and read week 3 before you use it. If you have a coach, ask them to log one workout for you, then find it in your History.
+**Try this:** dial a squat's weight down past the bar and read the line under it. Open Starter programs › Strongman and read week 3 before you use it. If you have a coach, ask them to log one workout for you, then find it in your History.
 
 ## Every change in this build
 
@@ -79,7 +79,7 @@ build: 76
 - **Use this program asks once on one sheet:** what it replaces, that the program you leave keeps its place (its week and day), what comes off Today, and for a starter its cautions. It replaces "Make it my current program".
 - **A program you come back to resumes on the week you left it.**
 - **A workout put on Today and not started is gone the next morning (at 4 AM), so Today, your watch and Stack AI don't keep yesterday's.**
-- **Plan's program card shows Next as a line, Starter programs open on Plan's own page, and "Kept" is gone:** they're Other programs. Plan says "Find, review and build. Start from Today."
+- **Plan's program card shows Next as a line, Starter programs open on Plan's own page, and "Kept" is gone:** they're Other programs. Plan says "Find, review and build."
 
 ### MealStack
 
