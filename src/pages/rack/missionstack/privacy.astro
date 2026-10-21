@@ -2,8 +2,9 @@
 /**
  * MissionStack — privacy.
  *
- * In effect October 15, 2026 (moved up a day with the ship, Mike 10-14 19:24), with the first MissionStack TestFlight build (#118, Chalkboard;
- * release/missionstack 49fef57). The facts are checked against that code
+ * In effect October 20, 2026 (October 15 for the first build, moved up a day with the ship, Mike 10-14 19:24;
+ * moved for #139's last-joined date, release/missionstack 7daff49, privacy review 2026-10-20). First with
+ * the first MissionStack TestFlight build (#118, Chalkboard; release/missionstack 49fef57). The facts are checked against that code
  * (missionstack/privacy/data-inventory-2026-10-09.md, §12–14 override; privacy review 2026-10-13).
  * Not linked from the Rack, the nav or the sitemap, and noindex, until Mike says the name is
  * cleared (promise 8: it describes what is live).
@@ -23,8 +24,10 @@
  * rating match; the TLS-PSK listener and ITSAppUsesNonExemptEncryption = NO; private CloudKit
  * counted as "not collected" (when sync ships). For a lawyer's review before public launch.
  *
- * Not in this build, so not on this page: heart rate on the board (BoardFlags.heartRate = false;
- * #157) and Team lifts (BoardPage.teamLiftShown is false in release; the Apple TV's Team board is
+ * Not in this build, so not on this page: heart rate on the board (#157). This board will draw a live heart
+ * rate (`liveHeartRate`, memory only) from a phone that sends one; what keeps it off is IronStack's
+ * `BoardHeartRateSetting.available = false` (release/ironstack), not `BoardFlags.heartRate`. IronStack may not turn
+ * that on until this page has its heart-rate paragraph live (privacy review 2026-10-20). And Team lifts (BoardPage.teamLiftShown is false in release; the Apple TV's Team board is
  * behind the debug -teamDemo launch). Each comes back here with the build that turns it on.
  *
  * Color discipline: oxblood for the hero period, section labels and the one
@@ -36,7 +39,7 @@ import TopNav from '../../../components/TopNav.astro';
 import { MISSIONSTACK_ANNOUNCED } from '../../../data/missionstack-gate.mjs';
 
 const DRAFT = false;
-const EFFECTIVE = 'October 15, 2026';
+const EFFECTIVE = 'October 20, 2026';
 const ASK = 'mailto:support@missionbuilt.io?subject=MissionStack%20data%20request';
 
 const stats = [
@@ -49,7 +52,7 @@ const stats = [
 type Keep = { what: string; how: string };
 const keeps: Keep[] = [
   { what: 'Your plan and settings', how: 'On this iPad or Mac until you delete them, or delete the app. Included in your device backup like any other app data.' },
-  { what: 'Phones the board remembers', how: 'The name each phone sent and a pairing key, in this device\'s Keychain (iPad, Mac or Apple TV). They stay after you delete the app. Delete all data, or Settings › Board › Forget all phones, clears them; on Apple TV, Forget all phones on the board\'s home screen. To forget one phone, open the board and choose Pair iPhone: each remembered phone has Forget this iPhone, beside Forget all phones.' },
+  { what: 'Phones the board remembers', how: 'The name each phone sent, a pairing key and the date it last joined, in this device\'s Keychain (iPad, Mac or Apple TV). They stay after you delete the app. Delete all data, or Settings › Board › Forget all phones, clears them; on Apple TV, Forget all phones on the board\'s home screen. To forget one phone, open the board and choose Pair iPhone: each remembered phone has Forget this iPhone, beside Forget all phones.' },
   { what: 'The board on your own', how: 'Held in memory only, with the clock voice your phone sent. Gone when its celebration closes, when you close the board, or 45 minutes after the phone goes quiet.' },
   { what: 'Anything on Mission Built\'s servers', how: 'Nothing. MissionStack doesn\'t talk to them.' },
 ];
@@ -130,7 +133,7 @@ const keeps: Keep[] = [
           <p class="v">Between this device and the phones you let in.</p>
           <p class="body">The board shows a workout from an iPhone on the same Wi-Fi. iPhone and iPad ask for permission to use the local network, and the board uses it only after you say yes. Apple TV doesn't ask: there, the board uses the local network only while the board is open, and stops when you close it or leave the app. On a Mac, the board uses it only after you say yes where the Mac asks, and keeps using it while the board is open, even minimised or behind another app, until you close it or quit the app. The link between the phone and the board is encrypted with a key from the code on the board's screen, nothing passes through the internet, and nothing reaches Mission Built. The board announces itself on the network under a random name, never yours.</p>
           <p class="body"><strong>On your own,</strong> everything your phone sends is on the screen for the room: the workout, each set with its weight, and the name your phone sent. The phone also sends the clock voice you picked in IronStack, Male or Female, and the board speaks in it. Never your age.</p>
-          <p class="body"><strong>Phones the board remembers.</strong> If you turn on Remember this iPhone when you pair, the board keeps the name the phone sent and a pairing key, on this iPad, Mac or Apple TV. They stay after you delete the app. Delete all data, or Settings › Board › Forget all phones, clears them. On Apple TV, use Forget all phones on the board's home screen. To forget one phone, open the board and choose Pair iPhone: each remembered phone has Forget this iPhone, beside Forget all phones.</p>
+          <p class="body"><strong>Phones the board remembers.</strong> If you turn on Remember this iPhone when you pair, the board keeps the name the phone sent, a pairing key and the date it last joined, on this iPad, Mac or Apple TV. They stay after you delete the app. Delete all data, or Settings › Board › Forget all phones, clears them. On Apple TV, use Forget all phones on the board's home screen. To forget one phone, open the board and choose Pair iPhone: each remembered phone has Forget this iPhone, beside Forget all phones.</p>
           <p class="body"><strong>Delete all IronStack data on your iPhone can't reach someone else's board.</strong> If your phone is remembered there, the board's owner has to forget it.</p>
         </div>
         <div class="cell">
