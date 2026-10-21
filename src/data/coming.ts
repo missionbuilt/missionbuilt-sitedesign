@@ -53,19 +53,11 @@ export const COMING: ComingItem[] = [
 
   // MealStack
   {
-    id: 'fueling-day-length',
-    app: 'mealstack',
-    when: 'january',
-    star: true,
-    title: 'A fueling day sized to how long you really train.',
-    detail: 'It learns how long you train from IronStack.',
-  },
-  {
     id: 'log-food-fast',
     app: 'mealstack',
     when: 'january',
     title: 'Log food in seconds:',
-    detail: 'recent, most used, favorites, copy a meal or a day.',
+    detail: 'recent, most used and favorites.',
   },
 
   // MissionStack (rendered only once the name is cleared)
