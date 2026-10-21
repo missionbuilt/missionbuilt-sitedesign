@@ -12,7 +12,7 @@ status: in-progress
 - **With IronStack's next TestFlight build, the board lists a superset, circuit or PAP pair together.** Its kind shows beside where you are ("2 OF 3   SUPERSET"), a group you haven't started yet has a dim line down its side, and a load in each hand reads "60 ea × 8", as on your iPhone.
 - **The board picks your workout up again after a short drop.** If your iPhone locks or leaves the Wi-Fi mid-workout and is back within 5 minutes, the board carries on by itself, without "Remember this iPhone". Before, it lost that workout until you scanned again.
 - **On Stacked, a long workout name no longer runs into the date.** It shrinks, then shows what comes after the colon (a starter's "Week 3, day 1: Squat and press" shows "Squat and press"), then is cut at a word. VoiceOver still reads the whole name.
-- **The board is ready for remembered iPhones to join with an id that changes every 45 minutes, not the same one every time.** Phones join this way once an IronStack TestFlight build sends it; until then they join as before.
+- **The board is ready for remembered iPhones to join with an id that changes every 45 minutes, not the same one every time.** Phones join this way once an IronStack TestFlight build sends the new id; until then they join as before.
 
 ### Plan
 
