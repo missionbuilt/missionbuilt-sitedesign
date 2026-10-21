@@ -2,8 +2,9 @@
 /**
  * MissionStack — privacy.
  *
- * In effect October 15, 2026 (moved up a day with the ship, Mike 10-14 19:24), with the first MissionStack TestFlight build (#118, Chalkboard;
- * release/missionstack 49fef57). The facts are checked against that code
+ * In effect October 20, 2026 (October 15 for the first build, moved up a day with the ship, Mike 10-14 19:24;
+ * moved for #139's last-joined date, release/missionstack 7daff49, privacy review 2026-10-20). First with
+ * the first MissionStack TestFlight build (#118, Chalkboard; release/missionstack 49fef57). The facts are checked against that code
  * (missionstack/privacy/data-inventory-2026-10-09.md, §12–14 override; privacy review 2026-10-13).
  * Not linked from the Rack, the nav or the sitemap, and noindex, until Mike says the name is
  * cleared (promise 8: it describes what is live).
@@ -23,8 +24,10 @@
  * rating match; the TLS-PSK listener and ITSAppUsesNonExemptEncryption = NO; private CloudKit
  * counted as "not collected" (when sync ships). For a lawyer's review before public launch.
  *
- * Not in this build, so not on this page: heart rate on the board (BoardFlags.heartRate = false;
- * #157) and Team lifts (BoardPage.teamLiftShown is false in release; the Apple TV's Team board is
+ * Not in this build, so not on this page: heart rate on the board (#157). This board will draw a live heart
+ * rate (`liveHeartRate`, memory only) from a phone that sends one; what keeps it off is IronStack's
+ * `BoardHeartRateSetting.available = false` (release/ironstack), not `BoardFlags.heartRate`. IronStack may not turn
+ * that on until this page has its heart-rate paragraph live (privacy review 2026-10-20). And Team lifts (BoardPage.teamLiftShown is false in release; the Apple TV's Team board is
  * behind the debug -teamDemo launch). Each comes back here with the build that turns it on.
  *
  * Color discipline: oxblood for the hero period, section labels and the one
