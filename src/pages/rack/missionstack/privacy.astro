@@ -150,6 +150,20 @@ const keeps: Keep[] = [
 
     <hr class="dashed" />
 
+    {/* ---------- THE COACH DESK (HELD: lands with the release that turns the desk on, #142/#188; words go to Mike first) ---------- */}
+    <section class="block">
+      <p class="section-label">Lifters without the app</p>
+      <h2 class="section-h2">If you coach, the coach desk keeps your lifters in your own iCloud.</h2>
+      <div class="prose-block">
+        <p>The coach desk is for coaches. It shows who you coach, what each lifter did against their plan, and a private note for each lifter. If you don't coach, none of this applies to you and the desk isn't there.</p>
+        <p><strong>Lifters who use the app.</strong> You sign in with Apple, the same sign-in as on your iPhone. The desk shows what a lifter has chosen to share with you, and only inside the history window they chose. It holds that on this iPad or Mac while the desk is open. When the lifter ends the link, narrows their window, or you sign out, it goes from the desk on the next refresh.</p>
+        <p><strong>Lifters without the app.</strong> You can add a lifter by name and keep their workouts and a private note about them. These are saved in your own iCloud, the same records as on your iPhone, and not on Mission Built's servers. Mission Built can't read them. Apple stores them under your Apple Account, and they are end-to-end encrypted only if you have turned on Advanced Data Protection. The desk keeps them in iCloud only while iCloud sync is on.</p>
+        <p><strong>A note can hold anything you type,</strong> including health details about a person. Write only what you need. Removing a lifter without the app removes their note and workouts everywhere your iCloud reaches.</p>
+      </div>
+    </section>
+
+    <hr class="dashed" />
+
     {/* ---------- HOW LONG ---------- */}
     <section class="block">
       <p class="section-label">How long</p>
@@ -172,7 +186,7 @@ const keeps: Keep[] = [
       <h2 class="section-h2">Export it, or delete it, from Settings.</h2>
       <div class="prose-block">
         <p><strong>Settings › Your data › Export</strong> saves your plan and your settings for appearance and units to a file you keep. <strong>Settings › Your data › Import</strong> brings that file back. It replaces the plan and those settings on this iPad or Mac, and shows you what it replaces before anything changes.</p>
-        <p><strong>Settings › Your data › Delete all data</strong> closes the board, forgets every phone the board remembers, and removes every file and setting MissionStack keeps on this device. It doesn't reach an export you saved elsewhere, or a backup already made. If something couldn't be deleted, the app says so, and <strong>Settings › Board › Forget all phones</strong> clears it.</p>
+        <p><strong>Settings › Your data › Delete all data</strong> closes the board, forgets every phone the board remembers, and removes every file and setting MissionStack keeps on this device. If you coach, it also clears what the coach desk holds, and it removes your lifters without the app and your notes about them from your iCloud. If iCloud can't take the delete right away, MissionStack says so and tries again each time you open it while you're online. It doesn't reach an export you saved elsewhere, or a backup already made. If something couldn't be deleted, the app says so, and <strong>Settings › Board › Forget all phones</strong> clears it.</p>
         <p><strong>Deleting the app is not the same.</strong> On an iPad, deleting the app removes your plan and settings. On a Mac, its files can stay behind. Either way, phones the board remembers stay in the Keychain. Run Delete all data first.</p>
         <p>Anything else about your data, email <a href={ASK}>support@missionbuilt.io</a>. Mission Built will confirm within ten days and finish within thirty.</p>
       </div>
