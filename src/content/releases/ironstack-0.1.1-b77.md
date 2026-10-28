@@ -2,8 +2,8 @@
 app: ironstack
 version: "0.1.1"
 order: 1001
-changes: 10
-groups: [{"title": "Exercise info", "slug": "exercise-info", "leads": ["NEW: Info on 33 lifts shows three short cues (Set up, Feel it, Common miss) where there is no animation yet."]}, {"title": "Plan", "slug": "plan", "leads": ["Add to today: a workout's page has Add to today where Start was (or swipe a day right).", "After Add to today, Today shows \"Back to Day 2 · Bench and rows\" to put your program's day back.", "Add to today on a starter's workout puts your copy on Today for today only.", "While a workout is live, Add to today reads Add to this workout."]}, {"title": "Stack AI", "slug": "stack-ai", "leads": ["FIXED: When Stack AI turns a question down, the app now says which limit it was."]}, {"title": "Logging", "slug": "logging", "leads": ["FIXED: A set you log as body weight now stays body weight."]}, {"title": "Groups", "slug": "groups", "leads": ["FIXED: A circuit you make by ungrouping two exercises and grouping them again can be moved like any other..."]}, {"title": "Sharing", "slug": "sharing", "leads": ["FIXED: Sharing a workout no longer shows an old spotter support message as a new alert."]}, {"title": "Apple Watch", "slug": "apple-watch", "leads": ["FIXED: With your wrist down, the rest clock at the top of the set screen and the countdown under a set you..."]}]
+changes: 11
+groups: [{"title": "Exercise info", "slug": "exercise-info", "leads": ["NEW: Info on 33 lifts shows three short cues (Set up, Feel it, Common miss) where there is no animation yet."]}, {"title": "Plan", "slug": "plan", "leads": ["Plan has no Start on a program card or a program page.", "Add to today: a workout's page has Add to today where Start was (or swipe a day right).", "After Add to today, Today shows \"Back to Day 2 · Bench and rows\" to put your program's day back.", "Add to today on a starter's workout puts your copy on Today for today only.", "While a workout is live, Add to today reads Add to this workout."]}, {"title": "Stack AI", "slug": "stack-ai", "leads": ["FIXED: When Stack AI turns a question down, the app now says which limit it was."]}, {"title": "Logging", "slug": "logging", "leads": ["FIXED: A set you log as body weight now stays body weight."]}, {"title": "Groups", "slug": "groups", "leads": ["FIXED: A circuit you make by ungrouping two exercises and grouping them again can be moved like any other..."]}, {"title": "Sharing", "slug": "sharing", "leads": ["FIXED: Sharing a workout no longer shows an old spotter support message as a new alert."]}, {"title": "Apple Watch", "slug": "apple-watch", "leads": ["FIXED: With your wrist down, the rest clock at the top of the set screen and the countdown under a set you..."]}]
 status: shipped
 build: 77
 ---
@@ -34,6 +34,7 @@ build: 77
 
 ### Plan
 
+- **Plan has no Start on a program card or a program page:** Add to today puts a workout on Today, and you start it from there. Plan says "Find, review and build. Start from Today."
 - **Add to today: a workout's page has Add to today where Start was (or swipe a day right).** It goes on Today for today only; nothing starts, and your program's next workout and week stay where they were: it doesn't count as your program's day. Undo takes it back.
 - **After Add to today, Today shows "Back to Day 2 · Bench and rows" to put your program's day back.**
 - **Add to today on a starter's workout puts your copy on Today for today only.** It isn't added to your workouts and is gone the next day; use Copy to My Workouts to keep it.
