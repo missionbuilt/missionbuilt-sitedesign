@@ -60,3 +60,35 @@ test('a later note is added to an earlier one, not written over it', async () =>
   await onRequestPost({ request: post({ email: 'a@b.co', t: OLD, note: 'Get in first · via li' }), env: { BETA_KV: store } });
   assert.equal(JSON.parse(store.m.get('signup:a@b.co')).note, 'my coach invited me · Get in first · via li');
 });
+
+test('a chunked ~5 KB body with no content-length: 413, read stops at the cap, nothing stored', async () => {
+  const store = kv();
+  const bytes = new TextEncoder().encode(JSON.stringify({ email: 'a@b.co', t: OLD, note: 'x'.repeat(5000) }));
+  const pulled = { n: 0, cancelled: false };
+  const stream = new ReadableStream({
+    pull(c) {
+      if (pulled.n >= bytes.length) return c.close();
+      c.enqueue(bytes.slice(pulled.n, pulled.n + 512)); pulled.n += 512;
+    },
+    cancel() { pulled.cancelled = true; },
+  });
+  const req = new Request('https://missionbuilt.io/api/beta', { method: 'POST', duplex: 'half', body: stream,
+    headers: { 'content-type': 'application/json', accept: 'application/json', 'cf-connecting-ip': '203.0.113.7' } });
+  assert.equal(req.headers.get('content-length'), null);
+  const res = await onRequestPost({ request: req, env: { BETA_KV: store } });
+  assert.equal(res.status, 413);
+  assert.equal(store.m.size, 0);
+  assert.equal(pulled.cancelled, true);
+  assert.ok(pulled.n <= 4096 + 1024, `read ${pulled.n} bytes`);
+});
+
+test('a plain urlencoded form post (no JS) is stored and redirects back to its page', async () => {
+  const store = kv();
+  const req = new Request('https://missionbuilt.io/api/beta', { method: 'POST',
+    headers: { 'content-type': 'application/x-www-form-urlencoded', 'cf-connecting-ip': '203.0.113.7' },
+    body: new URLSearchParams({ email: 'a@b.co', t: OLD, page: '/rack/ironstack' }).toString() });
+  const res = await onRequestPost({ request: req, env: { BETA_KV: store } });
+  assert.equal(res.status, 303);
+  assert.match(res.headers.get('location'), /\/rack\/ironstack\?beta=ok#beta$/);
+  assert.deepEqual(JSON.parse(store.m.get('signup:a@b.co')).pages, ['/rack/ironstack']);
+});

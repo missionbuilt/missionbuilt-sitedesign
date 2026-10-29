@@ -239,3 +239,54 @@ test('a broken address that the old check let through: 400, nothing sent, nothin
     assert.equal(store.m.size, 0);
   }
 });
+
+// A chunked post: a stream body, no content-length header, so only the byte count can stop it.
+function chunked(url, text, ctype = 'application/json') {
+  const bytes = new TextEncoder().encode(text);
+  const pulled = { n: 0, cancelled: false };
+  const stream = new ReadableStream({
+    pull(c) {
+      if (pulled.n >= bytes.length) return c.close();
+      c.enqueue(bytes.slice(pulled.n, pulled.n + 512)); pulled.n += 512;
+    },
+    cancel() { pulled.cancelled = true; },
+  });
+  const req = new Request(url, { method: 'POST', duplex: 'half', body: stream,
+    headers: { 'content-type': ctype, accept: 'application/json', 'cf-connecting-ip': '203.0.113.7' } });
+  return { req, pulled };
+}
+
+test('a chunked ~5 KB body with no content-length: 413, read stops at the cap, nothing sent or stored', async () => {
+  const store = kv(); const bd = buttondown(201);
+  const { req, pulled } = chunked('https://missionbuilt.io/api/first', JSON.stringify({ email: 'a@b.co', t: OLD, pad: 'x'.repeat(5000) }));
+  assert.equal(req.headers.get('content-length'), null);
+  const res = await onRequestPost({ request: req, env: { BETA_KV: store, BUTTONDOWN_API_KEY: KEY } }, bd);
+  assert.equal(res.status, 413);
+  assert.equal(bd.calls.length, 0);
+  assert.equal(store.m.size, 0);
+  assert.equal(pulled.cancelled, true);
+  assert.ok(pulled.n <= 4096 + 1024, `read ${pulled.n} bytes`);
+});
+
+test('a small chunked body with no content-length still signs up', async () => {
+  const bd = buttondown(201);
+  const { req } = chunked('https://missionbuilt.io/api/first', JSON.stringify({ email: 'a@b.co', t: OLD }));
+  const res = await onRequestPost({ request: req, env: { BETA_KV: kv(), BUTTONDOWN_API_KEY: KEY } }, bd);
+  assert.equal(res.status, 200);
+  assert.equal(bd.calls.length, 1);
+});
+
+test('a plain urlencoded form post (the page without JS) still signs up', async () => {
+  const bd = buttondown(201);
+  const req = new Request('https://missionbuilt.io/api/first', { method: 'POST',
+    headers: { 'content-type': 'application/x-www-form-urlencoded', 'cf-connecting-ip': '203.0.113.7' },
+    body: new URLSearchParams({ email: 'a@b.co', t: OLD, via: 'li' }).toString() });
+  const res = await onRequestPost({ request: req, env: { BETA_KV: kv(), BUTTONDOWN_API_KEY: KEY } }, bd);
+  assert.equal(res.status, 303);
+  assert.deepEqual(JSON.parse(bd.calls[0].init.body), { email_address: 'a@b.co', tags: ['first', 'via-li'], metadata: { via: 'li' } });
+});
+
+test('strict address check: a 63-character host label passes, 64 is refused', () => {
+  assert.equal(isEmail('a@' + 'b'.repeat(63) + '.co'), true);
+  assert.equal(isEmail('a@' + 'b'.repeat(64) + '.co'), false);
+});

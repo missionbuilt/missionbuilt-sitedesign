@@ -20,6 +20,8 @@
  * and the page shows the email fallback instead of an error.
  */
 
+import { readCapped } from './_body.js';
+
 const EMAIL = /^[^\s@]{1,64}@[^\s@]{1,190}\.[^\s@]{2,24}$/;
 const RATE_LIMIT = 5;          // posts per IP per window
 const RATE_WINDOW = 3600;      // seconds
@@ -74,17 +76,6 @@ function back(request, page, result) {
   return Response.redirect(url.toString(), 303);
 }
 
-async function readBody(request) {
-  const ctype = request.headers.get('content-type') || '';
-  if (ctype.includes('application/json')) {
-    try { return await request.json(); } catch { return {}; }
-  }
-  try {
-    const form = await request.formData();
-    return Object.fromEntries(form.entries());
-  } catch { return {}; }
-}
-
 export async function onRequestPost({ request, env }) {
   const asJson = wantsJson(request);
 
@@ -93,11 +84,11 @@ export async function onRequestPost({ request, env }) {
   if (origin && origin !== new URL(request.url).origin) {
     return asJson ? json({ ok: false, error: 'That did not go through.' }, 403) : back(request, '/rack/mealstack', 'err');
   }
-  if (parseInt(request.headers.get('content-length') || '0', 10) > MAX_BODY) {
+  // Over 4 KB is refused before it's read in full, with or without a content-length header.
+  const body = await readCapped(request, MAX_BODY);
+  if (body === null) {
     return asJson ? json({ ok: false, error: 'That did not go through.' }, 413) : back(request, '/rack/mealstack', 'err');
   }
-
-  const body = await readBody(request);
   const page = typeof body.page === 'string' ? body.page : '/rack/mealstack';
 
   if (!env.BETA_KV) {

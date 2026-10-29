@@ -26,6 +26,8 @@
  * only for the hourly per-IP counter under the `first-rl:` prefix).
  */
 
+import { readCapped } from './_body.js';
+
 // A plain address only (#194 "strict email validation"): ASCII, the usual characters before the @
 // (no quotes, spaces or brackets), no dot at either end or two in a row, real host-name labels
 // after it, a letter top-level domain (or a punycode one), 254 characters at most.
@@ -95,17 +97,6 @@ function back(request, result) {
   return Response.redirect(url.toString(), 303);
 }
 
-async function readBody(request) {
-  const ctype = request.headers.get('content-type') || '';
-  if (ctype.includes('application/json')) {
-    try { return await request.json(); } catch { return {}; }
-  }
-  try {
-    const form = await request.formData();
-    return Object.fromEntries(form.entries());
-  } catch { return {}; }
-}
-
 // Today's salt: random, made once a day and kept two days in KV, so a counter's key can't be
 // turned back into an IP and the salt shares nothing with any secret (security review).
 async function todaysSalt(kv) {
@@ -143,10 +134,10 @@ export async function onRequestPost({ request, env }, deps = {}) {
   // them a confirmation email) through a visitor's browser (security review).
   const origin = request.headers.get('origin');
   if (origin && origin !== new URL(request.url).origin) return answer('bad', 403);
-  // A form with one email field is small; a big body is refused before it's read.
-  if (parseInt(request.headers.get('content-length') || '0', 10) > MAX_BODY) return answer('bad', 413);
-
-  const body = await readBody(request);
+  // A form with one email field is small; a big body is refused before it's read in full, with or
+  // without a content-length header (a chunked post is counted as it arrives).
+  const body = await readCapped(request, MAX_BODY);
+  if (body === null) return answer('bad', 413);
 
   const email = String(body.email || '').trim().toLowerCase();
   const honeypot = String(body.website || '').trim();
