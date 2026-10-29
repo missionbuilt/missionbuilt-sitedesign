@@ -2,7 +2,7 @@
 // make a test file a route.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { onRequestPost, onRequest, cleanVia, cleanFounderName } from '../functions/api/first.js';
+import { onRequestPost, onRequest, cleanVia, cleanFounderName, isEmail } from '../functions/api/first.js';
 
 const KEY = 'bd-test-key';
 const OLD = String(Date.now() - 10_000);
@@ -212,4 +212,30 @@ test('neither field ever appears in a log line or the answer', async () => {
     assert.ok(!text.includes('Secret') && !text.includes('via'));
   } finally { console.log = orig; }
   assert.ok(logs.every((l) => !l.includes('Secret') && !l.includes('via')));
+});
+
+test('strict address check: plain addresses pass', () => {
+  for (const ok of ['a@b.co', 'first.last+gym@example.com', "o'neil@mail.example.org", 'x_y-z@sub-1.example.io', 'a@xn--bcher-kva.xn--p1ai']) {
+    assert.equal(isEmail(ok), true, ok);
+  }
+});
+
+test('strict address check: odd or broken addresses are refused', () => {
+  const long = 'a'.repeat(65) + '@b.co';
+  const huge = 'a@' + 'b'.repeat(60) + '.' + 'c'.repeat(60) + '.' + 'd'.repeat(60) + '.' + 'e'.repeat(60) + '.' + 'f'.repeat(10) + '.com';
+  for (const bad of ['', 'nope', '@b.co', 'a@', 'a@b', 'a@b.c', 'a@@b.co', 'a@b@c.co', '.a@b.co', 'a.@b.co', 'a..b@c.co',
+    'a@b..co', 'a@.b.co', 'a@b.co.', 'a@-b.co', 'a@b-.co', 'a@b.c0m', 'a b@c.co', '"a"@b.co', '<x>@b.co', 'a@b.co>',
+    'a,b@c.co', 'a@[1.2.3.4]', 'é@b.co', 'a@bü.co', 'a@b.co\n', long, huge]) {
+    assert.equal(isEmail(bad), false, JSON.stringify(bad));
+  }
+});
+
+test('a broken address that the old check let through: 400, nothing sent, nothing stored', async () => {
+  for (const email of ['a..b@c.co', 'a@b..co', '<x>@b.co']) {
+    const store = kv(); const bd = buttondown();
+    const res = await onRequestPost({ request: post({ email, t: OLD }), env: { BETA_KV: store, BUTTONDOWN_API_KEY: KEY } }, bd);
+    assert.equal(res.status, 400);
+    assert.equal(bd.calls.length, 0);
+    assert.equal(store.m.size, 0);
+  }
 });

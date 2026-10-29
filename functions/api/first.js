@@ -26,7 +26,25 @@
  * only for the hourly per-IP counter under the `first-rl:` prefix).
  */
 
-const EMAIL = /^[^\s@]{1,64}@[^\s@]{1,190}\.[^\s@]{2,24}$/;
+// A plain address only (#194 "strict email validation"): ASCII, the usual characters before the @
+// (no quotes, spaces or brackets), no dot at either end or two in a row, real host-name labels
+// after it, a letter top-level domain (or a punycode one), 254 characters at most.
+const LOCAL = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*$/;
+const LABEL = /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/;
+const TLD = /^(?:[a-z]{2,24}|xn--[a-z0-9-]{1,59})$/;
+
+/** True only for an address we'd hand to Buttondown. Expects it trimmed and lowercased. */
+export function isEmail(s) {
+  if (typeof s !== 'string' || s.length > 254) return false;
+  const at = s.lastIndexOf('@');
+  if (at < 1 || s.indexOf('@') !== at) return false;
+  const local = s.slice(0, at);
+  const labels = s.slice(at + 1).split('.');
+  if (local.length > 64 || !LOCAL.test(local)) return false;
+  if (labels.length < 2 || !labels.every((l) => LABEL.test(l))) return false;
+  return TLD.test(labels[labels.length - 1]);
+}
+
 const RATE_LIMIT = 5;          // posts per IP per window
 const RATE_WINDOW = 3600;      // seconds
 const MIN_AGE_MS = 2000;       // form must be at least this old
@@ -144,7 +162,7 @@ export async function onRequestPost({ request, env }, deps = {}) {
   // Not open until Mike sets the Buttondown key: nothing is sent or stored.
   if (!env.BUTTONDOWN_API_KEY) return answer('closed', 503);
 
-  if (!EMAIL.test(email)) return answer('bad', 400);
+  if (!isEmail(email)) return answer('bad', 400);
 
   // No counter store, no sign-ups: the limit never skips itself.
   if (!env.BETA_KV) return answer('closed', 503);
