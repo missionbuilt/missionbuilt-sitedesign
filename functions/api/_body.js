@@ -22,7 +22,11 @@ export async function readCapped(request, max) {
 
   const ctype = request.headers.get('content-type') || '';
   if (ctype.includes('application/json')) {
-    try { return JSON.parse(new TextDecoder().decode(bytes)); } catch { return {}; }
+    try {
+      // A non-object (null, a number) is unparseable here; null must only ever mean "over the cap".
+      const v = JSON.parse(new TextDecoder().decode(bytes));
+      return v && typeof v === 'object' ? v : {};
+    } catch { return {}; }
   }
   if (ctype.toLowerCase().includes('application/x-www-form-urlencoded')) {
     return Object.fromEntries(new URLSearchParams(new TextDecoder().decode(bytes)));

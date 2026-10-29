@@ -268,6 +268,23 @@ test('a chunked ~5 KB body with no content-length: 413, read stops at the cap, n
   assert.ok(pulled.n <= 4096 + 1024, `read ${pulled.n} bytes`);
 });
 
+test('a JSON body of null is a bad post (not 413), and sends and stores nothing', async () => {
+  const store = kv(); const bd = buttondown(201);
+  const { req } = chunked('https://missionbuilt.io/api/first', 'null');
+  const res = await onRequestPost({ request: req, env: { BETA_KV: store, BUTTONDOWN_API_KEY: KEY } }, bd);
+  assert.notEqual(res.status, 413);
+  assert.equal(bd.calls.length, 0);
+  assert.equal(store.m.size, 0);
+});
+
+test('the cap is exact on the stream path: 4096 bytes is read, 4097 is refused', async () => {
+  const { readCapped } = await import('../functions/api/_body.js');
+  const mk = (n) => chunked('https://missionbuilt.io/api/first', JSON.stringify({ p: 'x'.repeat(n - 8) })).req;
+  const ok = await readCapped(mk(4096), 4096);
+  assert.equal(ok.p.length, 4096 - 8);
+  assert.equal(await readCapped(mk(4097), 4096), null);
+});
+
 test('a small chunked body with no content-length still signs up', async () => {
   const bd = buttondown(201);
   const { req } = chunked('https://missionbuilt.io/api/first', JSON.stringify({ email: 'a@b.co', t: OLD }));
