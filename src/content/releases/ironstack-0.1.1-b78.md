@@ -8,6 +8,26 @@ status: shipped
 build: 78
 ---
 
+**Add and copy workouts right in Plan, count yourself into timed sets, and turn Reps with the watch's Digital Crown.**
+
+**NEW: Add a workout, and Copy this week forward.** On a program's page, tap Edit. Under a week you can drag a workout to move it, add a workout at the end, or copy this week forward so next week starts as a copy of this one (as it is, or +5 lb or +1 rep on the main lifts). Undo puts it back. A new workout is named "Workout 5", or "Week 3, workout 4" on a starter you're using, and the typed line on a workout's page takes "front squat 3x5 @7" and adds it.
+
+**NEW: Get in position first.** A timed set, like a plank or a wall sit, counts 3, 2, 1 before its timer starts. Your watch gives a short buzz at each number and one long buzz as the time starts. With voice cues on, you hear "Go." Turn it off in Settings › The clock › Get-in-position countdown. Rest, EMOM and a stopwatch start when you tap, as before.
+
+**CHANGED: "Use for today".** The button that puts a workout on Today for today only used to read Add to today. While a workout is live, Add to this workout is gone.
+
+**FIXED: The watch's Digital Crown changes Reps** after you tap Reps on the set screen.
+
+**FIXED: Groups.** A group you make under Up next has an Ungroup button after Done. An exercise you already started comes out of a group you leave it in. Undo after dragging an exercise no longer also undoes the drag.
+
+**FIXED: Carries in feet or yards on the gym board** read "50 ft" or "20 yd", not "50 reps". This needs MissionStack's next build on the board.
+
+**Known:** Add a workout greys out once a starter's week already holds 7 workouts. That limit goes in the next build.
+
+**Try this:** Open a starter you're using, tap Edit, and tap Add a workout, then Undo. Copy week 2 forward and read week 3. Start a plank and count 3, 2, 1 with your wrist on: short buzz at each number, long buzz at the start. On the watch, open a set, tap Reps, and turn the Crown. Group two exercises under Up next, tap Done, then Ungroup. Tap Use for today on a workout and look at Today.
+
+## Every change in this build
+
 ### Plan
 
 - **A program's page has Edit.** In Edit, under the week: drag a workout to move it, Add a workout (an empty workout at the end, opened so you can type its exercises), and Copy this week forward. Copy this week forward moved out of the ⋯ menu.
