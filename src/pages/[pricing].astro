@@ -22,16 +22,16 @@ const founding = inFoundingWindow();
 const paid = pricing.plans.filter((p) => p.monthly);
 ---
 <BaseLayout
-  title="Pricing · IronStack, MealStack and The Stack"
-  description="IronStack is free. Pay for what runs your day: IronStack Pro, MealStack, or The Stack with both."
+  title="Pricing · IronStack"
+  description="IronStack is free: unlimited logging, programs, history and the watch. IronStack Pro adds Stack AI and your whole training history."
   noindex={!launch}
 >
   <TopNav active="pricing" />
   <main class="pricing">
     <section class="hero">
       <p class="eyebrow">Pricing</p>
-      <h1>Free to lift. Pay for what runs your day.</h1>
-      <p class="free-line">IronStack is free: unlimited logging, programs, history, the watch and the gym board.</p>
+      <h1>Free to lift. Pay for what costs us money.</h1>
+      <p class="free-line">IronStack is free: unlimited logging, programs, your own exercises and the watch. If you stop paying, you keep everything you built and logged.</p>
     </section>
 
     <section class="plans" aria-labelledby="plans-heading">
@@ -90,7 +90,6 @@ const paid = pricing.plans.filter((p) => p.monthly);
           </tbody>
         </table>
       </div>
-      <p class="note">MissionStack, for iPad, Mac and Apple TV, is included in every plan.</p>
     </section>
 
     <section class="coaches" aria-labelledby="coaches-heading">
