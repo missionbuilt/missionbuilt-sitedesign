@@ -20,7 +20,7 @@
     }
   ],
   "coach": {
-    "line": "Your lifters never pay. Lifters you coach on Coach Pro 10 and 25 get IronStack Pro while they're linked.",
+    "line": "Your lifters never pay.",
     "tiers": [
       {
         "id": "coach_free",
@@ -116,13 +116,6 @@
       ]
     },
     {
-      "name": "Sync across your devices through your iCloud",
-      "cells": [
-        "✓",
-        "✓"
-      ]
-    },
-    {
       "name": "Stack AI answers from your log, on your phone",
       "cells": [
         "✓",
@@ -182,11 +175,11 @@
     },
     {
       "q": "What happens if I stop paying?",
-      "a": "You keep everything you built and logged."
+      "a": "You keep every set, program and chat. Insights goes back to 30 days."
     },
     {
       "q": "Does the free week need a card?",
-      "a": "No. Every new account gets a week of Stack AI, and it ends on its own."
+      "a": "No card. Sign in with Apple once and you get a week of Stack AI, and it ends on its own."
     },
     {
       "q": "Android?",
