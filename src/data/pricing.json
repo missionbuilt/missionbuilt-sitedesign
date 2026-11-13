@@ -168,8 +168,8 @@
   ],
   "founding": {
     "window_start": null,
-    "window_end": "2027-01-31",
-    "line": "Founding price for your first year. Renews at the regular price."
+    "window_end": "2027-02-28",
+    "line": "Founding price. Keep it as long as you stay."
   },
   "questions": [
     {

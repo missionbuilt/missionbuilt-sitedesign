@@ -23,7 +23,7 @@ const paid = pricing.plans.filter((p) => p.monthly);
 ---
 <BaseLayout
   title="Pricing · IronStack"
-  description="IronStack is free: unlimited logging, programs, history and the watch. IronStack Pro adds Stack AI and your whole training history."
+  description="IronStack is free: unlimited logging, programs and the watch. IronStack Pro adds Stack AI and your whole training history."
   noindex={!launch}
 >
   <TopNav active="pricing" />
@@ -57,6 +57,7 @@ const paid = pricing.plans.filter((p) => p.monthly);
               )}
             </p>
             {founding && p.founding && <p class="founding annual">{pricing.founding.line}</p>}
+            <p class="trial annual">14 days free, then {p.annual} a year.</p>
             <p class="price monthly"><strong>{p.monthly}</strong><span>/month</span></p>
             <p class="trial monthly">14 days free, then {p.monthly} a month.</p>
           </article>
