@@ -53,13 +53,12 @@
  * third-party AI named and permission asked first; 5.1.3 wants the health data named
  * and never used for marketing; 1.2 wants reporting and blocking for Social.
  *
- * HOLD (Stack AI M1 "measure", Logbook 2026-10-21, written on feat/privacy-stackai-measure; reworked
- * after the privacy reviews of 10-21 and 10-23): the count-and-cost row's second line (stackai_turn),
- * the first line's other counts, and the daily totals' kinds, cache reuse and spacing (mb-ops 0.2.0,
- * worked out from stackai_request's timestamps; nothing stored per install) go live with the deploy
- * of ironstack-coach and ironstack-stackai from ironstack feat/stackai-m1-no24 at 878379d
- * (stackai-proxy 0.4.0, M1 without #24) and of mb-ops 0.2.0 from the same commit, not
- * before; set EFFECTIVE to that day. The rate-limit lines (#24, Worker 0.5.0) are not on this page.
+ * LIVE 2026-11-12 (was HOLD, Stack AI M1 "measure", Logbook 2026-10-21; Mike's go 2026-11-12): the count-and-cost
+ * row's second line (stackai_turn), the first line's other counts, and the daily totals' kinds, cache reuse and
+ * spacing (mb-ops 0.2.0, worked out from stackai_request's timestamps; nothing stored per install). The Workers
+ * that write them are ironstack-coach and ironstack-stackai 0.4.0 from ironstack feat/stackai-owner-exempt-iron at
+ * 3620a13 (M1 without #24, plus the owner exemption #252), deployed after this page was live; mb-ops 0.2.0 is
+ * from 878379d. The rate-limit lines (#24, Worker 0.5.0) are not on this page.
  *
  * Every sentence here must be true of the build that is live. The Stack AI cell says what
  * the app's Stack AI permission screen says, in the same order; its last sentence (the
@@ -72,7 +71,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import SiteFooter from '../../../components/SiteFooter.astro';
 import TopNav from '../../../components/TopNav.astro';
 
-const EFFECTIVE = 'October 21, 2026';
+const EFFECTIVE = 'November 12, 2026';
 // The day POST /admin/capture/erase-all answered "done": true (Mike, 2026-10-05, 13:12 EDT).
 const COPIES_ERASED = 'October 5, 2026';
 const ASK = 'mailto:support@missionbuilt.io?subject=IronStack%20data%20request';
