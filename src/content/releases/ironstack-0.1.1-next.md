@@ -2,41 +2,32 @@
 app: ironstack
 version: "0.1.1"
 order: 1001
-changes: 4
-groups: [{"title": "Logging", "slug": "logging", "leads": ["A saved workout's sets open on what you lifted last time, set by set, not the weights it was saved with."]}, {"title": "Today", "slug": "today", "leads": ["In a superset or circuit, a log keeps you on the workout page with the next exercise's set highlighted."]}, {"title": "Stack AI", "slug": "stack-ai", "leads": ["Loading a workout from Stack AI puts it on Today without starting it."]}, {"title": "Apple Watch", "slug": "apple-watch", "leads": ["Finish a workout on your watch and the phone's \"End and log?\" goes away."]}]
+changes: 2
+groups: [{"title": "Exercise info", "slug": "exercise-info", "leads": ["NEW: Info shows how to do 377 more exercises, 410 in all, up from 33.", "Known: Some exercises have no cue card yet (about 850 of 1,259)."]}, {"title": "Logging", "slug": "logging", "leads": ["FIXED: A saved workout's sets open on what you lifted last time, set by set, not the weights it was saved with."]}]
 status: in-progress
 ---
 
-<!-- WAITING on the product lead (#146): the cue headline line, the count of exercises with a cue, and the cue "Try this" step. Nothing about cues is written here until those words are posted. Remove this note when they are in. -->
+**Info shows how to do 410 exercises, and a saved workout opens on what you lifted last time.**
 
-**What you will notice:** open a workout you've done before and the weight on each working set is last time's, not the weight the workout was saved with. Reps and warm-up sets stay as the workout has them. A program's week-by-week weights, and lifts done per hand, on body weight, with a band or assisted, work as before.
+**NEW: Cue cards for 410 exercises, up from 33.** Tap Info on an exercise in Plan, in search or in a workout, and you get a setup line, how it should feel, the usual miss, and the cues. An exercise without a card yet reads as before.
 
-**Try this:**
-1. Do a workout, change a weight on one working set, and finish.
-2. Open the same saved workout again. The set you changed opens on last time's weight.
-3. On a program, open a week that has its own weights and check they are as the program wrote them.
-4. Log a warm-up set by hand on a workout that has no warm-up sets, and look at Today.
+**FIXED: Sets open on last time's weights.** Open a workout you've done before and each working set shows what you lifted last time, not the weight the workout was saved with. Reps and prep sets stay the workout's. A program's week-by-week weights, and lifts done per hand, on body weight, with a band or assisted, work as before.
 
-**Known:**
-- Up next and Change planned sets still show the weights the workout was saved with. The set itself opens on last time's.
-- If you do a set before a warm-up ladder you built, the warm-up steps you skipped still show on Today as sets to do.
-- A warm-up you log yourself, on a workout with no warm-up sets, counts as one of its sets, so the workout's last set can be missing from Today and the watch. This was already so; the missing set used to be the first one.
-- Tapping + Prep after you've logged more working sets than the plan had can put the new warm-up row in the wrong place.
+**Known:** About 850 of the 1,259 exercises have no cue card yet. Up next and Change planned sets still show the weights the workout was saved with. The Known lines under Logging below still apply.
+
+**Try this:** Open Plan, tap Exercises, open Pause Squat and tap Info. Open a lift you do often and check its cues against how you do it; if one reads wrong, send it with Share Beta Feedback and name the exercise. Do a workout, change the weight on one working set, finish, and open the same workout again: that set opens on last time's weight. Open a program week with its own weights and check they are as the program wrote them.
 
 ## Every change in this build
 
+### Exercise info
+
+- **NEW:** Info shows how to do 377 more exercises, 410 in all, up from 33. Each has a short setup, how it should feel, the usual miss, and its cues.
+- **Known:** Some exercises have no cue card yet (about 850 of 1,259). Info reads as it did before for those. More arrive in the next builds, with no change needed on your phone.
+
 ### Logging
 
-- **A saved workout's sets open on what you lifted last time, set by set, not the weights it was saved with.** Reps and prep sets stay the workout's. A program's week-by-week weights, and lifts done per hand, on body weight, with a band or assisted, work as before.
-
-### Today
-
-- **In a superset or circuit, a log keeps you on the workout page with the next exercise's set highlighted.** The set sheet no longer opens by itself; tap the set when you're ready. The sheet that opened by itself could come up with a Log button that did nothing.
-
-### Stack AI
-
-- **Loading a workout from Stack AI puts it on Today without starting it.** A swap, sets or note card accepted before you start now asks you to start first; it used to start the workout quietly, so the Load went into a workout already running.
-
-### Apple Watch
-
-- **Finish a workout on your watch and the phone's "End and log?" goes away.** Tapping it afterwards could add a second, empty workout.
+- **FIXED:** A saved workout's sets open on what you lifted last time, set by set, not the weights it was saved with. Reps and prep sets stay the workout's. A program's week-by-week weights, and lifts done per hand, on body weight, with a band or assisted, work as before.
+- **Known:** Up next and Change planned sets still show the weights the workout was saved with. The set itself opens on last time's.
+- **Known:** If you do a set before a prep ladder you built, the prep steps you skipped still show on Today as sets to do.
+- **Known:** A warm-up you log yourself, on a workout with no prep sets, counts as one of its sets, so the workout's last set can be missing from Today and the watch. This was already so; the missing set used to be the first one.
+- **Known:** Tapping + Prep after you have logged more working sets than the plan had can put the new prep row in the wrong place.
