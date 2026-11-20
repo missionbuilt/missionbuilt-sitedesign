@@ -67,6 +67,8 @@ const logs = defineCollection({
     ogImageAlt: z.string().optional(),
     /** Hidden from listings, the feed and routing while true. */
     draft: z.boolean().default(false),
+    /** Staged: the page builds at its URL with noindex, but is left out of /logs, the feed, the home page, tool pages and the sitemap. Take it off at the go. */
+    unlisted: z.boolean().default(false),
   }),
 });
 

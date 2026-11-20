@@ -1,0 +1,82 @@
+---
+title: "Why I built my own logging app"
+accent: "logging app"
+eyebrow: "Why IronStack exists"
+standfirst: "A logging app has one job: get the set down between sets without a fight. Most of them made me fight."
+description: "What I wanted to log in the gym and couldn't, what IronStack is meant to solve, and how it was designed and tested. By the lifter who built it."
+date: 2026-12-15
+tool: ironstack
+ogImage: /images/logs/why-i-built-my-own-logging-app-og.jpg
+ogImageAlt: "Why I built my own logging app. A log from Mission Built."
+unlisted: true
+---
+
+{/* STAGED, #288 draft v1 (Billboard, 2026-11-20). Unlisted and noindex until Mike's typed go; date is the soft launch (about 12-15). Everything in [MIKE: ...] is only Mike's to fill in; nothing was invented to cover a gap. Numbers marked [CHECK] go to the product lead for the claim check one week before publishing (b80 and b81). Veteran-owned comes through lightly in the build paragraph, in Mike's words, not as a headline or a badge. */}
+
+Here is what I want from a logging app. Walk up to the bar. Do the set. Get it down before the next one. Nothing else.
+
+That is the whole job. It is also the job most of them get wrong.
+
+## The moments
+
+I have used a lot of logging apps. Every one was missing something, and the something was always small.
+
+[MIKE: the first lift you wanted to log and couldn't. Which app, which gym, what you did instead.]
+
+The add button I couldn't find. The free plan that held a few routines, when my program was eight weeks long. The ads and the feed between sets, when I only opened the app to log one. A loaded sled push that the app wanted in reps, when it is feet and weight. [MIKE: the sled, the load, the distance, the gym.]
+
+And the strongman lifts. The yoke, the log, the stones, and the attempts you make and miss, which a log should count and most can't.
+
+Then the phone. [MIKE: one scene, between sets, what pulled you out of the workout.] My watch app was a remote for the phone, so the phone stayed in my hand.
+
+Small things. Every set, every week.
+
+Small things compound. In the gym and in software.
+
+## What it is meant to solve
+
+Less friction between sets. That is the whole product.
+
+So when you open a workout you have done before, each working set already holds what you lifted last time. Most sets are one tap. Add is always the first row: type a lift the library doesn't have and the first thing you see is how to add it. Distances read in their own units, feet for a sled push, metres for a row. A program follows where you are, not the calendar. Miss a Tuesday and nothing breaks.
+
+The Apple Watch app runs the workout. Log the set, run the rest clock, leave the phone in the locker.
+
+Logging in IronStack is free, with no caps on programs, workouts or exercises. No ads. No feed. Social is the people you invite and the people who invite you.
+
+## How it was designed
+
+Every screen traces to a moment in the gym. If I couldn't name the moment, the screen didn't get built.
+
+A few rules I hold it to, in plain words:
+
+- A set is one entry. The app never logs a set for you.
+- Never hide the add button.
+- A workout is called a workout, everywhere.
+- No paywall in the middle of a workout.
+- Your log stays yours, on your phone. No usage analytics.
+
+Here is the honest part. Two of the worst moments this year came from my own beta. I typed a lift the library didn't have and couldn't find the add button. I finished workout 3 and the app offered me workout 1 again. [MIKE: the morning you caught it, and what you said.] Both were fixed in the next build, and the add button became a rule for every app I make.
+
+Exercise Info now carries a card for 410 lifts: how to set up, how it should feel, the usual miss, and the cues. I checked each one against coaching sources before I approved it.
+
+[MIKE: one line from your Army years that explains how you build. The Combined Air Operations Center at Prince Sultan Air Base, 2002 to 2003. Checklists, plans that survive contact, showing up when you don't feel like it. In your words.] Mission Built is veteran-owned, and it shows in how I build: [MIKE: finish the thought in one sentence].
+
+I built this after hours, with AI doing a lot of the work. Here is the line I hold: AI scaled my judgment. It did not replace it. I decide what ships. The agents do the typing and the testing. I'll tell the whole story in the next post.
+
+## How it was tested
+
+Not with guesses. With a weekly TestFlight build, real testers, and me logging my own training on it. [CHECK: number of weekly builds and testers] The test suite runs about 2,700 unit tests plus a UI gate before anything moves. [CHECK: product lead to confirm the count at b80 and b81] Design, privacy and security reviews read every change before it merges.
+
+None of that makes it perfect. It makes it honest, and fixed fast when it isn't.
+
+## Where it's going
+
+IronStack is the launch app. Two more are in development and come later. MealStack times your meals around your training, and it's in beta now. A companion for the big screen and the coach's desk is coming, and it will be included. No dates, no prices. IronStack stands on its own.
+
+## One thing to try
+
+Open IronStack and type the strangest lift you do into the exercise search. If we don't have it, adding it is the first row. Then log it in its own units.
+
+Before 12-15, join the beta at [missionbuilt.io/first](/first). After, get the app. [LINK: App Store page, set at launch]
+
+*Next: how I built it, working with AI.*

@@ -41,7 +41,7 @@ import { getCollection } from 'astro:content';
 import { byNewest, logUrl } from '../../../data/logs';
 
 /** Logs about MealStack, newest first. The first is the story the Why section links to. */
-const logs = (await getCollection('logs', ({ data }) => data.tool === 'mealstack' && !data.draft)).sort(byNewest);
+const logs = (await getCollection('logs', ({ data }) => data.tool === 'mealstack' && !data.draft && !data.unlisted)).sort(byNewest);
 const story = logs[0];
 const storyHref = story ? logUrl(story) : '/logs';
 const storyTitle = story ? story.data.title : 'Logs';
