@@ -38,7 +38,7 @@ export default defineConfig({
       // /founders waits for Mike's go (founders.astro's LIVE).
       && new URL(page).pathname !== '/founders/'
       // Staged launch post (#288): unlisted until Mike's go; take this line out with `unlisted`.
-      && new URL(page).pathname !== '/logs/why-i-built-my-own-logging-app/',
+      && new URL(page).pathname !== '/logs/i-built-the-logging-app-i-couldnt-find/',
   })],
   // Static output by default — the whole site can be a static export.
   output: 'static',
