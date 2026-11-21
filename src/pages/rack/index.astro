@@ -120,10 +120,10 @@ const comingLater = comingFor({ announced: true, when: 'later' });
 // Together is one line: a full-width row under the grid, like Coming later (QA 10-16).
 const comingTogether = comingFor({ announced: MS, app: 'together', when: 'january' });
 
-const title = MS ? 'IronStack, MealStack and MissionStack · The apps · Mission Built' : 'IronStack, MealStack and the gym board · The apps · Mission Built';
+const title = MS ? 'IronStack, MealStack and MissionStack · The apps · Mission Built' : 'IronStack and MealStack · The apps · Mission Built';
 const description = MS
   ? 'Three apps for people who train. IronStack logs every set on iPhone and Apple Watch. MealStack times your meals around your training. MissionStack plans your weeks on iPad and Mac and puts the workout on the gym TV. In a private beta now; on the App Store January 1.'
-  : 'Apps for people who train. IronStack logs every set on iPhone and Apple Watch. MealStack times your meals around your training. The gym board puts the workout on the TV. In a private beta now; on the App Store January 1.';
+  : 'IronStack logs every set on iPhone and Apple Watch. MealStack times your meals around your training and is in beta. IronStack is in a private beta now and reaches the App Store January 1.';
 ---
 <BaseLayout
   title={title}
@@ -136,12 +136,12 @@ const description = MS
     <section class="hero">
       <p class="eyebrow">
         <span class="dots" aria-hidden="true">▮▮▮</span>
-        <span>Three apps · one mission</span>
+        <span>IronStack first</span>
         <span class="dots" aria-hidden="true">▮▮▮</span>
       </p>
       {/* COPY (plan §4): the home has the ad's H1 thread; this page is the shelf. */}
       <h1 class="display">The apps<span class="dot">.</span></h1>
-      <p class="subtitle">One for the lift, one for the food around it, one for the big screen. In a private beta now; on the App Store January 1.</p>
+      <p class="subtitle">IronStack is the lifting log. MealStack, the food around it, is in beta. IronStack is in a private beta now and reaches the App Store January 1.</p>
     </section>
 
     <section class="apps" aria-label="The apps">
@@ -190,24 +190,12 @@ const description = MS
     {/* The Full Stack's mark (Mike 10-16 17:09). COPY */}
     <section class="stackband" aria-label="The Full Stack">
       <StackAIMark size={72} />
-      <p class="sb-line">Three apps. One stack.</p>
       <a class="soft" href="/rack/plans">The Full Stack →</a>
     </section>
 
     <section class="block coming" id="coming" aria-labelledby="coming-h">
-      <p class="section-label">Coming January 1</p>
-      {/* COPY (plan §5): one list, src/data/coming.ts. Each item comes off with the build that ships it. */}
       <h2 class="strip-h" id="coming-h">What's next.</h2>
-      <div class="coming-grid">
-        {comingGroups.map((g) => (
-          <div class="coming-col">
-            <p class="coming-app">{g.name}</p>
-            <ul>{g.items.map((c) => <li><b>{c.title}</b>{c.detail ? ' ' + c.detail : ''}</li>)}</ul>
-          </div>
-        ))}
-      </div>
-      {comingTogether.length > 0 && <p class="later"><span class="tag">All three</span> {comingTogether.map((c) => c.title + (c.detail ? ' ' + c.detail : '')).join(' ')}</p>}
-      <p class="later"><span class="tag">Coming later</span> {comingLater.map((c) => c.title).join(' ')}</p>
+      <p class="later">Coming soon, included: your workout on the big screen and at the coach's desk.</p>
     </section>
 
     <section class="block three-up">

@@ -33,7 +33,7 @@ export const COMING: ComingItem[] = [
     star: true,
     title: 'A demo and coaching cues for every lift.',
     detail:
-      'Tap Info on any lift: a looping demo, what to set up, what you should feel, the common miss. (Testing now on 4 lifts.)',
+      'Tap Info on an exercise for a cue card: the setup, how it should feel, the usual miss. 410 exercises so far, with demos where there is a clip.',
   },
   {
     id: 'watch-out-of-range',
