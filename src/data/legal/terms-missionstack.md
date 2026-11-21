@@ -14,7 +14,7 @@
 
 ## 1. Who we are
 
-MissionStack is made by Mission Built ("Mission Built", "we", "us"), which is Mike Nichols, in Pittsburgh, Pennsylvania, USA.
+MissionStack is made by Mission Built LLC ("Mission Built", "we", "us"), a Pennsylvania limited liability company in Pittsburgh, Pennsylvania, USA.
 
 Email: support@missionbuilt.io.
 
@@ -168,6 +168,6 @@ If we change these terms, we'll post the new version here with a new effective d
 
 ## 22. Contact
 
-Mission Built, which is Mike Nichols · Pittsburgh, Pennsylvania, USA
+Mission Built LLC, a Pennsylvania limited liability company, Pittsburgh, Pennsylvania, USA
 **support@missionbuilt.io**
 Support: [missionbuilt.io/rack/support](/rack/support)

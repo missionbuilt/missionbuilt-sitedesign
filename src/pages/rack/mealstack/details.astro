@@ -58,9 +58,9 @@ const stats = [
 
 type Card = { label: string; pillar: string; verdict: string; evidence: string; them: string; mark?: boolean };
 const cards: Card[] = [
-  { mark: true, label: 'Timing', pillar: 'Protect the session', verdict: 'The day is anchored to the session, not the clock.', evidence: 'The carb surge, the fuel around the session and the meals after it are tied to the session. Everything before them is worked out from the time you actually ate. A late morning tightens the gaps and says what moved; it never pushes the carb surge past the start of the session.', them: 'Alarms every N hours, or routines that roll lateness forward into the session.' },
+  { mark: true, label: 'Timing', pillar: 'Protect the workout', verdict: 'The day is anchored to the workout, not the clock.', evidence: 'The carb surge, the fuel around the workout and the meals after it are tied to the workout. Everything before them is worked out from the time you actually ate. A late morning tightens the gaps and says what moved; it never pushes the carb surge past the start of the workout.', them: 'Alarms every N hours, or routines that roll lateness forward into the workout.' },
   { label: 'Macros', pillar: 'Protect the protein', verdict: 'Weighed from the plate, or typed. Never both.', evidence: 'A meal is a list of ingredients and quantities, so the numbers come from the ingredients and editing a portion moves them. The daily target lives apart from the plan, so the editor can say "this plate puts the day 40 g of carbs over" while you are still building it.', them: 'A food database and a total. No plan to measure the plate against.' },
-  { label: 'Logging', pillar: 'Protect the record', verdict: 'Log when you eat, not when it was due.', evidence: 'The sheet opens on now with 15, 30 and 60 minutes ago one tap away, and shows what every remaining meal does at that time before you commit. Move today\'s session from the Today screen and the meals tied to it move with it.', them: '"Done" means now, so the day keys off the wrong number.' },
+  { label: 'Logging', pillar: 'Protect the record', verdict: 'Log when you eat, not when it was due.', evidence: 'The sheet opens on now with 15, 30 and 60 minutes ago one tap away, and shows what every remaining meal does at that time before you commit. Move today\'s workout from the Today screen and the meals tied to it move with it.', them: '"Done" means now, so the day keys off the wrong number.' },
   { label: 'Travel', pillar: 'Protect the day', verdict: 'Home or Away, in one tap.', evidence: 'Flip Travel on Today, or let the app do it when you are far from home. With IronStack on the phone, it is one switch for both apps. Skip a meal and it stays a decision, not a miss. History compares home days to travel days.', them: 'One schedule, and it assumes you are home.' },
   { label: 'Surfaces', pillar: 'Protect the protein', verdict: 'You should rarely have to open it.', evidence: 'Notifications carry the plate and two actions: "Log it" and "Not yet · 20 min". Home and Lock Screen widgets with a live countdown. A card on the Lock Screen from an hour before each meal to thirty minutes after, with a Log button on it and at the top of the screen.', them: 'A badge, and a screen you unlock to answer it.' },
   { label: 'Stack AI', pillar: 'Protect the day', verdict: 'An AI that proposes. You decide.', evidence: 'Turn it on and let Stack AI build the plan, or send it the plan your coach wrote, as a photo or a PDF, and it brings it in for you to review. Ask for targets and a fixed formula does the arithmetic, not the model. Eating out, hand it up to five menu photos, a link or a restaurant name, and it fits options to this meal\'s numbers. Nothing changes until you tap a card. Not a doctor, and it says so before you ask.', them: 'A chatbot that talks, or an AI that edits your plan without asking.' },
@@ -68,14 +68,14 @@ const cards: Card[] = [
 
 type Step = { n: string; title: string; body: string };
 const steps: Step[] = [
-  { n: '01', title: 'Pick how to start.', body: 'Just the times, your coach\'s plan, let Stack AI build it, or build it yourself; or see a finished day first. Just the times builds a working day from when you eat and train, no AI and no account: the morning meals follow one another from your first meal, the carb surge before the session and everything after it are tied to the session. Five meals by default; change the number in Settings. Put food on the plates when you are ready, or let Stack AI fill them.' },
+  { n: '01', title: 'Pick how to start.', body: 'Just the times, your coach\'s plan, let Stack AI build it, or build it yourself; or see a finished day first. Just the times builds a working day from when you eat and train, no AI and no account: the morning meals follow one another from your first meal, the carb surge before the workout and everything after it are tied to the workout. Five meals by default; change the number in Settings. Put food on the plates when you are ready, or let Stack AI fill them.' },
   { n: '02', title: 'Log when you actually ate.', body: 'One tap for now, one for thirty minutes ago. The sheet shows what every remaining meal does before you commit, and the notification can log it without opening the app. The carb surge holds. The rest of the day bends around you.' },
   { n: '03', title: 'Ask when the plan breaks.', body: 'Client lunch, airport, empty fridge. Send Stack AI the menu, a link or what is in the kitchen and it fits an order to this meal\'s numbers. Nothing changes until you tap. History keeps score, so you can see what the road does to you.' },
 ];
 
 type Versus = { k: string; them: string; us: string; honest?: boolean };
 const versus: Versus[] = [
-  { k: 'Anchor', them: 'The clock.', us: 'Your session.' },
+  { k: 'Anchor', them: 'The clock.', us: 'Your workout.' },
   { k: 'A late meal', them: 'The next alarm fires anyway.', us: 'The rest of the day re-flows. The carb surge holds.' },
   { k: 'Macros', them: 'Typed in, or scanned, then summed.', us: 'Weighed from the plate, measured against a target you set.' },
   { k: 'Logging time', them: 'Now.', us: 'When you actually ate, with the consequence shown first.' },
@@ -106,7 +106,7 @@ const faqs: Faq[] = [
 type Quote = { text: string; who: string };
 const quotes: Quote[] = [];
 
-const title = 'MealStack, the details: meal timing built around your training session · Mission Built';
+const title = 'MealStack, the details: meal timing built around your training workout · Mission Built';
 const description = 'Fueling is training. MealStack is a meal timing tracker for people who train: protein stacked across the day, a carb surge that holds its time, a day you can change on the road, Stack AI to build the plan with you, and a log of when you actually ate. Not a nutrition app. iPhone, no account, your data in an open format. Private beta.';
 
 const ld = {
@@ -171,7 +171,7 @@ const ld = {
 
       <p class="subtitle">
         <span class="line1">Fueling is training.</span>
-        <span class="line2">A meal timing tracker for people who train. Your session doesn't move. Your meals do.</span>
+        <span class="line2">A meal timing tracker for people who train. Your workout doesn't move. Your meals do.</span>
       </p>
 
       <div class="hero-ctas">
@@ -195,13 +195,13 @@ const ld = {
       <h2 class="section-h2">Fueling is training.</h2>
       <div class="story">
         <p>I sat in a nutrition seminar at the Shaw Strength Summit and heard Nathan Payton say it plainly: if you are not eating properly, you are failing your training. Eating is part of your training.</p>
-        <p>That sent me home to rebuild how I eat, and then looking for an app that understood it. The meal-timer apps are alarm clocks. The routine apps roll a late morning into the session. The macro trackers know what I ate to the gram and have no opinion about when. Not one of them asks what time you train. So I built the one I needed. Four ideas hold up everything it does.</p>
+        <p>That sent me home to rebuild how I eat, and then looking for an app that understood it. The meal-timer apps are alarm clocks. The routine apps roll a late morning into the workout. The macro trackers know what I ate to the gram and have no opinion about when. Not one of them asks what time you train. So I built the one I needed. Four ideas hold up everything it does.</p>
       </div>
 
       <ol class="pillars" aria-label="The four pillars">
         <li><span class="num">01</span><span class="label">Protect the protein</span><span class="say">Protein has no storage tank. Stack it across the day, and never send it out alone.</span></li>
-        <li><span class="num">02</span><span class="label">Protect the session</span><span class="say">Your pre-workout meal is equipment, not a snack. It anchors backward from when you train and holds its time.</span></li>
-        <li><span class="num">03</span><span class="label">Protect the day</span><span class="say">Flights, time zones, a session that moved to 8pm. Change the day to recovery, move the session, swap the plate, keep going.</span></li>
+        <li><span class="num">02</span><span class="label">Protect the workout</span><span class="say">Your pre-workout meal is equipment, not a snack. It anchors backward from when you train and holds its time.</span></li>
+        <li><span class="num">03</span><span class="label">Protect the day</span><span class="say">Flights, time zones, a workout that moved to 8pm. Change the day to recovery, move the workout, swap the plate, keep going.</span></li>
         <li><span class="num">04</span><span class="label">Protect the record</span><span class="say">Log when you eat, not when it was due. Today shows what actually landed, so tomorrow is built on the real day.</span></li>
       </ol>
 
@@ -262,8 +262,8 @@ const ld = {
 
       <h3 class="sub-h3">And the rest</h3>
       <p class="prose">
-        Meals are plates. Fuel is what you take for the session rather than as a meal: pre-workout, the jug
-        you sip through the session, the shake after it, electrolytes, creatine, water. It can carry protein,
+        Meals are plates. Fuel is what you take for the workout rather than as a meal: pre-workout, the jug
+        you sip through the workout, the shake after it, electrolytes, creatine, water. It can carry protein,
         carbs and fat, and those count toward the day's totals. Fuel is never a meal: it isn't in the meal
         count, doesn't move the meals around it, and isn't scored for timing. It gets its own alert and its
         own line on the record.
@@ -444,7 +444,7 @@ const ld = {
 
     {/* ---------- CLOSER ---------- */}
     <section class="closer">
-      <p class="four">Protein · Session · Day · Record</p>
+      <p class="four">Protein · Workout · Day · Record</p>
       <p>
         Fueling is <strong>training.</strong>
       </p>

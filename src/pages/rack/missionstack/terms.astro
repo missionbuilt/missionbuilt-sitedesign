@@ -26,6 +26,6 @@ const DRAFT = true;
   footLinks={[{ label: 'Privacy', href: '/rack/missionstack/privacy' }, { label: 'Support', href: '/rack/support' }, { label: 'Acknowledgements', href: '/rack/acknowledgements' }]}
 >
   {/* COPY: description, standfirst and the whole terms text are drafts (brief §6). */}
-  <Fragment slot="byline">Mission Built, which is Mike Nichols · Pittsburgh, PA · {DRAFT ? 'Draft, not yet in force' : 'In force'}</Fragment>
+  <Fragment slot="byline">Mission Built LLC · Pittsburgh, PA · {DRAFT ? 'Draft, not yet in force' : 'In force'}</Fragment>
   <LegalProse draft={DRAFT} apps="MissionStack reaches"><Content /></LegalProse>
 </ToolNoteLayout>
