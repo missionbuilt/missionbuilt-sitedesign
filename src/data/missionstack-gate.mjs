@@ -6,4 +6,4 @@
  * the sitemap lists them and the third app is named MissionStack everywhere. (A plain .mjs so
  * astro.config.mjs can read it too.)
  */
-export const MISSIONSTACK_ANNOUNCED = true;
+export const MISSIONSTACK_ANNOUNCED = false;

@@ -73,7 +73,7 @@ const ironstack: ComparePage = {
   ],
   intro: [
     'IronStack is a lifting log for iPhone and Apple Watch. You bring your history, log a set by tapping, typing or saying it, and the rest clock talks in your earbuds.',
-    'One thing that isn\'t a row below: MissionStack puts the workout you\'re logging on a TV, an iPad or a Mac, one lifter at a time today.',
+    'One thing that isn\'t a row below: the big screen and the coach\'s desk are coming soon, included.',
   ],
   rows: [
     {
@@ -128,8 +128,7 @@ const ironstack: ComparePage = {
       key: 'demos',
       label: 'Exercise demos',
       ours: {
-        text: 'Testing now on 4 lifts.',
-        soon: 'A demo and coaching cues for every lift.',
+        text: 'Cue cards for 410 exercises, with demos where there is a clip.',
       },
       them: {
         hevy: { text: '"400+" exercises with animated demos (its comparison page says about 450). Custom exercises can take a video or GIF.', sources: [s('https://www.hevyapp.com/features/exercise-library/'), s(HEVY_VS_STRONG)] },
@@ -157,7 +156,7 @@ const ironstack: ComparePage = {
     {
       key: 'privacy',
       label: 'Privacy',
-      ours: { text: 'Not on the App Store yet, so there is no label to quote. Everything you log is a file on your phone. Nothing goes to Anthropic until you turn Stack AI on. IronStack sends no usage data at all.' },
+      ours: { text: 'Not on the App Store yet, so there is no label to quote. Everything you log is a file on your phone. Nothing goes to Anthropic until you turn Stack AI on. No usage analytics. Stack AI keeps a count of what each question cost, never what you asked.' },
       them: {
         hevy: { text: 'App Store label: no "Data Used to Track You" section shown. Linked to you: purchases, usage data (analytics), email, name, contacts. Not linked: user ID, sensitive info, diagnostics.', sources: [s(HEVY_APPSTORE)] },
         strong: { text: 'App Store label: no "Data Used to Track You" section shown. Linked to you (app functionality): health and fitness, purchases, email, user ID, device ID, crash data, other data.', sources: [s(STRONG_APPSTORE)] },
