@@ -36,7 +36,9 @@ export default defineConfig({
       // /press waits for Mike's yes on the launch preview.
       && new URL(page).pathname !== '/press/'
       // /founders waits for Mike's go (founders.astro's LIVE).
-      && new URL(page).pathname !== '/founders/',
+      && new URL(page).pathname !== '/founders/'
+      // /pricing is linkable from the soft launch but in the sitemap only from 1-1 (#44).
+      && (new URL(page).pathname !== '/pricing/' || String(process.env.PUBLIC_LAUNCH).toLowerCase() === 'true'),
   })],
   // Static output by default — the whole site can be a static export.
   output: 'static',
