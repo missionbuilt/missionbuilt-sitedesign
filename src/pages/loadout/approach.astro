@@ -1,4 +1,5 @@
 ---
+import { BOOK_META } from '../../data/book-meta';
 /**
  * The Approach — standalone page.
  *
@@ -82,7 +83,7 @@ const meddpicc: MeddpiccDimension[] = [
   { letter: 'C', name: 'Competition',      state: 'confirmed' },
 ];
 ---
-<BaseLayout
+<BaseLayout ogImage={BOOK_META.ogImage} ogImageAlt={BOOK_META.ogImageAlt}
   title="The Approach · The Loadout · Mission Built"
   description="A pre-call intelligence brief for sellers and technical sellers. Know the room before you walk in. Open-source, MIT-licensed, MCP-compatible."
   active="loadout"

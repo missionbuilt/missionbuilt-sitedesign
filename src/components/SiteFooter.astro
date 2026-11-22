@@ -1,10 +1,12 @@
 ---
+import { MISSIONSTACK_ANNOUNCED } from '../data/missionstack-gate.mjs';
+import { WHY_POST, blueskyUrl, discordInvite } from '../data/community';
 /**
  * SiteFooter — the one footer every page shares.
  *
  * Row 1 (optional): links for the page you're on (a repo, release notes).
  * Row 2: the tagline left, site links right. Source and Download live here
- * so the TopNav can stay at five links.
+ * so the TopNav can stay short.
  *
  * Place it after </main> so it reads as the page's contentinfo landmark.
  */
@@ -25,11 +27,27 @@ interface Props {
 const { links = [], noEmail = false } = Astro.props;
 
 const site: FootLink[] = [
-  { label: 'Chapters', href: '/chapters' },
+  // Launch preview (plan §2): Compare · Support · Press · Get in first, then the book's and the
+  // Loadout's links (the Loadout left the top nav).
+  // Mike 2026-10-16 08:34: the book and the Logs stay the story behind the apps, linked here.
+  { label: 'The book', href: '/chapters' },
+  { label: 'Logs', href: '/logs' },
+  { label: 'Why I built it', href: WHY_POST },
+  { label: 'About Mike', href: '/about' },
+  { label: 'Join the beta', href: '/rack/ironstack#join' },
+  { label: 'Pricing', href: '/pricing' },
+  { label: 'Compare', href: '/compare' },
+  { label: 'Support', href: '/rack/support' },
+  { label: 'Privacy', href: '/rack/ironstack/privacy' },
+  { label: 'Terms', href: '/rack/ironstack/terms' },
+  // Plain links only; each shows once Mike gives the handle (src/data/community.ts).
+  ...(blueskyUrl ? [{ label: 'Bluesky', href: blueskyUrl }] : []),
+  ...(discordInvite ? [{ label: 'Discord', href: discordInvite }] : []),
+  { label: 'Press', href: '/press' },
+  { label: 'The Loadout', href: '/loadout' },
   { label: 'Download', href: '/download' },
   { label: 'Source',   href: '/source' },
   { label: 'RSS',      href: '/logs/rss.xml' },
-  { label: 'App support', href: '/rack/support' },
 ];
 ---
 <footer class="site-foot">
@@ -54,11 +72,11 @@ const site: FootLink[] = [
   </div>
 
   <p class="sf-fine">
-    {/* Mission Built LLC (2026-10-15). "Mission Built" itself stays out of the trademark line until
-        the lawyer answers who owns it; MissionStack joins the line once Mike clears the name. */}
-    © 2026 Mission Built LLC. The book is by Mike Nichols,
+    {/* Mission Built LLC (2026-10-15). Mike 2026-10-16 09:3x: "just put the company on the site", so
+        Mission Built joins the line; MissionStack is in it wherever its name is public (the gate). */}
+    © 2026 Mission Built LLC, a veteran-owned company. The book is by Mike Nichols,
     <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener license">CC BY-NC-SA 4.0</a>.
-    IronStack and MealStack are trademarks of Mission Built LLC. <a href="/rack/acknowledgements">Acknowledgements</a>.
+    {MISSIONSTACK_ANNOUNCED ? 'Mission Built, IronStack, MealStack and MissionStack' : 'Mission Built, IronStack and MealStack'} are trademarks of Mission Built LLC. <a href="/rack/acknowledgements" style="white-space: nowrap">Acknowledgements</a>.
   </p>
 </footer>
 
@@ -95,8 +113,10 @@ const site: FootLink[] = [
   .sf-site {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px 24px;
+    gap: 0 24px;
   }
+  /* 44 pt tap targets (iPhone QA 10-16). */
+  .sf-site a, .sf-page a { display: inline-flex; align-items: center; min-height: 44px; }
 
   a {
     color: var(--color-chalk-dim);
@@ -108,8 +128,9 @@ const site: FootLink[] = [
 
   .sf-fine {
     margin: 18px 0 0;
+    max-width: none;
     font-family: var(--font-serif);
-    font-size: 13px;
+    font-size: 14px;
     letter-spacing: 0.01em;
     text-transform: none;
     color: var(--color-chalk-faint);

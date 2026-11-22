@@ -40,7 +40,7 @@ interface Props {
 }
 
 const { title, description, crumbs, section = 'rack', eyebrow, heading, accent, standfirst, tool: toolKey, toolKicker = 'The app', back, footLinks = [], noindex = false, noEmail = false } = Astro.props;
-const root = section === 'loadout' ? { label: 'The Loadout', href: '/loadout' } : { label: 'The Rack', href: '/rack' };
+const root = section === 'loadout' ? { label: 'The Loadout', href: '/loadout' } : { label: 'IronStack', href: '/rack/ironstack' };
 const i = accent ? heading.indexOf(accent) : -1;
 const hBefore = i >= 0 ? heading.slice(0, i) : heading;
 const hAfter = i >= 0 ? heading.slice(i + (accent?.length ?? 0)) : '';

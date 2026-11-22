@@ -34,3 +34,23 @@
 /rack/mealstack/skill/     /loadout/plans  301
 /loadout/mealstack/skill   /loadout/plans  301
 /loadout/mealstack/skill/  /loadout/plans  301
+
+# One pricing page (XO #289, 11-21): Plans folded into Pricing.
+/rack/plans             /pricing  301
+/rack/plans/            /pricing  301
+/rack/ironstack/plans   /pricing  301
+
+# Launch-day site map (product lead and designer, #289, 11-21): fewer pages, every cut redirects.
+/rack                            /                      301
+/rack/                           /                      301
+/founders                        /first                 301
+/founders/                       /first                 301
+/rack/compare                    /compare               301
+/rack/compare/                   /compare               301
+/rack/compare/hevy-strong        /compare               301
+/rack/compare/truecoach          /coach                 301
+/rack/compare/macrofactor        /rack/mealstack        301
+/rack/mealstack/details          /rack/mealstack        301
+/rack/missionstack               /coach                 301
+/rack/missionstack/details       /coach                 301
+/rack/ironstack/details          /rack/ironstack        301

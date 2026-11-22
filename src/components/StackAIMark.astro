@@ -1,0 +1,14 @@
+---
+/**
+ * The Full Stack's mark (Mike 2026-10-16 17:09, corrected by XO 18:40): the apps' own Stack AI mark,
+ * MissionBuiltKit's StackAIMark ("the stack", Mike 10-02: three plates, the top one lit), traced
+ * exactly into public/images/marks/stack-ai.svg (state .on, dark appearance). Not Apple's
+ * text.bubble, which the apps stopped using on 10-02.
+ */
+interface Props { size?: number; label?: string }
+const { size = 64, label = 'The Full Stack' } = Astro.props;
+---
+<img class="stackai-mark" src="/images/marks/stack-ai.svg" width={size} height={size} alt={label} loading="lazy" style={`width:${size}px;height:${size}px`} />
+<style>
+  .stackai-mark { display: block; max-width: none; }
+</style>

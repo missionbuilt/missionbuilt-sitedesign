@@ -1,0 +1,45 @@
+---
+/**
+ * TvFrame.astro: a flat-panel TV on a low stand, drawn around a real Apple TV screenshot (#193).
+ *
+ * Only the frame is drawn: a thin black bezel with a 1px edge and a small stand below. The
+ * screen inside is always a real screenshot (never draw app screens in HTML); until it is
+ * captured, a slot with the file name stands in.
+ *
+ * Sized in em, so one font-size on the parent scales the whole set: 24 em wide, the bezel
+ * 0.35 em, the stand 1.2 em tall. `fill` sizes it to the width of its box.
+ */
+import { hasScreen, slotName } from '../data/screens';
+
+type Shot = { src: string; w: number; h: number; alt: string };
+interface Props {
+  shot: Shot;
+  lazy?: boolean;
+  priority?: boolean;
+  fill?: boolean;
+}
+const { shot, lazy = true, priority = false, fill = false } = Astro.props;
+const ready = hasScreen(shot.src);
+---
+<div class:list={['tv-box', fill && 'fill']}>
+  <div class="tv">
+    <div class="panel">
+      {ready
+        ? <img src={shot.src} width={shot.w} height={shot.h} alt={shot.alt} loading={lazy ? 'lazy' : 'eager'} decoding="async" fetchpriority={priority ? 'high' : undefined} />
+        : <div class="screen-slot" role="img" aria-label={`Screen to capture: ${shot.alt}`} style={`aspect-ratio:${shot.w}/${shot.h}`}><b>Screen to capture</b><span>{slotName(shot.src)}</span></div>}
+    </div>
+    <span class="neck" aria-hidden="true"></span>
+    <span class="foot" aria-hidden="true"></span>
+  </div>
+</div>
+
+<style>
+  .tv-box.fill { width: 100%; container-type: inline-size; }
+  .tv-box.fill .tv { font-size: calc(100cqi / 24); }
+  .tv { --body: #1c1b1a; --edge: #4a4742; width: 24em; display: flex; flex-direction: column; align-items: center; }
+  .panel { width: 100%; padding: 0.35em; background: #000; border-radius: 0.3em; outline: 1px solid var(--edge); box-sizing: border-box; }
+  .panel img { display: block; width: 100%; height: auto; }
+  .panel .screen-slot { font-size: max(12px, 0.5em); }
+  .neck { width: 1.6em; height: 0.8em; background: var(--body); outline: 1px solid var(--edge); }
+  .foot { width: 7em; height: 0.4em; background: var(--body); outline: 1px solid var(--edge); border-radius: 0.2em 0.2em 0.1em 0.1em; }
+</style>

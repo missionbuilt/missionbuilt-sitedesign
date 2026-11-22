@@ -1,4 +1,5 @@
 ---
+import { BOOK_META } from '../../data/book-meta';
 /**
  * Chapter Index — the table of contents. The spine of the book.
  *
@@ -35,7 +36,7 @@ function sectionPreview(sections: string[]): { head: string; overflow: number } 
   return { head, overflow };
 }
 ---
-<BaseLayout title="Chapters · Mission Built" active="chapters">
+<BaseLayout ogImage={BOOK_META.ogImage} ogImageAlt={BOOK_META.ogImageAlt} description={BOOK_META.description} title="Chapters · Mission Built" active="chapters">
   <TopNav active="chapters" />
 
   <main id="main" class="page">

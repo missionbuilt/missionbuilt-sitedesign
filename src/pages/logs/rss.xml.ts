@@ -17,7 +17,7 @@ function esc(s: string): string {
 }
 
 export const GET: APIRoute = async () => {
-  const logs = (await getCollection('logs', ({ data }) => !data.draft)).sort(byNewest);
+  const logs = (await getCollection('logs', ({ data }) => !data.draft && !data.unlisted)).sort(byNewest);
 
   const items = logs
     .map((n) => {

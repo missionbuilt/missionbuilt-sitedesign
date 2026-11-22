@@ -47,7 +47,7 @@ const standfirst = `${when(d)} ${plural(d.changes, 'change')}${titled.length > 1
   standfirst={standfirst}
   tool="ironstack"
   back={{ label: 'All releases', href: CHANGELOG }}
-  footLinks={[{ label: 'The details', href: '/rack/ironstack/details' }, { label: 'Privacy', href: '/rack/ironstack/privacy' }]}
+  footLinks={[{ label: 'IronStack', href: '/rack/ironstack' }, { label: 'Privacy', href: '/rack/ironstack/privacy' }]}
 >
   <Fragment slot="byline">
     IronStack {d.version} · {d.date ? <>Shipped <time datetime={isoDay(d.date)}>{longDate(d.date)}</time></> : when(d, true)}

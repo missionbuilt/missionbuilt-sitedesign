@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" role="img" aria-label="Stack AI">
+  <!-- Traced exactly from MissionBuiltKit's StackAIMark (0.7.2, Sources/MissionBuiltKit/StackAIMark.swift):
+       three plates on a 16 x 16 grid, the top one lit. State .on, dark appearance: top plate accent
+       0xA8211A, the two below ink 0xEBE5D8 (Palette.swift). Mike 2026-10-02 option A, "the stack". -->
+  <rect x="5" y="2" width="6" height="3" fill="#A8211A"/>
+  <rect x="3" y="6.5" width="10" height="3" fill="#EBE5D8"/>
+  <rect x="1" y="11" width="14" height="3" fill="#EBE5D8"/>
+</svg>
