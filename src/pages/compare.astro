@@ -1,22 +1,19 @@
 ---
 /**
- * /rack/compare/hevy-strong, /macrofactor, /truecoach (plan §8). Every competitor cell is sourced
+ * /compare, /macrofactor, /truecoach (plan §8). Every competitor cell is sourced
  * in src/data/compare.ts; rows with an unverified cell wait in `pending` and never render, and the
  * data file refuses to build if "[verify]" would publish. noindex and out of the sitemap until
  * Mike's word yes on the launch preview.
  */
-import BaseLayout from '../../../layouts/BaseLayout.astro';
-import TopNav from '../../../components/TopNav.astro';
-import SiteFooter from '../../../components/SiteFooter.astro';
-import { COMPARE_PAGES, CHECKED, CHECKED_ISO, hasExcerpt, type ComparePage } from '../../../data/compare';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TopNav from '../components/TopNav.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import { COMPARE_PAGES, CHECKED, CHECKED_ISO, hasExcerpt, type ComparePage } from '../data/compare';
 
-export function getStaticPaths() {
-  return COMPARE_PAGES.map((page) => ({ params: { slug: page.slug }, props: { page } }));
-}
-
-const { page } = Astro.props as { page: ComparePage };
+// The one compare page (launch-day site map, #289): IronStack against Hevy and Strong.
+// The macrofactor and truecoach pages are cut; their data stays in compare.ts.
+const page = COMPARE_PAGES.find((p) => p.slug === 'hevy-strong') as ComparePage;
 const host = (u: string) => new URL(u).hostname.replace(/^www\./, '');
-const others = COMPARE_PAGES.filter((p) => p.slug !== page.slug);
 ---
 <BaseLayout title={page.title} description={page.description} noindex={true}>
   <TopNav active="rack" />
@@ -84,15 +81,8 @@ const others = COMPARE_PAGES.filter((p) => p.slug !== page.slug);
       </ul>
     </section>
 
-    <section class="block more">
-      <p class="section-label">More comparisons</p>
-      <ul class="links">
-        <li><a href="/rack/compare">All comparisons</a></li>
-        {others.map((o) => <li><a href={`/rack/compare/${o.slug}`}>{o.h1.replace(/\.$/, '')}</a></li>)}
-      </ul>
-    </section>
   </main>
-  <SiteFooter links={[{ label: 'The apps', href: '/rack' }, { label: 'Compare', href: '/rack/compare' }, { label: 'Support', href: '/rack/support' }]} />
+  <SiteFooter links={[{ label: 'IronStack', href: '/rack/ironstack' }, { label: 'Support', href: '/rack/support' }]} />
 </BaseLayout>
 
 <style>

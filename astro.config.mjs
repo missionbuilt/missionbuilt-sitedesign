@@ -17,6 +17,20 @@ const releaseRedirects = new Set(
 
 // https://astro.build/config
 export default defineConfig({
+  // The same redirects as public/_redirects, so they also work on localhost (#289).
+  redirects: {
+    '/rack': '/',
+    '/founders': '/first',
+    '/rack/plans': '/pricing',
+    '/rack/ironstack/plans': '/pricing',
+    '/rack/compare': '/compare',
+    '/rack/compare/hevy-strong': '/compare',
+    '/rack/compare/truecoach': '/coach',
+    '/rack/compare/macrofactor': '/rack/mealstack',
+    '/rack/mealstack/details': '/rack/mealstack',
+    '/rack/missionstack': '/coach',
+    '/rack/missionstack/details': '/coach',
+  },
   site: 'https://missionbuilt.io',
   // The sitemap leaves out the 404 page, the old MealStack privacy address, which
   // only serves installed builds and App Review (its canonical is /rack/mealstack/privacy),
@@ -30,7 +44,7 @@ export default defineConfig({
       // /first (#194) stays out until Mike's go (first.astro's LIVE).
       && new URL(page).pathname !== '/first/'
       // The compare pages (plan §8) stay out until Mike's word yes on the launch preview.
-      && !new URL(page).pathname.startsWith('/rack/compare/')
+      && new URL(page).pathname !== '/compare/'
       // /press waits for Mike's yes on the launch preview.
       && new URL(page).pathname !== '/press/'
       // /founders waits for Mike's go (founders.astro's LIVE).

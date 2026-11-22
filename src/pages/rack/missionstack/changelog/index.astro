@@ -43,7 +43,7 @@ const buildLine = (r: Release) => (r.data.status === 'in-progress' ? 'next build
   heading="What changed"
   accent="changed"
   standfirst="Every build that goes to TestFlight, in plain words. If you can see it or feel it in the app, it gets a line here before it ships."
-  back={{ label: 'The Rack', href: '/rack' }}
+  back={{ label: 'Home', href: '/' }}
 >
   <Fragment slot="byline">
     MissionStack · Private beta{latest && <> · Latest {releaseLabel(latest.data)}</>}
