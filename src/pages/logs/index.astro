@@ -18,7 +18,7 @@ import SiteFooter from '../../components/SiteFooter.astro';
 import TopNav from '../../components/TopNav.astro';
 import { TOOLS, byNewest, logUrl, longDate, isoDay } from '../../data/logs';
 
-const logs = (await getCollection('logs', ({ data }) => !data.draft)).sort(byNewest);
+const logs = (await getCollection('logs', ({ data }) => !data.draft && !data.unlisted)).sort(byNewest);
 const count = logs.length;
 ---
 <BaseLayout
