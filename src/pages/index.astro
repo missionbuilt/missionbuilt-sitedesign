@@ -40,7 +40,6 @@ const shots = {
 // COPY: one line each.
 const apps = [
   { a: iron, line: 'Log every set.', body: 'On your iPhone or your Apple Watch, with the people you train with.', device: 'phone' as const, shot: shots.phone },
-  { a: meal, line: 'Also from Mission Built: MealStack.', body: 'Meals timed to your workout. In beta.', device: 'phone' as const, shot: shots.meal },
 ];
 
 const jsonLd = [
@@ -67,11 +66,11 @@ const jsonLd = [
       <p class="eyebrow"><span class="dots" aria-hidden="true">▮▮▮</span> <span>IronStack · iPhone and Apple Watch</span> <span class="dots" aria-hidden="true">▮▮▮</span></p>
       {/* COPY: a hook, not a paragraph (Mike 11-22). Voice pass, anti-slop pass, then read as a lifter coming from Hevy. */}
       <h1 class="display">Log the set. Get back to the bar.</h1>
-      <p class="what">A lifting log that gets out of your way. Free to log.</p>
+      <p class="what">Last time's weight and reps are already in the set, so most sets are one tap. Free to log.</p>
       <ul class="hooks">
-        <li>Last time's numbers are already in the set. Most sets are one tap.</li>
         <li>The Apple Watch runs the workout. The phone stays in the locker.</li>
         <li>Bring your Hevy or Strong history. Keep the old app as long as you like.</li>
+        <li>No ads, no feed, no cap on programs or workouts.</li>
       </ul>
       <div class="buttons">
         <a href="/rack/ironstack#join" class="btn primary">Join the IronStack beta <span aria-hidden="true">→</span></a>
@@ -177,7 +176,7 @@ const jsonLd = [
     </section>
 
     {/* ---------- LIFT WITH US: plain links, nothing embedded (product lead addendum, 11-21) ---------- */}
-    <section class="lift" aria-labelledby="lift-h">
+    {(blueskyUrl || discordInvite) && <section class="lift" aria-labelledby="lift-h">
       <div class="lift-in reveal">
         <h2 id="lift-h" class="title">Lift with us.</h2>
         <p class="lede">IronStack is built in the open, with the people who use it. Talk training, see what's being built next, vote on what comes after, and get help when something's off.</p>
@@ -186,7 +185,7 @@ const jsonLd = [
           <li><span class="k">Discord</span><span class="t">Training talk, help and feature votes.</span>{discordInvite ? <a href={discordInvite} rel="noopener">Join the Discord <span aria-hidden="true">→</span></a> : <span class="soon">Link coming</span>}</li>
         </ul>
       </div>
-    </section>
+    </section>}
 
     {/* ---------- 5. GET IN FIRST ---------- */}
     <section class="first reveal" aria-labelledby="first-h">
