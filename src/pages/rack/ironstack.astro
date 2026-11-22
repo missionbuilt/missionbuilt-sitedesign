@@ -60,7 +60,7 @@ const ld = {
     { title: 'Ask your log.', line: 'Your best lift, last time on a lift, plate math and swaps, answered from your phone at no cost. Stack AI is there when you want more.', devices: [] },
     { title: 'You against you.', line: 'Every lift you log, charted. Records by name, and this month against last.',
       devices: [phone('progress', 'IronStack Progress: every exercise with its trend line, pullups up 60 percent.')] },
-    { title: 'Bring your history.', line: 'Bring your Hevy or Strong history, or any spreadsheet you kept. Keep the old app as long as you like.', link: { label: 'How to bring it over', href: '/rack/ironstack/details#from-hevy' }, devices: [] },
+    { title: 'Bring your history.', line: 'Bring your Hevy or Strong history, or any spreadsheet you kept. Keep the old app as long as you like.', link: { label: 'How to bring it over', href: '#from-hevy' }, devices: [] },
   ]}
   family={{ title: 'Also from Mission Built.', items: [
     { name: meal.name, line: 'Times your meals around your training. In beta.', href: meal.href, icon: meal.icon },
@@ -70,7 +70,6 @@ const ld = {
   closer={{ title: 'Join the beta.', line: 'Train on it now. It reaches the App Store January 1.' }}
   more={[
     { label: 'Why I built it', href: WHY_POST },
-    { label: 'Details', href: '/rack/ironstack/details' },
     { label: 'Compare', href: '/compare' },
     { label: 'Privacy', href: '/rack/ironstack/privacy' },
     { label: 'Release notes', href: '/rack/ironstack/changelog' },
@@ -78,6 +77,31 @@ const ld = {
   ]}
 >
   <BetaForm slot="join" page="/rack/ironstack" name="IronStack" noteLabel="What do you log in now?" notePlaceholder="a notebook · with a friend" />
+
+  <section slot="faq" class="pp-faq" id="faq" aria-labelledby="faq-h">
+    {/* Moved in from /rack/ironstack/details (launch-day site map, #289). Left out on purpose: the watch answer (waits on Logbook, #251), the price and 1.0 date answers (see /pricing), TestFlight. */}
+    <h2 id="faq-h" class="ch-title">The ones I get asked.</h2>
+    <dl>
+      <dt id="from-hevy">Do I have to quit Hevy or Strong?</dt>
+      <dd>No. IronStack reads a file you export. It never signs in there or changes anything, so if you go back, your app is exactly as you left it. One limit: IronStack exports a documented JSON file, not a Hevy or Strong CSV, so workouts you log here will not load back into them. Run both for a couple of weeks if an unbroken history matters to you.</dd>
+      <dt>What comes over?</dt>
+      <dd>Workouts and routines (routines become saved workouts), supersets paired the way you had them, warm-ups as prep sets, drop sets tagged as what they were, and your custom exercise names kept exactly. A preview shows what it found, and any names to check, before anything is saved. In Hevy: Settings, then Export and Import Data. JuggernautAI and any spreadsheet come over the same way, with a preview to match the columns.</dd>
+      <dt>Does it need an account?</dt>
+      <dd>Not to log. Everything you log is a file on your phone. Social is the one part that needs you to be someone, and it uses Sign in with Apple without asking for your name or email.</dd>
+      <dt>What leaves my phone?</dt>
+      <dd>Nothing goes to Anthropic until you turn Stack AI on, and then only what you send it, when you ask. The cards you choose to share, if you use Social. Coach mode shares only what you say yes to. <a href="/rack/ironstack/privacy">The privacy page</a> says exactly what, where and for how long.</dd>
+      <dt>Can I take my data with me?</dt>
+      <dd>Yes. One tap exports everything in the Mission Built Schema, a documented, versioned format, and it imports back on a new phone. The app is closed. Your data is open.</dd>
+      <dt>Pounds or kilos?</dt>
+      <dd>Both. Pick one for the app and switch any single exercise the other way. The keypad shows the other unit under every number.</dd>
+      <dt>Is Stack AI a doctor, or my coach?</dt>
+      <dd>No to both. Coach means a person. Stack AI is an AI and can be wrong: it answers from your own sets, never names a weight above a ceiling it can show you, and points any question about pain or injury to a qualified person. Nothing it suggests changes your log until you tap.</dd>
+      <dt>What is Coach mode?</dt>
+      <dd>Training with a real person who also uses IronStack. Your coach invites you with a link or a code. Nothing is shared until you say yes, and you choose what they see. Either of you can end it, and their copy goes with it. <a href="/rack/ironstack/privacy#coach-mode">What Coach mode shares</a>.</dd>
+      <dt>How old do I have to be?</dt>
+      <dd>Eighteen. IronStack, Stack AI and Social are for adults.</dd>
+    </dl>
+  </section>
   <p slot="after" class="first-alt">IronStack is for lifters 18 and over.</p>
 </ProductPage>
 

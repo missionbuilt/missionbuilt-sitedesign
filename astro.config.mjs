@@ -28,6 +28,7 @@ export default defineConfig({
     '/rack/compare/truecoach': '/coach',
     '/rack/compare/macrofactor': '/rack/mealstack',
     '/rack/mealstack/details': '/rack/mealstack',
+    '/rack/ironstack/details': '/rack/ironstack',
     '/rack/missionstack': '/coach',
     '/rack/missionstack/details': '/coach',
   },

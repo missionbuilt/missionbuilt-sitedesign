@@ -43,7 +43,7 @@ const buildLine = (r: Release) => (r.data.status === 'in-progress' ? 'next build
   standfirst="Every build that goes to TestFlight, in plain words. If you can see it or feel it in the app, it gets a line here before it ships."
   tool="ironstack"
   back={{ label: 'IronStack', href: '/rack/ironstack' }}
-  footLinks={[{ label: 'The details', href: '/rack/ironstack/details' }, { label: 'Privacy', href: '/rack/ironstack/privacy' }]}
+  footLinks={[{ label: 'IronStack', href: '/rack/ironstack' }, { label: 'Privacy', href: '/rack/ironstack/privacy' }]}
 >
   <Fragment slot="byline">
     IronStack · Private beta{latest && <> · Latest {releaseLabel(latest.data)}</>}

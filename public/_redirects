@@ -53,3 +53,4 @@
 /rack/mealstack/details          /rack/mealstack        301
 /rack/missionstack               /coach                 301
 /rack/missionstack/details       /coach                 301
+/rack/ironstack/details          /rack/ironstack        301

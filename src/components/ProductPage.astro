@@ -153,6 +153,8 @@ const hasJoin = Astro.slots.has('join');
       </section>
     )}
 
+    <slot name="faq" />
+
     <section class="pp-closer reveal" id="join">
       {/* /api/beta's no-JS redirect lands on #beta. */}
       <span id="beta" aria-hidden="true"></span>
@@ -178,6 +180,11 @@ const hasJoin = Astro.slots.has('join');
   .lb-links a.lb-cta { display: inline-flex; align-items: center; min-height: 44px; padding: 8px 14px; background: var(--color-blood); color: var(--color-chalk); font-family: var(--font-display); font-weight: 600; font-size: 13px; letter-spacing: 0.06em; }
 
   .pp { overflow-x: clip; }
+  .pp-faq { max-width: 760px; margin: 0 auto; padding: 96px var(--pad-page-x) 0; }
+  .pp-faq h2 { margin: 0 0 8px; }
+  .pp-faq dt { margin-top: 22px; font-family: var(--font-display); font-weight: 600; font-size: 20px; letter-spacing: 0.02em; color: var(--color-chalk); }
+  .pp-faq dd { margin: 6px 0 0; font-family: var(--font-serif); font-size: 17px; line-height: 1.6; color: var(--color-chalk-dim); }
+  .pp-faq a { color: var(--color-chalk); border-bottom: 1px solid var(--color-chalk-ghost); }
   .pp-hero { padding: 72px var(--pad-page-x) 24px; text-align: center; }
   .pp-icon { display: block; margin: 0 auto 22px; border-radius: 20px; }
   .pp-name { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(48px, 10vw, 128px); line-height: 0.92; letter-spacing: -0.02em; text-transform: uppercase; color: var(--color-chalk); }
