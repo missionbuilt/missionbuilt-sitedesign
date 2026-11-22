@@ -1,5 +1,5 @@
 {
-  "_source": "Prices: decision log, Mike 2026-10-11 20:33, and the product lead's IronStack-only plan map (#154, 2026-11-12 10:58 ET). Spec: briefs/launch/pricing-page-spec.md. IronStack only for GA: MealStack, The Stack and MissionStack are out until March. The page renders only from this file.",
+  "_source": "Prices: decision log, Mike 2026-10-11 20:33, and the product lead's IronStack-only plan map (#154, 2026-11-12 10:58 ET). Spec: briefs/launch/pricing-page-spec.md. IronStack only for GA: MealStack, The Stack and MissionStack are out until March. The page renders only from this file. 11-21 (#289): one page, $2.49 / $21.99 / $19.99 (#44), two-week trial, coach prices held until coach-at-launch is decided (Tue 11-24).",
   "plans": [
     {
       "id": "ironstack_free",
@@ -12,15 +12,16 @@
     {
       "id": "ironstack_pro",
       "name": "IronStack Pro",
-      "monthly": "$3.99",
-      "annual": "$29.99",
+      "monthly": "$2.49",
+      "annual": "$21.99",
       "founding": "$19.99",
       "recommended": true,
       "what": "Stack AI, and your whole training history in Insights."
     }
   ],
   "coach": {
-    "line": "Your lifters never pay.",
+    "line": "Coach up to 5 lifters free. Lifters never pay.",
+    "soon": "Coach Pro, for more lifters, is coming soon.",
     "tiers": [
       {
         "id": "coach_free",
@@ -28,22 +29,6 @@
         "lifters": 5,
         "monthly": null,
         "annual": null
-      },
-      {
-        "id": "coach_10",
-        "name": "Coach Pro 10",
-        "lifters": 10,
-        "monthly": "$19",
-        "annual": "$199",
-        "firstMonthFree": true
-      },
-      {
-        "id": "coach_25",
-        "name": "Coach Pro 25",
-        "lifters": 25,
-        "monthly": "$39",
-        "annual": null,
-        "firstMonthFree": true
       }
     ]
   },
@@ -67,7 +52,7 @@
       ]
     },
     {
-      "name": "Apple Watch, with heart rate; it runs the workout when your phone is away",
+      "name": "Apple Watch, with heart rate",
       "cells": [
         "✓",
         "✓"
@@ -105,7 +90,7 @@
       "name": "Insights: charts and estimated maxes",
       "cells": [
         "Last 30 days",
-        "Full history, compare blocks, PDF"
+        "Full history"
       ]
     },
     {
@@ -167,7 +152,7 @@
   "questions": [
     {
       "q": "Is there a free trial?",
-      "a": "14 days on IronStack Pro, from Apple. And every new account gets a week of Stack AI."
+      "a": "Two weeks on IronStack Pro, from Apple. And a week of Stack AI comes with every free account."
     },
     {
       "q": "Is there a lifetime plan?",
@@ -179,7 +164,7 @@
     },
     {
       "q": "Does the free week need a card?",
-      "a": "No card. Sign in with Apple once and you get a week of Stack AI, and it ends on its own."
+      "a": "No card. The week starts when you ask Stack AI your first question, and it ends on its own."
     },
     {
       "q": "Android?",
@@ -187,7 +172,7 @@
     },
     {
       "q": "How do I cancel?",
-      "a": "In your Apple ID's subscriptions."
+      "a": "In your Apple Account's subscriptions."
     }
   ]
 }

@@ -1,5 +1,6 @@
 ---
 import { MISSIONSTACK_ANNOUNCED } from '../data/missionstack-gate.mjs';
+import { WHY_POST, blueskyUrl, discordInvite } from '../data/community';
 /**
  * SiteFooter — the one footer every page shares.
  *
@@ -31,10 +32,17 @@ const site: FootLink[] = [
   // Mike 2026-10-16 08:34: the book and the Logs stay the story behind the apps, linked here.
   { label: 'The book', href: '/chapters' },
   { label: 'Logs', href: '/logs' },
+  { label: 'Why I built it', href: WHY_POST },
   { label: 'About Mike', href: '/about' },
   { label: 'Join the beta', href: '/rack/ironstack#join' },
+  { label: 'Pricing', href: '/pricing' },
   { label: 'Compare', href: '/rack/compare' },
   { label: 'Support', href: '/rack/support' },
+  { label: 'Privacy', href: '/rack/ironstack/privacy' },
+  { label: 'Terms', href: '/rack/ironstack/terms' },
+  // Plain links only; each shows once Mike gives the handle (src/data/community.ts).
+  ...(blueskyUrl ? [{ label: 'Bluesky', href: blueskyUrl }] : []),
+  ...(discordInvite ? [{ label: 'Discord', href: discordInvite }] : []),
   { label: 'Press', href: '/press' },
   { label: 'The Loadout', href: '/loadout' },
   { label: 'Download', href: '/download' },

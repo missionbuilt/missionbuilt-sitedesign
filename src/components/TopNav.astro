@@ -23,9 +23,8 @@ const active = rawActive === 'chapters' ? 'book' : rawActive;
 const links = [
   { key: 'rack',     label: 'Apps',         href: '/rack' },
   { key: 'coach',    label: 'Coaches',      href: '/coach' },
-  { key: 'plans',    label: 'Plans',        href: '/rack/plans' },
-  // Pricing joins the nav at the public launch (1-1), not at the soft launch (#44).
-  ...(pricingFlags().launch ? [{ key: 'pricing', label: 'Pricing', href: '/pricing' }] as const : []),
+  // One page for plans and prices (XO #289, 11-21): Plans is gone from the nav; /rack/plans redirects here.
+  ...(pricingFlags().pricing ? [{ key: 'pricing', label: 'Pricing', href: '/pricing' }] as const : []),
   { key: 'logs',     label: 'Logs',         href: '/logs' },
   { key: 'book',     label: 'The Book',     href: '/chapters' },
   { key: 'about',    label: 'About',        href: '/about' },

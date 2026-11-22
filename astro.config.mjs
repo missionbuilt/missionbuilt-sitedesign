@@ -29,8 +29,6 @@ export default defineConfig({
       && !releaseRedirects.has(new URL(page).pathname) && new URL(page).pathname !== '/join/'
       // /first (#194) stays out until Mike's go (first.astro's LIVE).
       && new URL(page).pathname !== '/first/'
-      // /rack/plans stays out until Mike's yes on the words (noindex on the page too).
-      && new URL(page).pathname !== '/rack/plans/'
       // The compare pages (plan §8) stay out until Mike's word yes on the launch preview.
       && !new URL(page).pathname.startsWith('/rack/compare/')
       // /press waits for Mike's yes on the launch preview.

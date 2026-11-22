@@ -10,6 +10,7 @@
  * Mike's yes.
  */
 import ProductPage from '../../components/ProductPage.astro';
+import { WHY_POST } from '../../data/community';
 import BetaForm from '../../components/BetaForm.astro';
 import { STACK } from '../../data/apps';
 
@@ -39,7 +40,7 @@ const ld = {
   name="IronStack"
   icon={STACK[0].icon}
   line="Log every set."
-  sub="On your iPhone or your Apple Watch. With the people you train with, and the coach in your corner."
+  sub="I built it so the log gets out of your way. On your iPhone or your Apple Watch, with the people you train with and the coach in your corner."
   hero={[
     phone('hero-session', 'IronStack on iPhone mid-workout: Box Squat, set 1 of 5, 275 for 3, with Log lit.'),
     watch('watch-set', 'The same set on Apple Watch: Box squat, 275 lb for 3, the rest clock and Log set.'),
@@ -68,6 +69,7 @@ const ld = {
   promise={{ title: 'Your log stays yours.', line: 'It lives on your phone. No ads, nothing sold. Stack AI, the app\'s AI, stays off until you turn it on, and sees what you share with a coach only if that coach asks it to sum up your week.', href: '/rack/ironstack/privacy' }}
   closer={{ title: 'Join the beta.', line: 'Train on it now. It reaches the App Store January 1.' }}
   more={[
+    { label: 'Why I built it', href: WHY_POST },
     { label: 'Details', href: '/rack/ironstack/details' },
     { label: 'Compare', href: '/rack/compare/hevy-strong' },
     { label: 'Privacy', href: '/rack/ironstack/privacy' },

@@ -34,3 +34,8 @@
 /rack/mealstack/skill/     /loadout/plans  301
 /loadout/mealstack/skill   /loadout/plans  301
 /loadout/mealstack/skill/  /loadout/plans  301
+
+# One pricing page (XO #289, 11-21): Plans folded into Pricing.
+/rack/plans             /pricing  301
+/rack/plans/            /pricing  301
+/rack/ironstack/plans   /pricing  301

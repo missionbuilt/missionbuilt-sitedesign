@@ -10,7 +10,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import TopNav from '../components/TopNav.astro';
-import { pricing, pricingFlags, assertPricingFresh, inFoundingWindow, checkedLabel } from '../data/pricing';
+import { pricing, pricingFlags, assertPricingFresh, checkedLabel } from '../data/pricing';
 
 export function getStaticPaths() {
   return pricingFlags().pricing ? [{ params: { pricing: 'pricing' } }] : [];
@@ -18,104 +18,79 @@ export function getStaticPaths() {
 
 const { launch } = pricingFlags();
 assertPricingFresh();
-const founding = inFoundingWindow();
-const paid = pricing.plans.filter((p) => p.monthly);
+// Staging shows the founding card until its end date (the start is set on release day).
+const foundingEndDate = new Date(`${pricing.founding.window_end}T23:59:59Z`);
+const founding = new Date() <= foundingEndDate;
+const foundingEnd = foundingEndDate.toLocaleString('en-US', { month: 'long', day: 'numeric', timeZone: 'UTC' });
+const [free, pro] = pricing.plans;
+const proAdds = pricing.features.filter((f) => f.cells[1] !== f.cells[0]);
 ---
 <BaseLayout
   title="Pricing · IronStack"
-  description="IronStack is free: unlimited logging, programs and the watch. IronStack Pro adds Stack AI and your whole training history."
+  description="IronStack is free to log, with no cap on programs or workouts. IronStack Pro adds Stack AI and your whole training history."
   noindex={!launch}
 >
   <TopNav active="pricing" />
   <main class="pricing">
     <section class="hero">
       <p class="eyebrow">Pricing</p>
-      <h1>Free to lift. Pay for what costs us money.</h1>
-      <p class="free-line">IronStack is free: unlimited logging, programs, your own exercises and the watch. If you stop paying, you keep every set, program and chat you built and logged.</p>
+      <h1>Free to log. Pay for what costs us money.</h1>
+      <p class="free-line">Every set, program and workout is free, with no cap. Pro adds Stack AI and your whole history. Stop paying and you keep every set, program and chat you logged.</p>
     </section>
 
     <section class="plans" aria-labelledby="plans-heading">
-      <h2 id="plans-heading" class="sr-only">Plans</h2>
-      <fieldset class="toggle">
-        <legend class="sr-only">Billing</legend>
-        <input type="radio" name="period" id="period-annual" class="period" checked />
-        <label for="period-annual">Annual</label>
-        <input type="radio" name="period" id="period-monthly" class="period" />
-        <label for="period-monthly">Monthly</label>
-      </fieldset>
-      <div class="cards">
-        {paid.map((p) => (
-          <article class:list={['card', { recommended: p.recommended }]}>
-            {p.recommended && <p class="badge">Recommended</p>}
-            <h3>{p.name}</h3>
-            <p class="what">{p.what}</p>
-            <p class="price annual">
-              {founding && p.founding ? (
-                <><span class="sr-only">Regular price </span><s>{p.annual}</s> <span class="sr-only">Founding price </span><strong>{p.founding}</strong><span>/year</span></>
-              ) : (
-                <><strong>{p.annual}</strong><span>/year</span></>
-              )}
-            </p>
-            {founding && p.founding && <p class="founding annual">{pricing.founding.line}</p>}
-            <p class="trial annual">14 days free, then {p.annual} a year.</p>
-            <p class="price monthly"><strong>{p.monthly}</strong><span>/month</span></p>
-            <p class="trial monthly">14 days free, then {p.monthly} a month.</p>
-          </article>
-        ))}
-      </div>
-    </section>
+      <h2 id="plans-heading" class="sr-only">Free and Pro</h2>
+      <div class="side">
+        <article class="card">
+          <h3>IronStack Free</h3>
+          <p class="what">{free.what}</p>
+          <p class="price"><strong>$0</strong></p>
+          <ul class="checks">
+            {pricing.features.map((f) => <li>{f.name}{f.cells[0] !== '✓' && <> <span class="note">({f.cells[0]})</span></>}</li>)}
+          </ul>
+        </article>
 
-    <section class="features" aria-labelledby="features-heading">
-      <h2 id="features-heading">What each plan includes</h2>
-      <div class="table-wrap" tabindex="0" role="region" aria-label="What each plan includes">
-        <table>
-          <thead>
-            <tr>
-              <th scope="col"><span class="sr-only">Feature</span></th>
-              {pricing.featureColumns.map((c) => <th scope="col">{c}</th>)}
-            </tr>
-          </thead>
-          <tbody>
-            {pricing.features.map((f) => (
-              <tr>
-                <th scope="row">{f.name}</th>
-                {f.cells.map((cell, i) => (
-                  <td>
-                    {cell === '✓' ? <><span aria-hidden="true">✓</span><span class="sr-only">Included in {pricing.featureColumns[i]}</span></>
-                      : cell === '' ? <span class="sr-only">Not in {pricing.featureColumns[i]}</span>
-                      : cell}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <article class="card recommended">
+          <p class="badge">Recommended</p>
+          <h3>IronStack Pro</h3>
+          <p class="what">{pro.what}</p>
+          <fieldset class="toggle">
+            <legend class="sr-only">Billing</legend>
+            <input type="radio" name="period" id="period-annual" class="period" checked />
+            <label for="period-annual">Annual</label>
+            <input type="radio" name="period" id="period-monthly" class="period" />
+            <label for="period-monthly">Monthly</label>
+          </fieldset>
+          <p class="price annual">
+            {founding && pro.founding ? (
+              <><span class="sr-only">Regular price </span><s>{pro.annual}</s> <span class="sr-only">Founding price </span><strong>{pro.founding}</strong><span>/year</span></>
+            ) : (
+              <><strong>{pro.annual}</strong><span>/year</span></>
+            )}
+          </p>
+          {founding && pro.founding && <p class="founding annual">{pricing.founding.line} Until {foundingEnd}.</p>}
+          <p class="trial annual">2 weeks free, then {founding && pro.founding ? pro.founding : pro.annual} a year.</p>
+          <p class="price monthly"><strong>{pro.monthly}</strong><span>/month</span></p>
+          <p class="trial monthly">2 weeks free, then {pro.monthly} a month.</p>
+          <p class="more">Everything in Free, and:</p>
+          <ul class="checks">
+            {proAdds.map((f) => <li>{f.name}{f.cells[1] !== '✓' && <> <span class="note">({f.cells[1]})</span></>}</li>)}
+          </ul>
+        </article>
       </div>
     </section>
 
     <section class="coaches" aria-labelledby="coaches-heading">
       <h2 id="coaches-heading">Coaches</h2>
-      <p>{pricing.coach.line}</p>
-      <div class="tiers">
-        {pricing.coach.tiers.map((t) => (
-          <article class="tier">
-            <h3>{t.name}</h3>
-            <p class="lifters">Up to {t.lifters} lifters</p>
-            {t.monthly ? (
-              <p class="price"><strong>{t.monthly}</strong><span>/month</span>{t.annual && <> or <strong>{t.annual}</strong><span>/year</span></>}</p>
-            ) : (
-              <p class="price"><strong>Free</strong></p>
-            )}
-            {t.firstMonthFree && <p class="trial">First month free.</p>}
-          </article>
-        ))}
-      </div>
+      {/* [CHECK coach at launch]: Coach Pro prices stay off this page until the call on Tue 11-24 (XO #289, 4:41 PM). */}
+      <p>{pricing.coach.line} {pricing.coach.soon}</p>
+      <a class="soft" href="/coach">Coach mode, for coaches →</a>
     </section>
 
     <section class="compared" aria-labelledby="compared-heading">
       <h2 id="compared-heading">What the same costs elsewhere</h2>
       <ul>
-        {pricing.competitors.map((c) => (
+        {pricing.competitors.filter((c) => !c.name.includes('Coach')).map((c) => (
           <li><span class="name">{c.name}</span> <span class="cost">{c.price}</span> <span class="checked">{checkedLabel(c.checked)}</span></li>
         ))}
       </ul>
@@ -144,27 +119,25 @@ const paid = pricing.plans.filter((p) => p.monthly);
   .period:focus-visible + label { outline: 2px solid var(--color-blood-text); outline-offset: 2px; }
   .plans:has(#period-annual:checked) .monthly { display: none; }
   .plans:has(#period-monthly:checked) .annual { display: none; }
-  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+  .side { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; align-items: start; }
+  .toggle { margin-top: 8px; }
+  .more { margin: 22px 0 10px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk-dim); }
+  .checks { list-style: none; margin: 18px 0 0; padding: 0; display: grid; gap: 10px; }
+  .checks li { position: relative; padding-left: 24px; line-height: 1.5; }
+  .checks li::before { content: '✓'; position: absolute; left: 0; top: 0; font-family: var(--font-mono); }
+  .note { color: var(--color-chalk-dim); }
+  .soft { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-chalk); border-bottom: 1px solid var(--color-chalk-ghost); }
+  @media (max-width: 760px) { .side { grid-template-columns: minmax(0, 1fr); } }
   .card { background: var(--color-panel); border: var(--border-thin); padding: 22px; }
   .card.recommended { border-color: var(--color-blood-bright); }
   .badge { font-family: var(--font-mono); font-size: var(--fs-kicker); text-transform: uppercase; color: var(--color-blood-text); margin: 0 0 8px; }
-  .card h3, .tier h3 { margin: 0 0 6px; font-size: 1.25rem; }
+  .card h3 { margin: 0 0 6px; font-family: var(--font-display); font-weight: 700; font-size: 1.5rem; letter-spacing: 0.02em; text-transform: uppercase; }
   .what, .lifters { color: var(--color-chalk-dim); margin: 0 0 16px; }
   .price { margin: 0; font-size: 1.1rem; }
   .price strong { font-size: 1.8rem; font-family: var(--font-display); }
   .price span { color: var(--color-chalk-dim); }
   .price s { color: var(--color-chalk-faint); }
   .founding, .trial { color: var(--color-chalk-dim); font-size: 0.95rem; margin: 6px 0 0; }
-  .table-wrap { overflow-x: auto; }
-  table { width: 100%; border-collapse: collapse; min-width: 560px; }
-  th, td { padding: 10px 8px; border-bottom: 1px solid var(--color-rule-soft); text-align: center; }
-  tbody th { text-align: left; font-weight: normal; }
-  /* The feature names stay on screen while a phone scrolls the plans sideways. */
-  tbody th, thead th:first-child { position: sticky; left: 0; background: var(--color-bg); }
-  thead th { font-size: 0.95rem; color: var(--color-chalk-dim); }
-  .note { color: var(--color-chalk-dim); margin-top: 12px; }
-  .tiers { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
-  .tier { background: var(--color-panel); border: var(--border-thin); padding: 20px; }
   .compared ul { list-style: none; padding: 0; margin: 0; }
   .compared li { display: flex; flex-wrap: wrap; gap: 4px 12px; padding: 10px 0; border-bottom: 1px solid var(--color-rule-soft); }
   .compared .name { flex: 1 1 12em; }
