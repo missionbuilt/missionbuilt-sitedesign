@@ -3,127 +3,80 @@ title: "I built the logging app I couldn't find"
 accent: "logging app"
 eyebrow: "Why IronStack exists"
 standfirst: "A logging app has one job: get the set down between sets without a fight. Most of them made me fight."
-description: "What I wanted to log in the gym and couldn't, what IronStack is meant to solve, and how it was designed and tested. By the lifter who built it."
+description: "What kept going wrong in the logging apps I used, and what IronStack does about it. By the lifter who built it."
 date: 2026-12-15
 tool: ironstack
 ogImage: /images/logs/i-built-the-logging-app-i-couldnt-find-og.jpg
 ogImageAlt: "I built the logging app I couldn't find. A log from Mission Built."
 ---
 
-{/* Book named and linked 11-21 (Mike). Title is the current one, 'a field guide for building things that matter' (Mike 11-21, final). */}
+import Aside from '../../components/logs/Aside.astro';
 
-{/* VOICE PASS 11-21 (mike-nichols-voice): added the 'so why now' beat and a short triplet-style payoff; moved the veteran lines out of the design section; cut repeated 'That is'; split the long watch paragraph; added Q1's history questions, Social and son. The gym-and-software parallel is kept to one line, not forced. */}
+{/* REDO 11-22 (Mike): building, testing and stats moved to the next post (#297). This is the why. Order: voice pass, anti-slop pass, then a cold read as a lifter coming from Hevy (features first, Hevy callout near the top, backstory trimmed). Nothing invented. Left out, not guessed: sled load and distance, a quote from the add-button moment, a time of day, a last-straw event. */}
 
-{/* Son line softened by Mike 11-21; coach mode named as the reason he built it. CHECK: Mike's coach-at-launch call decides whether coach mode is named as a launch feature; product lead confirms wording. */}
+{/* CHECK with the product lead before publishing (claim check at b80 and b81): the watch runs the whole workout; Crown number entry; cardio, rucking, Pilates, yoga, basketball and lacrosse log at 1.0; answers across your whole history; Social; coach mode as a launch feature (XO, Mike's coach-at-launch call); what the Hevy and Strong import keeps (supersets, prep sets, custom names: from the site FAQ). Army wording is Mike's; the book says 'sergeant', About says 'analyst': Mike to settle. Open reader questions the post does not answer yet: offline use, the watch without the phone nearby (Logbook, #251). */}
 
-{/* ANTI-SLOP PASS 11-21 (anti-ai-slop, after mike-nichols-voice): cut two strawman contrast pivots ('Not a hype moment', 'Not with guesses'), the aphoristic tested-section closer, the repeated 'whole job/whole product', fragment runs and extra colon reveals; watch line no longer a triplet. Devices left: contrast pivots 2, triplets 2, rhetorical question 1. */}
+Walk up to the bar. Do the set. Get it down before the next one.
 
-{/* Army wording set by Mike 11-21: airborne intelligence analyst, OEF and OIF, early 2000s. No base or unit named, by his choice. */}
+IronStack is the logging app I built so that's all it takes. It's for lifters who are tired of fighting their log, including the ones who log in Hevy or Strong today.
 
-{/* Q6 answered by Mike 11-21 (Army: dedication, consistency, on bad days just move a bit; so the app covers cardio, rucking and more). CHECK: product lead confirms cardio and rucking log at 1.0. Dates and place are from the XO 11-19 note; Mike to confirm the wording. No badge. */}
+## What you get
 
-{/* TITLE chosen by Mike 11-21: option 4, 'I built the logging app I couldn't find'. Slug, OG card and sitemap exclusion renamed to match. */}
+- **Last time's numbers are already in the set.** Most sets are one tap.
+- **The Apple Watch app runs the workout.** Log the set, run the rest clock, leave the phone in the locker. Turn the Crown to change a number. With chalked hands it's the best way, and it's how I log now.
+- **Add is always the first row.** Type a lift the library doesn't have and the first thing you see is how to add it.
+- **Distances in their own units.** Feet for a sled push, metres for a row.
+- **A program follows where you are, not the calendar.** Miss a Tuesday and nothing breaks.
+- **Free to log, with no caps on programs, workouts or exercises.** No ads. No feed. Pro adds Stack AI and your whole history, and [the pricing page](/pricing) has the rest.
+- **Ask your log.** Get answers from your whole history, not one app's slice of it.
+- **Social is the people you invite.** I share my lifts with friends and back theirs.
+- **Coach mode.** I help my son with his lifting, and that's why I built it.
 
-{/* Q5 answered by Mike 11-21 (remembering previous lifts; the watch crown with chalked hands). CHECK: product lead confirms crown number entry ships at 1.0. Mike's exact quote of what he said when he caught it was not given; none invented. */}
+<Aside tag="Coming from Hevy or Strong?">
+Export your history from the old app and open the file in IronStack. A preview shows what it found, supersets, prep sets and your own exercise names included, before anything is saved. Nothing signs in anywhere, so you can run both for a couple of weeks and go back if you like. IronStack is for iPhone and Apple Watch.
+</Aside>
 
-{/* Q4 answered by Mike 11-21 (aha moment using AI at work; book, then skills, then an app). Added as 'Why now'. Not given: a single last-straw event. Line 'I built this after hours, with AI' further down may now repeat this; Mike to trim. */}
+## Why I built it
 
-{/* Q3 answered by Mike 11-21 (phone distractions, distributed job, focus modes, full watch use). Mike confirmed 11-21 'distributed job' stays public; no employer named. The old brief said no day job. Time of day not given, left out. */}
+I have used a lot of logging apps. Every one was missing something, and the something was always small:
 
-{/* Q2 answered by Mike 11-21 (carries need distance and weight; one place for strongman, Pilates, yoga). CHECK before publishing: product lead confirms Pilates and yoga log at 1.0, and Mike chose generic wording 11-21, wife not named; he asked to add basketball and lacrosse for his son. CHECK: product lead confirms sports like basketball and lacrosse log at 1.0. Sled load/distance and made-attempts detail not given, left out, not invented. */}
+- The add button I couldn't find.
+- A free plan that held a few routines, when my program was eight weeks long.
+- Ads and a feed between sets, when I only opened the app to log one.
+- A loaded sled push the app wanted in reps, when it's feet and weight.
 
-{/* Q1 answered by Mike 11-21 (JuggernautAI, Shaw Elite, single log). Still open: Q2 to Q6, plus the later paragraph on what a single log unlocks (watch, questions across history, Social, coaching his son, larger-screen app: unnamed, no date). */}
+Then there were two apps. I train powerlifting in JuggernautAI. I like it and I recommend it. When I wanted to weave in strongman, there was no good way to do it there, so I picked up the Shaw Elite app. Two logs of one body of training.
 
-{/* STAGED, #288 draft v1 (Billboard, 2026-11-20). Unlisted and noindex until Mike's typed go; date is the soft launch (about 12-15). Everything in [MIKE: ...] is only Mike's to fill in; nothing was invented to cover a gap. Numbers marked [CHECK] go to the product lead for the claim check one week before publishing (b80 and b81). Veteran-owned comes through lightly in the build paragraph, in Mike's words, not as a headline or a badge. */}
+What I needed was one place to log, with my data in my hands, whatever program I was running. I still subscribe to both apps and use both. IronStack is where the log lives.
 
-Here is what I want from a logging app. Walk up to the bar. Do the set. Get it down before the next one. Nothing else.
+## The phone is the problem
 
-That's the whole job. It's also the job most of them get wrong.
+The moment it's in the gym, distractions creep in. Texts. Slack. Email. I work a distributed job with people across the world, so the messages never stop. Focus modes help, and I use them. The real fix is going fully to the watch:
 
-## The moments
+> Just the set, the rest clock and the next set.
 
-I have used a lot of logging apps. Every one was missing something, and the something was always small.
+A watch app that's only a remote for the phone leaves the phone in your hand. This one doesn't.
 
-I train powerlifting in JuggernautAI. I like it and I recommend it. It rebuilds your workouts around how you perform, and it does that well. Then I wanted to weave in strongman, and there was no good way to do it there. So I picked up the Shaw Elite app for the strongman work.
+## If it's training, it belongs in the log
 
-Now I had two apps and two logs of one body of training. What I needed was one place to log, with my data in my hands, whatever program I was running.
+Most strongman carries aren't covered in the traditional apps: yoke, frame, farmers. You track distance and weight. You can create each one by hand. I wanted one place where all of it is managed together.
 
-IronStack is that place. It isn't a replacement. I still subscribe to both apps and use both.
+That goes past strongman. People in my house do Pilates, and we do yoga for flexibility and conditioning. My son adds basketball and lacrosse to his lifting. It's all training, so it all goes in one log, cardio and rucking included.
 
-The add button I couldn't find. The free plan that held a few routines, when my program was eight weeks long. The ads and the feed between sets, when I only opened the app to log one. A loaded sled push that the app wanted in reps, when it is feet and weight.
+## Who's behind it
 
-And the strongman work. Most carries aren't covered in the traditional apps: yoke, frame, farmers. You track distance and weight. Yes, you can create each one by hand and add it yourself. I wanted one place where all of it is managed together.
+I'm Mike. I served in the U.S. Army as an airborne intelligence analyst, in support of Operation Enduring Freedom and Operation Iraqi Freedom in the early 2000s. Mission Built is veteran-owned.
 
-That goes past strongman. People in my house do Pilates. We do yoga for flexibility and conditioning. My son adds basketball and lacrosse to his lifting. It all counts as training, so it all belongs in the same log.
+The Army taught me dedication: keep to the workouts, and on a bad day, just move a bit. That's why IronStack has so many ways to train. A bad day should still have a place in the log.
 
-Then the phone. The moment it's in the gym, distractions creep in: texts, Slack, email. I work a distributed job, with people across the world, so the messages never stop. If I don't force a disconnect, I get pulled out of my workout. Every time.
-
-Focus modes help, and I use them. But the real fix is going fully to the watch. No pull toward social media or Reddit. Just the set, the rest clock and the next set.
-
-That keeps the mind-muscle connection and keeps me focused. A watch app that was only a remote for the phone kept the phone in my hand, so it never fixed this.
-
-Small things, every set, every week. They compound, in the gym and in software.
-
-## Why now
-
-So why build it myself, and why now?
-
-I started using AI more at work. Somewhere in there came the aha moment. I might finally be able to build something that fits exactly what I need.
-
-It was the right place and the right time. First came my book, [*Mission Built: a field guide for building things that matter*](/chapters). Then the skills I started to share. An app was the natural next rep.
-
-## What it is meant to solve
-
-Less friction between sets. When you open a workout you have done before, each working set already holds what you lifted last time. Most sets are one tap. Add is always the first row. Type a lift the library doesn't have and the first thing you see is how to add it. Distances read in their own units, feet for a sled push, metres for a row. A program follows where you are, not the calendar. Miss a Tuesday and nothing breaks.
-
-The Apple Watch app runs the workout, rest clock included, so the phone can stay in the locker.
-
-Logging in IronStack is free, with no caps on programs, workouts or exercises. No ads and no feed.
-
-One log also means better questions. Ask about your lifts and get answers from your whole history, not one app's slice of it.
-
-Social is the people you invite and the people who invite you. I share my lifts with friends and back theirs. I also help my son with his lifting, and that is why I built coach mode.
-
-{/* CHECK: product lead confirms history answers, Social and coach-a-family-member wording at 1.0; coach-at-launch call is Mike's */}
-
-Mission Built is veteran-owned. I served in the U.S. Army as an airborne intelligence analyst, in support of Operation Enduring Freedom and Operation Iraqi Freedom in the early 2000s.
-
-The Army taught me dedication. Keep to the workouts, consistently. Even on a bad day, just move a bit.
-
-That's why the app has so many ways to train. Lifting, yes. Also cardio, rucking and more. A bad day should still have a place in the log.
-
-## How it was designed
-
-Every screen traces to a moment in the gym. If I couldn't name the moment, the screen didn't get built.
-
-A few rules I hold it to, in plain words:
-
-- A set is one entry. The app never logs a set for you.
-- Never hide the add button.
-- A workout is called a workout, everywhere.
-- No paywall in the middle of a workout.
-- Your log stays yours, on your phone. No usage analytics.
-
-Here is the honest part. Two of the worst moments this year came from my own beta. I typed a lift the library didn't have and couldn't find the add button. I finished workout 3 and the app offered me workout 1 again. Both were fixed in the next build, and the add button became a rule for every app I make.
-
-Two more changes came from using it. First, remembering the last lift. I realized quickly that the app had to open each set on what I lifted last time, so I stopped retyping it. Second, the watch. At first it was taps and voice. Then, with chalked hands, I found the crown, which turns to change the number. It became the best way, and it's how I log now.
-
-Exercise Info now carries a card for 410 lifts: how to set up, how it should feel, the usual miss, and the cues. I checked each one against coaching sources before I approved it.
-
-I built this after hours, with AI doing a lot of the work. Here is the line I hold: AI scaled my judgment. It did not replace it. I decide what ships. The agents do the typing and the testing. The whole story is the next post.
-
-## How it was tested
-
-It was tested with a weekly TestFlight build, with testers, and with me logging my own training on it. [CHECK: number of weekly builds and testers] The test suite runs about 2,700 unit tests plus a UI gate before anything moves. [CHECK: product lead to confirm the count at b80 and b81] Design, privacy and security reviews read every change before it merges.
+I started using AI more at work, and somewhere in there it clicked that I could build the app I'd been wishing for. I wrote [*Mission Built: a field guide for building things that matter*](/chapters) first, then shared the skills I use. The app came after. How I built it is the next post.
 
 ## Where it's going
 
-IronStack is the launch app. Two more are in development and come later. MealStack times your meals around your training, and it's in beta now. A companion for the big screen and the coach's desk is coming, and it will be included. No dates, no prices. IronStack stands on its own.
+IronStack is the launch app. MealStack times your meals around your training, and it's in beta now. A companion for the big screen and the coach's desk is coming, and it will be included. No dates, no prices. IronStack stands on its own.
 
-## One thing to try
+## Try it
 
 Open IronStack and type the strangest lift you do into the exercise search. If we don't have it, adding it is the first row. Then log it in its own units.
 
 Before 12-15, join the beta at [missionbuilt.io/first](/first). After, get the app. [LINK: App Store page, set at launch]
-
-*Next: how I built it, working with AI.*
