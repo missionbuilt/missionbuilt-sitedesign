@@ -1,5 +1,6 @@
 ---
 import { MISSIONSTACK_ANNOUNCED } from '../data/missionstack-gate.mjs';
+import { pricingFlags } from '../data/pricing';
 import { WHY_POST, blueskyUrl, discordInvite } from '../data/community';
 /**
  * SiteFooter — the one footer every page shares.
@@ -35,7 +36,7 @@ const site: FootLink[] = [
   { label: 'Why I built it', href: WHY_POST },
   { label: 'About Mike', href: '/about' },
   { label: 'Join the beta', href: '/rack/ironstack#join' },
-  { label: 'Pricing', href: '/pricing' },
+  ...(pricingFlags().pricing ? [{ label: 'Pricing', href: '/pricing' }] : []),
   { label: 'Compare', href: '/compare' },
   { label: 'Support', href: '/rack/support' },
   { label: 'Privacy', href: '/rack/ironstack/privacy' },
