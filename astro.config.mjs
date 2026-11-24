@@ -21,8 +21,8 @@ export default defineConfig({
   redirects: {
     '/rack': '/',
     '/founders': '/first',
-    '/rack/plans': '/pricing',
-    '/rack/ironstack/plans': '/pricing',
+    '/rack/plans': '/rack/ironstack',
+    '/rack/ironstack/plans': '/rack/ironstack',
     '/rack/compare': '/compare',
     '/rack/compare/hevy-strong': '/compare',
     '/rack/compare/truecoach': '/coach',
