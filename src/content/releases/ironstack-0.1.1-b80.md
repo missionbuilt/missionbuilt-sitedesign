@@ -8,6 +8,18 @@ status: shipped
 build: 80
 ---
 
+**Today's changes stay today's unless you save them, and Stack AI tells you plainly when it can't answer.**
+
+**Change today's workout without changing it for good.** Swaps, sets, renames, notes and a new order are for today only. When you finish, IronStack asks which to save to the workout, each with its own switch, all off.
+
+**Nothing gets lost.** Close or kill the app mid-workout and you come back exactly where you were. A change that couldn't save keeps trying until it does.
+
+**Clearer Stack AI.** On a new install, a short page says what Stack AI does. When you're offline, it's busy or your month is used up, it says so in one line, and questions your phone can answer still get answered.
+
+**Try this:** Start a workout, swap one exercise and rename the workout from the ⋯ menu. Finish, then switch on only the rename and tap Save. Open the workout again: the name is new and the swap is gone. Mid-workout, close IronStack from the app switcher and reopen it: your sets and the rest clock are where you left them.
+
+## Every change in this build
+
 ### Today
 
 - **Changes you make during a workout are for today only, with no question each time.** Swaps, planned sets and pace stay today's. When you finish, "Save today's changes to {workout}?" lists each one with a switch, all off. Save puts the ones you switch on into the workout; Not now keeps them for today only. On a coach's plan the button says "Suggest to @coach", and only swaps and sets can be switched on. A workout ended on your Apple Watch asks the next time you open the app. "Just today" and "Every time" are gone from Swap, Plan sets and the pace picker.
